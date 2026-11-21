@@ -1,0 +1,24 @@
+@* A filter as a small link (step 20.5, ADR 0024): it leads to the same page with the filter set or taken
+   away – no script – and says which state it is in by aria-current, not by its colour alone: a chip that is
+   set carries a mark. Chips of one question stand in a list with the class "chips". *@
+<a class="chip" href="@Href" aria-current="@(Set ? "true" : null)">
+    @if (Set)
+    {
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.500 10 17.500 19 7" /></svg>
+    }
+    <span>@ChildContent</span>
+</a>
+
+@code {
+    /// <summary>Gets or sets the address the chip leads to: the page with this filter changed.</summary>
+    [Parameter, EditorRequired]
+    public string Href { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets a value indicating whether the filter is set.</summary>
+    [Parameter]
+    public bool Set { get; set; }
+
+    /// <summary>Gets or sets the words of the chip.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = null!;
+}

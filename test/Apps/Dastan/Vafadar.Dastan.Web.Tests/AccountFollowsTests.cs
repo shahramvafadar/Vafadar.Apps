@@ -164,13 +164,14 @@ public sealed class AccountFollowsTests : IDisposable
         Assert.Contains($"href=\"{Story}/entity/character-rostam\"", list.Html, StringComparison.Ordinal);
         Assert.Contains("kept with your account", list.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("in this browser only", list.Main, StringComparison.Ordinal);
-        Assert.Contains("<a href=\"saved\">My list</a>", (await there.Get("/en/")).Html, StringComparison.Ordinal);
+        Assert.Contains("<a href=\"saved\">", (await there.Get("/en/")).Html, StringComparison.Ordinal);
         Assert.Contains("Take out of my list", (await there.Get(Rostam)).Main, StringComparison.Ordinal);
 
         await Keep(there, "character-rostam", "drop");
 
         Assert.Contains("Nothing is in your list.", (await here.Get("/en/saved")).Main, StringComparison.Ordinal);
-        Assert.DoesNotContain("<a href=\"saved\">", (await here.Get("/en/")).Html, StringComparison.Ordinal);
+        // The way to the list stays where it is while the list is empty (ADR 0024).
+        Assert.Contains("<a href=\"saved\">", (await here.Get("/en/")).Html, StringComparison.Ordinal);
     }
 
     [Fact]

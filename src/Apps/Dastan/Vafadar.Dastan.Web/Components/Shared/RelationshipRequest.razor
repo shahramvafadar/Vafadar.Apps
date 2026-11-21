@@ -1,0 +1,27 @@
+@* A request for a relationship that waits for the answer of this account (step 20.5, ADR 0024): who asks,
+   what they ask to be called, and the two answers. Nothing is sent to anybody: the request is found here. *@
+@using Vafadar.Dastan.People
+@inject IStringLocalizer<Ui> T
+
+<span><a href="@($"people/{Request.Other.Id}")" dir="auto">@Request.Other.Name</a> <span class="meta">– @Called</span></span>
+<form method="post" action="@($"{PeopleEndpoints.Root}/answer")" class="save inline">
+    <AntiforgeryToken />
+    <input type="hidden" name="returnUrl" value="@ReturnUrl" />
+    <input type="hidden" name="relationship" value="@Request.Id" />
+    <button type="submit" name="answer" value="accept">@T["People_Accept"]<span class="visually-hidden"> – @Request.Other.Name</span></button>
+    <button type="submit" name="answer" value="decline">@T["People_Decline"]<span class="visually-hidden"> – @Request.Other.Name</span></button>
+</form>
+
+@code {
+    /// <summary>Gets or sets the request.</summary>
+    [Parameter, EditorRequired]
+    public RelationshipInfo Request { get; set; } = null!;
+
+    /// <summary>Gets or sets what the relationship is asked to be called, as the page writes it.</summary>
+    [Parameter, EditorRequired]
+    public string Called { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the address the answer comes back to.</summary>
+    [Parameter, EditorRequired]
+    public string ReturnUrl { get; set; } = string.Empty;
+}

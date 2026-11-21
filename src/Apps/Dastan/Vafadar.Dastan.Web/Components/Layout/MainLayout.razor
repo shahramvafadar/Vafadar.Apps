@@ -11,50 +11,67 @@
 
 <a class="skip-link" href="@($"{Here}#content")">@T["Skip_ToContent"]</a>
 
+@* The frame of the site (step 20.5, ADR 0024): the name; the main ways – Discover, the private space, what
+   was kept, the search –; the account; and, away from the ways, the language and the appearance together.
+   The ways are one list: beside the name in a wide window, a bar at the foot of a phone. *@
 <header class="site-header">
     <a class="wordmark" href="./">@T["Site_Name"]</a>
     <nav class="site-nav" aria-label="@T["Nav_Main"]">
-        <a href="./">@T["Nav_Discover"]</a>
-        @if (!SavedList.Read(Context).IsEmpty)
+        <a href="./" aria-current="@Current(string.Empty)"><Icon Name="discover" /><span>@T["Nav_Discover"]</span></a>
+        @if (Accounts.IsOpen)
         {
-            @* Offered to who has a list: a visitor who keeps nothing is not shown an empty place. *@
-            <a href="saved">@T["Saved_Link"]</a>
+            @* The private space of who signed in; everybody else is shown what it is and where to sign in.
+               Nobody is sent anything: who is asked for a relationship finds the number here. *@
+            var waiting = AccountState.Of(Context).Waiting;
+            <a href="@(_session is null ? "account" : waiting > 0 ? "account/people#waiting" : "account/people")" aria-current="@Current("account/")">
+                <Icon Name="world" /><span>@T["Nav_World"]</span>
+                @if (waiting > 0)
+                {
+                    <span class="count" aria-hidden="true">@Visitor.Number(waiting)</span>
+                    <span class="visually-hidden"> – @string.Format(CultureInfo.CurrentCulture, T["People_Waiting_Count"], Visitor.Number(waiting))</span>
+                }
+            </a>
         }
+        @* What was kept has its place whether or not something is in it: an empty place says how to fill it. *@
+        <a href="saved" aria-current="@Current("saved")"><Icon Name="saved" /><span>@T["Nav_Saved"]</span></a>
+        <a href="search" aria-current="@Current("search")"><Icon Name="search" /><span>@T["Search_Title"]</span></a>
+    </nav>
+    <div class="site-tools">
         @if (Accounts.IsOpen)
         {
             @* Who signed in is shown their name; everybody else where to sign in. *@
-            <a href="account">@(AccountDesk.Session(Context.User)?.Name ?? T["Account_Link"].Value)</a>
-            @if (AccountState.Of(Context).Waiting is > 0 and var waiting)
-            {
-                @* Nobody is sent anything: who is asked for a relationship finds it here. *@
-                <a href="account/people#waiting">@string.Format(CultureInfo.CurrentCulture, T["People_Waiting_Count"], Visitor.Number(waiting))</a>
-            }
+            <a class="account-link" href="account" aria-current="@Current("account")"><Icon Name="account" /><bdi class="name">@(_session?.Name ?? T["Account_Link"].Value)</bdi></a>
         }
-    </nav>
-    <div class="site-tools">
-        <ul class="languages" role="list" aria-label="@T["Language_Label"]">
-            @foreach (var tag in Languages.Value.Languages)
-            {
-                var name = CultureInfo.GetCultureInfo(tag).NativeName;
-                <li>
-                    @if (tag == Visitor.Language.Tag)
+        <details class="site-settings">
+            <summary><Icon Name="settings" /><span>@T["Nav_Settings"]</span></summary>
+            <div class="settings-panel">
+                <p class="meta" id="settings-language">@T["Language_Label"]</p>
+                <ul class="languages" role="list" aria-labelledby="settings-language">
+                    @foreach (var tag in Languages.Value.Languages)
                     {
-                        <span aria-current="true" lang="@tag">@name</span>
+                        var name = CultureInfo.GetCultureInfo(tag).NativeName;
+                        <li>
+                            @if (tag == Visitor.Language.Tag)
+                            {
+                                <span aria-current="true" lang="@tag">@name</span>
+                            }
+                            else
+                            {
+                                <a href="@($"/{tag}/{Here}")" lang="@tag" hreflang="@tag">@name</a>
+                            }
+                        </li>
                     }
-                    else
-                    {
-                        <a href="@($"/{tag}/{Here}")" lang="@tag" hreflang="@tag">@name</a>
-                    }
-                </li>
-            }
-        </ul>
-        <form method="post" action="/preferences/theme" class="theme" aria-label="@T["Theme_Label"]">
-            <AntiforgeryToken />
-            <input type="hidden" name="returnUrl" value="@ReturnUrl" />
-            <button type="submit" name="theme" value="auto" aria-pressed="@Pressed(ThemeChoice.Auto)">@T["Theme_Auto"]</button>
-            <button type="submit" name="theme" value="light" aria-pressed="@Pressed(ThemeChoice.Light)">@T["Theme_Light"]</button>
-            <button type="submit" name="theme" value="dark" aria-pressed="@Pressed(ThemeChoice.Dark)">@T["Theme_Dark"]</button>
-        </form>
+                </ul>
+                <p class="meta" id="settings-theme">@T["Theme_Label"]</p>
+                <form method="post" action="/preferences/theme" class="theme" aria-labelledby="settings-theme">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@ReturnUrl" />
+                    <button type="submit" name="theme" value="auto" aria-pressed="@Pressed(ThemeChoice.Auto)">@T["Theme_Auto"]</button>
+                    <button type="submit" name="theme" value="light" aria-pressed="@Pressed(ThemeChoice.Light)">@T["Theme_Light"]</button>
+                    <button type="submit" name="theme" value="dark" aria-pressed="@Pressed(ThemeChoice.Dark)">@T["Theme_Dark"]</button>
+                </form>
+            </div>
+        </details>
     </div>
 </header>
 
@@ -144,6 +161,27 @@
     private string ReturnUrl => $"/{Visitor.Language.Tag}/{Here}";
 
     private string Pressed(ThemeChoice choice) => Visitor.Theme == choice ? "true" : "false";
+
+    private Vafadar.Dastan.People.VisitorSession? _session;
+
+    protected override void OnInitialized() => _session = Accounts.IsOpen ? AccountDesk.Session(Context.User) : null;
+
+    // Which of the main ways the page lies on: the way itself and what is below it. The private space is
+    // everything of the account but the page of the account itself, which is the account's.
+    private string? Current(string way)
+    {
+        var here = Here;
+        var end = here.IndexOfAny(['?', '#']);
+        here = end < 0 ? here : here[..end];
+        var on = way switch
+        {
+            "" => here.Length == 0,
+            "account" => here == "account",
+            "account/" => here.StartsWith("account/", StringComparison.Ordinal),
+            _ => here == way || here.StartsWith(way + "/", StringComparison.Ordinal),
+        };
+        return on ? "page" : null;
+    }
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;

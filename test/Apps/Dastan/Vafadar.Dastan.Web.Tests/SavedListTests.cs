@@ -35,7 +35,9 @@ public sealed class SavedListTests(DemoSite site, TwoCollectionsSite two) : ICla
         var before = await visitor.Get(address);
 
         Assert.Contains(keep, before.Main, StringComparison.Ordinal);
-        Assert.DoesNotContain("href=\"saved\"", before.Html, StringComparison.Ordinal);
+        // The way to the list is there before anything is kept (ADR 0024); the page itself does not name the list yet.
+        Assert.Contains("href=\"saved\"", before.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("href=\"saved\"", before.Main, StringComparison.Ordinal);
 
         var kept = await Send(visitor, address, "entity", "character-rostam", "keep");
         Assert.Equal(HttpStatusCode.Redirect, kept.Status);

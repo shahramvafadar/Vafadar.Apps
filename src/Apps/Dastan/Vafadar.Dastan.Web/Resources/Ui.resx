@@ -3900,4 +3900,22 @@
   <data name="People_Look_Note" xml:space="preserve">
     <value>Colleagues, classmates and team-mates were somewhere. You can look for that place among the entries of the collections of this site, or write it in your own words below.</value>
   </data>
+  <data name="Nav_World" xml:space="preserve">
+    <value>My World</value>
+  </data>
+  <data name="Nav_Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Language and appearance</value>
+  </data>
+  <data name="View_Connections" xml:space="preserve">
+    <value>Connections</value>
+  </data>
+  <data name="View_Timeline" xml:space="preserve">
+    <value>Timeline</value>
+  </data>
+  <data name="View_Pictures" xml:space="preserve">
+    <value>Pictures</value>
+  </data>
 </root>

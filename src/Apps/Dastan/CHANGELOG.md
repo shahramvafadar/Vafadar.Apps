@@ -383,3 +383,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   through the entry, whatever name each wrote, and never through a name alone. You can state several times at one
   place, and the years between them count as not there. The same choice exists for where two people were
   colleagues, classmates or team-mates. The published collection holds no such place yet.
+- Every page has the same head: the name, then Discover, My World, Saved and Search, then your account. The
+  language and the appearance (light, dark, like your device) are together behind one control at the end of the
+  head. On a phone the four ways are a bar at the foot of the screen. Saved is there before you keep anything.

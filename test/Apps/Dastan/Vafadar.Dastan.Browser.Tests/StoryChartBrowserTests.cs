@@ -38,7 +38,7 @@ public sealed class StoryChartBrowserTests(BrowserSite site) : IClassFixture<Bro
 
         Assert.InRange(sizes[0], 0, 17);
         Assert.InRange(sizes[1], 0, 17);
-        Assert.InRange(sizes[2], sizes[3] - 33, sizes[3]);
+        Assert.InRange(sizes[2], sizes[3] - 33 - (width <= 640 ? 60 : 0), sizes[3] - (width <= 640 ? 60 : 0));
         Assert.True(sizes[4] >= 43.5, $"A step is {sizes[4]} px.");
         Assert.Equal([2, 2, 2, 2], sizes[5..]);
         Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");

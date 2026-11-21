@@ -1,0 +1,35 @@
+@* The bar that says where the visitor is and offers the other views of the same thing (step 20.5, ADR 0024):
+   what is looked at, and the views – connections, timeline, pictures – as links, the one that is shown
+   marked. A view that the thing does not have is not offered. No script: a view is a page. *@
+<nav class="view-bar" aria-label="@Label">
+    <p class="view-bar-where">@Where</p>
+    <ul class="view-switch" role="list">
+        @foreach (var view in Views)
+        {
+            <li>
+                <a href="@view.Href" aria-current="@(view.Shown ? "page" : null)"><Icon Name="@view.Icon" /><span>@view.Name</span></a>
+            </li>
+        }
+    </ul>
+</nav>
+
+@code {
+    /// <summary>One view of a thing.</summary>
+    /// <param name="Icon">The name of its drawing.</param>
+    /// <param name="Name">Its name, in the language of the page.</param>
+    /// <param name="Href">The address of the view.</param>
+    /// <param name="Shown">Whether it is the view the page shows.</param>
+    public sealed record View(string Icon, string Name, string Href, bool Shown);
+
+    /// <summary>Gets or sets the name of the bar for a screen reader.</summary>
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets what is looked at: a name, usually a link to its page.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment Where { get; set; } = null!;
+
+    /// <summary>Gets or sets the views there are.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<View> Views { get; set; } = [];
+}

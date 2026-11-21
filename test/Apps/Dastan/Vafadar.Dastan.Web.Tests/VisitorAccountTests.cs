@@ -80,7 +80,7 @@ public sealed class VisitorAccountTests : IDisposable
         Assert.Contains("<meta name=\"robots\" content=\"noindex, nofollow\"", page.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("rel=\"canonical\"", page.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("<script", page.Own, StringComparison.Ordinal);
-        Assert.Contains($"<a href=\"account\">{signIn}</a>", WebUtility.HtmlDecode(page.Html), StringComparison.Ordinal);
+        Assert.Matches($"<a class=\"account-link\" href=\"account\" aria-current=\"page\">(?s:.*?)<bdi class=\"name\">{signIn}</bdi></a>", WebUtility.HtmlDecode(page.Html));
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public sealed class VisitorAccountTests : IDisposable
         Assert.Empty(Codes(await visitor.Get(Account)));
 
         // The name stands in the header of every page.
-        Assert.Contains("<a href=\"account\">Mina Rad</a>", (await visitor.Get("/en/")).Html, StringComparison.Ordinal);
+        Assert.Matches("<a class=\"account-link\" href=\"account\">(?s:.*?)<bdi class=\"name\">Mina Rad</bdi></a>", (await visitor.Get("/en/")).Html);
         Assert.DoesNotContain("Mina Rad", (await _site.Visitor().Get("/en/")).Html, StringComparison.Ordinal);
     }
 

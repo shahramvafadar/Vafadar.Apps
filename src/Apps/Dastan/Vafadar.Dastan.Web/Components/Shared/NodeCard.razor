@@ -5,8 +5,8 @@
 @inject Visitor Visitor
 @inject IStringLocalizer<Ui> T
 
-<div class="node-card">
-    <ProfilePicture Profile="Profile" Small="true" />
+<div class="@(Tall ? "node-card tall" : "node-card")">
+    <ProfilePicture Profile="Profile" Small="!Tall" />
     <div class="node-card-words">
         @if (Level == 2)
         {
@@ -44,6 +44,14 @@
     /// <summary>Gets or sets a value indicating whether the summary of the node is shown too – in a list that has the room.</summary>
     [Parameter]
     public bool Summary { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the picture stands above the words, as wide as the card
+    /// (step 20.5): a card of a grid that lives from its pictures. Without a picture the drawing of the kind
+    /// stands there, on a lower ground – it never pretends to be a picture.
+    /// </summary>
+    [Parameter]
+    public bool Tall { get; set; }
 
     /// <summary>Gets or sets the level of the heading the name is: 3 in a list under a heading of a section, 2 directly under the title of a page.</summary>
     [Parameter]
