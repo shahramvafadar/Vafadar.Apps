@@ -82,6 +82,36 @@ namespace Vafadar.Documents.Tests
                 TextRecognizer.Read = null;
             }
         }
+
+        [Fact]
+        public async Task Retiring_the_reader_cancels_the_renderer_before_recognition()
+        {
+            var source = MinimalPdf.Create([[], []]);
+            var expected = source.ToArray();
+            using var retired = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
+            var entered = new TaskCompletionSource<CancellationToken>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var rendering = new TaskCompletionSource<IReadOnlyList<byte[]>>(TaskCreationOptions.RunContinuationsAsynchronously);
+            TextRecognizer.Reads = [];
+            PdfPageImages.Render = ct =>
+            {
+                entered.TrySetResult(ct);
+                return rendering.Task.WaitAsync(ct);
+            };
+            var reading = DocumentReader.ReadDocumentAsync(source, "application/pdf", retired.Token);
+            try
+            {
+                Assert.Equal(retired.Token, await entered.Task.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken));
+                await retired.CancelAsync();
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => reading);
+                Assert.Empty(TextRecognizer.Reads);
+                Assert.Equal(expected, source);
+            }
+            finally
+            {
+                rendering.TrySetResult([]);
+                PdfPageImages.Render = null;
+            }
+        }
     }
 }
 
@@ -100,7 +130,9 @@ namespace Vafadar.Documents.Maui
     {
         internal static bool IsSupported => true;
         internal static IReadOnlyList<byte[]> Images = [];
-        internal static Task<IReadOnlyList<byte[]>> RenderAsync(byte[] pdf, int maximum) => Task.FromResult(Images);
+        internal static Func<CancellationToken, Task<IReadOnlyList<byte[]>>>? Render;
+        internal static Task<IReadOnlyList<byte[]>> RenderAsync(byte[] pdf, int maximum, CancellationToken ct) =>
+            Render?.Invoke(ct) ?? Task.FromResult(Images);
     }
 
     /// <summary>Captures synthetic input as observed by the reader and can fail during the first read.</summary>

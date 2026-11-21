@@ -70,7 +70,7 @@ public static class DocumentReader
 
             var pages = new List<string>();
             var ambiguous = false;
-            var images = await PdfPageImages.RenderAsync(content, MaxPages);
+            var images = await PdfPageImages.RenderAsync(content, MaxPages, ct);
             try
             {
                 foreach (var image in images)

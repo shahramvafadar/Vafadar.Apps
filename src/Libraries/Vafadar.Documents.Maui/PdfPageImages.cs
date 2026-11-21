@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Vafadar.Documents.Maui;
 
 /// <summary>
@@ -20,19 +22,14 @@ public static class PdfPageImages
 
     /// <summary>Renders the pages chosen by <see cref="TextLayout.PagesToRead"/> as encoded images.</summary>
     /// <returns>One image per page; empty when the file cannot be opened (damaged or password protected).</returns>
-    public static async Task<IReadOnlyList<byte[]>> RenderAsync(byte[] pdf, int maxPages = 4)
+    public static Task<IReadOnlyList<byte[]>> RenderAsync(byte[] pdf, int maxPages = 4) =>
+        RenderAsync(pdf, maxPages, CancellationToken.None);
+
+    /// <summary>Renders the chosen pages while their original reader remains active.</summary>
+    public static Task<IReadOnlyList<byte[]>> RenderAsync(byte[] pdf, int maxPages, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(pdf);
-#if IOS || MACCATALYST
-        return await Task.Run(() => RenderApple(pdf, maxPages));
-#elif WINDOWS
-        return await RenderWindowsAsync(pdf, maxPages);
-#elif ANDROID
-        return await Task.Run(() => RenderAndroid(pdf, maxPages));
-#else
-        await Task.CompletedTask;
-        return [];
-#endif
+        return RenderCoreAsync(pdf, maxPages, selected: null, observe: null, ct);
     }
 
     /// <summary>Renders one selected page and reports the real count, without sampling or loading every page.</summary>
@@ -41,17 +38,37 @@ public static class PdfPageImages
         ArgumentNullException.ThrowIfNull(pdf);
         if (pageIndex < 0) throw new ArgumentOutOfRangeException(nameof(pageIndex));
         var count = 0;
-#if IOS || MACCATALYST
-        var images = await Task.Run(() => RenderApple(pdf, 1, pageIndex, value => count = value));
-#elif WINDOWS
-        var images = await RenderWindowsAsync(pdf, 1, pageIndex, value => count = value);
-#elif ANDROID
-        var images = await Task.Run(() => RenderAndroid(pdf, 1, pageIndex, value => count = value));
-#else
-        await Task.CompletedTask;
-        IReadOnlyList<byte[]> images = [];
-#endif
+        var images = await RenderCoreAsync(pdf, 1, pageIndex, value => count = value, CancellationToken.None);
         return images.Count == 1 ? new PdfPageImage(count, images[0]) : null;
+    }
+
+    private static async Task<IReadOnlyList<byte[]>> RenderCoreAsync(byte[] pdf, int maxPages,
+        int? selected, Action<int>? observe, CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested();
+        var images = new List<byte[]>();
+        var transferred = false;
+        try
+        {
+#if IOS || MACCATALYST
+            var rendered = await Task.Run(() => RenderApple(pdf, maxPages, selected, observe, images, ct), ct);
+#elif WINDOWS
+            var rendered = await RenderWindowsAsync(pdf, maxPages, selected, observe, images, ct);
+#elif ANDROID
+            var rendered = await Task.Run(() => RenderAndroid(pdf, maxPages, selected, observe, images, ct), ct);
+#else
+            await Task.CompletedTask;
+            var rendered = false;
+#endif
+            ct.ThrowIfCancellationRequested();
+            transferred = rendered;
+            return rendered ? images : [];
+        }
+        finally
+        {
+            if (!transferred)
+                foreach (var image in images) CryptographicOperations.ZeroMemory(image);
+        }
     }
 
     private static IEnumerable<int> SelectedPages(int count, int maximum, int? selected, Action<int>? observe)
@@ -72,18 +89,19 @@ public static class PdfPageImages
     }
 
 #if IOS || MACCATALYST
-    private static List<byte[]> RenderApple(byte[] pdf, int maxPages, int? selected = null, Action<int>? observe = null)
+    private static bool RenderApple(byte[] pdf, int maxPages, int? selected, Action<int>? observe,
+        List<byte[]> images, CancellationToken ct)
     {
         using var data = Foundation.NSData.FromArray(pdf);
         using var document = new PdfKit.PdfDocument(data);
         if (document.IsLocked)
         {
-            return [];
+            return false;
         }
 
-        var images = new List<byte[]>();
         foreach (var index in SelectedPages(checked((int)document.PageCount), maxPages, selected, observe))
         {
+            ct.ThrowIfCancellationRequested();
             using var page = document.GetPage(index);
             if (page is null)
             {
@@ -93,18 +111,21 @@ public static class PdfPageImages
             var bounds = page.GetBoundsForBox(PdfKit.PdfDisplayBox.Media);
             var (width, height) = SizeOf(bounds.Width, bounds.Height);
             using var image = page.GetThumbnail(new CoreGraphics.CGSize(width, height), PdfKit.PdfDisplayBox.Media);
-            if (image.AsJPEG(0.9f) is { } jpeg)
+            ct.ThrowIfCancellationRequested();
+            using var jpeg = image.AsJPEG(0.9f);
+            if (jpeg is not null)
             {
                 images.Add(jpeg.ToArray());
             }
         }
 
-        return images;
+        return true;
     }
 #endif
 
 #if ANDROID
-    private static List<byte[]> RenderAndroid(byte[] pdf, int maxPages, int? selected = null, Action<int>? observe = null)
+    private static bool RenderAndroid(byte[] pdf, int maxPages, int? selected, Action<int>? observe,
+        List<byte[]> images, CancellationToken ct)
     {
         // PdfRenderer needs a seekable descriptor. Unlink the private path before rendering so an interrupted
         // render cannot leave the complete PDF behind in the app cache.
@@ -118,6 +139,7 @@ public static class PdfPageImages
                 staging.Write(pdf);
             }
 
+            ct.ThrowIfCancellationRequested();
             // Dispose only releases the .NET handles; the renderer, its pages and the descriptor are closed explicitly.
             using var descriptor = Android.OS.ParcelFileDescriptor.Open(new Java.IO.File(path), Android.OS.ParcelFileMode.ReadOnly)!;
             try
@@ -127,18 +149,22 @@ public static class PdfPageImages
                 using var renderer = new Android.Graphics.Pdf.PdfRenderer(descriptor);
                 try
                 {
-                    var images = new List<byte[]>();
                     foreach (var index in SelectedPages(renderer.PageCount, maxPages, selected, observe))
                     {
+                        ct.ThrowIfCancellationRequested();
                         using var page = renderer.OpenPage(index);
                         using var bitmap = RenderPage(page);
-                        using var output = new MemoryStream();
-                        bitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg!, 90, output);
-                        bitmap.Recycle();
-                        images.Add(output.ToArray());
+                        try
+                        {
+                            ct.ThrowIfCancellationRequested();
+                            using var output = new MemoryStream();
+                            bitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg!, 90, output);
+                            images.Add(output.ToArray());
+                        }
+                        finally { bitmap.Recycle(); }
                     }
 
-                    return images;
+                    return true;
                 }
                 finally
                 {
@@ -154,7 +180,7 @@ public static class PdfPageImages
         {
             // A damaged or password-protected file has no pages to render.
             System.Diagnostics.Debug.WriteLine($"PDF rendering failed: {ex.GetType().Name}");
-            return [];
+            return false;
         }
         finally
         {
@@ -182,7 +208,8 @@ public static class PdfPageImages
 #endif
 
 #if WINDOWS
-    private static async Task<IReadOnlyList<byte[]>> RenderWindowsAsync(byte[] pdf, int maxPages, int? selected = null, Action<int>? observe = null)
+    private static async Task<bool> RenderWindowsAsync(byte[] pdf, int maxPages, int? selected, Action<int>? observe,
+        List<byte[]> images, CancellationToken ct)
     {
         using var source = new global::Windows.Storage.Streams.InMemoryRandomAccessStream();
         using (var writer = new global::Windows.Storage.Streams.DataWriter(source.GetOutputStreamAt(0)))
@@ -193,6 +220,7 @@ public static class PdfPageImages
             writer.DetachStream();
         }
 
+        ct.ThrowIfCancellationRequested();
         source.Seek(0);
         global::Windows.Data.Pdf.PdfDocument document;
         try
@@ -203,26 +231,28 @@ public static class PdfPageImages
         {
             // A damaged or password-protected file has no pages to render.
             System.Diagnostics.Debug.WriteLine($"PDF rendering failed: {ex.GetType().Name}");
-            return [];
+            return false;
         }
 
-        var images = new List<byte[]>();
         foreach (var index in SelectedPages(checked((int)document.PageCount), maxPages, selected, observe))
         {
+            ct.ThrowIfCancellationRequested();
             using var page = document.GetPage((uint)index);
             var (width, height) = SizeOf(page.Size.Width, page.Size.Height);
             using var output = new global::Windows.Storage.Streams.InMemoryRandomAccessStream();
 
             // The default encoding is PNG on a white background.
             await page.RenderToStreamAsync(output, new global::Windows.Data.Pdf.PdfPageRenderOptions { DestinationWidth = (uint)width, DestinationHeight = (uint)height });
-            var bytes = new byte[output.Size];
+            ct.ThrowIfCancellationRequested();
             using var reader = new global::Windows.Storage.Streams.DataReader(output.GetInputStreamAt(0));
             await reader.LoadAsync((uint)output.Size);
-            reader.ReadBytes(bytes);
+            ct.ThrowIfCancellationRequested();
+            var bytes = new byte[output.Size];
             images.Add(bytes);
+            reader.ReadBytes(bytes);
         }
 
-        return images;
+        return true;
     }
 #endif
 }
