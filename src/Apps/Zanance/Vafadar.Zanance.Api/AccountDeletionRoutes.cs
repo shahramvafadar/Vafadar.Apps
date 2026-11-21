@@ -23,6 +23,7 @@ internal static class AccountDeletionRoutes
         var request = app.MapGroup("/identity/deletion-request").RequireAuthorization();
         request.MapGet("", ReadAsync);
         request.MapPost("", RequestAsync);
+        AccountDeletionPage.Map(app);
     }
 
     private static async Task<IResult> ReadAsync(HttpContext http, ServiceDbContext db, TimeProvider time, CancellationToken ct)
@@ -50,17 +51,24 @@ internal static class AccountDeletionRoutes
             return Results.Unauthorized();
         }
 
-        var current = await db.AccountDeletionRequests.SingleOrDefaultAsync(row => row.UserId == scope.Owner, ct);
+        var receipt = await QueueAsync(db, scope.Owner, time, ct);
+        await scope.CommitAsync(ct);
+        return Results.Accepted(value: receipt);
+    }
+
+    // Both entry points hold the original owner's transaction lock before calling this method.
+    internal static async Task<AccountDeletionReceipt> QueueAsync(ServiceDbContext db, string owner, TimeProvider time, CancellationToken ct)
+    {
+        var current = await db.AccountDeletionRequests.SingleOrDefaultAsync(row => row.UserId == owner, ct);
         if (current is null)
         {
             // PostgreSQL stores less precision than .NET ticks. Keep the first receipt identical to later reads.
             var requestedAt = DateTimeOffset.FromUnixTimeMilliseconds(time.GetUtcNow().ToUnixTimeMilliseconds());
-            current = new() { UserId = scope.Owner, ReceiptId = Guid.NewGuid(), RequestedAt = requestedAt };
+            current = new() { UserId = owner, ReceiptId = Guid.NewGuid(), RequestedAt = requestedAt };
             db.AccountDeletionRequests.Add(current);
         }
 
-        await scope.CommitAsync(ct);
-        return Results.Accepted(value: Receipt(current));
+        return Receipt(current);
     }
 
     private static AccountDeletionReceipt Receipt(AccountDeletionRequest row) => new(row.ReceiptId, row.RequestedAt);

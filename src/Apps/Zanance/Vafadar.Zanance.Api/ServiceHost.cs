@@ -149,6 +149,14 @@ public static class ServiceHost
             o.BearerTokenExpiration = TimeSpan.FromMinutes(15);
             o.RefreshTokenExpiration = TimeSpan.FromDays(14);
         });
+        builder.Services.AddAntiforgery(options =>
+        {
+            options.Cookie.Name = "__Host-ZananceCsrf";
+            options.Cookie.Path = "/";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.Strict;
+        });
         Analysis.AiPilotAdmin.Add(builder.Services, pilot, builder.Configuration["Analysis:ProviderPilot:OperatorUserId"]);
         builder.Services.AddAuthorization();
         var protection = builder.Services.AddDataProtection().SetApplicationName("Vafadar.Zanance.Service")

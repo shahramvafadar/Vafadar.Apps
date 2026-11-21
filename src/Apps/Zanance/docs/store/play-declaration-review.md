@@ -95,7 +95,10 @@ lost-response recovery, account replacement and retired-page feedback. An isolat
 Windows run checked the store account deletion card in 18 Persian, English and
 German layout contexts at widths 360, 412 and 1280 in light and dark themes.
 Each native status action opened the empty password form without a submission.
-Personal Sync native layout review and the public web remain open, along with
-deletion execution, verified retention and the Console declaration.
+The service also implements the English browser request form at
+`/identity/delete-account`. Isolated PostgreSQL HTTP evidence confirms protected
+submission and the same pending receipt through the app API. Personal Sync
+native layout review, publicly reachable deployment, deletion execution,
+verified retention and the Console declaration remain open.
 See [the service boundary](../../Vafadar.Zanance.Api/README.md#api-boundary)
 and [Play User Data policy](https://support.google.com/googleplay/android-developer/answer/10144311).

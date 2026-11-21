@@ -92,8 +92,16 @@ household ownership and membership, billing and analysis have separate restricti
 dependencies. A complete deletion
 request must address those records, private file retirement, already-dispatched
 provider work and what may be retained. Restore and independent recipient copies
-also need their scope explained. The external request form remains part of that
-delivery.
+also need their scope explained.
+
+The browser entry point is `/identity/delete-account` on the service HTTPS
+origin. It uses the current Zanance account password and the service identity
+rate limit. The browser form requires antiforgery validation, returns no-store
+pages, and does not create a login session. It shares the same transaction-locked
+receipt as the app. The isolated PostgreSQL HTTP test covered missing antiforgery
+proof, wrong password and unknown account refusal, a valid pending request, no
+new session, and reading the same receipt through the app API. Public deployment
+and verification of the production URL remain open.
 
 Bearer/refresh tickets use the framework BearerToken handler, not JWT/OIDC or a new token format.
 Access lasts 15 minutes; absolute device grants last 14 days. Each authorized request rechecks the

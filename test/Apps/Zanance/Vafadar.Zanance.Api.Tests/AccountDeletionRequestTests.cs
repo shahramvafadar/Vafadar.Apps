@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -16,6 +17,76 @@ namespace Vafadar.Zanance.Api.Tests;
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Web_deletion_requires_fresh_proof_and_shares_the_pending_receipt_with_the_app()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_web_fixture";
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "web-service"));
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        await db.Database.MigrateAsync(ct);
+        var users = fixture.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        const string email = "fictional-web-deletion@example.invalid";
+        const string password = "Synthetic-web-deletion9!";
+        var owner = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+        Assert.True((await users.CreateAsync(owner, password)).Succeeded);
+
+        const string page = "/identity/delete-account";
+        using var browser = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var firstPage = await browser.GetAsync(page, ct);
+        Assert.Equal(HttpStatusCode.OK, firstPage.StatusCode);
+        Assert.True(firstPage.Headers.CacheControl?.NoStore);
+        Assert.Contains("frame-ancestors 'none'", firstPage.Headers.GetValues("Content-Security-Policy").Single(), StringComparison.Ordinal);
+        var html = await firstPage.Content.ReadAsStringAsync(ct);
+        var token = Regex.Match(html, "name=\"__RequestVerificationToken\" value=\"([^\"]+)\"", RegexOptions.CultureInvariant,
+            TimeSpan.FromSeconds(1)).Groups[1].Value;
+        Assert.NotEmpty(token);
+        using var rejectedCsrf = await browser.PostAsync(page, Form(email, password, null), ct);
+        Assert.Equal(HttpStatusCode.BadRequest, rejectedCsrf.StatusCode);
+        using var wrong = await browser.PostAsync(page, Form(email, "Incorrect-fictional9!", token), ct);
+        using var unknown = await browser.PostAsync(page, Form("unknown@example.invalid", "Incorrect-fictional9!", token), ct);
+        Assert.Equal(HttpStatusCode.Unauthorized, wrong.StatusCode);
+        Assert.Equal(wrong.StatusCode, unknown.StatusCode);
+        Assert.Empty(await db.AccountDeletionRequests.ToListAsync(ct));
+
+        using var accepted = await browser.PostAsync(page, Form(email, password, token), ct);
+        Assert.Equal(HttpStatusCode.Accepted, accepted.StatusCode);
+        Assert.True(accepted.Headers.CacheControl?.NoStore);
+        var pending = await db.AccountDeletionRequests.AsNoTracking().SingleAsync(ct);
+        var result = await accepted.Content.ReadAsStringAsync(ct);
+        Assert.Contains(pending.ReceiptId.ToString("D"), result, StringComparison.Ordinal);
+        Assert.DoesNotContain(email, result, StringComparison.Ordinal);
+        Assert.DoesNotContain(password, result, StringComparison.Ordinal);
+        Assert.Equal(owner.Id, pending.UserId);
+        Assert.Empty(await db.Sessions.ToListAsync(ct));
+
+        using var app = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var login = await app.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        using var grant = JsonDocument.Parse(await login.Content.ReadAsStringAsync(ct));
+        app.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.RootElement.GetProperty("accessToken").GetString());
+        var receipt = await app.GetFromJsonAsync<AccountDeletionReceipt>("/identity/deletion-request", ct);
+        Assert.Equal(new AccountDeletionReceipt(pending.ReceiptId, pending.RequestedAt), receipt);
+
+        static FormUrlEncodedContent Form(string email, string password, string? token)
+        {
+            var fields = new Dictionary<string, string> { ["email"] = email, ["password"] = password };
+            if (token is not null) fields["__RequestVerificationToken"] = token;
+            return new(fields);
+        }
+    }
+
     /// <summary>The additive schema preserves existing accounts and accepts only their own reauthenticated request.</summary>
     [Fact]
     public async Task Deletion_request_survives_concurrent_retry_and_keeps_other_accounts_separate()
