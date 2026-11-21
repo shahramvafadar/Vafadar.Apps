@@ -584,7 +584,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         ready = true;
     }
     private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCoveredRead = false,
-        Action? validateRequest = null)
+        Action? validateRequest = null, Action? clearInputOnStart = null)
     {
         if (publishingDeviceItems) return;
         if (!(allowCoveredRead ? CanRead : CanInteract)) return;
@@ -600,6 +600,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         try
         {
             // D-1040: initial native binding feedback already owns a completion and must share its cleanup.
+            clearInputOnStart?.Invoke();
             IsBusy = true; failureKey = null; RefreshProperties();
             var originalAccess = environment.Capture();
             ownedOperation = CancellationTokenSource.CreateLinkedTokenSource(originalAccess.Cancellation, originalVisibility.Token);

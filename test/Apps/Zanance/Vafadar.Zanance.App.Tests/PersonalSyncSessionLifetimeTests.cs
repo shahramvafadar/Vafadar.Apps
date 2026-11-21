@@ -66,6 +66,40 @@ public sealed partial class PersonalSyncSessionLifetimeTests
     }
 
     [Fact]
+    public async Task Refused_deletion_access_clears_the_submitted_password_before_any_http_request()
+    {
+        using var fixture = new FlowFixture();
+        await using var host = await ProtocolHost.StartAsync();
+        using var environment = new PersonalSyncFlowTests.EnvironmentPort
+        { AllowPeerMemory = true, OpenTransport = (peer, verify) => new(peer, host.Tokens, verifyAccess: verify) };
+        var model = Create(fixture, environment);
+        await model.ActivateAsync();
+        try
+        {
+            model.Address = host.Peer.Address.AbsoluteUri;
+            model.Fingerprint = host.Peer.Fingerprint;
+            model.Email = "deletion-refused@example.invalid";
+            model.Password = "Synthetic-sign-in-password9!";
+            await model.SignInCommand.ExecuteAsync(null);
+            await model.ReadAccountDeletionCommand.ExecuteAsync(null);
+            Assert.True(model.ShowAccountDeletionForm);
+
+            var requests = host.Requests;
+            model.DeletionPassword = "Synthetic-deletion-password9!";
+            environment.FailCapture = true;
+            await model.RequestAccountDeletionCommand.ExecuteAsync(null);
+
+            Assert.Empty(model.DeletionPassword);
+            Assert.Equal(requests, host.Requests);
+            Assert.Equal(0, host.DeletionSubmissions);
+            Assert.NotNull(model.Error);
+            Assert.False(model.HasPendingOperation);
+            Assert.True(model.ShowAccountDeletionForm);
+        }
+        finally { model.Deactivate(); }
+    }
+
+    [Fact]
     public async Task Original_sign_in_publishes_the_received_identity_and_device_and_local_Reload_does_not_reopen_credentials()
     {
         using var f = new FlowFixture(); await using var host = await ProtocolHost.StartAsync();

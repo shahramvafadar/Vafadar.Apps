@@ -49,7 +49,6 @@ public sealed partial class PersonalSyncViewModel
         if (!CanInteract || CurrentDeletionOwner is not { } owner) return Task.CompletedTask;
         return RunAsync(async (access, ct) =>
         {
-            ClearAccountDeletionPassword();
             deletionOwner = null;
             RefreshAccountDeletionProperties();
             access.Validate();
@@ -57,7 +56,7 @@ public sealed partial class PersonalSyncViewModel
             access.Validate();
             deletionOwner = owner;
             deletionReceipt = receipt;
-        }, validateRequest: () => ValidateDeletionOwner(owner));
+        }, validateRequest: () => ValidateDeletionOwner(owner), clearInputOnStart: ClearAccountDeletionPassword);
     }
 
     [RelayCommand]
@@ -68,7 +67,6 @@ public sealed partial class PersonalSyncViewModel
         var password = deletionPassword;
         return RunAsync(async (access, ct) =>
         {
-            ClearAccountDeletionPassword();
             if (password.Length is < 12 or > 256)
                 throw new ArgumentException("Fresh account credential proof is required.");
             // Hide the submission form before the request. A lost response can be reconciled via status.
@@ -79,7 +77,7 @@ public sealed partial class PersonalSyncViewModel
             access.Validate();
             deletionReceipt = receipt;
             deletionOwner = owner;
-        }, validateRequest: () => ValidateDeletionOwner(owner));
+        }, validateRequest: () => ValidateDeletionOwner(owner), clearInputOnStart: ClearAccountDeletionPassword);
     }
 
     private void ValidateDeletionOwner((string User, string Binding) owner)
