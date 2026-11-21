@@ -6596,3 +6596,30 @@ Android Release built with zero warnings and errors. The canonical offline
 verifier passed on the APK. The copied archive has the same SHA-256, supports
 arm64-v8a and x86_64, and retains the previous licensed review certificate with
 v2 and v3 signatures. This APK was prepared for testing and has not been installed.
+
+### Offline Android About verification
+
+The licensed offline Release APK from `be889f0d` includes the About disclosures
+and Home Analysis navigation correction. The Android build passed with zero
+warnings and errors. The copy retained the previous v2/v3 release-review signer,
+both Android ABIs and the exact offline manifest, native storage and alignment checks.
+
+- APK: `artifacts/android-offline-be889f0d-licensed-review/pro.vafadar.zanance-Signed.apk`
+- Size: 99,712,623 bytes
+- SHA-256: `ed7a169f2ab4583be17837246d303380e46cd1887007745c723079d4f4aa1d21`
+
+A fresh owned Android 16 x86_64 guest installed that exact archive. More →
+About Zanance showed the local data summary, without the cloud backup, personal
+sync or online Analysis disclosures in its **Your data** card. The public policy
+button was hidden with policy publication disabled. The adjacent file-format
+help remained available. This qualifies one English offline screen. The enabled
+policy link and the visible disclosures of connected builds still require their
+own checks.
+
+One onboarding account with a zero opening balance was used solely to reach About.
+No financial entry, provider, sign-in or phone action ran. The initial implicit
+launcher command was unresolved; the installed activity was then resolved and
+launched once. The original XML observer output encoding was corrected without
+restarting the app. The temporary emulator was removed after restoring the
+AVD manager's required host PATH. The signed APK and screen evidence remain in
+`artifacts/zanance-about-offline-be889f0d/about-verification.json` and its sibling XML.
