@@ -15,3 +15,16 @@ Eleven new host cases passed. They cover six localized spellings, conflicting or
 The independent Windows review exercised the original entry and receipt drafts, native candidate adoption, the editable rule handoff and the native generic CSV draft button with no transaction or rule write. The receipt fixture used synthetic OCR text through the existing parser and did not repeat camera capture. The first CSV observer selected the wrong scrolling container before invoking Preview. It was corrected and the two accepted entry/receipt operations were not repeated.
 
 The category picker is tied to the displayed row. Rebuilding the generic preview while a choice is pending retires that choice, even when the original interpreted row and file remain available. A focused synthetic test reproduced the old callback replacing the category after the preview was rebuilt. It now checks that the delayed choice leaves the current row unchanged, a new choice on that row only updates the draft, and the financial source remains equal without import.
+
+A separate Android 16 review used the signed offline Release APK from `3705dd77`.
+The installed package matched SHA-256
+`ae6a1bc50397b9c7a62c265128bd0f1ca2f4301336b34417d144623d5484fa5b`.
+The native Settings switch was turned off on a disposable emulator with one
+zero-opening account. In the original expense editor, the title `Groceries`
+displayed a local Food suggestion with the Food chip unselected. Use suggestion
+selected that chip and exposed the editable rule draft action. Cancel and Discard
+returned to Home. Transactions remained empty. No amount, Save, rule edit, receipt
+recognition or provider action was used. The initial title bounds were clipped
+behind the amount keyboard. The observer dismissed that keyboard and continued in
+the same draft. The disposable package and emulator were retired and the captures
+are in `artifacts/category-ai-off-android36`.
