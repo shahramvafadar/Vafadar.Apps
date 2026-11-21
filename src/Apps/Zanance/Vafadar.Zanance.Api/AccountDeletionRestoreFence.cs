@@ -1,12 +1,20 @@
 using System.Text;
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
+using Vafadar.Zanance.Api.Sync;
 
 namespace Vafadar.Zanance.Api;
 
 /// <summary>Immutable minimal receipt markers outside the database snapshot protect restored accounts from resurrection.</summary>
 public static class AccountDeletionRestoreFence
 {
-    internal static async Task RecordAsync(ServiceStorage storage, Guid receipt, CancellationToken ct)
+    private const string OwnerDomain = "zanance-account-restore-v2:";
+
+    internal static Task RecordAsync(ServiceStorage storage, Guid receipt, string owner, CancellationToken ct) =>
+        WriteMarkerAsync(storage, receipt, OwnerHash(owner), ct, allowLegacyRetry: true);
+
+    private static async Task WriteMarkerAsync(ServiceStorage storage, Guid receipt, string? ownerHash, CancellationToken ct,
+        bool allowLegacyRetry = false)
     {
         if (receipt == Guid.Empty) throw new IOException("The original account deletion receipt is required.");
         var root = RootOf(storage.Root);
@@ -14,13 +22,16 @@ public static class AccountDeletionRestoreFence
         var path = Path.Combine(RootOf(storage.Root), receipt.ToString("N") + ".receipt");
         if (File.Exists(path))
         {
-            await ValidateAsync(path, receipt, ct);
+            var existingOwner = await ReadOwnerHashAsync(path, receipt, ct);
+            if (existingOwner != ownerHash && !(allowLegacyRetry && existingOwner is null))
+                throw new IOException("The account deletion marker owner differs.");
             return;
         }
         var pending = path + "." + Guid.NewGuid().ToString("N") + ".pending";
         await using (var file = new FileStream(pending, FileMode.CreateNew, FileAccess.Write, FileShare.None, 4096, FileOptions.WriteThrough))
         {
-            await file.WriteAsync(Encoding.ASCII.GetBytes(receipt.ToString("D")), ct);
+            var body = ownerHash is null ? receipt.ToString("D") : $"2\n{receipt:D}\n{ownerHash}";
+            await file.WriteAsync(Encoding.ASCII.GetBytes(body), ct);
             file.Flush(flushToDisk: true);
         }
         _ = RootOf(storage.Root);
@@ -32,7 +43,7 @@ public static class AccountDeletionRestoreFence
     {
         foreach (var (path, receipt) in Markers(storage.Root))
         {
-            await ValidateAsync(path, receipt, ct);
+            _ = await ReadOwnerHashAsync(path, receipt, ct);
             if (!await db.Set<AccountDeletionCompletion>().AnyAsync(row => row.ReceiptId == receipt, ct))
                 throw new IOException("Account deletion completion is missing. Reconcile the private restore before starting the service.");
         }
@@ -44,11 +55,10 @@ public static class AccountDeletionRestoreFence
         var outstanding = 0;
         foreach (var (path, receipt) in Markers(storage.Root))
         {
-            await ValidateAsync(path, receipt, ct);
+            var ownerHash = await ReadOwnerHashAsync(path, receipt, ct);
             if (await db.Set<AccountDeletionCompletion>().AnyAsync(row => row.ReceiptId == receipt, ct)) continue;
-            if (!await db.AccountDeletionRequests.AnyAsync(row => row.ReceiptId == receipt, ct))
+            if (!await BindRestoredRequestAsync(db, receipt, ownerHash, time, ct))
             {
-                // A receipt-only marker cannot identify an owner in a backup taken before the request.
                 outstanding++;
                 continue;
             }
@@ -61,6 +71,36 @@ public static class AccountDeletionRestoreFence
         }
         return outstanding;
     }
+
+    private static async Task<bool> BindRestoredRequestAsync(ServiceDbContext db, Guid receipt, string? ownerHash,
+        TimeProvider time, CancellationToken ct)
+    {
+        var pendingOwner = await db.AccountDeletionRequests.AsNoTracking().Where(row => row.ReceiptId == receipt)
+            .Select(row => row.UserId).SingleOrDefaultAsync(ct);
+        if (pendingOwner is not null) return ownerHash is null || OwnerHash(pendingOwner) == ownerHash;
+        if (ownerHash is null) return false;
+
+        var matches = await db.Database.SqlQuery<string>($"""
+            SELECT "Id" AS "Value" FROM "AspNetUsers"
+            WHERE sha256(convert_to({OwnerDomain} || "Id", 'UTF8')) = decode({ownerHash}, 'hex')
+            LIMIT 2
+            """).ToListAsync(ct);
+        if (matches.Count != 1) return false;
+        var owner = matches[0];
+        await using var transaction = await db.Database.BeginTransactionAsync(ct);
+        await SyncRequestScope.LockOwnerAsync(db, owner, ct);
+        if (!await db.Users.AnyAsync(row => row.Id == owner, ct)) return false;
+        var original = await db.AccountDeletionRequests.AsNoTracking().SingleOrDefaultAsync(row => row.UserId == owner, ct);
+        if (original is not null) return original.ReceiptId == receipt;
+        if (await db.AccountDeletionRequests.AnyAsync(row => row.ReceiptId == receipt, ct)) return false;
+        db.AccountDeletionRequests.Add(new() { UserId = owner, ReceiptId = receipt, RequestedAt = time.GetUtcNow() });
+        await db.SaveChangesAsync(ct);
+        await transaction.CommitAsync(ct);
+        return true;
+    }
+
+    private static string OwnerHash(string owner) =>
+        Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(OwnerDomain + owner)));
 
     /// <summary>Merges only current opaque receipt markers into a distinct restored private root.</summary>
     public static async Task<int> MergeAsync(string currentPrivateRoot, string restoredPrivateRoot, CancellationToken ct = default)
@@ -77,8 +117,8 @@ public static class AccountDeletionRestoreFence
         var merged = 0;
         foreach (var (path, receipt) in Markers(source))
         {
-            await ValidateAsync(path, receipt, ct);
-            await RecordAsync(storage, receipt, ct);
+            var ownerHash = await ReadOwnerHashAsync(path, receipt, ct);
+            await WriteMarkerAsync(storage, receipt, ownerHash, ct);
             merged++;
         }
         return merged;
@@ -96,12 +136,21 @@ public static class AccountDeletionRestoreFence
         }
     }
 
-    private static async Task ValidateAsync(string path, Guid receipt, CancellationToken ct)
+    private static async Task<string?> ReadOwnerHashAsync(string path, Guid receipt, CancellationToken ct)
     {
         var file = new FileInfo(path);
-        if (!file.Exists || (file.Attributes & FileAttributes.ReparsePoint) != 0 || file.Length != 36 ||
-            !string.Equals(await File.ReadAllTextAsync(path, ct), receipt.ToString("D"), StringComparison.Ordinal))
+        if (!file.Exists || (file.Attributes & FileAttributes.ReparsePoint) != 0 || file.Length is not (36 or 103))
             throw new IOException("Invalid account deletion marker.");
+        var text = await File.ReadAllTextAsync(path, ct);
+        var original = receipt.ToString("D");
+        if (string.Equals(text, original, StringComparison.Ordinal)) return null;
+        var prefix = $"2\n{original}\n";
+        if (text.Length == 103 && text.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            var ownerHash = text[prefix.Length..];
+            if (ownerHash.All(character => character is >= '0' and <= '9' or >= 'a' and <= 'f')) return ownerHash;
+        }
+        throw new IOException("Invalid account deletion marker.");
     }
 
     private static string RootOf(string storage)

@@ -135,7 +135,8 @@ Before the restored service starts, a deletion-v1 image runs its offline --merge
 
 Account identity erasure publishes a separate opaque receipt marker before the
 database commit. Restore transfers these exact markers from the stopped latest
-source using an image labeled `pro.vafadar.zanance.account-privacy=receipt-fence-v1`.
+source using an image labeled `pro.vafadar.zanance.account-privacy=receipt-fence-v2`.
+The v1 image can serve only its original receipt-only marker format.
 An older image is refused before target creation. A capable application refuses
 to start if any transferred receipt lacks an active-service completion in the
 restored database. This prevents serving a pre-erasure database. When the isolated
@@ -143,8 +144,11 @@ target has the original matching pending requests, use the same restore with
 `--reconcile-account-deletions` to confirm a reconciliation pass before startup.
 It processes only matched receipts, removing restored private service copies via
 the original retirement stages. Incomplete work leaves the API stopped and the
-restore continuable. A backup older than the original request needs separate
-reconciliation because the opaque marker alone cannot identify its account.
+restore continuable. The v2 marker binds the receipt to a digest of the immutable
+service ID without storing the ID itself. A backup preceding the request can
+reconstruct that request only when exactly one existing identity matches and no
+conflicting receipt exists. Unmatched or conflicting identities and legacy
+markers without a pending request stay fenced.
 
 The current API command passed Windows, idempotence, conflict/no-overwrite and invalid-directory cases. The freshly published image zanance-service:d294-household-privacy also ran the exact merge as UID1654, read-only root, no network and no capabilities. The subsequent independent full hosted compose/snapshot lifecycle now also passed, as recorded below; identity-erasure and whole D-294 acceptance remain open. Do not replace or discard the latest original private volume merely to restore an older backup successfully.
 ## D-294 full household hosting lifecycle qualification

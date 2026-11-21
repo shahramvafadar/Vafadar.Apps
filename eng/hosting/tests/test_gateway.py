@@ -77,7 +77,7 @@ class GatewayTests(unittest.TestCase):
         images = {'api': 'sha256:' + '2' * 64, 'database': 'sha256:' + '3' * 64}
         manifest = {'SourceProject': source, 'Quiesced': True, 'Images': images}
         labels = {'pro.vafadar.zanance.household-privacy': 'deletion-v1',
-                  'pro.vafadar.zanance.account-privacy': 'receipt-fence-v1'}
+                  'pro.vafadar.zanance.account-privacy': 'receipt-fence-v2'}
         for unfinished in (False, True):
             with self.subTest(unfinished=unfinished):
                 state = {'Snapshot': args.snapshot, 'Target': args.project, 'PrivacySource': source,

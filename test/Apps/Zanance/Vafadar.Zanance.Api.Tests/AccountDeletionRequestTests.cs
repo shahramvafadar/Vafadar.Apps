@@ -26,7 +26,7 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
-    public async Task Restore_reconciliation_processes_only_matched_receipts_before_startup()
+    public async Task Restore_reconciliation_binds_a_pre_request_snapshot_to_the_original_account()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
         Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
@@ -53,7 +53,8 @@ public sealed class AccountDeletionRequestTests
         {
             await db.Database.MigrateAsync(ct);
             db.Users.Add(new() { Id = identity, UserName = "restore-fence-original@example.invalid" });
-            db.AccountDeletionRequests.Add(new() { UserId = identity, ReceiptId = receipt, RequestedAt = DateTimeOffset.UtcNow });
+            if (ReferenceEquals(db, current))
+                db.AccountDeletionRequests.Add(new() { UserId = identity, ReceiptId = receipt, RequestedAt = DateTimeOffset.UtcNow });
             await db.SaveChangesAsync(ct);
             db.ChangeTracker.Clear();
         }
@@ -78,12 +79,30 @@ public sealed class AccountDeletionRequestTests
         Assert.True(await restored.Users.AnyAsync(row => row.Id == identity, ct));
         Assert.Empty(await restored.Set<AccountDeletionCompletion>().ToListAsync(ct));
         var copied = Directory.EnumerateFiles(Path.Combine(restoredRoot, "account-deletions")).Single();
-        Assert.Equal(receipt.ToString("D"), await File.ReadAllTextAsync(copied, ct));
+        var marker = await File.ReadAllTextAsync(copied, ct);
+        Assert.StartsWith($"2\n{receipt:D}\n", marker, StringComparison.Ordinal);
+        Assert.DoesNotContain(identity, marker, StringComparison.Ordinal);
+        var conflictingRoot = Directory.CreateDirectory(Path.Combine(fixtureRoot, "conflicting")).FullName;
+        var legacyPath = Path.Combine(Directory.CreateDirectory(Path.Combine(conflictingRoot, "account-deletions")).FullName,
+            receipt.ToString("N") + ".receipt");
+        await File.WriteAllTextAsync(legacyPath, receipt.ToString("D"), ct);
+        await Assert.ThrowsAsync<IOException>(() => AccountDeletionRestoreFence.MergeAsync(currentRoot, conflictingRoot, ct));
+        Assert.Equal(receipt.ToString("D"), await File.ReadAllTextAsync(legacyPath, ct));
         Assert.True(File.Exists(restoredFile));
+
+        var unrelated = new ServiceUser { UserName = "restore-unrelated@example.invalid" };
+        restored.Users.Add(unrelated);
+        restored.AccountDeletionRequests.Add(new() { UserId = unrelated.Id, ReceiptId = receipt, RequestedAt = DateTimeOffset.UtcNow });
+        await restored.SaveChangesAsync(ct);
+        restored.ChangeTracker.Clear();
+        Assert.Equal(1, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
+        Assert.True(File.Exists(restoredFile));
+        Assert.Equal(2, await restored.Users.CountAsync(ct));
+        await restored.AccountDeletionRequests.Where(row => row.ReceiptId == receipt).ExecuteDeleteAsync(ct);
 
         Assert.Equal(0, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
         Assert.False(File.Exists(restoredFile));
-        Assert.Empty(await restored.Users.ToListAsync(ct));
+        Assert.Equal(unrelated.Id, (await restored.Users.AsNoTracking().SingleAsync(ct)).Id);
         Assert.Equal(receipt, (await restored.Set<AccountDeletionCompletion>().SingleAsync(ct)).ReceiptId);
         await using (var repairedHost = new IdentityHost(connection.ConnectionString, restoredRoot))
         using (var repaired = repairedHost.CreateClient(new() { BaseAddress = new Uri("https://localhost") }))
@@ -91,10 +110,7 @@ public sealed class AccountDeletionRequestTests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var unknown = Guid.NewGuid();
-        var unrelated = new ServiceUser { UserName = "restore-without-receipt@example.invalid" };
-        restored.Users.Add(unrelated);
-        await restored.SaveChangesAsync(ct);
-        await AccountDeletionRestoreFence.RecordAsync(restoredStorage, unknown, ct);
+        await File.WriteAllTextAsync(Path.Combine(restoredRoot, "account-deletions", unknown.ToString("N") + ".receipt"), unknown.ToString("D"), ct);
         Assert.Equal(1, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
         Assert.True(await restored.Users.AnyAsync(row => row.Id == unrelated.Id, ct));
         Assert.False(await restored.Set<AccountDeletionCompletion>().AnyAsync(row => row.ReceiptId == unknown, ct));

@@ -145,9 +145,11 @@ retains only the opaque receipt and timestamp, so an ambiguous result can
 be reconciled without doing the deletion again. A separate opaque marker in
 the latest private volume fences startup on older restored databases.
 The restore operator can reapply a matched pending request offline through
-the existing local stages. If the backup predates the request or still has
-other blocking dependencies, the service stays unavailable pending separate
-reconciliation. Off-service retention remains separate.
+the existing local stages. Current markers bind the receipt to the original
+service identity digest. A pre-request restore can reconstruct the request
+when exactly that identity is present and no request conflicts. Unmatched
+legacy markers and remaining dependencies keep the service unavailable.
+Off-service retention remains separate.
 
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity
