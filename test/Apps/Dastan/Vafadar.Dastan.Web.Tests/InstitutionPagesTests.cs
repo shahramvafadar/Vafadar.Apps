@@ -434,6 +434,14 @@ public sealed class InstitutionPagesTests : IDisposable
         Assert.Contains(InstitutionsSite.University, mine, StringComparison.Ordinal);
         Assert.DoesNotContain("the university,", mine, StringComparison.Ordinal);
 
+        // And the name leads to the page of the entry, for both sides; the kind before it and nothing after it changed.
+        foreach (var side in new[] { mina, sara })
+        {
+            var held = Section(await side.Get(People), "mine");
+            Assert.Contains($"colleague, <a href=\"{Story}/entity/place-university\">", held, StringComparison.Ordinal);
+            Assert.Contains($"colleague, {InstitutionsSite.University}", Words(held), StringComparison.Ordinal);
+        }
+
         // Colleagues at the other university of the same name are another relationship; the same entry again is not.
         Assert.Equal($"{People}?said=asked", await Ask($"{Club}/place-other"));
         Assert.NotEqual($"{People}?said=asked", await Ask($"{Story}/place-university"));

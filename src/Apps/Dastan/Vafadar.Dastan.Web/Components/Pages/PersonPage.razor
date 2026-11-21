@@ -51,7 +51,7 @@
             <ul class="statements" role="list">
                 @foreach (var shown in _profile.Relationships)
                 {
-                    <li><a href="@($"people/{shown.Other.Id}")" dir="auto">@shown.Other.Name</a> <span class="meta">– @PeopleEndpoints.Called(shown.Kind, shown.Terms, T)@Held(shown.Terms)</span></li>
+                    <li><a href="@($"people/{shown.Other.Id}")" dir="auto">@shown.Other.Name</a> <span class="meta">– <RelationshipCalled Kind="@shown.Kind" Terms="shown.Terms" /></span></li>
                 }
             </ul>
         }
@@ -270,5 +270,4 @@
         }
     }
 
-    private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor, Library.Institutions) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
 }

@@ -523,6 +523,58 @@ public sealed class FamilyTreePagesTests : IDisposable
     }
 
     [Fact]
+    public async Task My_world_names_what_a_tree_asks_of_an_account_until_it_is_answered()
+    {
+        const string World = "/en/account/world";
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var dara = await Signed("Dara");
+        var saraId = await Friends(mina, sara, "Sara");
+        var daraId = await Friends(mina, dara, "Dara");
+        var page = await Tree(mina);
+        var tree = $"account/trees/{Id(page)}";
+        var record = await Person(mina, page, "Sara Rad");
+        await Send(mina, page, "member", ("account", saraId), ("role", "viewer"));
+        await Send(mina, page, "member", ("account", daraId), ("role", "viewer"));
+        Assert.Contains("Nothing waits for your answer.", (await mina.Get(World)).Main, StringComparison.Ordinal);
+
+        // A claim waits for who made the record – and is said to nobody else, not even to who made the claim.
+        await Send(sara, page, "claim", ("person", record));
+        var claimed = await mina.Get(World);
+        Assert.Matches($"<a href=\"{tree}#claims\"><bdi>[^<]+</bdi></a>\\s*<span class=\"meta\">– somebody says a record is them, for you to confirm or refuse: 1</span>", claimed.Main);
+        Assert.DoesNotContain("Nothing waits", claimed.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("<form", claimed.Main, StringComparison.Ordinal);
+        Assert.Contains("Nothing waits for your answer.", (await sara.Get(World)).Main, StringComparison.Ordinal);
+        Assert.Contains("Nothing waits for your answer.", (await dara.Get(World)).Main, StringComparison.Ordinal);
+
+        // Answered where it belongs, it waits no longer.
+        var claim = Regex.Match((await mina.Get(page)).Html, "name=\"claim\" value=\"(\\d+)\"").Groups[1].Value;
+        await Send(mina, page, "claim-review", ("claim", claim), ("answer", "confirm"));
+        Assert.Contains("Nothing waits for your answer.", (await mina.Get(World)).Main, StringComparison.Ordinal);
+
+        // The tree is to be public: who it names is asked, and nobody else – the owner and a viewer are not.
+        await Send(mina, page, "publication", ("act", "ask"));
+        var asked = await sara.Get(World);
+        Assert.Matches($"<a href=\"{tree}#consent\"><bdi>[^<]+</bdi></a>\\s*<span class=\"meta\">– asks whether you agree to be named in public</span>", asked.Main);
+        Assert.Contains("Nothing waits for your answer.", (await mina.Get(World)).Main, StringComparison.Ordinal);
+        Assert.Contains("Nothing waits for your answer.", (await dara.Get(World)).Main, StringComparison.Ordinal);
+        Assert.Contains("Something here waits for your answer.", (await sara.Get(page)).Main, StringComparison.Ordinal);
+        Assert.Contains("می‌پرسد آیا موافقید نامتان همگانی دیده شود", (await sara.Get(World.Replace("/en/", "/fa/", StringComparison.Ordinal))).Main, StringComparison.Ordinal);
+
+        // She agrees: nothing waits, here and at the top of the tree; taken back, she is asked again.
+        await Send(sara, page, "consent", ("answer", "agree"));
+        Assert.Contains("Nothing waits for your answer.", (await sara.Get(World)).Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Something here waits for your answer.", (await sara.Get(page)).Main, StringComparison.Ordinal);
+        Assert.Contains("id=\"consent\"", (await sara.Get(page)).Main, StringComparison.Ordinal);
+        await Send(sara, page, "consent", ("answer", "take-back"));
+        Assert.Contains($"{tree}#consent", (await sara.Get(World)).Main, StringComparison.Ordinal);
+
+        // Somebody who may not see the tree any more is told nothing of it.
+        await Send(mina, page, "member", ("account", saraId), ("role", "none"));
+        Assert.DoesNotContain(tree, (await sara.Get(World)).Main, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task A_tree_of_people_who_all_died_is_made_public_by_its_owner_alone()
     {
         var mina = await Signed("Mina");

@@ -11,6 +11,7 @@
   --text-muted: #56556b;
   --border: #d9d6e3;
   --accent: #3b3a8f;
+  --logo: #3b3a8f;
   --accent-text: #ffffff;
   --focus: #b45309;
   --mark: #92400e;
@@ -33,6 +34,7 @@
   --text-muted: #b6b4cc;
   --border: #3a3960;
   --accent: #b1b0ff;
+  --logo: #ffffff;
   --accent-text: #14132a;
   --focus: #fbbf24;
   --mark: #fcd34d;
@@ -46,6 +48,7 @@
     --text-muted: #b6b4cc;
     --border: #3a3960;
     --accent: #b1b0ff;
+    --logo: #ffffff;
     --accent-text: #14132a;
     --focus: #fbbf24;
     --mark: #fcd34d;
@@ -95,11 +98,21 @@ main {
 .wordmark {
   display: inline-flex;
   align-items: center;
+  gap: var(--space-2);
   min-block-size: 2.75rem;
   font-weight: 700;
   font-size: 1.25rem;
   text-decoration: none;
   color: var(--text);
+}
+
+/* The symbol of Dastan before the name of the tool (ADR 0026): the indigo of the brand on a light ground, white on
+   a dark one, as high as the name asks and never stretched. A drawing has no direction of writing. */
+.logo {
+  flex: none;
+  block-size: 1.75rem;
+  inline-size: auto;
+  fill: var(--logo);
 }
 
 .site-nav a,

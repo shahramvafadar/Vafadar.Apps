@@ -82,11 +82,18 @@ class DastanGraph {
   private byKeyboard = false;
   private fitNext = false;
   private inHistory = false;
+  // Where the drawing stood (ADR 0025): the place of this drawing among those of the page, whether the visitor
+  // moved or resized it, and whether it was just put back where it had been left.
+  private readonly slot: string;
+  private moved = false;
+  private asLeft = false;
+  private keeping = 0;
 
   constructor(private readonly host: HTMLElement, private readonly canvas: HTMLElement, private readonly graph: Graph) {
     this.rightToLeft = getComputedStyle(host).direction === 'rtl';
     this.look = lookOf(host);
     this.inspector = host.querySelector<HTMLElement>('[data-graph-inspector]');
+    this.slot = 'g' + [...document.querySelectorAll('dastan-graph')].indexOf(host);
     // The control does not take every identifier; the nodes and the edges are numbered for it.
     graph.nodes.forEach((node, index) => {
       this.byKey.set('n' + index, node);
@@ -287,9 +294,29 @@ class DastanGraph {
         }
       },
       doubleClick: () => this.toInspector(),
+      scrollChange: () => this.keepStanding(),
     });
     this.diagram.appendTo(this.canvas);
     this.diagram.fitToPage({ mode: 'Page', region: 'Content', canZoomIn: false, margin: { left: 24, right: 24, top: 24, bottom: 24 } });
+
+    // A visitor who comes back to this place of the history finds the drawing as large and as far moved as it
+    // was left; somebody who comes for the first time finds the whole of it.
+    const stood = this.stood();
+    if (stood) {
+      // The control takes a size and a movement as steps from where it stands, not as a place to stand at: so
+      // it is first shown at its own size and unmoved, then made as large, then moved as far as it was.
+      this.diagram.reset();
+      this.diagram.zoom(stood.zoom, { x: 0, y: 0 });
+      const settings = this.diagram.scrollSettings;
+      this.diagram.pan(stood.x - (settings.horizontalOffset ?? 0), stood.y - (settings.verticalOffset ?? 0));
+      [this.moved, this.asLeft] = [true, true];
+    }
+
+    // Only what the visitor does is kept – a finger, a wheel, a key, a tool –, not what the page does by itself.
+    for (const kind of ['pointerdown', 'wheel', 'keydown']) {
+      this.host.addEventListener(kind, () => { this.moved = true; }, { capture: true, passive: true });
+    }
+
     this.oneStop();
     this.keys();
     this.inspectorKeys();
@@ -309,7 +336,7 @@ class DastanGraph {
 
       // Drawn with something chosen, the drawing is shown whole in the room the inspector leaves it: once
       // the page has given the inspector its room.
-      this.fitNext = chosen !== undefined;
+      this.fitNext = chosen !== undefined && !stood;
     }
 
     this.watchRoom();
@@ -475,6 +502,12 @@ class DastanGraph {
 
       room = now;
       this.diagram.updateViewPort();
+      if (this.asLeft) {
+        // Put back where it was left, it stays there: the room it was left in is the room it has again.
+        this.asLeft = false;
+        return;
+      }
+
       if (this.fitNext) {
         this.fitNext = false;
         this.fit();
@@ -635,9 +668,11 @@ class DastanGraph {
   }
 
   /** What a test of the browser reads: how large the drawing is shown, what is chosen, and where the cards stand. */
-  get seen(): { zoom: number; chosen: string | null; cards: { id: string; x: number; y: number; width: number; height: number }[] } {
+  get seen(): { zoom: number; x: number; y: number; chosen: string | null; cards: { id: string; x: number; y: number; width: number; height: number }[] } {
     return {
       zoom: this.diagram.scrollSettings.currentZoom ?? 1,
+      x: this.diagram.scrollSettings.horizontalOffset ?? 0,
+      y: this.diagram.scrollSettings.verticalOffset ?? 0,
       chosen: this.node(this.selected)?.id ?? null,
       cards: this.graph.nodes.map(node => {
         const bounds = (this.diagram.getObject(this.keyOf.get(node.id)!) as { wrapper?: { bounds: { x: number; y: number; width: number; height: number } } }).wrapper!.bounds;
@@ -647,10 +682,50 @@ class DastanGraph {
   }
 
   zoom(factor: number): void {
+    this.moved = true;
     this.diagram.zoomTo({ type: factor > 1 ? 'ZoomIn' : 'ZoomOut', zoomFactor: Math.abs(factor - 1) });
   }
 
+  // What this place of the history says about where the drawing stood: believed only for a drawing of as many
+  // cards, and only numbers a drawing can stand at.
+  private stood(): { zoom: number; x: number; y: number } | null {
+    const kept = (history.state as { drawings?: Record<string, { cards?: number; zoom?: number; x?: number; y?: number }> } | null)?.drawings?.[this.slot];
+    return kept && kept.cards === this.graph.nodes.length && typeof kept.zoom === 'number' && typeof kept.x === 'number' && typeof kept.y === 'number'
+      && Number.isFinite(kept.zoom) && Number.isFinite(kept.x) && Number.isFinite(kept.y) && kept.zoom > 0.01 && kept.zoom < 100
+      ? { zoom: kept.zoom, x: kept.x, y: kept.y }
+      : null;
+  }
+
+  // Where the drawing stands is written into the place of the history the visitor is at – not into the address,
+  // which is passed on and says what is explored, not where somebody's eye was. Written a moment after the
+  // movement ends, so that a finger that drags does not write a hundred times.
+  private keepStanding(): void {
+    if (!this.moved) {
+      return;
+    }
+
+    window.clearTimeout(this.keeping);
+    this.keeping = window.setTimeout(() => {
+      const state = (history.state ?? {}) as { drawings?: Record<string, unknown> };
+      const settings = this.diagram.scrollSettings;
+      const here = { cards: this.graph.nodes.length, zoom: settings.currentZoom ?? 1, x: settings.horizontalOffset ?? 0, y: settings.verticalOffset ?? 0 };
+      history.replaceState({ ...state, drawings: { ...state.drawings, [this.slot]: here } }, '');
+    }, 120);
+  }
+
+  // The whole drawing again: nothing of where it stood is kept.
+  private forget(): void {
+    window.clearTimeout(this.keeping);
+    this.moved = false;
+    const state = history.state as { drawings?: Record<string, unknown> } | null;
+    if (state?.drawings && this.slot in state.drawings) {
+      const { [this.slot]: _, ...others } = state.drawings;
+      history.replaceState({ ...state, drawings: others }, '');
+    }
+  }
+
   fit(): void {
+    this.forget();
     // The control makes a drawing smaller to fit and never larger; so it is first shown at its own size.
     this.diagram.reset();
     this.diagram.fitToPage({ mode: 'Page', region: 'Content', canZoomIn: false, margin: { left: 24, right: 24, top: 24, bottom: 24 } });

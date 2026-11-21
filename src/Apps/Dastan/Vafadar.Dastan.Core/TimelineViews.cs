@@ -74,6 +74,12 @@ public sealed record TimeMark(string Key, LocalizedText Label, TimeShape Shape, 
 
     /// <summary>Gets a value indicating whether the statement is disputed.</summary>
     public bool IsDisputed { get; init; }
+
+    /// <summary>
+    /// Gets what a step of a telling says about the name being there, for a mark of the order of a telling: who
+    /// acts and who is only mentioned are different things, and a drawing may not make them one.
+    /// </summary>
+    public Presence? Presence { get; init; }
 }
 
 /// <summary>A lane of a view: what one subject has on the axis of the view.</summary>
@@ -187,8 +193,9 @@ public static class TimelineViews
                 lane.Entity.Id.Value,
                 lane.Entity.Label,
                 [.. story.Steps
-                    .Where((_, index) => lane.Cells[index] is not null)
-                    .Select(step => new TimeMark(StoryMark(step, lane.Entity.Id), step.Event.Label, TimeShape.Moment, step.Number, step.Number, step.Event.Time))]))
+                    .Select((step, index) => (Step: step, Cell: lane.Cells[index]))
+                    .Where(at => at.Cell is not null)
+                    .Select(at => new TimeMark(StoryMark(at.Step, lane.Entity.Id), at.Step.Event.Label, TimeShape.Moment, at.Step.Number, at.Step.Number, at.Step.Event.Time) { Presence = at.Cell!.Presence })]))
             .Where(lane => !lane.Marks.IsEmpty)
             .ToImmutableArray();
         return lanes.IsEmpty

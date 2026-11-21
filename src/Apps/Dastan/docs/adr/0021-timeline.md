@@ -192,7 +192,19 @@ kind, a stretch of time – from the search to the graph.
 
 **Not built:** the order inside the world of a story of a collection – the reader of a collection accepts a
 step with the order of the telling only, so the page of a story has one view; a comparison file can state the
-other and gets a view of its own. The moving view of a story does not tell "takes part" from "is only
-mentioned" – the still chart, its legend and the table do. The still chart draws no axis of depth: a table says
-it. Themes of a gallery (R-MED-02). The Studio shows `placements` as plain rows and has no input for the
-translation of a caption of a place.
+other and gets a view of its own. The still chart draws no axis of depth: a table says it. Themes of a gallery
+(R-MED-02): the vocabulary has no kind for a theme, and which themes there are is an editorial decision.
+
+**Built after this step, on 2026-11-21** (section 23 of the delivery plan):
+
+* **The moving view of a story tells "takes part" from "is only mentioned".** A mark of the order of a telling
+  carries what its step says about the name being there (`TimeMark.Presence`). Who is only spoken of –
+  mentioned, reported, mourned – has a hollow mark, who is there a full one, as in the still chart; and the name
+  of every mark says it in the words of the table ("… – is only mentioned, not present"), so the difference is
+  not carried by the drawing alone.
+* **The Studio has inputs for `placements`.** The form of a media item shows its places as rows that each offer
+  an entity and an event to name – so a place of the other kind can be added –, a caption and sources; an item
+  that stands in no place has the row that begins the list. The caption of a place in another language stands
+  below the caption and is kept under what the place names (`places` of a translation); a place whose caption
+  is emptied is taken out with its translation. An empty list of sources and an empty list of places are not
+  written. Whether an item may stand in a place is still asked of the readers, not of the form.

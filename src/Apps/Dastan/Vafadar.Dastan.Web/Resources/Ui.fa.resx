@@ -4131,4 +4131,10 @@
   <data name="World_Tags_Waiting" xml:space="preserve">
     <value>{0} عکس از شما نام برده‌اند و چشم‌به‌راهِ موافقت شما هستند</value>
   </data>
+  <data name="World_Tree_Agreement" xml:space="preserve">
+    <value>می‌پرسد آیا موافقید نامتان همگانی دیده شود</value>
+  </data>
+  <data name="World_Tree_Claims" xml:space="preserve">
+    <value>کسی می‌گوید پرونده‌ای خودِ اوست؛ تأیید یا ردّ آن با شماست: {0}</value>
+  </data>
 </root>

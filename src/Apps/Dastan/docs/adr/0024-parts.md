@@ -14,7 +14,8 @@ twice, in two pages. A place of a page that had nothing to show said so in a sen
 The owner's sketches of November 2026 (Discover, the explorer, the profile of a node; a wide window and a
 phone each) show one frame and a small number of parts that return on every page: a light, warm ground,
 readable text, one accent colour, room for pictures, and details only when they are asked for. They are a
-direction, not a design to copy: their pictures are made up, and the wordmark stays the plain name.
+direction, not a design to copy: their pictures are made up, and the wordmark stays the plain name. (It did
+until 2026-11-21: the owner then chose a logo – [ADR 0026](0026-logo.md).)
 
 ## Decision
 
@@ -113,6 +114,13 @@ Pages carry no style of their own – the policy of the site forbids it – so e
   none follows from another. An invitation makes an account and nothing else. These rules are those of
   ADR 0014 and are shown by the tests named there (`PeoplePagesTests`, `AffiliationPagesTests`,
   `PhotoPagesTests`, `FamilyTreePagesTests`, the tests of invitations); this step moved no rule.
+
+**Added on 2026-11-21** (section 23 of the delivery plan): My World names what a family tree asks of the
+account too – an agreement to be named in public that is asked and not given, and a claim on a record that
+this account is the one to confirm or refuse –, each leading to the part of the tree that answers it
+(`PeopleStore.TreesWaiting`). It says nothing of a tree the account may not see, and nothing to who made a claim
+or to the owner about an agreement that is somebody else's. The note at the top of a tree no longer says
+"something waits" to somebody who has agreed already.
 
 **Not built:** the head of a page of an account and of a record in a tree is the mark above the name, not
 `IdentityHead` – that part is fed by the profile of a node of a collection (ADR 0017), which neither has; a

@@ -191,6 +191,37 @@ public static class RecordForm
     private const string Note = "note";
     private static readonly string[] StopNames = ["entityId", "eventId", "mediaId"];
 
+    // The places a media item stands in with words of their own (R-MED-07, ADR 0021): the list, what a place
+    // names – an entity or an event, one of the two – and the caption the item has there; a translation names
+    // the captions as "places", by what the place names. A row is shown with both names to choose from, so
+    // that a place of the other kind can be added to a list that has places of one kind only.
+    private const string Placements = "placements";
+    private const string Caption = "caption";
+    private static readonly string[] PlaceNames = ["entityId", "eventId"];
+
+    private static JsonObject PlacementShape() => new() { ["entityId"] = string.Empty, ["eventId"] = string.Empty, [Caption] = string.Empty, ["sourceIds"] = new JsonArray() };
+
+    // The placements of an item with every row in the same form: what it names first, then its caption and its
+    // sources, then whatever else the row says. A list that is not a list of rows is left as it is written.
+    private static JsonArray Whole(JsonArray places)
+    {
+        if (places.Any(place => place is not JsonObject))
+        {
+            return places;
+        }
+
+        return new JsonArray([.. places.Select(place =>
+        {
+            var row = PlacementShape();
+            foreach (var (name, value) in place!.AsObject())
+            {
+                row[name] = value?.DeepClone();
+            }
+
+            return (JsonNode?)row;
+        })]);
+    }
+
     // The time of a relation: a relation of the world that states none has the inputs to state one.
     private const string Time = "time";
 
@@ -223,7 +254,9 @@ public static class RecordForm
         ArgumentNullException.ThrowIfNull(record);
         ArgumentNullException.ThrowIfNull(context);
         var fields = record.Where(field => !Kept.Contains(field.Key))
-            .Select(field => group == "entities" && field.Key == Facts && FactsOf(record, context) is { } profile ? profile : Field($"{group}[]", "f", field.Key, field.Value, context, nested: false))
+            .Select(field => group == "entities" && field.Key == Facts && FactsOf(record, context) is { } profile ? profile
+                : group == "media" && field.Key == Placements && field.Value is JsonArray places ? Field("media[]", "f", Placements, Whole(places), context, nested: false)
+                : Field($"{group}[]", "f", field.Key, field.Value, context, nested: false))
             .ToList();
         if (StatesNoTime(group, record))
         {
@@ -241,6 +274,12 @@ public static class RecordForm
             {
                 fields.Add(profile);
             }
+        }
+
+        if (group == "media" && !record.ContainsKey(Placements))
+        {
+            // The places of an item that stands in none yet, with the one row that begins them.
+            fields.Add(Field("media[]", "f", Placements, new JsonArray(), context, nested: false));
         }
 
         if (texts is not { Count: > 0 } || !Translated.TryGetValue(group, out var translated))
@@ -323,6 +362,25 @@ public static class RecordForm
                             .. row.SelectMany(part => part.Name != Note
                                 ? [part]
                                 : texts.Select(text => Translation($"t.{text.Language}.{Stops}[{index}].{Note}", Note, text.Language, NoteOf(text.Texts, row), part.Kind)).Prepend(part)),
+                        ]),
+                    ],
+                });
+                continue;
+            }
+
+            if (translated.Places && field is { Name: Placements, Kind: FieldKind.Rows })
+            {
+                // The caption of a place in another language goes with its place – also into the place that is added.
+                shown.Add(new FormField
+                {
+                    Path = field.Path, Name = field.Name, Kind = field.Kind, Value = field.Value,
+                    Rows =
+                    [
+                        .. field.Rows.Select((row, index) => (IReadOnlyList<FormField>)
+                        [
+                            .. row.SelectMany(part => part.Name != Caption
+                                ? [part]
+                                : texts.Select(text => Translation($"t.{text.Language}.{Placements}[{index}].{Caption}", Caption, text.Language, PlaceOf(text.Texts, row), part.Kind)).Prepend(part)),
                         ]),
                     ],
                 });
@@ -455,6 +513,33 @@ public static class RecordForm
                 }
             }
 
+            if (translated.Places)
+            {
+                if (form.ContainsKey($"f.{Placements}[0].{Caption}"))
+                {
+                    // A caption in another language is kept under what its place names now; the caption of a
+                    // place that was taken out goes with it.
+                    var places = new JsonObject();
+                    for (var index = 0; form.ContainsKey($"f.{Placements}[{index}].{Caption}"); index++)
+                    {
+                        var named = PlaceNames.Select(name => Sent(form[$"f.{Placements}[{index}].{name}"])).FirstOrDefault(text => text.Length > 0);
+                        if (named is not null && Sent(form[$"f.{Placements}[{index}].{Caption}"]).Length > 0 && Sent(form[$"t.{language}.{Placements}[{index}].{Caption}"]) is { Length: > 0 } caption)
+                        {
+                            places[named] = caption;
+                        }
+                    }
+
+                    if (places.Count > 0)
+                    {
+                        now["places"] = places;
+                    }
+                }
+                else if (before["places"] is { } kept)
+                {
+                    now["places"] = kept.DeepClone();
+                }
+            }
+
             read[language] = now;
         }
 
@@ -529,6 +614,10 @@ public static class RecordForm
     private static string RoleOf(JsonObject texts, IReadOnlyList<FormField> row) =>
         row.FirstOrDefault(part => part.Name == Who) is { } who && who.Text.Length > 0 ? TextOf((texts["roles"] as JsonObject)?[who.Text]) : string.Empty;
 
+    // The caption a language gives a place of a media item, by what the place names.
+    private static string PlaceOf(JsonObject texts, IReadOnlyList<FormField> row) =>
+        row.FirstOrDefault(part => PlaceNames.Contains(part.Name) && part.Text.Length > 0) is { } named ? TextOf((texts["places"] as JsonObject)?[named.Text]) : string.Empty;
+
     // The reason a language gives a stop, by what the stop names.
     private static string NoteOf(JsonObject texts, IReadOnlyList<FormField> row) =>
         row.FirstOrDefault(part => StopNames.Contains(part.Name) && part.Text.Length > 0) is { } named ? TextOf((texts["notes"] as JsonObject)?[named.Text]) : string.Empty;
@@ -574,6 +663,29 @@ public static class RecordForm
                 if (fields.TryGetValue(list, out var begun) && Filled(begun, form, problems) is { Node: JsonArray { Count: > 0 } rows })
                 {
                     filled[list] = rows;
+                }
+            }
+        }
+
+        if (group == "media")
+        {
+            if (!record.ContainsKey(Placements) && fields.TryGetValue(Placements, out var begun) && Filled(begun, form, problems) is { Node: JsonArray { Count: > 0 } places })
+            {
+                filled[Placements] = places;
+            }
+
+            if (filled[Placements] is JsonArray stated && stated.All(place => place is JsonObject))
+            {
+                // A place that names no source has no list of sources, and an item that stands in no place has
+                // no list of places: the form showed both only to be filled in.
+                foreach (var place in stated.Select(place => place!.AsObject()).Where(place => place["sourceIds"] is JsonArray { Count: 0 }))
+                {
+                    place.Remove("sourceIds");
+                }
+
+                if (stated.Count == 0)
+                {
+                    filled.Remove(Placements);
                 }
             }
         }
@@ -713,6 +825,12 @@ public static class RecordForm
             };
         }
 
+        // What the form added to the record – a list it had none of, a time it did not state – is shown again too.
+        foreach (var (name, value) in filled.Where(field => !record.ContainsKey(field.Key)))
+        {
+            shown[name] = value?.DeepClone();
+        }
+
         return shown;
     }
 
@@ -750,7 +868,7 @@ public static class RecordForm
             case JsonArray { Count: > 0 } items when items.All(IsText):
                 return Of(FieldKind.Lines);
 
-            case JsonArray { Count: 0 } when !nested && (context.Shapes.TryGetValue(here, out var begins) || (place == "entities[]" && EntityLists.TryGetValue(name, out begins))):
+            case JsonArray { Count: 0 } when !nested && (context.Shapes.TryGetValue(here, out var begins) || (place == "entities[]" && EntityLists.TryGetValue(name, out begins)) || (place == "media[]" && name == Placements && (begins = PlacementShape()) is not null)):
                 // A list without a row: the one row that begins it. Its texts are empty – a row nothing is
                 // typed into is no row – and its choices stand at what is usual for such a row.
                 return new FormField

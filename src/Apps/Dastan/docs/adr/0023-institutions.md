@@ -75,6 +75,12 @@ no link; the account is told so on its own page and may keep the reference throu
 statement can be pointed at the entry meanwhile. When the entry is published again the statement is what it
 was.
 
+**Added on 2026-11-21** (section 23 of the delivery plan): where a relationship is written with its place – on
+the page of one's people and on the page of a person – the name of an entry that is published leads to its
+page, as the name of a place somebody was at does (`RelationshipCalled`). Words, and an entry that is not
+published at the moment, stay words. A request to call a relationship something else is one sentence of two
+names and stays words too.
+
 ## Consequences
 
 * A place that gets another name stays one place for everybody who chose it; the page shows the name of

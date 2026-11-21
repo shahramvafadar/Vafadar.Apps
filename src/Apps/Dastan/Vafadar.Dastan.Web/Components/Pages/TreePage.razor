@@ -59,9 +59,9 @@ else if (_tree is not null)
     }
 
     // What waits for an answer of this visitor stands first and leads to where it is answered.
-    var asked = _tree.Publication.AskedOfMe;
+    var asked = _tree.Publication.AskedOfMe && !_tree.Publication.Consented;
     var toReview = _tree.Claims.Count(claim => claim.CanReview);
-    var shares = owns || asked || toReview > 0;
+    var shares = owns || _tree.Publication.AskedOfMe || toReview > 0;
 
     @if (asked || toReview > 0)
     {

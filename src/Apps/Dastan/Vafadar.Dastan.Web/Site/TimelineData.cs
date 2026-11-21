@@ -93,6 +93,11 @@ public sealed record TimelineData(IReadOnlyList<TimelineViewData> Views, Timelin
                         EndsFrom = mark.EndsFrom,
                         Loose = mark.IsLoose ? true : null,
                         Disputed = mark.IsDisputed ? true : null,
+
+                        // At a step of a telling: what the step says about the name being there, in the words
+                        // of the table below; and whether the name is only spoken of, which is drawn hollow.
+                        Presence = mark.Presence is { } presence ? text[$"Presence_{presence}"].Value : null,
+                        SpokenOf = mark.Presence is not (null or Presence.Acts or Presence.Involved or Presence.Setting or Presence.Object) ? true : null,
                     })]))]))],
             new(
                 Year("Era_Short_CommonEra"),
@@ -147,6 +152,12 @@ public sealed record TimelineMarkData(string Key, string Label, TimeShape Shape,
 
     /// <summary>Gets whether the statement is disputed.</summary>
     public bool? Disputed { get; init; }
+
+    /// <summary>Gets what a step of a telling says about the name being there, in words.</summary>
+    public string? Presence { get; init; }
+
+    /// <summary>Gets whether the name is only spoken of at the step – mentioned, reported, mourned – and not there.</summary>
+    public bool? SpokenOf { get; init; }
 }
 
 /// <summary>The words of the axes; "{0}" stands for the number.</summary>

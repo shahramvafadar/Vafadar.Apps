@@ -4131,4 +4131,10 @@
   <data name="World_Tags_Waiting" xml:space="preserve">
     <value>{0} photographs name you and wait for your agreement</value>
   </data>
+  <data name="World_Tree_Agreement" xml:space="preserve">
+    <value>asks whether you agree to be named in public</value>
+  </data>
+  <data name="World_Tree_Claims" xml:space="preserve">
+    <value>somebody says a record is them, for you to confirm or refuse: {0}</value>
+  </data>
 </root>

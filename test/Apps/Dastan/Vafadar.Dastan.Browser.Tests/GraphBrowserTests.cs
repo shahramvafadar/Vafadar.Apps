@@ -341,6 +341,63 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         Assert.False(await canvas.EvaluateAsync<bool>("canvas => canvas.contains(document.activeElement)"), "Shift and Tab left the drawing.");
     }
 
+    [Theory]
+    [InlineData(1280, "en")]
+    [InlineData(360, "fa")]
+    public async Task A_visitor_who_comes_back_finds_the_drawing_as_large_and_as_far_moved_as_it_was_left(int width, string language)
+    {
+        var page = await site.Visitor(width, readTo: 4, graph: true);
+        var address = $"/{language}/{Story}/entity/character-rostam/family?family=whole";
+        var (host, _) = await Drawn(page, address);
+        var whole = await Seen(host);
+
+        // Made larger with the tool and moved with a drag on the ground of the drawing.
+        await host.Locator("[data-graph-in]").ClickAsync();
+        await host.Locator("[data-graph-in]").ClickAsync();
+        var box = (await host.Locator("[data-graph-canvas]").BoundingBoxAsync())!;
+        await page.Mouse.MoveAsync((float)(box.X + 12), (float)(box.Y + 12));
+        await page.Mouse.DownAsync();
+        await page.Mouse.MoveAsync((float)(box.X + 52), (float)(box.Y + 42), new() { Steps = 6 });
+        await page.Mouse.UpAsync();
+        await page.WaitForFunctionAsync($"() => history.state?.drawings?.g0?.zoom > {whole.GetProperty("zoom").GetDouble().ToString(System.Globalization.CultureInfo.InvariantCulture)}");
+        var left = await Seen(host);
+        Assert.True(left.GetProperty("zoom").GetDouble() > whole.GetProperty("zoom").GetDouble());
+
+        // Where it stood is kept with the place of the history, not in the address that is passed on.
+        Assert.EndsWith(address, page.Url, StringComparison.Ordinal);
+
+        async Task Same(JsonElement expected)
+        {
+            await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live", new() { Timeout = 30_000 });
+            var now = await Seen(host);
+            Assert.Equal(expected.GetProperty("zoom").GetDouble(), now.GetProperty("zoom").GetDouble(), 0.001);
+            Assert.Equal(expected.GetProperty("x").GetDouble(), now.GetProperty("x").GetDouble(), 1.0);
+            Assert.Equal(expected.GetProperty("y").GetDouble(), now.GetProperty("y").GetDouble(), 1.0);
+        }
+
+        // The page loaded anew at the same place of the history: the drawing is drawn again and put back.
+        await page.ReloadAsync();
+        await Same(left);
+
+        // Another page and the Back button: the same.
+        await page.GotoAsync($"/{language}/");
+        await page.GoBackAsync();
+        await Same(left);
+
+        // "The whole drawing" forgets where it stood: back again, it is whole.
+        await host.Locator("[data-graph-fit]").ClickAsync();
+        Assert.True(await page.EvaluateAsync<bool>("() => history.state?.drawings?.g0 === undefined"));
+        await page.ReloadAsync();
+        await Same(whole);
+
+        // And somebody who opens the address for the first time finds the whole of it.
+        await host.Locator("[data-graph-in]").ClickAsync();
+        await page.WaitForFunctionAsync("() => history.state?.drawings?.g0 !== undefined");
+        await page.GotoAsync($"/{language}/");
+        var (again, _) = await Drawn(page, address);
+        Assert.Equal(whole.GetProperty("zoom").GetDouble(), (await Seen(again)).GetProperty("zoom").GetDouble(), 0.001);
+    }
+
     [Fact]
     public async Task The_tools_make_it_larger_and_smaller_and_give_the_still_drawing_back()
     {

@@ -284,6 +284,25 @@ public sealed class StoryChartBrowserTests(BrowserSite site) : IClassFixture<Bro
             """);
         Assert.Equal(0, over);
 
+        // A mark says what its cell says about the name being there, and who is only spoken of – the cells with a
+        // hollow mark – has a hollow mark here too: taking part and being mentioned are told apart (ADR 0021).
+        var told = await host.Locator("a.tlv-mark").EvaluateAllAsync<string[]>(
+            """
+            marks => marks.map(mark => {
+                const cell = document.getElementById(mark.getAttribute('href').split('#')[1]);
+                const words = cell.querySelector('.visually-hidden').textContent.trim();
+                const hollow = ['○', '◌', '▽'].includes(cell.querySelector('.mark').textContent.trim());
+                const says = mark.getAttribute('aria-label').endsWith(' – ' + words) && mark.querySelector('title').textContent.endsWith(' – ' + words);
+                return (says ? 'says' : 'silent') + (hollow === mark.classList.contains('tlv-spoken-of') ? '' : ' wrong') + (hollow ? ' hollow' : ' full');
+            })
+            """);
+        Assert.DoesNotContain(told, mark => mark.StartsWith("silent", StringComparison.Ordinal) || mark.Contains("wrong", StringComparison.Ordinal));
+        Assert.Contains("says hollow", told);
+        Assert.Contains("says full", told);
+        var fills = await host.EvaluateAsync<string[]>(
+            "host => ['a.tlv-spoken-of .tlv-point', 'a.tlv-mark:not(.tlv-spoken-of) .tlv-point'].map(which => getComputedStyle(host.querySelector(which)).fill)");
+        Assert.NotEqual(fills[0], fills[1]);
+
         // A mark leads to the cell that says the same.
         var first = await host.Locator("a.tlv-mark").First.EvaluateAsync<string>("mark => mark.getAttribute('href')");
         Assert.Matches("#item-s\\d+-", first);
