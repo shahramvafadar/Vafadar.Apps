@@ -79,11 +79,14 @@ through original Windows/Android native pages. The current signed personal-sync 
 ## Safe operations and certificate maintenance
 
 Use `python eng/hosting/operate.py status` for bounded public status. `stop` drains only API/proxy; `start` verifies
-the exact original project labels. `backup --snapshot zanance-hosting-snapshot-NAME` leaves workers stopped and
+the exact original project labels and uses the original immutable image IDs without building or pulling.
+The API and migrator must use the same service image. A mismatch requires explicit upgrade qualification.
+`backup --snapshot zanance-hosting-snapshot-NAME` leaves workers stopped and
 keeps the complete private snapshot only inside Docker. Resume with `start` after reviewing the result.
 Before copying and before publishing a completed snapshot, the operator checks
 that the original clients are still drained. An independent live private-volume
-mount or a changed deletion-marker inventory prevents publication.
+mount, changed deployment image identity or changed deletion-marker inventory
+prevents publication.
 
 The isolated Docker qualification of `2180409e` exercised this refusal
 with the packaged `0a11729f` service. A synthetic pending request and its
@@ -104,6 +107,7 @@ whose restore receipt is incomplete. `status` and `stop` remain available.
 `renew-transport --snapshot zanance-hosting-snapshot-PRE-RENEWAL` takes a mandatory complete snapshot, stops this
 project's workers/database and renews only internal TLS leaf certificates with the same keys and CA. It retains
 the historical protection certificate/key used by the key ring, restarts the stack and requires a readiness check.
+The renewal provisioner and restarted stack use the image IDs captured by the pre-maintenance snapshot.
 Schedule this explicit operator maintenance before the 365-day leaves expire. It is not an unattended updater.
 The public fingerprint intent permits completing an interrupted multi-file publication with `renew-transport` in
 the provisioner; do not start workers with a pending intent. Partial initial preparation or `.pending` writes

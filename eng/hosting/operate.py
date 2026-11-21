@@ -42,6 +42,15 @@ def _container(project, service):
     return name, value
 
 
+def _owned_images(project):
+    images = {service: _container(project, service)[1]['image'] for service in ('api', 'proxy', 'provision', 'database')}
+    if not all(IMAGE.fullmatch(image) for image in images.values()):
+        raise RuntimeError('Original service image identity is invalid.')
+    if _container(project, 'migrate')[1]['image'] != images['api']:
+        raise RuntimeError('Original API and migrator images differ; explicit upgrade qualification required.')
+    return images
+
+
 def _volume(project, logical, create=False):
     name = project + '_' + logical
     if create:
@@ -236,8 +245,7 @@ def _backup(args, helper):
     _require_gateway(args)
     database, _ = _container(args.project, 'database')
     household = _household_mode(args.project)
-    for service in ('api', 'proxy', 'migrate', 'provision'):
-        _container(args.project, service)
+    images = _owned_images(args.project)
     active = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + args.project,
                    '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
     if any(service not in ('api', 'proxy', 'database') for service in active):
@@ -257,7 +265,6 @@ def _backup(args, helper):
 
     require_quiesced_source()
     original_markers = _deletion_marker_inventory(helper, private_volume)
-    images = {service: _container(args.project, service)[1]['image'] for service in ('api', 'proxy', 'provision', 'database')}
     _run(['docker', 'volume', 'create', '--label', 'pro.vafadar.zanance.snapshot=d293', '--label', 'pro.vafadar.zanance.hosting=d293', args.snapshot])
     target = [(args.snapshot, '/snapshot', False)]
     _run(_helper(helper, target, 'chmod 700 /snapshot; umask 077; mkdir /snapshot/volumes'))
@@ -274,11 +281,14 @@ def _backup(args, helper):
     manifest = {'Schema': 1, 'DeploymentFormat': 'immutable-config-v1', 'SourceProject': args.project, 'CreatedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 'Quiesced': True, 'Public': args.public, 'Gateway': args.gateway, 'HouseholdLocalQualification': household, 'IdentityMail': _mail_mode(args.project) if args.public else None, 'Images': images, 'Archives': archives}
     require_quiesced_source()
+    if _owned_images(args.project) != images:
+        raise RuntimeError('Original service images changed; snapshot was not completed.')
     if _deletion_marker_inventory(helper, private_volume) != original_markers:
         raise RuntimeError('Original deletion marker inventory changed; snapshot was not completed.')
     _run(_helper(helper, target, 'umask 077; cat >/snapshot/complete.pending; sync -f /snapshot/complete.pending; mv /snapshot/complete.pending /snapshot/complete.json; sync -f /snapshot'), data=json.dumps(manifest).encode())
     _manifest(args.snapshot, helper)
     print('Complete private snapshot: ' + args.snapshot + '; original workers remain stopped.')
+    return images
 
 
 def _require_drained_private_clients(project, private_volume):
@@ -471,19 +481,27 @@ def main():
         if not args.snapshot:
             raise RuntimeError('A fresh pre-maintenance snapshot name is required.')
         household = _household_mode(args.project)
-        _backup(args, helper)
+        images = _backup(args, helper)
         _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'database'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
         _compose(args.project, args.port, args.subnet,
-                 ['run', '--no-deps', '-e', 'ZANANCE_CERTIFICATE_OPERATION=renew-transport', 'provision'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
-        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], public=args.public, gateway=args.gateway, household=household, mail=getattr(args, 'mail_provider', None))
+                 ['run', '--no-deps', '--pull', 'never', '-e', 'ZANANCE_CERTIFICATE_OPERATION=renew-transport', 'provision'],
+                 images, public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
+        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait', '--no-build', '--pull', 'never'],
+                 images, public=args.public, gateway=args.gateway, household=household, mail=getattr(args, 'mail_provider', None))
         print('Transport renewal complete; retained identities and snapshot were preserved.')
     elif args.action == 'status': print(_compose(args.project, args.port, args.subnet, ['ps', '-a', '--format', '{{.Service}} {{.State}} {{.Health}}'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None)).decode(), end='')
+    elif args.action == 'start':
+        _require_gateway(args)
+        images = _owned_images(args.project)
+        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait', '--no-build', '--pull', 'never'],
+                 images, public=args.public, gateway=args.gateway, household=_household_mode(args.project),
+                 mail=getattr(args, 'mail_provider', None))
+        print('Owned operation complete: ' + args.action)
     else:
         _require_gateway(args)
         for service in ('api', 'proxy', 'database', 'provision', 'migrate'): _container(args.project, service)
-        action = ['up', '-d', '--wait'] if args.action == 'start' else ['stop', '--timeout', '45', 'api', 'proxy']
-        _compose(args.project, args.port, args.subnet, action, public=args.public, gateway=args.gateway,
-                 household=_household_mode(args.project) if args.action == 'start' else None, mail=getattr(args, 'mail_provider', None))
+        _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'api', 'proxy'],
+                 public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
         print('Owned operation complete: ' + args.action)
 
 

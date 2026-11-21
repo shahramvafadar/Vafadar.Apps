@@ -14,6 +14,57 @@ import tunnel
 class GatewayTests(unittest.TestCase):
     """Protect original ingress across operations and refuse credential-content access."""
 
+    def test_operator_restart_and_renewal_use_the_exact_original_images(self):
+        project = 'zanance-selfhost-test'
+        images = {service: 'sha256:' + digit * 64
+                  for service, digit in zip(('api', 'proxy', 'provision', 'database'), '2345')}
+        names = {**images, 'migrate': images['api']}
+        for action in ('start', 'renew-transport'):
+            with (
+                self.subTest(action=action),
+                patch.object(sys, 'argv', ['operate.py', action, '--project', project,
+                                          '--snapshot', 'zanance-hosting-snapshot-test']),
+                patch.object(operate, '_run', return_value=('sha256:' + '1' * 64).encode()),
+                patch.object(operate, '_require_completed_restore'),
+                patch.object(operate, '_require_gateway'),
+                patch.object(operate, '_household_mode', return_value=False),
+                patch.object(operate, '_container', side_effect=lambda project, service: (service, {'image': names[service]})),
+                patch.object(operate, '_backup', return_value=images),
+                patch.object(operate, '_compose') as compose,
+            ):
+                operate.main()
+                starts = [call.args for call in compose.call_args_list if call.args[3][0] in ('up', 'run')]
+                self.assertEqual(1 if action == 'start' else 2, len(starts))
+                for command in starts:
+                    self.assertEqual(images, command[4] if len(command) > 4 else None)
+                    pull_index = command[3].index('--pull')
+                    self.assertEqual('never', command[3][pull_index + 1])
+                    if command[3][0] == 'up':
+                        self.assertIn('--no-build', command[3])
+
+    def test_operator_refuses_image_mismatch_before_starting_or_snapshotting(self):
+        project = 'zanance-selfhost-test'
+
+        def container(_, service):
+            return service, {'image': 'sha256:' + ('2' if service == 'migrate' else '1') * 64}
+
+        for action in ('start', 'backup'):
+            with (
+                self.subTest(action=action),
+                patch.object(sys, 'argv', ['operate.py', action, '--project', project,
+                                          '--snapshot', 'zanance-hosting-snapshot-test']),
+                patch.object(operate, '_run', return_value=('sha256:' + '1' * 64).encode()) as run,
+                patch.object(operate, '_exists', return_value=False),
+                patch.object(operate, '_require_gateway'),
+                patch.object(operate, '_household_mode', return_value=False),
+                patch.object(operate, '_container', side_effect=container),
+                patch.object(operate, '_compose') as compose,
+            ):
+                with self.assertRaisesRegex(RuntimeError, 'API and migrator images differ'):
+                    operate.main()
+                compose.assert_not_called()
+                run.assert_called_once()
+
     def test_tunnel_origin_uses_no_direct_overlay_and_scopes_connector_address(self):
         """Compose preserves the tunnel overlay and exact private connector rather than opening 443."""
         with patch.object(operate, '_run', return_value=b'') as run:
@@ -303,7 +354,7 @@ class GatewayTests(unittest.TestCase):
 
         with (patch.object(operate, '_exists', return_value=False),
               patch.object(operate, '_require_gateway'),
-              patch.object(operate, '_container', return_value=('owned', {'state': 'exited'})),
+              patch.object(operate, '_container', return_value=('owned', {'state': 'exited', 'image': 'sha256:' + '1' * 64})),
               patch.object(operate, '_household_mode', return_value=False),
               patch.object(operate, '_volume', return_value=project + '_private'),
               patch.object(operate, '_run', side_effect=run) as commands,
