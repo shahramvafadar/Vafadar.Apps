@@ -307,9 +307,33 @@ class DastanGraph {
       // it is first shown at its own size and unmoved, then made as large, then moved as far as it was.
       this.diagram.reset();
       this.diagram.zoom(stood.zoom, { x: 0, y: 0 });
-      const settings = this.diagram.scrollSettings;
-      this.diagram.pan(stood.x - (settings.horizontalOffset ?? 0), stood.y - (settings.verticalOffset ?? 0));
+      const moved = this.diagram.scroller;
+      // Workaround 6: a movement that no finger makes is not added to where the drawing stands – the control
+      // (35.2.12, scroller.applyScrollLimit) adds the step and then turns the whole place around, so the
+      // drawing ends at minus (where it stood plus the step). The step is chosen for that. A movement "of the
+      // visitor" is added as it is, but it is held inside the drawing, and a visitor may have moved further.
+      // The test of the browser fails in all three engines when a later version does it differently.
+      this.diagram.pan(-stood.x - moved.horizontalOffset, -stood.y - moved.verticalOffset);
       [this.moved, this.asLeft] = [true, true];
+      // The control settles its own bars of scrolling a moment later and may then stand a pixel or two beside
+      // (seen in WebKit on a narrow Persian page): once it has, the rest of the way is gone – once, and no more.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (Math.abs(moved.horizontalOffset - stood.x) > 0.5 || Math.abs(moved.verticalOffset - stood.y) > 0.5) {
+          this.diagram.pan(-stood.x - moved.horizontalOffset, -stood.y - moved.verticalOffset);
+        }
+      }));
+    }
+
+    // Somebody who leaves the page within that moment has moved the drawing all the same. What waits to be
+    // written is written when a finger lets go – a movement ends there –, and once more when the page is left;
+    // the second alone would not do: Chromium and Firefox do not keep what is written while a page is left.
+    const atOnce = (): void => {
+      if (this.keeping !== 0) {
+        this.write();
+      }
+    };
+    for (const kind of ['pointerup', 'pointercancel', 'pagehide']) {
+      window.addEventListener(kind, atOnce, { capture: true });
     }
 
     // Only what the visitor does is kept – a finger, a wheel, a key, a tool –, not what the page does by itself.
@@ -671,8 +695,8 @@ class DastanGraph {
   get seen(): { zoom: number; x: number; y: number; chosen: string | null; cards: { id: string; x: number; y: number; width: number; height: number }[] } {
     return {
       zoom: this.diagram.scrollSettings.currentZoom ?? 1,
-      x: this.diagram.scrollSettings.horizontalOffset ?? 0,
-      y: this.diagram.scrollSettings.verticalOffset ?? 0,
+      x: this.diagram.scroller.horizontalOffset,
+      y: this.diagram.scroller.verticalOffset,
       chosen: this.node(this.selected)?.id ?? null,
       cards: this.graph.nodes.map(node => {
         const bounds = (this.diagram.getObject(this.keyOf.get(node.id)!) as { wrapper?: { bounds: { x: number; y: number; width: number; height: number } } }).wrapper!.bounds;
@@ -684,6 +708,8 @@ class DastanGraph {
   zoom(factor: number): void {
     this.moved = true;
     this.diagram.zoomTo({ type: factor > 1 ? 'ZoomIn' : 'ZoomOut', zoomFactor: Math.abs(factor - 1) });
+    // A tool or a key is one movement, and it has ended: written at once.
+    this.write();
   }
 
   // What this place of the history says about where the drawing stood: believed only for a drawing of as many
@@ -705,17 +731,25 @@ class DastanGraph {
     }
 
     window.clearTimeout(this.keeping);
-    this.keeping = window.setTimeout(() => {
-      const state = (history.state ?? {}) as { drawings?: Record<string, unknown> };
-      const settings = this.diagram.scrollSettings;
-      const here = { cards: this.graph.nodes.length, zoom: settings.currentZoom ?? 1, x: settings.horizontalOffset ?? 0, y: settings.verticalOffset ?? 0 };
-      history.replaceState({ ...state, drawings: { ...state.drawings, [this.slot]: here } }, '');
-    }, 120);
+    this.keeping = window.setTimeout(() => this.write(), 120);
+  }
+
+  private write(): void {
+    window.clearTimeout(this.keeping);
+    this.keeping = 0;
+    const state = (history.state ?? {}) as { drawings?: Record<string, unknown> };
+    // The movement is read where the control keeps it and where a movement adds to it. What it writes into
+    // its settings has the other sign after some movements and not after others (seen in WebKit: a drawing
+    // came back moved to the other side).
+    const moved = this.diagram.scroller;
+    const here = { cards: this.graph.nodes.length, zoom: moved.currentZoom, x: moved.horizontalOffset, y: moved.verticalOffset };
+    history.replaceState({ ...state, drawings: { ...state.drawings, [this.slot]: here } }, '');
   }
 
   // The whole drawing again: nothing of where it stood is kept.
   private forget(): void {
     window.clearTimeout(this.keeping);
+    this.keeping = 0;
     this.moved = false;
     const state = history.state as { drawings?: Record<string, unknown> } | null;
     if (state?.drawings && this.slot in state.drawings) {
