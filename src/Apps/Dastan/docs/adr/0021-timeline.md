@@ -198,7 +198,8 @@ other and gets a view of its own. The still chart draws no axis of depth: a tabl
 **Built after this step, on 2026-11-21** (section 23 of the delivery plan):
 
 * **The moving view of a story tells "takes part" from "is only mentioned".** A mark of the order of a telling
-  carries what its step says about the name being there (`TimeMark.Presence`). Who is only spoken of –
+  carries what its step says about the name being there (`TimeMark.Presence`). Who is there and who is only
+  spoken of is one rule of the core for every drawing (`PresenceRule.IsThere`). Who is only spoken of –
   mentioned, reported, mourned – has a hollow mark, who is there a full one, as in the still chart; and the name
   of every mark says it in the words of the table ("… – is only mentioned, not present"), so the difference is
   not carried by the drawing alone.

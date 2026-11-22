@@ -3617,6 +3617,15 @@ dastan-timeline,
   font-weight: 700;
 }
 
+/* Who is only spoken of at a step of a telling – mentioned, reported, mourned – has a hollow mark; who is there
+   has a full one. The name of the mark says which, so the difference is not carried by the drawing alone. It
+   stands before the rules of a disputed and of a loose statement, which keep their line and their fill. */
+.tlv-spoken-of .tlv-point {
+  fill: var(--surface-raised);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
 .tlv-disputed .tlv-bar,
 .tlv-disputed .tlv-frame-of-window,
 .tlv-disputed .tlv-point {
@@ -3627,14 +3636,6 @@ dastan-timeline,
 .tlv-loose .tlv-bar,
 .tlv-loose .tlv-point {
   fill-opacity: 0.45;
-}
-
-/* Who is only spoken of at a step of a telling – mentioned, reported, mourned – has a hollow mark; who is there
-   has a full one. The name of the mark says which, so the difference is not carried by the drawing alone. */
-.tlv-spoken-of .tlv-point {
-  fill: var(--surface-raised);
-  stroke: var(--accent);
-  stroke-width: 2;
 }
 
 .tlv-mark:focus-visible {

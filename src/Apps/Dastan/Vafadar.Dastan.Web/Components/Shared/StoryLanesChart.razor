@@ -46,7 +46,7 @@
                 {
                     var words = string.Format(CultureInfo.CurrentCulture, T["Story_MarkTitle"], Visitor.Text(lane.Entity.Label).Value, T[$"Presence_{cell.Presence}"], Visitor.Number(step.Number), title);
                     <foreignObject x="@Em(Across(column * ColumnWidth, ColumnWidth))" y="@Em(HeadHeight + (row * RowHeight))" width="@Em(ColumnWidth)" height="@Em(RowHeight)">
-                        <a class="sc-mark @(Present(cell.Presence) ? null : "sc-absent")" href="@($"{Here}#step-{step.Number}")" title="@words">
+                        <a class="sc-mark @(cell.Presence.IsThere() ? null : "sc-absent")" href="@($"{Here}#step-{step.Number}")" title="@words">
                             <span aria-hidden="true">@Mark(cell.Presence)</span><span class="visually-hidden">@words</span>
                         </a>
                     </foreignObject>
@@ -94,9 +94,6 @@
     // the side where reading starts.
     private double Across(double start, double width) =>
         Visitor.Language.IsRightToLeft ? (Chart.Steps.Length * ColumnWidth) - start - width : start;
-
-    // Who or what is there in the step; the other marks are for who is only spoken of.
-    private static bool Present(Presence presence) => presence is Presence.Acts or Presence.Involved or Presence.Setting or Presence.Object;
 
     /// <summary>Returns the mark of a presence: full ones for who or what is there, hollow ones for who is only spoken of.</summary>
     public static string Mark(Presence presence) => presence switch

@@ -40,7 +40,7 @@
                     @* Who asks and what for; the answer is given on the page of the people, where it belongs. *@
                     <li>
                         <a href="account/people#waiting"><bdi>@request.Other.Name</bdi></a>
-                        <span class="meta">– @PeopleEndpoints.Called(request.Kind, request.Terms, T)</span>
+                        <span class="meta">– <RelationshipCalled Kind="@request.Kind" Terms="request.Terms" /></span>
                     </li>
                 }
                 @foreach (var waiting in _inTrees)

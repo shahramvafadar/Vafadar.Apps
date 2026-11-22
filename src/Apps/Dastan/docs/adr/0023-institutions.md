@@ -77,7 +77,8 @@ was.
 
 **Added on 2026-11-21** (section 23 of the delivery plan): where a relationship is written with its place – on
 the page of one's people and on the page of a person – the name of an entry that is published leads to its
-page, as the name of a place somebody was at does (`RelationshipCalled`). Words, and an entry that is not
+page, as the name of a place somebody was at does (`RelationshipCalled`) – also while the relationship waits
+for an answer, on the page of the people and on My World. Words, and an entry that is not
 published at the moment, stay words. A request to call a relationship something else is one sentence of two
 names and stays words too.
 

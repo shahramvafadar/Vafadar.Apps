@@ -934,7 +934,7 @@ faithfully as vectors, make every asset from one source, and put it on the site.
 
 **Done on 2026-11-21** ([ADR 0026](adr/0026-logo.md); `branding/dastan/README.md`). *Built:* the geometry of the logo, traced from the large logo of the approved picture and fitted with curves – the open D, the dot as a circle, the page, the six letters of the wordmark as outlines, 172 segments –, kept as `branding/dastan/source/dastan-geometry.json`; one script that writes from it two masters, ten variants as SVG, eighteen PNGs of the logo and the symbol without a ground, eight icons, `favicon.ico` with three sizes, the code the site draws the logo with, and a sheet of comparison; a small-size variant for 16 and 32 pixels with a heavier page and dot, named as such. On the site: the logo in the head of every page as a drawing in the page (indigo and ink on a light ground, white on a dark one, named once, never mirrored), the icons of the tab, the manifest with icons for "any" and separate ones for "maskable", the page for "no connection", the picture of a shared link; the store of the worker named anew so that a device drops the earlier icon and keeps the pages a visitor read. *Shown by tests:* eleven cases of `LogoTests` (the head in both languages; the site draws the geometry of the brand and no other; no asset holds pixels, a script, a font or anything fetched; the icons of the site are byte for byte those the brand made; the three sizes of the ICO; size, ground and the whole symbol of five icons, the maskable ones inside the circle of 40 %), four cases in a browser in `FrameBrowserTests` (the proportions and the colours of the logo on a light and a dark ground, not turned on a Persian page, every icon the page and the manifest name is there), and seven earlier tests brought to the new names. The whole suite ran once: 3308 of 3311 passed; the three that failed were the new cases in a browser, which asked for the icons from inside the page and were refused there – they ask from the test now and pass, with the other tests of the head, the installed app and the worker (70 cases). *Looked at:* the sheet (`branding/dastan/previews/comparison.png`) – the reference, the master, one over the other with 2.6 % of the pixels with ink differing at the soft edges of the picture, the variants, the symbol at 16 to 64 pixels as it is and enlarged, the logo at 24 to 40 pixels, the maskable icon under a circle and a rounded square; the head of the site in English, light, 1280 px and in Persian, dark, 360 px, on the machine of development. **Not built:** formats for print; a guide of the brand beyond the README; the logo in the tool of the editors (the Studio keeps its plain name). **Not shown:** the app installed on a phone or a computer and what a launcher makes of the maskable icon; the icon of a tab in Safari and Firefox by eye; a screen reader; the published build was not photographed. The original vector file and the font of the wordmark were not available: the geometry is a reconstruction of a picture.
 
-## 23. What phase 20 and the logo left that needed nobody's decision (2026-11-21)
+## 23. What phase 20 and the logo left that needed nobody's decision (2026-11-21 and 22)
 
 The steps of phase 20 and section 22 each say what they did not build. Six of those things needed no decision
 of the owner, no content and no device; they were built in one piece of work. Everything else that is open is
@@ -973,8 +973,8 @@ with the form as it was filled in); the presence of every mark in `TimelineViews
 `StoryChartBrowserTests`, every mark against its cell of the table in English at 1280 px and in Persian, dark,
 at 390 px; `A_visitor_who_comes_back_finds_the_drawing_as_large_and_as_far_moved_as_it_was_left` in
 `GraphBrowserTests` (loaded anew, Back, forgotten by "the whole drawing", whole for who comes first) at 1280
-and 360 px. The whole suite ran once after the last change: 3321 tests, none failed. *Looked at:* the head of the tool of the editors in English, light, 1280 px and in Persian,
-dark, 360 px, on the machine of development, over an empty store; after the work was merged, the moving view of
+and 360 px. The whole suite ran once after the last change: 3321 tests, none failed. *Looked at:* the head of
+the tool of the editors in English, light, 1280 px and in Persian, dark, 360 px, on the machine of development, over an empty store; after the work was merged, the moving view of
 the story in English, dark, in a wide window, read to the end – thirty marks, three of them hollow, among them
 Sohrab at "The remedy does not arrive" and at "Mourning in Zabulistan", each saying so in its name.
 
@@ -1028,6 +1028,21 @@ accounts unless it is given a database.
 
 **Not shown:** anything of this section in the published build beyond its head and its icons, for the reason
 above.
+
+**Read again as a whole on 2026-11-22**, on the owner's word to review the work and correct what is found.
+*Corrected:* the place of a relationship is a link also while the relationship waits – for who is asked, on
+the page of the people and on My World, and for who asked; that is where "which university" is the question,
+and it was words there. *Made better:* who is there in a step and who is only spoken of was decided twice, in
+the still chart and for the moving view – it is one rule of the core now (`PresenceRule.IsThere`), with a test
+that names its four and three; the hollow mark of the moving view stands before the rules of a disputed and a
+loose statement, so that it cannot take their line away; in the script of the graph a tool and "the whole
+drawing" end "put back where it was left" themselves and do not depend on a finger having been seen, what
+`seen` says is read from one place, and the condition under which a drawing is put back is said in two plain
+steps. *Looked for and not found:* a way in which a place of a picture or its Persian caption is lost or
+written twice by the form of the Studio; a way in which My World says something of a tree the account may not
+see. *Shown by tests:* the link while waiting in `InstitutionPagesTests` (three places), the rule in
+`TimelineViewsTests`; the tests of the graph, of exploring, of a record of a tree, of the chart of a story and
+of the timeline ran in Chromium, WebKit and Firefox (61 each, none failed); then the whole suite ran: 3321 tests, none failed.
 
 **What is still open, and whose it is.** Nothing below is forgotten; none of it can be built without the one
 named.
