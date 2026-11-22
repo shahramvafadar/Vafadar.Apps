@@ -404,6 +404,19 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         await page.GoBackAsync();
         await Same(left);
 
+        // The page gives the drawing another room, twice – as a page does while it arrives, and as a window
+        // does that is made narrower: what the visitor moved stays where it was put and is not forgotten.
+        // (Seen by eye first: the drawing was whole again after the second change.)
+        var window = page.ViewportSize!;
+        await page.SetViewportSizeAsync(window.Width - 48, window.Height - 40);
+        await page.WaitForTimeoutAsync(300);
+        await page.SetViewportSizeAsync(window.Width, window.Height);
+        await page.WaitForTimeoutAsync(300);
+        await Same(left);
+        Assert.True(await page.EvaluateAsync<bool>("() => history.state?.drawings?.g0 !== undefined"), "Where the drawing stood was forgotten.");
+        await page.ReloadAsync();
+        await Same(left);
+
         // "The whole drawing" forgets where it stood: back again, it is whole.
         await host.Locator("[data-graph-fit]").ClickAsync();
         Assert.True(await page.EvaluateAsync<bool>("() => history.state?.drawings?.g0 === undefined"));

@@ -997,10 +997,26 @@ there are budgets of time and nothing else: the whole way of the largest tree co
 against 5 s in both, and a step among 100 people took 312 ms against 300 in WebKit. The budgets were set on this
 machine for Chromium, which meets them; the build server writes the times down and does not judge them.
 
-**Not shown:** what a tree asks on My World, the link of a place of a relationship, the inputs of the Studio for
-the places of a picture and a drawing put back were not looked at by eye – My World and the page of the people
-were opened with an account of which nothing is asked and that has no relationship; they are shown by the tests
-above, of which those of the drawings run in a real browser. Nothing was looked at in the published build.
+*Looked at afterwards, on 2026-11-22, on the machine of development* (English, dark, the pane of a browser):
+the form of a picture in the Studio over the collection of the repository – the row that begins the places,
+with an entity, an event, a caption, the Persian caption and the sources; with two made-up accounts, the page
+of the people after one asked and the other accepted "colleague" at an entry – "colleague, Made-up University
+of the East, since 2010" with the name as a link to its page –, and My World of the owner of a tree after the
+other said a record is them – "A made-up family – somebody says a record is them, for you to confirm or
+refuse: 1", leading to the claims of the tree; and a drawing made larger, left and come back to with the Back
+button, by its numbers – the pane could not be made to show the drawing itself in a picture.
+
+*Found by that look, and corrected:* a drawing that was put back was whole again, and what was kept was
+forgotten, as soon as the page gave the drawing another room a second time while it arrived – the tests had a
+window that did not change. What the visitor moved now stays where it was put when the room changes; only a
+drawing nobody touched is shown whole again, and a drawing that was put back is put back again until the
+visitor does something. The test gives the drawing another room twice and failed before the correction. It ran
+twice in each of the three engines with the tests of exploring and of a record of a tree; then the whole suite
+ran: 3321 tests, none failed.
+
+**Not shown:** an agreement to be named in public on My World was not looked at by eye (the claim was), nor
+any of this in Persian or at the width of a phone by eye – the tests do both. Nothing was looked at in the
+published build.
 
 **What is still open, and whose it is.** Nothing below is forgotten; none of it can be built without the one
 named.
