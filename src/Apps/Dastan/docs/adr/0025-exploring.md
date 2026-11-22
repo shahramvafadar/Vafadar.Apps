@@ -100,7 +100,10 @@ of a visitor, in an address; the comparisons the editors write (ADR 0008) are an
   the machine of development after that:* a movement written a moment later was lost to somebody who left
   within that moment, and writing while the page is left is not kept by Chromium and Firefox – so a movement is
   written when it ends; and WebKit let the drawing stand two pixels beside once its bars of scrolling had
-  settled – the rest of the way is gone once, two frames later. The test runs in Chromium, WebKit and Firefox.
+  settled – the rest of the way is gone once, two frames later. The test runs in Chromium, WebKit and Firefox. *Found by eye after that:*
+  a page gives a drawing another room more than once while it arrives, and the second time the drawing was
+  shown whole again and what was kept was forgotten. What the visitor moved stays when the room changes; a
+  drawing that was put back is put back again until the visitor does something.
 * **The inspector.** What is chosen is a block of the page here; the panel beside the drawing and the sheet
   of a phone are 20.8.
 * **A context wider than one name** – exploring a story or a thread as such. The contract explores one

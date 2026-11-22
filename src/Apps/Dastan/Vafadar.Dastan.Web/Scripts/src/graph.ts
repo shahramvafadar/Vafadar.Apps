@@ -87,6 +87,7 @@ class DastanGraph {
   private readonly slot: string;
   private moved = false;
   private asLeft = false;
+  private left: { zoom: number; x: number; y: number } | null = null;
   private keeping = 0;
 
   constructor(private readonly host: HTMLElement, private readonly canvas: HTMLElement, private readonly graph: Graph) {
@@ -301,28 +302,16 @@ class DastanGraph {
 
     // A visitor who comes back to this place of the history finds the drawing as large and as far moved as it
     // was left; somebody who comes for the first time finds the whole of it.
-    const stood = this.stood();
-    if (stood) {
-      // The control takes a size and a movement as steps from where it stands, not as a place to stand at: so
-      // it is first shown at its own size and unmoved, then made as large, then moved as far as it was.
-      this.diagram.reset();
-      this.diagram.zoom(stood.zoom, { x: 0, y: 0 });
-      const moved = this.diagram.scroller;
-      // Workaround 6: a movement that no finger makes is not added to where the drawing stands – the control
-      // (35.2.12, scroller.applyScrollLimit) adds the step and then turns the whole place around, so the
-      // drawing ends at minus (where it stood plus the step). The step is chosen for that. A movement "of the
-      // visitor" is added as it is, but it is held inside the drawing, and a visitor may have moved further.
-      // The test of the browser fails in all three engines when a later version does it differently.
-      this.diagram.pan(-stood.x - moved.horizontalOffset, -stood.y - moved.verticalOffset);
+    this.left = this.stood();
+    if (this.left) {
+      this.putBack();
       [this.moved, this.asLeft] = [true, true];
       // The control settles its own bars of scrolling a moment later and may then stand a pixel or two beside
-      // (seen in WebKit on a narrow Persian page): once it has, the rest of the way is gone – once, and no more.
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        if (Math.abs(moved.horizontalOffset - stood.x) > 0.5 || Math.abs(moved.verticalOffset - stood.y) > 0.5) {
-          this.diagram.pan(-stood.x - moved.horizontalOffset, -stood.y - moved.verticalOffset);
-        }
-      }));
+      // (seen in WebKit on a narrow Persian page): once it has, the rest of the way is gone.
+      requestAnimationFrame(() => requestAnimationFrame(() => this.putBack()));
     }
+
+    const stood = this.left;
 
     // Somebody who leaves the page within that moment has moved the drawing all the same. What waits to be
     // written is written when a finger lets go – a movement ends there –, and once more when the page is left;
@@ -338,7 +327,7 @@ class DastanGraph {
 
     // Only what the visitor does is kept – a finger, a wheel, a key, a tool –, not what the page does by itself.
     for (const kind of ['pointerdown', 'wheel', 'keydown']) {
-      this.host.addEventListener(kind, () => { this.moved = true; }, { capture: true, passive: true });
+      this.host.addEventListener(kind, () => { [this.moved, this.asLeft] = [true, false]; }, { capture: true, passive: true });
     }
 
     this.oneStop();
@@ -527,8 +516,11 @@ class DastanGraph {
       room = now;
       this.diagram.updateViewPort();
       if (this.asLeft) {
-        // Put back where it was left, it stays there: the room it was left in is the room it has again.
-        this.asLeft = false;
+        // Put back where it was left, it stays there until the visitor does something – however often the page
+        // gives the drawing another room while it arrives (a note above it, a font, a bar of scrolling). The
+        // control holds a drawing inside a room it is told of, so it is put back again (seen by eye: it came
+        // back as large as it was left and at another place).
+        this.putBack();
         return;
       }
 
@@ -545,7 +537,9 @@ class DastanGraph {
         // In the middle of the new room: "into view" of the control keeps a card where it was when a part of
         // it was in the old room, also where the inspector now stands.
         this.diagram.bringToCenter(chosen.wrapper.bounds as never);
-      } else {
+      } else if (!this.moved) {
+        // What the visitor moved stays where the visitor put it; only a drawing nobody touched is shown whole
+        // again – showing it whole would also forget where it stood.
         this.fit();
       }
     }).observe(this.canvas);
@@ -710,6 +704,32 @@ class DastanGraph {
     this.diagram.zoomTo({ type: factor > 1 ? 'ZoomIn' : 'ZoomOut', zoomFactor: Math.abs(factor - 1) });
     // A tool or a key is one movement, and it has ended: written at once.
     this.write();
+  }
+
+  // Puts the drawing where it was left, while the visitor has done nothing since. The control takes a size and a
+  // movement as steps from where it stands, not as a place to stand at: so it is first shown at its own size
+  // and unmoved, then made as large, then moved as far as it was.
+  private putBack(): void {
+    const stood = this.left;
+    const moved = this.diagram.scroller;
+    if (!stood || !this.asLeft && this.moved
+      || (Math.abs(moved.currentZoom - stood.zoom) < 0.0001 && Math.abs(moved.horizontalOffset - stood.x) < 0.5 && Math.abs(moved.verticalOffset - stood.y) < 0.5)) {
+      return;
+    }
+
+    // As large as it was already – the control only settled a little beside, or was held inside a new room:
+    // the rest of the way is gone and nothing is begun anew (begun anew, WebKit settles beside again).
+    if (Math.abs(moved.currentZoom - stood.zoom) >= 0.0001) {
+      this.diagram.reset();
+      this.diagram.zoom(stood.zoom, { x: 0, y: 0 });
+    }
+
+    // Workaround 6: a movement that no finger makes is not added to where the drawing stands – the control
+    // (35.2.12, scroller.applyScrollLimit) adds the step and then turns the whole place around, so the
+    // drawing ends at minus (where it stood plus the step). The step is chosen for that. A movement "of the
+    // visitor" is added as it is, but it is held inside the drawing, and a visitor may have moved further.
+    // The test of the browser fails in all three engines when a later version does it differently.
+    this.diagram.pan(-stood.x - moved.horizontalOffset, -stood.y - moved.verticalOffset);
   }
 
   // What this place of the history says about where the drawing stood: believed only for a drawing of as many
