@@ -17,9 +17,9 @@
     [Parameter, EditorRequired]
     public RelationshipInfo Request { get; set; } = null!;
 
-    /// <summary>Gets or sets what the relationship is asked to be called, as the page writes it.</summary>
+    /// <summary>Gets or sets what the relationship is asked to be called, as the page writes it – with its place as a link where it is an entry.</summary>
     [Parameter, EditorRequired]
-    public string Called { get; set; } = string.Empty;
+    public RenderFragment Called { get; set; } = null!;
 
     /// <summary>Gets or sets the address the answer comes back to.</summary>
     [Parameter, EditorRequired]

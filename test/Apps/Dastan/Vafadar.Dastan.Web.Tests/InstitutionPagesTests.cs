@@ -426,6 +426,13 @@ public sealed class InstitutionPagesTests : IDisposable
         // An entry a form makes up is refused; one the page offers is asked of the other side.
         Assert.Equal($"{People}?form=ask&problem=terms#ask", await Ask($"{Story}/character-rostam"));
         Assert.Equal($"{People}?said=asked", await Ask($"{Story}/place-university"));
+
+        // While it waits, the place leads to its page too – for who is asked, where "which university" is the
+        // question, on the page of the people and on My World; and for who asked.
+        var link = $"colleague, <a href=\"{Story}/entity/place-university\">";
+        Assert.Contains(link, Section(await sara.Get(People), "waiting"), StringComparison.Ordinal);
+        Assert.Contains(link, Section(await sara.Get("/en/account/world"), "waiting"), StringComparison.Ordinal);
+        Assert.Contains(link, Section(await mina.Get(People), "asked"), StringComparison.Ordinal);
         var id = Regex.Match((await sara.Get(People)).Html, "name=\"relationship\" value=\"([a-f0-9]{32})\"").Groups[1].Value;
         await sara.Post("/preferences/people/answer", People, ("relationship", id), ("answer", "accept"), ("returnUrl", People));
 

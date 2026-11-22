@@ -399,6 +399,19 @@ public enum Presence
     DeceasedSubject = 6,
 }
 
+/// <summary>What follows from a <see cref="Presence"/> wherever one is shown.</summary>
+public static class PresenceRule
+{
+    /// <summary>
+    /// Returns whether the entity is there in the scenes of the event – acting, involved, the setting or an
+    /// object – and not only spoken of: mentioned, reported about, or mourned. Every drawing draws the two
+    /// differently, and none decides it for itself.
+    /// </summary>
+    /// <param name="presence">What the association asserts.</param>
+    public static bool IsThere(this Presence presence) =>
+        presence is Presence.Acts or Presence.Involved or Presence.Setting or Presence.Object;
+}
+
 /// <summary>How far the editors have come with a statement. It says nothing about whether the statement may be shown.</summary>
 public enum ReviewStatus
 {

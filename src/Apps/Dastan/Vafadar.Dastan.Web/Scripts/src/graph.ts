@@ -304,8 +304,8 @@ class DastanGraph {
     // was left; somebody who comes for the first time finds the whole of it.
     this.left = this.stood();
     if (this.left) {
-      this.putBack();
       [this.moved, this.asLeft] = [true, true];
+      this.putBack();
       // The control settles its own bars of scrolling a moment later and may then stand a pixel or two beside
       // (seen in WebKit on a narrow Persian page): once it has, the rest of the way is gone.
       requestAnimationFrame(() => requestAnimationFrame(() => this.putBack()));
@@ -688,7 +688,7 @@ class DastanGraph {
   /** What a test of the browser reads: how large the drawing is shown, what is chosen, and where the cards stand. */
   get seen(): { zoom: number; x: number; y: number; chosen: string | null; cards: { id: string; x: number; y: number; width: number; height: number }[] } {
     return {
-      zoom: this.diagram.scrollSettings.currentZoom ?? 1,
+      zoom: this.diagram.scroller.currentZoom,
       x: this.diagram.scroller.horizontalOffset,
       y: this.diagram.scroller.verticalOffset,
       chosen: this.node(this.selected)?.id ?? null,
@@ -700,7 +700,7 @@ class DastanGraph {
   }
 
   zoom(factor: number): void {
-    this.moved = true;
+    [this.moved, this.asLeft] = [true, false];
     this.diagram.zoomTo({ type: factor > 1 ? 'ZoomIn' : 'ZoomOut', zoomFactor: Math.abs(factor - 1) });
     // A tool or a key is one movement, and it has ended: written at once.
     this.write();
@@ -712,14 +712,18 @@ class DastanGraph {
   private putBack(): void {
     const stood = this.left;
     const moved = this.diagram.scroller;
-    if (!stood || !this.asLeft && this.moved
-      || (Math.abs(moved.currentZoom - stood.zoom) < 0.0001 && Math.abs(moved.horizontalOffset - stood.x) < 0.5 && Math.abs(moved.verticalOffset - stood.y) < 0.5)) {
+    if (!stood || !this.asLeft) {
+      return;
+    }
+
+    const sameSize = Math.abs(moved.currentZoom - stood.zoom) < 0.0001;
+    if (sameSize && Math.abs(moved.horizontalOffset - stood.x) < 0.5 && Math.abs(moved.verticalOffset - stood.y) < 0.5) {
       return;
     }
 
     // As large as it was already – the control only settled a little beside, or was held inside a new room:
     // the rest of the way is gone and nothing is begun anew (begun anew, WebKit settles beside again).
-    if (Math.abs(moved.currentZoom - stood.zoom) >= 0.0001) {
+    if (!sameSize) {
       this.diagram.reset();
       this.diagram.zoom(stood.zoom, { x: 0, y: 0 });
     }
@@ -779,6 +783,7 @@ class DastanGraph {
   }
 
   fit(): void {
+    this.asLeft = false;
     this.forget();
     // The control makes a drawing smaller to fit and never larger; so it is first shown at its own size.
     this.diagram.reset();

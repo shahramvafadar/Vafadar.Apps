@@ -229,6 +229,12 @@ public sealed class TimelineViewsTests
             view.Lanes.SelectMany(lane => lane.Marks.Select(mark => mark.Presence)));
         Assert.True(view.Lanes.SelectMany(lane => lane.Marks).Select(mark => mark.Presence).Distinct().Count() > 1, "The small story has one presence only.");
 
+        // Who is there and who is only spoken of is one rule for every drawing: four are there, three are not.
+        Assert.Equal(
+            [Presence.Acts, Presence.Involved, Presence.Setting, Presence.Object],
+            Enum.GetValues<Presence>().Where(presence => presence.IsThere()));
+        Assert.Equal(7, Enum.GetValues<Presence>().Length);
+
         // Who has read less has a shorter axis and no lane of somebody not met; a telling without steps has no view.
         var early = Assert.Single(TimelineViews.OfStory(Read(0)).Views);
         Assert.True(early.To < 3m);
