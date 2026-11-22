@@ -1014,9 +1014,20 @@ visitor does something. The test gives the drawing another room twice and failed
 twice in each of the three engines with the tests of exploring and of a record of a tree; then the whole suite
 ran: 3321 tests, none failed.
 
-**Not shown:** an agreement to be named in public on My World was not looked at by eye (the claim was), nor
-any of this in Persian or at the width of a phone by eye – the tests do both. Nothing was looked at in the
-published build.
+*Looked at once more the same day:* in Persian, light, at the width of a phone (375 px), with the second of
+the two made-up accounts – My World after the owner of the tree had confirmed the record and asked to make the
+tree public: "A made-up family – می‌پرسد آیا موافقید نامتان همگانی دیده شود", leading to the agreement of the
+tree; and the page of the people: "همکار، دانشگاه ساختگی شرق، از ۲۰۱۰" with the place as a link. Neither page
+scrolled sideways, and the logo of the head was not turned. *The published build:* the image of the Dockerfile
+was built from this revision and started with a folder of content that is not a published revision; in
+Persian, dark, it showed the head with the logo in white, answered the icon of a tab, the icon as a drawing,
+the icon of a home screen and the manifest, and said that nothing is published here yet – no story, so none of
+the six changes that need a story or an account can be seen in it. It shows content once a revision is
+published, which needs every statement reviewed, and that is the owner's as the editor; the image has no
+accounts unless it is given a database.
+
+**Not shown:** anything of this section in the published build beyond its head and its icons, for the reason
+above.
 
 **What is still open, and whose it is.** Nothing below is forgotten; none of it can be built without the one
 named.
