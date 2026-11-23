@@ -50,4 +50,29 @@ export function inStep(names: string[]): void {
 
     link.href = address.href;
   }
+
+  // A form of the bar – the years – sends the rest of the state along as fields nobody sees; they are kept in
+  // step like the links. What the form asks for itself is never one of them.
+  for (const form of document.querySelectorAll<HTMLFormElement>('form[data-explore]')) {
+    for (const name of names) {
+      if (form.querySelector(`input[name="${name}"]:not([type="hidden"])`)) {
+        continue;
+      }
+
+      const value = now.get(name);
+      let field = form.querySelector<HTMLInputElement>(`input[type="hidden"][name="${name}"]`);
+      if (value === null) {
+        field?.remove();
+      } else {
+        if (!field) {
+          field = document.createElement('input');
+          field.type = 'hidden';
+          field.name = name;
+          form.prepend(field);
+        }
+
+        field.value = value;
+      }
+    }
+  }
 }

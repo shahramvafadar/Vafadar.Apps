@@ -4137,4 +4137,82 @@
   <data name="World_Tree_Claims" xml:space="preserve">
     <value>somebody says a record is them, for you to confirm or refuse: {0}</value>
   </data>
+  <data name="Type_theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Gallery_Themes" xml:space="preserve">
+    <value>Themes</value>
+  </data>
+  <data name="Gallery_TitleTheme" xml:space="preserve">
+    <value>Theme “{0}” – images and videos</value>
+  </data>
+  <data name="Gallery_LeadTheme" xml:space="preserve">
+    <value>Images and videos the editors of this collection gathered under the theme “{0}”, as far as you have read.</value>
+  </data>
+  <data name="Entity_ThemeNote" xml:space="preserve">
+    <value>A theme is a grouping by the editors of this collection: it gathers images and videos and states nothing about the subject.</value>
+  </data>
+  <data name="Explore_Years_All" xml:space="preserve">
+    <value>Years: all</value>
+  </data>
+  <data name="Explore_Years_Chosen" xml:space="preserve">
+    <value>Years: {0}</value>
+  </data>
+  <data name="Explore_Years_From" xml:space="preserve">
+    <value>From the year</value>
+  </data>
+  <data name="Explore_Years_To" xml:space="preserve">
+    <value>to the year</value>
+  </data>
+  <data name="Explore_Years_Show" xml:space="preserve">
+    <value>Show these years</value>
+  </data>
+  <data name="Explore_Years_Clear" xml:space="preserve">
+    <value>All years</value>
+  </data>
+  <data name="Explore_Years_How" xml:space="preserve">
+    <value>A year before the common era is written with a minus: -500. The chart of time, the connections and the pictures of this name all keep to these years.</value>
+  </data>
+  <data name="Explore_Years_Refused" xml:space="preserve">
+    <value>That is no stretch of years: write two years, the second after the first. Nothing was left out.</value>
+  </data>
+  <data name="Connections_Years" xml:space="preserve">
+    <value>Shown for the years {0}: what held in them, and what states no time.</value>
+  </data>
+  <data name="Connections_Years_None" xml:space="preserve">
+    <value>Nothing here is stated to have held in the years {0}; what states no time is shown.</value>
+  </data>
+  <data name="Connections_Years_LeftOut" xml:space="preserve">
+    <value>Left out because they state another time: {0}.</value>
+  </data>
+  <data name="Connections_Years_Empty" xml:space="preserve">
+    <value>Every connection of this name states another time than the years you chose.</value>
+  </data>
+  <data name="Connections_InYears" xml:space="preserve">
+    <value>Held in the years {0}</value>
+  </data>
+  <data name="Connections_WithoutTime" xml:space="preserve">
+    <value>Without a stated time</value>
+  </data>
+  <data name="Connections_WithoutTimeNote" xml:space="preserve">
+    <value>These state no time. They are shown whatever years you choose.</value>
+  </data>
+  <data name="Connections_Possibly" xml:space="preserve">
+    <value>may have held in these years</value>
+  </data>
+  <data name="Gallery_Years" xml:space="preserve">
+    <value>Shown for the years {0}: what shows them, and below what states no time.</value>
+  </data>
+  <data name="Gallery_Years_None" xml:space="preserve">
+    <value>Nothing here is stated to show the years {0}; what states no time is shown.</value>
+  </data>
+  <data name="Gallery_Years_LeftOut" xml:space="preserve">
+    <value>Left out because they show another time: {0}.</value>
+  </data>
+  <data name="Gallery_WithoutTime" xml:space="preserve">
+    <value>Without a stated time</value>
+  </data>
+  <data name="Gallery_WithoutTimeNote" xml:space="preserve">
+    <value>These do not say what time they show. They are shown whatever years you choose.</value>
+  </data>
 </root>

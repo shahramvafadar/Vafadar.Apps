@@ -50,6 +50,42 @@
             }
         </div>
     }
+    @if (_years)
+    {
+        @* The years of what is explored (D-084): the connections and the pictures of a name show what lies in
+           them, as its chart of time does. They are asked for here with a form that asks for a page; the rest
+           of the state goes along, so that asking loses nothing. The chart of time has its own tools for them. *@
+        var years = State.Years;
+        <details class="fold explore-years" id="years" open="@(years is not null || _refused)">
+            <summary>@(years is { } stretch ? string.Format(CultureInfo.CurrentCulture, T["Explore_Years_Chosen"], YearsText.Of(stretch, Visitor, T)) : T["Explore_Years_All"])</summary>
+            <form class="search explore-years-form" method="get" action="@Path()" data-explore>
+                @foreach (var (name, value) in State.SaidBesideYears)
+                {
+                    <input type="hidden" name="@name" value="@value" />
+                }
+                <div class="search-row">
+                    <p class="field">
+                        <label for="explore-from">@T["Explore_Years_From"]</label>
+                        <input type="text" inputmode="numeric" id="explore-from" name="from" value="@(years?.From.ToString(CultureInfo.InvariantCulture) ?? _typedFrom)" maxlength="12" size="8" required autocomplete="off" dir="ltr" aria-describedby="explore-years-how" />
+                    </p>
+                    <p class="field">
+                        <label for="explore-to">@T["Explore_Years_To"]</label>
+                        <input type="text" inputmode="numeric" id="explore-to" name="to" value="@(years?.To.ToString(CultureInfo.InvariantCulture) ?? _typedTo)" maxlength="12" size="8" required autocomplete="off" dir="ltr" aria-describedby="explore-years-how" />
+                    </p>
+                    <button type="submit" class="action">@T["Explore_Years_Show"]</button>
+                    @if (years is not null)
+                    {
+                        <a class="action secondary" href="@Address(State.WithYears(null), State.View)" data-explore>@T["Explore_Years_Clear"]</a>
+                    }
+                </div>
+                <p class="meta" id="explore-years-how">@T["Explore_Years_How"]</p>
+            </form>
+            @if (_refused)
+            {
+                <p class="note" role="alert">@T["Explore_Years_Refused"]</p>
+            }
+        </details>
+    }
     @if (!State.SetAside.IsEmpty)
     {
         @* Nothing the visitor asked for is dropped in silence: this view shows more than they asked, and says so. *@
@@ -62,6 +98,15 @@
     private Entity? _chosen;
     private readonly List<Entity> _compared = [];
     private IReadOnlyList<ViewBar.View> _views = [];
+
+    // The years: whether this view asks for them itself, and what was typed when it was no stretch of years.
+    private bool _years;
+    private bool _refused;
+    private string? _typedFrom;
+    private string? _typedTo;
+
+    [CascadingParameter]
+    private HttpContext? Context { get; set; }
 
     /// <summary>Gets or sets the state of exploring, read from the address of the page.</summary>
     [Parameter, EditorRequired]
@@ -101,6 +146,24 @@
         }
 
         _views = views;
+
+        // The chart of time is told its years by its own tools; the connections and the pictures ask here.
+        _years = State.View is ExplorationView.Connections or ExplorationView.Pictures;
+        _typedFrom = Typed("from");
+        _typedTo = Typed("to");
+        _refused = _years && State.Years is null && (_typedFrom is not null || _typedTo is not null);
+    }
+
+    // What an address said under a name, as far as it can be shown again: short, and typed by somebody.
+    private string? Typed(string name) =>
+        Context?.Request.Query[name] is { Count: > 0 } said && said[0] is { Length: > 0 and <= 12 } typed ? typed : null;
+
+    // The address of the view that is shown, without anything it was told: a form writes that itself.
+    private string Path()
+    {
+        var address = Address(State, State.View);
+        var query = address.IndexOf('?', StringComparison.Ordinal);
+        return query < 0 ? address : address[..query];
     }
 
     private string Address(Exploration state, ExplorationView view) => $"{Site.Collection}/{state.Address(view)}";

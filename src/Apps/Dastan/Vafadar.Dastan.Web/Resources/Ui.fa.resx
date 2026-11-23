@@ -4137,4 +4137,82 @@
   <data name="World_Tree_Claims" xml:space="preserve">
     <value>کسی می‌گوید پرونده‌ای خودِ اوست؛ تأیید یا ردّ آن با شماست: {0}</value>
   </data>
+  <data name="Type_theme" xml:space="preserve">
+    <value>مضمون</value>
+  </data>
+  <data name="Gallery_Themes" xml:space="preserve">
+    <value>مضمون‌ها</value>
+  </data>
+  <data name="Gallery_TitleTheme" xml:space="preserve">
+    <value>مضمون «{0}» – تصویرها و ویدیوها</value>
+  </data>
+  <data name="Gallery_LeadTheme" xml:space="preserve">
+    <value>تصویرها و ویدیوهایی که ویراستاران این مجموعه زیر مضمون «{0}» گرد آورده‌اند، تا جایی که خوانده‌اید.</value>
+  </data>
+  <data name="Entity_ThemeNote" xml:space="preserve">
+    <value>مضمون دسته‌ای است که ویراستاران این مجموعه ساخته‌اند: تصویرها و ویدیوها را گرد می‌آورد و دربارهٔ موضوع چیزی ادعا نمی‌کند.</value>
+  </data>
+  <data name="Explore_Years_All" xml:space="preserve">
+    <value>سال‌ها: همه</value>
+  </data>
+  <data name="Explore_Years_Chosen" xml:space="preserve">
+    <value>سال‌ها: {0}</value>
+  </data>
+  <data name="Explore_Years_From" xml:space="preserve">
+    <value>از سال</value>
+  </data>
+  <data name="Explore_Years_To" xml:space="preserve">
+    <value>تا سال</value>
+  </data>
+  <data name="Explore_Years_Show" xml:space="preserve">
+    <value>همین سال‌ها را نشان بده</value>
+  </data>
+  <data name="Explore_Years_Clear" xml:space="preserve">
+    <value>همهٔ سال‌ها</value>
+  </data>
+  <data name="Explore_Years_How" xml:space="preserve">
+    <value>سالِ پیش از میلاد با منفی نوشته می‌شود: ‎-500. خط زمان، پیوندها و تصویرهای این نام همه به همین سال‌ها پایبند می‌مانند.</value>
+  </data>
+  <data name="Explore_Years_Refused" xml:space="preserve">
+    <value>این یک بازهٔ سال نیست: دو سال بنویسید که دومی پس از اولی باشد. چیزی کنار گذاشته نشد.</value>
+  </data>
+  <data name="Connections_Years" xml:space="preserve">
+    <value>برای سال‌های {0} نشان داده شده: آنچه در این سال‌ها برقرار بوده و آنچه زمانی برایش گفته نشده است.</value>
+  </data>
+  <data name="Connections_Years_None" xml:space="preserve">
+    <value>برای سال‌های {0} چیزی ثبت نشده که در آن برقرار بوده باشد؛ آنچه زمانی ندارد نشان داده شده است.</value>
+  </data>
+  <data name="Connections_Years_LeftOut" xml:space="preserve">
+    <value>کنار گذاشته‌شده چون زمان دیگری دارند: {0}.</value>
+  </data>
+  <data name="Connections_Years_Empty" xml:space="preserve">
+    <value>همهٔ پیوندهای این نام زمانی جز سال‌های انتخابی شما دارند.</value>
+  </data>
+  <data name="Connections_InYears" xml:space="preserve">
+    <value>برقرار در سال‌های {0}</value>
+  </data>
+  <data name="Connections_WithoutTime" xml:space="preserve">
+    <value>بدون زمانِ گفته‌شده</value>
+  </data>
+  <data name="Connections_WithoutTimeNote" xml:space="preserve">
+    <value>برای این‌ها زمانی گفته نشده است. هر سالی انتخاب کنید نشان داده می‌شوند.</value>
+  </data>
+  <data name="Connections_Possibly" xml:space="preserve">
+    <value>شاید در این سال‌ها برقرار بوده</value>
+  </data>
+  <data name="Gallery_Years" xml:space="preserve">
+    <value>برای سال‌های {0} نشان داده شده: آنچه این سال‌ها را نشان می‌دهد و، پایین‌تر، آنچه زمانی برایش گفته نشده است.</value>
+  </data>
+  <data name="Gallery_Years_None" xml:space="preserve">
+    <value>چیزی ثبت نشده که سال‌های {0} را نشان دهد؛ آنچه زمانی ندارد نشان داده شده است.</value>
+  </data>
+  <data name="Gallery_Years_LeftOut" xml:space="preserve">
+    <value>کنار گذاشته‌شده چون زمان دیگری را نشان می‌دهند: {0}.</value>
+  </data>
+  <data name="Gallery_WithoutTime" xml:space="preserve">
+    <value>بدون زمانِ گفته‌شده</value>
+  </data>
+  <data name="Gallery_WithoutTimeNote" xml:space="preserve">
+    <value>این‌ها نمی‌گویند چه زمانی را نشان می‌دهند. هر سالی انتخاب کنید نشان داده می‌شوند.</value>
+  </data>
 </root>

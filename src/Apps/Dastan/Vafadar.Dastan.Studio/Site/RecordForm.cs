@@ -120,11 +120,18 @@ public sealed record FormContext(IReadOnlyList<FieldOption> Stages, IReadOnlyDic
     public static FormContext Of(EditorialStore store, string collection)
     {
         ArgumentNullException.ThrowIfNull(store);
+        var records = new[] { "sources", "entities", "relations", "events", "media" }.ToDictionary(
+            group => group,
+            group => (IReadOnlyList<FieldOption>)[.. store.Records(collection, group).Select(record => new FieldOption(record.Id, $"{record.Label} ({record.Id})"))]);
+
+        // The themes of the collection are entities an item is gathered under and never shows: a form offers
+        // them for the themes of an item, and everything else for what an item shows.
+        var themes = store.EntitiesOfType(collection, RecordForm.ThemeType);
+        records[RecordForm.ThemeGroup] = [.. records["entities"].Where(entity => themes.Contains(entity.Value))];
+        records[RecordForm.ShownGroup] = [.. records["entities"].Where(entity => !themes.Contains(entity.Value))];
         return new FormContext(
             [.. store.Stages(collection).Select(stage => new FieldOption(stage.Level.ToString(CultureInfo.InvariantCulture), $"{stage.Level} – {stage.Label}"))],
-            new[] { "sources", "entities", "relations", "events", "media" }.ToDictionary(
-                group => group,
-                group => (IReadOnlyList<FieldOption>)[.. store.Records(collection, group).Select(record => new FieldOption(record.Id, $"{record.Label} ({record.Id})"))]));
+            records);
     }
 }
 
@@ -143,11 +150,28 @@ public static class RecordForm
     // The identifier of a record does not change, and the state of a review is what a review records.
     private static readonly FrozenSet<string> Kept = new[] { "id", "reviewStatus", "review" }.ToFrozenSet(StringComparer.Ordinal);
 
+    /// <summary>The type of an entity that is a theme of a gallery, as a record writes it.</summary>
+    internal const string ThemeType = "Theme";
+
+    /// <summary>The records a form offers for the themes of an item: the entities that are themes.</summary>
+    internal const string ThemeGroup = "themes";
+
+    /// <summary>The records a form offers for what an item shows: the entities that are no themes.</summary>
+    internal const string ShownGroup = "shown";
+
+    // The records a field can point to. A context that does not tell themes from what can be shown offers every entity for what is shown.
+    private static bool Targets(FormContext context, string group, out IReadOnlyList<FieldOption> records) =>
+        context.Records.TryGetValue(group, out records!) || (group == ShownGroup && context.Records.TryGetValue("entities", out records!));
+
+    // The themes a media item is gathered under (R-MED-02): offered for every item of a collection that has themes.
+    private const string Themes = "themeIds";
+
     // The fields that name records of the collection, and the group of those records.
     private static readonly FrozenDictionary<string, string> Pointing = new Dictionary<string, string>(StringComparer.Ordinal)
     {
         ["sourceIds"] = "sources",
-        ["depictedEntityIds"] = "entities",
+        ["depictedEntityIds"] = ShownGroup,
+        [Themes] = ThemeGroup,
         ["depictedEventIds"] = "events",
         ["relatedRelationIds"] = "relations",
         ["eventIds"] = "events",
@@ -274,6 +298,12 @@ public static class RecordForm
             {
                 fields.Add(profile);
             }
+        }
+
+        if (group == "media" && !record.ContainsKey(Themes) && context.Records.TryGetValue(ThemeGroup, out var themes) && themes.Count > 0)
+        {
+            // The themes of the collection, for an item that is under none yet.
+            fields.Add(Field("media[]", "f", Themes, new JsonArray(), context, nested: false));
         }
 
         if (group == "media" && !record.ContainsKey(Placements))
@@ -669,6 +699,17 @@ public static class RecordForm
 
         if (group == "media")
         {
+            if (!record.ContainsKey(Themes) && fields.TryGetValue(Themes, out var offered) && Filled(offered, form, problems) is { Node: JsonArray { Count: > 0 } under })
+            {
+                filled[Themes] = under;
+            }
+
+            // An item under no theme has no list of themes.
+            if (filled[Themes] is JsonArray { Count: 0 })
+            {
+                filled.Remove(Themes);
+            }
+
             if (!record.ContainsKey(Placements) && fields.TryGetValue(Placements, out var begun) && Filled(begun, form, problems) is { Node: JsonArray { Count: > 0 } places })
             {
                 filled[Placements] = places;
@@ -849,7 +890,7 @@ public static class RecordForm
                     return Of(FieldKind.Choice, With(choices, text));
                 }
 
-                if (Pointing.TryGetValue(name, out var pointed) && context.Records.TryGetValue(pointed, out var records))
+                if (Pointing.TryGetValue(name, out var pointed) && Targets(context, pointed, out var records))
                 {
                     return Of(FieldKind.Choice, With(records, text, unchosen: true));
                 }
@@ -862,7 +903,7 @@ public static class RecordForm
             case JsonValue scalar when scalar.GetValueKind() == JsonValueKind.Number:
                 return name == "spoilerLevel" ? Of(FieldKind.Choice, With(context.Stages, scalar.ToJsonString())) : Of(FieldKind.Number);
 
-            case JsonArray items when Pointing.TryGetValue(name, out var group) && context.Records.TryGetValue(group, out var targets) && items.All(IsText):
+            case JsonArray items when Pointing.TryGetValue(name, out var group) && Targets(context, group, out var targets) && items.All(IsText):
                 return Of(FieldKind.References, targets);
 
             case JsonArray { Count: > 0 } items when items.All(IsText):

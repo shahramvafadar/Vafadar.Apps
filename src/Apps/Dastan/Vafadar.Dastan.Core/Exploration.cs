@@ -132,11 +132,45 @@ public sealed class Exploration
     public ImmutableArray<EntityId> Compared =>
         _said.TryGetValue(ComparedName, out var compared) ? [.. compared.Split(',').Select(id => new EntityId(id))] : [];
 
-    /// <summary>Gets the stretch of years a chart of time was told to show, or nothing.</summary>
+    /// <summary>
+    /// Gets the stretch of years the visitor chose, or nothing: the first and the last year, positive in the
+    /// common era and negative before it. The chart of time, the connections and the pictures of a name show
+    /// what lies in it (D-084); the page of a name and its family tree set it aside and say so.
+    /// </summary>
     public (int From, int To)? Years =>
         _said.TryGetValue("from", out var from) && _said.TryGetValue("to", out var to)
             ? (int.Parse(from, CultureInfo.InvariantCulture), int.Parse(to, CultureInfo.InvariantCulture))
             : null;
+
+    /// <summary>Gets the stretch of years the visitor chose as a stretch of the axis of years – both years whole –, or nothing.</summary>
+    public Vafadar.Temporal.YearSpan? Span => Years is { } years ? new(Place(years.From), Place(years.To) + 1) : null;
+
+    /// <summary>Returns whether a view shows only what lies in the years the visitor chose.</summary>
+    /// <param name="view">The view.</param>
+    public static bool HonoursYears(ExplorationView view) => view is ExplorationView.Timeline or ExplorationView.Connections or ExplorationView.Pictures;
+
+    /// <summary>Returns the year of an address as a year of an era.</summary>
+    /// <param name="year">Positive in the common era, negative before it.</param>
+    public static YearOfEra YearOf(int year) => year > 0 ? new(Vafadar.Temporal.Era.CommonEra, year) : new(Vafadar.Temporal.Era.BeforeCommonEra, -year);
+
+    private static decimal Place(int year) => YearOf(year).Place;
+
+    /// <summary>Returns the state with another stretch of years – or, with nothing, with every year. Nothing else changes.</summary>
+    /// <param name="years">The first and the last year; the last is after the first.</param>
+    public Exploration WithYears((int From, int To)? years) =>
+        years is { } chosen && chosen.To > chosen.From && Year(chosen.From.ToString(CultureInfo.InvariantCulture)) is { } from && Year(chosen.To.ToString(CultureInfo.InvariantCulture)) is { } to
+            ? new(Subject, View, Boundary, _said.SetItem("from", from).SetItem("to", to))
+            : new(Subject, View, Boundary, _said.Remove("from").Remove("to"));
+
+    /// <summary>
+    /// Returns everything the state says other than the years, as the address of the view that is shown names
+    /// it: what a form that asks for years sends along, so that asking loses nothing.
+    /// </summary>
+    public ImmutableArray<KeyValuePair<string, string>> SaidBesideYears =>
+    [
+        .. Parts.Where(part => part.Name is not ("from" or "to") && _said.ContainsKey(part.Name))
+            .Select(part => KeyValuePair.Create(part.Of == View ? part.Native : part.Name, _said[part.Name])),
+    ];
 
     /// <summary>Gets a value indicating whether a family tree grows across the page instead of down it.</summary>
     public bool TreeAcross => _said.ContainsKey("tree");
@@ -253,13 +287,13 @@ public sealed class Exploration
         get
         {
             var aside = ImmutableArray.CreateBuilder<ExplorationFilter>();
+            if (Years is not null && !HonoursYears(View))
+            {
+                aside.Add(ExplorationFilter.Years);
+            }
+
             if (View != ExplorationView.Timeline)
             {
-                if (Years is not null)
-                {
-                    aside.Add(ExplorationFilter.Years);
-                }
-
                 if (_said.ContainsKey("events"))
                 {
                     aside.Add(ExplorationFilter.WithoutEvents);
@@ -361,11 +395,22 @@ public sealed class Exploration
             ? number.ToString(CultureInfo.InvariantCulture)
             : null;
 
-    // A year of an address: positive in the common era, negative before it; there is no year zero.
-    private static string? Year(string value) =>
-        int.TryParse(value, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var year) && year != 0 && Math.Abs(year) <= AskedTime.FurthestYear && value[0] != '+'
+    // A year of an address: positive in the common era, negative before it; there is no year zero. A form
+    // writes the address too, so the digits of Persian and Arabic and the longer signs of minus are read as typed.
+    private static string? Year(string value)
+    {
+        var typed = new StringBuilder(value.Length);
+        foreach (var letter in value.Trim())
+        {
+            var digit = CharUnicodeInfo.GetDecimalDigitValue(letter);
+            typed.Append(digit >= 0 ? (char)('0' + digit) : letter is '−' or '–' or '—' ? '-' : letter);
+        }
+
+        var written = typed.ToString();
+        return int.TryParse(written, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var year) && year != 0 && Math.Abs(year) <= AskedTime.FurthestYear && written[0] != '+'
             ? year.ToString(CultureInfo.InvariantCulture)
             : null;
+    }
 
     private static string? OneOf(string value, params string[] choices) => choices.Contains(value, StringComparer.Ordinal) ? value : null;
 }

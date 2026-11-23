@@ -1049,8 +1049,8 @@ named.
 
 | Open | Whose | Why not built here |
 |---|---|---|
-| Themes of a gallery (R-MED-02) | the owner, as editor | The vocabulary has no kind for a theme; which themes there are is an editorial decision, and a theme is a value of the vocabulary, not a free word (ADR 0021). |
-| A stretch of years that the connections and the pictures of a name honour | the owner | ADR 0025 left open whether they should leave years out at all. |
+| Themes of a gallery (R-MED-02) | – | **Decided and built on 2026-11-23** (D-083, section 24): a theme is a record of its collection. Which themes a collection has stays the decision of its editors. |
+| A stretch of years that the connections and the pictures of a name honour | – | **Decided and built on 2026-11-23** (D-084, section 24.2). |
 | A way for a visitor to propose a place to the editors | the owner | An editorial process with somebody who looks at the proposals (ADR 0023). |
 | Pictures, and content beyond the Shahnameh | the owner | Rights and sources; without them Discover has one story and drawings in the place of pictures. |
 | The order inside the world of a story of a collection | the owner, with content | No collection states one; a comparison file can. |
@@ -1060,3 +1060,35 @@ named.
 | A real phone, the app installed, Safari itself, a screen reader, five people who see the site for the first time | the owner | They need a device, eyes and ears. |
 | A mailbox and a sender, the clients at Google and Microsoft, the key of the licence of the graph, a host and an address | the owner | Accounts, contracts and secrets are entered by the owner alone. |
 | The legal pages read by a lawyer, the postal address | the owner | Section 18.8. |
+
+## 24. Five decisions of the owner (2026-11-23, D-083 to D-087)
+
+Section 23 ended with a table of what was open and whose it was. On 2026-11-23 the owner was given, for each of
+the five rows that were a decision about the product, the ways it could go with what each costs and a
+recommendation, and answered: themes as records of a collection; a stretch of years honoured by all three
+views of a name; a way to propose a place to the editors; a full identity head for an account and for a record
+of a tree – "not a short one: what we build is built whole"; a guide of the brand with the formats for print.
+The order of work the owner set for what follows: everything is tried in the browser on this machine first,
+then content is written, then the site goes online. Each decision is built whole, with its tests and its
+documents, before the next.
+
+**24.1 Themes of a gallery – done on 2026-11-23** (D-083, [ADR 0027](adr/0027-gallery-themes.md)). *Built:* the
+type `Theme` of an entity; `themeIds` of an image or a video; the rules of a collection for them (a theme is
+named as a theme and nothing else is, none twice, none of a later stage, nothing depicts a theme, a theme may
+rest on no source); the themes a reader is offered, each with the number of what stands under it and only with
+something under it; the gallery of a theme, which says "gathered under" and is arranged like every gallery; the
+themes above the pictures of the gallery of a collection and of a theme; the themes of an item on its page; the
+page of a theme; in the tool of the editors the themes to tick in the form of every image and video, kept apart
+from who and what the item shows. *Tried:* `MediaThemesTests` (15), `GalleryThemesTests` (6, English and
+Persian), `StudioThemesTests` (2).
+
+**24.2 The years of a name – done on 2026-11-23** (D-084, [ADR 0025](adr/0025-exploring.md), "The years of a
+name"). *Built:* the stretch of years of the state of exploring kept to by the connections and the pictures of
+a name as by its chart of time; the neighbourhood of a name in a stretch of years – what held in it, what
+states no time told apart, what states another time counted and left out, a node reached and opened only by
+what is part of it; the gallery of a name in a stretch of years, in the same three parts; the same
+neighbourhood for the drawing that moves; on the bar of exploring the years to ask for, to change and to give
+up, as a form that sends the rest of the state along and is kept in step by the script; years read as they are
+typed, also in Persian; what is no stretch of years said to be none; a picture that keeps the years of the
+gallery it was opened from, with its way back, the one before and the next. *Tried:* `ExplorationTests` (the 9
+new ones among 41), `YearsOfANameTests` (5), `YearsOfANamePagesTests` (9, English and Persian).

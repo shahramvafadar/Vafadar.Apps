@@ -76,6 +76,7 @@ public sealed class Projection
                     item.Id, item.Kind, item.Label, item.Caption, item.Representation, item.Created, item.Creator, item.Rights.Status,
                     item.CataloguePage!, item.DepictedEntities, item.DepictedEvents)
                 {
+                    Themes = item.Themes,
                     Shows = item.Shows,
                     CatalogueTitle = item.CatalogueTitle,
                     AccessionNumber = item.AccessionNumber,
@@ -306,7 +307,7 @@ public sealed class Projection
                     .Where(association => association.Entity == id)
                     .Select(association => new Appearance(step, association))),
             ],
-            [.. Media.Where(item => item.DepictedEntities.Contains(id))]);
+            [.. Media.Where(item => Stands(item.DepictedEntities, item.Themes, entity))]);
     }
 
     /// <summary>
@@ -315,8 +316,23 @@ public sealed class Projection
     /// </summary>
     /// <param name="focus">The entity in the middle.</param>
     /// <param name="expanded">The nodes whose relations are shown as well.</param>
-    public ConnectionsView? Connections(EntityId focus, IEnumerable<EntityId>? expanded = null)
+    public ConnectionsView? Connections(EntityId focus, IEnumerable<EntityId>? expanded = null) => Connections(focus, expanded, null, null);
+
+    /// <summary>
+    /// Returns the neighbourhood of an entity in a stretch of years (D-084), or <see langword="null"/>. A
+    /// relation that states a time is part of it only when it held in those years; a relation that states no
+    /// time is part of it always, and the answer tells the two apart. A node is reached, opened and offered to
+    /// be opened only by relations that are part of it.
+    /// </summary>
+    /// <param name="focus">The entity in the middle.</param>
+    /// <param name="expanded">The nodes whose relations are shown as well.</param>
+    /// <param name="years">The stretch of years, or nothing for every year.</param>
+    /// <param name="present">The year of the common era the visitor asks in: a depth of time is counted back from it.</param>
+    public ConnectionsView? Connections(EntityId focus, IEnumerable<EntityId>? expanded, Vafadar.Temporal.YearSpan? years, int? present)
     {
+        Holding Held(Relation relation) => years is not { } asked || relation.Time is null ? Holding.Yes : YearCover.Of(relation.Time, asked, present);
+        bool Part(Relation relation) => Held(relation) != Holding.No;
+
         if (Find(focus) is not { } entity)
         {
             return null;
@@ -329,7 +345,7 @@ public sealed class Projection
             grown = false;
             foreach (var id in requested)
             {
-                if (!open.Contains(id) && _relationsOf[id].Any(relation => open.Contains(relation.From) || open.Contains(relation.To)))
+                if (!open.Contains(id) && _relationsOf[id].Any(relation => Part(relation) && (open.Contains(relation.From) || open.Contains(relation.To))))
                 {
                     open.Add(id);
                     grown = true;
@@ -337,7 +353,8 @@ public sealed class Projection
             }
         }
 
-        bool Shown(Relation relation) => open.Contains(relation.From) || open.Contains(relation.To);
+        bool Open(Relation relation) => open.Contains(relation.From) || open.Contains(relation.To);
+        bool Shown(Relation relation) => Open(relation) && Part(relation);
 
         ImmutableArray<Edge> edges = [.. Relations.Where(Shown).Select(ToEdge)];
         var reached = edges.SelectMany(edge => new[] { edge.From.Id, edge.To.Id }).ToHashSet();
@@ -347,7 +364,12 @@ public sealed class Projection
             nodes,
             edges,
             [.. nodes.Where(node => node.Id != focus && open.Contains(node.Id))],
-            [.. nodes.Where(node => !open.Contains(node.Id) && _relationsOf[node.Id].Any(relation => !Shown(relation)))]);
+            [.. nodes.Where(node => !open.Contains(node.Id) && _relationsOf[node.Id].Any(relation => Part(relation) && !Open(relation)))])
+        {
+            Years = years,
+            Possibly = years is null ? [] : [.. edges.Where(edge => edge.Relation.Time is not null && Held(edge.Relation) == Holding.Possibly).Select(edge => edge.Relation.Id)],
+            LeftOut = Relations.Count(relation => Open(relation) && !Part(relation)),
+        };
     }
 
     /// <summary>Returns the family relations of the collection.</summary>
@@ -595,7 +617,22 @@ public sealed class Projection
     ];
 
     /// <summary>Returns every media item that may be shown.</summary>
-    public GalleryView Gallery() => new(GalleryRule.WholeCollection, null, null, GalleryOrder.Editorial, Media) { References = References };
+    public GalleryView Gallery() => new(GalleryRule.WholeCollection, null, null, GalleryOrder.Editorial, Media) { References = References, Themes = Themes() };
+
+    /// <summary>
+    /// Returns the themes of the collection that have something under them for this visitor, in the order of
+    /// the collection, each with the number of its items – shown, or named as a reference (R-MED-02).
+    /// </summary>
+    public ImmutableArray<ThemeCount> Themes() =>
+    [
+        .. Entities.Where(entity => entity.Type == EntityTypes.Theme)
+            .Select(theme => new ThemeCount(theme, Media.Count(item => item.Themes.Contains(theme.Id)) + References.Count(item => item.Themes.Contains(theme.Id))))
+            .Where(theme => theme.Items > 0),
+    ];
+
+    // Whether an item stands with an entity: under it, for a theme; showing it, for everything else.
+    private static bool Stands(ImmutableArray<EntityId> depicted, ImmutableArray<EntityId> themes, Entity entity) =>
+        entity.Type == EntityTypes.Theme ? themes.Contains(entity.Id) : depicted.Contains(entity.Id);
 
     /// <summary>
     /// Returns the gallery of a time (ADR 0021, R-MED-02): the items that show the time that was asked for – a
@@ -619,18 +656,51 @@ public sealed class Projection
         };
     }
 
-    /// <summary>Returns the media that depict an entity, or <see langword="null"/>.</summary>
+    /// <summary>
+    /// Returns the media that depict an entity – or, for a theme, the media the editors gathered under it,
+    /// with the other themes of the collection to go on to – or <see langword="null"/>.
+    /// </summary>
     public GalleryView? Gallery(EntityId entity) => Find(entity) is not { } found
         ? null
         : new GalleryView(
-            GalleryRule.DepictsEntity,
+            found.Type == EntityTypes.Theme ? GalleryRule.OfTheme : GalleryRule.DepictsEntity,
             found,
             null,
             GalleryOrder.Editorial,
-            [.. Media.Where(item => item.DepictedEntities.Contains(entity))])
+            [.. Media.Where(item => Stands(item.DepictedEntities, item.Themes, found))])
         {
-            References = [.. References.Where(item => item.DepictedEntities.Contains(entity))],
+            References = [.. References.Where(item => Stands(item.DepictedEntities, item.Themes, found))],
+            Themes = found.Type == EntityTypes.Theme ? Themes() : [],
         };
+
+    /// <summary>
+    /// Returns the gallery of an entity in a stretch of years (D-084), or <see langword="null"/>: the items
+    /// of its gallery that show those years; apart from them the items that state no time they show – told
+    /// apart, not hidden –; and how many show another time and are left out. A work that is only named with
+    /// its holder is named when it shows the years or states no time.
+    /// </summary>
+    /// <param name="entity">The entity, or the theme.</param>
+    /// <param name="years">The stretch of years, or nothing for every year.</param>
+    /// <param name="present">The year of the common era the visitor asks in.</param>
+    public GalleryView? Gallery(EntityId entity, Vafadar.Temporal.YearSpan? years, int? present)
+    {
+        if (Gallery(entity) is not { } whole || years is not { } asked)
+        {
+            return Gallery(entity);
+        }
+
+        var shown = whole.Items.Where(item => item.Shows is not null).Select(item => (Item: item, Holding: YearCover.Of(item.Shows, asked, present))).ToList();
+        var references = whole.References.Where(item => item.Shows is null || YearCover.Of(item.Shows, asked, present) != Holding.No).ToImmutableArray();
+        return whole with
+        {
+            Years = asked,
+            Items = [.. shown.Where(found => found.Holding != Holding.No).Select(found => found.Item)],
+            Possibly = [.. shown.Where(found => found.Holding == Holding.Possibly).Select(found => found.Item.Id)],
+            WithoutTime = [.. whole.Items.Where(item => item.Shows is null)],
+            References = references,
+            LeftOut = shown.Count(found => found.Holding == Holding.No) + whole.References.Length - references.Length,
+        };
+    }
 
     /// <summary>Returns the media that depict an event, or <see langword="null"/>.</summary>
     public GalleryView? Gallery(EventId storyEvent) => Find(storyEvent) is not { } step
@@ -652,7 +722,10 @@ public sealed class Projection
             item,
             [.. item.DepictedEntities.Select(entity => _entities[entity])],
             [.. item.DepictedEvents.Select(storyEvent => _steps.GetValueOrDefault(storyEvent)).OfType<StoryStep>()],
-            [.. item.RelatedRelations.Select(relation => ToEdge(_relations[relation]))]);
+            [.. item.RelatedRelations.Select(relation => ToEdge(_relations[relation]))])
+        {
+            Themes = [.. item.Themes.Select(theme => _entities[theme])],
+        };
 
     /// <summary>Returns the sources of an entity, or <see langword="null"/>.</summary>
     public EvidenceView? Evidence(EntityId id) => Find(id) is not { } entity

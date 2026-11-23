@@ -958,6 +958,22 @@ main:has(> .discover) {
   margin-block: var(--space-2);
 }
 
+/* The years of what is explored (D-084): asked for on the bar, folded until somebody wants them. The fold
+   belongs to the bar, not to the page below it: it stands close and without the line of a part of the page. */
+details.explore-years {
+  margin-block: var(--space-3);
+  border-block-start: 0;
+}
+
+.explore-years-form .search-row {
+  align-items: end;
+}
+
+.explore-years-form input[type="text"] {
+  inline-size: 8rem;
+  max-inline-size: 100%;
+}
+
 /* The steps of the telling a name takes part in, under its drawing: a short list, each step a line. */
 .telling {
   display: grid;

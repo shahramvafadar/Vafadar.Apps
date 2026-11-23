@@ -293,6 +293,21 @@ identifier of the same catalogue, also as `exact`, is the same place for people 
 
 A new name of the same thing is a `former` name of one entity, not a second entity and not a relation.
 
+### A theme of the gallery
+
+A theme gathers images and videos of the collection: "Combat", "Mourning", "Safavid painting". It is an entity
+of the type `Theme` ([ADR 0027](adr/0027-gallery-themes.md)) – with a name, a summary, a stage and translations
+like every entity – and a media item names the themes it stands under in `themeIds`. The gallery of the
+collection offers every theme a reader may see something under; the gallery of a theme is
+`/<collection>/entity/<theme>/gallery`.
+
+* A theme is the editors' grouping. It may leave `sourceIds` out; it names a source where the theme is a term
+  of scholarship. Every other entity names at least one source.
+* Nothing depicts a theme: `depictedEntityIds` names whom and what an item shows, `themeIds` what it is
+  gathered under. Naming a theme in the first or anything else in the second is a problem.
+* A theme whose name gives something of a story away gets the stage from which it may be told; its items belong
+  to that stage or a later one.
+
 ### The types of entities
 
 | `type` | What it is | Kind of thing |
@@ -328,6 +343,7 @@ A new name of the same thing is a `former` name of one entity, not a second enti
 | `Object` | A real thing: a manuscript, a sword, a coin | a thing |
 | `NaturalSubject` | A subject of nature: a species, a river system, an element | a subject |
 | `Concept` | An idea, a field of knowledge, a technique | a subject |
+| `Theme` | A theme the images and videos of the collection are gathered under: a motif, a genre, a school of painting. A media item names it in `themeIds`; nothing depicts it. Its `sourceIds` are optional – see "A theme of the gallery" | a subject |
 
 Things that share a name stay apart by their type: a `Brand` is not the `Company` that owns it, a `SportsTeam`
 is not its `SportsClub`, a `Government` or `Dynasty` is not the `Country` it rules, a `CompetitionSeason` is
@@ -473,6 +489,7 @@ not say what each has to do with the step.
 | `sourceUrl` | Optional: the public page of the item, an `https` address. An item that may not be shown and has this page stands in the galleries as a **reference**: its catalogue record and a link to the page, without a picture ([ADR 0006](adr/0006-media-delivery.md), addendum) |
 | `altText`, `altTextStatus` | Optional: the text alternative and its state – `not_prepared_image_not_cleared`, `draft_pending_visual_review` or `project_authored_for_exact_diagram` |
 | `depictedEntityIds`, `depictedEventIds`, `relatedRelationIds` | Optional lists: whom and what the item shows |
+| `themeIds` | Optional list: the themes the item is gathered under – entities of the type `Theme`, each once, none of a later stage than the item. See "A theme of the gallery" |
 | `posterUrl`, `captions` (`language`, `url`), `transcriptUrl` with `transcriptFormat` `text/plain` (a `.txt` file), `renditions` (`format`, `url` – the same item in another format), `sizes` (`width`, `url` – for an image: the same picture narrower, in pixels; each narrower than the image, no width twice; the tool writes them when an image is brought in), `durationSeconds`, `audioTrack`, `dimensions` (`width`, `height`) | Optional; local paths like `url` |
 | `catalogTitle`, `accessionNumber`, `creditLine` | Optional: the record of a museum |
 | `reviewerProvenancePath` with `reviewerProvenanceAudience` `reviewer_only` | Optional: a working document for reviewers, outside `content/`. It is checked and never shown; the `revision` command leaves it out of a revision |

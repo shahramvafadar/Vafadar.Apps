@@ -437,3 +437,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - For editors: the form of a picture has inputs for the places it stands in with words of their own – an entity
   or a step, a caption, sources – and for the caption of each place in the other language. A form that is
   refused shows again everything that was filled in, also a list that was begun in it.
+- A gallery has themes when a collection states them: the gallery of a collection offers its themes with the
+  number of pictures under each, a theme has a gallery of its own, and the page of a picture names its themes.
+  For editors: a theme is added as a name of the kind "Theme" – it needs no source – and the form of every image
+  and video offers the themes of the collection to tick.
+- The years you choose for a name are kept by its connections and its pictures as by its timeline: you see what
+  lies in those years, apart from it what states no time, and how much was left out because it states another
+  time. The years are asked for, changed and given up on the bar above each of these views.

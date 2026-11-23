@@ -235,12 +235,15 @@ public static class GraphDataEndpoints
             return Answer(context, view is null ? null : Of(view, around, visitor, site, text, explore));
         });
 
-        endpoints.MapGet("/{collection}/entity/{id}/connections.json", (HttpContext context, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, string collection, string id, string? open) =>
+        endpoints.MapGet("/{collection}/entity/{id}/connections.json", (HttpContext context, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, TimeProvider clock, string collection, string id, string? open) =>
         {
             static bool IsIdentifier(string written) => written.Length > 0 && !written.Any(char.IsWhiteSpace);
             var known = collection == site.Collection && IsIdentifier(id);
             var opened = (open ?? string.Empty).Split(',', StringSplitOptions.TrimEntries).Where(IsIdentifier).Select(one => new EntityId(one)).Distinct();
-            var view = known ? visitor.Projection?.Connections(new EntityId(id), opened) : null;
+
+            // The drawing that moves shows what the page shows: the neighbourhood in the years the visitor chose (D-084).
+            var years = known ? Exploring.Of(context, visitor, new EntityId(id), ExplorationView.Connections).Span : null;
+            var view = known ? visitor.Projection?.Connections(new EntityId(id), opened, years, clock.GetUtcNow().Year) : null;
             return Answer(context, view is null ? null : Of(view, visitor, site, text, Exploring.Of(context, visitor, view.Focus.Id, ExplorationView.Connections).Opened(view.Expanded.Select(entity => entity.Id))));
         });
 

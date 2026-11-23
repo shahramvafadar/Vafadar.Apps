@@ -651,7 +651,9 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var label = record.Text("label");
         var persianLabel = record.Text("labelFa", required: false);
         var summary = record.Text("summary");
-        var sources = Ids(record, "sourceIds");
+
+        // A theme of a gallery is a grouping of the editors: it may name sources and does not have to.
+        var sources = Ids(record, "sourceIds", required: !(typeKnown && type == EntityTypes.Theme));
         var level = Level(record);
         var dated = ImmutableArray.CreateBuilder<DatedStatement>();
         var datedComplete = true;
@@ -1344,6 +1346,9 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var depictedEvents = Ids(record, "depictedEventIds", required: false);
         var relatedRelations = Ids(record, "relatedRelationIds", required: false);
 
+        // The themes the item is gathered under (R-MED-02): entities of the type Theme, which the check of the collection asks for.
+        var themes = Ids(record, "themeIds", required: false);
+
         // A caption of its own in a place the item stands in (R-MED-07): the place names the entity or the event,
         // which the item says it shows; the item is referred to, not copied.
         var places = ImmutableArray.CreateBuilder<MediaPlace>();
@@ -1548,6 +1553,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             DepictedEntities = [.. depictedEntities.Select(entity => new EntityId(entity))],
             DepictedEvents = [.. depictedEvents.Select(storyEvent => new EventId(storyEvent))],
             RelatedRelations = [.. relatedRelations.Select(relation => new RelationId(relation))],
+            Themes = [.. themes.Select(theme => new EntityId(theme))],
             Places = places.ToImmutable(),
             Sources = [.. sources.Select(source => new SourceId(source))],
             Level = level.Value,

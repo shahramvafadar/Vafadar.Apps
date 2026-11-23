@@ -52,7 +52,9 @@ public sealed class NodeProfileTests
         {
             var facts = ProfileFacts.Of(type);
 
-            Assert.NotEmpty(facts.Essential);
+            // A theme of a gallery is a grouping of the editors: nothing of it has to be known (ADR 0027).
+            Assert.Equal(type == EntityTypes.Theme, facts.Essential.IsEmpty);
+            Assert.NotEmpty(facts.All);
             Assert.Equal(facts.All.Length, facts.All.Select(fact => fact.Key).Distinct().Count());
             Assert.All(facts.All, fact => Assert.Same(ProfileFacts.Find(fact.Key), fact));
         }

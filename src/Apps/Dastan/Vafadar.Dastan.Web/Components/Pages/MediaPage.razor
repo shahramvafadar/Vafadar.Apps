@@ -227,6 +227,20 @@
         </section>
     }
 
+    @if (!media.Themes.IsEmpty)
+    {
+        @* The themes the editors gathered the item under (R-MED-02): each leads to everything else under it. *@
+        <section aria-labelledby="themes">
+            <h2 id="themes">@T["Gallery_Themes"]</h2>
+            <ul class="subjects" role="list">
+                @foreach (var theme in media.Themes)
+                {
+                    <li><a href="@($"{Site.Collection}/entity/{theme.Id}/gallery")"><Loc Text="theme.Label" /></a></li>
+                }
+            </ul>
+        </section>
+    }
+
     @if (!media.Steps.IsEmpty)
     {
         <section aria-labelledby="shows-steps">
@@ -313,6 +327,9 @@
     private MediaItem? _previous;
     private MediaItem? _next;
 
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
     public string Collection { get; set; } = string.Empty;
@@ -396,9 +413,17 @@
         _galleryName = T["Gallery_Title"];
         if (Named(FromEntity) is { } entity && projection.Gallery(new EntityId(entity)) is { Entity: { } subject } ofEntity && ofEntity.Items.Contains(item))
         {
+            // The years the gallery of the name was asked for are kept, as far as this item is in it that way (D-084).
+            var explored = Exploring.Of(Context, Visitor, subject.Id, ExplorationView.Pictures);
+            if (explored.Years is { } stretch && projection.Gallery(subject.Id, explored.Span, Clock.GetUtcNow().Year) is { } inYears && (inYears.Items.Contains(item) || inYears.WithoutTime.Contains(item)))
+            {
+                ofEntity = inYears;
+                asked.Add(FormattableString.Invariant($"from={stretch.From}&to={stretch.To}"));
+            }
+
             gallery = ofEntity;
             _galleryAddress = $"{Site.Collection}/entity/{subject.Id}/gallery";
-            _galleryName = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleEntity"], Visitor.Text(subject.Label).Value);
+            _galleryName = string.Format(CultureInfo.CurrentCulture, T[ofEntity.Rule == GalleryRule.OfTheme ? "Gallery_TitleTheme" : "Gallery_TitleEntity"], Visitor.Text(subject.Label).Value);
             _context = $"?entity={Uri.EscapeDataString(subject.Id.Value)}";
             _caption = item.CaptionAt(subject.Id);
             placed = item.PlaceAt(subject.Id);
@@ -451,9 +476,11 @@
 
         _here = $"{Site.Collection}/media/{item.Id}{_context}";
         _placeSources = placed is null ? [] : [.. projection.Sources.Where(source => placed.Sources.Contains(source.Id))];
-        var at = gallery.Items.IndexOf(item);
-        _previous = at > 0 ? gallery.Items[at - 1] : null;
-        _next = at >= 0 && at < gallery.Items.Length - 1 ? gallery.Items[at + 1] : null;
+        // The one before and the next are those of the gallery as it lists them: what shows the years, then what states no time.
+        var listed = gallery.Items.AddRange(gallery.WithoutTime);
+        var at = listed.IndexOf(item);
+        _previous = at > 0 ? listed[at - 1] : null;
+        _next = at >= 0 && at < listed.Length - 1 ? listed[at + 1] : null;
     }
 
     private static string? Named(string? id) => string.IsNullOrEmpty(id) || id.Any(char.IsWhiteSpace) ? null : id;

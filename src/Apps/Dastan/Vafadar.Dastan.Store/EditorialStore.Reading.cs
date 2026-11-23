@@ -67,6 +67,20 @@ public sealed partial class EditorialStore
         .. _context.Records.AsNoTracking().Where(record => record.CollectionId == collectionId && record.Group == group).OrderBy(record => record.Position).AsEnumerable().Select(Info),
     ];
 
+    /// <summary>
+    /// Returns the identifiers of the entities of a collection whose record names a type – the themes of a
+    /// collection, which a form offers apart from what an item can show. One reading of the store, whatever
+    /// the number of entities.
+    /// </summary>
+    /// <param name="collectionId">The collection.</param>
+    /// <param name="type">The type as a record writes it.</param>
+    public ImmutableHashSet<string> EntitiesOfType(string collectionId, string type) =>
+    [
+        .. _context.Records.AsNoTracking().Where(record => record.CollectionId == collectionId && record.Group == "entities")
+            .Select(record => new { record.RecordId, record.Body }).AsEnumerable()
+            .Where(record => (string?)JsonNode.Parse(record.Body)!["type"] == type).Select(record => record.RecordId),
+    ];
+
     /// <summary>Returns a record with its content, or nothing when the store does not hold it.</summary>
     public RecordView? Record(string collectionId, string group, string recordId)
     {
