@@ -16,6 +16,8 @@ and the checks of the repository are green.
 ## A. Development – this line of work
 
 Begins when the owner says so. Each item is built whole – with its tests and its documents – before the next.
+How each is built – the files, the rules, the tests, the documents – is in the
+[delivery plan](delivery-plan.md), section 25 (A6 is 25.1, A5 is 25.2, A1 to A4 are 25.3 to 25.6).
 
 | # | Item | What is built | Done when | Status |
 |---|---|---|---|---|
