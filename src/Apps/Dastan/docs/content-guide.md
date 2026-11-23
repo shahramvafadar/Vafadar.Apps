@@ -41,6 +41,14 @@ All paths are below `src/Apps/Dastan/`. The files are input of the site and neve
 UTF-8 JSON; a field the format does not know is a problem, not a comment – remarks go into the fields the format
 has for them (`note`, `reviewNotes`).
 
+## Where files go
+
+There are two content roots, of the same shape (`samples`, `comparisons`, `media`). [`content/`](../content) is
+the small pilot the tests of the software are written against; it is changed with the software and not by
+content work. [`library/`](../library/README.md) is where the collections that are written to be published go;
+every file of it is checked with each build, and a file that cannot be used or that a template left unfinished
+fails it. Neither folder is served by the site as files, and neither is in an image of it.
+
 ## The command
 
 One command, three things it does. Run it from the root of the repository (.NET 10 SDK):

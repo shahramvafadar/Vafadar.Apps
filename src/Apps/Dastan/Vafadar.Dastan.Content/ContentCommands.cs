@@ -149,7 +149,12 @@ public static class ContentCommands
             if (Directory.Exists(path))
             {
                 var files = ContentCheck.FilesOf(path);
-                if (files.IsEmpty)
+                if (files.IsEmpty && ContentCheck.IsContentRoot(path))
+                {
+                    // A content root that is not written into yet: nothing the site could not use.
+                    reports.Add(new ContentReport(Path.GetFullPath(path), ContentCheck.EmptyRoot, [], [("collections", "0"), ("comparisons", "0")]));
+                }
+                else if (files.IsEmpty)
                 {
                     reports.Add(new ContentReport(Path.GetFullPath(path), null, [$"{path}: the folder holds no content file."], []));
                 }
@@ -212,7 +217,9 @@ public static class ContentCommands
                 output.WriteLine($"{report.File}{(report.Format is null ? null : $"  ({report.Format})")}");
                 if (report.IsUsable)
                 {
-                    output.WriteLine("  In order: the site can use this file.");
+                    output.WriteLine(report.Format == ContentCheck.EmptyRoot
+                        ? "  In order, and empty: the folder holds no collection and no comparison yet."
+                        : "  In order: the site can use this file.");
                     foreach (var (name, value) in report.Summary)
                     {
                         output.WriteLine($"    {name}: {value}");

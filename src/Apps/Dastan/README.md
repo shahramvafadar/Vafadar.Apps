@@ -134,7 +134,8 @@ has started, the first page of a run can take longer than the tests wait; a seco
 
 What is left to do for Dastan – development, content, trying it and going online – is in [the
 backlog](docs/backlog.md). The real collections are written into [`library/`](library/README.md) from [the work
-order for content](docs/content-work-order.md); `content/` is the pilot the tests are written against.
+order for content](docs/content-work-order.md); `content/` is the pilot the tests are written against. The site is started on the library with
+`dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Web --launch-profile library` (port 5220).
 
 Content is written apart from the software, by people and by assistants (D-042). [The guide for
 writers](docs/content-guide.md) says how; [the file of a collection](docs/collection-format.md) and [the file of a

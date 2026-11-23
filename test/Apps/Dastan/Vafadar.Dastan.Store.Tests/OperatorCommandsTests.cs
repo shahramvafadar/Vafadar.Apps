@@ -251,6 +251,49 @@ public sealed class OperatorCommandsTests : IDisposable
     }
 
     [Fact]
+    public void A_tree_is_written_from_a_file_once_and_names_nobody_in_what_it_prints()
+    {
+        string mina;
+        using (var store = PeopleStore.Open(People, _clock))
+        {
+            mina = store.Register("Mina", Password).Session!.Id;
+        }
+
+        var file = Path.Combine(_folder, "tree.json");
+        Directory.CreateDirectory(_folder);
+        File.WriteAllText(file, """
+            {
+              "format": "dastan-tree-0.1",
+              "name": "The Rad family",
+              "people": [ { "key": "zal", "name": "Zal Rad", "born": 1960 }, { "key": "sara", "name": "Sara Rad", "born": 1990 } ],
+              "parents": [ { "parent": "zal", "child": "sara" } ]
+            }
+            """);
+
+        var written = Run("people", "import-tree", "Mina", "--from", file, "--people", People);
+        Assert.Equal(ContentCommands.Done, written.Exit);
+        Assert.Contains("Mina: a tree was written – 2 persons, 1 link.", written.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("Rad", written.Output, StringComparison.Ordinal);
+
+        var again = Run("people", "import-tree", "Mina", "--from", file, "--people", People);
+        Assert.Equal(ContentCommands.NotUsable, again.Exit);
+        Assert.Contains("Nothing was written.", again.Output, StringComparison.Ordinal);
+
+        Assert.Equal(ContentCommands.NotUsable, Run("people", "import-tree", "Nobody", "--from", file, "--people", People).Exit);
+        Assert.Equal(ContentCommands.NotUsable, Run("people", "import-tree", "Mina", "--from", Path.Combine(_folder, "no-such.json"), "--people", People).Exit);
+
+        File.WriteAllText(file, """{ "format": "dastan-tree-0.1", "name": "Another", "people": [ { "key": "a", "name": "A", "town": "A town" } ] }""");
+        var refused = Run("people", "import-tree", "Mina", "--from", file, "--people", People);
+        Assert.Equal(ContentCommands.NotUsable, refused.Exit);
+        Assert.Contains("the field town is not one a tree file has", refused.Output, StringComparison.Ordinal);
+
+        using (var store = PeopleStore.Open(People, _clock))
+        {
+            Assert.Single(store.Trees(mina));
+        }
+    }
+
+    [Fact]
     public void A_tree_and_an_account_are_restricted_with_their_reasons_listed_and_lifted()
     {
         string tree, zal;
