@@ -106,6 +106,12 @@ internal static class OperatorCommands
           people person remove <tree> <person> --people <database>
               Takes the record of a person out of a tree, with its links – for a person who objects to
               being in it and whom the owner of the tree did not take out.
+
+          people import-tree <account name> --from <file> --people <database>
+              Writes a family tree from a file (dastan-tree-0.1) into the account of that name, as a new,
+              private tree of the account – for an account that asked for it. A file that cannot be
+              written whole writes nothing, and nothing is added to a tree that is there. The file
+              says a name, the years and the family of a person and nothing else, and is kept nowhere.
         """;
 
     /// <summary>Runs a command of the operator; <see langword="null"/> when it was not understood.</summary>
@@ -367,6 +373,39 @@ internal static class OperatorCommands
                     }
 
                     output.WriteLine($"{person}: taken out of the tree {tree}.");
+                    return ContentCommands.Done;
+                });
+
+            case ["people", "import-tree", var account, "--from", var file, "--people", var database]:
+                if (!File.Exists(file))
+                {
+                    output.WriteLine($"{file}: there is no such file.");
+                    return ContentCommands.NotUsable;
+                }
+
+                var (read, problems) = TreeFile.Read(File.ReadAllText(file));
+                if (read is null)
+                {
+                    output.WriteLine($"{Path.GetFileName(file)}: the file cannot be read as a tree; nothing was written. {problems.Length} {(problems.Length == 1 ? "problem" : "problems")}.");
+                    for (var index = 0; index < problems.Length; index++)
+                    {
+                        output.WriteLine($"  {index + 1}. {problems[index]}");
+                    }
+
+                    return ContentCommands.NotUsable;
+                }
+
+                return People(database, output, time, store =>
+                {
+                    var came = store.ImportTree(account, read);
+                    if (came.Tree is null)
+                    {
+                        output.WriteLine($"Nothing was written. {came.Problem}");
+                        return ContentCommands.NotUsable;
+                    }
+
+                    // What was written is said in numbers: the output of a command names nobody of a family.
+                    output.WriteLine($"{account}: a tree was written – {came.People} {(came.People == 1 ? "person" : "persons")}, {came.Links} {(came.Links == 1 ? "link" : "links")}. Its identifier is {came.Tree}.");
                     return ContentCommands.Done;
                 });
 
