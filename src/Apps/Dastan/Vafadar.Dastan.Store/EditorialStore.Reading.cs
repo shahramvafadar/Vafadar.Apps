@@ -81,6 +81,42 @@ public sealed partial class EditorialStore
             .Where(record => (string?)JsonNode.Parse(record.Body)!["type"] == type).Select(record => record.RecordId),
     ];
 
+    /// <summary>
+    /// Returns the themes of other collections that the editors say are the same theme as a theme of a
+    /// collection (ADR 0027, step 25.4): those that carry one of its identifiers of an outside catalogue, both
+    /// marked as exact. A record that is no theme, or a theme without such an identifier, has none.
+    /// </summary>
+    /// <param name="collectionId">The collection of the theme.</param>
+    /// <param name="recordId">The identifier of the theme.</param>
+    public ImmutableArray<(string Collection, string RecordId, string Label)> SameThemeElsewhere(string collectionId, string recordId)
+    {
+        static IEnumerable<(string Issuer, string Value)> Exact(JsonNode body) =>
+            (body["identifiers"] as JsonArray ?? [])
+                .Where(identifier => (string?)identifier?["match"] == "exact" && identifier?["issuer"] is not null && identifier["value"] is not null)
+                .Select(identifier => (((string)identifier!["issuer"]!).Trim().ToUpperInvariant(), ((string)identifier["value"]!).Trim()));
+
+        if (Record(collectionId, "entities", recordId) is not { } theme || (string?)theme.Body["type"] != "Theme")
+        {
+            return [];
+        }
+
+        var named = Exact(theme.Body).ToHashSet();
+        if (named.Count == 0)
+        {
+            return [];
+        }
+
+        return
+        [
+            .. _context.Records.AsNoTracking().Where(record => record.CollectionId != collectionId && record.Group == "entities")
+                .OrderBy(record => record.CollectionId).ThenBy(record => record.Position)
+                .Select(record => new { record.CollectionId, record.RecordId, record.Body }).AsEnumerable()
+                .Select(record => (record.CollectionId, record.RecordId, Body: JsonNode.Parse(record.Body)!))
+                .Where(record => (string?)record.Body["type"] == "Theme" && Exact(record.Body).Any(named.Contains))
+                .Select(record => (record.CollectionId, record.RecordId, (string?)record.Body["label"] ?? record.RecordId)),
+        ];
+    }
+
     /// <summary>Returns a record with its content, or nothing when the store does not hold it.</summary>
     public RecordView? Record(string collectionId, string group, string recordId)
     {

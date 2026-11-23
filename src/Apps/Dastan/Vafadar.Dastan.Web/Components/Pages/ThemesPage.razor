@@ -1,0 +1,146 @@
+@page "/themes"
+@page "/themes/{Collection}/{Id}"
+@using System.Collections.Immutable
+@inject Visitor Visitor
+@inject DastanLibrary Library
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The themes of the site (D-083, step 25.4): what the editors gathered pictures under, across the collections.
+   A theme that several collections have is one theme here – the editors say so with the same identifier of
+   the same catalogue, marked as exact; a name joins nothing. Each collection is asked through its own
+   projection, at the stage this visitor has read it to: a theme of a later stage is neither named nor counted,
+   and its pictures are not shown. *@
+@if (_theme is { } theme)
+{
+    var first = theme.From(Collection);
+    var name = Visitor.Text(first.Theme.Label).Value;
+    var title = string.Format(CultureInfo.CurrentCulture, T["Themes_TitleOne"], name);
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+    <HeadContent><meta name="robots" content="noindex, follow" /></HeadContent>
+
+    <header class="page-header">
+        <p class="meta"><a href="themes">@T["Themes_Title"]</a></p>
+        <h1>@title</h1>
+        <p class="lead">@T[theme.IsShared ? "Themes_LeadShared" : "Themes_LeadOne"]</p>
+    </header>
+
+    @foreach (var one in theme.In)
+    {
+        var site = Library.Find(one.Collection)!;
+        var gallery = Visitor.Of(site)!.Gallery(one.Theme.Id)!;
+        var heading = $"theme-in-{one.Collection}";
+        <section class="theme-collection" aria-labelledby="@heading">
+            <h2 id="@heading"><a href="@one.Collection"><Loc Text="one.Subject.Label" /></a></h2>
+            <p class="meta">
+                @* The name the collection gives the theme: collections keep their own words. *@
+                <a href="@($"{one.Collection}/entity/{one.Theme.Id}/gallery")"><Loc Text="one.Theme.Label" /></a>
+                – @string.Format(CultureInfo.CurrentCulture, T["Themes_Count"], Visitor.Number(one.Items))
+            </p>
+            <ul class="cards gallery-cards" role="list">
+                @foreach (var item in gallery.Items)
+                {
+                    var viewer = $"{one.Collection}/media/{item.Id}?entity={Uri.EscapeDataString(one.Theme.Id.Value)}";
+                    var picture = site.ContentFile(item.Kind == MediaKind.Video ? item.Poster : item.File) is null
+                        ? null
+                        : item.Kind == MediaKind.Video ? MediaAddress.Poster(one.Collection, item.Id) : MediaAddress.File(one.Collection, item.Id);
+                    <li class="card media-card">
+                        @if (picture is not null)
+                        {
+                            <a class="thumb" href="@viewer" tabindex="-1" aria-hidden="true"><img src="@picture" alt="" loading="lazy" decoding="async" /></a>
+                        }
+                        <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+                        <h3><a href="@viewer"><Loc Text="item.Label" /></a></h3>
+                        <p><Loc Text="item.CaptionAt(one.Theme.Id)" /></p>
+                    </li>
+                }
+                @foreach (var item in gallery.References)
+                {
+                    @* A work the site may not show stands here as a reference; its record is on the page of its collection. *@
+                    <li class="card media-card media-reference">
+                        <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+                        <h3><a href="@($"{one.Collection}/entity/{one.Theme.Id}/gallery#{item.Id}")"><Loc Text="item.Label" /></a></h3>
+                        <p><Loc Text="item.Caption" /></p>
+                    </li>
+                }
+            </ul>
+            @if (Visitor.Of(site)!.Overview().StoryContinues)
+            {
+                <p class="note">@T["Gallery_EmptyHint"] <a href="@($"{one.Collection}#reading")">@T["Reading_Change"]</a></p>
+            }
+        </section>
+    }
+}
+else if (_listed)
+{
+    <PageTitle>@T["Themes_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="./">@T["Nav_Discover"]</a></p>
+        <h1>@T["Themes_Title"]</h1>
+        <p class="lead">@T["Themes_Lead"]</p>
+    </header>
+
+    @if (_themes.IsEmpty)
+    {
+        @* The same sentence whether no theme exists or none has been reached yet. *@
+        <p class="note" role="status">@T["Themes_None"]</p>
+    }
+    else
+    {
+        <ul class="cards themes" role="list">
+            @foreach (var shared in _themes)
+            {
+                var first = shared.In[0];
+                <li class="card theme-card">
+                    <h2><a href="@($"themes/{first.Collection}/{first.Theme.Id}")"><Loc Text="first.Theme.Label" /></a></h2>
+                    <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Themes_Count"], Visitor.Number(shared.Items))</p>
+                    <p>
+                        @T["Themes_In"]
+                        @for (var index = 0; index < shared.In.Length; index++)
+                        {
+                            var one = shared.In[index];
+                            @(index == 0 ? " " : T["Explore_Aside_And"].Value)<a href="@one.Collection"><Loc Text="one.Subject.Label" /></a>
+                        }
+                    </p>
+                    @if (first.Theme.Summary is { } summary)
+                    {
+                        <p><Loc Text="summary" /></p>
+                    }
+                </li>
+            }
+        </ul>
+    }
+}
+
+@code {
+    private ImmutableArray<SharedTheme> _themes = [];
+    private SharedTheme? _theme;
+    private bool _listed;
+
+    /// <summary>Gets or sets the collection of the theme in the address, or nothing for the list.</summary>
+    [Parameter]
+    public string? Collection { get; set; }
+
+    /// <summary>Gets or sets the identifier of the theme in the address.</summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _themes = ThemesOfSite.For(Library, Visitor);
+        if (Collection is null)
+        {
+            _listed = true;
+            return;
+        }
+
+        // A theme the visitor has not read to yet and one that does not exist are the same page: not found.
+        var known = !string.IsNullOrWhiteSpace(Id) && !Id.Any(char.IsWhiteSpace);
+        _theme = known ? _themes.Find(Collection, new EntityId(Id!)) : null;
+        if (_theme is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}

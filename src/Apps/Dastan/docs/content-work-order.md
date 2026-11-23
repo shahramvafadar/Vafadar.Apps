@@ -341,7 +341,9 @@ A collection is complete without a picture, and none is asked for in the first p
   and its `sourceUrl`, it stands in the gallery as a reference to its holder.
 * `publicRenderEligibility` is not yours to set to `allowed`.
 * What a picture shows is said in `depictedEntityIds`, the time it shows in `depictedTime`, and its themes in
-  `themeIds` – a theme is an entity of the type `Theme` of the same collection.
+  `themeIds` – a theme is an entity of the type `Theme` of the same collection. A theme that another collection
+  has too carries the same identifier of the same catalogue as that one, marked `exact` – look at the themes
+  the library has before you write a new one.
 
 ## 7. The owner's family tree
 

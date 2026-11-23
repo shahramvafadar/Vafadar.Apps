@@ -305,6 +305,10 @@ collection offers every theme a reader may see something under; the gallery of a
   of scholarship. Every other entity names at least one source.
 * Nothing depicts a theme: `depictedEntityIds` names whom and what an item shows, `themeIds` what it is
   gathered under. Naming a theme in the first or anything else in the second is a problem.
+* The same theme in another collection: give both themes the same identifier of the same catalogue in
+  `identifiers`, with `"match": "exact"`. The site then shows what stands under them on one page
+  (`/themes/<collection>/<theme>`), each collection under its own name. A name joins nothing; two themes of one
+  collection must not carry the same exact identifier.
 * A theme whose name gives something of a story away gets the stage from which it may be told; its items belong
   to that stage or a later one.
 

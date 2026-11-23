@@ -1299,6 +1299,19 @@ other tests count. *Written down:* ADR 0027 addendum, the format page ("Themes")
 order part 6. *Not part of it:* a hierarchy of themes; a theme of the whole site that belongs to no
 collection.
 
+*Done on 2026-11-23.* *Built:* `SharedThemes` – the themes of the collections a reader may see, joined only by
+the same exact identifier of the same catalogue, in the order of the site; the rule that a collection has a
+theme once; the pages `/themes` and `/themes/<collection>/<theme>` – a theme is addressed by any collection
+that has it, and the page shows every collection under its own name with the name it gives the theme –; on
+the gallery of a theme the other collections that have it and the way to all together, and on the galleries
+of a site with several collections the way to the themes of the site; the search of the site, which finds a
+shared theme once; in the tool of the editors, on the record of a theme, the themes of other collections
+that carry its identifier. *Other than planned:* the address of a theme of the site names a collection and
+its theme, not the identifier of a catalogue, so that no address has to be invented; the form of the editors
+had the identifiers of an entity already. The value of an identifier is compared as it is written and its
+issuer without regard to case, as for a place. *Tried:* `SharedThemesTests` (6), `SharedThemesPagesTests` (7,
+English and Persian), `SharedThemesStoreTests` (1).
+
 **25.5 More that an account says about itself (backlog A3).** D-086 gave an account words about itself and a
 picture. *To build, each as a field with an audience of its own that begins at "nobody else":*
 

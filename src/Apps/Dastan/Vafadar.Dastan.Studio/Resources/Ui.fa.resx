@@ -885,4 +885,10 @@
   <data name="Proposals_PageNote" xml:space="preserve">
     <value>نشانی‌ای که یک بازدیدکننده نوشته؛ کسی آن را بررسی نکرده است</value>
   </data>
+  <data name="Theme_Same_Title" xml:space="preserve">
+    <value>همین موضوع در مجموعه‌ای دیگر</value>
+  </data>
+  <data name="Theme_Same_Lead" xml:space="preserve">
+    <value>این موضوع‌ها یکی از شناسه‌های این موضوع را با تطبیق دقیق دارند. سایت آنچه زیر آن‌هاست را با هم نشان می‌دهد، هر کدام زیر نام مجموعهٔ خودش. نام به‌تنهایی چیزی را یکی نمی‌کند.</value>
+  </data>
 </root>

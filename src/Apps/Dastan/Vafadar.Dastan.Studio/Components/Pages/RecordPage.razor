@@ -37,6 +37,22 @@
             <JsonView Node="record.Body" />
         </section>
 
+        @if (_sameTheme.Length > 0)
+        {
+            @* A theme that another collection has too (ADR 0027, step 25.4): both carry the same identifier of the
+               same catalogue as exact. The site shows their pictures on one page; each keeps its own name. *@
+            <section aria-labelledby="same-theme">
+                <h2 id="same-theme">@T["Theme_Same_Title"]</h2>
+                <p class="note">@T["Theme_Same_Lead"]</p>
+                <ul>
+                    @foreach (var (collection, id, label) in _sameTheme)
+                    {
+                        <li><a href="@($"{collection}/record/entities/{id}")"><bdi>@label</bdi></a> – <bdi dir="ltr">@collection</bdi></li>
+                    }
+                </ul>
+            </section>
+        }
+
         @if (_statements.Count > 0)
         {
             <section aria-labelledby="review">
@@ -232,6 +248,7 @@
 
     private RecordView? _record;
     private List<RecordChange> _history = [];
+    private System.Collections.Immutable.ImmutableArray<(string Collection, string RecordId, string Label)> _sameTheme = [];
     private List<StatementState> _statements = [];
     private List<string>? _reviewProblems;
     private List<string>? _changeProblems;
@@ -309,6 +326,7 @@
         }
 
         _record = Store.Record(Collection, Group, Record);
+        _sameTheme = Group == "entities" ? Store.SameThemeElsewhere(Collection, Record) : [];
         _form = _record is null ? null : FormContext.Of(Store, Collection);
         _texts = _record is null ? [] : Store.Texts(Collection, Group, Record);
         _dated = _record is null || Group != "entities" ? [] : Store.DatedTexts(Collection, Record);

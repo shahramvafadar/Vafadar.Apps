@@ -3,6 +3,7 @@
 @page "/{Collection}/event/{Step}/gallery"
 @inject Visitor Visitor
 @inject DastanSite Site
+@inject DastanLibrary Library
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 @inject TimeProvider Clock
@@ -37,6 +38,22 @@
                     @Choice(gallery.Entity?.Id == theme.Theme.Id, $"{Site.Collection}/entity/{theme.Theme.Id}/gallery", $"{Visitor.Text(theme.Theme.Label).Value} ({Visitor.Number(theme.Items)})")
                 }
             </p>
+            @if (_elsewhere is { } shared)
+            {
+                @* The same theme in another collection (step 25.4): the editors say so, a name does not. *@
+                <p class="chart-tool theme-elsewhere">
+                    <span class="chart-tool-name">@T["Themes_AlsoIn"]</span>
+                    @foreach (var other in shared.In.Where(one => one.Collection != Site.Collection))
+                    {
+                        <a href="@($"{other.Collection}/entity/{other.Theme.Id}/gallery")"><Loc Text="other.Subject.Label" /></a>
+                    }
+                    <a href="@($"themes/{Site.Collection}/{gallery.Entity!.Id}")">@T["Themes_Together"]</a>
+                </p>
+            }
+            else if (Library.Collections.Length > 1)
+            {
+                <p class="chart-tool"><a href="themes">@T["Themes_All"]</a></p>
+            }
         </nav>
     }
 
@@ -235,6 +252,7 @@
     private string _backName = string.Empty;
     private string _context = string.Empty;
     private bool _continues;
+    private SharedTheme? _elsewhere;
     private string _here = string.Empty;
 
     // The state of exploring one name; nothing for the pictures of a step or of the whole collection.
@@ -322,6 +340,7 @@
                 // A theme gathers pictures; nothing shows it. The page says which of the two rules it follows.
                 var name = Visitor.Text(entity.Label).Value;
                 var theme = _gallery.Rule == GalleryRule.OfTheme;
+                _elsewhere = theme && ThemesOfSite.For(Library, Visitor).Find(Site.Collection, entity.Id) is { IsShared: true } shared ? shared : null;
                 _title = string.Format(CultureInfo.CurrentCulture, T[theme ? "Gallery_TitleTheme" : "Gallery_TitleEntity"], name);
                 _lead = string.Format(CultureInfo.CurrentCulture, T[theme ? "Gallery_LeadTheme" : "Gallery_LeadEntity"], name);
                 _back = $"{Site.Collection}/entity/{entity.Id}";

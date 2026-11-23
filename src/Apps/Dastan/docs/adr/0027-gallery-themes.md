@@ -54,3 +54,30 @@ collection.
 
 `MediaThemesTests` (the reader, the rules of a collection, what a reader is offered at each stage, nothing of a
 later stage disclosed), `GalleryThemesTests` (the pages in English and Persian), `StudioThemesTests` (the form).
+
+## Addendum of 2026-11-23: a theme across collections (step 25.4, D-088)
+
+The decision left a theme a record of one collection, and named "a theme across collections" as what nobody
+had asked for. The owner asked for it.
+
+* **Who says that two themes are one.** The editors, in the one way the collections have for it
+  (ADR 0023, DOM-003): both themes carry the same identifier of the same outside catalogue, marked `exact` –
+  the Art & Architecture Thesaurus, Iconclass, a list the editors keep. The issuer is compared without regard
+  to case, the value as it is written. A name joins nothing, a `close` identifier joins nothing, and what
+  stands under two themes joins nothing.
+* **A collection has a theme once.** Two themes of one collection that carry the same exact identifier are a
+  problem of the collection.
+* **What a reader is told.** Each collection is asked through its own projection, at the stage this reader has
+  read it to. A theme of a later stage of one collection is not named, not counted and not joined because
+  another collection has it too; asked for by its address it is a page that does not exist.
+* **The pages.** `/themes` lists every theme with something under it, a shared one once, with its collections.
+  `/themes/<collection>/<theme>` is the page of that theme: every collection that has it under its own name,
+  with the name that collection gives the theme, its pictures and its references to works, each leading into
+  its own collection. A shared theme has one page under the address of each of its collections. The gallery
+  of a theme in a collection says where else the theme is.
+* **The search of the site** finds a shared theme once and leads to that page.
+* **The tool of the editors** shows, on the record of a theme, the themes of other collections that carry one
+  of its identifiers as exact.
+
+Not built, and not asked for: themes above themes; a theme of the site that belongs to no collection; a page
+that orders the pictures of several collections into one list – each collection keeps its own order.

@@ -4317,4 +4317,37 @@
   <data name="Family_Years" xml:space="preserve">
     <value>برای سال‌های {0} نشان داده شده. نسب زمانی ندارد و همیشه رسم می‌شود؛ همسری وقتی رسم می‌شود که در این سال‌ها برقرار بوده یا زمانی برایش گفته نشده باشد.</value>
   </data>
+  <data name="Themes_Title" xml:space="preserve">
+    <value>موضوع‌ها</value>
+  </data>
+  <data name="Themes_Lead" xml:space="preserve">
+    <value>آنچه ویراستاران تصویرها و ویدیوها را زیر آن گرد آورده‌اند، در همهٔ مجموعه‌های سایت – تا جایی که هر یک را خوانده‌اید.</value>
+  </data>
+  <data name="Themes_None" xml:space="preserve">
+    <value>موضوعی برای نمایش در اینجا نیست.</value>
+  </data>
+  <data name="Themes_TitleOne" xml:space="preserve">
+    <value>موضوع «{0}»</value>
+  </data>
+  <data name="Themes_LeadOne" xml:space="preserve">
+    <value>تصویرها و ویدیوهایی که ویراستاران زیر این موضوع گرد آورده‌اند، تا جایی که خوانده‌اید.</value>
+  </data>
+  <data name="Themes_LeadShared" xml:space="preserve">
+    <value>چند مجموعه این موضوع را دارند. هر کدام زیر نام خودش آمده، با آنچه از آن خوانده‌اید.</value>
+  </data>
+  <data name="Themes_Count" xml:space="preserve">
+    <value>{0} مورد برای دیدن</value>
+  </data>
+  <data name="Themes_In" xml:space="preserve">
+    <value>در:</value>
+  </data>
+  <data name="Themes_AlsoIn" xml:space="preserve">
+    <value>این موضوع همچنین در</value>
+  </data>
+  <data name="Themes_Together" xml:space="preserve">
+    <value>همه با هم</value>
+  </data>
+  <data name="Themes_All" xml:space="preserve">
+    <value>موضوع‌های همهٔ مجموعه‌ها</value>
+  </data>
 </root>
