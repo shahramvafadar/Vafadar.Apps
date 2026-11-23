@@ -85,18 +85,27 @@ year zero.
   "continuity": "notAsserted" }
 
 { "kind": "unknown" }
+
+{ "kind": "inapplicable" }
 ```
 
 The first is something that happened in a year; the second "about" a year; the third between two years; the
 fourth something that lasted – a reign, a dynasty –, whose start and end may each be `known`, `between`
-(with `earliest` and `latest`) or `unknown`; the last says that nobody knows. Only a relation with the scope
-`outside_the_story` and a statement in `dated` carry a time; a relation of a story never does.
+(with `earliest` and `latest`) or `unknown`; `unknown` says that nobody knows, and `inapplicable` that there
+is none – somebody who lives has no time of death, a part of a poem no years.
+
+* `approximate` is written only as `true`; an exact year leaves it out (`"approximate": false` is refused).
+* A time of the calendar is carried by a fact that says when, a statement in `dated`, another name of an
+  entity, `depictedTime` of a media item, and a relation with the scope `outside_the_story`. A relation of a
+  story and a step of a story never carry one.
 
 ### Tradition and dispute
 
 * A year that tradition gives and history does not confirm – the founding of Rome in 753 BCE, the Xia – is
-  written with `approximate: true` and the word "traditionally" in its `label` or `summary`, and its source is
-  one that says it is tradition.
+  written as the tradition gives it, and said to be tradition in words: "traditionally" in the `summary` of
+  the entity, or in the `label` of the relation or of the dated statement that carries the year (a fact has
+  no words of its own for it). Its source is one that says it is tradition. `approximate: true` only where
+  the source says "about".
 * Where scholars give different years – the fall of the Shang, the beginning of the Arsacids – write the
   window between the earliest and the latest year the sources give, and say in the `summary` that the sources
   differ. Do **not** set `reviewStatus` to `disputed`: that is a decision of a review.
@@ -184,13 +193,16 @@ A collection that tells no story: `"events": []`, no `editionContext`, one readi
 | What a house ruled | relation `governs`, dynasty → region, with `time` | |
 | A capital | relation `capitalOf`, place → dynasty or region, with `time` where the capital moved | |
 | Who took part in what, and where | `participantIn` (person or dynasty → event), `tookPlaceIn` (event → place), `during` (event → period) | |
-| A written work of the time (the Behistun inscription, the Records of the Grand Historian) | entity `Work` or `Object`, with `authorOf`, `commissionerOf`, `keptAt` | |
+| A written work of the time (the Behistun inscription, the Records of the Grand Historian) | entity `Work` – then `authorOf` and `commissionerOf` say who wrote and who ordered it – or `Object`, a thing: `authorOf`, `commissionerOf`, `illustratorOf`, `patronOf` and `dedicatedTo` read to a `Work` only; who made an `Object` is its fact `creator`, where it is kept its relation `keptAt` | |
 
 A fact is written in `facts` of its entity and says exactly one thing: a time (`"time"`), an entity of the same
 file (`"entityId"`) or words (`"text"`) – which one is fixed by the fact: `born`, `died`, `founded`, `dissolved`,
 `began`, `ended`, `happened`, `created` say a time; `seat`, `where`, `partOf`, `birthPlace`, `deathPlace`,
 `keptAt`, `founder`, `creator`, `participant` name an entity (a place where the fact is about a place);
 `knownFor`, `role`, `field` are words. The check says so when a fact is given the wrong one.
+
+**A fact is stated once** – only `founder`, `creator` and `participant` may be stated several times. `seat`
+names one place: the chief capital. Every capital, with its years, is a `capitalOf` relation.
 
 ```json
 { "id": "dynasty-achaemenid", "type": "Dynasty", "label": "…", "summary": "…", "sourceIds": ["src-…"], "spoilerLevel": 0,
@@ -207,9 +219,9 @@ file (`"entityId"`) or words (`"text"`) – which one is fixed by the fact: `bor
   "scope": { "kind": "outside_the_story", "eventIds": [] } }
 ```
 
-These shapes are kept as made-up files the tests of the software check with every build –
-`test/Apps/Dastan/Fixtures/work-order-shapes/a-history.json` and `a-work-without-a-story.json`; look at them
-for a whole file in each shape. They were tried on the site on 2026-11-23 with made-up records: a `Region` as what
+These shapes are kept as made-up files the tests of the software check with every build, in
+`test/Apps/Dastan/Fixtures/work-order-shapes/`: `a-history.json` with its Persian `a-history.fa.json`,
+`a-work-without-a-story.json` and `places-people-were-at.json`. Look at them for a whole file in each shape. They were tried on the site on 2026-11-23 with made-up records: a `Region` as what
 a collection is about, a `Dynasty`, its `Office`, rulers with `holderOf` and a time, `memberOf`, `successorOf`,
 `parentOf`, `founderOf`, `governs`, `capitalOf`, a `Period`, an `Event` with `participantIn`, `tookPlaceIn` and
 `during`.
@@ -237,9 +249,10 @@ each collection names its own side of it, with the same identifier for the same 
 stories lie on.
 
 Because it names stories (`NarrativeArc` entities), the reader takes it for a collection of a work and asks
-for an **`editionContext`** – with `workId` `work-shahnameh`, the text it follows and, in `scope`, that it is the
-work as a whole and tells no story – and then `language` is left out (`editionContext.summaryLanguage` says
-it). Do not begin this file from `template subject` without adding it; the check says "editionContext is
+for an **`editionContext`** – `id`, `workId` `work-shahnameh`, `baseText` and `baseUrl` (https) of the text it
+follows, `criticalPrintEdition`, `summaryLanguage`, and in `scope` that it is the work as a whole and tells no
+story (the block of the made-up `a-work-without-a-story.json` shows all of them) – and then `language` is
+left out (`editionContext.summaryLanguage` says it). Do not begin this file from `template subject` without adding it; the check says "editionContext is
 missing" otherwise. This shape – a `Work` as what the collection is about, stories as entities, no events –
 was tried with the check and on the site on 2026-11-23.
 
@@ -248,22 +261,36 @@ was tried with the check and on the site on 2026-11-23.
   (`verses`, `approximate`); its sources as the scholarship names them – the prose Shahnameh of Abu Mansur,
   Daqiqi's verses.
 * **Its three parts** as `Period` entities of the poem's own world – the mythical, the heroic, the historical –
-  each `partOf` the work, said to be a division of scholarship, not of the poem.
+  each tied to the work by a **relation** `partOf` (a `Period` has no fact `partOf`), with the facts `began`
+  and `ended` as `{ "kind": "inapplicable" }` – a part of a poem has no years –, and said in its summary to be
+  a division of scholarship, not of the poem.
 * **Its dynasties and kings in order:** the Pishdadians and the Kayanians with every king the poem names in its
   order; the Ashkanians as the poem has them; the Sasanians as the poem names them. A king of the poem is a
   `Character`, not a `Person`, also where a historical king stands behind the name. Where the scholarship says
   who that is, write that `Person` into **this** file – a relation never leads into another file – with the
   identifier the history collection gives the same person, and a `portrayalOf` relation from the character to
   it; only where a source says so.
+* **How kings and houses of the poem are written.** A line of kings of the poem (Pishdadians, Kayanians) is a
+  `Dynasty`, a house of heroes (the house of Sam) a `Family`; both with the fact `founded` as
+  `{ "kind": "inapplicable" }` – they are of the poem and have no year – and no `seat` unless the poem names
+  one (a place of the poem is a `NarrativePlace` or `NarrativeRegion`, never a `Place`). Kingship is an
+  `Office` ("King of Iran, in the poem") with `holderOf` from each king – a `Character` – and `successorOf`
+  from each king to the one before; none of these carries a time.
+* **The scope of a relation in this file.** What is of the real world – who wrote the poem, where a manuscript
+  is kept, which edition is an edition of the work – has the scope `outside_the_story`. A story being part of
+  the work has `work_structure`, with `storyId` that story. Everything the poem tells – who is whose parent,
+  who is of which house, who was king after whom – has `background_lineage`, with `storyId` the story (a
+  `NarrativeArc` of this file) in which the poem tells it; a relation of a story always names its story. The
+  made-up `a-work-without-a-story.json` shows each of the three.
 * **Its heroes and their houses:** the house of Sam and Zal and Rostam; the houses of Gudarz, of Tus, of
-  Afrasiab and Turan; with `parentOf` and `memberOf` as the poem tells them, and as `background_lineage` or
-  `outside_the_story` in scope as the format page says.
+  Afrasiab and Turan; with `parentOf` and `memberOf` as the poem tells them.
 * **Its stories** as `NarrativeArc` entities, `partOf` the work, in the order of the poem – the ones that have a
   collection of their own, and the chief others by name with a summary of two sentences that gives no ending
   away.
 * **Its manuscripts and editions:** the Florence manuscript, the London manuscript of 1276, the Baysonghori
   and the Shah Tahmasp Shahnameh (`Object`, with `created`, `keptAt`, `editionOf`); the editions of Moscow and
-  of Khaleghi-Motlagh (`Work`, `editionOf`, with their editors). The fact `keptAt` of an object names a
+  of Khaleghi-Motlagh (`Work`, `editionOf`; the editor is the fact `creator` of the edition – there is no
+  relation for an editor, and `authorOf` is not one). The fact `keptAt` of an object names a
   **place** – the town or the building; the library or museum that holds it is said by the relation `keptAt`,
   from the object to that institution.
 * The facts these kinds need: a `Work` `creator` and `created`; a `NarrativeArc` `partOf` (the work); a
@@ -278,15 +305,35 @@ is about, never how it ends.
 ### 4.3 Rostam and Sohrab, whole
 
 `samples/rostam-and-sohrab.json`. Begin from a copy of `content/samples/shahnameh-pilot.json` – copy it, do not
-edit it – and keep its identifiers, its five reading stages and its `editionContext`. Change `datasetId` to
-`rostam-and-sohrab` – its `worldId` is `world-shahnameh` already, and its media name it –, and take over its
-statements **with their state of review as they are**.
+edit it – and keep its identifiers and its five reading stages. Of its `editionContext` keep `id`, `workId`
+and the text it follows, and rewrite `scope` to what the file now covers; set `documentVersion` and
+`preparedAt`, and bring `status` and the notes in `inputContract` to what the file now is.
+
+The copy is three things, and the check refuses it until all three are there (tried on 2026-11-23):
+
+1. the file itself, with its `datasetId` changed;
+2. its Persian, `content/samples/shahnameh-pilot.fa.json`, copied to `rostam-and-sohrab.fa.json` with the same new
+   `datasetId` – a translation names the collection it belongs to;
+3. all eight files of `content/media/`, copied into `library/media/` – the video and the image that are the
+   project's own, and the files they name: the poster, the captions, the transcript, the other rendition and
+   the document of the reviewers. The items `media-dastan-parentage-video` and
+   `media-dastan-family-illustration` name them by `../media/…`. These are the only such files in the library.
+
+The new `datasetId` is `rostam-and-sohrab`. Its `worldId` is `world-shahnameh` already, and its media name it.
+Take over its statements **with their state of review as they are**.
+
+The fourteen entities of the pilot carry their Persian name in the file itself (`labelFa`), and the pilot's
+Persian gives only their summaries. Leave that as it is: a Persian name given twice – in `labelFa` and as
+`label` in the translation – is refused. Every **new** entity, in every file, gets its Persian name in the
+translation and no `labelFa`.
 
 Then complete it against the text on Ganjoor, section by section:
 
-* Every step of the telling from Rostam's hunt to the mourning, each with `order`, its section as
-  `passageLocator`, its sources, and for everybody and everything in it an `entityAssociations` row with the
-  role in words and the `presence` – ask `vocabulary` for the values.
+* Every step of the telling from Rostam's hunt to the mourning, each with `order`, `orderBasis` `narrative`,
+  `temporalExpression` `{ "kind": "narrative_position" }`, its sources, and for everybody and everything in it
+  an `entityAssociations` row with the role in words and the `presence` – ask `vocabulary` for the values. A
+  step has **no** `passageLocator`: the section of the text is named in the `passageLocator` of its source –
+  one source for each section of Ganjoor.
 * Everybody the telling names and the pilot leaves out – among them Gordafarid, Hojir, Human, Barman,
   Zhende Razm, Kay Kavus, Gudarz, Giv, Tus, Gostaham – with what they do, each at the stage in which the
   telling first names them.
@@ -325,6 +372,13 @@ Actium). Every period and event is `proposed`. The kinds of a source are written
 a collection: `primaryText`, `scholarlyReference`, `museumRecord`, `rightsPolicy` – ask `vocabulary comparison`.
 Its `publication` stays `localDemoAllowed` true and `publicReleaseApproved` false, and its `status` `draft`.
 
+* Set `show.from` and `show.to` to the span of the collections; the copy shows 600 BCE to 700 CE.
+* The copy holds periods and events after 100 CE (the Sasanians, the caliphates, Sui, Tang, the later Rome).
+  Take them out, and take their entries out of the copied Persian file as well: a translation that names
+  something the comparison does not have is refused.
+* The time of a period is `kind` `period`; of an event usually `occurrence`.
+* The translation of a comparison names it by `id`, not by `datasetId`.
+
 ### 4.6 Places people can have been at
 
 `samples/places.json`. A small collection so that a visitor who says where they were finds an entry to choose
@@ -332,13 +386,16 @@ Its `publication` stays `localDemoAllowed` true and `publicReleaseApproved` fals
 owner names, if the owner names any – each a `University`, `Company` or `Organisation` with `founded`, `seat`,
 its seat as a `Place` with a `position`, its other and earlier names in `names`, and one identifier of a
 catalogue (`identifiers`, `match` `exact`) – a ROR identifier for a university is the usual one. Source: the
-institution's own page for its founding and seat.
+institution's own page for its founding and seat, as a source of the kind `scholarly_reference`. A `Company` also states `field` – what it does, in words –,
+an `Organisation` `founded` and `field`, and what the collection is about (`subject-places`, a `Concept`) its
+`field`. The made-up `places-people-were-at.json` of the tests shows the whole shape.
 
 ### 4.7 Persian
 
 For every file, a translation beside it (`dastan-translation-0.1` and `dastan-comparison-translation-0.1`),
 `"review": "draft"`. Translate every label and summary, the roles in the events, the names of the reading
-stages, the facts said in words. Names of people and places in the Persian form that is usual – for the
+stages, the facts said in words – but for the entities taken over from the pilot, whose Persian name is in
+`labelFa` (4.3). Names of people and places in the Persian form that is usual – for the
 Shahnameh the form of the poem, for China and Rome the form Persian books of history use; where there is no
 usual form, transliterate and keep it the same everywhere. Do not translate what you did not write in English
 first, and do not let the Persian say more than the English.
@@ -359,7 +416,12 @@ dotnet run --project $content --no-build -- check $library/samples/ancient-iran.
 
 The exit code is the answer: `0` in order, `1` a file cannot be used. A **notice** – a `REPLACE` text, an
 address at `example.org` – means the file is not finished. A file is done when the check says "in order" with
-no notice.
+no notice **and the site starts on the library** ("Looking at it"): the check reads file by file, and only
+the site sees two collections about the same thing, a collection named like an address of the site, or a
+correspondence to a stage another collection does not have.
+
+Every file in `library/` is read by the tests of the software with every build, and a problem or a notice
+fails them for everybody. Never commit a file with a `REPLACE` text or a problem – also not on a branch.
 
 Work **one collection at a time, in batches**: sources first, then the entities that cite them, then the
 relations between them, then the Persian. Check after every batch of twenty to thirty records, not once at the
@@ -371,7 +433,7 @@ end – the check names every problem, and two hundred at once cannot be read.
 2. The comparison.
 3. `shahnameh`, then `rostam-and-sohrab`, then `siavash`.
 4. `places`.
-5. The owner's family tree (part 7), when the software for it is there (backlog, A5).
+5. The owner's family tree (part 7), when the owner has made the account (backlog, B9).
 
 ### Looking at it
 
@@ -396,7 +458,7 @@ one house, the search, and the same in Persian.
   sources it rests on and what was left out for want of a source.
 * Commit as the owner and name no tool, assistant or vendor anywhere – in no file, message or comment. The
   hooks of the repository refuse it; do not go around them.
-* Add the row of the collection to [the backlog](backlog.md) as done, with the day.
+* Set the status of its row in [the backlog](backlog.md) (B1 to B10) to done, with the day.
 * After a push, look at the checks of the repository once, after about twenty minutes.
 
 ### On this machine
@@ -409,7 +471,8 @@ one house, the search, and the same in Persian.
 ## 6. Pictures
 
 A collection is complete without a picture, and none is asked for in the first pass. **You bring no file of a
-picture into the repository.** The site shows a picture only when it is the project's own
+picture into the repository** – but for the project's own files that Rostam and Sohrab takes over from the
+pilot (4.3). The site shows a picture only when it is the project's own
 (`rights.status` `original_project_content`) – and making pictures is not part of this task. A work of a
 museum or a library is written as a **reference**: its record, without a file, with the way to the page of its
 holder. That is how the pilot writes its paintings; look at `media-met-452419` in
@@ -417,7 +480,9 @@ holder. That is how the pilot writes its paintings; look at `media-met-452419` i
 
 If you add references:
 
-* The item has no file of its own here: no `url` that is a path. It has `sourceUrl` – the public page of the
+* The item has no file of its own here. With `permission_not_verified` it has no `url` at all – any is
+  refused; only with `verified_open_access_metadata` may `url` be the `https` address of the holder's file, and
+  never a path. It has `sourceUrl` – the public page of the
   work at its holder, `https` – and the record of the holder: `catalogTitle`, `accessionNumber`, `creditLine`,
   `creator`, `creationDate` as the catalogue words it.
 * `rights.status` is `permission_not_verified`, with a `statement` that says what the holder's page says and
@@ -432,6 +497,9 @@ If you add references:
   `Theme` of the same collection. A theme that another collection has too carries the same identifier of the
   same catalogue as that one, marked `exact` – look at the themes the library has before you write a new one.
 * `depictedContext.worldId` is the `worldId` of the collection.
+* References are for the story collections in this pass: `depictedContext.kind` knows a later artwork of a
+  literary narrative and a diagram of today, and neither says what a relief or a bronze of a history is. For a
+  history, write the thing as an `Object` entity, and name the gap in your hand-over note.
 * An item of a story belongs to the stage of what it shows: a painting of the ending is of the last stage.
 
 ## 7. The owner's family tree
@@ -488,7 +556,7 @@ public, do not ask anybody to agree to anything.
 
 A collection is finished when:
 
-* the check says "in order" with no notice, for the file and its Persian;
+* the check says "in order" with no notice, for the file and its Persian, and the site starts on the library;
 * every statement cites a source you read for it, and every time is as exact as its source and not more;
 * nothing of an early stage gives a later one away (stories), and the work collection gives no ending away;
 * you looked at it in a browser, in English and in Persian, and nothing reads as a fault;

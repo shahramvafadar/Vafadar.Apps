@@ -14,7 +14,8 @@ public sealed class WorkOrderShapesTests
 
     [Theory]
     [InlineData("a-history.json", "Region 1, Dynasty 1, Office 1, Person 2, Place 1, Period 1, Event 1")]
-    [InlineData("a-work-without-a-story.json", "Work 1, Person 2, Period 1, NarrativeArc 2, Character 1, Object 1, Place 1, Organisation 1")]
+    [InlineData("a-work-without-a-story.json", "Work 2, Person 2, Period 1, NarrativeArc 2, Character 3, Object 1, Place 1, Organisation 1, Dynasty 1, Family 1, Office 1")]
+    [InlineData("places-people-were-at.json", "Concept 1, University 1, Company 1, Organisation 1, Place 1")]
     public void A_shape_of_the_work_order_is_one_the_site_can_use(string file, string kinds)
     {
         var report = ContentCheck.File(Path.Combine(Shapes, file));
@@ -22,6 +23,17 @@ public sealed class WorkOrderShapesTests
         Assert.True(report.IsUsable, string.Join('\n', report.Problems));
         Assert.Empty(report.Notices);
         Assert.Contains(report.Summary, line => line.Name == "entities" && line.Value.Contains(kinds, StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void A_translation_beside_a_collection_is_read_with_it()
+    {
+        var report = ContentCheck.File(Path.Combine(Shapes, "a-history.json"));
+
+        Assert.Contains(report.Summary, line => line.Name == "translations" && line.Value == "fa");
+
+        // And by itself: a translation is checked with the file it translates.
+        Assert.True(ContentCheck.File(Path.Combine(Shapes, "a-history.fa.json")).IsUsable);
     }
 
     [Fact]

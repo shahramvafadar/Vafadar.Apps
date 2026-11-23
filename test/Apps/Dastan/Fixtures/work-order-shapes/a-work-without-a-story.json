@@ -291,6 +291,117 @@
           "text": "A library."
         }
       ]
+    },
+    {
+      "id": "dynasty-of-the-poem",
+      "type": "Dynasty",
+      "label": "The first house of kings of the poem",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "inapplicable"
+          }
+        }
+      ]
+    },
+    {
+      "id": "family-of-heroes",
+      "type": "Family",
+      "label": "A house of heroes",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "inapplicable"
+          }
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-the-poem",
+      "type": "Office",
+      "label": "King, in the poem",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-of-the-poem"
+        }
+      ]
+    },
+    {
+      "id": "character-second-king",
+      "type": "Character",
+      "label": "The second king of the poem",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "A king of the heroic part."
+        }
+      ]
+    },
+    {
+      "id": "character-hero",
+      "type": "Character",
+      "label": "A hero",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "A hero of the heroic part."
+        }
+      ]
+    },
+    {
+      "id": "work-edition",
+      "type": "Work",
+      "label": "A made-up edition",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-poet"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1960
+            }
+          }
+        }
+      ]
     }
   ],
   "relations": [
@@ -363,8 +474,8 @@
       }
     },
     {
-      "id": "relation-story-part",
-      "from": "story-first",
+      "id": "relation-part-part",
+      "from": "period-heroic",
       "to": "work-shahnameh",
       "type": "partOf",
       "directionality": "directed",
@@ -380,10 +491,154 @@
       }
     },
     {
-      "id": "relation-part-part",
-      "from": "period-heroic",
+      "id": "relation-story-part",
+      "from": "story-first",
       "to": "work-shahnameh",
       "type": "partOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-first",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-second-story-part",
+      "from": "story-second",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-second",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-holds",
+      "from": "character-king",
+      "to": "office-king-of-the-poem",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "background_lineage",
+        "storyId": "story-first",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-second-king-holds",
+      "from": "character-second-king",
+      "to": "office-king-of-the-poem",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "background_lineage",
+        "storyId": "story-first",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-second-king-follows",
+      "from": "character-second-king",
+      "to": "character-king",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "background_lineage",
+        "storyId": "story-first",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-of-house",
+      "from": "character-king",
+      "to": "dynasty-of-the-poem",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "background_lineage",
+        "storyId": "story-first",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-father",
+      "from": "character-king",
+      "to": "character-second-king",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "background_lineage",
+        "storyId": "story-first",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hero-of-house",
+      "from": "character-hero",
+      "to": "family-of-heroes",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "background_lineage",
+        "storyId": "story-first",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-edition",
+      "from": "work-edition",
+      "to": "work-shahnameh",
+      "type": "editionOf",
       "directionality": "directed",
       "label": "Made up",
       "sourceIds": [
