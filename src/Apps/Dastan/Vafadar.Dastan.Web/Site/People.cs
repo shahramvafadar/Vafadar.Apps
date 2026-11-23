@@ -136,6 +136,49 @@ public static class PeopleEndpoints
             };
         });
 
+        // The facts an account states about itself (step 25.5): each with an audience of its own.
+        forms.MapPost("/facts", (HttpContext context, AccountDesk desk, [FromForm] string? born, [FromForm] string? bornShown, [FromForm] string? town, [FromForm] string? country,
+            [FromForm] string? livesShown, [FromForm] string? languagesShown, [FromForm] string? link, [FromForm] string? linkShown, [FromForm] string? returnUrl) =>
+        {
+            if (Scope(bornShown) is not { } bornFor || Scope(livesShown) is not { } livesFor || Scope(languagesShown) is not { } languagesFor || Scope(linkShown) is not { } linkFor)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            var me = Me(context);
+            var address = ReturnAddress.Safe(returnUrl, $"{Person}/{me}");
+            var end = address.IndexOfAny(['?', '#']);
+            address = end < 0 ? address : address[..end];
+            var page = address.EndsWith($"{Person}/{me}", StringComparison.Ordinal) && address.Length <= Person.Length + me.Length + 13 ? address : $"{Person}/{me}";
+
+            // A year is typed as digits, also Persian ones; what is no number is no year.
+            int? year = null;
+            if (!string.IsNullOrWhiteSpace(born))
+            {
+                var digits = new string([.. born.Trim().Select(character => char.IsDigit(character) ? (char)('0' + char.GetNumericValue(character)) : character)]);
+                if (!int.TryParse(digits, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var typed))
+                {
+                    return Results.Redirect($"{page}?form=facts&problem=year#facts");
+                }
+
+                year = typed;
+            }
+
+            var facts = new AccountFacts(
+                year, new(bornFor.Kind, bornFor.Circle),
+                town, country, new(livesFor.Kind, livesFor.Circle),
+                // The languages are the boxes that were ticked: one field of the form, said several times.
+                [.. context.Request.Form["languages"].Where(tag => !string.IsNullOrWhiteSpace(tag)).Select(tag => tag!.Trim())], new(languagesFor.Kind, languagesFor.Circle),
+                link, new(linkFor.Kind, linkFor.Circle));
+            return store.StateFacts(me, facts) switch
+            {
+                "done" => Results.Redirect($"{page}?said=stated"),
+                "refused" => Results.BadRequest(),
+                var problem => Results.Redirect($"{page}?form=facts&problem={problem}#facts"),
+            };
+        });
+
         // Blocking (PRIV-009): one-sided, and the other account is not told.
         forms.MapPost("/block", (HttpContext context, AccountDesk desk, [FromForm] string? account, [FromForm] string? returnUrl) =>
         {

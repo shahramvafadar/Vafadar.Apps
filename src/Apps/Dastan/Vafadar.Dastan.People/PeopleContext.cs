@@ -50,6 +50,45 @@ public sealed class StoredVisitor
     /// own. It is shown to who may see that photograph, and to nobody else.
     /// </summary>
     public string? Picture { get; set; }
+
+    /// <summary>Gets or sets the year of the common era the visitor says they were born in (step 25.5) – a year, never a day –; nothing for none.</summary>
+    public int? BornYear { get; set; }
+
+    /// <summary>Gets or sets who may see that year (<c>ScopeKind</c>).</summary>
+    public int BornScope { get; set; }
+
+    /// <summary>Gets or sets the circle, when the year is for one.</summary>
+    public long? BornCircle { get; set; }
+
+    /// <summary>Gets or sets the town the visitor says they live in, in their own words; nothing for none.</summary>
+    public string? Town { get; set; }
+
+    /// <summary>Gets or sets the country the visitor says they live in, in their own words; nothing for none.</summary>
+    public string? Country { get; set; }
+
+    /// <summary>Gets or sets who may see where the visitor lives (<c>ScopeKind</c>).</summary>
+    public int LivesScope { get; set; }
+
+    /// <summary>Gets or sets the circle, when where the visitor lives is for one.</summary>
+    public long? LivesCircle { get; set; }
+
+    /// <summary>Gets or sets the languages the visitor says they speak: tags, with commas between them; nothing for none.</summary>
+    public string? Languages { get; set; }
+
+    /// <summary>Gets or sets who may see the languages (<c>ScopeKind</c>).</summary>
+    public int LanguagesScope { get; set; }
+
+    /// <summary>Gets or sets the circle, when the languages are for one.</summary>
+    public long? LanguagesCircle { get; set; }
+
+    /// <summary>Gets or sets the address of a page of the visitor's own, under https; nothing for none.</summary>
+    public string? Link { get; set; }
+
+    /// <summary>Gets or sets who may see that address (<c>ScopeKind</c>).</summary>
+    public int LinkScope { get; set; }
+
+    /// <summary>Gets or sets the circle, when the address is for one.</summary>
+    public long? LinkCircle { get; set; }
 }
 
 /// <summary>
@@ -717,6 +756,10 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             visitor.Property(item => item.TermsVersion).HasMaxLength(20);
             visitor.Property(item => item.About).HasMaxLength(PeopleStore.LongestAccountAbout);
             visitor.Property(item => item.Picture).HasMaxLength(40);
+            visitor.Property(item => item.Town).HasMaxLength(PeopleStore.LongestPlaceOfAccount);
+            visitor.Property(item => item.Country).HasMaxLength(PeopleStore.LongestPlaceOfAccount);
+            visitor.Property(item => item.Languages).HasMaxLength(100);
+            visitor.Property(item => item.Link).HasMaxLength(PeopleStore.LongestLink);
             visitor.HasIndex(item => item.NameKey).IsUnique();
         });
 

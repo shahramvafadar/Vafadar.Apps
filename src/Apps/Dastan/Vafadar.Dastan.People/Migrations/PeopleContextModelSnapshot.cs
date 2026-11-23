@@ -879,14 +879,53 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<int>("AboutScope")
                         .HasColumnType("integer");
 
+                    b.Property<long?>("BornCircle")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("BornScope")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("BornYear")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("ClosedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("ClosedByOperator")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Country")
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Languages")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<long?>("LanguagesCircle")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("LanguagesScope")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Link")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<long?>("LinkCircle")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("LinkScope")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("LivesCircle")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("LivesScope")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -906,6 +945,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Town")
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
 
                     b.Property<DateTime?>("TermsAcceptedAt")
                         .HasColumnType("timestamp with time zone");

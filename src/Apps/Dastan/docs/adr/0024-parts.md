@@ -164,3 +164,25 @@ Not built: a date of birth, a place of living or any other fact of an account �
 would be a decision about what the site keeps of a person.
 
 Tests: `AccountDescriptionTests`, `AccountProfilePagesTests`, `TreePersonPagesTests`.
+
+## Addendum of 2026-11-23: the facts an account states about itself (step 25.5, D-088)
+
+D-086 gave an account a few words and a picture. On the owner's word it may also state four facts, and the
+rules are the ones of the words:
+
+* **What.** A year of birth – a year, never a day, from 1900 to last year; the town and the country it lives
+  in, in its own words, one line each; up to eight languages of a list, each shown by the name it gives
+  itself; one address of a page of its own, under https.
+* **None is asked for.** No form of the site requires one, and nothing works differently without them.
+* **Each has an audience of its own** – nobody else, one of the account's circles, everybody – and begins with
+  nobody else. A fact that is not stated keeps no audience. A circle that is given up takes what was for it
+  back to nobody else.
+* **A viewer is shown what each audience allows** and is not told what else there is (PRIV-012): an account
+  that states nothing and one that states nothing to this viewer have the same head. "See as" shows it as
+  another sees it. Who was blocked and a closed account are told nothing.
+* **What the site does not do with them.** No age is computed or shown. Nothing is used to find, sort or
+  suggest people, and the search for people does not search them. The place is words and is tied to no entry
+  of a collection and to no coordinates. The address is shown as a link that tells engines not to follow it
+  (`rel="nofollow noopener ugc"`) and is never fetched by the site.
+* **They are the account's.** The copy of one's data holds them with who each is shown to; closing the account
+  removes them with the account.

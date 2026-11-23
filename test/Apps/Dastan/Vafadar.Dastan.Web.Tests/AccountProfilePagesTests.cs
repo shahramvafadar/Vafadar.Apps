@@ -185,4 +185,114 @@ public sealed class AccountProfilePagesTests : IDisposable
         var sara = await Signed("Sara");
         Assert.DoesNotContain("Was at", Head(await _site.Visitor().Get($"/en/people/{await Me(sara)}")), StringComparison.Ordinal);
     }
+
+    private static Task<Page> State(Browser visitor, string id, params (string, string)[] fields) =>
+        visitor.Post("/preferences/people/facts", $"/en/people/{id}", [.. fields, ("returnUrl", $"/en/people/{id}")]);
+
+    private static (string, string)[] Audiences(string born = "private", string lives = "private", string languages = "private", string link = "private") =>
+        [("bornShown", born), ("livesShown", lives), ("languagesShown", languages), ("linkShown", link)];
+
+    [Theory]
+    [InlineData("en", "A few facts about you", "Born", "Lives in", "Languages", "A page of its own")]
+    [InlineData("fa", "چند نکته دربارهٔ شما", "زادهٔ سال", "ساکنِ", "زبان‌ها", "صفحه‌ای از خودش")]
+    public async Task The_facts_of_an_account_are_shown_in_its_head_to_who_each_is_for(string language, string title, string born, string lives, string languages, string link)
+    {
+        var mina = await Signed("Mina");
+        var id = await Me(mina);
+
+        // The form is the account's own, with one audience for each fact, each beginning with nobody else.
+        var own = WebUtility.HtmlDecode((await mina.Get($"/{language}/people/{id}")).Html);
+        Assert.Contains($"<h2 id=\"facts-title\">{title}</h2>", own, StringComparison.Ordinal);
+        foreach (var name in new[] { "born", "bornShown", "town", "country", "livesShown", "languages", "languagesShown", "link", "linkShown" })
+        {
+            Assert.Contains($"name=\"{name}\"", own, StringComparison.Ordinal);
+        }
+
+        Assert.DoesNotContain("facts-title", (await _site.Visitor().Get($"/{language}/people/{id}")).Html, StringComparison.Ordinal);
+
+        var sent = await State(mina, id,
+            [("born", "1985"), ("town", "Shiraz"), ("country", "Iran"), ("languages", "fa"), ("languages", "en"), ("link", "https://example.org/mina"),
+                .. Audiences(born: "public", lives: "public", languages: "public", link: "public")]);
+        Assert.Equal($"/en/people/{id}?said=stated", sent.Response.Headers.Location?.OriginalString);
+
+        var head = Head(await _site.Visitor().Get($"/{language}/people/{id}"));
+        Assert.Contains($"<dt>{born}</dt>", head, StringComparison.Ordinal);
+        Assert.Contains(language == "fa" ? "۱۹۸۵" : "1985", head, StringComparison.Ordinal);
+        Assert.Contains($"<dt>{lives}</dt>", head, StringComparison.Ordinal);
+        Assert.Contains("Shiraz", head, StringComparison.Ordinal);
+        Assert.Contains("Iran", head, StringComparison.Ordinal);
+        Assert.Contains($"<dt>{languages}</dt>", head, StringComparison.Ordinal);
+        Assert.Contains("<span lang=\"fa\" dir=\"auto\">فارسی</span>", head, StringComparison.Ordinal);
+        Assert.Contains("<span lang=\"en\" dir=\"auto\">English</span>", head, StringComparison.Ordinal);
+        Assert.Contains($"<dt>{link}</dt>", head, StringComparison.Ordinal);
+
+        // An address a visitor wrote is followed by no engine and opens with nothing of this page.
+        Assert.Contains("<a href=\"https://example.org/mina\" rel=\"nofollow noopener ugc\" dir=\"ltr\">https://example.org/mina</a>", head, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_fact_is_seen_by_who_its_own_audience_allows_and_looking_as_shows_it()
+    {
+        var mina = await Signed("Mina");
+        var id = await Me(mina);
+        await State(mina, id, [("born", "1985"), ("town", "Shiraz"), ("country", "Iran"), ("languages", "fa"), ("link", "https://example.org/mina"), .. Audiences(born: "public")]);
+
+        // Everybody: the year alone. The account itself: everything.
+        var stranger = Head(await _site.Visitor().Get($"/en/people/{id}"));
+        Assert.Contains("<dt>Born</dt>", stranger, StringComparison.Ordinal);
+        Assert.DoesNotContain("Shiraz", stranger, StringComparison.Ordinal);
+        Assert.DoesNotContain("example.org", stranger, StringComparison.Ordinal);
+        Assert.DoesNotContain("Languages", stranger, StringComparison.Ordinal);
+
+        var own = Head(await mina.Get($"/en/people/{id}"));
+        Assert.Contains("Shiraz", own, StringComparison.Ordinal);
+        Assert.Contains("example.org", own, StringComparison.Ordinal);
+
+        // Looking as everybody shows the account what a stranger is shown.
+        var seenAs = Head(await mina.Get($"/en/people/{id}?as=public"));
+        Assert.Contains("<dt>Born</dt>", seenAs, StringComparison.Ordinal);
+        Assert.DoesNotContain("Shiraz", seenAs, StringComparison.Ordinal);
+
+        // Taken back by emptying: nothing is left for anybody, and the head has no such list.
+        await State(mina, id, Audiences(born: "public", lives: "public", languages: "public", link: "public"));
+        Assert.DoesNotContain("account-facts", Head(await _site.Visitor().Get($"/en/people/{id}")), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("born", "85", "year")]
+    [InlineData("born", "nineteen", "year")]
+    [InlineData("born", "2026", "year")]
+    [InlineData("link", "http://example.org/", "link")]
+    [InlineData("link", "example.org", "link")]
+    [InlineData("languages", "xx", "languages")]
+    public async Task What_is_no_fact_is_refused_with_its_reason_and_keeps_nothing(string field, string value, string problem)
+    {
+        var mina = await Signed("Mina");
+        var id = await Me(mina);
+
+        var sent = await State(mina, id, [(field, value), .. Audiences(born: "public", link: "public", languages: "public")]);
+
+        Assert.Equal($"/en/people/{id}?form=facts&problem={problem}#facts", sent.Response.Headers.Location?.OriginalString);
+        Assert.Contains("role=\"alert\"", (await mina.Get($"/en/people/{id}?form=facts&problem={problem}")).Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("account-facts\"", Head(await _site.Visitor().Get($"/en/people/{id}")), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Only_the_account_states_its_facts_and_a_year_is_read_in_persian_digits()
+    {
+        var mina = await Signed("Mina");
+        var id = await Me(mina);
+
+        // Who is not signed in states nothing; an audience that is none is no request.
+        Assert.Equal("/refused", (await _site.Visitor().Post("/preferences/people/facts", "/en", [("born", "1985"), .. Audiences()])).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await State(mina, id, ("born", "1985"), ("bornShown", "everybody-and-more"), ("livesShown", "private"), ("languagesShown", "private"), ("linkShown", "private"))).Response.Headers.Location?.OriginalString);
+
+        // Somebody else's form writes onto their own page.
+        var sara = await Signed("Sara");
+        var saraId = await Me(sara);
+        var sent = await sara.Post("/preferences/people/facts", $"/en/people/{saraId}", [("born", "۱۹۹۰"), .. Audiences(born: "public"), ("returnUrl", $"/en/people/{id}")]);
+        Assert.Equal($"/people/{saraId}?said=stated", sent.Response.Headers.Location?.OriginalString);
+        Assert.DoesNotContain("1990", Head(await _site.Visitor().Get($"/en/people/{id}")), StringComparison.Ordinal);
+        Assert.Contains("1990", Head(await _site.Visitor().Get($"/en/people/{saraId}")), StringComparison.Ordinal);
+    }
 }

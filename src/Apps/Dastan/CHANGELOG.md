@@ -461,3 +461,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   is left out and counted, what states no time is shown apart, and descent is always drawn.
 - A theme that several collections have is one theme: the page of the themes of the site lists it once, and its
   page shows the pictures of every collection that has it, each under its own name and as far as you have read it.
+- Your page can say a few facts about you, if you choose: the year you were born, where you live, the languages
+  you speak and one address of a page of your own. None is asked for; each is seen by who you choose and begins
+  with nobody else.

@@ -76,8 +76,9 @@ public sealed partial class PeopleStore
             var photos = Shown(viewer, _context.Photos.AsNoTracking().Where(photo => photo.Owner == id).ToList()).ToList();
 
             // What the account says about itself, by the same scopes asked for this viewer.
-            var (about, picture) = Described(_context.Visitors.AsNoTracking().Single(visitor => visitor.Id == id), viewer);
-            return new(kind, name, new ProfileView(person, [.. shown]) { Affiliations = AffiliationsShown(account, id), About = about, Picture = picture }, photos, AlbumsShown(viewer, id, empty: false));
+            var seen = _context.Visitors.AsNoTracking().Single(visitor => visitor.Id == id);
+            var (about, picture) = Described(seen, viewer);
+            return new(kind, name, new ProfileView(person, [.. shown]) { Affiliations = AffiliationsShown(account, id), About = about, Picture = picture, Facts = FactsShown(seen, viewer) }, photos, AlbumsShown(viewer, id, empty: false));
         }
         finally
         {

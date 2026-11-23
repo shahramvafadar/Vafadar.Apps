@@ -4350,4 +4350,67 @@
   <data name="Themes_All" xml:space="preserve">
     <value>موضوع‌های همهٔ مجموعه‌ها</value>
   </data>
+  <data name="Person_Fact_Born" xml:space="preserve">
+    <value>زادهٔ سال</value>
+  </data>
+  <data name="Person_Fact_Lives" xml:space="preserve">
+    <value>ساکنِ</value>
+  </data>
+  <data name="Person_Fact_Languages" xml:space="preserve">
+    <value>زبان‌ها</value>
+  </data>
+  <data name="Person_Fact_Link" xml:space="preserve">
+    <value>صفحه‌ای از خودش</value>
+  </data>
+  <data name="Person_Facts_Title" xml:space="preserve">
+    <value>چند نکته دربارهٔ شما</value>
+  </data>
+  <data name="Person_Facts_Note" xml:space="preserve">
+    <value>هیچ‌کدام از این‌ها الزامی نیست. هر کدام مخاطب خودش را دارد و در آغاز برای هیچ‌کس دیگر نیست. هر زمان بخواهید با خالی کردن هر کدام آن را پس می‌گیرید.</value>
+  </data>
+  <data name="Person_Facts_Born_Label" xml:space="preserve">
+    <value>سال تولد</value>
+  </data>
+  <data name="Person_Facts_Born_How" xml:space="preserve">
+    <value>سالی میلادی، مانند 1985 – هرگز روز. سنی از آن نشان داده نمی‌شود.</value>
+  </data>
+  <data name="Person_Facts_Town" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="Person_Facts_Country" xml:space="preserve">
+    <value>کشور</value>
+  </data>
+  <data name="Person_Facts_Lives_How" xml:space="preserve">
+    <value>به زبان خودتان. بدون خیابان و نشانی.</value>
+  </data>
+  <data name="Person_Facts_Languages_How" xml:space="preserve">
+    <value>زبان‌هایی که صحبت می‌کنید – حداکثر {0}.</value>
+  </data>
+  <data name="Person_Facts_Link_Label" xml:space="preserve">
+    <value>نشانی صفحه‌ای از خودتان</value>
+  </data>
+  <data name="Person_Facts_Link_How" xml:space="preserve">
+    <value>یک نشانی که با https:// آغاز می‌شود. سایت آن را باز نمی‌کند و به موتورهای جست‌وجو می‌گوید دنبالش نروند.</value>
+  </data>
+  <data name="Person_Facts_Shown" xml:space="preserve">
+    <value>چه کسی این را می‌بیند</value>
+  </data>
+  <data name="Person_Facts_Save" xml:space="preserve">
+    <value>نگه داشتن این نکته‌ها</value>
+  </data>
+  <data name="Person_Said_stated" xml:space="preserve">
+    <value>نکته‌های مربوط به شما نگه داشته شد.</value>
+  </data>
+  <data name="Person_Facts_Problem_year" xml:space="preserve">
+    <value>این سالِ تولد نیست: سالی بین 1900 و سال گذشته، با رقم.</value>
+  </data>
+  <data name="Person_Facts_Problem_long" xml:space="preserve">
+    <value>شهر یا کشور بیش از اندازه بلند است، یا چیزی دارد که یک خط متن نیست.</value>
+  </data>
+  <data name="Person_Facts_Problem_languages" xml:space="preserve">
+    <value>حداکثر هشت زبان از فهرست انتخاب کنید.</value>
+  </data>
+  <data name="Person_Facts_Problem_link" xml:space="preserve">
+    <value>این نشانی یک صفحه نیست: باید با https:// آغاز شود و نام یک سایت را داشته باشد.</value>
+  </data>
 </root>

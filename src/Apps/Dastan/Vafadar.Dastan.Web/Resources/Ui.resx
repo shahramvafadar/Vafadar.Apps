@@ -4350,4 +4350,67 @@
   <data name="Themes_All" xml:space="preserve">
     <value>Themes of all collections</value>
   </data>
+  <data name="Person_Fact_Born" xml:space="preserve">
+    <value>Born</value>
+  </data>
+  <data name="Person_Fact_Lives" xml:space="preserve">
+    <value>Lives in</value>
+  </data>
+  <data name="Person_Fact_Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="Person_Fact_Link" xml:space="preserve">
+    <value>A page of its own</value>
+  </data>
+  <data name="Person_Facts_Title" xml:space="preserve">
+    <value>A few facts about you</value>
+  </data>
+  <data name="Person_Facts_Note" xml:space="preserve">
+    <value>None of this is asked for. Each has its own audience and begins with nobody else. You can take each back at any time by emptying it.</value>
+  </data>
+  <data name="Person_Facts_Born_Label" xml:space="preserve">
+    <value>Year of birth</value>
+  </data>
+  <data name="Person_Facts_Born_How" xml:space="preserve">
+    <value>A year of the common era, such as 1985 – never a day. No age is shown from it.</value>
+  </data>
+  <data name="Person_Facts_Town" xml:space="preserve">
+    <value>Town</value>
+  </data>
+  <data name="Person_Facts_Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Person_Facts_Lives_How" xml:space="preserve">
+    <value>In your own words. No street, no address.</value>
+  </data>
+  <data name="Person_Facts_Languages_How" xml:space="preserve">
+    <value>The languages you speak – at most {0}.</value>
+  </data>
+  <data name="Person_Facts_Link_Label" xml:space="preserve">
+    <value>Address of a page of your own</value>
+  </data>
+  <data name="Person_Facts_Link_How" xml:space="preserve">
+    <value>One address that begins with https://. The site does not open it and tells search engines not to follow it.</value>
+  </data>
+  <data name="Person_Facts_Shown" xml:space="preserve">
+    <value>Who sees this</value>
+  </data>
+  <data name="Person_Facts_Save" xml:space="preserve">
+    <value>Keep these facts</value>
+  </data>
+  <data name="Person_Said_stated" xml:space="preserve">
+    <value>The facts about you are kept.</value>
+  </data>
+  <data name="Person_Facts_Problem_year" xml:space="preserve">
+    <value>That is not a year of birth: a year between 1900 and last year, as digits.</value>
+  </data>
+  <data name="Person_Facts_Problem_long" xml:space="preserve">
+    <value>The town or the country is too long, or holds what is no line of text.</value>
+  </data>
+  <data name="Person_Facts_Problem_languages" xml:space="preserve">
+    <value>Choose at most eight languages of the list.</value>
+  </data>
+  <data name="Person_Facts_Problem_link" xml:space="preserve">
+    <value>That is not the address of a page: it begins with https:// and names a site.</value>
+  </data>
 </root>
