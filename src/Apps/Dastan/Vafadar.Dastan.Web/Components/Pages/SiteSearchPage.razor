@@ -34,8 +34,25 @@
     }
     else
     {
-        <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_Results"], _query, Visitor.Number(_found.Sum(group => group.Hits.Length)))</p>
-        @foreach (var (collection, name, hits) in _found)
+        <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_Results"], _query, Visitor.Number(_found.Sum(group => group.Hits.Length) + _themes.Count))</p>
+        @if (_themes.Count > 0)
+        {
+            @* A theme several collections have is found once (step 25.4), with the way to its pictures in all of them. *@
+            <section aria-labelledby="found-themes">
+                <h2 id="found-themes">@T["Themes_Title"]</h2>
+                <ul class="cards" role="list">
+                    @foreach (var theme in _themes)
+                    {
+                        var first = theme.In[0];
+                        <li class="card">
+                            <h3><a href="@($"themes/{first.Collection}/{first.Theme.Id}")"><Loc Text="first.Theme.Label" /></a></h3>
+                            <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Themes_Count"], Visitor.Number(theme.Items))</p>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+        @foreach (var (collection, name, hits) in _found.Where(group => !group.Hits.IsEmpty))
         {
             <section aria-labelledby="@($"found-{collection.Collection}")">
                 <h2 id="@($"found-{collection.Collection}")"><a href="@collection.Collection"><Loc Text="name" /></a></h2>
@@ -65,6 +82,7 @@
 
     private string _query = string.Empty;
     private List<(DastanSite Collection, LocalizedText Name, ImmutableArray<SearchHit> Hits)> _found = [];
+    private List<SharedTheme> _themes = [];
 
     /// <summary>Gets or sets what the visitor typed.</summary>
     [SupplyParameterFromQuery(Name = "q")]
@@ -80,6 +98,27 @@
             if (Visitor.Of(collection) is { } projection && projection.Search(_query, MostHits) is { IsEmpty: false } hits)
             {
                 _found.Add((collection, projection.Overview().Subject.Label, hits));
+            }
+        }
+
+        // A theme that several collections have is one hit, not one in each.
+        if (_found.Any(group => group.Hits.Any(hit => hit.Entity.Type == EntityTypes.Theme)))
+        {
+            var themes = ThemesOfSite.For(Library, Visitor);
+            for (var index = 0; index < _found.Count; index++)
+            {
+                var (collection, name, hits) = _found[index];
+                var shared = hits.Where(hit => hit.Entity.Type == EntityTypes.Theme && themes.Find(collection.Collection, hit.Entity.Id) is { IsShared: true }).ToList();
+                foreach (var hit in shared)
+                {
+                    var theme = themes.Find(collection.Collection, hit.Entity.Id)!;
+                    if (!_themes.Contains(theme))
+                    {
+                        _themes.Add(theme);
+                    }
+                }
+
+                _found[index] = (collection, name, [.. hits.Except(shared)]);
             }
         }
     }

@@ -459,3 +459,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   or not at all, for an account that asked for it.
 - The years you choose are kept to by the page of a name and by its family tree as well: what states another time
   is left out and counted, what states no time is shown apart, and descent is always drawn.
+- A theme that several collections have is one theme: the page of the themes of the site lists it once, and its
+  page shows the pictures of every collection that has it, each under its own name and as far as you have read it.

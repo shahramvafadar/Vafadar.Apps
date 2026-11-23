@@ -4317,4 +4317,37 @@
   <data name="Family_Years" xml:space="preserve">
     <value>Shown for the years {0}. Descent states no time and is drawn at every time; a partnership is drawn when it held in these years or states no time.</value>
   </data>
+  <data name="Themes_Title" xml:space="preserve">
+    <value>Themes</value>
+  </data>
+  <data name="Themes_Lead" xml:space="preserve">
+    <value>What the editors gathered images and videos under, across the collections of the site – as far as you have read each.</value>
+  </data>
+  <data name="Themes_None" xml:space="preserve">
+    <value>There is no theme to show here.</value>
+  </data>
+  <data name="Themes_TitleOne" xml:space="preserve">
+    <value>Theme “{0}”</value>
+  </data>
+  <data name="Themes_LeadOne" xml:space="preserve">
+    <value>Images and videos the editors gathered under this theme, as far as you have read.</value>
+  </data>
+  <data name="Themes_LeadShared" xml:space="preserve">
+    <value>Several collections have this theme. Each stands under its own name, with what you have read of it.</value>
+  </data>
+  <data name="Themes_Count" xml:space="preserve">
+    <value>{0} to see</value>
+  </data>
+  <data name="Themes_In" xml:space="preserve">
+    <value>In:</value>
+  </data>
+  <data name="Themes_AlsoIn" xml:space="preserve">
+    <value>This theme also in</value>
+  </data>
+  <data name="Themes_Together" xml:space="preserve">
+    <value>All together</value>
+  </data>
+  <data name="Themes_All" xml:space="preserve">
+    <value>Themes of all collections</value>
+  </data>
 </root>

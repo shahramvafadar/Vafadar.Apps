@@ -268,6 +268,7 @@ public sealed class Catalogue
         public void Run()
         {
             CheckIdentifiersAcrossKinds();
+            CheckThemesAreApart();
             CheckInfo();
             CheckThreads();
             foreach (var entity in catalogue.Entities)
@@ -354,6 +355,21 @@ public sealed class Catalogue
         }
 
         // The editorial source uses one space of identifiers; a text that names two records would be ambiguous in it.
+        // Two themes that carry the same exact identifier are the same theme (ADR 0027): within one collection
+        // that is one theme written twice.
+        private void CheckThemesAreApart()
+        {
+            var named = catalogue.Entities
+                .Where(entity => entity.Type == EntityTypes.Theme)
+                .SelectMany(entity => entity.Identifiers.Where(identifier => identifier.Match == IdentifierMatch.Exact)
+                    .Select(identifier => (Key: (identifier.Issuer.Trim().ToUpperInvariant(), identifier.Value.Trim()), Identifier: identifier, Theme: entity.Id.Value)))
+                .GroupBy(one => one.Key);
+            foreach (var twice in named.Where(group => group.Select(one => one.Theme).Distinct().Count() > 1))
+            {
+                problems.Add($"{string.Join(" and ", twice.Select(one => one.Theme).Distinct())}: both themes carry the identifier {twice.First().Identifier.Value} of {twice.First().Identifier.Issuer} as exact; that says they are one theme, and a collection has a theme once.");
+            }
+        }
+
         private void CheckIdentifiersAcrossKinds()
         {
             var all = catalogue.Entities.Select(entity => entity.Id.Value)
