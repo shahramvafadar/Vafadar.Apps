@@ -354,6 +354,8 @@ dotnet Vafadar.Dastan.Content.dll people import-tree "<account name>" --from <fi
 * The tree is written whole or not at all, by the rules every tree keeps, as a new and private tree of the
   account. If the account has a tree of that name the command stops: nothing is added to a tree that is there.
 * No record is said to be an account: that is a claim on the site, confirmed by somebody else.
+* The history of the tree names the account as who added each person: the command acts for the account that
+  asked.
 * The command prints how many people and links it wrote and never a name. The file is read and kept nowhere;
   remove it when the tree is written, unless the account wants it kept.
 

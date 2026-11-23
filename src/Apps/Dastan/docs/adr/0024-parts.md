@@ -172,7 +172,8 @@ rules are the ones of the words:
 
 * **What.** A year of birth – a year, never a day, from 1900 to last year; the town and the country it lives
   in, in its own words, one line each; up to eight languages of a list, each shown by the name it gives
-  itself; one address of a page of its own, under https.
+  itself; one address of a page of its own, under https and written in the letters of ASCII – it is shown as it
+  was written, and a mark of direction or a look-alike letter could make it read as another address.
 * **None is asked for.** No form of the site requires one, and nothing works differently without them.
 * **Each has an audience of its own** – nobody else, one of the account's circles, everybody – and begins with
   nobody else. A fact that is not stated keeps no audience. A circle that is given up takes what was for it

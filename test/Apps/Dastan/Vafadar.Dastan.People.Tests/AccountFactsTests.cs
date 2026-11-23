@@ -135,6 +135,8 @@ public sealed class AccountFactsTests : IDisposable
     [InlineData("javascript:alert(1)")]
     [InlineData("https://example.org/a page")]
     [InlineData("mailto:mina@example.org")]
+    [InlineData("https://example.org/\u202Emoc.elpmaxe")]
+    [InlineData("https://exаmple.org/")]
     public void An_address_that_is_no_page_under_https_is_refused(string link)
     {
         Assert.Equal("link", _store.StateFacts(_mina, AccountFacts.None with { Link = link, Linked = Everybody }));

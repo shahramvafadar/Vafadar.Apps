@@ -87,6 +87,13 @@ public sealed class LibrarySiteTests
                 Assert.True(page.Status == HttpStatusCode.OK, $"{address} answered {(int)page.Status}.");
             }
         }
+
+        // The comparisons of the library, and what the collections of the site share.
+        foreach (var address in library.Comparisons.Select(comparison => $"/{language}/compare/{comparison.Id}").Append($"/{language}/themes").Append($"/{language}/search?q=a"))
+        {
+            var page = await visitor.Get(address);
+            Assert.True(page.Status == HttpStatusCode.OK, $"{address} answered {(int)page.Status}.");
+        }
     }
 
     [Fact]

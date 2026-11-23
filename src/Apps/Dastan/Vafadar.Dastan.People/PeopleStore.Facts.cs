@@ -187,9 +187,12 @@ public sealed partial class PeopleStore
         });
     }
 
-    // The address of a page somebody can open: absolute, under https, with a host and without a name or a password in it.
+    // The address of a page somebody can open: absolute, under https, with a host and without a name or a password
+    // in it – and written in the letters of ASCII alone. It is shown as it was written: a mark of direction or a
+    // letter of another script that looks like a Latin one could make it read as another address than it is. A
+    // name of a site in another script is written the way it is sent ("xn--…").
     private static bool IsPage(string written) =>
-        written.Length <= LongestLink && !written.Any(char.IsControl) && !written.Any(char.IsWhiteSpace)
+        written.Length <= LongestLink && written.All(letter => letter is > ' ' and < (char)127)
         && Uri.TryCreate(written, UriKind.Absolute, out var address) && address.Scheme == Uri.UriSchemeHttps
         && address.Host.Contains('.', StringComparison.Ordinal) && address.UserInfo.Length == 0;
 

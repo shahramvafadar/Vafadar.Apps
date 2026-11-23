@@ -105,6 +105,25 @@ public sealed class SharedThemesTests
     }
 
     [Fact]
+    public void Two_themes_of_one_collection_stay_two_also_when_a_theme_elsewhere_names_both()
+    {
+        // The story has Combat (T-1) and Lineage (T-2, T-3); another collection has one theme that carries T-1 and T-2.
+        var both = Read(4, sample =>
+        {
+            sample["entities"]!.AsArray().Add(Theme("theme-both", "Both", 0, ("T-1", "exact"), ("T-2", "exact")));
+            Under(sample, "media-met-452419", "theme-both");
+        });
+
+        foreach (var themes in new[] { SharedThemes.Of([("story", Story(4)), ("both", both)]), SharedThemes.Of([("both", both), ("story", Story(4))]) })
+        {
+            Assert.All(themes, theme => Assert.Equal(theme.In.Length, theme.In.Select(one => one.Collection).Distinct().Count()));
+            Assert.NotSame(themes.Find("story", new EntityId("theme-combat")), themes.Find("story", new EntityId("theme-lineage")));
+            Assert.Equal(2, themes.Length);
+            Assert.True(themes.Find("both", new EntityId("theme-both"))!.IsShared);
+        }
+    }
+
+    [Fact]
     public void A_site_without_themes_has_none()
     {
         Assert.Empty(SharedThemes.Of([("story", Read(4, _ => { }))]));

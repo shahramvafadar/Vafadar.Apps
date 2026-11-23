@@ -233,8 +233,8 @@ than one visitor at a time.
 ## Addendum of 2026-11-23: cards in sizes of their own (step 25.6, D-088)
 
 Every card of the drawing that moves was 220 by 72. Now a card has one of three sizes, and **the server says
-which** (`GraphCards`, the field `size` of a node) – a drawing never decides by itself what stands out, and
-the still drawing and the moving one are told the same.
+which** (`GraphCards`, the field `size` of a node) – a drawing never decides by itself what stands out. The
+still drawing of connections had a larger box for the name in the middle already; it has no compact cards.
 
 * **Main** – the name in the middle of a drawing of connections: wider, higher, larger letters and picture.
 * **Usual** – every other card; said by saying nothing.

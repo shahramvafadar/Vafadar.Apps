@@ -1,0 +1,412 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "shahnameh",
+  "worldId": "world-shahnameh",
+  "subjectId": "work-shahnameh",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-first",
+      "title": "A made-up source",
+      "url": "https://made-up.invalid/article",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "The made-up poem",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-poet"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
+          }
+        }
+      ],
+      "dated": [
+        {
+          "key": "work-shahnameh-verses",
+          "label": "Length",
+          "quantity": {
+            "value": 50000,
+            "unit": "verses",
+            "approximate": true
+          },
+          "sourceIds": [
+            "src-first"
+          ],
+          "spoilerLevel": 0,
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "id": "person-poet",
+      "type": "Person",
+      "label": "The poet",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1019
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Wrote the poem."
+        }
+      ]
+    },
+    {
+      "id": "period-heroic",
+      "type": "Period",
+      "label": "The heroic part",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "inapplicable"
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "inapplicable"
+          }
+        }
+      ]
+    },
+    {
+      "id": "story-first",
+      "type": "NarrativeArc",
+      "label": "The first story",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "story-second",
+      "type": "NarrativeArc",
+      "label": "The second story",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-king",
+      "type": "Character",
+      "label": "The king of the poem",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "A king of the heroic part."
+        }
+      ]
+    },
+    {
+      "id": "person-king",
+      "type": "Person",
+      "label": "The king of history",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "A king."
+        }
+      ]
+    },
+    {
+      "id": "object-manuscript",
+      "type": "Object",
+      "label": "The made-up manuscript",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "created",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1276
+            }
+          }
+        },
+        {
+          "fact": "keptAt",
+          "entityId": "place-library-town"
+        }
+      ]
+    },
+    {
+      "id": "place-library-town",
+      "type": "Place",
+      "label": "The town of the library",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "organisation-library",
+      "type": "Organisation",
+      "label": "The made-up library",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "field",
+          "text": "A library."
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-poet-author",
+      "from": "person-poet",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-portrayal",
+      "from": "character-king",
+      "to": "person-king",
+      "type": "portrayalOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-manuscript-edition",
+      "from": "object-manuscript",
+      "to": "work-shahnameh",
+      "type": "editionOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-manuscript-kept",
+      "from": "object-manuscript",
+      "to": "organisation-library",
+      "type": "keptAt",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-story-part",
+      "from": "story-first",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-part-part",
+      "from": "period-heroic",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "events": [],
+  "media": [],
+  "editionContext": {
+    "id": "edition-made-up",
+    "workId": "work-shahnameh",
+    "baseText": "A made-up text.",
+    "baseUrl": "https://made-up.invalid/text",
+    "criticalPrintEdition": "None.",
+    "scope": "The work as a whole, as a map of its stories; no story is told here.",
+    "summaryLanguage": "en",
+    "calendarMapping": null
+  }
+}

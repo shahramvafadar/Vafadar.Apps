@@ -308,7 +308,8 @@ collection offers every theme a reader may see something under; the gallery of a
 * The same theme in another collection: give both themes the same identifier of the same catalogue in
   `identifiers`, with `"match": "exact"`. The site then shows what stands under them on one page
   (`/themes/<collection>/<theme>`), each collection under its own name. A name joins nothing; two themes of one
-  collection must not carry the same exact identifier.
+  collection must not carry the same exact identifier – and stay two themes also where a theme of another
+  collection carries the identifiers of both.
 * A theme whose name gives something of a story away gets the stage from which it may be told; its items belong
   to that stage or a later one.
 

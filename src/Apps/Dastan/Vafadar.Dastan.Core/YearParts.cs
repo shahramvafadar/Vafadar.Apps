@@ -73,8 +73,9 @@ public static class YearParts
     /// <summary>
     /// Returns a family tree in a stretch of years. Descent states no time and is drawn at every time: a parent
     /// is a parent. A partnership that states a time is drawn only when it held in the years; one that states
-    /// none is drawn always. Somebody is drawn when a line that is drawn reaches them – and the one the tree is
-    /// about always.
+    /// none is drawn always. Somebody is drawn when the lines that are drawn lead to them from the one the tree is
+    /// about – a partner whose partnership is left out is still drawn as the parent of a child that is, and
+    /// not with a family of their own beside the tree.
     /// </summary>
     /// <param name="family">The family tree.</param>
     /// <param name="around">The entity the tree is about, or nothing for the families of a collection.</param>
@@ -90,14 +91,43 @@ public static class YearParts
 
         var partnerships = Of(family.Partnerships, edge => edge.Relation.Time, years, present);
         ImmutableArray<Edge> drawn = [.. family.Partnerships.Where(edge => partnerships.In.Contains(edge) || partnerships.WithoutTime.Contains(edge))];
-        var reached = family.Parentage.Concat(drawn).SelectMany(edge => new[] { edge.From.Id, edge.To.Id }).ToHashSet();
+        var parentage = family.Parentage;
+        HashSet<EntityId> reached;
+        if (around is { } centre)
+        {
+            // What the lines that are drawn lead to from the one the tree is about. What is left beside it – a
+            // family reached only through a partnership of another time – is not part of the tree in these years.
+            reached = [centre];
+            for (var grown = true; grown;)
+            {
+                grown = false;
+                foreach (var edge in parentage.Concat(drawn))
+                {
+                    if (reached.Contains(edge.From.Id) != reached.Contains(edge.To.Id))
+                    {
+                        reached.Add(edge.From.Id);
+                        reached.Add(edge.To.Id);
+                        grown = true;
+                    }
+                }
+            }
+
+            parentage = [.. parentage.Where(edge => reached.Contains(edge.From.Id))];
+            drawn = [.. drawn.Where(edge => reached.Contains(edge.From.Id))];
+        }
+        else
+        {
+            reached = [.. parentage.Concat(drawn).SelectMany(edge => new[] { edge.From.Id, edge.To.Id })];
+        }
+
         return family with
         {
+            Parentage = parentage,
             Partnerships = drawn,
-            Members = [.. family.Members.Where(member => reached.Contains(member.Entity.Id) || member.Entity.Id == around)],
+            Members = [.. family.Members.Where(member => reached.Contains(member.Entity.Id))],
             Years = years,
             LeftOut = partnerships.LeftOut,
-            WithoutTime = family.Parentage.Length + partnerships.WithoutTime.Length,
+            WithoutTime = parentage.Count(edge => edge.Relation.Time is null) + drawn.Count(edge => edge.Relation.Time is null),
             Possibly = [.. partnerships.Possibly.Select(edge => edge.Relation.Id)],
         };
     }

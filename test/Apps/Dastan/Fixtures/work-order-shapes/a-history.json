@@ -1,0 +1,554 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "ancient-iran",
+  "worldId": "world-ancient-iran",
+  "subjectId": "subject-ancient-iran",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-first",
+      "title": "A made-up source",
+      "url": "https://made-up.invalid/article",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "subject-ancient-iran",
+      "type": "Region",
+      "label": "Ancient Iran (made up)",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "dynasty-made-up",
+      "type": "Dynasty",
+      "label": "The made-up house",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 550,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-capital"
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 330
+            }
+          }
+        },
+        {
+          "fact": "founder",
+          "entityId": "person-first-ii"
+        }
+      ]
+    },
+    {
+      "id": "office-king",
+      "type": "Office",
+      "label": "King of kings",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-made-up"
+        }
+      ]
+    },
+    {
+      "id": "person-first-ii",
+      "type": "Person",
+      "label": "First II",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Kūruš",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 530
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founded the house."
+        },
+        {
+          "fact": "deathPlace",
+          "entityId": "place-capital"
+        }
+      ]
+    },
+    {
+      "id": "person-second-i",
+      "type": "Person",
+      "label": "Second I",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 560
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 550
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 486
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Ruled long."
+        }
+      ]
+    },
+    {
+      "id": "place-capital",
+      "type": "Place",
+      "label": "The capital",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-iran"
+        }
+      ],
+      "position": {
+        "latitude": 29.93,
+        "longitude": 52.89,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "period-made-up",
+      "type": "Period",
+      "label": "The made-up age",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 550,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 330
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-battle",
+      "type": "Event",
+      "label": "The made-up battle",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 331
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-capital"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-second-i"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-first-holder",
+      "from": "person-first-ii",
+      "to": "office-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 559,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 530
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-second-holder",
+      "from": "person-second-i",
+      "to": "office-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 522
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 486
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-first-member",
+      "from": "person-first-ii",
+      "to": "dynasty-made-up",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-second-successor",
+      "from": "person-second-i",
+      "to": "person-first-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-first-parent",
+      "from": "person-first-ii",
+      "to": "person-second-i",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-first-founder",
+      "from": "person-first-ii",
+      "to": "dynasty-made-up",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-governs",
+      "from": "dynasty-made-up",
+      "to": "subject-ancient-iran",
+      "type": "governs",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 550,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 330
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-capital",
+      "from": "place-capital",
+      "to": "dynasty-made-up",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 518
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 330
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-in-battle",
+      "from": "person-second-i",
+      "to": "event-battle",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-at",
+      "from": "event-battle",
+      "to": "place-capital",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-during",
+      "from": "event-battle",
+      "to": "period-made-up",
+      "type": "during",
+      "directionality": "directed",
+      "label": "Made up",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "events": [],
+  "media": []
+}

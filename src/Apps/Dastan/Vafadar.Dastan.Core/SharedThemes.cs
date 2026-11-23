@@ -54,15 +54,19 @@ public static class SharedThemes
                     .Select(identifier => (identifier.Issuer.Trim().ToUpperInvariant(), identifier.Value.Trim()))
                     .ToList();
 
-                // The groups this theme belongs to by one of its identifiers become one group, with it.
-                var joined = keys.Where(byIdentifier.ContainsKey).Select(key => byIdentifier[key]).Distinct().ToList();
+                // The groups this theme belongs to by one of its identifiers become one group, with it – as far
+                // as that leaves every collection in the group once. Two themes of one collection are two themes
+                // (a collection has a theme once), also when a theme of another collection carries the
+                // identifiers of both: that theme then joins the first of them, and the two stay apart.
+                var joined = keys.Where(byIdentifier.ContainsKey).Select(key => byIdentifier[key]).Distinct()
+                    .Where(found => found.All(one => one.Collection != collection)).ToList();
                 var group = joined.Count == 0 ? [] : joined[0];
                 if (joined.Count == 0)
                 {
                     groups.Add(group);
                 }
 
-                foreach (var other in joined.Skip(1))
+                foreach (var other in joined.Skip(1).Where(other => !other.Any(one => group.Any(kept => kept.Collection == one.Collection))).ToList())
                 {
                     group.AddRange(other);
                     groups.Remove(other);
@@ -74,7 +78,7 @@ public static class SharedThemes
 
                 group.Add(theme);
                 seen.Add(theme);
-                foreach (var key in keys)
+                foreach (var key in keys.Where(key => !byIdentifier.ContainsKey(key)))
                 {
                     byIdentifier[key] = group;
                 }
