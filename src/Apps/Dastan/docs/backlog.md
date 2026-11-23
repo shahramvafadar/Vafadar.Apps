@@ -43,7 +43,7 @@ it is written and when it is finished. Nothing here is reviewed or released by w
 | B4 | Iran to about 100 CE: Elam, the Medes, the Achaemenids, Alexander and the Seleucids, the Arsacids | Done 2026-11-23 (`library/samples/ancient-iran.json`, with its Persian; not yet looked at in a browser) |
 | B5 | China to about 100 CE: Shang, Zhou, Qin, Western Han, Xin, Eastern Han – and Xia as tradition | Done 2026-11-23 (`library/samples/ancient-china.json`, with its Persian; not yet looked at in a browser) |
 | B6 | Rome to about 100 CE: the kings, the Republic, the emperors from Augustus to Trajan | Done 2026-11-23 (`library/samples/ancient-rome.json`, with its Persian; not yet looked at in a browser) |
-| B7 | The comparison of the three over time, brought to the same span and the same statements | Planned |
+| B7 | The comparison of the three over time, brought to the same span and the same statements | Done 2026-11-23 (`library/comparisons/iran-china-rome.json`, built from the three collections; not yet looked at in a browser) |
 | B8 | Places people can have been at: a small collection of real universities and organisations, so that "where you were" has entries to choose | Planned |
 | B9 | The owner's family tree, written into the owner's account on the owner's machine – never into the repository | Waits for the owner's account – the command is there (A5) |
 | B10 | Persian for all of the above | Planned, with each item |
