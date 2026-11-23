@@ -101,6 +101,20 @@ public static class ContentCheck
         ];
     }
 
+    /// <summary>The format a report states for a content root that holds no file yet.</summary>
+    public const string EmptyRoot = "an empty content root";
+
+    /// <summary>
+    /// Returns whether a folder is a content root: a folder with the three folders the site reads –
+    /// <c>samples</c>, <c>comparisons</c> and <c>media</c>. Such a folder may hold no file yet and is in order then.
+    /// </summary>
+    /// <param name="folder">The folder.</param>
+    public static bool IsContentRoot(string folder)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(folder);
+        return new[] { "samples", "comparisons", "media" }.All(name => Directory.Exists(Path.Combine(folder, name)));
+    }
+
     private static ContentReport Refused(string file, string? format, string problem) =>
         new(file, format, [$"{Path.GetFileName(file)}: {problem}"], []);
 

@@ -297,18 +297,15 @@ end – the check names every problem, and two hundred at once cannot be read.
 ### Looking at it
 
 Look at every collection in a browser before you call it done; the check does not see a timeline with one bar
-or a family of forty that reads as a knot. The site is started on the library like this (the backlog, A6,
-adds a launch setting of the project that does the same):
+or a family of forty that reads as a knot. The site is started on the library with its launch profile
+of that name, and answers at `http://localhost:5220`:
 
 ```powershell
-dotnet build src/Apps/Dastan/Vafadar.Dastan.Web
-dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Web --no-build --no-launch-profile -- `
-  --urls=http://localhost:5220 --environment=Development `
-  "--Dastan:Content=<absolute path of the repository>/src/Apps/Dastan/library" `
-  --Dastan:Sample=ancient-iran.json
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Web --launch-profile library
 ```
 
-`Development` shows what is not reviewed, as a local demonstration; a public site would show nothing of it.
+It begins with the first collection of `library/samples` in the order of the names, and refuses to start while
+the folder holds none. `Development` shows what is not reviewed, as a local demonstration; a public site would show nothing of it.
 Stop it when you are done, and before you build again. Look at, for each collection: its
 entry page, its timeline, the page and the timeline of one ruler, the connections of one ruler, the family of
 one house, the search, and the same in Persian.
@@ -360,7 +357,7 @@ personal data of living people:
 * The owner makes the account – on the site that runs locally, with a password only the owner knows. Never
   make it for the owner and never sign in as the owner.
 
-Then one command writes the tree (backlog, A5 – until it is built, this part waits):
+Then one command writes the tree, as a new tree of that account:
 
 ```powershell
 $env:DASTAN_DATABASE = "<the connection of the local database>"
@@ -374,21 +371,27 @@ The file:
   "format": "dastan-tree-0.1",
   "name": "The name of the tree",
   "people": [
-    { "key": "a", "name": "A name", "self": true },
-    { "key": "b", "name": "Another name", "deceased": false }
+    { "key": "a", "name": "A name", "born": 1990 },
+    { "key": "b", "name": "Another name", "born": 1960, "deceased": false },
+    { "key": "c", "name": "A third name", "died": 2001 }
   ],
-  "parents": [ { "parent": "b", "child": "a" } ],
+  "parents": [ { "parent": "b", "child": "a" }, { "parent": "c", "child": "a", "kind": "adoptive-parent" } ],
   "partners": [ ["b", "c"] ]
 }
 ```
 
-`key` is a name of the record inside the file only. `self` marks the record that is the account itself.
-`born` and `died` may be given as years where the owner gives them; nothing is guessed. Of somebody who lives,
+`key` is a name of the record inside the file only. `born` and `died` are years of the common era, given
+where the owner gives them; nothing is guessed. `kind` of a line of descent is `parent` (the default),
+`adoptive-parent` or `guardian`. The file is read strictly: an unknown field, a key used twice or missing,
+somebody who would be their own ancestor – each is said with its place, and nothing is written then. Of somebody who lives,
 the site keeps the name, the years and the family and nothing else (PRIV-003) – the file has no field for
 more. Brothers and sisters are not stated: they are the children of the same parents. The order of people of
 the same parents is the order of the file until years of birth say otherwise.
 
-The tree stays private: do not share it, do not make it public, do not ask anybody to agree to anything.
+The command writes the tree once: if the account has a tree of that name already it stops and writes
+nothing – what is there is changed on the site. No record is said to be the account itself; the owner says
+that on the site, where somebody else confirms it. The tree stays private: do not share it, do not make it
+public, do not ask anybody to agree to anything.
 
 ## 8. When it is finished, and what you hand over
 

@@ -453,3 +453,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   tree begin with the picture or a drawing, the name and a few facts.
 - The logo has files for a printer (PDF and EPS, outlines, CMYK) and the brand has a guide
   (`branding/dastan/guide`). The colours for paper are a beginning until a proof is printed.
+- For writers: the real collections have a folder of their own (`library/`). Every file in it is checked with each
+  build, and the site can be started on it with the launch profile `library`.
+- For who runs the site: a family tree can be written into an account from a file (`people import-tree`), whole
+  or not at all, for an account that asked for it.

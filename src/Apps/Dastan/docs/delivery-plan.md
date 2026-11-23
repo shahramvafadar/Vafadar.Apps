@@ -1185,6 +1185,13 @@ on this machine and taken out again. *Written down:* README, guide for writers (
 order, operations ("What is in no image"). *Not part of it:* a second database, a second site – the library
 is a folder.
 
+*Done on 2026-11-23.* *Built:* `ContentCheck.IsContentRoot`; the command calls a content root without a file
+"in order, and empty" and a folder that is no content root still a problem; a site that is told no collection
+to begin with (`Dastan:Sample` empty) begins with the first file of the folder and says what is missing where
+there is none; the launch profile `library` (port 5220). *Tried:* `LibraryTests` (7 – every file of the library
+usable and finished, nothing released by who wrote it, in no image, the command), `LibrarySiteTests` (5 – the
+pages of every collection of the library in English and Persian, a site told no collection, the profile).
+
 **25.2 A family tree written from a file (backlog A5).** *To build:*
 
 * `Vafadar.Dastan.People/TreeFile.cs`: the format `dastan-tree-0.1` of the work order, part 7 – `name`,
@@ -1214,6 +1221,15 @@ holds), a test of the command, and the page of the tree with the imported tree i
 *Written down:* operations ("A tree from a file"), ADR 0024 addendum, the record of processing (no new data,
 a new way in), work order part 7 brought to what was built. *Then, on the owner's machine only:* the owner
 makes the account; the tree of `.local/dastan-owner-tree.json` is written into it (backlog B9).
+
+*Done on 2026-11-23.* *Built:* `TreeFile` (the format, read strictly, every problem with its place and all at
+once); `PeopleStore.ImportTree` (one transaction through the acts of the pages; the account is named and must be
+there and open); the command `people import-tree <account name> --from <file> --people <database>`, which
+prints numbers and no name. *Decided while building, other than planned:* there is no `--add` – a tree of that
+name that is there stops the command, because "the same person" cannot be told safely where two people of a
+family have one name; and the file has no `self` – that a record is an account is said by a claim on the site,
+which somebody else reviews (PRIV-004), and an import does not go around it. A year of the file is a year of
+the common era. *Tried:* `TreeImportTests` (27), a test of the command in `OperatorCommandsTests`.
 
 **25.3 The years of a name on its page and on its family tree (backlog A1).** D-084 made the chart of time,
 the connections and the pictures keep to the years; the page of a name and the drawing of a family say "not

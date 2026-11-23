@@ -34,7 +34,7 @@ Settings are environment variables (two underscores for a level).
 | Variable | Meaning |
 |---|---|
 | `Dastan__Content` | The folder of the collection inside the container. Default `content`, that is `/app/content` – mount the content there, read-only |
-| `Dastan__Sample` | The file inside `samples/` of that folder of the collection a visitor enters first. Default `shahnameh-pilot.json`. Every other collection in `samples/` is offered as well (step 14.10) |
+| `Dastan__Sample` | The file inside `samples/` of that folder of the collection a visitor enters first. Default `shahnameh-pilot.json`. Every other collection in `samples/` is offered as well (step 14.10). Empty: the site begins with the first collection of the folder in the order of the names, and does not start with a folder that holds none (step 25.1) |
 | `Dastan__Audience` | `Public` (the default) or `LocalDemonstration`. A host never sets it: a demonstration shows what is not published |
 | `Dastan__TrustedProxies__0`, `__1`, … | The proxies the site believes when they say how a visitor came (`X-Forwarded-Proto`, `X-Forwarded-For`): an address or a network such as `10.0.0.0/8`. Not set, the site believes nobody – then it does not know that a visitor came by https, sets no `Secure` cookie and sends no HSTS. Name the proxy of the host and nothing wider |
 | `Dastan__Reports` | `true`: the site takes the reports of visitors (step 14.8, [ADR 0012](adr/0012-visitor-reports.md)) and keeps them in its database (`Dastan__Database`), in the table `delivery."Reports"`. The editors read them with their tool (`Studio__Reports`), which is told the same database. A report is the statement, the words and the day – nothing about the visitor. The same setting lets who signed in propose a place to the editors (D-085): a place they were at that no collection has an entry for, kept in the table `delivery."Proposals"` as the place in their words and the day – not who proposed it. That table came on 2026-11-23: run `database migrate` before a site of that day or later starts. A site told to take reports without a database, or on a database without the tables, does not start | not set: the site offers no form for reports and takes none |
@@ -334,6 +334,25 @@ concerned reads the reason and the ground on the page of the account – the own
 giving the name and the password on the sign-in page. `people forget` ends the 30 days of a closed account
 for somebody who asks to be deleted at once. The commands write into the store the site writes into: run them
 where the store lies, while few people are on the site.
+
+## A family tree from a file
+
+An account can ask who runs the site to write a family tree for it from a file, instead of typing it into the
+pages. The file is of the format `dastan-tree-0.1` ([the work order for content](content-work-order.md), part
+7): a name of the tree, people with a name and – where known – the years of birth and death, who is a parent of
+whom and who are partners. It has no field for more, so of somebody who lives nothing but the name, the year and
+the family is written (PRIV-003).
+
+```powershell
+dotnet Vafadar.Dastan.Content.dll people import-tree "<account name>" --from <file> --people env
+```
+
+* The account must be there and open; the command makes none.
+* The tree is written whole or not at all, by the rules every tree keeps, as a new and private tree of the
+  account. If the account has a tree of that name the command stops: nothing is added to a tree that is there.
+* No record is said to be an account: that is a claim on the site, confirmed by somebody else.
+* The command prints how many people and links it wrote and never a name. The file is read and kept nowhere;
+  remove it when the tree is written, unless the account wants it kept.
 
 ## What the site keeps about visitors
 

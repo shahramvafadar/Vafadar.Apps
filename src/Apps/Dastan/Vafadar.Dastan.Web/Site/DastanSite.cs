@@ -185,7 +185,12 @@ public sealed class DastanLibrary
         }
         else
         {
-            var first = Path.Combine(samples, settings.Sample);
+            // No collection named to begin with: the site begins with the first file of the folder, in the
+            // order of the names – a folder that is written into, where no file is the first for good.
+            var first = string.IsNullOrWhiteSpace(settings.Sample)
+                ? (Directory.Exists(samples) ? Directory.EnumerateFiles(samples, "*.json").Where(IsCollection).Order(StringComparer.Ordinal).FirstOrDefault() : null)
+                    ?? throw new InvalidOperationException($"The folder {samples} holds no collection: the site has nothing to show. Write one, or name the folder of another content root in Dastan:Content.")
+                : Path.Combine(samples, settings.Sample);
             IEnumerable<string> others = Directory.Exists(samples)
                 ? Directory.EnumerateFiles(samples, "*.json").Where(file => !PathsEqual(file, first) && IsCollection(file)).Order(StringComparer.Ordinal)
                 : [];
