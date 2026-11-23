@@ -157,12 +157,9 @@ public static class PeopleEndpoints
             if (!string.IsNullOrWhiteSpace(born))
             {
                 var digits = new string([.. born.Trim().Select(character => char.IsDigit(character) ? (char)('0' + char.GetNumericValue(character)) : character)]);
-                if (!int.TryParse(digits, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var typed))
-                {
-                    return Results.Redirect($"{page}?form=facts&problem=year#facts");
-                }
-
-                year = typed;
+                // What is no number is no year: the store refuses the year zero like every year nobody was born
+                // in, and what else was typed is kept as for every other fact that is none.
+                year = int.TryParse(digits, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var typed) ? typed : 0;
             }
 
             var facts = new AccountFacts(
@@ -171,12 +168,29 @@ public static class PeopleEndpoints
                 // The languages are the boxes that were ticked: one field of the form, said several times.
                 [.. context.Request.Form["languages"].Where(tag => !string.IsNullOrWhiteSpace(tag)).Select(tag => tag!.Trim())], new(languagesFor.Kind, languagesFor.Circle),
                 link, new(linkFor.Kind, linkFor.Circle));
-            return store.StateFacts(me, facts) switch
+            var came = store.StateFacts(me, facts);
+            if (came is "done" or "refused")
             {
-                "done" => Results.Redirect($"{page}?said=stated"),
-                "refused" => Results.BadRequest(),
-                var problem => Results.Redirect($"{page}?form=facts&problem={problem}#facts"),
-            };
+                return came == "done" ? Results.Redirect($"{page}?said=stated") : Results.BadRequest();
+            }
+
+            // One fact is none: it stays as it was, and what else was typed is kept – a form of nine fields is
+            // not typed again for one of them. What was typed never goes into an address. The first problem
+            // is the one the page names; a second one is found the same way and stays as it was too.
+            var first = came;
+            for (var round = 0; round < 4 && came is not ("done" or "refused") && store.Facts(me) is { } kept; round++)
+            {
+                facts = came switch
+                {
+                    "year" => facts with { BornYear = kept.BornYear, Born = kept.Born },
+                    "long" => facts with { Town = kept.Town, Country = kept.Country, Lives = kept.Lives },
+                    "languages" => facts with { Languages = kept.Languages, Speaks = kept.Speaks },
+                    _ => facts with { Link = kept.Link, Linked = kept.Linked },
+                };
+                came = store.StateFacts(me, facts);
+            }
+
+            return Results.Redirect($"{page}?form=facts&problem={first}#facts");
         });
 
         // Blocking (PRIV-009): one-sided, and the other account is not told.

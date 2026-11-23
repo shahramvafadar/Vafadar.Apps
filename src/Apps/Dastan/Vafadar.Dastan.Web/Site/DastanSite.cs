@@ -215,7 +215,7 @@ public sealed class DastanLibrary
             }
         }
 
-        if (Collections.FirstOrDefault(site => Taken.Contains(site.Collection, StringComparer.Ordinal)) is { } unreachable)
+        if (Collections.FirstOrDefault(site => IsTaken(site.Collection)) is { } unreachable)
         {
             throw new InvalidOperationException($"A collection about {unreachable.Collection} cannot be reached: the site has an address of that name.");
         }

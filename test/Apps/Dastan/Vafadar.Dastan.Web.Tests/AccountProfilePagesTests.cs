@@ -261,7 +261,7 @@ public sealed class AccountProfilePagesTests : IDisposable
     [Theory]
     [InlineData("born", "85", "year")]
     [InlineData("born", "nineteen", "year")]
-    [InlineData("born", "2026", "year")]
+    [InlineData("born", "9999", "year")]
     [InlineData("link", "http://example.org/", "link")]
     [InlineData("link", "example.org", "link")]
     [InlineData("languages", "xx", "languages")]
@@ -294,5 +294,36 @@ public sealed class AccountProfilePagesTests : IDisposable
         Assert.Equal($"/people/{saraId}?said=stated", sent.Response.Headers.Location?.OriginalString);
         Assert.DoesNotContain("1990", Head(await _site.Visitor().Get($"/en/people/{id}")), StringComparison.Ordinal);
         Assert.Contains("1990", Head(await _site.Visitor().Get($"/en/people/{saraId}")), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task One_fact_that_is_none_stays_as_it_was_and_what_else_was_typed_is_kept()
+    {
+        var mina = await Signed("Mina");
+        var id = await Me(mina);
+        await State(mina, id, [("born", "1985"), ("link", "https://example.org/mina"), .. Audiences(born: "public", link: "public")]);
+
+        // A new year, a town – and an address that is none; and once more with a year that is no number.
+        var sent = await State(mina, id, [("born", "1986"), ("town", "Shiraz"), ("languages", "fa"), ("link", "example.org"), .. Audiences(born: "public", lives: "public", languages: "public", link: "public")]);
+        Assert.Equal($"/en/people/{id}?form=facts&problem=link#facts", sent.Response.Headers.Location?.OriginalString);
+
+        var head = Head(await _site.Visitor().Get($"/en/people/{id}"));
+        Assert.Contains("1986", head, StringComparison.Ordinal);
+        Assert.Contains("Shiraz", head, StringComparison.Ordinal);
+        Assert.Contains("فارسی", head, StringComparison.Ordinal);
+        Assert.Contains("https://example.org/mina", head, StringComparison.Ordinal);
+
+        var page = WebUtility.HtmlDecode((await mina.Get($"/en/people/{id}?form=facts&problem=link")).Html);
+        Assert.Contains("That one stays as it was; what else you entered is kept.", page, StringComparison.Ordinal);
+
+        sent = await State(mina, id, [("born", "nineteen"), ("town", "Tabriz"), ("link", "http://example.org"), .. Audiences(born: "public", lives: "public", link: "public")]);
+        Assert.Equal($"/en/people/{id}?form=facts&problem=year#facts", sent.Response.Headers.Location?.OriginalString);
+        head = Head(await _site.Visitor().Get($"/en/people/{id}"));
+        Assert.Contains("1986", head, StringComparison.Ordinal);
+        Assert.Contains("Tabriz", head, StringComparison.Ordinal);
+        Assert.Contains("https://example.org/mina", head, StringComparison.Ordinal);
+
+        // What was typed is in no address.
+        Assert.DoesNotContain("Tabriz", sent.Response.Headers.Location?.OriginalString, StringComparison.Ordinal);
     }
 }

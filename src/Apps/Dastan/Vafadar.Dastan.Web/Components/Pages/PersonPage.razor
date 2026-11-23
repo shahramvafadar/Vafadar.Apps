@@ -208,7 +208,7 @@
             @if (_factsProblem is not null)
             {
                 <div class="problems" role="alert"><ul>
-                    <li>@T[$"Person_Facts_Problem_{_factsProblem}"]</li>
+                    <li>@T[$"Person_Facts_Problem_{_factsProblem}"] @T["Person_Facts_Problem_Rest"]</li>
                 </ul></div>
             }
             <form method="post" action="@($"{PeopleEndpoints.Root}/facts")" class="account account-facts-form">
@@ -242,10 +242,10 @@
                         <AudienceChoice Id="fact-lives-shown" Name="livesShown" Shown="_stated.Lives.Shown" Circle="_stated.Lives.Circle" Circles="_circles" />
                     </p>
                 </fieldset>
-                <fieldset class="fact-group">
+                <fieldset class="fact-group" aria-describedby="fact-languages-how">
                     <legend>@T["Person_Fact_Languages"]</legend>
                     <p class="meta" id="fact-languages-how">@string.Format(CultureInfo.CurrentCulture, T["Person_Facts_Languages_How"], Visitor.Number(AccountLanguages.Most))</p>
-                    <ul class="choices fact-languages" role="list" aria-describedby="fact-languages-how">
+                    <ul class="choices fact-languages" role="list">
                         @foreach (var (tag, name) in AccountLanguages.Known)
                         {
                             <li><label><input type="checkbox" name="languages" value="@tag" checked="@_stated.Languages.Contains(tag)" /> <span lang="@tag" dir="auto">@name</span></label></li>

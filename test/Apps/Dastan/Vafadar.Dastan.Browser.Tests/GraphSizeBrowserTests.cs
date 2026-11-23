@@ -132,10 +132,10 @@ public sealed class GraphSizeBrowserTests(BrowserSite site) : IClassFixture<Brow
         Assert.All(Enumerable.Range(0, 12), index => Assert.Equal(usual.Width, sizes[$"near{index}"].Width, 1.0));
         Assert.All(Enumerable.Range(0, 12), index => Assert.Equal(compact.Width, sizes[$"far{index}"].Width, 1.0));
 
-        // A compact card says a name and what the node is, and nothing else.
+        // A compact card says a name and the first line of the card, and nothing else.
         var texts = await host.EvaluateAsync<string[]>("host => [...host.querySelectorAll('[data-graph-canvas] g[id^=\"n13\"] text')].map(text => text.textContent.trim()).filter(text => text.length > 0)");
         Assert.Contains(texts, text => text.Contains("Far 0", StringComparison.Ordinal));
-        Assert.Contains(texts, text => text.Contains("Person", StringComparison.Ordinal));
-        Assert.DoesNotContain(texts, text => text.Contains("Born", StringComparison.Ordinal) || text.Contains("Made up", StringComparison.Ordinal));
+        Assert.Contains(texts, text => text.Contains("Born: 1000", StringComparison.Ordinal));
+        Assert.DoesNotContain(texts, text => text.Contains("Made up", StringComparison.Ordinal) || text.Contains("Person", StringComparison.Ordinal));
     }
 }

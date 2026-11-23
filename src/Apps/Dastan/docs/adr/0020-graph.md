@@ -239,7 +239,8 @@ still drawing of connections had a larger box for the name in the middle already
 * **Main** – the name in the middle of a drawing of connections: wider, higher, larger letters and picture.
 * **Usual** – every other card; said by saying nothing.
 * **Compact** – in a drawing with 24 cards or more: the cards the name in the middle is not connected with.
-  A compact card says a name and what the node is, and has no picture.
+  A compact card says a name and one line – the first of the card, such as the years of somebody in a family,
+  or what the node is where the card has no line – and has no picture.
 * **A family has one size for all its cards**, so that a generation stays a row or a column: the usual one,
   and the compact one from 24 cards on. The steps between its rows and columns are taken from its widest and
   highest card.

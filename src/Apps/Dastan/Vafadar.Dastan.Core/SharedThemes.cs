@@ -40,58 +40,71 @@ public static class SharedThemes
     public static ImmutableArray<SharedTheme> Of(IEnumerable<(string Collection, Projection Projection)> collections)
     {
         ArgumentNullException.ThrowIfNull(collections);
-        var groups = new List<List<ThemeOf>>();
-        var seen = new List<ThemeOf>();
-        var byIdentifier = new Dictionary<(string Issuer, string Value), List<ThemeOf>>();
+
+        // Every theme a reader may see, in the order of the site, with the identifiers that say what it is.
+        var themes = new List<(ThemeOf Theme, List<(string Issuer, string Value)> Keys)>();
         foreach (var (collection, projection) in collections)
         {
             var subject = projection.Overview().Subject;
             foreach (var counted in projection.Themes())
             {
-                var theme = new ThemeOf(collection, subject, counted.Theme, counted.Items);
-                var keys = counted.Theme.Identifiers
-                    .Where(identifier => identifier.Match == IdentifierMatch.Exact)
-                    .Select(identifier => (identifier.Issuer.Trim().ToUpperInvariant(), identifier.Value.Trim()))
-                    .ToList();
+                themes.Add((new ThemeOf(collection, subject, counted.Theme, counted.Items),
+                [
+                    .. counted.Theme.Identifiers
+                        .Where(identifier => identifier.Match == IdentifierMatch.Exact)
+                        .Select(identifier => (identifier.Issuer.Trim().ToUpperInvariant(), identifier.Value.Trim())),
+                ]));
+            }
+        }
 
-                // The groups this theme belongs to by one of its identifiers become one group, with it – as far
-                // as that leaves every collection in the group once. Two themes of one collection are two themes
-                // (a collection has a theme once), also when a theme of another collection carries the
-                // identifiers of both: that theme then joins the first of them, and the two stay apart.
-                var joined = keys.Where(byIdentifier.ContainsKey).Select(key => byIdentifier[key]).Distinct()
-                    .Where(found => found.All(one => one.Collection != collection)).ToList();
-                var group = joined.Count == 0 ? [] : joined[0];
-                if (joined.Count == 0)
+        // What an identifier ties together, and what is tied through that: themes that share one are of one
+        // set, and so are themes that each share one with a third. A set is the same whatever the order of the
+        // collections, of the themes and of the identifiers of a theme.
+        var set = Enumerable.Range(0, themes.Count).ToArray();
+        int Of(int index)
+        {
+            while (set[index] != index)
+            {
+                index = set[index] = set[set[index]];
+            }
+
+            return index;
+        }
+
+        var first = new Dictionary<(string Issuer, string Value), int>();
+        for (var index = 0; index < themes.Count; index++)
+        {
+            foreach (var key in themes[index].Keys)
+            {
+                if (first.TryGetValue(key, out var other))
                 {
-                    groups.Add(group);
+                    // The earlier of the two stands for the set, so that a set stands where its first theme does.
+                    var (one, two) = (Of(index), Of(other));
+                    set[Math.Max(one, two)] = Math.Min(one, two);
                 }
-
-                foreach (var other in joined.Skip(1).Where(other => !other.Any(one => group.Any(kept => kept.Collection == one.Collection))).ToList())
+                else
                 {
-                    group.AddRange(other);
-                    groups.Remove(other);
-                    foreach (var key in byIdentifier.Where(pair => ReferenceEquals(pair.Value, other)).Select(pair => pair.Key).ToList())
-                    {
-                        byIdentifier[key] = group;
-                    }
-                }
-
-                group.Add(theme);
-                seen.Add(theme);
-                foreach (var key in keys.Where(key => !byIdentifier.ContainsKey(key)))
-                {
-                    byIdentifier[key] = group;
+                    first[key] = index;
                 }
             }
         }
 
-        // Joining groups does not change the order of the site: a theme stands where its first collection has it.
+        // A set is one theme of the site – unless it holds two themes of one collection. A collection has a
+        // theme once; a set that says otherwise contradicts itself (one collection tells two themes apart that
+        // another calls one), and then nothing of it is joined: each of its themes stands by itself, until the
+        // editors say which belongs to which.
         return
         [
-            .. groups
-                .Select(group => group.OrderBy(seen.IndexOf).ToList())
-                .OrderBy(group => seen.IndexOf(group[0]))
-                .Select(group => new SharedTheme([.. group])),
+            .. Enumerable.Range(0, themes.Count)
+                .GroupBy(Of)
+                .OrderBy(group => group.Key)
+                .SelectMany(group =>
+                {
+                    var members = group.Select(index => themes[index].Theme).ToList();
+                    return members.Select(member => member.Collection).Distinct(StringComparer.Ordinal).Count() == members.Count
+                        ? [new SharedTheme([.. members])]
+                        : members.Select(member => new SharedTheme([member]));
+                }),
         ];
     }
 

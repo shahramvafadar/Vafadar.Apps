@@ -80,8 +80,10 @@ of this file that says otherwise**:
 * **One projection decides what a visitor sees.** Publication state and demo eligibility, then the reading boundary,
   are applied on the server before anything is counted, searched, laid out, suggested or serialized. Hiding in the
   browser is never the protection.
-* The files in [`content/`](content) are editorial input with the whole story. They are never copied under a web
-  root, never served as files and never cached by a service worker. Media reach the browser only through a route
+* The files in [`content/`](content) and in [`library/`](library/README.md) are editorial input with the whole
+  story – `content/` the small pilot the tests are written against, which content work does not change;
+  `library/` the collections written to be published (delivery plan, 25.1). They are never copied under a web
+  root, never put into an image, never served as files and never cached by a service worker. Media reach the browser only through a route
   that checks the projection. The fixtures in `test/Apps/Dastan/Fixtures` are test data and never public.
 * Time is never a `DateTime` unless it is an operational timestamp: story and historical time use `Vafadar.Temporal`.
   No date, precision or order is invented; unknown stays unknown.

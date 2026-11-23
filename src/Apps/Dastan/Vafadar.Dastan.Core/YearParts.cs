@@ -126,7 +126,9 @@ public static class YearParts
             Partnerships = drawn,
             Members = [.. family.Members.Where(member => reached.Contains(member.Entity.Id))],
             Years = years,
-            LeftOut = partnerships.LeftOut,
+            // Everything of the tree that is not drawn in these years: the partnerships of another time, and
+            // what they cut off from the one the tree is about – nothing is left out without being counted.
+            LeftOut = family.Partnerships.Length - drawn.Length + family.Parentage.Length - parentage.Length,
             WithoutTime = parentage.Count(edge => edge.Relation.Time is null) + drawn.Count(edge => edge.Relation.Time is null),
             Possibly = [.. partnerships.Possibly.Select(edge => edge.Relation.Id)],
         };

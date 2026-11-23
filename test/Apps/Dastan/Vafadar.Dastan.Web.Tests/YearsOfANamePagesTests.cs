@@ -53,10 +53,17 @@ public class YearsSite : DatedSite
         }
 
         var entities = sample["entities"]!.AsArray();
+
+        // Two people who were partners from 1000 to 1010, with nobody else: a family of one line.
+        entities.Add(Entity("person-first-partner", "The first partner"));
+        entities.Add(Entity("person-second-partner", "The second partner"));
         entities.Add(Entity("person-poet", "The poet"));
         entities.Add(Entity("organisation-court", "The court"));
         entities.Add(Entity("organisation-school", "The school"));
         var relations = sample["relations"]!.AsArray();
+        var partners = Relation("relation-partners", "person-second-partner", 1000, 1010);
+        (partners["from"], partners["type"], partners["label"], partners["directionality"]) = ("person-first-partner", "spouseOf", "Partner of", "symmetric");
+        relations.Add(partners);
         relations.Add(Relation("relation-court-dated", "organisation-court", 994, 999));
         relations.Add(Relation("relation-court-undated", "organisation-court", null, null));
         relations.Add(Relation("relation-school", "organisation-school", 1020, 1030));
@@ -292,5 +299,47 @@ public sealed class YearsOfANamePagesTests(YearsSite site) : IClassFixture<Years
         Assert.Contains("character-zal", graph.Html, StringComparison.Ordinal);
 
         Assert.DoesNotContain("family-years", Html(await visitor.Get($"{Rostam}/family")), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_partnership_of_another_time_is_left_out_of_the_tree_and_of_its_drawing_and_said_so()
+    {
+        var visitor = await Reader();
+        const string Partner = $"/en/{Story}/entity/person-first-partner";
+
+        // In its years the partnership is drawn, on the page and in what the moving drawing is given.
+        var held = Html(await visitor.Get($"{Partner}/family?from=1000&to=1010"));
+        Assert.Contains("person-second-partner", held, StringComparison.Ordinal);
+        Assert.DoesNotContain("Left out because they state another time", held, StringComparison.Ordinal);
+        Assert.Contains("relation-partners", (await visitor.Get($"{Partner}/family.json?from=1000&to=1010")).Html, StringComparison.Ordinal);
+
+        // In other years it is left out of both, counted, and the way to all years is offered.
+        var other = Html(await visitor.Get($"{Partner}/family?from=1100&to=1200"));
+        Assert.Contains("family-years", other, StringComparison.Ordinal);
+        Assert.Contains("Left out because they state another time: 1.", other, StringComparison.Ordinal);
+        Assert.Contains($"{Story}/entity/person-first-partner/family\"", other.Replace("?", "\"", StringComparison.Ordinal), StringComparison.Ordinal);
+        var graph = (await visitor.Get($"{Partner}/family.json?from=1100&to=1200")).Html;
+        Assert.DoesNotContain("relation-partners", graph, StringComparison.Ordinal);
+        Assert.DoesNotContain("person-second-partner", graph, StringComparison.Ordinal);
+
+        // Without years the tree is whole.
+        Assert.Contains("relation-partners", (await visitor.Get($"{Partner}/family.json")).Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Years_in_which_nothing_is_stated_about_a_name_say_so_where_its_statements_stand()
+    {
+        var visitor = await Reader();
+        const string Work = $"/en/{Story}/entity/work-shahnameh";
+
+        var whole = Html(await visitor.Get(Work));
+        Assert.Contains("id=\"stated-work-written\"", whole, StringComparison.Ordinal);
+        Assert.DoesNotContain("Everything stated about this name states another time", whole, StringComparison.Ordinal);
+
+        // The section stays, says why it is empty, and the statements themselves are not shown.
+        var later = Html(await visitor.Get($"{Work}?from=1500&to=1600"));
+        Assert.Contains("id=\"stated\"", later, StringComparison.Ordinal);
+        Assert.Contains("Everything stated about this name states another time than the years you chose.", later, StringComparison.Ordinal);
+        Assert.DoesNotContain("id=\"stated-work-written\"", later, StringComparison.Ordinal);
     }
 }

@@ -106,7 +106,7 @@ public sealed record GraphNode(string Id, string Name, string Address, string Pr
 /// <summary>
 /// The sizes of the cards of a graph (step 25.6, ADR 0020). The name a drawing of connections is about has a
 /// larger card. A drawing with many cards is read by its names: there the cards that are not connected with
-/// that name are compact – a name and what it is, no picture. A family has one size for all its cards, so that
+/// that name are compact – a name and one line, no picture. A family has one size for all its cards, so that
 /// a generation stays a row: the usual one, and the compact one when it has many.
 /// </summary>
 public static class GraphCards
@@ -114,7 +114,7 @@ public static class GraphCards
     /// <summary>The larger card of the name in the middle.</summary>
     public const string Main = "main";
 
-    /// <summary>The card of a drawing with many: a name and what it is.</summary>
+    /// <summary>The card of a drawing with many: a name and one line.</summary>
     public const string Compact = "compact";
 
     /// <summary>The number of cards from which a drawing has many.</summary>

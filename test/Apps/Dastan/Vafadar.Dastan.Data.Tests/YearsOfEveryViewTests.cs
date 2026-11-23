@@ -172,7 +172,10 @@ public sealed class YearsOfEveryViewTests
 
         Assert.Equal(["relation-child-of-partner", "relation-child-of-poet"], then.Parentage.Select(edge => edge.Relation.Id.Value).Order());
         Assert.Empty(then.Partnerships);
-        Assert.Equal(2, then.LeftOut);
+
+        // Left out and counted: the two partnerships of another time, and the descent of the other partner
+        // that the partnership of another time cuts off from the poet.
+        Assert.Equal(3, then.LeftOut);
         Assert.Equal(2, then.WithoutTime);
 
         // The first partner is a parent of a child that is drawn: drawn, by descent. The other is reached by
@@ -194,7 +197,9 @@ public sealed class YearsOfEveryViewTests
 
         var touching = whole.Within(new EntityId(Poet), Span(1005, 1020), 2026);
         Assert.Equal(["relation-partner"], touching.Partnerships.Select(edge => edge.Relation.Id.Value));
-        Assert.Equal(1, touching.LeftOut);
+
+        // The partnership with the other is of another time, and with it the descent of the other is cut off.
+        Assert.Equal(2, touching.LeftOut);
     }
 
     [Fact]

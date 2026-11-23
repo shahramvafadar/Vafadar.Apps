@@ -139,7 +139,10 @@ public sealed record FamilyView(
     /// <summary>Gets the stretch of years the tree was asked for in (D-084), or nothing for every year.</summary>
     public Vafadar.Temporal.YearSpan? Years { get; init; }
 
-    /// <summary>Gets how many family relations state another time than the years and are left out.</summary>
+    /// <summary>
+    /// Gets how many family relations are left out in the years: those that state another time, and those a
+    /// relation of another time cuts off from the one the tree is about.
+    /// </summary>
     public int LeftOut { get; init; }
 
     /// <summary>Gets how many of the relations that are drawn state no time: they are drawn at every time.</summary>

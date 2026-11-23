@@ -66,8 +66,13 @@ had asked for. The owner asked for it.
   to case, the value as it is written. A name joins nothing, a `close` identifier joins nothing, and what
   stands under two themes joins nothing.
 * **A collection has a theme once.** Two themes of one collection that carry the same exact identifier are a
-  problem of the collection. And where a theme of another collection carries the identifiers of two themes of
-  one collection, those two stay two: the other theme joins the first of them.
+  problem of the collection.
+* **What is joined does not depend on any order.** Themes that share an identifier are of one set, and so are
+  themes that each share one with a third; the set is the same whatever the order of the collections, of the
+  themes and of the identifiers of a theme. A set is one theme of the site – unless it holds two themes of one
+  collection: then one collection tells two themes apart that another calls one, the statements contradict
+  each other, and **nothing of that set is joined** until the editors say which belongs to which. (An earlier
+  form joined such a theme to "the first" of the two; which one that was depended on the order of the files.)
 * **What a reader is told.** Each collection is asked through its own projection, at the stage this reader has
   read it to. A theme of a later stage of one collection is not named, not counted and not joined because
   another collection has it too; asked for by its address it is a page that does not exist.
