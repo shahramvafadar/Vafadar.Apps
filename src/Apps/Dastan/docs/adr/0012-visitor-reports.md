@@ -35,8 +35,9 @@ site into the store, and must not make the site keep anything about who wrote it
   is asked of the projection, like the page), about another collection, without words or with more than a
   form allows, and a form without its token. Refused like any form that is no form of the site.
 * **Against programs**: a field no person sees – whoever fills it in is thanked and nothing is kept; at most
-  five reports an hour from one address, counted in the memory of the process and forgotten with the hour
-  (the address is never written anywhere); and a box that holds 500 reports nobody has looked at takes no
+  five reports in the last sixty minutes from one address, counted in the memory of the process and forgotten
+  when their hour is over (the address is never written anywhere; since 2026-11-23 the hour slides with the
+  clock – `RequestWindow`); and a box that holds 500 reports nobody has looked at takes no
   more and says so. No picture puzzle and no third party.
 * **In the tool** the page `reports` lists what waits, the oldest first, each with the way to the record it
   is about; an editor who reviews notes that a report was looked at, with the name the act is kept under. The

@@ -1461,6 +1461,17 @@ made-up file and started on the site.
   Persian, no page wider than its window. *Changed by looking:* the groups of the form of the facts have
   headings of their own; they had the labels of the head, which do not read as headings in Persian.
 
+**After the second review, on 2026-11-23.** The build server failed the same test of the limit of passwords
+once more, on the commit of the first review, begun a moment before 18:00 – `TestHour` was not yet there. The
+cause was the site, not the test: every limit per hour of the site (accounts, passwords and codes, mails,
+looking for a place, proposals, reports, notices) counted by the hour of the clock and forgot everything at
+the full hour, so that a program could ask twice as often around it. They now count the last sixty minutes,
+in one place (`RequestWindow`): a window that slides with the clock, keeps no more moments than are allowed,
+counts no refused request and forgets a sender whose hour is over. `TestHour` is taken out again – nothing
+waits for the clock any more. *Tried:* `RequestWindowTests` (7, with a made-up clock: the full hour, the
+moment the oldest request is an hour old, a thousand requests at the same moment, what is forgotten) and the
+classes that count in an hour. *Not looked at:* this step changes no page.
+
 **What is open, with what is built if the owner says nothing.** The owner was given these on 2026-11-23:
 
 | Question | Built if nothing is said |

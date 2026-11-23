@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Vafadar.Dastan.Data;
@@ -23,8 +22,9 @@ public sealed class NoticeDesk
 
     private readonly NoticeBox? _box;
     private readonly TimeProvider _time;
-    private readonly ConcurrentDictionary<string, int> _sent = new(StringComparer.Ordinal);
-    private long _hour;
+
+    // Who gave how many notices in the last hour, in the memory of the process: an address is never written anywhere.
+    private readonly RequestWindow _sent;
 
     /// <summary>Initializes a new instance of the <see cref="NoticeDesk"/> class.</summary>
     public NoticeDesk(IOptions<DastanOptions> options, IHostEnvironment environment, TimeProvider time)
@@ -32,6 +32,7 @@ public sealed class NoticeDesk
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(environment);
         _time = time;
+        _sent = new RequestWindow(time);
         if (options.Value.Notices)
         {
             _box = new NoticeBox(options.Value.DeliveryDatabase("Dastan:Notices"));
@@ -45,13 +46,7 @@ public sealed class NoticeDesk
     public string Take(string sender, string language, string address, string kind, string explanation, string? name, string? mail)
     {
         var now = _time.GetUtcNow();
-        var hour = now.ToUnixTimeSeconds() / 3600;
-        if (Interlocked.Exchange(ref _hour, hour) != hour)
-        {
-            _sent.Clear();
-        }
-
-        if (_sent.AddOrUpdate(sender, 1, (_, count) => count + 1) > PerHour)
+        if (!_sent.Allows(sender, PerHour))
         {
             return "later";
         }

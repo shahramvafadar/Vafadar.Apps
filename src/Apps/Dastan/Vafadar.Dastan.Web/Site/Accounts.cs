@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Net;
 using System.Security.Claims;
@@ -50,10 +49,8 @@ public sealed class AccountDesk
     private readonly IDataProtector _codes;
     private readonly ITimeLimitedDataProtector _arrivals;
 
-    // Who asked how often in the present hour. It lives in the memory of the process and is thrown away with the
-    // hour: an address is never written anywhere.
-    private readonly ConcurrentDictionary<string, int> _asked = new(StringComparer.Ordinal);
-    private long _hour;
+    // Who asked how often in the last hour. It lives in the memory of the process: an address is never written anywhere.
+    private readonly RequestWindow _asked;
     private long _purgedOn;
 
     /// <summary>Initializes a new instance of the <see cref="AccountDesk"/> class and brings the store to the form this program knows.</summary>
@@ -67,6 +64,7 @@ public sealed class AccountDesk
         ArgumentNullException.ThrowIfNull(environment);
         ArgumentNullException.ThrowIfNull(protection);
         _time = time;
+        _asked = new RequestWindow(time);
         _codes = protection.CreateProtector("dastan.visitor.codes");
         _arrivals = protection.CreateProtector("dastan.visitor.external").ToTimeLimitedDataProtector();
         InvitationOnly = options.Value.InvitationOnly;
@@ -202,17 +200,14 @@ public sealed class AccountDesk
         }
     }
 
-    /// <summary>Counts a request of a kind for who sent it (<see cref="Sender"/>) and returns whether it is still within what an hour allows.</summary>
+    /// <summary>
+    /// Counts a request of a kind for who sent it (<see cref="Sender"/>) and returns whether it is still within
+    /// what the last hour allows – an hour that slides with the clock (<see cref="RequestWindow"/>).
+    /// </summary>
     public bool Allows(HttpContext context, string kind, int most)
     {
         ArgumentNullException.ThrowIfNull(context);
-        var hour = _time.GetUtcNow().ToUnixTimeSeconds() / 3600;
-        if (Interlocked.Exchange(ref _hour, hour) != hour)
-        {
-            _asked.Clear();
-        }
-
-        return _asked.AddOrUpdate($"{kind} {Sender.Of(context)}", 1, (_, count) => count + 1) <= most;
+        return _asked.Allows($"{kind} {Sender.Of(context)}", most);
     }
 
     /// <summary>

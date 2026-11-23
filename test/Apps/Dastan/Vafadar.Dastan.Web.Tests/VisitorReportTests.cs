@@ -167,7 +167,6 @@ public sealed class VisitorReportTests : IDisposable
     [Fact]
     public async Task More_reports_in_an_hour_than_a_person_writes_are_asked_to_wait()
     {
-        await TestHour.NotAboutToTurn();
         var visitor = _site.Visitor();
         for (var number = 0; number < ReportDesk.PerHour; number++)
         {

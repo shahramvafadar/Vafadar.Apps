@@ -120,7 +120,6 @@ public sealed class PlaceProposalPagesTests : IDisposable
     [Fact]
     public async Task Only_who_signed_in_proposes_and_only_so_often_in_an_hour()
     {
-        await TestHour.NotAboutToTurn();
         var stranger = _site.Visitor();
         var refused = await stranger.Post($"{Forms}/propose", "/en", ("name", "A place"), ("kind", "company"), ("returnUrl", Page));
         Assert.Equal("/refused", refused.Response.Headers.Location?.OriginalString);

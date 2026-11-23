@@ -302,7 +302,6 @@ public sealed class VisitorAccountTests : IDisposable
     [Fact]
     public async Task An_address_asks_for_only_so_many_accounts_in_an_hour()
     {
-        await TestHour.NotAboutToTurn();
         for (var number = 0; number < AccountDesk.RegistrationsPerHour; number++)
         {
             Assert.Contains("said=welcome", (await Register(_site.Visitor(), $"Visitor {number}")).Response.Headers.Location?.OriginalString, StringComparison.Ordinal);
@@ -319,7 +318,6 @@ public sealed class VisitorAccountTests : IDisposable
     [Fact]
     public async Task An_address_tries_only_so_many_passwords_in_an_hour_over_all_accounts()
     {
-        await TestHour.NotAboutToTurn();
         await Register(_site.Visitor());
         var visitor = _site.Visitor();
         for (var attempt = 0; attempt < AccountDesk.AttemptsPerHour; attempt++)
