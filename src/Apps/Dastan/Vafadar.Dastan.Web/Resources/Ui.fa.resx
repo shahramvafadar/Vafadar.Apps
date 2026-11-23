@@ -4317,6 +4317,9 @@
   <data name="Family_Years" xml:space="preserve">
     <value>برای سال‌های {0} نشان داده شده. نسب زمانی ندارد و همیشه رسم می‌شود؛ همسری وقتی رسم می‌شود که در این سال‌ها برقرار بوده یا زمانی برایش گفته نشده باشد.</value>
   </data>
+  <data name="Family_Years_LeftOut" xml:space="preserve">
+    <value>کنار گذاشته‌شده چون زمان دیگری دارند، همراه آنچه فقط از راه آن‌ها به این نام می‌رسد: {0}.</value>
+  </data>
   <data name="Themes_Title" xml:space="preserve">
     <value>موضوع‌ها</value>
   </data>

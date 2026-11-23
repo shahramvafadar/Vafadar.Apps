@@ -167,6 +167,30 @@ public sealed class SharedThemesTests
     }
 
     [Fact]
+    public void A_theme_of_a_set_that_contradicts_itself_stands_where_it_is()
+    {
+        // "a", "c" and "d" hang together through the theme of "d", and "c" has two of their themes: nothing of them is joined. The theme
+        // of "x" has nothing to do with them and stands between "a" and "c", as the site has it.
+        Projection One(string theme, params string[] identifiers) => Read(4, sample =>
+        {
+            sample["entities"]!.AsArray().Add(Theme(theme, theme, 0, [.. identifiers.Select(value => (value, "exact"))]));
+            Under(sample, "media-met-452419", theme);
+        });
+        var c = Read(4, sample =>
+        {
+            sample["entities"]!.AsArray().Add(Theme("theme-c1", "C1", 0, ("T-1", "exact")));
+            sample["entities"]!.AsArray().Add(Theme("theme-c2", "C2", 0, ("T-2", "exact")));
+            Under(sample, "media-met-452419", "theme-c1", "theme-c2");
+        });
+
+        var themes = SharedThemes.Of([("a", One("theme-a", "T-1")), ("x", One("theme-x", "T-9")), ("c", c), ("d", One("theme-d", "T-1", "T-2"))]);
+
+        Assert.Equal(
+            ["a:theme-a", "x:theme-x", "c:theme-c1", "c:theme-c2", "d:theme-d"],
+            themes.Select(theme => string.Join('+', theme.In.Select(one => $"{one.Collection}:{one.Theme.Id}"))));
+    }
+
+    [Fact]
     public void A_site_without_themes_has_none()
     {
         Assert.Empty(SharedThemes.Of([("story", Read(4, _ => { }))]));

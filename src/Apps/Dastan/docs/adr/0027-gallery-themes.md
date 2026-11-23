@@ -73,6 +73,8 @@ had asked for. The owner asked for it.
   collection: then one collection tells two themes apart that another calls one, the statements contradict
   each other, and **nothing of that set is joined** until the editors say which belongs to which. (An earlier
   form joined such a theme to "the first" of the two; which one that was depended on the order of the files.)
+  A theme of the site stands in the list where its first theme stands; a theme of such a set stands where it
+  is itself, not where the first theme of its set is.
 * **What a reader is told.** Each collection is asked through its own projection, at the stage this reader has
   read it to. A theme of a later stage of one collection is not named, not counted and not joined because
   another collection has it too; asked for by its address it is a page that does not exist.

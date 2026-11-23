@@ -166,6 +166,37 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     }
 
     /// <summary>
+    /// Clicks what sends a form and waits until the page it leads to is there. Where that page has the address
+    /// the browser is already at – a second "accept" after the first –, <see cref="Arrived"/> alone found the
+    /// old page and the test read it (WebKit on the build server, 2026-11-23): this waits for a new document
+    /// of that address first. It asks no script of the page, so it also waits in a window without scripts.
+    /// </summary>
+    public static async Task Sent(IPage page, ILocator button, System.Text.RegularExpressions.Regex address)
+    {
+        var moved = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        void Navigated(object? sender, IFrame frame)
+        {
+            if (frame == page.MainFrame && address.IsMatch(frame.Url))
+            {
+                moved.TrySetResult();
+            }
+        }
+
+        page.FrameNavigated += Navigated;
+        try
+        {
+            await button.ClickAsync();
+            await moved.Task.WaitAsync(TimeSpan.FromSeconds(30));
+        }
+        finally
+        {
+            page.FrameNavigated -= Navigated;
+        }
+
+        await Arrived(page, address);
+    }
+
+    /// <summary>
     /// Waits until the window shows an address and the page there has been loaded. A link that is chosen while
     /// its page is still loading is not always followed in WebKit; a visitor is slower than a test.
     /// <para>
