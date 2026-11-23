@@ -34,6 +34,46 @@ public sealed class StoredReport
     public DateOnly? SettledOn { get; set; }
 }
 
+/// <summary>A place a visitor proposed to the editors as the table keeps it (<see cref="PlaceProposal"/>).</summary>
+public sealed class StoredProposal
+{
+    /// <summary>Gets or sets the name of the proposal.</summary>
+    public required string Id { get; set; }
+
+    /// <summary>Gets or sets the day it was written.</summary>
+    public DateOnly On { get; set; }
+
+    /// <summary>Gets or sets the language of the page it was written on.</summary>
+    public required string Language { get; set; }
+
+    /// <summary>Gets or sets the name of the place.</summary>
+    public required string Name { get; set; }
+
+    /// <summary>Gets or sets what kind of place it is.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>Gets or sets where it is, in the visitor's words.</summary>
+    public string? Where { get; set; }
+
+    /// <summary>Gets or sets a public page about the place.</summary>
+    public string? Page { get; set; }
+
+    /// <summary>Gets or sets what else the visitor wrote.</summary>
+    public string? Note { get; set; }
+
+    /// <summary>Gets or sets the editor who decided.</summary>
+    public string? SettledBy { get; set; }
+
+    /// <summary>Gets or sets the day that was.</summary>
+    public DateOnly? SettledOn { get; set; }
+
+    /// <summary>Gets or sets what was decided: <c>added</c> or <c>declined</c>.</summary>
+    public string? Outcome { get; set; }
+
+    /// <summary>Gets or sets the entry the place has now, as <c>collection/entity</c>.</summary>
+    public string? Entry { get; set; }
+}
+
 /// <summary>A message that waits to be sent, or was, as the table keeps it (<see cref="MailOutbox"/>).</summary>
 public sealed class StoredMail
 {
@@ -124,6 +164,9 @@ public sealed class DeliveryContext(DbContextOptions<DeliveryContext> options) :
     /// <summary>Gets the reports of visitors.</summary>
     public DbSet<StoredReport> Reports => Set<StoredReport>();
 
+    /// <summary>Gets the places visitors proposed.</summary>
+    public DbSet<StoredProposal> Proposals => Set<StoredProposal>();
+
     /// <summary>Gets the notices about content.</summary>
     public DbSet<StoredNotice> Notices => Set<StoredNotice>();
 
@@ -147,6 +190,23 @@ public sealed class DeliveryContext(DbContextOptions<DeliveryContext> options) :
             report.Property(item => item.Text).HasMaxLength(ReportBox.LongestText);
             report.Property(item => item.SettledBy).HasMaxLength(200);
             report.HasIndex(item => new { item.SettledOn, item.On });
+        });
+
+        modelBuilder.Entity<StoredProposal>(proposal =>
+        {
+            proposal.ToTable("Proposals", Delivery.Schema);
+            proposal.HasKey(item => item.Id);
+            proposal.Property(item => item.Id).HasMaxLength(32);
+            proposal.Property(item => item.Language).HasMaxLength(120);
+            proposal.Property(item => item.Name).HasMaxLength(ProposalBox.LongestName);
+            proposal.Property(item => item.Kind).HasMaxLength(120);
+            proposal.Property(item => item.Where).HasMaxLength(ProposalBox.LongestLine);
+            proposal.Property(item => item.Page).HasMaxLength(ProposalBox.LongestLine);
+            proposal.Property(item => item.Note).HasMaxLength(ProposalBox.LongestNote);
+            proposal.Property(item => item.SettledBy).HasMaxLength(200);
+            proposal.Property(item => item.Outcome).HasMaxLength(20);
+            proposal.Property(item => item.Entry).HasMaxLength(241);
+            proposal.HasIndex(item => new { item.SettledOn, item.On });
         });
 
         modelBuilder.Entity<StoredMail>(mail =>

@@ -74,7 +74,10 @@ public sealed partial class PeopleStore
             // Of the photographs only the account's own: whether a photograph of somebody else reaches this
             // viewer is that owner's choice.
             var photos = Shown(viewer, _context.Photos.AsNoTracking().Where(photo => photo.Owner == id).ToList()).ToList();
-            return new(kind, name, new ProfileView(person, [.. shown]) { Affiliations = AffiliationsShown(account, id) }, photos, AlbumsShown(viewer, id, empty: false));
+
+            // What the account says about itself, by the same scopes asked for this viewer.
+            var (about, picture) = Described(_context.Visitors.AsNoTracking().Single(visitor => visitor.Id == id), viewer);
+            return new(kind, name, new ProfileView(person, [.. shown]) { Affiliations = AffiliationsShown(account, id), About = about, Picture = picture }, photos, AlbumsShown(viewer, id, empty: false));
         }
         finally
         {

@@ -1,0 +1,262 @@
+@page "/proposals"
+@inject Editor Editor
+@inject EditorialStore Store
+@inject NavigationManager Navigation
+@inject IOptions<StudioOptions> Options
+@inject IStringLocalizer<Ui> T
+
+@* The places visitors of the site proposed (D-085, ADR 0023): somewhere people were at that no collection has
+   an entry for. A proposal is words of a stranger and changes nothing: an editor decides whether the place gets
+   an entry, makes it like any other name, and notes here what was decided. The same place proposed several
+   times stands together and is decided once. Nothing says who proposed a place – the site does not keep it. *@
+@if (_box is not null)
+{
+    <PageTitle>@T["Proposals_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <h1>@T["Proposals_Title"]</h1>
+        <p class="lead">@T["Proposals_Lead"]</p>
+    </header>
+
+    @if (Done is "added" or "declined")
+    {
+        <p class="done" role="status">@T[$"Proposals_Done_{Done}"]</p>
+    }
+
+    <ActOutcome Problems="_problems" />
+
+    @if (_waiting.Count == 0)
+    {
+        <p class="note" role="status">@T["Proposals_None"]</p>
+    }
+
+    @* The form stays on the page while one is being sent, even when the last proposal was decided meanwhile:
+       the editor is then told so, not refused. *@
+    @if (_waiting.Count > 0 || Deciding is not null)
+    {
+        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Proposals_Waiting"], Editor.Number(_waiting.Count), Editor.Number(_places.Count))</p>
+        <Allowed Role="EditorRoles.Reviewer">
+            <form method="post" @formname="decide" @onsubmit="Decide" class="act" action="proposals">
+                <AntiforgeryToken />
+                <ol class="changes reports proposals" role="list">
+                    @foreach (var place in _places)
+                    {
+                        var first = place[0];
+                        <li id="@($"proposal-{first.Id}")">
+                            @Place(place)
+                            <p class="actions">
+                                @foreach (var collection in _collections)
+                                {
+                                    <a class="action secondary" href="@($"{collection}/records/entities/new?type={Uri.EscapeDataString(TypeOf(first.Kind))}&label={Uri.EscapeDataString(first.Name)}")">@string.Format(CultureInfo.CurrentCulture, T["Proposals_Make"], collection)</a>
+                                }
+                            </p>
+                            <p class="field">
+                                <label for="@($"entry-{first.Id}")">@T["Proposals_Entry"]</label>
+                                <input id="@($"entry-{first.Id}")" name="@($"entry-{first.Id}")" value="@(_typed.GetValueOrDefault(first.Id))" maxlength="241" dir="ltr" autocomplete="off" aria-describedby="@($"entry-{first.Id}-hint")" />
+                                <span class="hint" id="@($"entry-{first.Id}-hint")">@T["Proposals_EntryHint"]</span>
+                            </p>
+                            <p>
+                                <button type="submit" class="action secondary" name="Deciding.Added" value="@first.Id">@T["Proposals_Added"]<span class="visually-hidden"> – @first.Name</span></button>
+                                <button type="submit" class="action secondary" name="Deciding.Declined" value="@first.Id">@T["Proposals_Declined"]<span class="visually-hidden"> – @first.Name</span></button>
+                            </p>
+                        </li>
+                    }
+                </ol>
+                <WhoAndWhy Form="decide" Model="Deciding" By="@(Deciding?.By ?? Editor.Name)" />
+            </form>
+        </Allowed>
+        @if (!Editor.May(EditorRoles.Reviewer))
+        {
+            @* Who does not review reads the proposals all the same. *@
+            <ol class="changes reports proposals" role="list">
+                @foreach (var place in _places)
+                {
+                    <li>@Place(place)</li>
+                }
+            </ol>
+        }
+    }
+
+    @if (_decided.Count > 0)
+    {
+        <section aria-labelledby="decided">
+            <h2 id="decided">@T["Proposals_Decided"]</h2>
+            <ol class="changes reports proposals" role="list">
+                @foreach (var proposal in _decided)
+                {
+                    <li>
+                        <p><strong dir="auto">@proposal.Name</strong> <span class="meta">– <bdi dir="ltr">@TypeOf(proposal.Kind)</bdi></span></p>
+                        <p class="meta">
+                            @T[$"Proposals_Outcome_{proposal.Outcome}"]
+                            @if (proposal.Entry is { } entry)
+                            {
+                                var at = entry.IndexOf('/', StringComparison.Ordinal);
+                                <text> – </text><a href="@($"{entry[..at]}/record/entities/{entry[(at + 1)..]}")"><bdi dir="ltr">@entry</bdi></a>
+                            }
+                            – @string.Format(CultureInfo.CurrentCulture, T["Proposals_DecidedBy"], proposal.SettledBy, proposal.SettledOn?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))
+                        </p>
+                    </li>
+                }
+            </ol>
+        </section>
+    }
+}
+
+@code {
+    // The proposals that were decided are a trail, not a list to work through: the last of them are shown.
+    private const int MostDecided = 50;
+
+    private ProposalBox? _box;
+    private IReadOnlyList<PlaceProposal> _waiting = [];
+    private IReadOnlyList<PlaceProposal> _decided = [];
+    private IReadOnlyList<IReadOnlyList<PlaceProposal>> _places = [];
+    private IReadOnlyList<string> _collections = [];
+    private readonly Dictionary<string, string> _typed = new(StringComparer.Ordinal);
+    private List<string>? _problems;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets which place an editor decides, how, and who the editor is.</summary>
+    [SupplyParameterFromForm(FormName = "decide")]
+    public DecideInput? Deciding { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Options.Value.Reports)
+        {
+            // A tool that was not told to show what visitors write has no such page.
+            Navigation.NotFound();
+            return;
+        }
+
+        _box = new ProposalBox(Options.Value.Store);
+        _collections = Store.Collections;
+        Read();
+    }
+
+    private void Read()
+    {
+        _waiting = _box!.Waiting();
+        _decided = [.. _box.Decided().Take(MostDecided)];
+
+        // The same place written another way stands together, in the order the first of each came in.
+        _places = [.. _waiting.GroupBy(proposal => ProposalBox.Folded(proposal.Name), StringComparer.Ordinal).Select(place => (IReadOnlyList<PlaceProposal>)[.. place])];
+    }
+
+    private void Decide()
+    {
+        var by = Editor.By(Deciding?.By);
+        var id = Deciding?.Added ?? Deciding?.Declined ?? string.Empty;
+        var outcome = Deciding?.Added is not null ? ProposalOutcome.Added : ProposalOutcome.Declined;
+
+        // The place is named by any of its proposals; its entry is asked for once, under the first of them.
+        var decided = _places.FirstOrDefault(place => place.Any(proposal => proposal.Id == id));
+        var head = decided?[0].Id ?? id;
+        var entry = Context.Request.Form[$"entry-{head}"].ToString().Trim();
+        if (entry.Length > 0)
+        {
+            _typed[head] = entry;
+        }
+
+        if (by is null)
+        {
+            _problems = [T["Act_NeedsName"]];
+            return;
+        }
+
+        if (decided is null)
+        {
+            _problems = [T["Proposals_Gone"]];
+            Read();
+            return;
+        }
+
+        // The entry of a place that was added is one of the store: a collection and a name of it.
+        string? named = null;
+        if (outcome == ProposalOutcome.Added && entry.Length > 0)
+        {
+            var at = entry.IndexOf('/', StringComparison.Ordinal);
+            if (at <= 0 || at == entry.Length - 1 || !Store.Collections.Contains(entry[..at]) || Store.Record(entry[..at], "entities", entry[(at + 1)..]) is null)
+            {
+                _problems = [string.Format(CultureInfo.CurrentCulture, T["Proposals_NoEntry"], entry)];
+                return;
+            }
+
+            named = entry;
+        }
+
+        // Every proposal of the place is decided with it; one that somebody else decided meanwhile is left as it is.
+        var settled = decided.Count(proposal => _box!.Settle(proposal.Id, by, Editor.Today, outcome, named));
+        if (settled == 0)
+        {
+            _problems = [T["Proposals_Gone"]];
+            Read();
+            return;
+        }
+
+        EditorName.Keep(Context, by);
+        Navigation.NavigateTo($"proposals?done={(outcome == ProposalOutcome.Added ? "added" : "declined")}");
+    }
+
+    // The type of entity a kind of place is, as a record writes it: the key with a capital.
+    private static string TypeOf(string kind) => kind.Length == 0 ? kind : char.ToUpperInvariant(kind[0]) + kind[1..];
+
+    // A place: its name as it was first written, how often it was proposed, and what each proposal says.
+    private RenderFragment Place(IReadOnlyList<PlaceProposal> place) =>
+        @<text>
+            <p>
+                <strong dir="auto">@place[0].Name</strong>
+                @if (place.Count > 1)
+                {
+                    <span class="meta"> – @string.Format(CultureInfo.CurrentCulture, T["Proposals_Times"], Editor.Number(place.Count))</span>
+                }
+            </p>
+            <ul class="proposal-lines" role="list">
+                @foreach (var proposal in place)
+                {
+                    <li>
+                        <p class="meta">
+                            <bdi dir="ltr">@proposal.On.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)</bdi> –
+                            <bdi dir="ltr">@TypeOf(proposal.Kind)</bdi>
+                            @if (proposal.Name != place[0].Name)
+                            {
+                                <text> – </text><span dir="auto">@proposal.Name</span>
+                            }
+                            @if (proposal.Where is { } where)
+                            {
+                                <text> – </text><span dir="auto">@where</span>
+                            }
+                            – @string.Format(CultureInfo.CurrentCulture, T["Reports_Read"], proposal.Language)
+                        </p>
+                        @if (proposal.Page is { } address)
+                        {
+                            @* The address is words of a stranger: it is shown as it is, opened apart, and vouched for by nobody. *@
+                            <p class="meta"><a href="@address.AbsoluteUri" rel="external nofollow noopener noreferrer" target="_blank"><bdi dir="ltr">@address.AbsoluteUri</bdi></a> <span class="hint">(@T["Proposals_PageNote"])</span></p>
+                        }
+                        @if (proposal.Note is { } note)
+                        {
+                            <blockquote class="report-text" dir="auto">@note</blockquote>
+                        }
+                    </li>
+                }
+            </ul>
+        </text>;
+
+    /// <summary>What the form that decides a proposed place is filled with.</summary>
+    public sealed class DecideInput
+    {
+        /// <summary>Gets or sets the first proposal of the place that was added.</summary>
+        public string? Added { get; set; }
+
+        /// <summary>Gets or sets the first proposal of the place that was declined.</summary>
+        public string? Declined { get; set; }
+
+        /// <summary>Gets or sets who decided, when the tool has no accounts.</summary>
+        public string? By { get; set; }
+    }
+}

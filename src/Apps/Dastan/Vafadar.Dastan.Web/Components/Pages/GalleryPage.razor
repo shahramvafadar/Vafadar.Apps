@@ -24,6 +24,22 @@
         <ExploreBar State="_explore" />
     }
 
+    @if (!gallery.Themes.IsEmpty)
+    {
+        @* The themes of the collection (R-MED-02): what the editors gathered its pictures under. They stand above
+           the pictures, where a visitor chooses among them; a theme with nothing to show is not offered. *@
+        <nav class="chart-tools gallery-themes" aria-label="@T["Gallery_Themes"]">
+            <p class="chart-tool">
+                <span class="chart-tool-name">@T["Gallery_Themes"]</span>
+                @Choice(gallery.Rule == GalleryRule.WholeCollection, $"{Site.Collection}/gallery", T["Gallery_Kind_All"])
+                @foreach (var theme in gallery.Themes)
+                {
+                    @Choice(gallery.Entity?.Id == theme.Theme.Id, $"{Site.Collection}/entity/{theme.Theme.Id}/gallery", $"{Visitor.Text(theme.Theme.Label).Value} ({Visitor.Number(theme.Items)})")
+                }
+            </p>
+        </nav>
+    }
+
     @* The gallery begins with its pictures (step 20.10). Why they are here, the time that can be asked for and how
        they are arranged stand in one fold above them – open when the visitor has chosen something there, or when
        there is nothing to show and the fold says why. *@
@@ -99,39 +115,42 @@
     }
     </details>
 
+    @if (gallery.Years is not null)
+    {
+        @* The years the visitor chose (D-084): what shows them stands first, what states no time apart below,
+           and what shows another time is counted and said to be left out – nothing is dropped in silence. *@
+        <p class="note gallery-years" role="status">
+            @string.Format(CultureInfo.CurrentCulture, T[gallery.Items.IsEmpty ? "Gallery_Years_None" : "Gallery_Years"], _years)
+            @if (gallery.LeftOut > 0)
+            {
+                @(" " + string.Format(CultureInfo.CurrentCulture, T["Gallery_Years_LeftOut"], Visitor.Number(gallery.LeftOut)))
+            }
+        </p>
+    }
+
     @if (!gallery.Items.IsEmpty)
     {
         <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Gallery_Count"], Visitor.Number(gallery.Items.Length))@(_order == GalleryOrder.Editorial ? $" – {T["Gallery_Order"]}" : null)</p>
         <ul class="cards gallery" role="list">
             @foreach (var item in gallery.Items)
             {
-                var viewer = $"{Site.Collection}/media/{item.Id}{_context}";
-                var picture = Site.ContentFile(item.Kind == MediaKind.Video ? item.Poster : item.File) is null
-                    ? null
-                    : item.Kind == MediaKind.Video ? MediaAddress.Poster(Site.Collection, item.Id) : MediaAddress.File(Site.Collection, item.Id);
-                <li class="card media-card" id="@item.Id">
-                    @if (picture is not null)
-                    {
-                        @* The picture leads where the title leads; for a screen reader and the keyboard the title is the link. *@
-                        <a class="thumb" href="@viewer" tabindex="-1" aria-hidden="true"><img src="@picture" srcset="@MediaAddress.SourceSet(Site.Collection, item, file => Site.ContentFile(file) is not null)" sizes="@(item.Sizes.IsEmpty ? null : "(min-width: 40rem) 20rem, 100vw")" alt="" loading="lazy" /></a>
-                    }
-                    <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
-                    <h2><a href="@viewer"><Loc Text="item.Label" /></a></h2>
-                    <p><Loc Text="Caption(item)" /></p>
-                    <p class="meta">@T["Media_Made"]: @TimeText.Of(item.Created, Visitor, T)</p>
-                    @if (item.Shows is { } shows)
-                    {
-                        <p class="meta">
-                            @T["Media_ShowsTime"]: @TimeText.Of(shows, Visitor, T)
-                            @if (gallery.Possibly.Contains(item.Id))
-                            {
-                                <span class="possibly">– @T["Gallery_Possibly"]</span>
-                            }
-                        </p>
-                    }
-                </li>
+                @Card(item, gallery)
             }
         </ul>
+    }
+
+    @if (!gallery.WithoutTime.IsEmpty)
+    {
+        <section aria-labelledby="without-time">
+            <h2 id="without-time">@T["Gallery_WithoutTime"]</h2>
+            <p class="note">@T["Gallery_WithoutTimeNote"]</p>
+            <ul class="cards gallery" role="list">
+                @foreach (var item in gallery.WithoutTime)
+                {
+                    @Card(item, gallery)
+                }
+            </ul>
+        </section>
     }
 
     @if (!gallery.MadeThen.IsEmpty)
@@ -230,6 +249,7 @@
     private bool _invalid;
     private bool _open;
     private string _asked = string.Empty;
+    private string _years = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -269,7 +289,9 @@
         // A time is asked of the whole collection; what is no time is said to be none, and the gallery stays whole.
         var time = named is null && !string.IsNullOrWhiteSpace(Time) ? AskedTime.Read(Time) : null;
         _invalid = named is null && !string.IsNullOrWhiteSpace(Time) && time is null;
-        _gallery = Subject is not null ? projection.Gallery(new EntityId(Subject))
+        // The pictures of a name are one of its views: the years the visitor chose are part of what is explored (D-084).
+        _explore = Subject is null ? null : Exploring.Of(Context, Visitor, new EntityId(Subject), ExplorationView.Pictures);
+        _gallery = Subject is not null ? projection.Gallery(new EntityId(Subject), _explore!.Span, Clock.GetUtcNow().Year)
             : Step is not null ? projection.Gallery(new EventId(Step))
             : time is not null ? projection.Gallery(time, Clock.GetUtcNow().Year)
             : projection.Gallery();
@@ -280,7 +302,7 @@
         }
 
         // What a gallery has to choose from is asked before anything is left out.
-        _kinds = [.. _gallery.Items.Select(item => item.Kind).Concat(_gallery.References.Select(item => item.Kind)).Concat(_gallery.MadeThen.Select(item => item.Kind)).Distinct().Order()];
+        _kinds = [.. _gallery.Items.Concat(_gallery.WithoutTime).Select(item => item.Kind).Concat(_gallery.References.Select(item => item.Kind)).Concat(_gallery.MadeThen.Select(item => item.Kind)).Distinct().Order()];
         _asked = time is null ? string.Empty : "time=" + Uri.EscapeDataString(time.Written);
         _order = Order switch { "oldest" => GalleryOrder.OldestFirst, "newest" => GalleryOrder.NewestFirst, _ => GalleryOrder.Editorial };
         _kind = Kind switch { "image" => MediaKind.Image, "video" => MediaKind.Video, _ => null };
@@ -290,16 +312,18 @@
             _gallery = _gallery.Arranged(_order, _kind);
         }
 
-        _explore = Subject is null ? null : Exploring.Of(Context, Visitor, new EntityId(Subject), ExplorationView.Pictures);
+        _years = _explore?.Years is { } chosen ? YearsText.Of(chosen, Visitor, T) : string.Empty;
 
         var overview = projection.Overview();
         _continues = overview.StoryContinues;
         switch (_gallery)
         {
             case { Entity: { } entity }:
+                // A theme gathers pictures; nothing shows it. The page says which of the two rules it follows.
                 var name = Visitor.Text(entity.Label).Value;
-                _title = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleEntity"], name);
-                _lead = string.Format(CultureInfo.CurrentCulture, T["Gallery_LeadEntity"], name);
+                var theme = _gallery.Rule == GalleryRule.OfTheme;
+                _title = string.Format(CultureInfo.CurrentCulture, T[theme ? "Gallery_TitleTheme" : "Gallery_TitleEntity"], name);
+                _lead = string.Format(CultureInfo.CurrentCulture, T[theme ? "Gallery_LeadTheme" : "Gallery_LeadEntity"], name);
                 _back = $"{Site.Collection}/entity/{entity.Id}";
                 _backName = name;
                 _context = $"?entity={Uri.EscapeDataString(entity.Id.Value)}";
@@ -336,10 +360,41 @@
             _asked.Length == 0 ? null : _asked,
             _order switch { GalleryOrder.OldestFirst => "order=oldest", GalleryOrder.NewestFirst => "order=newest", _ => null },
             _kind is { } only ? $"kind={only.ToString().ToLowerInvariant()}" : null,
+            _gallery.Years is null || _explore?.Years is not { } stretch ? null : FormattableString.Invariant($"from={stretch.From}&to={stretch.To}"),
         }.Where(part => part is not null).ToList();
         _context = carried.Count == 0 ? string.Empty : "?" + string.Join('&', carried);
         _open = _gallery.IsEmpty || _invalid || time is not null || _order != GalleryOrder.Editorial || _kind is not null;
     }
+
+    // The card of an item, the same wherever the gallery lists it.
+    private RenderFragment Card(MediaItem item, GalleryView gallery) => __builder =>
+    {
+        var viewer = $"{Site.Collection}/media/{item.Id}{_context}";
+        var picture = Site.ContentFile(item.Kind == MediaKind.Video ? item.Poster : item.File) is null
+            ? null
+            : item.Kind == MediaKind.Video ? MediaAddress.Poster(Site.Collection, item.Id) : MediaAddress.File(Site.Collection, item.Id);
+        <li class="card media-card" id="@item.Id">
+            @if (picture is not null)
+            {
+                @* The picture leads where the title leads; for a screen reader and the keyboard the title is the link. *@
+                <a class="thumb" href="@viewer" tabindex="-1" aria-hidden="true"><img src="@picture" srcset="@MediaAddress.SourceSet(Site.Collection, item, file => Site.ContentFile(file) is not null)" sizes="@(item.Sizes.IsEmpty ? null : "(min-width: 40rem) 20rem, 100vw")" alt="" loading="lazy" /></a>
+            }
+            <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+            <h2><a href="@viewer"><Loc Text="item.Label" /></a></h2>
+            <p><Loc Text="Caption(item)" /></p>
+            <p class="meta">@T["Media_Made"]: @TimeText.Of(item.Created, Visitor, T)</p>
+            @if (item.Shows is { } shows)
+            {
+                <p class="meta">
+                    @T["Media_ShowsTime"]: @TimeText.Of(shows, Visitor, T)
+                    @if (gallery.Possibly.Contains(item.Id))
+                    {
+                        <span class="possibly">– @T["Gallery_Possibly"]</span>
+                    }
+                </p>
+            }
+        </li>
+    };
 
     // The caption of an item in this gallery: the one of the place the gallery is of, where the item has one (R-MED-07).
     private LocalizedText Caption(MediaItem item) => _gallery switch

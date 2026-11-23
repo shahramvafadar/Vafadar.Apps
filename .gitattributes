@@ -71,3 +71,10 @@ src/Apps/Dastan/Vafadar.Dastan.Web/wwwroot/favicon.svg text eol=lf
 src/Apps/Dastan/Vafadar.Dastan.Studio/wwwroot/favicon.svg text eol=lf
 src/Apps/Dastan/Vafadar.Dastan.Web/Site/BrandGeometry.cs text eol=lf
 src/Apps/Dastan/Vafadar.Dastan.Studio/Site/BrandGeometry.cs text eol=lf
+
+# Written by branding/dastan/scripts/print.mjs. A PDF counts the places of its objects in bytes, so no line
+# end of it is ever changed; an EPS and the guide are LF on every system.
+branding/dastan/exports/print/*.pdf -text
+branding/dastan/guide/*.pdf binary
+branding/dastan/exports/print/*.eps text eol=lf
+branding/dastan/guide/*.html text eol=lf

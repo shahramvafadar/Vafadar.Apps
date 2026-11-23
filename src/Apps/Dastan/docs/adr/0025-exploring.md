@@ -86,7 +86,8 @@ of a visitor, in an address; the comparisons the editors write (ADR 0008) are an
 
 * **A stretch of years that the connections and the pictures of a name honour.** Today only the chart of
   time leaves years out; the two others name the wish as set aside. Whether they should leave years out too
-  belongs to the explorer (20.8).
+  belongs to the explorer (20.8). *Decided by the owner and built on 2026-11-23 – see "The years of a name"
+  below.*
 * **Where a drawing stood** – its movement and its size. *Built on 2026-11-21 (section 23 of the delivery
   plan):* the moving drawing of connections, of a family and of a family tree writes how large it is shown and
   how far it was moved into the place of the history the visitor is at (`history.state`) when the visitor –
@@ -108,3 +109,38 @@ of a visitor, in an address; the comparisons the editors write (ADR 0008) are an
   of a phone are 20.8.
 * **A context wider than one name** – exploring a story or a thread as such. The contract explores one
   entity of one collection; the chart and the pictures of a whole collection have no bar.
+
+## The years of a name (2026-11-23, D-084)
+
+The owner chose that all three views of a name that can keep to years do: the chart of time, the connections
+and the pictures. One state of exploring that one view drops when the view is changed reads as a fault.
+
+1. **One stretch, named the same everywhere.** The years are `from` and `to` of the address in every view, as
+   they were; `Exploration.HonoursYears` says which views keep to them, and `Exploration.Span` is the stretch
+   on the axis of years – both years whole. The page of a name and its family tree show every year and go on
+   saying so ("Not left out in this view").
+2. **What states no time is told apart, not hidden.** In a story almost no relation has a time; years that hid
+   them would empty the page. So the neighbourhood of a name in a stretch of years
+   (`Projection.Connections` with years) holds the relations that held in it and the relations that state no
+   time, and the answer tells the two apart; the gallery of a name in a stretch of years (`Projection.Gallery`
+   with years) holds what shows the years and, apart, what states no time it shows. A node is reached, opened
+   and offered to be opened only by relations that are part of the answer.
+3. **What is left out is counted and said.** A relation of another time and a picture of another time are not
+   shown; the page says how many, so that nothing is dropped in silence. A time that is less than exact or
+   reaches out of the years "may" lie in them, and is marked so.
+4. **The drawing that moves shows what the page shows.** It asks its address with what the page was asked
+   with; the address of the connections answers the neighbourhood in the same years.
+5. **The years are asked for on the bar** of the connections and of the pictures: two years, a button, and the
+   way back to every year, folded until somebody wants them and open while years are chosen. It is a form that
+   asks for a page and sends the rest of the state along; the script of exploring keeps those fields in step
+   like the links. A year is read as somebody typed it – the digits of Persian and Arabic, a longer sign of
+   minus. What is no stretch of years is said to be none, and leaves nothing out. The chart of time keeps its
+   own tools for its stretch.
+6. **A picture keeps the years of the gallery it was opened from**: the way back, the one before and the next
+   are those of the gallery as it lists them – what shows the years, then what states no time.
+
+Not built: years on the page of a name and on a family tree (parentage states no time in any collection yet);
+a time of a theme's gallery other than the gallery of a time of the whole collection.
+
+Tests: `ExplorationTests` (the stretch, what is typed, what is none), `YearsOfANameTests` (the projection),
+`YearsOfANamePagesTests` (the pages, the form, Persian, the address of the drawing).

@@ -50,6 +50,9 @@ Flat colours, no gradient, no shadow. The logo files have no ground of their own
 | `exports/icons/icon-maskable-{192,512}.png` | whole square, opaque | manifest, purpose `maskable` |
 | `exports/icons/apple-touch-icon.png` | 180 pixels, whole square, opaque | the home screen of iOS |
 | `exports/icons/favicon-{16,32,48}.png`, `exports/ico/favicon.ico` | the icon of a tab; the ICO holds the three | `favicon.ico` |
+| `exports/print/dastan-logo-{color-cmyk,reversed-cmyk,black}.pdf` and `.eps` | the logo for print: outlines only, CMYK, its page the logo with its clear space | for a printer |
+| `exports/print/dastan-symbol-{indigo-cmyk,reversed-cmyk,black}.pdf` and `.eps` | the symbol for print, the same way | for a printer |
+| `guide/brand-guide.html`, `guide/dastan-brand-guide.pdf` | the guide of the brand: versions, clear space, smallest sizes, colours, type, the name, icons, what is not done, the marks of others, the files | to hand to who works with the logo |
 | `previews/comparison.png` | the reference, the master, one over the other, the variants, the actual sizes, the masks | to look at |
 | `previews/report.json` | the size and the least alpha of every PNG, and the measured difference from the reference | to check |
 
@@ -72,6 +75,26 @@ half the diagonal of the box of the symbol is 94 % of that radius.
   right to left the logo is the same: the D and the wordmark are Latin, and a drawing is not mirrored.
 * The logo is readable from a height of 24 pixels; below that, use the symbol alone.
 
+## For print, and the guide of the brand
+
+`scripts/print.mjs` writes the files for print and the guide (decision D-087). A file for print is the outlines
+of the geometry as the paths of a PDF and of an EPS – no picture of pixels, no font, nothing embedded –, filled
+in CMYK. Its page is the logo with its clear space, the diameter of the dot on every side; its trim box is the
+logo. The reversed files hold the indigo field as large as that page.
+
+| Colour | CMYK (C / M / Y / K) |
+|---|---|
+| Indigo | 90 / 88 / 0 / 5 |
+| Ink | 70 / 65 / 30 / 85 |
+| Black | 0 / 0 / 0 / 100 |
+
+**These values are where a printer begins, not a measurement.** No proof was printed and no spot colour is
+chosen. A proof decides; then the table `print` at the head of the script is changed and the files are made
+again. The files carry plain CMYK without an embedded profile.
+
+The guide is one page of HTML that holds everything it shows, and the same page printed as a PDF. It is made
+from the geometry; do not edit it by hand.
+
 ## On the site
 
 `src/Apps/Dastan/Vafadar.Dastan.Web` draws the logo itself, from `Site/BrandGeometry.cs`, which the script
@@ -90,6 +113,8 @@ draws another geometry or serves another icon than this folder holds.
 ```powershell
 node branding/dastan/scripts/build.mjs            # the SVG files and both Site/BrandGeometry.cs – Node alone
 node branding/dastan/scripts/build.mjs --raster   # also the PNG and ICO files, the icons of the site, the sheet
+node branding/dastan/scripts/print.mjs            # the files for print and the guide as HTML – Node alone
+node branding/dastan/scripts/print.mjs --pdf      # also the guide as a PDF, printed by the same browser
 ```
 
 A PNG is a drawing of an SVG by a browser. `--raster` uses the Chromium of the test container of Dastan
@@ -101,6 +126,6 @@ another icon than this folder made.
 
 ## What is not here
 
-The original vector file and the name of the font of the wordmark; formats for print (PDF, EPS); a guide of the
-brand beyond this page; registration of the mark. Nothing was tried on a phone or as an installed app – see
+The original vector file and the name of the font of the wordmark; colours that were proofed on paper, and a
+spot colour; a Latin font of the brand and stationery; registration of the mark. Nothing was tried on a phone or as an installed app – see
 ADR 0026.

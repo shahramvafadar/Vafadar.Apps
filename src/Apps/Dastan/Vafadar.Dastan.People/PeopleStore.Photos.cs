@@ -173,6 +173,17 @@ public sealed partial class PeopleStore
             return null;
         }
 
+        // A photograph that is gone is the picture of nobody: of no account and of no record of a tree.
+        foreach (var pictured in _context.Visitors.Where(candidate => candidate.Picture == photo))
+        {
+            pictured.Picture = null;
+        }
+
+        foreach (var pictured in _context.Persons.Where(candidate => candidate.Picture == photo))
+        {
+            pictured.Picture = null;
+        }
+
         _context.Photos.Remove(stored);
         Save();
         return stored.File;

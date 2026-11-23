@@ -4137,4 +4137,169 @@
   <data name="World_Tree_Claims" xml:space="preserve">
     <value>somebody says a record is them, for you to confirm or refuse: {0}</value>
   </data>
+  <data name="Type_theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Gallery_Themes" xml:space="preserve">
+    <value>Themes</value>
+  </data>
+  <data name="Gallery_TitleTheme" xml:space="preserve">
+    <value>Theme “{0}” – images and videos</value>
+  </data>
+  <data name="Gallery_LeadTheme" xml:space="preserve">
+    <value>Images and videos the editors of this collection gathered under the theme “{0}”, as far as you have read.</value>
+  </data>
+  <data name="Entity_ThemeNote" xml:space="preserve">
+    <value>A theme is a grouping by the editors of this collection: it gathers images and videos and states nothing about the subject.</value>
+  </data>
+  <data name="Explore_Years_All" xml:space="preserve">
+    <value>Years: all</value>
+  </data>
+  <data name="Explore_Years_Chosen" xml:space="preserve">
+    <value>Years: {0}</value>
+  </data>
+  <data name="Explore_Years_From" xml:space="preserve">
+    <value>From the year</value>
+  </data>
+  <data name="Explore_Years_To" xml:space="preserve">
+    <value>to the year</value>
+  </data>
+  <data name="Explore_Years_Show" xml:space="preserve">
+    <value>Show these years</value>
+  </data>
+  <data name="Explore_Years_Clear" xml:space="preserve">
+    <value>All years</value>
+  </data>
+  <data name="Explore_Years_How" xml:space="preserve">
+    <value>A year before the common era is written with a minus: -500. The chart of time, the connections and the pictures of this name all keep to these years.</value>
+  </data>
+  <data name="Explore_Years_Refused" xml:space="preserve">
+    <value>That is no stretch of years: write two years, the second after the first. Nothing was left out.</value>
+  </data>
+  <data name="Connections_Years" xml:space="preserve">
+    <value>Shown for the years {0}: what held in them, and what states no time.</value>
+  </data>
+  <data name="Connections_Years_None" xml:space="preserve">
+    <value>Nothing here is stated to have held in the years {0}; what states no time is shown.</value>
+  </data>
+  <data name="Connections_Years_LeftOut" xml:space="preserve">
+    <value>Left out because they state another time: {0}.</value>
+  </data>
+  <data name="Connections_Years_Empty" xml:space="preserve">
+    <value>Every connection of this name states another time than the years you chose.</value>
+  </data>
+  <data name="Connections_InYears" xml:space="preserve">
+    <value>Held in the years {0}</value>
+  </data>
+  <data name="Connections_WithoutTime" xml:space="preserve">
+    <value>Without a stated time</value>
+  </data>
+  <data name="Connections_WithoutTimeNote" xml:space="preserve">
+    <value>These state no time. They are shown whatever years you choose.</value>
+  </data>
+  <data name="Connections_Possibly" xml:space="preserve">
+    <value>may have held in these years</value>
+  </data>
+  <data name="Gallery_Years" xml:space="preserve">
+    <value>Shown for the years {0}: what shows them, and below what states no time.</value>
+  </data>
+  <data name="Gallery_Years_None" xml:space="preserve">
+    <value>Nothing here is stated to show the years {0}; what states no time is shown.</value>
+  </data>
+  <data name="Gallery_Years_LeftOut" xml:space="preserve">
+    <value>Left out because they show another time: {0}.</value>
+  </data>
+  <data name="Gallery_WithoutTime" xml:space="preserve">
+    <value>Without a stated time</value>
+  </data>
+  <data name="Gallery_WithoutTimeNote" xml:space="preserve">
+    <value>These do not say what time they show. They are shown whatever years you choose.</value>
+  </data>
+  <data name="Affiliations_Propose_Title" xml:space="preserve">
+    <value>Propose a place to the editors</value>
+  </data>
+  <data name="Affiliations_Propose_Note" xml:space="preserve">
+    <value>Is a place you were at not among the entries of the collections? Tell the editors. They decide whether it gets an entry; proposing states nothing about you and publishes nothing. The proposal is kept without your name and without your account, so nobody can answer it – look here again later.</value>
+  </data>
+  <data name="Affiliations_Propose_Name" xml:space="preserve">
+    <value>Name of the place</value>
+  </data>
+  <data name="Affiliations_Propose_Kind" xml:space="preserve">
+    <value>What kind of place it is</value>
+  </data>
+  <data name="Affiliations_Propose_Where" xml:space="preserve">
+    <value>Where it is – a city, a country (optional)</value>
+  </data>
+  <data name="Affiliations_Propose_Page" xml:space="preserve">
+    <value>A public page about it (optional)</value>
+  </data>
+  <data name="Affiliations_Propose_Page_How" xml:space="preserve">
+    <value>An address that begins with https://, such as the site of the place itself.</value>
+  </data>
+  <data name="Affiliations_Propose_NoteLabel" xml:space="preserve">
+    <value>What else the editors should know (optional)</value>
+  </data>
+  <data name="Affiliations_Propose_Send" xml:space="preserve">
+    <value>Propose this place</value>
+  </data>
+  <data name="Affiliations_Propose_Link" xml:space="preserve">
+    <value>Propose it to the editors.</value>
+  </data>
+  <data name="Affiliations_Said_proposed" xml:space="preserve">
+    <value>Thank you. The editors have your proposal; it says nothing about who sent it.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-later" xml:space="preserve">
+    <value>That is many proposals in a short time. Please try again in an hour.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-full" xml:space="preserve">
+    <value>The editors have more proposals waiting than they can take at the moment. Please try again another day.</value>
+  </data>
+  <data name="Affiliations_Problem_proposal" xml:space="preserve">
+    <value>That could not be sent: a proposal needs the name of the place, and a page – if you name one – an address that begins with https://.</value>
+  </data>
+  <data name="Affiliations_Entry_Now" xml:space="preserve">
+    <value>An entry of a collection goes by these words now.</value>
+  </data>
+  <data name="Affiliations_Entry_Look" xml:space="preserve">
+    <value>See whether it is your place, and choose it</value>
+  </data>
+  <data name="Person_Head_Places" xml:space="preserve">
+    <value>Was at</value>
+  </data>
+  <data name="Person_Head_More" xml:space="preserve">
+    <value>More places below</value>
+  </data>
+  <data name="Person_Describe_Link" xml:space="preserve">
+    <value>Change what your page says</value>
+  </data>
+  <data name="Person_Said_described-self" xml:space="preserve">
+    <value>Kept. Your page says it to who you chose.</value>
+  </data>
+  <data name="Person_Self_Title" xml:space="preserve">
+    <value>What your page says</value>
+  </data>
+  <data name="Person_Self_Note" xml:space="preserve">
+    <value>A few words about yourself and a picture, if you want. The words are read by who you choose here. The picture is one of your photographs and is seen by who may see that photograph – choose who that is where the photograph is.</value>
+  </data>
+  <data name="Person_Self_About" xml:space="preserve">
+    <value>A few words about you</value>
+  </data>
+  <data name="Person_Self_About_How" xml:space="preserve">
+    <value>At most 300 characters. Leave it empty to say nothing.</value>
+  </data>
+  <data name="Person_Self_Shown" xml:space="preserve">
+    <value>Who may read these words</value>
+  </data>
+  <data name="Person_Self_Picture_Note" xml:space="preserve">
+    <value>Only your own photographs can be your picture. Who sees it is decided by who may see the photograph:</value>
+  </data>
+  <data name="Person_Self_Save" xml:space="preserve">
+    <value>Keep</value>
+  </data>
+  <data name="Person_Self_Problem_long" xml:space="preserve">
+    <value>The words are too long: at most 300 characters.</value>
+  </data>
+  <data name="Person_Self_Problem_picture" xml:space="preserve">
+    <value>That photograph is not one of yours.</value>
+  </data>
 </root>

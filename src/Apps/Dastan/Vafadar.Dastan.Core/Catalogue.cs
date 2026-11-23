@@ -272,7 +272,8 @@ public sealed class Catalogue
             CheckThreads();
             foreach (var entity in catalogue.Entities)
             {
-                CheckSources(entity.Id.Value, entity.Sources, entity.Level);
+                // A theme is a grouping of the editors and may rest on no source; everything else rests on one.
+                CheckSources(entity.Id.Value, entity.Sources, entity.Level, required: entity.Type != EntityTypes.Theme);
                 CheckStage(entity.Id.Value, entity.Level);
                 foreach (var dated in entity.Dated)
                 {
@@ -781,6 +782,24 @@ public sealed class Catalogue
             foreach (var id in item.DepictedEntities)
             {
                 Known(name, id, item.Level, "depicted entity");
+                if (catalogue.Find(id)?.Type == EntityTypes.Theme)
+                {
+                    problems.Add($"{name}: {id} is a theme; an item names its themes in themeIds and depicts none.");
+                }
+            }
+
+            foreach (var id in item.Themes)
+            {
+                Known(name, id, item.Level, "theme");
+                if (catalogue.Find(id) is { } theme && theme.Type != EntityTypes.Theme)
+                {
+                    problems.Add($"{name}: its theme {id} is a {theme.Type.Key}, not a theme.");
+                }
+            }
+
+            foreach (var twice in item.Themes.GroupBy(id => id).Where(ids => ids.Count() > 1))
+            {
+                problems.Add($"{name}: the theme {twice.Key} is named {twice.Count()} times.");
             }
 
             foreach (var id in item.DepictedEvents)

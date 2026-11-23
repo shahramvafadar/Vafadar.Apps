@@ -825,4 +825,64 @@
   <data name="Publish_Notes_Missing" xml:space="preserve">
     <value>واقعیت‌های لازمِ بیان‌نشده: {0}</value>
   </data>
+  <data name="Nav_Proposals" xml:space="preserve">
+    <value>مکان‌های پیشنهادی</value>
+  </data>
+  <data name="Proposals_Title" xml:space="preserve">
+    <value>مکان‌هایی که بازدیدکنندگان پیشنهاد داده‌اند</value>
+  </data>
+  <data name="Proposals_Lead" xml:space="preserve">
+    <value>جاهایی که مردم می‌گویند آن‌جا بوده‌اند و هیچ مجموعه‌ای مدخلی برایشان ندارد. پیشنهاد، نوشتهٔ یک ناشناس است: خودش چیزی را عوض نمی‌کند و دربارهٔ نویسنده‌اش چیزی نمی‌گوید. تصمیم بگیرید که این مکان مدخل بگیرد یا نه؛ اگر می‌گیرد، نامش را در مجموعه‌ای که به آن تعلق دارد بسازید، منتشر کنید و این‌جا ثبت کنید که افزوده شد – همراه با مدخلش، تا ردّش به آن برسد.</value>
+  </data>
+  <data name="Proposals_None" xml:space="preserve">
+    <value>پیشنهادی در انتظار نیست.</value>
+  </data>
+  <data name="Proposals_Waiting" xml:space="preserve">
+    <value>در انتظار: {0} – مکان‌ها: {1}</value>
+  </data>
+  <data name="Proposals_Times" xml:space="preserve">
+    <value>{0} بار پیشنهاد شده</value>
+  </data>
+  <data name="Proposals_Make" xml:space="preserve">
+    <value>ساختن نام در {0}</value>
+  </data>
+  <data name="Proposals_Entry" xml:space="preserve">
+    <value>مدخلی که این مکان اکنون دارد (اختیاری)</value>
+  </data>
+  <data name="Proposals_EntryHint" xml:space="preserve">
+    <value>به شکل collection/name، مثل universities/university-of-tehran. فقط برای مکانی که افزوده شده است.</value>
+  </data>
+  <data name="Proposals_Added" xml:space="preserve">
+    <value>افزوده شد</value>
+  </data>
+  <data name="Proposals_Declined" xml:space="preserve">
+    <value>مدخلی نمی‌گیرد</value>
+  </data>
+  <data name="Proposals_Done_added" xml:space="preserve">
+    <value>ثبت شد: مکان افزوده شد.</value>
+  </data>
+  <data name="Proposals_Done_declined" xml:space="preserve">
+    <value>ثبت شد: مکان مدخلی نمی‌گیرد.</value>
+  </data>
+  <data name="Proposals_Gone" xml:space="preserve">
+    <value>آن پیشنهاد دیگر در انتظار نیست – کس دیگری دربارهٔ آن تصمیم گرفته است.</value>
+  </data>
+  <data name="Proposals_NoEntry" xml:space="preserve">
+    <value>در انبار نامی به شکل «{0}» نیست. مدخل را به شکل collection/name بنویسید یا میدان را خالی بگذارید.</value>
+  </data>
+  <data name="Proposals_Decided" xml:space="preserve">
+    <value>تصمیم‌گرفته‌شده‌ها</value>
+  </data>
+  <data name="Proposals_Outcome_Added" xml:space="preserve">
+    <value>افزوده شد</value>
+  </data>
+  <data name="Proposals_Outcome_Declined" xml:space="preserve">
+    <value>بدون مدخل</value>
+  </data>
+  <data name="Proposals_DecidedBy" xml:space="preserve">
+    <value>تصمیم از {0} در {1}</value>
+  </data>
+  <data name="Proposals_PageNote" xml:space="preserve">
+    <value>نشانی‌ای که یک بازدیدکننده نوشته؛ کسی آن را بررسی نکرده است</value>
+  </data>
 </root>

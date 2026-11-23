@@ -1,0 +1,84 @@
+@using Vafadar.Dastan.People
+@inject IStringLocalizer<Ui> T
+
+@* The head of somebody of the personal side of the site (D-086, ADR 0024): an account, or a record in a
+   family tree. It is the head of an identity as a name of a collection has it (IdentityHead) – the picture
+   or a drawing, what kind of somebody it is, the name as the title of the page, where it belongs, a line
+   about it, a few facts, and what can be done – fed by what the store of the visitors lets this viewer see.
+   The picture is a photograph of a visitor and is here only when who looks may see that photograph; without
+   one the drawing of a person stands, which says nothing about anybody. *@
+<header class="page-header identity is-@Flavour">
+    <figure class="profile-figure">
+        <span class="profile-picture">
+            @if (Picture is not null)
+            {
+                <PhotoImage Photo="Picture" />
+            }
+            else
+            {
+                <svg class="kind-drawing" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                </svg>
+            }
+        </span>
+        @if (PictureNote is not null)
+        {
+            <figcaption class="meta">@PictureNote</figcaption>
+        }
+    </figure>
+    <div class="identity-words">
+        <IdentityMark Flavour="@Flavour" />
+        <h1 dir="auto">@Name</h1>
+        @if (Where is not null)
+        {
+            @Where
+        }
+        @if (About is { Length: > 0 })
+        {
+            <p class="lead person-about" dir="auto">@About</p>
+        }
+        @if (Facts is not null)
+        {
+            @Facts
+        }
+        @if (ChildContent is not null)
+        {
+            <div class="identity-actions">@ChildContent</div>
+        }
+    </div>
+</header>
+
+@code {
+    /// <summary>Gets or sets which of the kinds of identity it is (<see cref="IdentityMark"/>): an account or a record.</summary>
+    [Parameter, EditorRequired]
+    public string Flavour { get; set; } = IdentityMark.Account;
+
+    /// <summary>Gets or sets the name, as its owner wrote it.</summary>
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the picture, when who looks may see that photograph.</summary>
+    [Parameter]
+    public PhotoInfo? Picture { get; set; }
+
+    /// <summary>Gets or sets what is said under the picture: what it shows, or that there is none.</summary>
+    [Parameter]
+    public RenderFragment? PictureNote { get; set; }
+
+    /// <summary>Gets or sets where it belongs: a line under the name.</summary>
+    [Parameter]
+    public RenderFragment? Where { get; set; }
+
+    /// <summary>Gets or sets a line about it, in the words of who wrote it.</summary>
+    [Parameter]
+    public string? About { get; set; }
+
+    /// <summary>Gets or sets the few facts a head shows.</summary>
+    [Parameter]
+    public RenderFragment? Facts { get; set; }
+
+    /// <summary>Gets or sets what can be done with it.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

@@ -825,4 +825,64 @@
   <data name="Publish_Notes_Missing" xml:space="preserve">
     <value>essential facts not stated: {0}</value>
   </data>
+  <data name="Nav_Proposals" xml:space="preserve">
+    <value>Proposed places</value>
+  </data>
+  <data name="Proposals_Title" xml:space="preserve">
+    <value>Places visitors proposed</value>
+  </data>
+  <data name="Proposals_Lead" xml:space="preserve">
+    <value>Places people say they were at that no collection has an entry for. A proposal is words of a stranger: it changes nothing by itself and says nothing about who wrote it. Decide whether the place gets an entry; if it does, make the name in the collection it belongs to, publish, and note here that it was added – with its entry, so that the trail leads to it.</value>
+  </data>
+  <data name="Proposals_None" xml:space="preserve">
+    <value>No proposal waits.</value>
+  </data>
+  <data name="Proposals_Waiting" xml:space="preserve">
+    <value>Waiting: {0} – places: {1}</value>
+  </data>
+  <data name="Proposals_Times" xml:space="preserve">
+    <value>proposed {0} times</value>
+  </data>
+  <data name="Proposals_Make" xml:space="preserve">
+    <value>Make the name in {0}</value>
+  </data>
+  <data name="Proposals_Entry" xml:space="preserve">
+    <value>The entry the place has now (optional)</value>
+  </data>
+  <data name="Proposals_EntryHint" xml:space="preserve">
+    <value>As collection/name, such as universities/university-of-tehran. Only for a place that was added.</value>
+  </data>
+  <data name="Proposals_Added" xml:space="preserve">
+    <value>It was added</value>
+  </data>
+  <data name="Proposals_Declined" xml:space="preserve">
+    <value>No entry for it</value>
+  </data>
+  <data name="Proposals_Done_added" xml:space="preserve">
+    <value>Noted: the place was added.</value>
+  </data>
+  <data name="Proposals_Done_declined" xml:space="preserve">
+    <value>Noted: the place gets no entry.</value>
+  </data>
+  <data name="Proposals_Gone" xml:space="preserve">
+    <value>That proposal waits no longer – somebody else has decided it.</value>
+  </data>
+  <data name="Proposals_NoEntry" xml:space="preserve">
+    <value>The store has no name “{0}”. Write the entry as collection/name, or leave the field empty.</value>
+  </data>
+  <data name="Proposals_Decided" xml:space="preserve">
+    <value>Decided</value>
+  </data>
+  <data name="Proposals_Outcome_Added" xml:space="preserve">
+    <value>added</value>
+  </data>
+  <data name="Proposals_Outcome_Declined" xml:space="preserve">
+    <value>no entry</value>
+  </data>
+  <data name="Proposals_DecidedBy" xml:space="preserve">
+    <value>decided by {0} on {1}</value>
+  </data>
+  <data name="Proposals_PageNote" xml:space="preserve">
+    <value>an address a visitor wrote; nobody has checked it</value>
+  </data>
 </root>

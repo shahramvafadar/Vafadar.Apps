@@ -3,7 +3,10 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Vafadar.Dastan.People;
 
-/// <summary>The account of a visitor: a name to sign in with and what is kept of a password. Nothing else about the person.</summary>
+/// <summary>
+/// The account of a visitor: a name to sign in with and what is kept of a password – and, since D-086, what
+/// the visitor chose to say on the page of the account: a few words and a picture. Nothing else about the person.
+/// </summary>
 public sealed class StoredVisitor
 {
     /// <summary>Gets or sets the identifier: made by the store, it says nothing about the person and never changes.</summary>
@@ -32,6 +35,21 @@ public sealed class StoredVisitor
 
     /// <summary>Gets or sets when the visitor said so.</summary>
     public DateTime? TermsAcceptedAt { get; set; }
+
+    /// <summary>Gets or sets a few words the visitor wrote about themself for the page of the account (D-086); nothing for none.</summary>
+    public string? About { get; set; }
+
+    /// <summary>Gets or sets who may read those words (<c>ScopeKind</c>): nobody else, a circle, everybody.</summary>
+    public int AboutScope { get; set; }
+
+    /// <summary>Gets or sets the circle, when the words are for one.</summary>
+    public long? AboutCircle { get; set; }
+
+    /// <summary>
+    /// Gets or sets the photograph that is the picture of the account, by its identifier: one of the account's
+    /// own. It is shown to who may see that photograph, and to nobody else.
+    /// </summary>
+    public string? Picture { get; set; }
 }
 
 /// <summary>
@@ -697,6 +715,8 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             visitor.Property(item => item.NameKey).HasMaxLength(80);
             visitor.Property(item => item.Stamp).HasMaxLength(40);
             visitor.Property(item => item.TermsVersion).HasMaxLength(20);
+            visitor.Property(item => item.About).HasMaxLength(PeopleStore.LongestAccountAbout);
+            visitor.Property(item => item.Picture).HasMaxLength(40);
             visitor.HasIndex(item => item.NameKey).IsUnique();
         });
 

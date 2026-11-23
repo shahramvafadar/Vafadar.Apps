@@ -132,6 +132,13 @@ public sealed class MediaItem
     /// <param name="storyEvent">The event of the step.</param>
     public LocalizedText CaptionAt(EventId storyEvent) => Places.FirstOrDefault(place => place.Event == storyEvent)?.Caption ?? Caption;
 
+    /// <summary>
+    /// Gets the themes the item is gathered under (R-MED-02): entities of the type
+    /// <see cref="EntityTypes.Theme"/> of the same collection, in the order the editors named them. A theme is
+    /// a grouping – it is not depicted, and it is apart from <see cref="DepictedEntities"/>.
+    /// </summary>
+    public ImmutableArray<EntityId> Themes { get; init; } = [];
+
     /// <summary>Gets the relations the item explains.</summary>
     public ImmutableArray<RelationId> RelatedRelations { get; init; } = [];
 

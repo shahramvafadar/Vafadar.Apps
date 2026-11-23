@@ -138,12 +138,18 @@ public static class EntityTypes
     /// <summary>An idea, a field of knowledge, a technique.</summary>
     public static EntityType Concept { get; } = new("concept", EntityNature.Subject, "An idea, a field of knowledge, a technique");
 
+    /// <summary>
+    /// A theme the images and videos of a collection are gathered under: a motif, a genre, a school of painting.
+    /// It is the editors' grouping – a media item names its themes – and is not something an item depicts.
+    /// </summary>
+    public static EntityType Theme { get; } = new("theme", EntityNature.Subject, "A theme the images and videos of the collection are gathered under: a motif, a genre, a school of painting. A media item names it in themeIds; nothing depicts it");
+
     /// <summary>Gets every known type.</summary>
     public static ImmutableArray<EntityType> All { get; } =
     [
         Work, StoryArc, Character, AnimalCharacter, NarrativePlace, NarrativeRegion, NarrativeObject,
         Person, Organisation, Place, Region, Company, SportsClub, SportsTeam, Competition, CompetitionSeason,
-        Brand, Product, University, Government, Dynasty, Family, Community, Country, Event, Period, Office, Honour, RealObject, NaturalSubject, Concept,
+        Brand, Product, University, Government, Dynasty, Family, Community, Country, Event, Period, Office, Honour, RealObject, NaturalSubject, Concept, Theme,
     ];
 
     /// <summary>Returns the type named <paramref name="key"/>, or <see langword="null"/> when the list has none.</summary>

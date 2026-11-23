@@ -4137,4 +4137,169 @@
   <data name="World_Tree_Claims" xml:space="preserve">
     <value>کسی می‌گوید پرونده‌ای خودِ اوست؛ تأیید یا ردّ آن با شماست: {0}</value>
   </data>
+  <data name="Type_theme" xml:space="preserve">
+    <value>مضمون</value>
+  </data>
+  <data name="Gallery_Themes" xml:space="preserve">
+    <value>مضمون‌ها</value>
+  </data>
+  <data name="Gallery_TitleTheme" xml:space="preserve">
+    <value>مضمون «{0}» – تصویرها و ویدیوها</value>
+  </data>
+  <data name="Gallery_LeadTheme" xml:space="preserve">
+    <value>تصویرها و ویدیوهایی که ویراستاران این مجموعه زیر مضمون «{0}» گرد آورده‌اند، تا جایی که خوانده‌اید.</value>
+  </data>
+  <data name="Entity_ThemeNote" xml:space="preserve">
+    <value>مضمون دسته‌ای است که ویراستاران این مجموعه ساخته‌اند: تصویرها و ویدیوها را گرد می‌آورد و دربارهٔ موضوع چیزی ادعا نمی‌کند.</value>
+  </data>
+  <data name="Explore_Years_All" xml:space="preserve">
+    <value>سال‌ها: همه</value>
+  </data>
+  <data name="Explore_Years_Chosen" xml:space="preserve">
+    <value>سال‌ها: {0}</value>
+  </data>
+  <data name="Explore_Years_From" xml:space="preserve">
+    <value>از سال</value>
+  </data>
+  <data name="Explore_Years_To" xml:space="preserve">
+    <value>تا سال</value>
+  </data>
+  <data name="Explore_Years_Show" xml:space="preserve">
+    <value>همین سال‌ها را نشان بده</value>
+  </data>
+  <data name="Explore_Years_Clear" xml:space="preserve">
+    <value>همهٔ سال‌ها</value>
+  </data>
+  <data name="Explore_Years_How" xml:space="preserve">
+    <value>سالِ پیش از میلاد با منفی نوشته می‌شود: ⁦-500⁩. خط زمان، پیوندها و تصویرهای این نام همه به همین سال‌ها پایبند می‌مانند.</value>
+  </data>
+  <data name="Explore_Years_Refused" xml:space="preserve">
+    <value>این یک بازهٔ سال نیست: دو سال بنویسید که دومی پس از اولی باشد. چیزی کنار گذاشته نشد.</value>
+  </data>
+  <data name="Connections_Years" xml:space="preserve">
+    <value>برای سال‌های {0} نشان داده شده: آنچه در این سال‌ها برقرار بوده و آنچه زمانی برایش گفته نشده است.</value>
+  </data>
+  <data name="Connections_Years_None" xml:space="preserve">
+    <value>برای سال‌های {0} چیزی ثبت نشده که در آن برقرار بوده باشد؛ آنچه زمانی ندارد نشان داده شده است.</value>
+  </data>
+  <data name="Connections_Years_LeftOut" xml:space="preserve">
+    <value>کنار گذاشته‌شده چون زمان دیگری دارند: {0}.</value>
+  </data>
+  <data name="Connections_Years_Empty" xml:space="preserve">
+    <value>همهٔ پیوندهای این نام زمانی جز سال‌های انتخابی شما دارند.</value>
+  </data>
+  <data name="Connections_InYears" xml:space="preserve">
+    <value>برقرار در سال‌های {0}</value>
+  </data>
+  <data name="Connections_WithoutTime" xml:space="preserve">
+    <value>بدون زمانِ گفته‌شده</value>
+  </data>
+  <data name="Connections_WithoutTimeNote" xml:space="preserve">
+    <value>برای این‌ها زمانی گفته نشده است. هر سالی انتخاب کنید نشان داده می‌شوند.</value>
+  </data>
+  <data name="Connections_Possibly" xml:space="preserve">
+    <value>شاید در این سال‌ها برقرار بوده</value>
+  </data>
+  <data name="Gallery_Years" xml:space="preserve">
+    <value>برای سال‌های {0} نشان داده شده: آنچه این سال‌ها را نشان می‌دهد و، پایین‌تر، آنچه زمانی برایش گفته نشده است.</value>
+  </data>
+  <data name="Gallery_Years_None" xml:space="preserve">
+    <value>چیزی ثبت نشده که سال‌های {0} را نشان دهد؛ آنچه زمانی ندارد نشان داده شده است.</value>
+  </data>
+  <data name="Gallery_Years_LeftOut" xml:space="preserve">
+    <value>کنار گذاشته‌شده چون زمان دیگری را نشان می‌دهند: {0}.</value>
+  </data>
+  <data name="Gallery_WithoutTime" xml:space="preserve">
+    <value>بدون زمانِ گفته‌شده</value>
+  </data>
+  <data name="Gallery_WithoutTimeNote" xml:space="preserve">
+    <value>این‌ها نمی‌گویند چه زمانی را نشان می‌دهند. هر سالی انتخاب کنید نشان داده می‌شوند.</value>
+  </data>
+  <data name="Affiliations_Propose_Title" xml:space="preserve">
+    <value>پیشنهاد یک مکان به ویراستاران</value>
+  </data>
+  <data name="Affiliations_Propose_Note" xml:space="preserve">
+    <value>جایی که بوده‌اید در میان مدخل‌های مجموعه‌ها نیست؟ به ویراستاران بگویید. آن‌ها تصمیم می‌گیرند که مدخلی برایش ساخته شود یا نه؛ پیشنهاد دادن چیزی دربارهٔ شما نمی‌گوید و چیزی را منتشر نمی‌کند. پیشنهاد بدون نام و بدون حساب شما نگه داشته می‌شود، پس کسی نمی‌تواند به آن پاسخ دهد – بعداً دوباره همین‌جا را نگاه کنید.</value>
+  </data>
+  <data name="Affiliations_Propose_Name" xml:space="preserve">
+    <value>نام مکان</value>
+  </data>
+  <data name="Affiliations_Propose_Kind" xml:space="preserve">
+    <value>چه نوع مکانی است</value>
+  </data>
+  <data name="Affiliations_Propose_Where" xml:space="preserve">
+    <value>کجاست – شهر، کشور (اختیاری)</value>
+  </data>
+  <data name="Affiliations_Propose_Page" xml:space="preserve">
+    <value>صفحه‌ای عمومی دربارهٔ آن (اختیاری)</value>
+  </data>
+  <data name="Affiliations_Propose_Page_How" xml:space="preserve">
+    <value>نشانی‌ای که با https:// آغاز می‌شود، مثل سایت خودِ همان مکان.</value>
+  </data>
+  <data name="Affiliations_Propose_NoteLabel" xml:space="preserve">
+    <value>هر چیز دیگری که ویراستاران باید بدانند (اختیاری)</value>
+  </data>
+  <data name="Affiliations_Propose_Send" xml:space="preserve">
+    <value>همین مکان را پیشنهاد بده</value>
+  </data>
+  <data name="Affiliations_Propose_Link" xml:space="preserve">
+    <value>آن را به ویراستاران پیشنهاد بدهید.</value>
+  </data>
+  <data name="Affiliations_Said_proposed" xml:space="preserve">
+    <value>سپاس. پیشنهاد شما به دست ویراستاران رسید؛ چیزی دربارهٔ فرستنده‌اش در آن نیست.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-later" xml:space="preserve">
+    <value>این تعداد پیشنهاد در زمانی کوتاه زیاد است. لطفاً یک ساعت دیگر دوباره بفرستید.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-full" xml:space="preserve">
+    <value>پیشنهادهای در انتظارِ ویراستاران بیش از آن است که الان بتوانند بپذیرند. لطفاً روز دیگری دوباره بفرستید.</value>
+  </data>
+  <data name="Affiliations_Problem_proposal" xml:space="preserve">
+    <value>فرستاده نشد: پیشنهاد به نام مکان نیاز دارد، و صفحه – اگر می‌نویسید – به نشانی‌ای که با https:// آغاز شود.</value>
+  </data>
+  <data name="Affiliations_Entry_Now" xml:space="preserve">
+    <value>اکنون مدخلی از یک مجموعه به همین نام هست.</value>
+  </data>
+  <data name="Affiliations_Entry_Look" xml:space="preserve">
+    <value>ببینید همان جای شماست یا نه، و انتخابش کنید</value>
+  </data>
+  <data name="Person_Head_Places" xml:space="preserve">
+    <value>بوده در</value>
+  </data>
+  <data name="Person_Head_More" xml:space="preserve">
+    <value>جاهای دیگر، پایین‌تر</value>
+  </data>
+  <data name="Person_Describe_Link" xml:space="preserve">
+    <value>تغییر آنچه صفحهٔ شما می‌گوید</value>
+  </data>
+  <data name="Person_Said_described-self" xml:space="preserve">
+    <value>نگه داشته شد. صفحهٔ شما آن را به کسانی که برگزیدید می‌گوید.</value>
+  </data>
+  <data name="Person_Self_Title" xml:space="preserve">
+    <value>آنچه صفحهٔ شما می‌گوید</value>
+  </data>
+  <data name="Person_Self_Note" xml:space="preserve">
+    <value>چند کلمه دربارهٔ خودتان و یک عکس، اگر بخواهید. کلمه‌ها را کسانی می‌خوانند که همین‌جا برمی‌گزینید. عکس یکی از عکس‌های خود شماست و کسانی آن را می‌بینند که اجازهٔ دیدن همان عکس را دارند – این را همان‌جا که عکس هست برگزینید.</value>
+  </data>
+  <data name="Person_Self_About" xml:space="preserve">
+    <value>چند کلمه دربارهٔ شما</value>
+  </data>
+  <data name="Person_Self_About_How" xml:space="preserve">
+    <value>حداکثر ۳۰۰ نویسه. برای اینکه چیزی گفته نشود خالی بگذارید.</value>
+  </data>
+  <data name="Person_Self_Shown" xml:space="preserve">
+    <value>چه کسانی این کلمه‌ها را بخوانند</value>
+  </data>
+  <data name="Person_Self_Picture_Note" xml:space="preserve">
+    <value>فقط عکس‌های خودتان می‌توانند عکس نمایهٔ شما باشند. اینکه چه کسی آن را ببیند با اجازهٔ دیدن همان عکس است:</value>
+  </data>
+  <data name="Person_Self_Save" xml:space="preserve">
+    <value>نگه دار</value>
+  </data>
+  <data name="Person_Self_Problem_long" xml:space="preserve">
+    <value>کلمه‌ها بیش از اندازه بلندند: حداکثر ۳۰۰ نویسه.</value>
+  </data>
+  <data name="Person_Self_Problem_picture" xml:space="preserve">
+    <value>آن عکس از عکس‌های شما نیست.</value>
+  </data>
 </root>

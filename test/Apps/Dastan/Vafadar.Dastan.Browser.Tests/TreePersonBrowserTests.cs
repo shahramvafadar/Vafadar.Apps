@@ -109,7 +109,8 @@ public sealed class TreePersonBrowserTests(AccountsBrowserSite site) : IClassFix
         await BrowserSite.Arrived(page, new Regex(@"/person/[a-f0-9]{32}$"));
         var person = page.Url;
         Assert.Equal("زال", await page.Locator("main h1").InnerTextAsync());
-        Assert.Equal(1, await page.Locator(".profile .kind-drawing").CountAsync());
+        Assert.Equal(1, await page.Locator(".identity .kind-drawing").CountAsync());
+        Assert.Equal(0, await page.Locator(".profile .profile-picture").CountAsync());
         var facts = await page.Locator(".profile .profile-facts").InnerTextAsync();
         Assert.Contains(language == "fa" ? "۱۲۵۰" : "1250", facts, StringComparison.Ordinal);
         // The day as it was written, with the name of its month – and, on a page of another calendar, converted beside it.
@@ -136,10 +137,10 @@ public sealed class TreePersonBrowserTests(AccountsBrowserSite site) : IClassFix
         await BrowserSite.Arrived(page, new Regex(@"\?said=described#profile$"));
 
         // The picture is really drawn – a square cut out of the portrait – and the words keep their two lines.
-        var picture = page.Locator(".profile .profile-picture img");
+        var picture = page.Locator(".identity .profile-picture img");
         await picture.EvaluateAsync("image => image.complete || new Promise(done => image.addEventListener('load', done, { once: true }))");
         Assert.True(await picture.EvaluateAsync<int>("image => image.naturalWidth") > 0, "The picture is drawn.");
-        Assert.Equal(0, await page.Locator(".profile .kind-drawing").CountAsync());
+        Assert.Equal(0, await page.Locator(".identity .kind-drawing").CountAsync());
         Assert.Contains("زابل", await page.Locator(".profile .profile-facts").InnerTextAsync(), StringComparison.Ordinal);
         var about = await page.Locator(".person-about").BoundingBoxAsync();
         Assert.NotNull(about);
@@ -148,23 +149,24 @@ public sealed class TreePersonBrowserTests(AccountsBrowserSite site) : IClassFix
         await BreaksNoRule(page);
     }
 
-    // Nothing reaches beyond the screen; the picture is a square; the facts stand beside it or under it.
+    // Nothing reaches beyond the screen; the picture of the head is a square; the name and what is said with it
+    // stand beside it or under it (D-086).
     private static async Task Fits(IPage page, int width)
     {
         Assert.False(await ScrollsSideways(page));
-        var picture = await page.Locator(".profile .profile-picture").BoundingBoxAsync();
-        var facts = await page.Locator(".profile .profile-facts").BoundingBoxAsync();
+        var picture = await page.Locator(".identity .profile-picture").BoundingBoxAsync();
+        var facts = await page.Locator(".identity .identity-words").BoundingBoxAsync();
         Assert.NotNull(picture);
         Assert.NotNull(facts);
         Assert.InRange(picture.Width, 100, 240);
         Assert.Equal(picture.Width, picture.Height, 1.0);
         if (width >= 1000)
         {
-            Assert.True(Math.Abs(facts.Y - picture.Y) < 4 + 24, "The facts stand beside the picture.");
+            Assert.True(Math.Abs(facts.Y - picture.Y) < 4 + 24, "The name stands beside the picture.");
         }
         else
         {
-            Assert.True(facts.Y > picture.Y + picture.Height, "The facts stand under the picture.");
+            Assert.True(facts.Y > picture.Y + picture.Height, "The name stands under the picture.");
         }
     }
 }

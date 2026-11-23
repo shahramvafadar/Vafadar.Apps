@@ -109,6 +109,7 @@ Je nachdem, was Sie nutzen, speichert die Website zu Ihrem Konto:
 - Wie weit Sie in einer Sammlung gelesen haben, und die Seiten, die Sie sich gemerkt haben.
 - Einladungen, die Sie erstellt haben: wann, bis wann sie gelten, ob und von wem sie verwendet wurden.
 - Ihre Beziehungen zu anderen Konten: wer wen angefragt hat, als was (zum Beispiel Elternteil, Geschwister, Freund), ob die Beziehung bestätigt wurde und wer sie sehen darf.
+- Was Ihre Seite über Sie sagt, wenn Sie es schreiben: einige Worte, wer sie lesen darf, und welche Ihrer Fotografien Ihr Bild ist. Das Bild sieht, wer diese Fotografie sehen darf.
 - Ihre Kreise: ihre Namen und wer ihnen angehört.
 - Ihre Stammbäume: ihre Namen, wer sie sehen oder ändern darf, die Einträge der Personen darin (Abschnitt 9), die Verbindungen zwischen diesen Personen und den Verlauf der Änderungen.
 - Ihre Fotografien: die Bilddatei, ihre Größe und ihr Format, Ihre Bildunterschrift, das Aufnahmedatum, wenn Sie es angeben, wer sie sehen darf, in welchen Alben sie liegt und wer darauf markiert ist (Abschnitt 9).
@@ -133,6 +134,10 @@ Bis Sie es entfernen oder bis das Konto gelöscht wird.
 ## Einen Fehler auf einer redaktionellen Seite mitteilen
 
 Jede Aussage einer redaktionellen Seite kann als falsch gemeldet werden. Die Website speichert den Tag, die Seite und die Aussage, die Sprache und das, was Sie geschrieben haben – keinen Namen, keine IP-Adresse und kein Konto. Bitte schreiben Sie nichts über sich selbst oder über andere Personen in den Text. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (unser Interesse an richtigen Inhalten). Ein Fehlerhinweis wird 90 Tage, nachdem ein Mitglied der Redaktion ihn gesichtet hat, gelöscht.
+
+## Der Redaktion einen Ort vorschlagen
+
+Wenn Sie ein Konto haben und ein Ort, an dem Sie waren – eine Universität, ein Unternehmen, ein Verein –, nicht unter den Einträgen der Website ist, können Sie ihn der Redaktion vorschlagen. Die Website speichert den Tag, die Sprache und das, was Sie über den Ort geschrieben haben: seinen Namen, seine Art, wo er liegt, eine öffentliche Seite über ihn und eine Anmerkung, soweit Sie diese angeben – keinen Namen, keine IP-Adresse und kein Konto; ein Vorschlag lässt sich deshalb nicht auf Sie zurückführen und nicht beantworten. Bitte schreiben Sie nichts über sich selbst oder über andere Personen hinein. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (unser Interesse an vollständigen Inhalten). Ein Vorschlag wird 90 Tage, nachdem ein Mitglied der Redaktion über ihn entschieden hat, gelöscht.
 
 ## Inhalte melden (Meldung)
 
@@ -256,4 +261,4 @@ Wir ändern diese Erklärung, wenn sich die Website oder das Recht ändert. Das 
 
 Diese Erklärung liegt in englischer, deutscher und persischer Sprache vor. Maßgeblich ist die deutsche Fassung.
 
-Stand: 20. November 2026
+Stand: 23. November 2026

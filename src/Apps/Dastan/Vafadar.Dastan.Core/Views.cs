@@ -94,7 +94,27 @@ public sealed record ConnectionsView(
     ImmutableArray<Entity> Nodes,
     ImmutableArray<Edge> Edges,
     ImmutableArray<Entity> Expanded,
-    ImmutableArray<Entity> Expandable);
+    ImmutableArray<Entity> Expandable)
+{
+    /// <summary>
+    /// Gets the stretch of years the neighbourhood was asked for (D-084), or nothing. With one, a relation that
+    /// states a time is among the edges only when it held in those years; a relation that states no time is
+    /// among them always – it is told apart, not hidden.
+    /// </summary>
+    public Vafadar.Temporal.YearSpan? Years { get; init; }
+
+    /// <summary>Gets the relations among the edges that only may have held in the years: their time is less than exact, or reaches out of them.</summary>
+    public ImmutableHashSet<RelationId> Possibly { get; init; } = [];
+
+    /// <summary>Gets how many relations of what is open state a time outside the years and are left out.</summary>
+    public int LeftOut { get; init; }
+
+    /// <summary>Gets the edges that held in the years that were asked for; without years, every edge.</summary>
+    public IEnumerable<Edge> InYears => Years is null ? Edges : Edges.Where(edge => edge.Relation.Time is not null);
+
+    /// <summary>Gets the edges that state no time, when years were asked for; without years, none.</summary>
+    public IEnumerable<Edge> WithoutTime => Years is null ? [] : Edges.Where(edge => edge.Relation.Time is null);
+}
 
 /// <summary>A member of a family view.</summary>
 /// <param name="Entity">The entity.</param>
@@ -149,7 +169,15 @@ public enum GalleryRule
 
     /// <summary>The items that show a time that was asked for: a year, a stretch of years or a depth of time (ADR 0021).</summary>
     ShowsTime = 3,
+
+    /// <summary>The items the editors gathered under the theme (R-MED-02).</summary>
+    OfTheme = 4,
 }
+
+/// <summary>A theme of a collection with how many items a visitor may see under it – shown or named as a reference.</summary>
+/// <param name="Theme">The theme.</param>
+/// <param name="Items">How many items stand under it for this visitor.</param>
+public sealed record ThemeCount(Entity Theme, int Items);
 
 /// <summary>How the items of a gallery are ordered.</summary>
 public enum GalleryOrder
@@ -193,6 +221,9 @@ public sealed record MediaReference(
     ImmutableArray<EntityId> DepictedEntities,
     ImmutableArray<EventId> DepictedEvents)
 {
+    /// <summary>Gets the themes the work is gathered under.</summary>
+    public ImmutableArray<EntityId> Themes { get; init; } = [];
+
     /// <summary>Gets the title the holding institution gives the work.</summary>
     /// <summary>Gets the time the item shows, where it shows a time of the world.</summary>
     public Vafadar.Temporal.TemporalExpression? Shows { get; init; }
@@ -229,6 +260,25 @@ public sealed record GalleryView(
     public AskedTime? Time { get; init; }
 
     /// <summary>
+    /// Gets the stretch of years the gallery of a name was asked for (D-084), or nothing. With one,
+    /// <see cref="Items"/> are the items that show those years, and <see cref="WithoutTime"/> those that state
+    /// no time they show.
+    /// </summary>
+    public Vafadar.Temporal.YearSpan? Years { get; init; }
+
+    /// <summary>Gets the items of the rule that state no time they show, when years were asked for: told apart, not hidden.</summary>
+    public ImmutableArray<MediaItem> WithoutTime { get; init; } = [];
+
+    /// <summary>Gets how many items of the rule – shown, or named as held elsewhere – show another time than the years and are left out.</summary>
+    public int LeftOut { get; init; }
+
+    /// <summary>
+    /// Gets the themes a visitor can go on to from this gallery, in the order of the collection: every theme
+    /// that has something to show at this reading position. A theme with nothing under it is not offered.
+    /// </summary>
+    public ImmutableArray<ThemeCount> Themes { get; init; } = [];
+
+    /// <summary>
     /// Gets the items that were made in the time that was asked for and do not show it – or do not say what
     /// time they show. They are named apart: a picture made in a time is no picture of that time.
     /// </summary>
@@ -244,23 +294,26 @@ public sealed record GalleryView(
     public GalleryView Arranged(GalleryOrder order, MediaKind? kind)
     {
         var items = Items.Where(item => kind is null || item.Kind == kind);
+        var undated = WithoutTime.Where(item => kind is null || item.Kind == kind);
         var references = References.Where(item => kind is null || item.Kind == kind);
         if (order != GalleryOrder.Editorial)
         {
             decimal? Made(Vafadar.Temporal.TemporalExpression time) => YearCover.Reach(time)?.Middle;
-            items = order == GalleryOrder.OldestFirst
-                ? items.OrderBy(item => Made(item.Created) is null).ThenBy(item => Made(item.Created))
-                : items.OrderBy(item => Made(item.Created) is null).ThenByDescending(item => Made(item.Created));
+            IEnumerable<MediaItem> Ordered(IEnumerable<MediaItem> shown) => order == GalleryOrder.OldestFirst
+                ? shown.OrderBy(item => Made(item.Created) is null).ThenBy(item => Made(item.Created))
+                : shown.OrderBy(item => Made(item.Created) is null).ThenByDescending(item => Made(item.Created));
+            items = Ordered(items);
+            undated = Ordered(undated);
             references = order == GalleryOrder.OldestFirst
                 ? references.OrderBy(item => Made(item.Created) is null).ThenBy(item => Made(item.Created))
                 : references.OrderBy(item => Made(item.Created) is null).ThenByDescending(item => Made(item.Created));
         }
 
-        return this with { Order = order, Items = [.. items], References = [.. references], MadeThen = [.. MadeThen.Where(item => kind is null || item.Kind == kind)] };
+        return this with { Order = order, Items = [.. items], WithoutTime = [.. undated], References = [.. references], MadeThen = [.. MadeThen.Where(item => kind is null || item.Kind == kind)] };
     }
 
     /// <summary>Gets whether the gallery has nothing to show and nothing to refer to.</summary>
-    public bool IsEmpty => Items.IsEmpty && References.IsEmpty && MadeThen.IsEmpty;
+    public bool IsEmpty => Items.IsEmpty && WithoutTime.IsEmpty && References.IsEmpty && MadeThen.IsEmpty;
 }
 
 /// <summary>One media item with what it shows.</summary>
@@ -272,7 +325,11 @@ public sealed record MediaView(
     MediaItem Item,
     ImmutableArray<Entity> Depicted,
     ImmutableArray<StoryStep> Steps,
-    ImmutableArray<Edge> Relations);
+    ImmutableArray<Edge> Relations)
+{
+    /// <summary>Gets the themes the item is gathered under, as far as the visitor has read: a theme of a later stage is not named.</summary>
+    public ImmutableArray<Entity> Themes { get; init; } = [];
+}
 
 /// <summary>The kind of statement an evidence view supports.</summary>
 public enum EvidenceSubject

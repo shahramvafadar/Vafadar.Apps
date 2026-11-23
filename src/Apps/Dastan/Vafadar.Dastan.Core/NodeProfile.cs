@@ -180,6 +180,9 @@ public static class ProfileFacts
         [EntityTypes.Honour.Key] = Facts([Organiser], [Founded, Field]),
         [EntityTypes.NaturalSubject.Key] = Facts([Field], [Where]),
         [EntityTypes.Concept.Key] = Facts([Field], [Created, Creator]),
+
+        // A theme of a gallery is a grouping of the editors: nothing of it has to be known, and its field may be said.
+        [EntityTypes.Theme.Key] = Facts([], [Field]),
     }.ToFrozenDictionary(StringComparer.Ordinal);
 
     /// <summary>Gets every kind of fact the table knows, by its key.</summary>

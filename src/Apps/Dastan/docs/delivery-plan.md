@@ -1049,14 +1049,98 @@ named.
 
 | Open | Whose | Why not built here |
 |---|---|---|
-| Themes of a gallery (R-MED-02) | the owner, as editor | The vocabulary has no kind for a theme; which themes there are is an editorial decision, and a theme is a value of the vocabulary, not a free word (ADR 0021). |
-| A stretch of years that the connections and the pictures of a name honour | the owner | ADR 0025 left open whether they should leave years out at all. |
-| A way for a visitor to propose a place to the editors | the owner | An editorial process with somebody who looks at the proposals (ADR 0023). |
+| Themes of a gallery (R-MED-02) | – | **Decided and built on 2026-11-23** (D-083, section 24): a theme is a record of its collection. Which themes a collection has stays the decision of its editors. |
+| A stretch of years that the connections and the pictures of a name honour | – | **Decided and built on 2026-11-23** (D-084, section 24.2). |
+| A way for a visitor to propose a place to the editors | – | **Decided and built on 2026-11-23** (D-085, section 24.3). Somebody has to look at the page of the proposals in the tool of the editors: that stays with the owner. |
 | Pictures, and content beyond the Shahnameh | the owner | Rights and sources; without them Discover has one story and drawings in the place of pictures. |
 | The order inside the world of a story of a collection | the owner, with content | No collection states one; a comparison file can. |
 | Cards of a graph in sizes of their own; a first answer smaller than a whole family tree | nobody yet | The measurement of step 20.12 did not ask for either. |
-| `IdentityHead` for an account and a record in a tree | the owner | It would need a profile of people of accounts, which is a decision about what an account shows (ADR 0024). |
-| Formats of the logo for print; a guide of the brand | the owner | Asked for by no step; the masters are vectors and serve print as they are. |
+| `IdentityHead` for an account and a record in a tree | – | **Decided and built on 2026-11-23** (D-086, section 24.4). |
+| Formats of the logo for print; a guide of the brand | – | **Decided and built on 2026-11-23** (D-087, section 24.5). A proof on paper stays with the owner. |
 | A real phone, the app installed, Safari itself, a screen reader, five people who see the site for the first time | the owner | They need a device, eyes and ears. |
 | A mailbox and a sender, the clients at Google and Microsoft, the key of the licence of the graph, a host and an address | the owner | Accounts, contracts and secrets are entered by the owner alone. |
 | The legal pages read by a lawyer, the postal address | the owner | Section 18.8. |
+
+## 24. Five decisions of the owner (2026-11-23, D-083 to D-087)
+
+Section 23 ended with a table of what was open and whose it was. On 2026-11-23 the owner was given, for each of
+the five rows that were a decision about the product, the ways it could go with what each costs and a
+recommendation, and answered: themes as records of a collection; a stretch of years honoured by all three
+views of a name; a way to propose a place to the editors; a full identity head for an account and for a record
+of a tree – "not a short one: what we build is built whole"; a guide of the brand with the formats for print.
+The order of work the owner set for what follows: everything is tried in the browser on this machine first,
+then content is written, then the site goes online. Each decision is built whole, with its tests and its
+documents, before the next.
+
+**24.1 Themes of a gallery – done on 2026-11-23** (D-083, [ADR 0027](adr/0027-gallery-themes.md)). *Built:* the
+type `Theme` of an entity; `themeIds` of an image or a video; the rules of a collection for them (a theme is
+named as a theme and nothing else is, none twice, none of a later stage, nothing depicts a theme, a theme may
+rest on no source); the themes a reader is offered, each with the number of what stands under it and only with
+something under it; the gallery of a theme, which says "gathered under" and is arranged like every gallery; the
+themes above the pictures of the gallery of a collection and of a theme; the themes of an item on its page; the
+page of a theme; in the tool of the editors the themes to tick in the form of every image and video, kept apart
+from who and what the item shows. *Tried:* `MediaThemesTests` (15), `GalleryThemesTests` (6, English and
+Persian), `StudioThemesTests` (2).
+
+**24.2 The years of a name – done on 2026-11-23** (D-084, [ADR 0025](adr/0025-exploring.md), "The years of a
+name"). *Built:* the stretch of years of the state of exploring kept to by the connections and the pictures of
+a name as by its chart of time; the neighbourhood of a name in a stretch of years – what held in it, what
+states no time told apart, what states another time counted and left out, a node reached and opened only by
+what is part of it; the gallery of a name in a stretch of years, in the same three parts; the same
+neighbourhood for the drawing that moves; on the bar of exploring the years to ask for, to change and to give
+up, as a form that sends the rest of the state along and is kept in step by the script; years read as they are
+typed, also in Persian; what is no stretch of years said to be none; a picture that keeps the years of the
+gallery it was opened from, with its way back, the one before and the next. *Tried:* `ExplorationTests` (the 9
+new ones among 41), `YearsOfANameTests` (5), `YearsOfANamePagesTests` (9, English and Persian).
+
+**24.3 A place proposed to the editors – done on 2026-11-23** (D-085, [ADR 0023](adr/0023-institutions.md), "A
+place proposed to the editors"). *Built:* the table of the proposals and its box – what is a proposal and what
+is none, a box that is full, the decision of an editor, forgetting what was decided long ago –; on the page of
+the places somebody was at the form that proposes one, with the kinds people can have been at, offered also
+where looking for a place found nothing, with the name carried along; the limit of five in an hour; the word
+a statement in words gets when an entry goes by its words now, with the way to choose it; in the tool of the
+editors the page of the proposed places – the same place proposed several times as one, the way to begin its
+name with what was proposed, the decision with the entry the place has –; a new name that begins with a type
+and a name a link of the tool asks for; the command that forgets reports forgets decided proposals too; the
+privacy notice in its three languages and the record of processing name what is kept. *Tried:*
+`ProposalBoxTests` (19, among them that the tables are what the history of their changes of form makes them),
+`PlaceProposalPagesTests` (11, English and Persian), `StudioProposalsTests` (6). *To do by who runs a site:*
+`database migrate` before the new version starts.
+
+**24.4 The head of an account and of a record in a tree – done on 2026-11-23** (D-086,
+[ADR 0024](adr/0024-parts.md), "The head of an account and of a record in a tree"). *Built:* what an account
+says about itself – a few words with an audience of their own and a picture that is one of its photographs –,
+kept, read by who the scopes allow, looked at as somebody else, given back in the copy of one's data, taken
+back when a circle or a photograph goes; the form for it on the account's own page; the part `PersonHead` and
+with it the head of the page of an account – picture or drawing, name, words, the first places – and of the
+page of a person of a tree, private and public – picture or drawing, name, tree, the life in two lines –; the
+profile of a person of a tree without a second picture; the privacy notice in its three languages and the
+record of processing. *Tried:* `AccountDescriptionTests` (13, among them that the tables are what the history
+of their changes of form makes them), `AccountProfilePagesTests` (6, English and Persian),
+`TreePersonPagesTests` (13, brought to the head). *To do by who runs a site:* `database migrate`.
+
+**24.5 Files for print and the guide of the brand – done on 2026-11-23** (D-087,
+[ADR 0026](adr/0026-logo.md), addendum; `branding/dastan/README.md`). *Built:* the script that writes, from
+the geometry and by Node alone, the logo and the symbol for print – colour, white on indigo, black – as a PDF
+and an EPS each, outlines only, in CMYK, cut to the clear space; the guide of the brand as one page of HTML
+and as a PDF of nine pages. *Tried:* `BrandPrintTests`; the colour file read as a PDF and looked at; the guide
+looked at in a browser. *Not tried:* a proof on paper – the CMYK values are a beginning and are said to be.
+
+**What section 24 leaves open, and whose it is.** A proof of the colours on paper, a Latin font of the brand,
+the registration of the mark: the owner. Somebody who looks at the proposed places and at the reports: the
+owner, as editor. Years on a family tree and on the page of a name; themes across collections; facts of an
+account beyond a few words and a picture: asked for by nothing. Everything else that was open before stands in
+the table of section 23.
+
+**Section 24 as a whole, tried and looked at on 2026-11-23.** The whole suite ran after the last change: 3435
+tests, none failed. *Looked at in a browser, with made-up content:* the gallery of a collection with its themes
+in Persian and the gallery of a theme in English, dark, 1100 px; the connections of a name in a stretch of
+years with the form of the years, English; the pictures of a name in a stretch of years in Persian at 375 px,
+where nothing reaches beyond the screen; the form that proposes a place in Persian at 375 px; the page of an
+account with its head, the form for it filled in and sent, Persian, 375 and 1100 px; the page of the proposed
+places of the tool of the editors in Persian, with the same place proposed twice standing together; the guide
+of the brand; the colour file for print read as a PDF. *Found by looking and corrected:* two sentences about
+what was left out of the years stood without a blank between them; the example of a year before the common
+era was turned around in a Persian sentence; the field for the address of a page had the look of the browser
+and not of the form. *Not looked at:* a light appearance of these pages, a phone, a screen reader, the files
+for print on paper.

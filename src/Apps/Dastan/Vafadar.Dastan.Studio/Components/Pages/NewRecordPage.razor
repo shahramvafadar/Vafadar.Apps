@@ -57,6 +57,17 @@
     [Parameter]
     public string Group { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the type a new name starts with, as a record writes it – asked for by a link of the tool,
+    /// such as the one of a place a visitor proposed. Anything that is no type is not taken.
+    /// </summary>
+    [SupplyParameterFromQuery(Name = "type")]
+    public string? StartType { get; set; }
+
+    /// <summary>Gets or sets the name a new name starts with, asked for by a link of the tool.</summary>
+    [SupplyParameterFromQuery(Name = "label")]
+    public string? StartLabel { get; set; }
+
     /// <summary>Gets or sets who adds the record, and why.</summary>
     [SupplyParameterFromForm(FormName = "new")]
     public FieldsInput? Adding { get; set; }
@@ -73,6 +84,20 @@
         }
 
         _form = FormContext.Of(Store, Collection);
+
+        // A link of the tool may say what the form begins with. It fills in a form; it adds nothing.
+        if (Group == "entities" && Adding is null)
+        {
+            if (StartType is { Length: > 0 } type && ContentVocabulary.Collection.Any(choices => choices.Field == "entities[].type" && choices.Values.Any(value => value.Name == type)))
+            {
+                _start["type"] = type;
+            }
+
+            if (StartLabel is { Length: > 0 and <= 200 } label && !label.Any(char.IsControl))
+            {
+                _start["label"] = label.Trim();
+            }
+        }
     }
 
     private void Add()

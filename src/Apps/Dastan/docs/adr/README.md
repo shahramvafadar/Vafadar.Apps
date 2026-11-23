@@ -32,6 +32,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0023](0023-institutions.md) | A place somebody was at is an entity of a collection when they choose one, and a time there is a stretch of its own | Accepted; step 20.4 |
 | [0024](0024-parts.md) | The frame of the site – the main ways, the account, language and appearance behind one control, a bar at the foot of a phone – and the parts every page is made of | Accepted for the structure; step 20.5 |
 | [0026](0026-logo.md) | The logo: one geometry reconstructed from the approved picture, every asset made from it by one script, drawn by the site itself | Accepted; D-082 |
+| [0027](0027-gallery-themes.md) | A theme of a gallery is a record of its collection: an entity of the type `Theme` that media items name | Accepted; D-083 |
 | [0025](0025-exploring.md) | One state of exploring – what is explored, the view, what is chosen, what each view was told – read from the address and known to no renderer | Accepted; step 20.6 |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),

@@ -213,7 +213,15 @@
             </ul>
         }
 
-        <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
+        @if (overview.Entity.Type == EntityTypes.Theme && overview.Entity.Sources.IsEmpty)
+        {
+            @* A theme is a grouping of the editors; where it rests on no source the page says what it is instead of leading to an empty list. *@
+            <p class="meta">@T["Entity_ThemeNote"]</p>
+        }
+        else
+        {
+            <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
+        }
 
         @if (!overview.Entity.Identifiers.IsEmpty)
         {

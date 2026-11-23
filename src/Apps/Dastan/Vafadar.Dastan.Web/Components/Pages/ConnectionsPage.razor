@@ -3,6 +3,7 @@
 @inject DastanSite Site
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
 @if (_view is { } view)
 {
@@ -16,9 +17,22 @@
 
     <ExploreBar State="_explore" />
 
+    @if (view.Years is not null)
+    {
+        @* The years the visitor chose (D-084): what held in them and what states no time are drawn; what
+           states another time is counted and said to be left out – nothing is dropped in silence. *@
+        <p class="note connections-years" role="status">
+            @string.Format(CultureInfo.CurrentCulture, T[view.InYears.Any() ? "Connections_Years" : "Connections_Years_None"], _years)
+            @if (view.LeftOut > 0)
+            {
+                @(" " + string.Format(CultureInfo.CurrentCulture, T["Connections_Years_LeftOut"], Visitor.Number(view.LeftOut)))
+            }
+        </p>
+    }
+
     @if (view.Edges.IsEmpty)
     {
-        <p class="note">@T["Entity_NoConnections"]</p>
+        <p class="note">@T[view.LeftOut > 0 ? "Connections_Years_Empty" : "Entity_NoConnections"]</p>
     }
     else
     {
@@ -44,20 +58,24 @@
         @* The list says what the drawing says: both are the same answer of the projection (ADR 0002). *@
         <section aria-labelledby="as-list">
             <h2 id="as-list">@T["Connections_List"]</h2>
-            <ul class="statements" role="list">
-                @foreach (var edge in view.Edges)
+            @if (view.Years is null)
+            {
+                @Listed(view.Edges, view)
+            }
+            else
+            {
+                @if (view.InYears.Any())
                 {
-                    var other = edge.From.Id == view.Focus.Id ? edge.To : edge.From;
-                    <li>
-                        <Statement Relation="edge" Self="view.Focus.Id" Evidence="true" From="@_here" />
-                        @if (other.Id != view.Focus.Id && other.Id != _explore.Chosen)
-                        {
-                            @* Choosing looks at the other one closer and leaves the drawing as it is (ADR 0025). *@
-                            <a class="choose" href="@($"{Site.Collection}/{_explore.Choose(other.Id).Address(ExplorationView.Connections)}#chosen")">@T["Explore_Choose"]<span class="visually-hidden"> – @Visitor.Text(other.Label).Value</span></a>
-                        }
-                    </li>
+                    <h3 id="in-years">@string.Format(CultureInfo.CurrentCulture, T["Connections_InYears"], _years)</h3>
+                    @Listed(view.InYears, view)
                 }
-            </ul>
+                @if (view.WithoutTime.Any())
+                {
+                    <h3 id="without-time">@T["Connections_WithoutTime"]</h3>
+                    <p class="note">@T["Connections_WithoutTimeNote"]</p>
+                    @Listed(view.WithoutTime, view)
+                }
+            }
         </section>
     }
 
@@ -65,6 +83,30 @@
 }
 
 @code {
+    // The connections of a list, each with its sources and the way to choose the other one.
+    private RenderFragment Listed(IEnumerable<Edge> edges, ConnectionsView view) => __builder =>
+    {
+        <ul class="statements" role="list">
+            @foreach (var edge in edges)
+            {
+                var other = edge.From.Id == view.Focus.Id ? edge.To : edge.From;
+                <li>
+                    <Statement Relation="edge" Self="view.Focus.Id" Evidence="true" From="@_here" />
+                    @if (view.Possibly.Contains(edge.Relation.Id))
+                    {
+                        <span class="possibly">– @T["Connections_Possibly"]</span>
+                    }
+                    @if (other.Id != view.Focus.Id && other.Id != _explore.Chosen)
+                    {
+                        @* Choosing looks at the other one closer and leaves the drawing as it is (ADR 0025). *@
+                        <a class="choose" href="@($"{Site.Collection}/{_explore.Choose(other.Id).Address(ExplorationView.Connections)}#chosen")">@T["Explore_Choose"]<span class="visually-hidden"> – @Visitor.Text(other.Label).Value</span></a>
+                    }
+                </li>
+            }
+        </ul>
+    };
+
+    private string _years = string.Empty;
     private ConnectionsView? _view;
     private ConnectionsChart _chart = null!;
     private IReadOnlyList<EntityId> _open = [];
@@ -95,14 +137,22 @@
         // see or what is not connected is ignored by the projection.
         _open = [.. (Open ?? string.Empty).Split(',', StringSplitOptions.TrimEntries).Where(IsIdentifier).Select(id => new EntityId(id)).Distinct()];
         var known = Collection == Site.Collection && IsIdentifier(Id);
-        _view = known ? Visitor.Projection?.Connections(new EntityId(Id), _open) : null;
+        if (!known)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        // The years the visitor chose are part of what is explored: the neighbourhood is asked for in them (D-084).
+        _explore = Exploring.Of(Context, Visitor, new EntityId(Id), ExplorationView.Connections);
+        _view = Visitor.Projection?.Connections(new EntityId(Id), _open, _explore.Span, Clock.GetUtcNow().Year);
         if (_view is null)
         {
             Navigation.NotFound();
             return;
         }
 
-        _explore = Exploring.Of(Context, Visitor, _view.Focus.Id, ExplorationView.Connections);
+        _years = _explore.Years is { } chosen ? YearsText.Of(chosen, Visitor, T) : string.Empty;
 
         // Only what is really open stays in the links of the page.
         _open = [.. _view.Expanded.Select(entity => entity.Id)];

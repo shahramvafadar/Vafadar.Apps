@@ -47,6 +47,7 @@ builder.Services.AddSingleton<DastanLibrary>();
 builder.Services.AddScoped(services => services.GetRequiredService<DastanLibrary>().Of(services.GetRequiredService<IHttpContextAccessor>().HttpContext!));
 builder.Services.TryAddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<ReportDesk>();
+builder.Services.AddSingleton<ProposalDesk>();
 
 // The accounts of the visitors (step 16.1): there are some only where the site was told its database.
 builder.Services.AddVisitorAccounts(builder.Configuration);

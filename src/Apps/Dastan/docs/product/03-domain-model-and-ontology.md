@@ -224,6 +224,7 @@ The same table is in the code (`ProfileFacts`); a test holds the two together.
 | `object` | `created`, `keptAt` | `creator`, `owner` |
 | `naturalSubject` | `field` | `where` |
 | `concept` | `field` | `created`, `creator` |
+| `theme` | – | `field` |
 <!-- /facts-of-kinds -->
 
 What each fact says:

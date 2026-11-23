@@ -122,7 +122,45 @@ this account is the one to confirm or refuse –, each leading to the part of th
 or to the owner about an agreement that is somebody else's. The note at the top of a tree no longer says
 "something waits" to somebody who has agreed already.
 
-**Not built:** the head of a page of an account and of a record in a tree is the mark above the name, not
+**Not built** (*decided by the owner and built on 2026-11-23 – see "The head of an account and of a record in
+a tree" below*)**:** the head of a page of an account and of a record in a tree is the mark above the name, not
 `IdentityHead` – that part is fed by the profile of a node of a collection (ADR 0017), which neither has; a
 profile of that shape for people of accounts is not made up here. The pages of the people, of where one was and
 of the photographs keep their bodies as they were and gained the bar; they were not put together anew.
+
+## The head of an account and of a record in a tree (2026-11-23, D-086)
+
+The owner chose a head for both, and a whole one: "what we build is built whole".
+
+1. **One part for both: `PersonHead`.** It is the head of an identity as a name of a collection has it – the
+   picture or a drawing, the mark that says what kind of somebody this is, the name as the title of the page,
+   where it belongs, a line about it, a few facts, what can be done – and it is fed by what the store of the
+   visitors lets this viewer see, not by the profile of a node. `IdentityHead` stays the head of a name of a
+   collection; the two share their classes and so their look.
+2. **An account says about itself what it chooses** (`PeopleStore.DescribeAccount`): a few words – at most
+   300 characters, a lead under a name and not a life – with an audience of their own (nobody else, a circle,
+   everybody), and a picture. Only the account writes them, on its own page.
+3. **The picture has no audience of its own.** It is one of the account's own photographs and is shown to who
+   may see that photograph. So a photograph cannot be seen as a picture by somebody who may not see it as a
+   photograph, and there is one place where its audience is chosen. A photograph that is removed is the
+   picture of nobody; that holds for the picture of a record of a tree too, which kept a name of nothing before.
+4. **Nothing is hinted at** (PRIV-012). The words are read where their scope allows, asked before anything is
+   made of them. The head of an account that says nothing and of one that says nothing to this viewer are the
+   same: the drawing of a person and the name. Looking at one's own page as somebody else draws the head by
+   the same scopes. A circle that is deleted takes the words back to the account alone. A copy of one's data
+   holds the words, their audience and the picture.
+5. **The head of an account names the first three places** the viewer may see, with the way to the rest; it
+   counts nothing.
+6. **The head of a record of a tree** shows the picture this viewer may see or the drawing, the name, the tree,
+   when the person was born and died in two lines (`PersonLife`), and – where the record is an account – the
+   way to it. The profile below is the facts and does not show the picture a second time. The public page of
+   a person of a public tree has the same head.
+
+The table of the visitors gained four columns by a change of form written by hand
+(`20261123130000_AccountDescription`); `AccountDescriptionTests` asks the database whether the model has a
+change no change of form carries.
+
+Not built: a date of birth, a place of living or any other fact of an account – none is asked for, and each
+would be a decision about what the site keeps of a person.
+
+Tests: `AccountDescriptionTests`, `AccountProfilePagesTests`, `TreePersonPagesTests`.

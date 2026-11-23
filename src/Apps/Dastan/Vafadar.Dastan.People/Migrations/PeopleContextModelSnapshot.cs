@@ -869,6 +869,16 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
+                    b.Property<string>("About")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<long?>("AboutCircle")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("AboutScope")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("ClosedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -887,6 +897,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
+
+                    b.Property<string>("Picture")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("Stamp")
                         .IsRequired()

@@ -17,15 +17,49 @@
     @* The page of a person is for people, not for search engines. *@
     <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
 
-    <header class="page-header is-account">
-        <IdentityMark Flavour="@IdentityMark.Account" />
-        <h1 dir="auto">@_profile.Person.Name</h1>
-        @if (_own && _seen is null)
-        {
-            <p class="lead">@T["Person_Lead_Self"]</p>
-            <p class="actions"><a class="action secondary" href="account/people">@T["People_Title"]</a></p>
-        }
-    </header>
+    @* The head of the account (D-086): its picture where this viewer may see that photograph, its name, the
+       words it wrote about itself where they are for this viewer, and the first places it lets this viewer
+       see. An account that says nothing and one that says nothing to this viewer have the same head (PRIV-012). *@
+    <PersonHead Flavour="@IdentityMark.Account" Name="@_profile.Person.Name" Picture="_profile.Picture" About="@_profile.About">
+        <Facts>
+            @if (!_profile.Affiliations.IsEmpty)
+            {
+                <dl class="facts profile-facts compact">
+                    <dt>@T["Person_Head_Places"]</dt>
+                    @foreach (var shown in _profile.Affiliations.Take(HeadPlaces))
+                    {
+                        var when = shown.DatesShown ? AffiliationEndpoints.When(shown.Terms, T, Visitor) : string.Empty;
+                        <dd><PlaceName Words="@shown.Terms.Organisation" Reference="shown.Terms.Institution" />@if (when.Length > 0)
+                            {
+                                <span class="meta"> – @when</span>
+                            }
+                        </dd>
+                    }
+                    @if (_profile.Affiliations.Length > HeadPlaces)
+                    {
+                        <dd><a href="@($"people/{Id}{(_seen is null ? null : $"?as={As}")}#person-affiliations")">@T["Person_Head_More"]</a></dd>
+                    }
+                </dl>
+            }
+        </Facts>
+        <ChildContent>
+            @if (_own && _seen is null)
+            {
+                <a class="action secondary" href="@($"people/{Id}#describe")">@T["Person_Describe_Link"]</a>
+                <a class="action secondary" href="account/people">@T["People_Title"]</a>
+            }
+        </ChildContent>
+    </PersonHead>
+
+    @if (_own && _seen is null)
+    {
+        <p class="note">@T["Person_Lead_Self"]</p>
+    }
+
+    @if (_said)
+    {
+        <p class="note" role="status">@T["Person_Said_described-self"]</p>
+    }
 
     @if (_seen is not null)
     {
@@ -77,6 +111,50 @@
                     </li>
                 }
             </ul>
+        </section>
+    }
+
+    @if (_own && _seen is null && _mine is not null)
+    {
+        @* What the page says (D-086): a few words with an audience of their own, and a picture – one of the
+           account's photographs, seen by who may see that photograph. Only the account writes them. *@
+        <section id="describe" aria-labelledby="describe-title">
+            <h2 id="describe-title">@T["Person_Self_Title"]</h2>
+            <p class="note">@T["Person_Self_Note"]</p>
+            @if (_problem is not null)
+            {
+                <div class="problems" role="alert"><ul>
+                    <li>@T[$"Person_Self_Problem_{_problem}"]</li>
+                </ul></div>
+            }
+            <form method="post" action="@($"{PeopleEndpoints.Root}/describe")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}{PeopleEndpoints.Person}/{Id}")" />
+                <p class="field">
+                    <label for="self-about">@T["Person_Self_About"]</label>
+                    <textarea id="self-about" name="about" rows="3" maxlength="@PeopleStore.LongestAccountAbout" dir="auto" aria-describedby="self-about-how">@_mine.About</textarea>
+                    <span class="meta" id="self-about-how">@T["Person_Self_About_How"]</span>
+                </p>
+                <p class="field">
+                    <label for="self-shown">@T["Person_Self_Shown"]</label>
+                    <AudienceChoice Id="self-shown" Name="shown" Shown="_mine.AboutShown" Circle="_mine.AboutCircle" Circles="_circles" />
+                </p>
+                @if (Desk.PhotoFolder is not null)
+                {
+                    <p class="field">
+                        <label for="self-picture">@T["Person_Picture"]</label>
+                        <select id="self-picture" name="picture" aria-describedby="self-picture-note">
+                            <option value="">@T["Person_Picture_None"]</option>
+                            @foreach (var photo in _ownPhotos)
+                            {
+                                <option value="@photo.Id" selected="@(_mine.Picture?.Id == photo.Id)">@Titled(photo)</option>
+                            }
+                        </select>
+                    </p>
+                    <p class="meta" id="self-picture-note">@T["Person_Self_Picture_Note"] <a href="account/photos">@T["Photos_Title"]</a></p>
+                }
+                <p><button type="submit" class="action">@T["Person_Self_Save"]</button></p>
+            </form>
         </section>
     }
 
@@ -203,6 +281,27 @@
 <ReportLink />
 
 @code {
+    // How many places the head names; the rest stand in their part of the page.
+    private const int HeadPlaces = 3;
+
+    private static readonly string[] Problems = ["long", "picture"];
+
+    // What the account says about itself, as it reads it itself; and its own photographs to choose a picture from.
+    private AccountDescription? _mine;
+    private IReadOnlyList<PhotoInfo> _ownPhotos = [];
+    private bool _said;
+    private string? _problem;
+
+    /// <summary>Gets or sets what a form of this page answered with.</summary>
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
     private IReadOnlyList<AlbumInfo> _albums = [];
     private int[] _years = [];
     private IReadOnlyList<PhotoInfo> _photos = [];
@@ -251,6 +350,10 @@
             _viewer = viewer;
             if (_own && _profile is not null)
             {
+                _mine = store.Description(Id);
+                _ownPhotos = Desk.PhotoFolder is null ? [] : store.Photos(Id);
+                _said = Said == "described";
+                _problem = Form == "describe" && Problems.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
                 _circles = store.Circles(Id);
                 _known = [.. store.Relationships(Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other).DistinctBy(person => person.Id)];
                 _seen = As is { Length: > 0 and <= 60 } ? store.SeeAs(Id, As) : null;
@@ -269,5 +372,9 @@
             Navigation.NotFound();
         }
     }
+
+    private string Titled(PhotoInfo photo) => photo.Caption.Length > 0
+        ? photo.Caption
+        : string.Format(CultureInfo.CurrentCulture, T["Person_Picture_Untitled"], TimeText.Of(DateOnly.FromDateTime(photo.SharedAt), Visitor, T));
 
 }

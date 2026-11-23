@@ -127,6 +127,11 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
   that record and a link to the museum, without a picture.
 * A shown image needs a checked text alternative, a shown video its playing time, captions and a transcript.
 * The date an artwork was made is not a date of the story it shows.
+* A gallery has **themes** when the collection states them: add an entity of the type `Theme` for each ("Combat",
+  "Safavid painting") and name it in `themeIds` of every image and video that belongs under it
+  ([format](collection-format.md), "A theme of the gallery"). A theme needs no source; give it a stage when its
+  name gives something away. Which themes a collection has is your decision as its editors – keep them few and
+  about the subject.
 * The picture of a profile (`picture` of an entity) is one of these items – an image that depicts the entity and may be shown. Without one the page shows a drawing of the kind and says so; an image of a museum that is only a reference cannot be a picture that is seen.
 
 ## Adding to a file and correcting it

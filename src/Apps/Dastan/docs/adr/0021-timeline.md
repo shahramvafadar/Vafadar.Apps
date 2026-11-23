@@ -36,7 +36,8 @@ with a mark, and put what did not fit into a list. No control on the market has 
   go with them from the graph to the timeline to the gallery and back, in the address.
 * **A picture in a place** (R-MED-07): the same picture can stand in several places – a profile, a step of a
   telling, a gallery – with a caption and a source of its own in each. A gallery can be of a period and of a
-  theme (R-MED-02); themes are kinds of the vocabulary, not free words.
+  theme (R-MED-02); themes are kinds of the vocabulary, not free words. (Decided otherwise on 2026-11-23: a
+  theme is a record of its collection – [ADR 0027](0027-gallery-themes.md).)
 
 ## Consequences
 
@@ -159,7 +160,7 @@ phone, touch with two fingers, a screen reader.
   chart stay with the name.
 
 **Not built:** themes of a gallery (R-MED-02 names them; the vocabulary has no kind for a theme yet, and none is
-made up here); a picture in several places with a caption of its own in each (R-MED-07); the time a photograph
+made up here – built on 2026-11-23, [ADR 0027](0027-gallery-themes.md)); a picture in several places with a caption of its own in each (R-MED-07); the time a photograph
 of an account shows (it has the day it was taken and the day it was brought in); the page of a story on the
 control (it keeps its own chart of the telling); a choice of the calendar by the reader; carrying filters – a
 kind, a stretch of time – from the search to the graph.
@@ -193,7 +194,8 @@ kind, a stretch of time – from the search to the graph.
 **Not built:** the order inside the world of a story of a collection – the reader of a collection accepts a
 step with the order of the telling only, so the page of a story has one view; a comparison file can state the
 other and gets a view of its own. The still chart draws no axis of depth: a table says it. Themes of a gallery
-(R-MED-02): the vocabulary has no kind for a theme, and which themes there are is an editorial decision.
+(R-MED-02): the vocabulary has no kind for a theme, and which themes there are is an editorial decision
+(built on 2026-11-23 as records of a collection, [ADR 0027](0027-gallery-themes.md)).
 
 **Built after this step, on 2026-11-21** (section 23 of the delivery plan):
 

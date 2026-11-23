@@ -90,9 +90,13 @@ public sealed class ExplorationTests
     [Fact]
     public void What_was_left_out_elsewhere_and_is_shown_here_is_named()
     {
-        Assert.Equal([ExplorationFilter.Years, ExplorationFilter.WithoutEvents, ExplorationFilter.FewerLanes, ExplorationFilter.KindOfPicture], Read(ExplorationView.Connections, "from=900&to=1000&events=off&lanes=2&kind=video").SetAside);
+        // The years are honoured by the chart of time, the connections and the pictures (D-084); the page of a
+        // name and its family tree show every year and say so.
+        Assert.Equal([ExplorationFilter.WithoutEvents, ExplorationFilter.FewerLanes, ExplorationFilter.KindOfPicture], Read(ExplorationView.Connections, "from=900&to=1000&events=off&lanes=2&kind=video").SetAside);
         Assert.Equal([ExplorationFilter.KindOfPicture], Read(ExplorationView.Timeline, "from=900&to=1000&events=off&lanes=2&kind=video").SetAside);
-        Assert.Equal([ExplorationFilter.Years], Read(ExplorationView.Pictures, "from=900&to=1000&kind=video").SetAside);
+        Assert.Empty(Read(ExplorationView.Pictures, "from=900&to=1000&kind=video").SetAside);
+        Assert.Equal([ExplorationFilter.Years, ExplorationFilter.KindOfPicture], Read(ExplorationView.Family, "from=900&to=1000&kind=video").SetAside);
+        Assert.Equal([ExplorationFilter.Years], Read(ExplorationView.Overview, "from=900&to=1000").SetAside);
 
         // How far a drawing is opened and in which order pictures stand leave nothing out.
         Assert.Empty(Read(ExplorationView.Overview, "open=character-zal&up=3&order=oldest&tree=across&scale=4").SetAside);
@@ -204,5 +208,53 @@ public sealed class ExplorationTests
         Assert.Equal(new ReadingLevel(2), state.Boundary);
         Assert.Equal(new ReadingLevel(2), state.Centre(Zal).Show(ExplorationView.Family).Boundary);
         Assert.DoesNotContain("2", state.Address(ExplorationView.Family), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void The_years_are_one_stretch_for_the_three_views_that_keep_to_them()
+    {
+        var state = Read(ExplorationView.Connections, "from=-500&to=1000&open=character-zal&sel=character-zal&order=oldest");
+
+        Assert.Equal((-500, 1000), state.Years);
+        Assert.True(Exploration.HonoursYears(ExplorationView.Connections) && Exploration.HonoursYears(ExplorationView.Timeline) && Exploration.HonoursYears(ExplorationView.Pictures));
+        Assert.False(Exploration.HonoursYears(ExplorationView.Overview) || Exploration.HonoursYears(ExplorationView.Family));
+
+        // Both years are whole years of the axis: from the start of 500 BCE to the end of 1000 CE.
+        Assert.Equal(new Vafadar.Temporal.YearSpan(new YearOfEra(Vafadar.Temporal.Era.BeforeCommonEra, 500).Place, new YearOfEra(Vafadar.Temporal.Era.CommonEra, 1000).Place + 1), state.Span);
+        Assert.Null(Read(ExplorationView.Connections, "open=character-zal").Span);
+
+        // Every view is led to with the years; they are named the same in each.
+        Assert.Contains("from=-500&to=1000", state.Address(ExplorationView.Pictures), StringComparison.Ordinal);
+        Assert.Contains("from=-500&to=1000", state.Address(ExplorationView.Timeline), StringComparison.Ordinal);
+
+        // A form that asks for years sends the rest of the state along, under the names of the view that is shown.
+        Assert.Equal(
+            [KeyValuePair.Create("sel", "character-zal"), KeyValuePair.Create("open", "character-zal"), KeyValuePair.Create("order", "oldest")],
+            state.SaidBesideYears);
+
+        // Other years, and every year: nothing else changes.
+        Assert.Equal((900, 950), state.WithYears((900, 950)).Years);
+        Assert.Equal("entity/character-rostam/connections?sel=character-zal&open=character-zal&order=oldest", state.WithYears(null).Address(ExplorationView.Connections));
+        Assert.Null(state.WithYears((950, 900)).Years);
+    }
+
+    [Theory]
+    [InlineData("from=۹۹۰&to=۱۰۰۰", 990, 1000)]
+    [InlineData("from=−500&to=-400", -500, -400)]
+    [InlineData("from=%20990%20&to=1000", 990, 1000)]
+    public void Years_are_read_as_somebody_typed_them(string query, int from, int to)
+    {
+        Assert.Equal((from, to), Read(ExplorationView.Pictures, query).Years);
+    }
+
+    [Theory]
+    [InlineData("from=1000&to=990")]
+    [InlineData("from=990")]
+    [InlineData("from=0&to=10")]
+    [InlineData("from=+990&to=1000")]
+    [InlineData("from=nine&to=ten")]
+    public void What_is_no_stretch_of_years_is_none(string query)
+    {
+        Assert.Null(Read(ExplorationView.Connections, query).Years);
     }
 }
