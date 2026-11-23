@@ -109,6 +109,7 @@ Je nachdem, was Sie nutzen, speichert die Website zu Ihrem Konto:
 - Wie weit Sie in einer Sammlung gelesen haben, und die Seiten, die Sie sich gemerkt haben.
 - Einladungen, die Sie erstellt haben: wann, bis wann sie gelten, ob und von wem sie verwendet wurden.
 - Ihre Beziehungen zu anderen Konten: wer wen angefragt hat, als was (zum Beispiel Elternteil, Geschwister, Freund), ob die Beziehung bestätigt wurde und wer sie sehen darf.
+- Was Ihre Seite über Sie sagt, wenn Sie es schreiben: einige Worte, wer sie lesen darf, und welche Ihrer Fotografien Ihr Bild ist. Das Bild sieht, wer diese Fotografie sehen darf.
 - Ihre Kreise: ihre Namen und wer ihnen angehört.
 - Ihre Stammbäume: ihre Namen, wer sie sehen oder ändern darf, die Einträge der Personen darin (Abschnitt 9), die Verbindungen zwischen diesen Personen und den Verlauf der Änderungen.
 - Ihre Fotografien: die Bilddatei, ihre Größe und ihr Format, Ihre Bildunterschrift, das Aufnahmedatum, wenn Sie es angeben, wer sie sehen darf, in welchen Alben sie liegt und wer darauf markiert ist (Abschnitt 9).

@@ -1055,7 +1055,7 @@ named.
 | Pictures, and content beyond the Shahnameh | the owner | Rights and sources; without them Discover has one story and drawings in the place of pictures. |
 | The order inside the world of a story of a collection | the owner, with content | No collection states one; a comparison file can. |
 | Cards of a graph in sizes of their own; a first answer smaller than a whole family tree | nobody yet | The measurement of step 20.12 did not ask for either. |
-| `IdentityHead` for an account and a record in a tree | the owner | It would need a profile of people of accounts, which is a decision about what an account shows (ADR 0024). |
+| `IdentityHead` for an account and a record in a tree | – | **Decided and built on 2026-11-23** (D-086, section 24.4). |
 | Formats of the logo for print; a guide of the brand | the owner | Asked for by no step; the masters are vectors and serve print as they are. |
 | A real phone, the app installed, Safari itself, a screen reader, five people who see the site for the first time | the owner | They need a device, eyes and ears. |
 | A mailbox and a sender, the clients at Google and Microsoft, the key of the licence of the graph, a host and an address | the owner | Accounts, contracts and secrets are entered by the owner alone. |
@@ -1106,3 +1106,15 @@ privacy notice in its three languages and the record of processing name what is 
 `ProposalBoxTests` (19, among them that the tables are what the history of their changes of form makes them),
 `PlaceProposalPagesTests` (11, English and Persian), `StudioProposalsTests` (6). *To do by who runs a site:*
 `database migrate` before the new version starts.
+
+**24.4 The head of an account and of a record in a tree – done on 2026-11-23** (D-086,
+[ADR 0024](adr/0024-parts.md), "The head of an account and of a record in a tree"). *Built:* what an account
+says about itself – a few words with an audience of their own and a picture that is one of its photographs –,
+kept, read by who the scopes allow, looked at as somebody else, given back in the copy of one's data, taken
+back when a circle or a photograph goes; the form for it on the account's own page; the part `PersonHead` and
+with it the head of the page of an account – picture or drawing, name, words, the first places – and of the
+page of a person of a tree, private and public – picture or drawing, name, tree, the life in two lines –; the
+profile of a person of a tree without a second picture; the privacy notice in its three languages and the
+record of processing. *Tried:* `AccountDescriptionTests` (13, among them that the tables are what the history
+of their changes of form makes them), `AccountProfilePagesTests` (6, English and Persian),
+`TreePersonPagesTests` (13, brought to the head). *To do by who runs a site:* `database migrate`.

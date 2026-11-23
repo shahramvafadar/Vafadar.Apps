@@ -448,3 +448,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   you were at. The proposal is kept without your name and your account. When an entry of that name exists
   later, the page says so beside your statement and lets you choose it. For editors: a page of the proposed
   places, where the same place proposed several times stands together and is decided once.
+- Your page can say something about you: a few words, read by who you choose, and one of your photographs as
+  your picture, seen by who may see that photograph. The page of an account and the page of a person of a family
+  tree begin with the picture or a drawing, the name and a few facts.

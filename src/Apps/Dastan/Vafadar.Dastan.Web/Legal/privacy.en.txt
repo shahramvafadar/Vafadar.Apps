@@ -109,6 +109,7 @@ Depending on what you use, the site keeps with your account:
 - How far you have read in a collection, and the pages you saved.
 - Invitations you made: when, until when they hold, whether and by whom they were used.
 - Your relations with other accounts: who asked whom, as what (for example parent, sibling, friend), whether it was confirmed, and who may see it.
+- What your page says about you, if you write it: a few words, who may read them, and which of your photographs is your picture. The picture is seen by who may see that photograph.
 - Your circles: their names and who is in them.
 - Your family trees: their names, who may see or change them, the records of the people in them (section 9), the links between those people, and the history of changes.
 - Your photographs: the image file, its size and format, your caption, the date it was taken if you say so, who may see it, in which albums it is, and who is tagged on it (section 9).
