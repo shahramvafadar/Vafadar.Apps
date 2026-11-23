@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text.Json.Nodes;
 using Vafadar.Dastan.Core;
 
@@ -105,7 +106,7 @@ public sealed class SharedThemesTests
     }
 
     [Fact]
-    public void Two_themes_of_one_collection_stay_two_also_when_a_theme_elsewhere_names_both()
+    public void A_theme_elsewhere_that_names_two_themes_of_one_collection_joins_neither()
     {
         // The story has Combat (T-1) and Lineage (T-2, T-3); another collection has one theme that carries T-1 and T-2.
         var both = Read(4, sample =>
@@ -114,13 +115,55 @@ public sealed class SharedThemesTests
             Under(sample, "media-met-452419", "theme-both");
         });
 
+        // That says the two themes of the story are one – and the story says they are two. The statements
+        // contradict each other, and nothing of them is joined, whatever the order of the collections.
         foreach (var themes in new[] { SharedThemes.Of([("story", Story(4)), ("both", both)]), SharedThemes.Of([("both", both), ("story", Story(4))]) })
         {
-            Assert.All(themes, theme => Assert.Equal(theme.In.Length, theme.In.Select(one => one.Collection).Distinct().Count()));
-            Assert.NotSame(themes.Find("story", new EntityId("theme-combat")), themes.Find("story", new EntityId("theme-lineage")));
-            Assert.Equal(2, themes.Length);
-            Assert.True(themes.Find("both", new EntityId("theme-both"))!.IsShared);
+            Assert.Equal(3, themes.Length);
+            Assert.All(themes, theme => Assert.False(theme.IsShared));
+            Assert.NotNull(themes.Find("both", new EntityId("theme-both")));
         }
+    }
+
+    [Fact]
+    public void What_is_joined_does_not_depend_on_the_order_of_the_collections()
+    {
+        // Three collections, each with a theme of its own identifier; the third collection has a second theme
+        // with another identifier. A theme of a fourth collection carries all of them: whatever it joins, no
+        // theme of the site holds a collection twice, and nothing is lost.
+        Projection One(string theme, params string[] identifiers) => Read(4, sample =>
+        {
+            sample["entities"]!.AsArray().Add(Theme(theme, theme, 0, [.. identifiers.Select(value => (value, "exact"))]));
+            Under(sample, "media-met-452419", theme);
+        });
+        var third = Read(4, sample =>
+        {
+            sample["entities"]!.AsArray().Add(Theme("theme-c1", "C1", 0, ("T-1", "exact")));
+            sample["entities"]!.AsArray().Add(Theme("theme-c2", "C2", 0, ("T-2", "exact")));
+            Under(sample, "media-met-452419", "theme-c1", "theme-c2");
+        });
+        (string, Projection)[] site = [("a", One("theme-a", "T-1")), ("b", One("theme-b", "T-2")), ("c", third), ("d", One("theme-d", "T-1", "T-2", "T-3"))];
+
+        static string[] Sets(ImmutableArray<SharedTheme> themes) =>
+            [.. themes.Select(theme => string.Join('+', theme.In.Select(one => $"{one.Collection}:{one.Theme.Id}").Order(StringComparer.Ordinal))).Order(StringComparer.Ordinal)];
+
+        // All five hang together through the theme of "d", and "c" has two of them: nothing is joined.
+        var expected = Sets(SharedThemes.Of(site));
+        Assert.Equal(["a:theme-a", "b:theme-b", "c:theme-c1", "c:theme-c2", "d:theme-d"], expected);
+        foreach (var order in new[] { [.. site.Reverse()], new[] { site[2], site[3], site[0], site[1] }, [site[1], site[3], site[2], site[0]] })
+        {
+            Assert.Equal(expected, Sets(SharedThemes.Of(order)));
+        }
+
+        // Without the second theme of "c" the same four are one theme, in every order.
+        (string, Projection)[] four = [site[0], site[1], ("c", One("theme-c1", "T-1")), site[3]];
+        var one = Sets(SharedThemes.Of(four));
+        Assert.Equal(["a:theme-a+b:theme-b+c:theme-c1+d:theme-d"], one);
+        Assert.Equal(one, Sets(SharedThemes.Of([.. four.Reverse()])));
+
+        // And the order of the identifiers of a theme changes nothing.
+        (string, Projection)[] turned = [site[0], site[1], ("c", One("theme-c1", "T-1")), ("d", One("theme-d", "T-3", "T-2", "T-1"))];
+        Assert.Equal(one, Sets(SharedThemes.Of(turned)));
     }
 
     [Fact]

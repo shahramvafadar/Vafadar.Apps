@@ -103,12 +103,16 @@
         </section>
     }
 
-    @if (!_stated.IsEmpty)
+    @if (!overview.Entity.Dated.IsEmpty)
     {
         @* What is stated about the entity itself: when something lasted or happened, how much of something. *@
         <section aria-labelledby="stated">
             <h2 id="stated">@T["Entity_Stated"]</h2>
-            @if (_stated.Years is null)
+            @if (_stated.IsEmpty)
+            {
+                <p class="note">@T["Entity_Stated_Empty"]</p>
+            }
+            else if (_stated.Years is null)
             {
                 @Stated(_stated.In)
             }

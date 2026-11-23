@@ -4422,4 +4422,10 @@
   <data name="Person_Facts_Group_Link" xml:space="preserve">
     <value>A page of your own</value>
   </data>
+  <data name="Entity_Stated_Empty" xml:space="preserve">
+    <value>Everything stated about this name states another time than the years you chose.</value>
+  </data>
+  <data name="Person_Facts_Problem_Rest" xml:space="preserve">
+    <value>That one stays as it was; what else you entered is kept.</value>
+  </data>
 </root>

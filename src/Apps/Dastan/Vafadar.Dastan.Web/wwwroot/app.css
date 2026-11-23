@@ -3731,3 +3731,13 @@ dastan-timeline > .tlv-still > :not(.stage),
   gap: var(--space-2);
   min-block-size: 2.75rem;
 }
+
+/* A theme across collections (step 25.4): the collections that have the theme too stand apart from one another
+   in the line of the tools of a gallery, and each collection has room of its own on the page of a theme. */
+.theme-elsewhere a {
+  margin-inline-end: var(--space-3);
+}
+
+.theme-collection {
+  margin-block-end: var(--space-4);
+}

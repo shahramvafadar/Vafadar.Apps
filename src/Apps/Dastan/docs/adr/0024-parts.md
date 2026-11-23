@@ -175,6 +175,9 @@ rules are the ones of the words:
   itself; one address of a page of its own, under https and written in the letters of ASCII – it is shown as it
   was written, and a mark of direction or a look-alike letter could make it read as another address.
 * **None is asked for.** No form of the site requires one, and nothing works differently without them.
+* **One fact that is none does not cost the others.** A year that is no year or an address that is no address
+  stays as it was, and what else was typed in the form is kept; the page says which one was not. What was
+  typed never travels in an address.
 * **Each has an audience of its own** – nobody else, one of the account's circles, everybody – and begins with
   nobody else. A fact that is not stated keeps no audience. A circle that is given up takes what was for it
   back to nobody else.

@@ -496,6 +496,8 @@ If you add references:
   – never guessed from when it was made –, and its themes in `themeIds`. A theme is an entity of the type
   `Theme` of the same collection. A theme that another collection has too carries the same identifier of the
   same catalogue as that one, marked `exact` – look at the themes the library has before you write a new one.
+  Give a theme the identifiers of one theme only: where a theme carries the identifiers of two themes that
+  another collection tells apart, the site joins none of them.
 * `depictedContext.worldId` is the `worldId` of the collection.
 * References are for the story collections in this pass: `depictedContext.kind` knows a later artwork of a
   literary narrative and a diagram of today, and neither says what a relief or a bronze of a history is. For a

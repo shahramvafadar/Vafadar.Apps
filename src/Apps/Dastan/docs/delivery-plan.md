@@ -1461,6 +1461,26 @@ made-up file and started on the site.
   Persian, no page wider than its window. *Changed by looking:* the groups of the form of the facts have
   headings of their own; they had the labels of the head, which do not read as headings in Persian.
 
+**A third review on 2026-11-23**, on the owner's word; the parts the first two had read only partly were
+read whole by somebody who had not written them, with the new tests.
+
+* *Found and corrected:* which themes became one depended on the order of the collections and of the
+  identifiers of a theme – what is joined is now a set that no order changes, and a set in which a collection
+  has two themes joins nothing (ADR 0027); a test of the form of the facts would have failed from the first
+  of January, when the year it called "not yet" becomes a year of birth; a test of the drawing of a family in
+  years could not fail – it asked for a family that states no time – and has one with a partnership of
+  another time now; the section of the statements of a name vanished, with its series of numbers, where
+  nothing was stated for the years – it stays and says so; a form of nine fields of an account lost
+  everything that was typed when one of them was none – that one stays as it was and the rest is kept; a
+  partnership cut off by one of another time was dropped without being counted; a collection named like an
+  address of the site in other letters ("Themes") passed the check of such names; a compact card of a
+  family said "Person" under every name – it says the first line of the card, the years.
+* *Looked for and found in order:* every text of the new pages in both languages, none unused; headings,
+  labels and directions of the new pages; the measures of the three sizes of a card through the whole script
+  of the drawing.
+* *Not looked at in a browser this time*, on the owner's rule of the same day that the site is started for
+  looking only when the owner says so: the changes of this review. The tests of the browser ran.
+
 **What is open, with what is built if the owner says nothing.** The owner was given these on 2026-11-23:
 
 | Question | Built if nothing is said |

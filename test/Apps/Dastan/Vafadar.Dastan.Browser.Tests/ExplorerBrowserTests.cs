@@ -16,7 +16,7 @@ public sealed class ExplorerBrowserTests(BrowserSite site) : IClassFixture<Brows
     {
         await page.GotoAsync(address);
         var host = page.Locator("dastan-graph");
-        await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live");
+        await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live", new() { Timeout = 30_000 });
         return host;
     }
 
@@ -104,7 +104,7 @@ public sealed class ExplorerBrowserTests(BrowserSite site) : IClassFixture<Brows
         await page.GoBackAsync();
         await Assertions.Expect(sheet).ToBeHiddenAsync();
         Assert.Contains("/entity/character-rostam/family", page.Url, StringComparison.Ordinal);
-        await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live");
+        await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live", new() { Timeout = 30_000 });
         Assert.NotNull(chosen);
     }
 

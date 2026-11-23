@@ -205,9 +205,10 @@ class DastanGraph {
     words.minWidth = wordsWidth;
     const name = this.text(node.name, size.name, true, this.look.text, wordsWidth);
     name.id = key + '-name';
-    // A compact card says what the node is where the server says it, and else the first of its lines.
-    const said = size.lines === 1 && node.kind ? [node.kind] : node.lines.slice(0, size.lines);
-    const lines = said.map((line, index) => {
+    // A compact card says one line: the first of the card – the years of somebody in a family, a fact –, and
+    // what the node is where it has no line.
+    const shown = size.lines === 1 && node.lines.length === 0 && node.kind ? [node.kind] : node.lines.slice(0, size.lines);
+    const lines = shown.map((line, index) => {
       const element = this.text(line, size.line, false, this.look.muted, wordsWidth);
       element.id = key + '-line' + index;
       return element;

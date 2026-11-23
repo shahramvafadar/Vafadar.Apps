@@ -889,6 +889,6 @@
     <value>The same theme in another collection</value>
   </data>
   <data name="Theme_Same_Lead" xml:space="preserve">
-    <value>These themes carry one of the identifiers of this theme as exact. The site shows what stands under them together, each under the name of its collection. A name alone joins nothing.</value>
+    <value>These themes carry one of the identifiers of this theme as exact. The site shows what stands under them together, each under the name of its collection – unless a collection has two of them: then they contradict each other and the site joins none. A name alone joins nothing.</value>
   </data>
 </root>
