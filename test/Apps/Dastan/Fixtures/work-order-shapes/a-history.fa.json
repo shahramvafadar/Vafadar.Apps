@@ -1,0 +1,84 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "ancient-iran",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-ancient-iran": {
+      "label": "ساختگی: subject-ancient-iran",
+      "summary": "ساختگی."
+    },
+    "dynasty-made-up": {
+      "label": "ساختگی: dynasty-made-up",
+      "summary": "ساختگی."
+    },
+    "office-king": {
+      "label": "ساختگی: office-king",
+      "summary": "ساختگی."
+    },
+    "person-first-ii": {
+      "label": "ساختگی: person-first-ii",
+      "summary": "ساختگی.",
+      "facts": {
+        "knownFor": "ساختگی"
+      }
+    },
+    "person-second-i": {
+      "label": "ساختگی: person-second-i",
+      "summary": "ساختگی.",
+      "facts": {
+        "knownFor": "ساختگی"
+      }
+    },
+    "place-capital": {
+      "label": "ساختگی: place-capital",
+      "summary": "ساختگی."
+    },
+    "period-made-up": {
+      "label": "ساختگی: period-made-up",
+      "summary": "ساختگی."
+    },
+    "event-battle": {
+      "label": "ساختگی: event-battle",
+      "summary": "ساختگی."
+    }
+  },
+  "relations": {
+    "relation-first-holder": {
+      "label": "ساختگی"
+    },
+    "relation-second-holder": {
+      "label": "ساختگی"
+    },
+    "relation-first-member": {
+      "label": "ساختگی"
+    },
+    "relation-second-successor": {
+      "label": "ساختگی"
+    },
+    "relation-first-parent": {
+      "label": "ساختگی"
+    },
+    "relation-first-founder": {
+      "label": "ساختگی"
+    },
+    "relation-governs": {
+      "label": "ساختگی"
+    },
+    "relation-capital": {
+      "label": "ساختگی"
+    },
+    "relation-in-battle": {
+      "label": "ساختگی"
+    },
+    "relation-battle-at": {
+      "label": "ساختگی"
+    },
+    "relation-battle-during": {
+      "label": "ساختگی"
+    }
+  }
+}

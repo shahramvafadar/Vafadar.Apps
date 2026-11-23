@@ -4413,4 +4413,13 @@
   <data name="Person_Facts_Problem_link" xml:space="preserve">
     <value>این نشانی یک صفحه نیست: باید با https:// آغاز شود و نام یک سایت را داشته باشد.</value>
   </data>
+  <data name="Person_Facts_Group_Born" xml:space="preserve">
+    <value>زمان تولد</value>
+  </data>
+  <data name="Person_Facts_Group_Lives" xml:space="preserve">
+    <value>محل زندگی</value>
+  </data>
+  <data name="Person_Facts_Group_Link" xml:space="preserve">
+    <value>صفحه‌ای از خودتان</value>
+  </data>
 </root>

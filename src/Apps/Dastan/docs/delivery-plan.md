@@ -1155,7 +1155,7 @@ of work; the content is written in a line of work of its own, from
 [the work order for content](content-work-order.md); then everything is tried in a browser on the owner's
 machine; then the site goes online. [The backlog](backlog.md) is the list; this section is the plan of the
 development – for each step what is built, in which files, by which rules, how it is tried and what is
-written down. Nothing of it is begun before the owner says so.
+written down. It was begun when the owner said so, on the same day.
 
 The order is 25.1 and 25.2 first, because the content needs them; then 25.3 to 25.6 in the order in which a
 later one leans on an earlier one; then 25.7. Each step is built whole – code, tests, documents, a look in the
@@ -1196,7 +1196,7 @@ pages of every collection of the library in English and Persian, a site told no 
 
 * `Vafadar.Dastan.People/TreeFile.cs`: the format `dastan-tree-0.1` of the work order, part 7 – `name`,
   `people` (`key`, `name`, optional `born`, `died` as years, `deceased`, `self`), `parents` (`parent`, `child`,
-  optional `kind` of `parent`, `adoptive-parent`, `guardian`), `partners` (pairs, optional `since`, `until`).
+  optional `kind` of `parent`, `adoptive-parent`, `guardian`), `partners` (pairs of two keys).
   Reading is strict: an unknown field, a key used twice, a key that is not there, a person who is their own
   ancestor, more than one `self`, a year that is no year, a `died` without `deceased` being true or left out,
   more people than a tree may hold – each is a problem with its place in the file, and with one problem
@@ -1419,8 +1419,8 @@ order was held against the reader of the site, and somebody who had not written 
   another collection – a relation never leaves its file; a work that names its stories without an
   `editionContext` – the reader refuses it; pictures of museums brought in as files – the site shows only what
   is the project's own, a museum's work is a reference. The times, the facts and the relations it prescribes
-  are now written out, and the two shapes it prescribes – a history, and a work without a story – are made-up
-  files the tests check with every build (`Fixtures/work-order-shapes`, `WorkOrderShapesTests`). Both were
+  are now written out, and the shapes it prescribes – a history with its Persian, a work without a story, and
+  places people were at – are made-up files the tests check with every build (`Fixtures/work-order-shapes`, `WorkOrderShapesTests`). Both were
   started on the site through the launch profile `library`.
 * *Found in the software and corrected:* `themes` was no name the site keeps for itself – a collection of that
   name would have taken the address of the page; two themes of one collection became one where a theme of
@@ -1438,6 +1438,28 @@ order was held against the reader of the site, and somebody who had not written 
 * *Known and left:* the history of a tree written from a file names the account as who added each person;
   after a refused form of the facts the page shows what is kept, not what was typed; the pictures on the page
   of a name are not narrowed by the years – its gallery is.
+
+**A second review on 2026-11-23**, on the owner's word. The work order was read by somebody who had not
+written it, claim by claim against the reader of the site, and every shape it prescribes was written as a
+made-up file and started on the site.
+
+* *The work order, corrected again:* a step of a story has no `passageLocator` – the section is named in its
+  source; the entities of the pilot have their Persian name in `labelFa`, and a second one in the translation
+  is refused; `authorOf`, `commissionerOf` and their like read to a `Work` only, never to an `Object`; a
+  `Period` has no fact `partOf`; a fact carries a time as a relation outside a story does; an item without
+  established permission has no `url` at all; a fact is stated once, so several capitals are relations;
+  `approximate` is written as `true` or left out; a year of tradition is said to be tradition in words, not by
+  "about"; how the kings, the houses and the office of a king of the poem are written, and which scope each
+  relation of that file has; an editor is the fact `creator` of an edition; what of the pilot is rewritten in
+  the copy, and that the copy needs its Persian and the eight files its media name; what the copy of the
+  comparison holds beyond the span; that a file is done only when the site starts on the library.
+* *Found by the build server:* a test of the limit of passwords in an hour failed because it began a moment
+  before the hour turned – the site counts by the hour of the clock. The four tests of what is counted in an
+  hour wait for the hour to turn when it is about to (`TestHour`).
+* *Looked at in a browser, at last in the light appearance and at the width of a phone:* the themes, the page
+  of a name and a family tree in a stretch of years, the form of the facts of an account – in English and
+  Persian, no page wider than its window. *Changed by looking:* the groups of the form of the facts have
+  headings of their own; they had the labels of the head, which do not read as headings in Persian.
 
 **What is open, with what is built if the owner says nothing.** The owner was given these on 2026-11-23:
 

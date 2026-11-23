@@ -215,7 +215,7 @@
                 <AntiforgeryToken />
                 <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}{PeopleEndpoints.Person}/{Id}")" />
                 <fieldset class="fact-group">
-                    <legend>@T["Person_Fact_Born"]</legend>
+                    <legend>@T["Person_Facts_Group_Born"]</legend>
                     <p class="field">
                         <label for="fact-born">@T["Person_Facts_Born_Label"]</label>
                         <input id="fact-born" name="born" type="text" inputmode="numeric" maxlength="4" autocomplete="bday-year" dir="ltr" value="@_stated.BornYear?.ToString(CultureInfo.InvariantCulture)" aria-describedby="fact-born-how" />
@@ -227,7 +227,7 @@
                     </p>
                 </fieldset>
                 <fieldset class="fact-group">
-                    <legend>@T["Person_Fact_Lives"]</legend>
+                    <legend>@T["Person_Facts_Group_Lives"]</legend>
                     <p class="field">
                         <label for="fact-town">@T["Person_Facts_Town"]</label>
                         <input id="fact-town" name="town" type="text" maxlength="@PeopleStore.LongestPlaceOfAccount" autocomplete="address-level2" dir="auto" value="@_stated.Town" />
@@ -257,7 +257,7 @@
                     </p>
                 </fieldset>
                 <fieldset class="fact-group">
-                    <legend>@T["Person_Fact_Link"]</legend>
+                    <legend>@T["Person_Facts_Group_Link"]</legend>
                     <p class="field">
                         <label for="fact-link">@T["Person_Facts_Link_Label"]</label>
                         <input id="fact-link" name="link" type="text" inputmode="url" maxlength="@PeopleStore.LongestLink" autocomplete="url" dir="ltr" placeholder="https://" value="@_stated.Link" aria-describedby="fact-link-how" />

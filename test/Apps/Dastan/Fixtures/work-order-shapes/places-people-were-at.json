@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "places",
+  "worldId": "world-places",
+  "subjectId": "subject-places",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-first",
+      "title": "A made-up source",
+      "url": "https://made-up.invalid/about",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "subject-places",
+      "type": "Concept",
+      "label": "Places of learning and work (made up)",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "field",
+          "text": "Universities and organisations people were at."
+        }
+      ]
+    },
+    {
+      "id": "university-made-up",
+      "type": "University",
+      "label": "The Made-up University",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Made-up Polytechnic",
+          "language": "en",
+          "kind": "former"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "00made0up",
+          "url": "https://made-up.invalid/ror/00made0up",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1870
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-made-up-town"
+        }
+      ]
+    },
+    {
+      "id": "company-made-up",
+      "type": "Company",
+      "label": "Made-up Works",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1950
+            }
+          }
+        },
+        {
+          "fact": "field",
+          "text": "Machines."
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-made-up-town"
+        }
+      ]
+    },
+    {
+      "id": "organisation-made-up",
+      "type": "Organisation",
+      "label": "The Made-up Society",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "field",
+          "text": "A society."
+        }
+      ]
+    },
+    {
+      "id": "place-made-up-town",
+      "type": "Place",
+      "label": "Made-up Town",
+      "summary": "Made up.",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 50.1,
+        "longitude": 8.6,
+        "precision": "centre_of_area"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-university-in-town",
+      "from": "university-made-up",
+      "to": "place-made-up-town",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "In",
+      "sourceIds": [
+        "src-first"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "events": [],
+  "media": []
+}
