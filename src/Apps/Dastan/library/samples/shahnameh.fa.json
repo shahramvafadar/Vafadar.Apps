@@ -1,0 +1,1930 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "shahnameh",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "work-shahnameh": {
+      "label": "شاهنامه",
+      "summary": "حماسهٔ فردوسی دربارهٔ شاهان ایران از نخستین شاه تا گشودن ایران به دست عرب‌ها، که حدود ۹۷۷ آغاز و در ۸ مارس ۱۰۱۰ به پایان رسید؛ موزهٔ آقاخان حدود پنجاه هزار بیت می‌شمارد و منبعی دیگر شصت هزار. بر شاهنامهٔ منثور ابومنصوری تکیه دارد و حدود هزار بیت از دقیقی را در خود دارد."
+    },
+    "person-ferdowsi": {
+      "label": "فردوسی",
+      "summary": "ابوالقاسم فردوسی، زادهٔ ۹۴۰ در روستای باژ نزدیک توس در خراسان، که پس از مرگ دقیقی سرودن شاهنامه را آغاز کرد، آن را در ۱۰۱۰ به پایان رساند و در ۱۰۲۰ یا به احتمال بیشتر ۱۰۲۵ در توس درگذشت.",
+      "facts": {
+        "knownFor": "سرایندهٔ شاهنامه."
+      }
+    },
+    "person-daqiqi": {
+      "label": "دقیقی",
+      "summary": "شاعری که نخست به نظم درآوردن شاهنامه را آغاز کرد؛ فردوسی پس از مرگ او کارش را دنبال کرد و حدود هزار بیت از او در شعر آمده است.",
+      "facts": {
+        "knownFor": "حدود هزار بیت از شاهنامه."
+      }
+    },
+    "person-abu-mansur": {
+      "label": "ابومنصور محمد بن عبدالرزاق",
+      "summary": "فرمانروای توس که شاهنامهٔ منثور، منبع اصلی فردوسی، در ۹۵۷ برای او گرد آمد.",
+      "facts": {
+        "knownFor": "سفارش‌دهندهٔ شاهنامهٔ منثور."
+      }
+    },
+    "work-prose-shahnameh": {
+      "label": "شاهنامهٔ ابومنصوری",
+      "summary": "کتابی منثور دربارهٔ شاهان که در ۹۵۷ برای ابومنصور گرد آمد و منبع اصلی فردوسی شد؛ تنها دیباچه‌اش مانده است."
+    },
+    "person-mahmud-of-ghazni": {
+      "label": "محمود غزنوی",
+      "summary": "سلطانی که فردوسی شاهنامه را به او پیشکش کرد؛ در ۹۹۷ بر تخت نشست.",
+      "facts": {
+        "knownFor": "شاهنامه به او پیشکش شد."
+      }
+    },
+    "dynasty-pishdadian": {
+      "label": "پیشدادیان",
+      "summary": "نخستین رشتهٔ شاهان در شعر، از کیومرث تا گرشاسپ؛ پژوهشگران آنان را پیشدادیان می‌نامند. گنجور این نام را عنوان نکرده است."
+    },
+    "dynasty-kayanian": {
+      "label": "کیانیان",
+      "summary": "شاهان شعر از کیقباد، نیای آنان، تا دارا؛ گنجور این نام را عنوان نکرده است."
+    },
+    "dynasty-ashkanian": {
+      "label": "اشکانیان",
+      "summary": "شاهان پس از اسکندر که شعر آنان را در یک بخش، همچون ملوک‌الطوایف، یکجا می‌آورد."
+    },
+    "dynasty-sasanian": {
+      "label": "ساسانیان",
+      "summary": "شاهان شعر از اردشیر تا واپسین یزدگرد، خاندان ساسان."
+    },
+    "office-king-of-iran": {
+      "label": "شاه ایران، در شعر",
+      "summary": "پادشاهی‌ای که شاهنامه آن را از کیومرث تا یزدگرد، پادشاهی به پادشاهی، دنبال می‌کند."
+    },
+    "family-sam": {
+      "label": "خاندان سام",
+      "summary": "خاندان پهلوانی سام نریمان، زال و رستم."
+    },
+    "family-gudarz": {
+      "label": "خاندان گودرز",
+      "summary": "خاندان پهلوانی گودرز کشواد، گیو و بیژن."
+    },
+    "family-viseh": {
+      "label": "خاندان ویسه",
+      "summary": "خاندان تورانی ویسه، پیران و هومان."
+    },
+    "family-pashang": {
+      "label": "خاندان پشنگ",
+      "summary": "خاندان شاهی توران: پشنگ، پسرش افراسیاب و گرسیوز."
+    },
+    "story-reign-kayumars": {
+      "label": "پادشاهی کیومرث",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی کیومرث، ۱مین پادشاهی در ترتیب شعر."
+    },
+    "character-kayumars": {
+      "label": "کیومرث",
+      "summary": "شاهی از ایران در شاهنامه، ۱مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱مین در ترتیب آن."
+      }
+    },
+    "story-reign-hushang": {
+      "label": "پادشاهی هوشنگ",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی هوشنگ، ۲مین پادشاهی در ترتیب شعر."
+    },
+    "character-hushang": {
+      "label": "هوشنگ",
+      "summary": "شاهی از ایران در شاهنامه، ۲مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲مین در ترتیب آن."
+      }
+    },
+    "story-reign-tahmuras": {
+      "label": "پادشاهی طهمورث",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی طهمورث، ۳مین پادشاهی در ترتیب شعر."
+    },
+    "character-tahmuras": {
+      "label": "طهمورث",
+      "summary": "شاهی از ایران در شاهنامه، ۳مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳مین در ترتیب آن."
+      }
+    },
+    "story-reign-jamshid": {
+      "label": "پادشاهی جمشید",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی جمشید، ۴مین پادشاهی در ترتیب شعر."
+    },
+    "character-jamshid": {
+      "label": "جمشید",
+      "summary": "شاهی از ایران در شاهنامه، ۴مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴مین در ترتیب آن."
+      }
+    },
+    "story-reign-zahhak": {
+      "label": "پادشاهی ضحاک",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی ضحاک، ۵مین پادشاهی در ترتیب شعر."
+    },
+    "character-zahhak": {
+      "label": "ضحاک",
+      "summary": "شاهی از ایران در شاهنامه، ۵مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۵مین در ترتیب آن."
+      }
+    },
+    "story-reign-fereydun": {
+      "label": "پادشاهی فریدون",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی فریدون، ۶مین پادشاهی در ترتیب شعر."
+    },
+    "character-fereydun": {
+      "label": "فریدون",
+      "summary": "شاهی از ایران در شاهنامه، ۶مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۶مین در ترتیب آن."
+      }
+    },
+    "story-reign-manuchehr": {
+      "label": "پادشاهی منوچهر",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی منوچهر، ۷مین پادشاهی در ترتیب شعر."
+    },
+    "character-manuchehr": {
+      "label": "منوچهر",
+      "summary": "شاهی از ایران در شاهنامه، ۷مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۷مین در ترتیب آن."
+      }
+    },
+    "story-reign-nowzar": {
+      "label": "پادشاهی نوذر",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی نوذر، ۸مین پادشاهی در ترتیب شعر."
+    },
+    "character-nowzar": {
+      "label": "نوذر",
+      "summary": "شاهی از ایران در شاهنامه، ۸مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۸مین در ترتیب آن."
+      }
+    },
+    "story-reign-zav": {
+      "label": "پادشاهی زو",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی زو، ۹مین پادشاهی در ترتیب شعر."
+    },
+    "character-zav": {
+      "label": "زو",
+      "summary": "شاهی از ایران در شاهنامه، ۹مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۹مین در ترتیب آن."
+      }
+    },
+    "story-reign-garshasp": {
+      "label": "پادشاهی گرشاسپ",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی گرشاسپ، ۱۰مین پادشاهی در ترتیب شعر."
+    },
+    "character-garshasp": {
+      "label": "گرشاسپ",
+      "summary": "شاهی از ایران در شاهنامه، ۱۰مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۰مین در ترتیب آن."
+      }
+    },
+    "story-reign-kay-qobad": {
+      "label": "پادشاهی کیقباد",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی کیقباد، ۱۱مین پادشاهی در ترتیب شعر."
+    },
+    "character-kay-qobad": {
+      "label": "کیقباد",
+      "summary": "شاهی از ایران در شاهنامه، ۱۱مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۱مین در ترتیب آن."
+      }
+    },
+    "story-reign-kay-kavus": {
+      "label": "پادشاهی کی‌کاووس",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی کی‌کاووس، ۱۲مین پادشاهی در ترتیب شعر."
+    },
+    "character-kay-kavus": {
+      "label": "کی‌کاووس",
+      "summary": "شاهی از ایران در شاهنامه، ۱۲مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۲مین در ترتیب آن."
+      }
+    },
+    "story-reign-kay-khosrow": {
+      "label": "پادشاهی کیخسرو",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی کیخسرو، ۱۳مین پادشاهی در ترتیب شعر."
+    },
+    "character-kay-khosrow": {
+      "label": "کیخسرو",
+      "summary": "شاهی از ایران در شاهنامه، ۱۳مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۳مین در ترتیب آن."
+      }
+    },
+    "story-reign-lohrasp": {
+      "label": "پادشاهی لهراسپ",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی لهراسپ، ۱۴مین پادشاهی در ترتیب شعر."
+    },
+    "character-lohrasp": {
+      "label": "لهراسپ",
+      "summary": "شاهی از ایران در شاهنامه، ۱۴مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۴مین در ترتیب آن."
+      }
+    },
+    "story-reign-goshtasp": {
+      "label": "پادشاهی گشتاسپ",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی گشتاسپ، ۱۵مین پادشاهی در ترتیب شعر."
+    },
+    "character-goshtasp": {
+      "label": "گشتاسپ",
+      "summary": "شاهی از ایران در شاهنامه، ۱۵مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۵مین در ترتیب آن."
+      }
+    },
+    "story-reign-bahman": {
+      "label": "پادشاهی بهمن",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی بهمن، ۱۶مین پادشاهی در ترتیب شعر."
+    },
+    "character-bahman": {
+      "label": "بهمن",
+      "summary": "شاهی از ایران در شاهنامه، ۱۶مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۶مین در ترتیب آن."
+      }
+    },
+    "story-reign-homay": {
+      "label": "پادشاهی همای",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی همای، ۱۷مین پادشاهی در ترتیب شعر."
+    },
+    "character-homay": {
+      "label": "همای",
+      "summary": "شاهی از ایران در شاهنامه، ۱۷مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۷مین در ترتیب آن."
+      }
+    },
+    "story-reign-darab": {
+      "label": "پادشاهی داراب",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی داراب، ۱۸مین پادشاهی در ترتیب شعر."
+    },
+    "character-darab": {
+      "label": "داراب",
+      "summary": "شاهی از ایران در شاهنامه، ۱۸مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۸مین در ترتیب آن."
+      }
+    },
+    "story-reign-dara": {
+      "label": "پادشاهی دارا",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی دارا، ۱۹مین پادشاهی در ترتیب شعر."
+    },
+    "character-dara": {
+      "label": "دارا",
+      "summary": "شاهی از ایران در شاهنامه، ۱۹مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۱۹مین در ترتیب آن."
+      }
+    },
+    "story-reign-eskandar": {
+      "label": "پادشاهی اسکندر",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی اسکندر، ۲۰مین پادشاهی در ترتیب شعر."
+    },
+    "character-eskandar": {
+      "label": "اسکندر",
+      "summary": "شاهی از ایران در شاهنامه، ۲۰مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۰مین در ترتیب آن."
+      }
+    },
+    "story-reign-ashkanian": {
+      "label": "پادشاهی اشکانیان",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی اشکانیان، ۲۱مین پادشاهی در ترتیب شعر."
+    },
+    "story-reign-ardashir-i": {
+      "label": "پادشاهی اردشیر",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی اردشیر، ۲۲مین پادشاهی در ترتیب شعر."
+    },
+    "character-ardashir-i": {
+      "label": "اردشیر",
+      "summary": "شاهی از ایران در شاهنامه، ۲۲مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۲مین در ترتیب آن."
+      }
+    },
+    "story-reign-shapur-i": {
+      "label": "پادشاهی شاپور پسر اردشیر",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی شاپور پسر اردشیر، ۲۳مین پادشاهی در ترتیب شعر."
+    },
+    "character-shapur-i": {
+      "label": "شاپور پسر اردشیر",
+      "summary": "شاهی از ایران در شاهنامه، ۲۳مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۳مین در ترتیب آن."
+      }
+    },
+    "story-reign-ormazd-i": {
+      "label": "پادشاهی اورمزد",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی اورمزد، ۲۴مین پادشاهی در ترتیب شعر."
+    },
+    "character-ormazd-i": {
+      "label": "اورمزد",
+      "summary": "شاهی از ایران در شاهنامه، ۲۴مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۴مین در ترتیب آن."
+      }
+    },
+    "story-reign-bahram-i": {
+      "label": "پادشاهی بهرام اورمزد",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی بهرام اورمزد، ۲۵مین پادشاهی در ترتیب شعر."
+    },
+    "character-bahram-i": {
+      "label": "بهرام اورمزد",
+      "summary": "شاهی از ایران در شاهنامه، ۲۵مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۵مین در ترتیب آن."
+      }
+    },
+    "story-reign-bahram-ii": {
+      "label": "پادشاهی بهرام (نوزده سال)",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی بهرام (نوزده سال)، ۲۶مین پادشاهی در ترتیب شعر."
+    },
+    "character-bahram-ii": {
+      "label": "بهرام (نوزده سال)",
+      "summary": "شاهی از ایران در شاهنامه، ۲۶مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۶مین در ترتیب آن."
+      }
+    },
+    "story-reign-bahram-iii": {
+      "label": "پادشاهی بهرام بهرامیان",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی بهرام بهرامیان، ۲۷مین پادشاهی در ترتیب شعر."
+    },
+    "character-bahram-iii": {
+      "label": "بهرام بهرامیان",
+      "summary": "شاهی از ایران در شاهنامه، ۲۷مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۷مین در ترتیب آن."
+      }
+    },
+    "story-reign-narsi": {
+      "label": "پادشاهی نرسی",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی نرسی، ۲۸مین پادشاهی در ترتیب شعر."
+    },
+    "character-narsi": {
+      "label": "نرسی",
+      "summary": "شاهی از ایران در شاهنامه، ۲۸مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۸مین در ترتیب آن."
+      }
+    },
+    "story-reign-ormazd-ii": {
+      "label": "پادشاهی اورمزد نرسی",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی اورمزد نرسی، ۲۹مین پادشاهی در ترتیب شعر."
+    },
+    "character-ormazd-ii": {
+      "label": "اورمزد نرسی",
+      "summary": "شاهی از ایران در شاهنامه، ۲۹مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۲۹مین در ترتیب آن."
+      }
+    },
+    "story-reign-shapur-ii": {
+      "label": "پادشاهی شاپور ذوالاکتاف",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی شاپور ذوالاکتاف، ۳۰مین پادشاهی در ترتیب شعر."
+    },
+    "character-shapur-ii": {
+      "label": "شاپور ذوالاکتاف",
+      "summary": "شاهی از ایران در شاهنامه، ۳۰مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۰مین در ترتیب آن."
+      }
+    },
+    "story-reign-ardashir-ii": {
+      "label": "پادشاهی اردشیر نکوکار",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی اردشیر نکوکار، ۳۱مین پادشاهی در ترتیب شعر."
+    },
+    "character-ardashir-ii": {
+      "label": "اردشیر نکوکار",
+      "summary": "شاهی از ایران در شاهنامه، ۳۱مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۱مین در ترتیب آن."
+      }
+    },
+    "story-reign-shapur-iii": {
+      "label": "پادشاهی شاپور سوم",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی شاپور سوم، ۳۲مین پادشاهی در ترتیب شعر."
+    },
+    "character-shapur-iii": {
+      "label": "شاپور سوم",
+      "summary": "شاهی از ایران در شاهنامه، ۳۲مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۲مین در ترتیب آن."
+      }
+    },
+    "story-reign-bahram-iv": {
+      "label": "پادشاهی بهرام شاپور",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی بهرام شاپور، ۳۳مین پادشاهی در ترتیب شعر."
+    },
+    "character-bahram-iv": {
+      "label": "بهرام شاپور",
+      "summary": "شاهی از ایران در شاهنامه، ۳۳مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۳مین در ترتیب آن."
+      }
+    },
+    "story-reign-yazdegerd-i": {
+      "label": "پادشاهی یزدگرد بزه‌گر",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی یزدگرد بزه‌گر، ۳۴مین پادشاهی در ترتیب شعر."
+    },
+    "character-yazdegerd-i": {
+      "label": "یزدگرد بزه‌گر",
+      "summary": "شاهی از ایران در شاهنامه، ۳۴مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۴مین در ترتیب آن."
+      }
+    },
+    "story-reign-bahram-v": {
+      "label": "پادشاهی بهرام گور",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی بهرام گور، ۳۵مین پادشاهی در ترتیب شعر."
+    },
+    "character-bahram-v": {
+      "label": "بهرام گور",
+      "summary": "شاهی از ایران در شاهنامه، ۳۵مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۵مین در ترتیب آن."
+      }
+    },
+    "story-reign-yazdegerd-ii": {
+      "label": "پادشاهی یزدگرد (هجده سال)",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی یزدگرد (هجده سال)، ۳۶مین پادشاهی در ترتیب شعر."
+    },
+    "character-yazdegerd-ii": {
+      "label": "یزدگرد (هجده سال)",
+      "summary": "شاهی از ایران در شاهنامه، ۳۶مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۶مین در ترتیب آن."
+      }
+    },
+    "story-reign-hormoz-iii": {
+      "label": "پادشاهی هرمز",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی هرمز، ۳۷مین پادشاهی در ترتیب شعر."
+    },
+    "character-hormoz-iii": {
+      "label": "هرمز",
+      "summary": "شاهی از ایران در شاهنامه، ۳۷مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۷مین در ترتیب آن."
+      }
+    },
+    "story-reign-piruz": {
+      "label": "پادشاهی پیروز",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی پیروز، ۳۸مین پادشاهی در ترتیب شعر."
+    },
+    "character-piruz": {
+      "label": "پیروز",
+      "summary": "شاهی از ایران در شاهنامه، ۳۸مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۸مین در ترتیب آن."
+      }
+    },
+    "story-reign-balash": {
+      "label": "پادشاهی بلاش",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی بلاش، ۳۹مین پادشاهی در ترتیب شعر."
+    },
+    "character-balash": {
+      "label": "بلاش",
+      "summary": "شاهی از ایران در شاهنامه، ۳۹مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۳۹مین در ترتیب آن."
+      }
+    },
+    "story-reign-qobad": {
+      "label": "پادشاهی قباد",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی قباد، ۴۰مین پادشاهی در ترتیب شعر."
+    },
+    "character-qobad": {
+      "label": "قباد",
+      "summary": "شاهی از ایران در شاهنامه، ۴۰مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۰مین در ترتیب آن."
+      }
+    },
+    "story-reign-kesra-anushirvan": {
+      "label": "پادشاهی کسری نوشین‌روان",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی کسری نوشین‌روان، ۴۱مین پادشاهی در ترتیب شعر."
+    },
+    "character-kesra-anushirvan": {
+      "label": "کسری نوشین‌روان",
+      "summary": "شاهی از ایران در شاهنامه، ۴۱مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۱مین در ترتیب آن."
+      }
+    },
+    "story-reign-hormozd-iv": {
+      "label": "پادشاهی هرمزد",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی هرمزد، ۴۲مین پادشاهی در ترتیب شعر."
+    },
+    "character-hormozd-iv": {
+      "label": "هرمزد",
+      "summary": "شاهی از ایران در شاهنامه، ۴۲مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۲مین در ترتیب آن."
+      }
+    },
+    "story-reign-khosrow-parviz": {
+      "label": "پادشاهی خسرو پرویز",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی خسرو پرویز، ۴۳مین پادشاهی در ترتیب شعر."
+    },
+    "character-khosrow-parviz": {
+      "label": "خسرو پرویز",
+      "summary": "شاهی از ایران در شاهنامه، ۴۳مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۳مین در ترتیب آن."
+      }
+    },
+    "story-reign-shiruy": {
+      "label": "پادشاهی شیرویه",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی شیرویه، ۴۴مین پادشاهی در ترتیب شعر."
+    },
+    "character-shiruy": {
+      "label": "شیرویه",
+      "summary": "شاهی از ایران در شاهنامه، ۴۴مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۴مین در ترتیب آن."
+      }
+    },
+    "story-reign-ardashir-iii": {
+      "label": "پادشاهی اردشیر شیروی",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی اردشیر شیروی، ۴۵مین پادشاهی در ترتیب شعر."
+    },
+    "character-ardashir-iii": {
+      "label": "اردشیر شیروی",
+      "summary": "شاهی از ایران در شاهنامه، ۴۵مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۵مین در ترتیب آن."
+      }
+    },
+    "story-reign-farayin": {
+      "label": "پادشاهی فرایین",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی فرایین، ۴۶مین پادشاهی در ترتیب شعر."
+    },
+    "character-farayin": {
+      "label": "فرایین",
+      "summary": "شاهی از ایران در شاهنامه، ۴۶مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۶مین در ترتیب آن."
+      }
+    },
+    "story-reign-puran": {
+      "label": "پادشاهی پوران‌دخت",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی پوران‌دخت، ۴۷مین پادشاهی در ترتیب شعر."
+    },
+    "character-puran": {
+      "label": "پوران‌دخت",
+      "summary": "شاهی از ایران در شاهنامه، ۴۷مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۷مین در ترتیب آن."
+      }
+    },
+    "story-reign-azarmdokht": {
+      "label": "پادشاهی آزرم‌دخت",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی آزرم‌دخت، ۴۸مین پادشاهی در ترتیب شعر."
+    },
+    "character-azarmdokht": {
+      "label": "آزرم‌دخت",
+      "summary": "شاهی از ایران در شاهنامه، ۴۸مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۸مین در ترتیب آن."
+      }
+    },
+    "story-reign-farrokhzad": {
+      "label": "پادشاهی فرخ‌زاد",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی فرخ‌زاد، ۴۹مین پادشاهی در ترتیب شعر."
+    },
+    "character-farrokhzad": {
+      "label": "فرخ‌زاد",
+      "summary": "شاهی از ایران در شاهنامه، ۴۹مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۴۹مین در ترتیب آن."
+      }
+    },
+    "story-reign-yazdegerd-iii": {
+      "label": "پادشاهی یزدگرد، واپسین شاه",
+      "summary": "بخشی از شعر دربارهٔ پادشاهی یزدگرد، واپسین شاه، ۵۰مین پادشاهی در ترتیب شعر."
+    },
+    "character-yazdegerd-iii": {
+      "label": "یزدگرد، واپسین شاه",
+      "summary": "شاهی از ایران در شاهنامه، ۵۰مین در ترتیب پادشاهی‌ها.",
+      "facts": {
+        "role": "شاه ایران در شعر، ۵۰مین در ترتیب آن."
+      }
+    },
+    "story-haft-khan-rostam": {
+      "label": "هفت‌خوان رستم",
+      "summary": "سفر رستم از هفت آزمون در راه مازندران، در پادشاهی کی‌کاووس."
+    },
+    "story-kavus-hamavaran": {
+      "label": "رزم کاووس با شاه هاماوران",
+      "summary": "جنگ کی‌کاووس با شاه هاماوران."
+    },
+    "story-rostam-sohrab": {
+      "label": "رستم و سهراب",
+      "summary": "داستان رستم پهلوان و سهراب، جنگاور جوانی که در پادشاهی کی‌کاووس از توران به ایران می‌آید."
+    },
+    "story-siavash": {
+      "label": "سیاوش",
+      "summary": "داستان شاهزاده سیاوش، پسر کی‌کاووس، و سال‌هایش در ایران و توران."
+    },
+    "story-forud": {
+      "label": "فرود",
+      "summary": "داستان فرود، پسری از سیاوش، در پادشاهی کیخسرو."
+    },
+    "story-kamus": {
+      "label": "کاموس کشانی",
+      "summary": "داستان جنگ با کاموس کشانی، هم‌پیمان توران."
+    },
+    "story-khaqan-chin": {
+      "label": "خاقان چین",
+      "summary": "داستان جنگ با خاقان چین."
+    },
+    "story-akvan-div": {
+      "label": "اکوان دیو",
+      "summary": "داستان رستم و اکوان دیو."
+    },
+    "story-bizhan-manizheh": {
+      "label": "بیژن و منیژه",
+      "summary": "داستان بیژن، پهلوان ایرانی، و منیژه، دختر افراسیاب."
+    },
+    "story-davazdah-rokh": {
+      "label": "دوازده رخ",
+      "summary": "داستان دوازده نبرد تن‌به‌تن میان پهلوانان ایران و توران."
+    },
+    "story-great-war-kay-khosrow-afrasiab": {
+      "label": "جنگ بزرگ کیخسرو با افراسیاب",
+      "summary": "جنگ بزرگ میان کیخسرو و افراسیاب."
+    },
+    "story-haft-khan-esfandiar": {
+      "label": "هفتخوان اسفندیار",
+      "summary": "سفر اسفندیار از هفت آزمون."
+    },
+    "story-rostam-esfandiar": {
+      "label": "رستم و اسفندیار",
+      "summary": "داستان شاهزاده اسفندیار و رستم پهلوان در پادشاهی گشتاسپ."
+    },
+    "story-rostam-shaghad": {
+      "label": "رستم و شغاد",
+      "summary": "داستان رستم و برادرش شغاد."
+    },
+    "story-zal-birth": {
+      "label": "زاده شدن زال",
+      "summary": "داستان زاده شدن زال، پسر سپیدموی سام، در پادشاهی منوچهر."
+    },
+    "story-mazdak": {
+      "label": "مزدک و قباد",
+      "summary": "داستان مزدک در دربار قباد."
+    },
+    "story-bozorgmehr": {
+      "label": "بوزرجمهر",
+      "summary": "داستان بوزرجمهر فرزانه در دربار کسری نوشین‌روان."
+    },
+    "story-chess": {
+      "label": "درنهادن شطرنج",
+      "summary": "داستان آمدن شطرنج به دربار کسری نوشین‌روان."
+    },
+    "story-kalila-dimna": {
+      "label": "کلیله و دمنه",
+      "summary": "داستان آوردن کتاب کلیله و دمنه به ایران."
+    },
+    "story-khosrow-shirin": {
+      "label": "خسرو و شیرین",
+      "summary": "داستان خسرو پرویز و شیرین."
+    },
+    "character-siamak": {
+      "label": "سیامک",
+      "summary": "پسر کیومرث در شعر.",
+      "facts": {
+        "role": "پسر کیومرث در شعر."
+      }
+    },
+    "character-mardas": {
+      "label": "مرداس",
+      "summary": "پدر ضحاک در شعر.",
+      "facts": {
+        "role": "پدر ضحاک در شعر."
+      }
+    },
+    "character-abtin": {
+      "label": "آبتین",
+      "summary": "پدر فریدون در شعر.",
+      "facts": {
+        "role": "پدر فریدون در شعر."
+      }
+    },
+    "character-salm": {
+      "label": "سلم",
+      "summary": "پسری از فریدون در شعر.",
+      "facts": {
+        "role": "پسری از فریدون در شعر."
+      }
+    },
+    "character-tahmasp": {
+      "label": "طهماسپ",
+      "summary": "پدر زو در شعر.",
+      "facts": {
+        "role": "پدر زو در شعر."
+      }
+    },
+    "character-aurvand": {
+      "label": "اورند",
+      "summary": "پدر لهراسپ در شعر.",
+      "facts": {
+        "role": "پدر لهراسپ در شعر."
+      }
+    },
+    "character-siavash": {
+      "label": "سیاوش",
+      "summary": "شاهزاده‌ای، پسر کی‌کاووس، در شعر.",
+      "facts": {
+        "role": "شاهزاده‌ای، پسر کی‌کاووس، در شعر."
+      }
+    },
+    "character-forud": {
+      "label": "فرود",
+      "summary": "پسری از سیاوش در شعر.",
+      "facts": {
+        "role": "پسری از سیاوش در شعر."
+      }
+    },
+    "character-esfandiar": {
+      "label": "اسفندیار",
+      "summary": "شاهزاده‌ای، پسر گشتاسپ، در شعر.",
+      "facts": {
+        "role": "شاهزاده‌ای، پسر گشتاسپ، در شعر."
+      }
+    },
+    "character-sasan": {
+      "label": "ساسان",
+      "summary": "پسر دارا در شعر، که ساسانیان نام از او دارند.",
+      "facts": {
+        "role": "پسر دارا در شعر، که ساسانیان نام از او دارند."
+      }
+    },
+    "character-shahriyar": {
+      "label": "شهریار",
+      "summary": "پدر واپسین یزدگرد در شعر.",
+      "facts": {
+        "role": "پدر واپسین یزدگرد در شعر."
+      }
+    },
+    "character-nariman": {
+      "label": "نریمان",
+      "summary": "پدر سام در شعر.",
+      "facts": {
+        "role": "پدر سام در شعر."
+      }
+    },
+    "character-sam": {
+      "label": "سام",
+      "summary": "پهلوانی از شعر، پسر نریمان.",
+      "facts": {
+        "role": "پهلوانی از شعر، پسر نریمان."
+      }
+    },
+    "character-zal": {
+      "label": "زال",
+      "summary": "پهلوانی از شعر، پسر سپیدموی سام، که دستان نیز خوانده می‌شود.",
+      "facts": {
+        "role": "پهلوانی از شعر، پسر سپیدموی سام، که دستان نیز خوانده می‌شود."
+      }
+    },
+    "character-rostam": {
+      "label": "رستم",
+      "summary": "پهلوان بزرگ شعر، پسر زال.",
+      "facts": {
+        "role": "پهلوان بزرگ شعر، پسر زال."
+      }
+    },
+    "character-faramarz": {
+      "label": "فرامرز",
+      "summary": "پسری از رستم در شعر.",
+      "facts": {
+        "role": "پسری از رستم در شعر."
+      }
+    },
+    "character-keshvad": {
+      "label": "کشواد",
+      "summary": "پدر گودرز در شعر.",
+      "facts": {
+        "role": "پدر گودرز در شعر."
+      }
+    },
+    "character-gudarz": {
+      "label": "گودرز",
+      "summary": "پهلوانی از شعر، پسر کشواد.",
+      "facts": {
+        "role": "پهلوانی از شعر، پسر کشواد."
+      }
+    },
+    "character-giv": {
+      "label": "گیو",
+      "summary": "پهلوانی از شعر، پسر گودرز.",
+      "facts": {
+        "role": "پهلوانی از شعر، پسر گودرز."
+      }
+    },
+    "character-bizhan": {
+      "label": "بیژن",
+      "summary": "پهلوانی از شعر، پسر گیو.",
+      "facts": {
+        "role": "پهلوانی از شعر، پسر گیو."
+      }
+    },
+    "character-bahram-pahlavan": {
+      "label": "بهرام گودرز",
+      "summary": "پهلوانی از شعر، پسر گودرز.",
+      "facts": {
+        "role": "پهلوانی از شعر، پسر گودرز."
+      }
+    },
+    "character-tus": {
+      "label": "طوس",
+      "summary": "پهلوانی از شعر، پسر نوذر.",
+      "facts": {
+        "role": "پهلوانی از شعر، پسر نوذر."
+      }
+    },
+    "character-pashang": {
+      "label": "پشنگ",
+      "summary": "شاهی از توران در شعر، پدر افراسیاب.",
+      "facts": {
+        "role": "شاهی از توران در شعر، پدر افراسیاب."
+      }
+    },
+    "character-afrasiab": {
+      "label": "افراسیاب",
+      "summary": "شاه توران در شعر، پسر پشنگ.",
+      "facts": {
+        "role": "شاه توران در شعر، پسر پشنگ."
+      }
+    },
+    "character-garsivaz": {
+      "label": "گرسیوز",
+      "summary": "برادری از افراسیاب در شعر.",
+      "facts": {
+        "role": "برادری از افراسیاب در شعر."
+      }
+    },
+    "character-viseh": {
+      "label": "ویسه",
+      "summary": "مردی تورانی، پدر پیران، در شعر.",
+      "facts": {
+        "role": "مردی تورانی، پدر پیران، در شعر."
+      }
+    },
+    "character-piran": {
+      "label": "پیران",
+      "summary": "سپهسالاری تورانی در شعر، پسر ویسه.",
+      "facts": {
+        "role": "سپهسالاری تورانی در شعر، پسر ویسه."
+      }
+    },
+    "character-houman": {
+      "label": "هومان",
+      "summary": "پهلوانی تورانی در شعر، برادر پیران.",
+      "facts": {
+        "role": "پهلوانی تورانی در شعر، برادر پیران."
+      }
+    },
+    "place-florence": {
+      "label": "فلورانس",
+      "summary": "شهری در ایتالیا که دست‌نویس فلورانس در آن نگهداری می‌شود."
+    },
+    "place-tehran": {
+      "label": "تهران",
+      "summary": "شهری که کاخ گلستان دست‌نویس بایسنغری را در آن نگه می‌دارد."
+    },
+    "place-toronto": {
+      "label": "تورنتو",
+      "summary": "شهر موزهٔ آقاخان."
+    },
+    "place-herat": {
+      "label": "هرات",
+      "summary": "شهری که دست‌نویس بایسنغری در ۱۴۳۰ در آن ساخته شد."
+    },
+    "organisation-bncf": {
+      "label": "کتابخانهٔ ملی مرکزی فلورانس",
+      "summary": "کتابخانهٔ ملی مرکزی فلورانس، نگه‌دارندهٔ دست‌نویس فلورانس.",
+      "facts": {
+        "field": "کتابخانهٔ ملی"
+      }
+    },
+    "organisation-golestan-palace": {
+      "label": "کاخ گلستان",
+      "summary": "کاخ‌موزه‌ای در تهران که دست‌نویس بایسنغری را با شمارهٔ ۷۱۶ نگه می‌دارد.",
+      "facts": {
+        "field": "کاخ‌موزه"
+      }
+    },
+    "organisation-aga-khan-museum": {
+      "label": "موزهٔ آقاخان",
+      "summary": "موزه‌ای در تورنتو که ده نگارهٔ شاهنامهٔ شاه‌تهماسبی را نگه می‌دارد.",
+      "facts": {
+        "field": "موزهٔ هنرهای اسلامی"
+      }
+    },
+    "organisation-metropolitan-museum": {
+      "label": "موزهٔ هنر متروپولیتن",
+      "summary": "موزه‌ای در نیویورک که در ۱۹۷۰، ۷۷ برگ نگارین شاهنامهٔ شاه‌تهماسبی به آن بخشیده شد.",
+      "facts": {
+        "field": "موزهٔ هنر"
+      }
+    },
+    "object-florence-shahnameh": {
+      "label": "دست‌نویس فلورانس",
+      "summary": "کهن‌ترین دست‌نویس شناخته‌شدهٔ شاهنامه، به تاریخ ۶۱۴ هجری (۱۲۱۷ میلادی)، در کتابخانهٔ ملی مرکزی فلورانس؛ در ۱۹۷۷ در آنجا پیدا شد و چاپ عکسی آن منتشر شده است."
+    },
+    "object-baysonghori-shahnameh": {
+      "label": "شاهنامهٔ بایسنغری",
+      "summary": "دست‌نویس کامل و نگارین در ۳۴۶ برگ که در ۱۴۳۰ در هرات برای بایسنغر ساخته شد، به خط نستعلیق جعفر بایسنغری؛ در کاخ گلستان تهران نگهداری می‌شود."
+    },
+    "object-shah-tahmasp-shahnameh": {
+      "label": "شاهنامهٔ شاه‌تهماسبی",
+      "summary": "دست‌نویس نگارینی که در تبریز برای دربار صفوی ساخته شد، حدود ۱۵۲۲ یا ۱۵۲۴ آغاز و حدود ۱۵۳۷ به پایان رسید، با ۲۵۸ نگاره؛ شاه تهماسب آن را در ۱۵۶۸ به سلطان سلیم دوم عثمانی بخشید، پس از ۱۹۷۰ پراکنده شد و برگ‌هایش اکنون در چند مجموعه است، از جمله موزهٔ آقاخان و موزهٔ متروپولیتن."
+    },
+    "person-bertels": {
+      "label": "ای. ای. برتلس",
+      "summary": "سرویراستار ویراست مسکو از شاهنامه، که پیش از چاپ نخستین جلد آن درگذشت.",
+      "facts": {
+        "knownFor": "سرویراستار ویراست مسکو."
+      }
+    },
+    "person-khaleghi-motlagh": {
+      "label": "جلال خالقی مطلق",
+      "summary": "ویراستار ویراست انتقادی شاهنامه بر پایهٔ کهن‌ترین دست‌نویس‌ها، از جمله دست‌نویس فلورانس؛ زادهٔ ۱۱ سپتامبر ۱۹۳۷ در تهران.",
+      "facts": {
+        "knownFor": "ویراست انتقادی شاهنامه."
+      }
+    },
+    "work-moscow-edition": {
+      "label": "ویراست مسکو",
+      "summary": "ویراست شاهنامه در نُه جلد که انتشارات ادبیات شرقی در مسکو منتشر کرد، نخستین جلد در ۱۹۶۰، به سرویراستاری ای. ای. برتلس."
+    },
+    "work-khaleghi-motlagh-edition": {
+      "label": "ویراست خالقی مطلق",
+      "summary": "ویراست انتقادی شاهنامه به کوشش جلال خالقی مطلق در هشت جلد؛ یک ناشر آن را ۱۹۸۸ تا ۲۰۰۸ و دیگری ۱۹۸۷ تا ۲۰۰۵ می‌گذارد."
+    }
+  },
+  "relations": {
+    "relation-ferdowsi-author-of-shahnameh": {
+      "label": "سراینده"
+    },
+    "relation-daqiqi-author-of-shahnameh": {
+      "label": "سرایندهٔ حدود هزار بیت آن"
+    },
+    "relation-abu-mansur-commissioner-of-prose-shahnameh": {
+      "label": "سفارش داد"
+    },
+    "relation-shahnameh-adaptation-of-prose-shahnameh": {
+      "label": "منبع اصلی آن"
+    },
+    "relation-shahnameh-dedicated-to-mahmud-of-ghazni": {
+      "label": "پیشکش به"
+    },
+    "relation-reign-kayumars-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-kayumars-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-kayumars-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-hushang-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-hushang-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-hushang-successor-of-kayumars": {
+      "label": "شاه پس از"
+    },
+    "relation-hushang-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-tahmuras-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-tahmuras-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-tahmuras-successor-of-hushang": {
+      "label": "شاه پس از"
+    },
+    "relation-tahmuras-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-jamshid-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-jamshid-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-jamshid-successor-of-tahmuras": {
+      "label": "شاه پس از"
+    },
+    "relation-jamshid-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-zahhak-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-zahhak-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-zahhak-successor-of-jamshid": {
+      "label": "شاه پس از"
+    },
+    "relation-reign-fereydun-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-fereydun-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-fereydun-successor-of-zahhak": {
+      "label": "شاه پس از"
+    },
+    "relation-fereydun-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-manuchehr-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-manuchehr-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-manuchehr-successor-of-fereydun": {
+      "label": "شاه پس از"
+    },
+    "relation-manuchehr-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-nowzar-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-nowzar-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-nowzar-successor-of-manuchehr": {
+      "label": "شاه پس از"
+    },
+    "relation-nowzar-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-zav-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-zav-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-zav-successor-of-nowzar": {
+      "label": "شاه پس از"
+    },
+    "relation-zav-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-garshasp-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-garshasp-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-garshasp-successor-of-zav": {
+      "label": "شاه پس از"
+    },
+    "relation-garshasp-member-of-pishdadian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-kay-qobad-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-kay-qobad-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-kay-qobad-successor-of-garshasp": {
+      "label": "شاه پس از"
+    },
+    "relation-kay-qobad-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-kay-kavus-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-kay-kavus-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-kay-kavus-successor-of-kay-qobad": {
+      "label": "شاه پس از"
+    },
+    "relation-kay-kavus-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-kay-khosrow-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-kay-khosrow-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-kay-khosrow-successor-of-kay-kavus": {
+      "label": "شاه پس از"
+    },
+    "relation-kay-khosrow-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-lohrasp-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-lohrasp-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-lohrasp-successor-of-kay-khosrow": {
+      "label": "شاه پس از"
+    },
+    "relation-lohrasp-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-goshtasp-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-goshtasp-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-goshtasp-successor-of-lohrasp": {
+      "label": "شاه پس از"
+    },
+    "relation-goshtasp-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-bahman-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-bahman-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-bahman-successor-of-goshtasp": {
+      "label": "شاه پس از"
+    },
+    "relation-bahman-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-homay-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-homay-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-homay-successor-of-bahman": {
+      "label": "شاه پس از"
+    },
+    "relation-homay-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-darab-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-darab-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-darab-successor-of-homay": {
+      "label": "شاه پس از"
+    },
+    "relation-darab-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-dara-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-dara-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-dara-successor-of-darab": {
+      "label": "شاه پس از"
+    },
+    "relation-dara-member-of-kayanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-eskandar-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-eskandar-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-eskandar-successor-of-dara": {
+      "label": "شاه پس از"
+    },
+    "relation-reign-ashkanian-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-reign-ardashir-i-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-ardashir-i-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-ardashir-i-successor-of-eskandar": {
+      "label": "شاه پس از"
+    },
+    "relation-ardashir-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-shapur-i-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-shapur-i-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-shapur-i-successor-of-ardashir-i": {
+      "label": "شاه پس از"
+    },
+    "relation-shapur-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-ormazd-i-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-ormazd-i-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-ormazd-i-successor-of-shapur-i": {
+      "label": "شاه پس از"
+    },
+    "relation-ormazd-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-bahram-i-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-bahram-i-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-bahram-i-successor-of-ormazd-i": {
+      "label": "شاه پس از"
+    },
+    "relation-bahram-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-bahram-ii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-bahram-ii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-bahram-ii-successor-of-bahram-i": {
+      "label": "شاه پس از"
+    },
+    "relation-bahram-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-bahram-iii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-bahram-iii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-bahram-iii-successor-of-bahram-ii": {
+      "label": "شاه پس از"
+    },
+    "relation-bahram-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-narsi-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-narsi-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-narsi-successor-of-bahram-iii": {
+      "label": "شاه پس از"
+    },
+    "relation-narsi-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-ormazd-ii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-ormazd-ii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-ormazd-ii-successor-of-narsi": {
+      "label": "شاه پس از"
+    },
+    "relation-ormazd-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-shapur-ii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-shapur-ii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-shapur-ii-successor-of-ormazd-ii": {
+      "label": "شاه پس از"
+    },
+    "relation-shapur-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-ardashir-ii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-ardashir-ii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-ardashir-ii-successor-of-shapur-ii": {
+      "label": "شاه پس از"
+    },
+    "relation-ardashir-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-shapur-iii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-shapur-iii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-shapur-iii-successor-of-ardashir-ii": {
+      "label": "شاه پس از"
+    },
+    "relation-shapur-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-bahram-iv-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-bahram-iv-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-bahram-iv-successor-of-shapur-iii": {
+      "label": "شاه پس از"
+    },
+    "relation-bahram-iv-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-yazdegerd-i-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-yazdegerd-i-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-yazdegerd-i-successor-of-bahram-iv": {
+      "label": "شاه پس از"
+    },
+    "relation-yazdegerd-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-bahram-v-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-bahram-v-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-bahram-v-successor-of-yazdegerd-i": {
+      "label": "شاه پس از"
+    },
+    "relation-bahram-v-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-yazdegerd-ii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-yazdegerd-ii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-yazdegerd-ii-successor-of-bahram-v": {
+      "label": "شاه پس از"
+    },
+    "relation-yazdegerd-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-hormoz-iii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-hormoz-iii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-hormoz-iii-successor-of-yazdegerd-ii": {
+      "label": "شاه پس از"
+    },
+    "relation-hormoz-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-piruz-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-piruz-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-piruz-successor-of-hormoz-iii": {
+      "label": "شاه پس از"
+    },
+    "relation-piruz-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-balash-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-balash-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-balash-successor-of-piruz": {
+      "label": "شاه پس از"
+    },
+    "relation-balash-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-qobad-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-qobad-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-qobad-successor-of-balash": {
+      "label": "شاه پس از"
+    },
+    "relation-qobad-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-kesra-anushirvan-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-kesra-anushirvan-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-kesra-anushirvan-successor-of-qobad": {
+      "label": "شاه پس از"
+    },
+    "relation-kesra-anushirvan-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-hormozd-iv-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-hormozd-iv-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-hormozd-iv-successor-of-kesra-anushirvan": {
+      "label": "شاه پس از"
+    },
+    "relation-hormozd-iv-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-khosrow-parviz-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-khosrow-parviz-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-khosrow-parviz-successor-of-hormozd-iv": {
+      "label": "شاه پس از"
+    },
+    "relation-khosrow-parviz-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-shiruy-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-shiruy-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-shiruy-successor-of-khosrow-parviz": {
+      "label": "شاه پس از"
+    },
+    "relation-shiruy-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-ardashir-iii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-ardashir-iii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-ardashir-iii-successor-of-shiruy": {
+      "label": "شاه پس از"
+    },
+    "relation-ardashir-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-farayin-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-farayin-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-farayin-successor-of-ardashir-iii": {
+      "label": "شاه پس از"
+    },
+    "relation-farayin-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-puran-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-puran-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-puran-successor-of-farayin": {
+      "label": "شاه پس از"
+    },
+    "relation-puran-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-azarmdokht-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-azarmdokht-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-azarmdokht-successor-of-puran": {
+      "label": "شاه پس از"
+    },
+    "relation-azarmdokht-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-farrokhzad-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-farrokhzad-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-farrokhzad-successor-of-azarmdokht": {
+      "label": "شاه پس از"
+    },
+    "relation-farrokhzad-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-reign-yazdegerd-iii-part-of-shahnameh": {
+      "label": "بخشی از شاهنامه"
+    },
+    "relation-yazdegerd-iii-holder-of-king-of-iran": {
+      "label": "شاه ایران"
+    },
+    "relation-yazdegerd-iii-successor-of-farrokhzad": {
+      "label": "شاه پس از"
+    },
+    "relation-yazdegerd-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-haft-khan-rostam-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-haft-khan-rostam-part-of-reign-kay-kavus": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-kavus-hamavaran-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-kavus-hamavaran-part-of-reign-kay-kavus": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-rostam-sohrab-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-rostam-sohrab-part-of-reign-kay-kavus": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-siavash-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-siavash-part-of-reign-kay-kavus": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-forud-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-forud-part-of-reign-kay-khosrow": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-kamus-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-kamus-part-of-reign-kay-khosrow": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-khaqan-chin-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-khaqan-chin-part-of-reign-kay-khosrow": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-akvan-div-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-akvan-div-part-of-reign-kay-khosrow": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-bizhan-manizheh-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-bizhan-manizheh-part-of-reign-kay-khosrow": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-davazdah-rokh-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-davazdah-rokh-part-of-reign-kay-khosrow": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-great-war-kay-khosrow-afrasiab-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-great-war-kay-khosrow-afrasiab-part-of-reign-kay-khosrow": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-haft-khan-esfandiar-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-haft-khan-esfandiar-part-of-reign-goshtasp": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-rostam-esfandiar-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-rostam-esfandiar-part-of-reign-goshtasp": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-rostam-shaghad-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-rostam-shaghad-part-of-reign-goshtasp": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-zal-birth-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-zal-birth-part-of-reign-manuchehr": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-mazdak-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-mazdak-part-of-reign-qobad": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-bozorgmehr-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-bozorgmehr-part-of-reign-kesra-anushirvan": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-chess-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-chess-part-of-reign-kesra-anushirvan": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-kalila-dimna-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-kalila-dimna-part-of-reign-kesra-anushirvan": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-khosrow-shirin-part-of-shahnameh": {
+      "label": "داستانی از شاهنامه"
+    },
+    "relation-khosrow-shirin-part-of-reign-khosrow-parviz": {
+      "label": "روایت‌شده در این پادشاهی"
+    },
+    "relation-kayumars-parent-of-siamak": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-siamak-parent-of-hushang": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-hushang-parent-of-tahmuras": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-tahmuras-parent-of-jamshid": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-mardas-parent-of-zahhak": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-abtin-parent-of-fereydun": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-fereydun-parent-of-salm": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-tahmasp-parent-of-zav": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-zav-parent-of-garshasp": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-kay-qobad-parent-of-kay-kavus": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-kay-kavus-parent-of-siavash": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-siavash-parent-of-kay-khosrow": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-siavash-parent-of-forud": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-aurvand-parent-of-lohrasp": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-lohrasp-parent-of-goshtasp": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-goshtasp-parent-of-esfandiar": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-esfandiar-parent-of-bahman": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-bahman-parent-of-homay": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-homay-parent-of-darab": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-darab-parent-of-dara": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-darab-parent-of-eskandar": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-dara-parent-of-sasan": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-ardashir-i-parent-of-shapur-i": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-shapur-i-parent-of-ormazd-i": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-ormazd-i-parent-of-bahram-i": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-bahram-iii-parent-of-narsi": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-narsi-parent-of-ormazd-ii": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-ardashir-ii-sibling-of-shapur-ii": {
+      "label": "برادرِ، در شعر"
+    },
+    "relation-shapur-iii-parent-of-bahram-iv": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-yazdegerd-i-parent-of-bahram-v": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-yazdegerd-ii-parent-of-hormoz-iii": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-piruz-parent-of-balash": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-hormozd-iv-parent-of-khosrow-parviz": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-khosrow-parviz-parent-of-shiruy": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-shiruy-parent-of-ardashir-iii": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-shahriyar-parent-of-yazdegerd-iii": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-nariman-parent-of-sam": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-sam-parent-of-zal": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-zal-parent-of-rostam": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-rostam-parent-of-faramarz": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-keshvad-parent-of-gudarz": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-gudarz-parent-of-giv": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-giv-parent-of-bizhan": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-gudarz-parent-of-bahram-pahlavan": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-nowzar-parent-of-tus": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-pashang-parent-of-afrasiab": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-garsivaz-sibling-of-afrasiab": {
+      "label": "برادرِ، در شعر"
+    },
+    "relation-viseh-parent-of-piran": {
+      "label": "پدرِ، در شعر"
+    },
+    "relation-houman-sibling-of-piran": {
+      "label": "برادرِ، در شعر"
+    },
+    "relation-sam-member-of-sam": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-nariman-member-of-sam": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-zal-member-of-sam": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-rostam-member-of-sam": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-faramarz-member-of-sam": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-keshvad-member-of-gudarz": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-gudarz-member-of-gudarz": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-giv-member-of-gudarz": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-bizhan-member-of-gudarz": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-bahram-pahlavan-member-of-gudarz": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-viseh-member-of-viseh": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-piran-member-of-viseh": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-houman-member-of-viseh": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-pashang-member-of-pashang": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-afrasiab-member-of-pashang": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-garsivaz-member-of-pashang": {
+      "label": "از خاندانِ، در شعر"
+    },
+    "relation-florence-shahnameh-edition-of-shahnameh": {
+      "label": "دست‌نویسی از شاهنامه"
+    },
+    "relation-baysonghori-shahnameh-edition-of-shahnameh": {
+      "label": "دست‌نویسی از شاهنامه"
+    },
+    "relation-shah-tahmasp-shahnameh-edition-of-shahnameh": {
+      "label": "دست‌نویسی از شاهنامه"
+    },
+    "relation-florence-shahnameh-kept-at-bncf": {
+      "label": "نگهداری در"
+    },
+    "relation-baysonghori-shahnameh-kept-at-golestan-palace": {
+      "label": "نگهداری در"
+    },
+    "relation-shah-tahmasp-shahnameh-kept-at-aga-khan-museum": {
+      "label": "ده نگاره‌اش در"
+    },
+    "relation-shah-tahmasp-shahnameh-kept-at-metropolitan-museum": {
+      "label": "۷۷ برگش بخشیده شد به"
+    },
+    "relation-bncf-located-in-florence": {
+      "label": "در"
+    },
+    "relation-golestan-palace-located-in-tehran": {
+      "label": "در"
+    },
+    "relation-aga-khan-museum-located-in-toronto": {
+      "label": "در"
+    },
+    "relation-moscow-edition-edition-of-shahnameh": {
+      "label": "ویراستی از شاهنامه"
+    },
+    "relation-khaleghi-motlagh-edition-edition-of-shahnameh": {
+      "label": "ویراستی از شاهنامه"
+    }
+  }
+}

@@ -37,7 +37,7 @@ it is written and when it is finished. Nothing here is reviewed or released by w
 
 | # | Item | Status |
 |---|---|---|
-| B1 | The Shahnameh as a work: the poet, the making of the poem, its three parts, its dynasties and kings in order, its chief heroes and their houses, its manuscripts and editions | Planned |
+| B1 | The Shahnameh as a work: the poet, the making of the poem, its three parts, its dynasties and kings in order, its chief heroes and their houses, its manuscripts and editions | Done 2026-11-23 (`library/samples/shahnameh.json`, with its Persian; the three parts are left out for want of a source; not yet looked at in a browser) |
 | B2 | The story of Rostam and Sohrab, whole: every step of the telling, everybody in it, its places | Planned |
 | B3 | The story of Siavash, as a second story of the same world | Planned |
 | B4 | Iran to about 100 CE: Elam, the Medes, the Achaemenids, Alexander and the Seleucids, the Arsacids | Done 2026-11-23 (`library/samples/ancient-iran.json`, with its Persian; not yet looked at in a browser) |
