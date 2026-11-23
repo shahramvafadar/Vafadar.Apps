@@ -1145,9 +1145,9 @@ era was turned around in a Persian sentence; the field for the address of a page
 and not of the form. *Not looked at:* a light appearance of these pages, a phone, a screen reader, the files
 for print on paper.
 
-## 25. What the owner asked for after section 24 – the plan (2026-11-23, D-088 and D-089)
+## 25. What the owner asked for after section 24 (2026-11-23, D-088 and D-089)
 
-*Planned, not begun.* Section 24 ended with four things "nobody asked for". On 2026-11-23 the owner asked for
+*Planned on 2026-11-23 and, on the owner's word of the same day, built – steps 25.1 to 25.6.* Section 24 ended with four things "nobody asked for". On 2026-11-23 the owner asked for
 all four (D-088), and for real content to try the site with: the Shahnameh fuller and more exact, a stretch of
 the history of Iran, of Rome and of China, a family tree in the owner's own account, and fitting data wherever
 else a part needs it (D-089). The owner then set the order: the development that is left is done in this line
@@ -1398,6 +1398,18 @@ machine – databases brought up with `database migrate` first –, the addresse
 account with a made-up name is made so that circles and "who was here" have two sides, and the light
 appearance of the pages of section 24 and of this section is looked at. What the owner finds is written into
 the backlog as rows of its own and built before the site goes online.
+
+**Where section 25 stands on 2026-11-23.** Steps 25.1 to 25.6 are built, merged and tried: 3,540 tests on the
+machine of development, and the classes of the browser that touch what changed in Chromium, WebKit and
+Firefox. *Looked at in a browser, with made-up content:* the themes of the site and the page of a shared
+theme, in English and Persian; the page of a name and a family tree in a stretch of years; the drawing of
+connections that moves, with the larger card in the middle; the form of the facts of an account and the head
+that shows them. *Found by looking and corrected:* the line under the form of the years still named three
+views. *Found by the build server and corrected:* a test of the family tree compared two places by rounding
+both and failed in Firefox when a part above the drawing moved it by a part of a pixel; it now asks for less
+than a pixel between them. *Not looked at:* a light appearance, a phone, a screen reader; a drawing of a real
+collection with many cards – the compact cards were seen in a test with made-up data only. Step 25.7 waits for
+the content.
 
 **What is open, with what is built if the owner says nothing.** The owner was given these on 2026-11-23:
 
