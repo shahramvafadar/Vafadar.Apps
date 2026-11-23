@@ -135,7 +135,9 @@ public sealed class Exploration
     /// <summary>
     /// Gets the stretch of years the visitor chose, or nothing: the first and the last year, positive in the
     /// common era and negative before it. Every view of a name keeps to it (D-084, completed in step 25.3):
-    /// what states a time is shown when it lies in the years, and what states none is shown apart.
+    /// what states a time is shown when it lies in the years, and what states none is shown apart. On the page
+    /// of a name that is what is stated about it and its connections; its head, the few pictures that lead to
+    /// its gallery and a series of numbers are of the name and stay.
     /// </summary>
     public (int From, int To)? Years =>
         _said.TryGetValue("from", out var from) && _said.TryGetValue("to", out var to)

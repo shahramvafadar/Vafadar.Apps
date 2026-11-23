@@ -41,9 +41,9 @@
             <section aria-labelledby="found-themes">
                 <h2 id="found-themes">@T["Themes_Title"]</h2>
                 <ul class="cards" role="list">
-                    @foreach (var theme in _themes)
+                    @foreach (var (theme, found) in _themes)
                     {
-                        var first = theme.In[0];
+                        var first = theme.From(found);
                         <li class="card">
                             <h3><a href="@($"themes/{first.Collection}/{first.Theme.Id}")"><Loc Text="first.Theme.Label" /></a></h3>
                             <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Themes_Count"], Visitor.Number(theme.Items))</p>
@@ -82,7 +82,7 @@
 
     private string _query = string.Empty;
     private List<(DastanSite Collection, LocalizedText Name, ImmutableArray<SearchHit> Hits)> _found = [];
-    private List<SharedTheme> _themes = [];
+    private List<(SharedTheme Theme, string FoundIn)> _themes = [];
 
     /// <summary>Gets or sets what the visitor typed.</summary>
     [SupplyParameterFromQuery(Name = "q")]
@@ -112,9 +112,10 @@
                 foreach (var hit in shared)
                 {
                     var theme = themes.Find(collection.Collection, hit.Entity.Id)!;
-                    if (!_themes.Contains(theme))
+                    if (!_themes.Any(one => one.Theme == theme))
                     {
-                        _themes.Add(theme);
+                        // Named as the collection names it in which the words were found.
+                        _themes.Add((theme, collection.Collection));
                     }
                 }
 

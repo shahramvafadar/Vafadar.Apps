@@ -34,7 +34,7 @@ interface GraphEdge {
 interface Graph { kind: string; focus: string | null; nodes: GraphNode[]; edges: GraphEdge[]; flow?: string; }
 
 // The measures of a card, in pixels of the drawing. A card has one of three sizes (step 25.6), which the
-// server names with the graph so that this drawing and the still one agree: the name in the middle is larger,
+// server names with the graph – this drawing never decides by itself what stands out: the name in the middle is larger,
 // a card of a drawing with many is compact – its name and one line, no picture –, every other is the usual.
 // In a family every card has one size, so that the places of the layout – counted in cards – are columns.
 interface CardSize { width: number; height: number; name: number; line: number; picture: number; lines: number; }

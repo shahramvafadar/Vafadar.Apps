@@ -64,6 +64,34 @@ Wikipedia and Wikidata are for finding things, not for citing: follow them to a 
 that. Where two sources of the table disagree, cite both and treat the statement as tradition or dispute.
 A source is one page with one address; cite the article, not the site. `accessedAt` is the day you read it.
 
+### How a time is written
+
+A time is written in one of these shapes ([the file of a comparison](comparison-format.md), "Time"). Years are
+years of the common era (`commonEra`) or before it (`beforeCommonEra`), in the Gregorian calendar; there is no
+year zero.
+
+```json
+{ "kind": "occurrence", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 331 } }
+
+{ "kind": "occurrence", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 550, "approximate": true } }
+
+{ "kind": "occurrenceWindow",
+  "earliest": { "frame": "calendar", "era": "beforeCommonEra", "year": 1046 },
+  "latest":   { "frame": "calendar", "era": "beforeCommonEra", "year": 1027 } }
+
+{ "kind": "period",
+  "start": { "state": "known", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 559, "approximate": true } },
+  "end":   { "state": "known", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 530 } },
+  "continuity": "notAsserted" }
+
+{ "kind": "unknown" }
+```
+
+The first is something that happened in a year; the second "about" a year; the third between two years; the
+fourth something that lasted – a reign, a dynasty –, whose start and end may each be `known`, `between`
+(with `earliest` and `latest`) or `unknown`; the last says that nobody knows. Only a relation with the scope
+`outside_the_story` and a statement in `dated` carry a time; a relation of a story never does.
+
 ### Tradition and dispute
 
 * A year that tradition gives and history does not confirm – the founding of Rome in 753 BCE, the Xia – is
@@ -89,13 +117,21 @@ src/Apps/Dastan/library/
 | `samples/shahnameh.json` | `shahnameh` | `world-shahnameh` | the work: `work-shahnameh` |
 | `samples/rostam-and-sohrab.json` | `rostam-and-sohrab` | `world-shahnameh` | its one story: `story-rostam-sohrab` |
 | `samples/siavash.json` | `siavash` | `world-shahnameh` | its one story: `story-siavash` |
-| `samples/ancient-iran.json` | `ancient-iran` | `world-history` | `subject-ancient-iran` (a `Region`) |
-| `samples/ancient-china.json` | `ancient-china` | `world-history` | `subject-ancient-china` (a `Region`) |
-| `samples/ancient-rome.json` | `ancient-rome` | `world-history` | `subject-ancient-rome` (a `Government`) |
-| `samples/places.json` | `places` | `world-history` | `subject-places` (a `Concept`: places of learning and work) |
+| `samples/ancient-iran.json` | `ancient-iran` | `world-ancient-iran` | `subject-ancient-iran` (a `Region`) |
+| `samples/ancient-china.json` | `ancient-china` | `world-ancient-china` | `subject-ancient-china` (a `Region`) |
+| `samples/ancient-rome.json` | `ancient-rome` | `world-ancient-rome` | `subject-ancient-rome` (a `Region`) |
+| `samples/places.json` | `places` | `world-places` | `subject-places` (a `Concept`: places of learning and work) |
 | `comparisons/iran-china-rome.json` | – | – | the three over time |
 
 Each has its Persian beside it: `shahnameh.fa.json`, and so on.
+
+**`worldId` is not a label.** The site offers the collections of one world to each other as "the same world,
+told elsewhere". That is right for the three collections of the Shahnameh and wrong for three histories: each
+history and the places have a world of their own, as the table says. The media items of a collection name its
+`worldId` (`depictedContext.worldId`).
+
+**No two collections are about the same thing.** `subjectId` is the name of a collection in addresses, and a
+site does not start with two collections of one `subjectId`.
 
 **Identifiers** are lower case with hyphens, begin with what the thing is, and never change once a file is
 handed over. They are unique in a file across all kinds of record.
@@ -138,7 +174,7 @@ A collection that tells no story: `"events": []`, no `editionContext`, one readi
 | A span of history (the Warring States) | entity `Period` | facts `began`, `ended` |
 | A battle, a founding, a reform | entity `Event` | facts `happened`, `where`; optional `participant` |
 | A capital, a city | entity `Place` | fact `partOf` (its region), and `position` with `precision` |
-| A land | entity `Region` | fact `partOf` where it is part of a larger one |
+| A land | entity `Region` | fact `partOf` – naming the larger land as an entity of the file – where it is part of one; left out where it is not |
 | The office of the ruler | entity `Office` | fact `partOf` (the dynasty or government) |
 | **A reign** | relation `holderOf`, ruler → office, with `time` a `period` from the first to the last year of the reign | the heart of each collection: every ruler has exactly one for each time they ruled |
 | Who belongs to which house | relation `memberOf`, person → dynasty | no `time` unless the source gives one |
@@ -149,6 +185,34 @@ A collection that tells no story: `"events": []`, no `editionContext`, one readi
 | A capital | relation `capitalOf`, place → dynasty or region, with `time` where the capital moved | |
 | Who took part in what, and where | `participantIn` (person or dynasty → event), `tookPlaceIn` (event → place), `during` (event → period) | |
 | A written work of the time (the Behistun inscription, the Records of the Grand Historian) | entity `Work` or `Object`, with `authorOf`, `commissionerOf`, `keptAt` | |
+
+A fact is written in `facts` of its entity and says exactly one thing: a time (`"time"`), an entity of the same
+file (`"entityId"`) or words (`"text"`) – which one is fixed by the fact: `born`, `died`, `founded`, `dissolved`,
+`began`, `ended`, `happened`, `created` say a time; `seat`, `where`, `partOf`, `birthPlace`, `deathPlace`,
+`keptAt`, `founder`, `creator`, `participant` name an entity (a place where the fact is about a place);
+`knownFor`, `role`, `field` are words. The check says so when a fact is given the wrong one.
+
+```json
+{ "id": "dynasty-achaemenid", "type": "Dynasty", "label": "…", "summary": "…", "sourceIds": ["src-…"], "spoilerLevel": 0,
+  "facts": [
+    { "fact": "founded", "time": { "kind": "occurrence", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 550, "approximate": true } } },
+    { "fact": "seat", "entityId": "place-persepolis" },
+    { "fact": "founder", "entityId": "person-cyrus-ii" } ] }
+
+{ "id": "relation-cyrus-ii-holder-of-king-of-kings", "from": "person-cyrus-ii", "to": "office-king-of-kings",
+  "type": "holderOf", "directionality": "directed", "label": "King of kings", "sourceIds": ["src-…"], "spoilerLevel": 0,
+  "reviewStatus": "source_backed_editorial_review_pending",
+  "time": { "kind": "period", "start": { "state": "known", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 559, "approximate": true } },
+            "end": { "state": "known", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 530 } }, "continuity": "notAsserted" },
+  "scope": { "kind": "outside_the_story", "eventIds": [] } }
+```
+
+These shapes are kept as made-up files the tests of the software check with every build –
+`test/Apps/Dastan/Fixtures/work-order-shapes/a-history.json` and `a-work-without-a-story.json`; look at them
+for a whole file in each shape. They were tried on the site on 2026-11-23 with made-up records: a `Region` as what
+a collection is about, a `Dynasty`, its `Office`, rulers with `holderOf` and a time, `memberOf`, `successorOf`,
+`parentOf`, `founderOf`, `governs`, `capitalOf`, a `Period`, an `Event` with `participantIn`, `tookPlaceIn` and
+`during`.
 
 Other names – a throne name, a name in the original script, a Latin or Greek form – go into `names` of the
 entity, never into a second entity. Identifiers of other catalogues go into `identifiers`.
@@ -169,7 +233,15 @@ each collection names its own side of it, with the same identifier for the same 
 ### 4.2 The Shahnameh as a work
 
 `samples/shahnameh.json`. A collection about a work that tells no story of its own here: `subjectId` is
-`work-shahnameh`, there are no events, one reading stage. It gives the reader the map the stories lie on.
+`work-shahnameh`, there are no events (`"events": []`), one reading stage. It gives the reader the map the
+stories lie on.
+
+Because it names stories (`NarrativeArc` entities), the reader takes it for a collection of a work and asks
+for an **`editionContext`** – with `workId` `work-shahnameh`, the text it follows and, in `scope`, that it is the
+work as a whole and tells no story – and then `language` is left out (`editionContext.summaryLanguage` says
+it). Do not begin this file from `template subject` without adding it; the check says "editionContext is
+missing" otherwise. This shape – a `Work` as what the collection is about, stories as entities, no events –
+was tried with the check and on the site on 2026-11-23.
 
 * **The poet and the poem:** Ferdowsi (`Person`, with `born`, `died`, `knownFor`, `birthPlace`), his patron and
   the court he wrote for; when the poem was begun and finished (`dated` on the work); its length as a quantity
@@ -179,9 +251,10 @@ each collection names its own side of it, with the same identifier for the same 
   each `partOf` the work, said to be a division of scholarship, not of the poem.
 * **Its dynasties and kings in order:** the Pishdadians and the Kayanians with every king the poem names in its
   order; the Ashkanians as the poem has them; the Sasanians as the poem names them. A king of the poem is a
-  `Character`, not a `Person`, also where a historical king stands behind the name; where the scholarship says
-  who that is, a `portrayalOf` relation leads from the character to the `Person` of the history collection's
-  identifier – only where a source says so.
+  `Character`, not a `Person`, also where a historical king stands behind the name. Where the scholarship says
+  who that is, write that `Person` into **this** file – a relation never leads into another file – with the
+  identifier the history collection gives the same person, and a `portrayalOf` relation from the character to
+  it; only where a source says so.
 * **Its heroes and their houses:** the house of Sam and Zal and Rostam; the houses of Gudarz, of Tus, of
   Afrasiab and Turan; with `parentOf` and `memberOf` as the poem tells them, and as `background_lineage` or
   `outside_the_story` in scope as the format page says.
@@ -190,7 +263,11 @@ each collection names its own side of it, with the same identifier for the same 
   away.
 * **Its manuscripts and editions:** the Florence manuscript, the London manuscript of 1276, the Baysonghori
   and the Shah Tahmasp Shahnameh (`Object`, with `created`, `keptAt`, `editionOf`); the editions of Moscow and
-  of Khaleghi-Motlagh (`Work`, `editionOf`, with their editors).
+  of Khaleghi-Motlagh (`Work`, `editionOf`, with their editors). The fact `keptAt` of an object names a
+  **place** – the town or the building; the library or museum that holds it is said by the relation `keptAt`,
+  from the object to that institution.
+* The facts these kinds need: a `Work` `creator` and `created`; a `NarrativeArc` `partOf` (the work); a
+  `Character` `role`, in words that give nothing away; an `Object` `created` and `keptAt`.
 
 About: 100–140 entities, 150–220 relations, 15–25 dated statements.
 
@@ -202,8 +279,8 @@ is about, never how it ends.
 
 `samples/rostam-and-sohrab.json`. Begin from a copy of `content/samples/shahnameh-pilot.json` – copy it, do not
 edit it – and keep its identifiers, its five reading stages and its `editionContext`. Change `datasetId` to
-`rostam-and-sohrab`, set `worldId` to `world-shahnameh`, and take over its statements **with their state of
-review as they are**.
+`rostam-and-sohrab` – its `worldId` is `world-shahnameh` already, and its media name it –, and take over its
+statements **with their state of review as they are**.
 
 Then complete it against the text on Ganjoor, section by section:
 
@@ -244,7 +321,9 @@ three lanes to the span of the three collections and to the same statements: a p
 comparison says the same years, with the same uncertainty and from the same source, as the collection does.
 Lanes: one for each land; periods are the dynasties and governments; events are the few that a reader should
 see side by side (the unification under Qin, Cyrus taking Babylon, the founding of the Republic, Carrhae,
-Actium). Every period and event is `proposed`.
+Actium). Every period and event is `proposed`. The kinds of a source are written differently in a comparison than in
+a collection: `primaryText`, `scholarlyReference`, `museumRecord`, `rightsPolicy` – ask `vocabulary comparison`.
+Its `publication` stays `localDemoAllowed` true and `publicReleaseApproved` false, and its `status` `draft`.
 
 ### 4.6 Places people can have been at
 
@@ -329,21 +408,31 @@ one house, the search, and the same in Persian.
 
 ## 6. Pictures
 
-A collection is complete without a picture, and none is asked for in the first pass. If you add one:
+A collection is complete without a picture, and none is asked for in the first pass. **You bring no file of a
+picture into the repository.** The site shows a picture only when it is the project's own
+(`rights.status` `original_project_content`) – and making pictures is not part of this task. A work of a
+museum or a library is written as a **reference**: its record, without a file, with the way to the page of its
+holder. That is how the pilot writes its paintings; look at `media-met-452419` in
+`content/samples/shahnameh-pilot.json` for a whole item.
 
-* Only a work whose holder states that it may be reused freely – public domain or CC0 – on a page you cite as
-  an `institutional_rights_policy` source: the Metropolitan Museum's Open Access, the Smithsonian, the Cleveland
-  Museum of Art, the Walters. A file in a free media collection is not proof of its rights; the holder's page is.
-* The file goes into `library/media/`, is named in the item with a path relative to the collection
-  (`../media/<name>`), and the item states `rights`, `creator`, `creationDate`, the catalogue record and a text
-  alternative you wrote for exactly this image.
-* A work that cannot be shown is still worth a record: with `rights.status` `permission_not_verified`, no file,
-  and its `sourceUrl`, it stands in the gallery as a reference to its holder.
-* `publicRenderEligibility` is not yours to set to `allowed`.
-* What a picture shows is said in `depictedEntityIds`, the time it shows in `depictedTime`, and its themes in
-  `themeIds` – a theme is an entity of the type `Theme` of the same collection. A theme that another collection
-  has too carries the same identifier of the same catalogue as that one, marked `exact` – look at the themes
-  the library has before you write a new one.
+If you add references:
+
+* The item has no file of its own here: no `url` that is a path. It has `sourceUrl` – the public page of the
+  work at its holder, `https` – and the record of the holder: `catalogTitle`, `accessionNumber`, `creditLine`,
+  `creator`, `creationDate` as the catalogue words it.
+* `rights.status` is `permission_not_verified`, with a `statement` that says what the holder's page says and
+  `checkedAt`. Where the holder states open access on a page you cite as an `institutional_rights_policy`
+  source, `verified_open_access_metadata` may be written, with `license` and the address of that policy.
+  Establishing the rights of a picture so that it may be shown is the owner's (the backlog, D2), not yours.
+* `demoRenderEligibility.allowed` is `false` and `publicRenderEligibility` is left out – it is not yours to
+  set.
+* A file in a free media collection is not proof of anybody's rights; the page of the holder is what you cite.
+* What an item shows is said in `depictedEntityIds` and `depictedEventIds`, the time it shows in `depictedTime`
+  – never guessed from when it was made –, and its themes in `themeIds`. A theme is an entity of the type
+  `Theme` of the same collection. A theme that another collection has too carries the same identifier of the
+  same catalogue as that one, marked `exact` – look at the themes the library has before you write a new one.
+* `depictedContext.worldId` is the `worldId` of the collection.
+* An item of a story belongs to the stage of what it shows: a painting of the ending is of the last stage.
 
 ## 7. The owner's family tree
 

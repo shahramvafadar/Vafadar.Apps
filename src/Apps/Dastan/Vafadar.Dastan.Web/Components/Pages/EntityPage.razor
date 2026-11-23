@@ -125,7 +125,8 @@
                     @Stated(_stated.WithoutTime)
                 }
             }
-            @* The same quantity stated for several times is drawn as well: the list above has every digit. *@
+            @* The same quantity stated for several times is drawn as well – the whole series, whatever years are
+               chosen: a line of numbers is read as a whole. The list above has every digit of the years asked for. *@
             @foreach (var series in QuantitySeries.Of(overview.Entity, Site.Language))
             {
                 <SeriesFigure Series="series" Here="@_here" />

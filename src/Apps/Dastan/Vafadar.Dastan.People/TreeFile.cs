@@ -234,6 +234,12 @@ public sealed record TreeFile(string Name, ImmutableArray<TreeFilePerson> People
         {
             problems.Add($"{place}: the field {field.Name} is not one a tree file has. A tree file says a name, the years and the family and nothing else.");
         }
+
+        // A field that is said twice would be read as its last saying, and the first would be lost in silence.
+        foreach (var twice in element.EnumerateObject().GroupBy(field => field.Name, StringComparer.Ordinal).Where(fields => fields.Count() > 1))
+        {
+            problems.Add($"{place}: the field {twice.Key} is said {twice.Count()} times.");
+        }
     }
 
     private static string? Text(JsonElement element, string field) =>

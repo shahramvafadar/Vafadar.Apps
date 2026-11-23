@@ -159,7 +159,7 @@ years" is said nowhere any more.
   kind, its facts – is of the name and is never left out.
 * **The family tree.** Descent states no time and is drawn at every time. A partnership that states a time is
   drawn when it held in the years; one that states another is left out and counted, and somebody reached only
-  by it is not drawn. The one the tree is about is drawn always. The drawing that moves is asked with the same
+  by it is not drawn – nor a family of their own beside the tree. The one the tree is about is drawn always. The drawing that moves is asked with the same
   years and draws the same tree.
 * **What it does not do.** A collection dates only relations outside a story, so the family of a story is
   drawn whole whatever the years. The trees of accounts and their public pages are no content of a collection

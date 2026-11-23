@@ -1411,6 +1411,34 @@ than a pixel between them. *Not looked at:* a light appearance, a phone, a scree
 collection with many cards – the compact cards were seen in a test with made-up data only. Step 25.7 waits for
 the content.
 
+**A review of section 25 on 2026-11-23**, on the owner's word: everything of the day was read again, the work
+order was held against the reader of the site, and somebody who had not written the code read it.
+
+* *The work order said what the site does not take, and was corrected:* three histories with one `worldId` –
+  the site would have offered each as "the same world, told elsewhere"; a relation from a character into
+  another collection – a relation never leaves its file; a work that names its stories without an
+  `editionContext` – the reader refuses it; pictures of museums brought in as files – the site shows only what
+  is the project's own, a museum's work is a reference. The times, the facts and the relations it prescribes
+  are now written out, and the two shapes it prescribes – a history, and a work without a story – are made-up
+  files the tests check with every build (`Fixtures/work-order-shapes`, `WorkOrderShapesTests`). Both were
+  started on the site through the launch profile `library`.
+* *Found in the software and corrected:* `themes` was no name the site keeps for itself – a collection of that
+  name would have taken the address of the page; two themes of one collection became one where a theme of
+  another collection carried the identifiers of both; a family tree in a stretch of years drew, beside the
+  tree, the family of a partner whose partnership was left out; a relation of descent that states a time was
+  counted as stating none; the address an account names could hold marks of direction and look-alike letters
+  – it is now ASCII only; a field said twice in a tree file was read as its last saying; the search named a
+  shared theme by another collection than the one that found it; the tool of the editors would have failed on
+  an identifier that is no text.
+* *Words that said more than the code:* the still drawing has no compact cards; a series of numbers on the page
+  of a name is drawn whole whatever the years.
+* *Looked for and not found:* a way for a viewer to see, or to tell the existence of, a fact of an account its
+  audience does not allow; a way for a reader to be told of a theme of a stage not read to; a difference
+  between the hand-written change of form, its designer and the model.
+* *Known and left:* the history of a tree written from a file names the account as who added each person;
+  after a refused form of the facts the page shows what is kept, not what was typed; the pictures on the page
+  of a name are not narrowed by the years – its gallery is.
+
 **What is open, with what is built if the owner says nothing.** The owner was given these on 2026-11-23:
 
 | Question | Built if nothing is said |

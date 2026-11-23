@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Hosting;
+using Vafadar.Dastan.Web.Site;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -180,7 +181,17 @@ public sealed class SharedThemesPagesTests(SharedThemesSite site) : IClassFixtur
         var html = Html(await (await Reader(4)).Get("/en/search?q=Fighting"));
 
         Assert.Contains("id=\"found-themes\"", html, StringComparison.Ordinal);
-        Assert.Contains($"href=\"themes/{Story}/theme-combat\"", html, StringComparison.Ordinal);
+        // It is named as the collection names it in which the words were found, and stands there once.
+        Assert.Contains($"href=\"themes/{Retold}/theme-fighting\"", html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"href=\"themes/{Story}/theme-combat\"", html, StringComparison.Ordinal);
         Assert.DoesNotContain($"{Retold}/entity/theme-fighting\"", html, StringComparison.Ordinal);
+        Assert.Equal(1, Count(html, "class=\"card\""));
+    }
+
+    [Fact]
+    public void No_collection_can_take_the_address_of_the_themes_of_the_site()
+    {
+        // A collection about something called "themes" could not be reached: its address is the page of the themes.
+        Assert.True(DastanLibrary.IsTaken("themes"));
     }
 }

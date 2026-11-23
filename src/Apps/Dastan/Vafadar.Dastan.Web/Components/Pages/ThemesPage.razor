@@ -28,7 +28,8 @@
     @foreach (var one in theme.In)
     {
         var site = Library.Find(one.Collection)!;
-        var gallery = Visitor.Of(site)!.Gallery(one.Theme.Id)!;
+        var read = Visitor.Of(site)!;
+        var gallery = read.Gallery(one.Theme.Id)!;
         var heading = $"theme-in-{one.Collection}";
         <section class="theme-collection" aria-labelledby="@heading">
             <h2 id="@heading"><a href="@one.Collection"><Loc Text="one.Subject.Label" /></a></h2>
@@ -64,7 +65,7 @@
                     </li>
                 }
             </ul>
-            @if (Visitor.Of(site)!.Overview().StoryContinues)
+            @if (read.Overview().StoryContinues)
             {
                 <p class="note">@T["Gallery_EmptyHint"] <a href="@($"{one.Collection}#reading")">@T["Reading_Change"]</a></p>
             }

@@ -91,9 +91,13 @@ public sealed partial class EditorialStore
     public ImmutableArray<(string Collection, string RecordId, string Label)> SameThemeElsewhere(string collectionId, string recordId)
     {
         static IEnumerable<(string Issuer, string Value)> Exact(JsonNode body) =>
-            (body["identifiers"] as JsonArray ?? [])
-                .Where(identifier => (string?)identifier?["match"] == "exact" && identifier?["issuer"] is not null && identifier["value"] is not null)
-                .Select(identifier => (((string)identifier!["issuer"]!).Trim().ToUpperInvariant(), ((string)identifier["value"]!).Trim()));
+            (body["identifiers"] as JsonArray ?? []).OfType<JsonObject>()
+                .Select(identifier => (Match: Said(identifier["match"]), Issuer: Said(identifier["issuer"]), Value: Said(identifier["value"])))
+                .Where(identifier => identifier.Match == "exact" && identifier.Issuer is not null && identifier.Value is not null)
+                .Select(identifier => (identifier.Issuer!.Trim().ToUpperInvariant(), identifier.Value!.Trim()));
+
+        // What a field says when it is a text; a record that was written wrongly says nothing there.
+        static string? Said(JsonNode? field) => field is JsonValue value && value.TryGetValue<string>(out var text) ? text : null;
 
         if (Record(collectionId, "entities", recordId) is not { } theme || (string?)theme.Body["type"] != "Theme")
         {

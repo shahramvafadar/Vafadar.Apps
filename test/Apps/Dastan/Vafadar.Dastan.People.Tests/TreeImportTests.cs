@@ -101,6 +101,7 @@ public sealed class TreeImportTests : IDisposable
     [InlineData("""{ "format": "dastan-tree-0.1", "name": "A", "people": [ { "key": "a", "name": "A", "died": 1980, "deceased": false } ] }""", "said not to have died")]
     [InlineData("""{ "format": "dastan-tree-0.1", "name": "A", "people": [ { "key": "a", "name": "A", "birthPlace": "A town" } ] }""", "the field birthPlace is not one a tree file has")]
     [InlineData("""{ "format": "dastan-tree-0.1", "name": "A", "note": "x", "people": [ { "key": "a", "name": "A" } ] }""", "the field note is not one a tree file has")]
+    [InlineData("""{ "format": "dastan-tree-0.1", "name": "A", "people": [ { "key": "a", "name": "A", "name": "B" } ] }""", "the field name is said 2 times")]
     [InlineData("""{ "format": "dastan-tree-0.1", "name": "A", "people": [ { "key": "a", "name": "A" } ], "parents": [ { "parent": "a", "child": "b" } ] }""", "there is no person with the key b")]
     [InlineData("""{ "format": "dastan-tree-0.1", "name": "A", "people": [ { "key": "a", "name": "A" } ], "parents": [ { "parent": "a", "child": "a" } ] }""", "a is linked with themself")]
     [InlineData("""{ "format": "dastan-tree-0.1", "name": "A", "people": [ { "key": "a", "name": "A" }, { "key": "b", "name": "B" } ], "parents": [ { "parent": "a", "child": "b", "kind": "friend" } ] }""", "one of parent, adoptive-parent and guardian")]
