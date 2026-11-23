@@ -4302,4 +4302,19 @@
   <data name="Person_Self_Problem_picture" xml:space="preserve">
     <value>That photograph is not one of yours.</value>
   </data>
+  <data name="Entity_Years" xml:space="preserve">
+    <value>Shown for the years {0}: what is stated for them, and what states no time.</value>
+  </data>
+  <data name="Entity_Years_None" xml:space="preserve">
+    <value>Nothing here is stated for the years {0}; what states no time is shown.</value>
+  </data>
+  <data name="Entity_Years_LeftOut" xml:space="preserve">
+    <value>Left out because they state another time: {0}.</value>
+  </data>
+  <data name="Entity_InYears" xml:space="preserve">
+    <value>Stated for the years {0}</value>
+  </data>
+  <data name="Family_Years" xml:space="preserve">
+    <value>Shown for the years {0}. Descent states no time and is drawn at every time; a partnership is drawn when it held in these years or states no time.</value>
+  </data>
 </root>

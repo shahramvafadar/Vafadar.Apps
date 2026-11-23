@@ -226,12 +226,71 @@ public sealed class YearsOfANamePagesTests(YearsSite site) : IClassFixture<Years
         Assert.Contains($"id=\"{Illustration}\"", whole, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("en", "Shown for the years 990 CE – 1000 CE", "Left out because they state another time: 1.", "Stated for the years", "Held in the years 990 CE – 1000 CE", "Without a stated time", "All years")]
+    [InlineData("fa", "برای سال‌های", "کنار گذاشته‌شده چون زمان دیگری دارند: ۱.", "گفته‌شده برای سال‌های", "برقرار در سال‌های", "بدون زمانِ گفته‌شده", "همهٔ سال‌ها")]
+    public async Task The_page_of_a_name_keeps_to_the_years(string language, string shown, string leftOut, string stated, string held, string without, string all)
+    {
+        var visitor = await Reader();
+        var poet = Poet.Replace("/en/", $"/{language}/", StringComparison.Ordinal);
+
+        var html = Html(await visitor.Get($"{poet}?from=990&to=1000"));
+
+        // What is said: the years, and how much of another time was left out, with the way to all years.
+        Assert.Contains("entity-years", html, StringComparison.Ordinal);
+        Assert.Contains(shown, html, StringComparison.Ordinal);
+        Assert.Contains(leftOut, html, StringComparison.Ordinal);
+        Assert.Contains(all, html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Not left out in this view", html, StringComparison.Ordinal);
+        Assert.DoesNotContain(stated, html, StringComparison.Ordinal);
+
+        // The connections: the court of those years, the court without a time apart, the school not at all.
+        var connections = html[html.IndexOf("id=\"connections\"", StringComparison.Ordinal)..];
+        Assert.True(connections.IndexOf(held, StringComparison.Ordinal) < connections.IndexOf(without, StringComparison.Ordinal));
+        Assert.Contains("organisation-court", connections[..connections.IndexOf("</section>", StringComparison.Ordinal)], StringComparison.Ordinal);
+        Assert.DoesNotContain("organisation-school", connections[..connections.IndexOf("</section>", StringComparison.Ordinal)], StringComparison.Ordinal);
+
+        // The bar asks for the years on this page too, and the other views are reached with them.
+        Assert.Contains("id=\"explore-from\"", html, StringComparison.Ordinal);
+        Assert.Contains("connections?from=990&to=1000", html, StringComparison.Ordinal);
+
+        // Without years the page is what it was.
+        var whole = Html(await visitor.Get(poet));
+        Assert.DoesNotContain("entity-years", whole, StringComparison.Ordinal);
+        Assert.Contains("organisation-school", whole, StringComparison.Ordinal);
+        Assert.DoesNotContain(without, whole, StringComparison.Ordinal);
+    }
+
     [Fact]
-    public async Task The_page_of_a_name_and_its_family_tree_show_every_year_and_say_so()
+    public async Task Years_in_which_nothing_is_stated_leave_what_states_no_time()
     {
         var visitor = await Reader();
 
-        Assert.Contains("Not left out in this view: the years you chose", Html(await visitor.Get($"{Rostam}?from=1000&to=1050")), StringComparison.Ordinal);
-        Assert.Contains("Not left out in this view: the years you chose", Html(await visitor.Get($"{Rostam}/family?from=1000&to=1050")), StringComparison.Ordinal);
+        var html = Html(await visitor.Get($"{Poet}?from=1500&to=1600"));
+
+        Assert.Contains("Nothing here is stated for the years 1500 CE – 1600 CE", html, StringComparison.Ordinal);
+        Assert.Contains("Left out because they state another time: 2.", html, StringComparison.Ordinal);
+        Assert.Contains("organisation-court", html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task The_family_tree_keeps_to_the_years_and_draws_descent_at_every_time()
+    {
+        var visitor = await Reader();
+
+        var html = Html(await visitor.Get($"{Rostam}/family?from=1000&to=1050"));
+
+        Assert.Contains("family-years", html, StringComparison.Ordinal);
+        Assert.Contains("Shown for the years 1000 CE – 1050 CE. Descent states no time and is drawn at every time", html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Not left out in this view", html, StringComparison.Ordinal);
+        Assert.Contains("character-zal", html, StringComparison.Ordinal);
+        Assert.Contains("id=\"explore-from\"", html, StringComparison.Ordinal);
+
+        // The drawing that moves is asked with the same years.
+        var graph = await visitor.Get($"{Rostam}/family.json?from=1000&to=1050");
+        Assert.Equal(HttpStatusCode.OK, graph.Status);
+        Assert.Contains("character-zal", graph.Html, StringComparison.Ordinal);
+
+        Assert.DoesNotContain("family-years", Html(await visitor.Get($"{Rostam}/family")), StringComparison.Ordinal);
     }
 }

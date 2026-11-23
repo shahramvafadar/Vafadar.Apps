@@ -52,8 +52,8 @@
     }
     @if (_years)
     {
-        @* The years of what is explored (D-084): the connections and the pictures of a name show what lies in
-           them, as its chart of time does. They are asked for here with a form that asks for a page; the rest
+        @* The years of what is explored (D-084): the page of a name, its connections, its family and its
+           pictures show what lies in them, as its chart of time does. They are asked for here with a form that asks for a page; the rest
            of the state goes along, so that asking loses nothing. The chart of time has its own tools for them. *@
         var years = State.Years;
         <details class="fold explore-years" id="years" open="@(years is not null || _refused)">
@@ -147,8 +147,8 @@
 
         _views = views;
 
-        // The chart of time is told its years by its own tools; the connections and the pictures ask here.
-        _years = State.View is ExplorationView.Connections or ExplorationView.Pictures;
+        // The chart of time is told its years by its own tools; every other view of a name asks here.
+        _years = State.View != ExplorationView.Timeline;
         _typedFrom = Typed("from");
         _typedTo = Typed("to");
         _refused = _years && State.Years is null && (_typedFrom is not null || _typedTo is not null);

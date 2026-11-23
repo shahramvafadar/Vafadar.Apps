@@ -134,8 +134,8 @@ public sealed class Exploration
 
     /// <summary>
     /// Gets the stretch of years the visitor chose, or nothing: the first and the last year, positive in the
-    /// common era and negative before it. The chart of time, the connections and the pictures of a name show
-    /// what lies in it (D-084); the page of a name and its family tree set it aside and say so.
+    /// common era and negative before it. Every view of a name keeps to it (D-084, completed in step 25.3):
+    /// what states a time is shown when it lies in the years, and what states none is shown apart.
     /// </summary>
     public (int From, int To)? Years =>
         _said.TryGetValue("from", out var from) && _said.TryGetValue("to", out var to)
@@ -145,9 +145,13 @@ public sealed class Exploration
     /// <summary>Gets the stretch of years the visitor chose as a stretch of the axis of years – both years whole –, or nothing.</summary>
     public Vafadar.Temporal.YearSpan? Span => Years is { } years ? new(Place(years.From), Place(years.To) + 1) : null;
 
-    /// <summary>Returns whether a view shows only what lies in the years the visitor chose.</summary>
+    /// <summary>
+    /// Returns whether a view shows only what lies in the years the visitor chose. Every view of a name does
+    /// since step 25.3; a view that is added says here whether it does.
+    /// </summary>
     /// <param name="view">The view.</param>
-    public static bool HonoursYears(ExplorationView view) => view is ExplorationView.Timeline or ExplorationView.Connections or ExplorationView.Pictures;
+    public static bool HonoursYears(ExplorationView view) =>
+        view is ExplorationView.Overview or ExplorationView.Connections or ExplorationView.Family or ExplorationView.Timeline or ExplorationView.Pictures;
 
     /// <summary>Returns the year of an address as a year of an era.</summary>
     /// <param name="year">Positive in the common era, negative before it.</param>

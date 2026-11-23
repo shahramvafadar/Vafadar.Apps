@@ -134,7 +134,20 @@ public sealed record FamilyView(
     ImmutableArray<Edge> Partnerships,
     bool MoreAbove = false,
     bool MoreBelow = false,
-    bool MoreBeside = false);
+    bool MoreBeside = false)
+{
+    /// <summary>Gets the stretch of years the tree was asked for in (D-084), or nothing for every year.</summary>
+    public Vafadar.Temporal.YearSpan? Years { get; init; }
+
+    /// <summary>Gets how many family relations state another time than the years and are left out.</summary>
+    public int LeftOut { get; init; }
+
+    /// <summary>Gets how many of the relations that are drawn state no time: they are drawn at every time.</summary>
+    public int WithoutTime { get; init; }
+
+    /// <summary>Gets the relations of which it is not sure that they held in the years.</summary>
+    public ImmutableHashSet<RelationId> Possibly { get; init; } = [];
+}
 
 /// <summary>The events of the story in the order of the telling.</summary>
 /// <param name="Story">The story.</param>

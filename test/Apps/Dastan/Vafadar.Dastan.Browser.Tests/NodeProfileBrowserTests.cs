@@ -44,7 +44,7 @@ public sealed class NodeProfileBrowserTests(BrowserSite site) : IClassFixture<Br
 
         // Every fact is folded until asked for, opens without a script of the site, and fits the screen as well.
         await Assertions.Expect(page.Locator(".profile .profile-facts")).ToBeHiddenAsync();
-        await page.Locator("details.fold > summary").ClickAsync();
+        await page.Locator("details.fold:not(.explore-years) > summary").ClickAsync();
         await Assertions.Expect(page.Locator(".profile .profile-facts")).ToBeVisibleAsync();
         Assert.False(await page.EvaluateAsync<bool>("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1"));
 

@@ -143,9 +143,9 @@ public sealed class ExploringPagesTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.DoesNotContain("explore-aside", pictures.Main, StringComparison.Ordinal);
         Assert.Contains($"{Rostam}/connections?from=900&to=1000&kind=image", Views(pictures).Select(view => view.Address));
 
-        // The page of the name and its family tree show every year, and say so.
+        // The family tree keeps to the years too (step 25.3): only the kind of picture is set aside there.
         var family = await visitor.Get($"/en/{Rostam}/family?from=900&to=1000&kind=image");
-        Assert.Contains("Not left out in this view: the years you chose, the kind of picture you chose. It is kept for the view it belongs to.", Words(family.Main), StringComparison.Ordinal);
+        Assert.Contains("Not left out in this view: the kind of picture you chose. It is kept for the view it belongs to.", Words(family.Main), StringComparison.Ordinal);
 
         // How far a drawing is opened leaves nothing out, and neither does what is no choice.
         Assert.DoesNotContain("explore-aside", (await visitor.Get($"/en/{Rostam}/gallery?up=3&open=character-zal&from=1000&to=900&kind=sound")).Main, StringComparison.Ordinal);
@@ -174,6 +174,9 @@ public sealed class ExploringPagesTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.Contains("نمای کلی پیوندها خانواده تصویرها", words, StringComparison.Ordinal);
         Assert.Contains("انتخاب‌شده:", words, StringComparison.Ordinal);
         Assert.Contains("در میانه بگذار", words, StringComparison.Ordinal);
-        Assert.Contains("در این نما کنار گذاشته نشده: سال‌هایی که انتخاب کردید. برای نمایی که به آن تعلق دارد نگه داشته شده است.", words, StringComparison.Ordinal);
+
+        // The family tree keeps to the years (step 25.3): they are said, and nothing is set aside.
+        Assert.DoesNotContain("در این نما کنار گذاشته نشده", words, StringComparison.Ordinal);
+        Assert.Contains("نسب زمانی ندارد و همیشه رسم می‌شود", words, StringComparison.Ordinal);
     }
 }
