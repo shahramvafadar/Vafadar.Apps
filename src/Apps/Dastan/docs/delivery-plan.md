@@ -1144,3 +1144,199 @@ what was left out of the years stood without a blank between them; the example o
 era was turned around in a Persian sentence; the field for the address of a page had the look of the browser
 and not of the form. *Not looked at:* a light appearance of these pages, a phone, a screen reader, the files
 for print on paper.
+
+## 25. What the owner asked for after section 24 – the plan (2026-11-23, D-088 and D-089)
+
+*Planned, not begun.* Section 24 ended with four things "nobody asked for". On 2026-11-23 the owner asked for
+all four (D-088), and for real content to try the site with: the Shahnameh fuller and more exact, a stretch of
+the history of Iran, of Rome and of China, a family tree in the owner's own account, and fitting data wherever
+else a part needs it (D-089). The owner then set the order: the development that is left is done in this line
+of work; the content is written in a line of work of its own, from
+[the work order for content](content-work-order.md); then everything is tried in a browser on the owner's
+machine; then the site goes online. [The backlog](backlog.md) is the list; this section is the plan of the
+development – for each step what is built, in which files, by which rules, how it is tried and what is
+written down. Nothing of it is begun before the owner says so.
+
+The order is 25.1 and 25.2 first, because the content needs them; then 25.3 to 25.6 in the order in which a
+later one leans on an earlier one; then 25.7. Each step is built whole – code, tests, documents, a look in the
+browser in English and Persian, light and dark, 375 and 1100 px – merged and green before the next begins.
+
+**25.1 A folder for the real collections (backlog A6).** *Why first:* content is written into it from the
+first day. *Exists already:* the folder `library/` with `samples`, `comparisons`, `media`, its README, and its
+exclusion from both images. *To build:*
+
+* A test project reads `library/` the way the site does: `LibraryTests` in `Vafadar.Dastan.Data.Tests` calls the
+  check of the content (`ContentCheck`) on the folder and fails with the list of problems the command prints.
+  A library that holds no file yet is in order; a notice (a `REPLACE` text, an address at `example.org`) fails
+  as a problem does, because a collection with a notice is not finished. The folder is found from the root of
+  the repository as the tests find `content/`.
+* A second test starts the site on `library/` (`WebApplicationFactory` with `Dastan:Content`) and asks for the
+  entry page of every collection of it, in English and Persian – so that a file that passes the check and
+  breaks a page is found. With an empty library the test asks for nothing and passes.
+* A third test reads both `.dockerignore` files and fails if `library` is missing from one.
+* `Vafadar.Dastan.Web/Properties/launchSettings.json` gets a profile `library` (port 5220, `Development`,
+  `Dastan:Content` relative to the project). The work order names it in place of the long command.
+* The check of an empty folder says today "the folder holds no content file" as a problem. For `library/` that
+  is no problem: the command gets the answer "in order, and empty" for a folder that has the three folders of
+  a content root and no file. `content/` is not affected.
+
+*Tried by:* the three tests; the command on the empty folder; a made-up file with a fault put into `library/`
+on this machine and taken out again. *Written down:* README, guide for writers ("Where files go"), work
+order, operations ("What is in no image"). *Not part of it:* a second database, a second site – the library
+is a folder.
+
+**25.2 A family tree written from a file (backlog A5).** *To build:*
+
+* `Vafadar.Dastan.People/TreeFile.cs`: the format `dastan-tree-0.1` of the work order, part 7 – `name`,
+  `people` (`key`, `name`, optional `born`, `died` as years, `deceased`, `self`), `parents` (`parent`, `child`,
+  optional `kind` of `parent`, `adoptive-parent`, `guardian`), `partners` (pairs, optional `since`, `until`).
+  Reading is strict: an unknown field, a key used twice, a key that is not there, a person who is their own
+  ancestor, more than one `self`, a year that is no year, a `died` without `deceased` being true or left out,
+  more people than a tree may hold – each is a problem with its place in the file, and with one problem
+  nothing is written.
+* `PeopleStore.ImportTree(account, TreeFile)`: one transaction. It writes through the same guarded calls as
+  the page does (`AddTree`, `AddPerson`, `Link`), so every rule of the store holds – PRIV-003 above all: of
+  somebody who lives, the name, the years and the family and nothing else; the file has no field for more.
+  The record marked `self` is tied to the account the way the page ties it. The tree is private.
+* Twice the same file: a tree is recognised by its name within the account. If a tree of that name exists the
+  command stops and says so; with `--add` it adds what the file has and the tree has not – a person is the
+  same person when name and years are the same and it stands in the same place of the family – and changes
+  nothing that is there. Nothing is ever taken away by an import.
+* The command: `people import-tree <account name> --from <file> --people <database>` in `OperatorCommands`,
+  with `--add`; it prints what it wrote in numbers, never a name, and writes a line into the log of who runs
+  the site as the other commands of `people` do.
+
+*Rules that are decided here:* the account is named by its name and must exist – the command makes no
+account; a file is never kept by the software; an import shares nothing and asks nobody to agree to anything.
+*Tried by:* `TreeFileTests` (every problem of the list, a good file of three generations),
+`TreeImportTests` (written and read back; a second run; `--add`; a file with a loop writes nothing; PRIV-003
+holds), a test of the command, and the page of the tree with the imported tree in the browser.
+*Written down:* operations ("A tree from a file"), ADR 0024 addendum, the record of processing (no new data,
+a new way in), work order part 7 brought to what was built. *Then, on the owner's machine only:* the owner
+makes the account; the tree of `.local/dastan-owner-tree.json` is written into it (backlog B9).
+
+**25.3 The years of a name on its page and on its family tree (backlog A1).** D-084 made the chart of time,
+the connections and the pictures keep to the years; the page of a name and the drawing of a family say "not
+left out in this view". *To build:*
+
+* `Exploration.HonoursYears` answers yes for every view of a name; the sentence "Not left out in this view:
+  the years" and its text in both languages go, with the tests that ask for it.
+* Core, `Projection`: `Profile(focus, years, present)` and `Family(around, up, down, beside, years, present)`
+  beside the ones without years, built on `Holding.Of(time, span, present)` as `Connections` is – one rule of
+  "held in these years" for all five views, in one place.
+* The page of a name in years: every fact and every relation is in one of three parts – *in these years*
+  (its time meets them), *without a stated time* (shown apart, under its own heading, never hidden), *at
+  another time* (left out and counted: "12 at another time", with a way to see all). The head of the page –
+  the name, the kind, born and died – is of the name and is never left out. Statements that "may have held"
+  (a window that only touches the years) stand in the first part and say so, as on the connections.
+* The family in years: a parent is a parent at every time – descent states no time and is always drawn. What
+  can be left out is what states a time: a partnership, an adoption, a guardianship, a membership of a house.
+  A person is drawn when a line that is drawn reaches them. Under the drawing: how many lines were left out,
+  and how many state no time. The moving drawing gets the same graph from the server as the still one.
+* `ExploreBar` offers the form of the years on the two views; `explore.ts` keeps it in step as on the others.
+* The public page of a shared tree and the page of a record of a tree of an account are not content of a
+  collection and have no state of exploring: not part of this step.
+
+*Tried by:* `ExplorationTests`, `YearsOfANameTests` (profile and family: inside, outside, no time, a window
+that touches), `YearsOfANamePagesTests` (the two pages, English and Persian, years typed in Persian),
+`ExplorationBrowserTests` for the form on the two views. *Written down:* ADR 0025 ("The years of a name",
+brought to five views), D-084 addendum, CHANGELOG.
+
+**25.4 A theme across collections (backlog A2).** D-083 made a theme a record of one collection. *To build:*
+
+* The statement is the editors' and is the one a place already has (ADR 0023): two entities of the type
+  `Theme` in two collections are the same theme when both carry the same identifier of the same issuer, marked
+  `exact`. A name joins nothing. The rules of a collection learn: a theme may carry identifiers; two themes of
+  one collection do not carry the same one.
+* Core, `Themes.cs` beside `Institutions.cs`: from the projections of all collections a visitor may read – each
+  at the stage the visitor has reached in it – the themes that are shared, each with its collections. A theme
+  of a stage the reader has not reached is not there, and neither its name nor its count.
+* The site: a page `/themes` – every theme that has something under it, shared ones once – and `/themes/{id}`
+  – the pictures of every collection that has the theme, each under the name of its collection, each
+  arranged as the gallery of that collection is, each with its own "read further to see more" where the
+  reader's stage holds pictures back. From the page of a theme in a collection a line leads there when the
+  theme is shared ("also in: …"), and from there back.
+* The label of a shared theme on the shared page: the label of the collection of the address the visitor came
+  from, else of the first collection in the order of the site. Different labels are not unified – each
+  collection keeps its own under its own heading.
+* The tool of the editors: the form of a theme has the identifiers (as a place has); the list of themes says
+  which are shared and with which collection.
+* The search of the site finds a theme once.
+
+*Tried by:* `SharedThemesTests` (shared and not, a later stage, an identifier that is `close` joins nothing,
+the same name joins nothing), `ThemesPagesTests` (English and Persian), `StudioThemesTests` extended; two
+made-up collections with one shared theme in the fixtures of the tests – not in `content/samples`, which the
+other tests count. *Written down:* ADR 0027 addendum, the format page ("Themes"), the guide for writers, work
+order part 6. *Not part of it:* a hierarchy of themes; a theme of the whole site that belongs to no
+collection.
+
+**25.5 More that an account says about itself (backlog A3).** D-086 gave an account words about itself and a
+picture. *To build, each as a field with an audience of its own that begins at "nobody else":*
+
+| Field | Form | Limits |
+|---|---|---|
+| Year of birth | a year of the common era | a year, never a day; between 1900 and the year before this one; an account says nothing about being of age by it |
+| Where it lives | a town and a country, in words | 80 characters each; no address, no coordinates; tied to no entry of a collection |
+| Languages | up to eight, chosen from a list of language tags with their own names | no level, no "mother tongue" |
+| A page of its own | one address | `https` only; shown as text with `rel="nofollow noopener ugc"`; never fetched by the site |
+
+* People: `StoredVisitor` gets the fields and, for each, a scope and a circle; `PeopleStore.Description.cs`
+  gets `DescribeAccount` widened and one method that answers "what may this viewer see of that account",
+  used by every page – so that no page asks for a field by itself. A migration by hand with the test for
+  pending changes of the model. A circle that is given up takes its fields back to "nobody else", as it does
+  for the words about itself.
+* The site: the form on the page of the account – one group for each field, its audience beside it, in the
+  shape of the form of D-086; the head (`PersonHead`) shows what the viewer may see, in a line of facts under
+  the name; "see as" shows it as another sees it.
+* Everything a visitor's own does, these fields do: the copy of one's data holds them; closing the account
+  removes them; an account that is restricted shows none; the search for people never searches them.
+* Privacy: the notice in English, German and Persian names the four and says they are given freely, to whom
+  they are shown and that they can be taken back; the record of processing gets the row; nothing of it is
+  used to suggest, sort or find people.
+
+*Rules that are decided here:* none of the four is ever required; none is shown to somebody without an
+account unless its audience is "everybody" and the account is findable; the year of birth is never used to
+compute an age that is shown. *Tried by:* `AccountFactsTests` (kept, shown by scope, with a circle, taken back,
+exported, removed, pending changes), `AccountProfilePagesTests` extended (English and Persian, "see as"), the
+head in the browser. *Written down:* ADR 0024 addendum, D-086 addendum, privacy texts, record of processing,
+operations (`database migrate` before the version starts).
+
+**25.6 Cards of a graph in sizes of their own (backlog A4).** Every card is 220 by 72 today, in the still
+drawing of the server and in the moving one. *To build:*
+
+* Three sizes, decided by the server and sent with the graph, so that both drawings agree by construction:
+  *main* (the name in the middle: wider and higher, the picture larger, two lines of words), *usual* (as
+  today), *compact* (name and kind on one line, no picture). The rule: the focus is main; with more than a
+  number of cards on the drawing that is set in one place, cards further than one step from the focus are
+  compact; a card somebody chose is at least usual.
+* Core: the graph a view gives carries the size of each node; the layout of the still drawing takes the steps
+  between columns and rows from the largest card of the column and the row, not from a constant.
+* `graph.ts`: `cardWidth`, the height 72, `columnStep`, `rowStep`, `generationStep`, `besideStep` become
+  functions of the size; the ports of the lines, the words that are cut, the picture and the frame of the
+  focus follow. A compact card that is chosen grows to usual in place and the lines follow.
+* The family drawing keeps one size in a generation, so that a row stays a row.
+
+*Tried by:* the tests of the still drawing (no two cards overlap, in the three sizes, from left to right and
+from right to left), `GraphBrowserTests` in Chromium, Firefox and WebKit on this machine before pushing (the
+rule of the three engines), the budgets of time of step 20.12 – which must hold as they are; if a budget
+fails because of the sizes the sizes are made cheaper, the budget is not raised. A look at a drawing of sixty
+cards and of three. *Written down:* ADR 0020 addendum, CHANGELOG.
+
+**25.7 Trying it with the owner (backlog C).** After 25.1 to 25.6 and after the content of the backlog, part
+B, as far as it is there: the site and the tool of the editors are started on `library/` on the owner's
+machine – databases brought up with `database migrate` first –, the addresses are given to the owner, a second
+account with a made-up name is made so that circles and "who was here" have two sides, and the light
+appearance of the pages of section 24 and of this section is looked at. What the owner finds is written into
+the backlog as rows of its own and built before the site goes online.
+
+**What is open, with what is built if the owner says nothing.** The owner was given these on 2026-11-23:
+
+| Question | Built if nothing is said |
+|---|---|
+| The Shahnameh: how far | the work as a whole, Rostam and Sohrab whole, Siavash |
+| The histories: which span | Iran from Elam (about 2700 BCE), China from the Shang (about 1600 BCE, the Xia as tradition), Rome from 753 BCE; all to 100 CE |
+| Languages of the content | English and Persian |
+| The names of the family tree | in Latin letters, as the owner wrote them |
+| Places people can have been at | ten to fifteen well-known universities and organisations, unless the owner names their own |
+| 25.5: which facts of an account | the four of the table |
+| 25.6: from how many cards a drawing is compact | set after looking at real collections, in one constant |
