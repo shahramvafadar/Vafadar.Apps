@@ -15,7 +15,7 @@ and the checks of the repository are green.
 
 ## A. Development – this line of work
 
-Begins when the owner says so. Each item is built whole – with its tests and its documents – before the next.
+Begun and done on 2026-11-23, on the owner's word. Each item was built whole – with its tests and its documents – before the next.
 How each is built – the files, the rules, the tests, the documents – is in the
 [delivery plan](delivery-plan.md), section 25 (A6 is 25.1, A5 is 25.2, A1 to A4 are 25.3 to 25.6).
 
@@ -45,7 +45,7 @@ it is written and when it is finished. Nothing here is reviewed or released by w
 | B6 | Rome to about 100 CE: the kings, the Republic, the emperors from Augustus to Trajan | Planned |
 | B7 | The comparison of the three over time, brought to the same span and the same statements | Planned |
 | B8 | Places people can have been at: a small collection of real universities and organisations, so that "where you were" has entries to choose | Planned |
-| B9 | The owner's family tree, written into the owner's account on the owner's machine – never into the repository | Waits for A5 and for the owner's account |
+| B9 | The owner's family tree, written into the owner's account on the owner's machine – never into the repository | Waits for the owner's account – the command is there (A5) |
 | B10 | Persian for all of the above | Planned, with each item |
 
 ## C. Trying it – with the owner
@@ -55,7 +55,7 @@ collections, and the owner looks.
 
 | # | Item | Who | Status |
 |---|---|---|---|
-| C1 | The site and the tool of the editors, started on `library/`, with the addresses given to the owner | this line of work | Waits for A and B |
+| C1 | The site and the tool of the editors, started on `library/`, with the addresses given to the owner | this line of work | Waits for B |
 | C2 | A second account with a made-up name, so that relationships, circles and "who was here" have two sides | this line of work | Waits for C1 |
 | C3 | The light appearance of the pages of section 24 of the delivery plan, which was not looked at | this line of work | Planned |
 | C4 | A real phone, the site installed as an app, Safari itself, a screen reader | the owner | Waits |

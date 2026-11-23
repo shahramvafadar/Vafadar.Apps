@@ -19,6 +19,12 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
 
     private static Task Arrived(IPage page, Regex address) => BrowserSite.Arrived(page, address);
 
+    // Two places of the drawing are the same place when they lie less than a pixel apart. Rounding both and
+    // comparing would fail where one lies a hair below a half and the other on it (seen in Firefox: 1002.4917
+    // and 1002.5000, when a part above the drawing moved it by a part of a pixel).
+    private static void Same(double expected, double actual) =>
+        Assert.True(Math.Abs(expected - actual) < 1, $"{expected} and {actual} are a pixel or more apart.");
+
     // The box of a member inside the drawing, as the window shows it.
     private static async Task<(double Left, double Top, double Right, double Bottom)> Box(IPage page, string member)
     {
@@ -59,15 +65,15 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         var (rostam, tahmineh, sohrab) = (await Box(page, "character-rostam"), await Box(page, "character-tahmineh"), await Box(page, "character-sohrab"));
         var (zal, king) = (await Box(page, "character-zal"), await Box(page, "character-king-samangan"));
 
-        Assert.Equal(rostam.Top, tahmineh.Top, precision: 0);
+        Same(rostam.Top, tahmineh.Top);
         Assert.True(rostam.Right < tahmineh.Left);
         Assert.True(sohrab.Top > rostam.Bottom);
         Assert.True(zal.Bottom < rostam.Top && king.Bottom < tahmineh.Top);
 
         // The child stands below the middle of its parents, and each father above his child.
-        Assert.Equal((rostam.Left + tahmineh.Right) / 2, (sohrab.Left + sohrab.Right) / 2, precision: 0);
-        Assert.Equal(zal.Left, rostam.Left, precision: 0);
-        Assert.Equal(king.Left, tahmineh.Left, precision: 0);
+        Same((rostam.Left + tahmineh.Right) / 2, (sohrab.Left + sohrab.Right) / 2);
+        Same(zal.Left, rostam.Left);
+        Same(king.Left, tahmineh.Left);
         await Assertions.Expect(page.Locator(".tree .graph-focus")).ToHaveTextAsync("Sohrab");
     }
 
@@ -81,10 +87,10 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
 
         var (rostam, tahmineh, sohrab, zal) = (await Box(page, "character-rostam"), await Box(page, "character-tahmineh"), await Box(page, "character-sohrab"), await Box(page, "character-zal"));
 
-        Assert.Equal(rostam.Left, tahmineh.Left, precision: 0);
+        Same(rostam.Left, tahmineh.Left);
         Assert.True(rostam.Bottom < tahmineh.Top);
         Assert.True(zal.Right < rostam.Left && rostam.Right < sohrab.Left);
-        Assert.Equal((rostam.Top + tahmineh.Bottom) / 2, (sohrab.Top + sohrab.Bottom) / 2, precision: 0);
+        Same((rostam.Top + tahmineh.Bottom) / 2, (sohrab.Top + sohrab.Bottom) / 2);
     }
 
     [Fact]
