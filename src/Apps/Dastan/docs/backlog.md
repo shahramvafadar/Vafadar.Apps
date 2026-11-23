@@ -57,7 +57,7 @@ collections, and the owner looks.
 |---|---|---|---|
 | C1 | The site and the tool of the editors, started on `library/`, with the addresses given to the owner | this line of work | Waits for B |
 | C2 | A second account with a made-up name, so that relationships, circles and "who was here" have two sides | this line of work | Waits for C1 |
-| C3 | The light appearance of the pages of section 24 of the delivery plan, which was not looked at | this line of work | Planned |
+| C3 | The light appearance of the pages of sections 24 and 25 of the delivery plan. Looked at on 2026-11-23, light and at the width of a phone, in English and Persian: the themes of the site, the page of a name and a family tree in a stretch of years, the form of the facts of an account. Not yet: the gallery and the page of a picture with their themes, the connections and the pictures in a stretch of years, the form that proposes a place, the head of a record of a tree, the drawing of connections with its card sizes | this line of work | Waits for the owner's word to start the site (AGENTS.md) |
 | C4 | A real phone, the site installed as an app, Safari itself, a screen reader | the owner | Waits |
 | C5 | Five people who see the site for the first time ([user-test.md](user-test.md)) | the owner | Waits |
 | C6 | The owner's own photographs, brought in by the owner | the owner | Waits |

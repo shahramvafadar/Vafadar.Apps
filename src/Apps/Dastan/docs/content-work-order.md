@@ -416,9 +416,17 @@ dotnet run --project $content --no-build -- check $library/samples/ancient-iran.
 
 The exit code is the answer: `0` in order, `1` a file cannot be used. A **notice** – a `REPLACE` text, an
 address at `example.org` – means the file is not finished. A file is done when the check says "in order" with
-no notice **and the site starts on the library** ("Looking at it"): the check reads file by file, and only
-the site sees two collections about the same thing, a collection named like an address of the site, or a
-correspondence to a stage another collection does not have.
+no notice **and the site starts on the library**: the check reads file by file, and only the site sees two
+collections about the same thing, a collection named like an address of the site, or a correspondence to a
+stage another collection does not have. You do not start the site for that – the tests do:
+
+```powershell
+dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Web.Tests -- --filter-class "*LibrarySiteTests"
+```
+
+starts the site on `library/` inside the test, as the site starts for a visitor, and asks for the pages of
+every collection and comparison of it, in English and Persian. It passes when the site can start on the
+library and every one of those pages answers.
 
 Every file in `library/` is read by the tests of the software with every build, and a problem or a notice
 fails them for everybody. Never commit a file with a `REPLACE` text or a problem – also not on a branch.
@@ -437,19 +445,20 @@ end – the check names every problem, and two hundred at once cannot be read.
 
 ### Looking at it
 
-Look at every collection in a browser before you call it done; the check does not see a timeline with one bar
-or a family of forty that reads as a knot. The site is started on the library with its launch profile
-of that name, and answers at `http://localhost:5220`:
+The site is started for looking **only when the owner says so** – not by you on your own, also not to check a
+file (the tests above do that). When the owner asks, it is started on the library with its launch profile of
+that name and answers at `http://localhost:5220`:
 
 ```powershell
 dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Web --launch-profile library
 ```
 
 It begins with the first collection of `library/samples` in the order of the names, and refuses to start while
-the folder holds none. `Development` shows what is not reviewed, as a local demonstration; a public site would show nothing of it.
-Stop it when you are done, and before you build again. Look at, for each collection: its
-entry page, its timeline, the page and the timeline of one ruler, the connections of one ruler, the family of
-one house, the search, and the same in Persian.
+the folder holds none. `Development` shows what is not reviewed, as a local demonstration; a public site would
+show nothing of it. Stop it when the owner is done, and before you build again. What is worth looking at, for
+each collection: its entry page, its timeline, the page and the timeline of one ruler, the connections of one
+ruler, the family of one house, the search, and the same in Persian. Until the owner asks, say in your
+hand-over note that the collection was not looked at in a browser.
 
 ### Committing
 
@@ -556,10 +565,12 @@ public, do not ask anybody to agree to anything.
 
 A collection is finished when:
 
-* the check says "in order" with no notice, for the file and its Persian, and the site starts on the library;
+* the check says "in order" with no notice, for the file and its Persian, and `LibrarySiteTests` pass – the site
+  starts on the library and answers every page of it;
 * every statement cites a source you read for it, and every time is as exact as its source and not more;
 * nothing of an early stage gives a later one away (stories), and the work collection gives no ending away;
-* you looked at it in a browser, in English and in Persian, and nothing reads as a fault;
+* where the owner asked for it, it was looked at in a browser, in English and in Persian, and nothing reads as a
+  fault – and where not, the hand-over note says it was not looked at;
 * it is committed, merged, pushed, and the checks of the repository are green.
 
 Hand over, for each collection, a note of a few lines in the message of its commit and to the owner in the

@@ -37,6 +37,10 @@ for Dastan is added here in the same commit as the work it came with.
 * **Services run in containers** (D-034): a database and every other service that can run in a container uses
   Docker Desktop on the development machine, in one Compose project named `test`. Never start, stop, remove or prune
   anything of another project.
+* **The site is started for looking only when the owner says so** (2026-11-23): no `dotnet run` of the site
+  or of the tool of the editors, no launch profile and no browser on them, on one's own initiative. The automated
+  tests – also those that start the site inside the test, and the browser tests – are not looking and run as
+  before. What was not looked at for that reason is said so in the report and the documents.
 
 ## 3. Architecture
 
