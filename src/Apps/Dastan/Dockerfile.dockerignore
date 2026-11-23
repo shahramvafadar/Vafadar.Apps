@@ -19,6 +19,7 @@ eng/native
 eng/sync
 eng/tests
 src/Apps/Dastan/content
+src/Apps/Dastan/library
 src/Apps/Dastan/docs
 **/bin
 **/obj
