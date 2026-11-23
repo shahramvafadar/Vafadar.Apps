@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
+using Vafadar.Dastan.Web.Site;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -184,5 +185,59 @@ public sealed class GraphDataTests(DemoSite site) : IClassFixture<DemoSite>
         var answer = await late.Get($"/en/{Story}/entity/character-rostam/family.json");
         Assert.Equal("no-store", answer.Response.Headers.CacheControl?.ToString());
         Assert.False(answer.Response.Headers.Contains("Dastan-Keep"));
+    }
+
+    private static GraphNode Card(string id) => new(id, "Name of " + id, "x/entity/" + id, "x/entity/" + id + "/profile.json");
+
+    private static GraphEdge Line(string from, string to) => new(from + "-" + to, from, to, "relation", "Test data", Directed: true);
+
+    [Fact]
+    public async Task The_name_in_the_middle_of_its_connections_has_the_larger_card_and_a_small_drawing_no_compact_one()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+        var nodes = (await Both(visitor, "en", "character-rostam", "connections")).Data!["nodes"]!.AsArray();
+
+        Assert.Equal("main", (string?)nodes.Single(node => (string?)node!["id"] == "character-rostam")!["size"]);
+        Assert.All(nodes.Where(node => (string?)node!["id"] != "character-rostam"), node => Assert.Null(node!["size"]));
+
+        // A family has one size for all its cards: the usual one, which is said by saying nothing.
+        var family = (await Both(visitor, "en", "character-rostam", "family")).Data!["nodes"]!.AsArray();
+        Assert.All(family, node => Assert.Null(node!["size"]));
+    }
+
+    [Fact]
+    public void A_drawing_of_connections_with_many_cards_makes_those_compact_that_the_name_in_the_middle_is_not_connected_with()
+    {
+        // The focus, twelve it is connected with, and behind each of them one more: twenty-five cards.
+        var near = Enumerable.Range(0, 12).Select(index => "near-" + index).ToList();
+        var far = near.Select(id => id.Replace("near", "far", StringComparison.Ordinal)).ToList();
+        List<GraphNode> nodes = [Card("focus"), .. near.Select(Card), .. far.Select(Card)];
+        List<GraphEdge> edges = [.. near.Select(id => Line("focus", id)), .. near.Zip(far, Line)];
+
+        var sized = GraphCards.OfConnections(nodes, edges, "focus");
+
+        Assert.Equal(GraphCards.Main, sized[0].Size);
+        Assert.All(sized.Skip(1).Take(12), node => Assert.Null(node.Size));
+        Assert.All(sized.Skip(13), node => Assert.Equal(GraphCards.Compact, node.Size));
+
+        // One card fewer is no drawing with many: nothing is compact, and the focus is still the larger one.
+        var fewer = GraphCards.OfConnections([.. nodes.Take(GraphCards.Many - 1)], edges, "focus");
+        Assert.Equal([GraphCards.Main], fewer.Select(node => node.Size).Where(size => size is not null));
+
+        // An edge that leads to the focus brings its other end near as well.
+        var reached = GraphCards.OfConnections(nodes, [.. edges, Line("far-3", "focus")], "focus");
+        Assert.Null(reached.Single(node => node.Id == "far-3").Size);
+    }
+
+    [Fact]
+    public void A_family_has_one_size_for_all_its_cards()
+    {
+        List<GraphNode> few = [.. Enumerable.Range(0, GraphCards.Many - 1).Select(index => Card("p" + index))];
+        List<GraphNode> many = [.. few, Card("last")];
+
+        Assert.Same(few, GraphCards.OfFamily(few));
+        Assert.All(GraphCards.OfFamily(many), node => Assert.Equal(GraphCards.Compact, node.Size));
+        Assert.Empty(GraphCards.OfFamily([]));
     }
 }
