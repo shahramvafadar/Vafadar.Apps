@@ -1,0 +1,1187 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "ancient-rome",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-ancient-rome": {
+      "label": "روم باستان",
+      "summary": "شهر رم و کشوری که بر آن فرمان راند، از بنیاد سنتی‌اش در ۷۵۳ پیش از میلاد، از راه شاهان، جمهوری و نخستین امپراتوران تا تراژان، حدود ۱۰۰ میلادی."
+    },
+    "place-rome": {
+      "label": "رم",
+      "summary": "شهری کنار رود تیبر که بر پایهٔ روایت در ۲۱ آوریل ۷۵۳ پیش از میلاد بنیاد نهاده شد و بعدها پایتخت امپراتوری روم بود."
+    },
+    "place-ostia": {
+      "label": "اوستیا",
+      "summary": "بندر رم در دهانهٔ تیبر، که بر پایهٔ روایت آنکوس مارکیوس شاه ساخت."
+    },
+    "place-pompeii": {
+      "label": "پمپئی",
+      "summary": "شهری که در ۸۰ پیش از میلاد کلنی رومی شد و در ۷۹ میلادی زیر خاکستر وزوویوس رفت."
+    },
+    "place-cannae": {
+      "label": "کانای",
+      "summary": "جایی بر کرانهٔ خاوری ایتالیا که هانیبال در ۲۱۶ پیش از میلاد سپاهی رومی را نابود کرد."
+    },
+    "place-antium": {
+      "label": "آنتیوم",
+      "summary": "شهری نزدیک رم، زادگاه کالیگولا و نرون."
+    },
+    "place-narnia": {
+      "label": "نارنیا",
+      "summary": "شهری در ایتالیا، زادگاه نروا."
+    },
+    "place-falacrinae": {
+      "label": "فالاکرینه",
+      "summary": "روستایی نزدیک رئاته، زادگاه وسپاسیان."
+    },
+    "place-carthage": {
+      "label": "کارتاژ",
+      "summary": "شهر فنیقی در آفریقا، رقیب بزرگ رم، که رم در ۱۴۶ پیش از میلاد آن را ویران کرد و بعدها دوباره ساخته شد؛ نویسندگان باستان بنیادش را ۸۱۴/۸۱۳ یا ۸۲۵ پیش از میلاد می‌گذارند."
+    },
+    "place-zama": {
+      "label": "زاما",
+      "summary": "جایی در آفریقا که اسکیپیو در ۲۰۲ پیش از میلاد هانیبال را شکست داد."
+    },
+    "place-alexandria": {
+      "label": "اسکندریه",
+      "summary": "شهری که اسکندر بزرگ در ۳۳۰ پیش از میلاد بنیاد نهاد، پایتخت پادشاهی بطلمیوسی، که اکتاویان در ۳۰ پیش از میلاد گرفت."
+    },
+    "place-actium": {
+      "label": "آکتیوم",
+      "summary": "دماغه‌ای در دهانهٔ خلیج آمبراکیا که اکتاویان در ۳۱ پیش از میلاد در دریای کنار آن آنتونی و کلئوپاترا را شکست داد."
+    },
+    "place-philippi": {
+      "label": "فیلیپی",
+      "summary": "شهری در مقدونیه که فیلیپ دوم در ۳۵۶ پیش از میلاد نامش را دگرگون کرد، و آنتونی و اکتاویان در مهر ۴۲ پیش از میلاد در آنجا بروتوس و کاسیوس را شکست دادند."
+    },
+    "place-pharsalus": {
+      "label": "فارسالوس",
+      "summary": "شهری در تسالی که سزار نزدیک آن در ۴۸ پیش از میلاد پومپه را شکست داد."
+    },
+    "place-carrhae": {
+      "label": "حران",
+      "summary": "حرّان در میان‌رودان، جایی که پارت‌ها در ۵۳ پیش از میلاد کراسوس را شکست دادند."
+    },
+    "place-jerusalem": {
+      "label": "اورشلیم",
+      "summary": "پایتخت یهودیه و شهر مقدس یهودیت، که تیتوس در ۷۰ میلادی گرفت."
+    },
+    "place-antioch": {
+      "label": "انطاکیه",
+      "summary": "شهری در سوریه که ژرمانیکوس در ۱۹ میلادی در آنجا درگذشت."
+    },
+    "place-lugdunum": {
+      "label": "لوگدونوم",
+      "summary": "لیون امروزی، زادگاه کلودیوس."
+    },
+    "government-roman-monarchy": {
+      "label": "پادشاهی روم",
+      "summary": "رم زیر هفت شاه، بر پایهٔ روایت ۲۴۳ سال از بنیاد تا راندن تارکوینیوس مغرور؛ شاهان و سال‌هایشان بر روایت‌های پسین استوارند."
+    },
+    "government-roman-republic": {
+      "label": "جمهوری روم",
+      "summary": "جمهوری‌ای که پس از راندن واپسین شاه بنیاد نهاده شد – بر پایهٔ روایت در ۵۰۹ پیش از میلاد؛ یک صفحهٔ Livius ۵۱۰ می‌گوید و خود Livius حدود ۵۰۷ تا ۵۰۵ را درست‌تر می‌داند – و تا آگوستوس با کارگزاران یک‌ساله و سنا اداره می‌شد."
+    },
+    "government-roman-empire": {
+      "label": "امپراتوری روم",
+      "summary": "فرمانروایی امپراتوران، که با پذیرفتن لقب آگوستوس از سوی اکتاویان در ژانویهٔ ۲۷ پیش از میلاد آغاز شد؛ پایتختش رم بود."
+    },
+    "organisation-roman-senate": {
+      "label": "سنا",
+      "summary": "بالاترین انجمن رایزنی رم، با نامی از واژهٔ senex («پیرمرد»)؛ بر پایهٔ روایت رومولوس صد عضو نخستش را برگزید و بعدها از کارگزاران پیشین و برگزیدگان سانسورها تشکیل می‌شد.",
+      "facts": {
+        "field": "رایزنی و اندرز در کارهای کشور"
+      }
+    },
+    "office-king-of-rome": {
+      "label": "شاه رم",
+      "summary": "پادشاهی رم آغازین که بر پایهٔ روایت هفت شاه داشت."
+    },
+    "office-consul": {
+      "label": "کنسول",
+      "summary": "یکی از دو کارگزار ارشد جمهوری که هر سال برگزیده می‌شدند، با فرماندهی سپاه و بالاترین قدرت داوری؛ ریاست سنا با آنان بود. این مقام در دههٔ ۳۶۰ پیش از میلاد به روی عامهٔ مردم (پلبی‌ها) باز شد."
+    },
+    "office-dictator": {
+      "label": "دیکتاتور",
+      "summary": "کارگزاری اضطراری با اختیارات فوق‌العاده برای حداکثر شش ماه، که یک کنسول می‌گماشت؛ نخستین بار در دههٔ نخست سدهٔ پنجم پیش از میلاد و واپسین بار به روال عادی در ۲۰۲ پیش از میلاد، و بعدها سولا و سزار آن را زنده کردند."
+    },
+    "office-tribune-of-the-plebs": {
+      "label": "تریبون عامه",
+      "summary": "پشتیبان پلبی‌ها با حق وتو بر کنسول‌ها، پریتورها و کوئستورها؛ نخست دو تن و بعدها ده تن. Livius این مقام را حدود ۴۹۰ پیش از میلاد می‌داند (در گاه‌شماری سنتی ۴۹۴)."
+    },
+    "office-censor": {
+      "label": "سانسور",
+      "summary": "کارگزاری که حدود ۴۴۰ پیش از میلاد پدید آمد و هر پنج سال سرشماری می‌کرد، بر اخلاق همگانی نظارت داشت و پیمان‌های کشور را می‌سپرد."
+    },
+    "office-praetor": {
+      "label": "پریتور",
+      "summary": "کارگزاری برای دادرسی، که در ۳۶۷ یا ۳۶۶ پیش از میلاد پدید آمد؛ در ۲۴۲ پیش از میلاد پریتور دومی افزوده شد."
+    },
+    "office-princeps": {
+      "label": "امپراتور (پرینکپس)",
+      "summary": "جایگاه امپراتور روم: آگوستوس خود را پرینکپس، «نخستین سناتور»، می‌خواند؛ فرمانداری همهٔ استان‌های دارای سپاه با او بود و آمیزهٔ مقام‌هایش او را در عمل شاه می‌کرد."
+    },
+    "period-monarchy": {
+      "label": "روزگار شاهان",
+      "summary": "از بنیاد سنتی رم تا پایان سنتی پادشاهی."
+    },
+    "period-republic": {
+      "label": "دورهٔ جمهوری",
+      "summary": "از پایان پادشاهی تا سامان آگوستوس در ۲۷ پیش از میلاد؛ آغازش ۵۰۹، ۵۱۰ یا حدود ۵۰۷ تا ۵۰۵ پیش از میلاد گفته می‌شود."
+    },
+    "period-julio-claudian": {
+      "label": "ژولیو-کلودیان",
+      "summary": "فرمانروایی خاندان آگوستوس، از فرمانروایی تنهای او در ۳۱ پیش از میلاد تا مرگ نرون در ۶۸ میلادی."
+    },
+    "period-year-of-four-emperors": {
+      "label": "سال چهار امپراتور",
+      "summary": "جنگ داخلی پس از مرگ نرون، که گالبا، اوتو، ویتلیوس و وسپاسیان یکی پس از دیگری امپراتور شدند."
+    },
+    "period-flavian": {
+      "label": "فلاویان",
+      "summary": "فرمانروایی وسپاسیان و پسرانش تیتوس و دومیتیان."
+    },
+    "period-nerva-trajan": {
+      "label": "نروا و تراژان",
+      "summary": "از بر تخت نشستن نروا در ۹۶ میلادی تا مرگ تراژان در ۱۱۷ میلادی؛ این مجموعه آن را تا حدود ۱۰۰ میلادی دنبال می‌کند."
+    },
+    "dynasty-julio-claudian": {
+      "label": "ژولیو-کلودیان",
+      "summary": "نخستین خاندان امپراتوری، با نامی از خاندان یولیوس آگوستوس و خاندان کلودیوس تیبریوس؛ از ۳۱ پیش از میلاد تا ۶۸ میلادی فرمان راند."
+    },
+    "dynasty-flavian": {
+      "label": "فلاویان",
+      "summary": "خاندان وسپاسیان، امپراتور از ۶۹ میلادی، و پسرانش تیتوس و دومیتیان؛ با کشته شدن دومیتیان در ۹۶ میلادی پایان یافت."
+    },
+    "person-romulus": {
+      "label": "رومولوس",
+      "summary": "بنیادگذار افسانه‌ای و نخستین شاه رم که پسر رئا سیلویا و خدای مارس خوانده می‌شود؛ نشانه‌ای از هستی تاریخی او نیست. روایت سی‌وهفت سال فرمانروایی به او می‌دهد.",
+      "facts": {
+        "knownFor": "بنیادگذار افسانه‌ای رم."
+      }
+    },
+    "person-numa-pompilius": {
+      "label": "نوما پومپیلیوس",
+      "summary": "سابینی، به روایت دومین شاه رم، که به رومیان قانون، آیین و مراسم دینی داد؛ روایت چهل‌وسه سال به او می‌دهد.",
+      "facts": {
+        "knownFor": "قانون‌ها و آیین‌های دینی رم."
+      }
+    },
+    "person-tullus-hostilius": {
+      "label": "تولوس هوستیلیوس",
+      "summary": "به روایت سومین شاه رم، که آلبی‌ها را شکست داد؛ روایت سی‌ودو سال به او می‌دهد.",
+      "facts": {
+        "knownFor": "پیروزی بر آلبی‌ها."
+      }
+    },
+    "person-ancus-marcius": {
+      "label": "آنکوس مارکیوس",
+      "summary": "به روایت چهارمین شاه رم، نوهٔ دختری نوما، که اوستیا را بنیاد نهاد؛ روایت بیست‌وچهار سال به او می‌دهد.",
+      "facts": {
+        "knownFor": "بنیادگذاری اوستیا."
+      }
+    },
+    "person-tarquinius-priscus": {
+      "label": "تارکوینیوس پریسکوس",
+      "summary": "مردی اتروسکی که به روایت پنجمین شاه رم شد و ساختن کاپیتول را آغاز کرد؛ روایت سی‌وهشت سال به او می‌دهد.",
+      "facts": {
+        "knownFor": "آغاز ساختن کاپیتول."
+      }
+    },
+    "person-servius-tullius": {
+      "label": "سرویوس تولیوس",
+      "summary": "به روایت ششمین شاه رم، که نخستین سرشماری را برگزار کرد؛ روایت چهل‌وپنج سال به او می‌دهد.",
+      "facts": {
+        "knownFor": "نخستین سرشماری."
+      }
+    },
+    "person-tarquinius-superbus": {
+      "label": "تارکوینیوس مغرور",
+      "summary": "تارکوینیوس مغرور، پسر تارکوینیوس پریسکوس و داماد سرویوس تولیوس، به روایت هفتمین و واپسین شاه رم که رانده شد؛ روایت بیست‌وپنج سال به او می‌دهد.",
+      "facts": {
+        "knownFor": "واپسین شاه رم."
+      }
+    },
+    "person-rhea-silvia": {
+      "label": "رئا سیلویا",
+      "summary": "در افسانه، مادر رومولوس؛ پدر را خدای مارس می‌دانند.",
+      "facts": {
+        "knownFor": "مادر رومولوس در افسانه."
+      }
+    },
+    "event-founding-of-rome": {
+      "label": "بنیاد رم",
+      "summary": "بر پایهٔ روایت رومولوس رم را در ۲۱ آوریل ۷۵۳ پیش از میلاد بر تپهٔ پالاتین بنیاد نهاد؛ Livius این تاریخ وارونی را محاسبه‌ای ساختگی می‌خواند."
+    },
+    "person-lucius-junius-brutus": {
+      "label": "لوکیوس یونیوس بروتوس",
+      "summary": "بنیادگذار افسانه‌ای جمهوری، خویشاوند خاندان شاهی تارکوینی، که بر پایهٔ روایت واپسین شاه را راند و یکی از دو کنسول نخستین بود؛ در سال نخست جمهوری درگذشت.",
+      "facts": {
+        "knownFor": "بنیادگذار افسانه‌ای جمهوری روم."
+      }
+    },
+    "person-camillus": {
+      "label": "مارکوس فوریوس کامیلوس",
+      "summary": "رهبری رومی که خلاصه‌های لیوی او را با رهایی رم از گُل‌ها و با روزگار قانون‌های لیکینیوس و سکستیوس پیوند می‌دهند.",
+      "facts": {
+        "knownFor": "رهبر در سال‌های پس از تاراج رم به دست گُل‌ها."
+      }
+    },
+    "event-founding-of-republic": {
+      "label": "بنیاد جمهوری",
+      "summary": "واپسین شاه رانده و جمهوری بنیاد نهاده شد – به گاه‌شماری سنتی در ۵۰۹ پیش از میلاد، به یک صفحهٔ Livius در ۵۱۰، و به بازسازی خود Livius حدود ۵۰۷ تا ۵۰۵."
+    },
+    "event-twelve-tables": {
+      "label": "دوازده لوح",
+      "summary": "نخستین گردآوری قانون روم، که هیئتی ده‌نفره در میانهٔ سدهٔ پنجم پیش از میلاد نوشت: ده لوح در ۴۵۱ و دو لوح دیگر در ۴۵۰ پیش از میلاد به گاه‌شماری سنتی."
+    },
+    "event-gallic-sack": {
+      "label": "گرفتن رم به دست گُل‌ها",
+      "summary": "گُل‌ها پس از پیروزی در آلیا رم را گرفتند و کاپیتول را در محاصره نگه داشتند تا رومیان آزادی خود را با زر خریدند – به گاه‌شماری سنتی در ۳۹۰ پیش از میلاد و به گفتهٔ Livius در ۳۸۷ یا ۳۸۶."
+    },
+    "event-licinian-sextian-laws": {
+      "label": "قانون‌های لیکینیوس و سکستیوس",
+      "summary": "قانون‌هایی که نخست در ۳۷۶ پیشنهاد و در ۳۶۷ پیش از میلاد (به گاه‌شماری سنتی) تصویب شد و کنسولی را به روی پلبی‌ها گشود، وام‌ها را سامان داد و دارایی زمین همگانی را محدود کرد."
+    },
+    "person-hamilcar-barca": {
+      "label": "هامیلکار بارکا",
+      "summary": "سرداری کارتاژی، پدر هانیبال.",
+      "facts": {
+        "knownFor": "پدر هانیبال."
+      }
+    },
+    "person-hannibal": {
+      "label": "هانیبال",
+      "summary": "سردار کارتاژی، زادهٔ ۲۴۷ پیش از میلاد در کارتاژ، که در جنگ دوم پونیک از آلپ گذشت، سپاهی رومی را در کانای نابود کرد و در زاما شکست خورد؛ در زمستان ۱۸۳/۱۸۲ پیش از میلاد در لیبیسا خود را زهر داد.",
+      "facts": {
+        "knownFor": "گذر از آلپ و پیروزی در کانای."
+      }
+    },
+    "person-scipio-africanus": {
+      "label": "اسکیپیو آفریکانوس",
+      "summary": "پوبلیوس کورنلیوس اسکیپیو، که کارتاگنا را گرفت، جنگ اسپانیا را در ۲۰۶ پیش از میلاد پایان داد و هانیبال را در زاما شکست داد؛ در ۱۸۳ پیش از میلاد در لیترنوم درگذشت.",
+      "facts": {
+        "knownFor": "پیروزی بر هانیبال در زاما."
+      }
+    },
+    "person-cato-the-elder": {
+      "label": "کاتوی بزرگ",
+      "summary": "مارکوس پورکیوس کاتو، سانسور در ۱۸۴ پیش از میلاد، که به جنگ با کارتاژ فرامی‌خواند.",
+      "facts": {
+        "knownFor": "فراخواندن به نابودی کارتاژ."
+      }
+    },
+    "event-first-punic-war": {
+      "label": "جنگ نخست پونیک",
+      "summary": "جنگ رم و کارتاژ از ۲۶۴ تا ۲۴۱ پیش از میلاد، که در آن رم سیسیل را گرفت."
+    },
+    "event-second-punic-war": {
+      "label": "جنگ دوم پونیک",
+      "summary": "جنگ رم و کارتاژ از ۲۱۸ تا ۲۰۲ پیش از میلاد، که در آن هانیبال از آلپ گذشت؛ صلح در ۲۰۱ پیش از میلاد بسته شد."
+    },
+    "event-cannae": {
+      "label": "نبرد کانای",
+      "summary": "هانیبال در ۲ اوت ۲۱۶ پیش از میلاد سپاه دو کنسول رومی را در کانای نابود کرد."
+    },
+    "event-zama": {
+      "label": "نبرد زاما",
+      "summary": "اسکیپیو در ۱۹ اکتبر ۲۰۲ پیش از میلاد هانیبال را در زاما در آفریقا شکست داد."
+    },
+    "event-third-punic-war": {
+      "label": "جنگ سوم پونیک",
+      "summary": "واپسین جنگ با کارتاژ که در ۱۴۹ پیش از میلاد، پس از فراخوان کاتو، آغاز شد و در ۱۴۶ پیش از میلاد با نابودی شهر پایان یافت."
+    },
+    "event-destruction-of-carthage": {
+      "label": "ویرانی کارتاژ",
+      "summary": "رم در ۱۴۶ پیش از میلاد کارتاژ را گرفت و ویران کرد؛ کورینت نیز در همان سال تاراج شد."
+    },
+    "person-tiberius-gracchus": {
+      "label": "تیبریوس گراکوس",
+      "summary": "تریبون عامه‌ای که در ۱۳۳ پیش از میلاد قانونی برای محدود کردن دارایی زمین همگانی پیشنهاد کرد و در همان سال بر کاپیتول کشته شد.",
+      "facts": {
+        "knownFor": "قانون زمینش در تریبونی ۱۳۳ پیش از میلاد."
+      }
+    },
+    "person-gaius-gracchus": {
+      "label": "گایوس گراکوس",
+      "summary": "برادر تیبریوس، تریبون در ۱۲۳ و باز در ۱۲۲ پیش از میلاد، که قانون غله، قانون زمین و کلنی‌هایی، یکی در کارتاژ، را گذراند؛ در ۱۲۱ پیش از میلاد درگذشت.",
+      "facts": {
+        "knownFor": "قانون‌هایش در تریبونی ۱۲۳ و ۱۲۲ پیش از میلاد."
+      }
+    },
+    "event-tribunate-of-tiberius-gracchus": {
+      "label": "تریبونی تیبریوس گراکوس",
+      "summary": "تیبریوس گراکوس در ۱۳۳ پیش از میلاد قانون زمینش را پیشنهاد کرد و در همان سال بر کاپیتول کشته شد."
+    },
+    "person-marius": {
+      "label": "گایوس ماریوس",
+      "summary": "رهبر پوپولارها، هفت بار کنسول از ۱۰۷ تا ۸۶ پیش از میلاد، که سپاه را دگرگون کرد و یوگورتا، تئوتون‌ها (۱۰۲) و کیمبری‌ها (۱۰۱) را شکست داد؛ همسر یولیا، عمهٔ ژولیوس سزار، بود و در ۸۶ پیش از میلاد درگذشت.",
+      "facts": {
+        "knownFor": "هفت بار کنسولی و دگرگونی سپاه."
+      }
+    },
+    "person-sulla": {
+      "label": "سولا",
+      "summary": "رهبر اپتیمات‌ها که در ۸۸ پیش از میلاد بر رم تاخت و نخستین جنگ داخلی را آغاز کرد؛ پس از بازگشت از آسیا دیکتاتور شد و فهرست محکومان (پروسکریپسیون) را منتشر کرد. در ۷۸ پیش از میلاد درگذشت.",
+      "facts": {
+        "knownFor": "لشکرکشی‌اش به رم و دیکتاتوری‌اش."
+      }
+    },
+    "event-social-war": {
+      "label": "جنگ متحدان",
+      "summary": "جنگ با هم‌پیمانان ایتالیایی رم که در ۹۱ پیش از میلاد آغاز شد؛ شهروندی در ۹۰ به هم‌پیمانان وفادار و در ۸۹ به تسلیم‌شدگان وعده داده شد. ماریوس و سولا در سوی رم جنگیدند."
+    },
+    "person-spartacus": {
+      "label": "اسپارتاکوس",
+      "summary": "رهبر شورش بردگان که از کاپوآ آغاز شد و در ۷۳ تا ۷۱ پیش از میلاد به جنگی تمام‌عیار بدل شد؛ پیکرش هرگز یافت نشد.",
+      "facts": {
+        "knownFor": "رهبری شورش بردگان در ۷۳ تا ۷۱ پیش از میلاد."
+      }
+    },
+    "person-crassus": {
+      "label": "مارکوس لیکینیوس کراسوس",
+      "summary": "زادهٔ ۱۱۵ پیش از میلاد و به گفته ثروتمندترین مرد رم، که در ۷۱ پیش از میلاد به عنوان پریتور شورش اسپارتاکوس را فرونشاند، در ۶۰ با سزار و پومپه هم‌پیمان شد و پس از شکست در حران در ۵۳ پیش از میلاد کشته شد.",
+      "facts": {
+        "knownFor": "ثروتمندترین مرد رم؛ شکست‌خوردهٔ حران."
+      }
+    },
+    "event-revolt-of-spartacus": {
+      "label": "شورش اسپارتاکوس",
+      "summary": "شورش بردگانی که از کاپوآ آغاز شد و کراسوس آن را فرونشاند؛ صفحهٔ Livius جنگ را یک جا ۷۳ تا ۷۱ و جای دیگر ۷۳ تا ۷۰ پیش از میلاد می‌گذارد."
+    },
+    "person-pompey": {
+      "label": "پومپه",
+      "summary": "گنایوس پومپیوس، پومپه بزرگ، زادهٔ ۱۰۶ پیش از میلاد، که دزدان دریایی و مهرداد را شکست داد و سوریه را ضمیمه کرد، با یولیا دختر سزار ازدواج کرد، در ۵۲ پیش از میلاد کنسول بی‌همکار بود و پس از فارسالوس در ۴۸ پیش از میلاد در مصر کشته شد.",
+      "facts": {
+        "knownFor": "پیروزی‌هایش در خاور و جنگش با سزار."
+      }
+    },
+    "person-cicero": {
+      "label": "سیسرون",
+      "summary": "سخنور، زادهٔ ۱۰۶ پیش از میلاد، که در کنسولی‌اش توطئهٔ کاتیلینا را آشکار کرد؛ سه‌گانه‌فرمانروایان او را محکوم کردند و در ۴۳ پیش از میلاد کشته شد.",
+      "facts": {
+        "knownFor": "سخنور؛ آشکارکنندهٔ توطئهٔ کاتیلینا."
+      }
+    },
+    "person-julius-caesar": {
+      "label": "گایوس ژولیوس سزار",
+      "summary": "زادهٔ ۱۳ ژوئیهٔ ۱۰۰ پیش از میلاد، کنسول در ۵۹، گشایندهٔ گُل، که در ۴۹ پیش از میلاد از روبیکون گذشت، پومپه را شکست داد، در ۴۶ برای ده سال و در ۴۴ برای همهٔ عمر دیکتاتور شد و در ایدهای مارس ۴۴ پیش از میلاد کشته شد.",
+      "facts": {
+        "knownFor": "گشودن گُل و دیکتاتور کردن خود."
+      }
+    },
+    "person-julia": {
+      "label": "یولیا",
+      "summary": "دختر ژولیوس سزار از کورنلیا، که برای استوار کردن هم‌پیمانی سال ۶۰ پیش از میلاد همسر پومپه شد.",
+      "facts": {
+        "knownFor": "همسر پومپه و دختر سزار."
+      }
+    },
+    "event-first-triumvirate": {
+      "label": "هم‌پیمانی سزار، کراسوس و پومپه",
+      "summary": "در ۶۰ پیش از میلاد سزار، کراسوس و پومپه پیمانی خصوصی بستند که با ازدواج پومپه با یولیا دختر سزار استوار شد؛ تاریخ‌نویسان امروز آن را نخستین سه‌گانه‌فرمانروایی می‌خوانند."
+    },
+    "event-conquest-of-gaul": {
+      "label": "گشودن گُل به دست سزار",
+      "summary": "سزار از ۵۸ تا ۵۰ پیش از میلاد گُل را گشود؛ در ۵۲ پیش از میلاد ورسینژتوریکس در آلزیا تسلیم او شد."
+    },
+    "event-carrhae": {
+      "label": "نبرد حران",
+      "summary": "در ۵۳ پیش از میلاد پارت‌ها سپاه رومی کراسوس را در حران شکست دادند و کراسوس کشته شد."
+    },
+    "event-rubicon": {
+      "label": "گذر سزار از روبیکون",
+      "summary": "سزار در شب ۱۰ به ۱۱ ژانویهٔ ۴۹ پیش از میلاد از روبیکون، مرز گُل کیسالپین و ایتالیا، گذشت و دومین جنگ داخلی را آغاز کرد؛ جای آن رود قطعی نیست."
+    },
+    "event-pharsalus": {
+      "label": "نبرد فارسالوس",
+      "summary": "سزار در ۹ اوت ۴۸ پیش از میلاد پومپه را در فارسالوس شکست داد؛ پومپه به مصر گریخت و در آنجا کشته شد."
+    },
+    "person-marcus-junius-brutus": {
+      "label": "مارکوس یونیوس بروتوس",
+      "summary": "زادهٔ حدود ۸۵ پیش از میلاد، پسر سرویلیا، یکی از کشندگان سزار و یکی از واپسین پاسداران جمهوری؛ پس از فیلیپی در ۴۲ پیش از میلاد خود را کشت.",
+      "facts": {
+        "knownFor": "یکی از کشندگان سزار."
+      }
+    },
+    "event-murder-of-caesar": {
+      "label": "کشته شدن سزار",
+      "summary": "در ایدهای مارس، ۱۵ مارس ۴۴ پیش از میلاد، گروهی به رهبری گایوس کاسیوس، دکیموس بروتوس و مارکوس یونیوس بروتوس سزار را کشتند."
+    },
+    "person-mark-antony": {
+      "label": "مارک آنتونی",
+      "summary": "زادهٔ ۸۳ پیش از میلاد (به گفتهٔ صفحه‌ای دیگر از Livius ۸۲)، عضو دومین سه‌گانه‌فرمانروایی، همسر کلئوپاترا، شکست‌خوردهٔ آکتیوم؛ در ۱۲ اوت ۳۰ پیش از میلاد خود را کشت.",
+      "facts": {
+        "knownFor": "سه‌گانه‌فرمانروا؛ شکست‌خوردهٔ آکتیوم."
+      }
+    },
+    "person-cleopatra-vii": {
+      "label": "کلئوپاترای هفتم",
+      "summary": "ملکهٔ مصر از ۵۱ تا ۳۰ پیش از میلاد، زادهٔ دسامبر ۷۰ یا ژانویهٔ ۶۹ پیش از میلاد؛ همسر ژولیوس سزار و سپس مارک آنتونی، که به گزارش‌ها در ۱۲ اوت ۳۰ پیش از میلاد خود را کشت.",
+      "facts": {
+        "knownFor": "واپسین ملکهٔ مصر بطلمیوسی."
+      }
+    },
+    "event-second-triumvirate": {
+      "label": "دومین سه‌گانه‌فرمانروایی",
+      "summary": "در ۴۳ پیش از میلاد آنتونی و اکتاویان با همکاری سوم سه‌گانه‌فرمانروا شدند، مقامی رسمی با اختیارات دیکتاتوری."
+    },
+    "event-philippi": {
+      "label": "نبرد فیلیپی",
+      "summary": "در مهر ۴۲ پیش از میلاد مارک آنتونی و اکتاویان بروتوس و کاسیوس را در فیلیپی شکست دادند."
+    },
+    "event-actium": {
+      "label": "نبرد آکتیوم",
+      "summary": "اکتاویان همراه آگریپا در ۳۱ پیش از میلاد مارک آنتونی و کلئوپاترا را در دریای کنار آکتیوم شکست داد – به گفتهٔ صفحهٔ نبرد در ۲ سپتامبر و به گفتهٔ صفحه‌ای دیگر از Livius در ۲ اوت."
+    },
+    "event-augustan-settlement": {
+      "label": "سامان آگوستوس",
+      "summary": "در ژانویهٔ ۲۷ پیش از میلاد اکتاویان لقب آگوستوس را پذیرفت (۱۶ ژانویه)؛ فرمانروایی امپراتوران از اینجا آغاز می‌شود."
+    },
+    "person-augustus": {
+      "label": "آگوستوس",
+      "summary": "زادهٔ گایوس اکتاویوس در رم در ۲۳ سپتامبر ۶۳ پیش از میلاد، پسر گایوس اکتاویوس و آتیا، که در ۴۴ پیش از میلاد پسرخواندهٔ دایی‌بزرگش ژولیوس سزار شد؛ از ۳۱ پیش از میلاد فرمانروای تنها و از ۲۷ پیش از میلاد نخستین امپراتور تا مرگش در ۱۹ اوت ۱۴ میلادی. نویسندگان امروز او را پیش از ۲۷ پیش از میلاد اکتاویان می‌نامند، نامی که خودش هرگز به کار نبرد.",
+      "facts": {
+        "knownFor": "نخستین امپراتور روم."
+      }
+    },
+    "person-livia": {
+      "label": "لیویا",
+      "summary": "زادهٔ ژانویهٔ ۵۸ پیش از میلاد، نخست همسر تیبریوس کلودیوس نرون که از او مادر تیبریوس شد، و از ۱۷ ژانویهٔ ۳۸ پیش از میلاد همسر اکتاویان؛ در ۲۹ میلادی درگذشت.",
+      "facts": {
+        "knownFor": "همسر آگوستوس و مادر تیبریوس."
+      }
+    },
+    "person-tiberius": {
+      "label": "تیبریوس",
+      "summary": "زادهٔ ۴۲ پیش از میلاد در رم، پسر لیویا و ناپسری آگوستوس که در ۲۶ ژوئن ۴ میلادی او را به فرزندی پذیرفت؛ امپراتور از ۱۴ تا ۳۷ میلادی، و در ۱۶ مارس ۳۷ میلادی درگذشت.",
+      "facts": {
+        "knownFor": "دومین امپراتور روم."
+      }
+    },
+    "person-germanicus": {
+      "label": "ژرمانیکوس",
+      "summary": "زادهٔ ۲۴ مه ۱۵ پیش از میلاد، پسر دروسوس و آنتونیا، پسرخواندهٔ تیبریوس و همسر آگریپینای بزرگ؛ پدر کالیگولا و آگریپینای کوچک، که در ۱۰ اکتبر ۱۹ میلادی در انطاکیه درگذشت.",
+      "facts": {
+        "knownFor": "پدر کالیگولا."
+      }
+    },
+    "person-caligula": {
+      "label": "کالیگولا",
+      "summary": "پسر ژرمانیکوس، زادهٔ ۳۱ اوت ۱۲ میلادی در آنتیوم؛ امپراتور از ۳۷ تا ۴۱ میلادی، که کاسیوس خائرئا در ۲۴ ژانویهٔ ۴۱ میلادی او را کشت.",
+      "facts": {
+        "knownFor": "کشته شدن پس از چهار سال امپراتوری."
+      }
+    },
+    "person-claudius": {
+      "label": "کلودیوس",
+      "summary": "پسر دروسوس و آنتونیا، زادهٔ ۱ اوت ۱۰ پیش از میلاد در لوگدونوم؛ امپراتور از ۴۱ تا ۵۴ میلادی، که با آگریپینای کوچک ازدواج کرد، پسرش نرون را در ۵۰ میلادی به فرزندی پذیرفت و در ۱۳ اکتبر ۵۴ میلادی با زهر درگذشت.",
+      "facts": {
+        "knownFor": "امپراتوری که نرون را به فرزندی پذیرفت."
+      }
+    },
+    "person-agrippina-the-younger": {
+      "label": "آگریپینای کوچک",
+      "summary": "دختر ژرمانیکوس، زادهٔ ۱۵ یا ۱۶ میلادی در کلن، همسر کلودیوس (ازدواج در ۴۸ یا ۴۹ میلادی) و مادر نرون؛ در مارس ۵۹ میلادی کشته شد.",
+      "facts": {
+        "knownFor": "همسر کلودیوس و مادر نرون."
+      }
+    },
+    "person-nero": {
+      "label": "نرون",
+      "summary": "پسر آگریپینای کوچک، زادهٔ ۱۵ دسامبر ۳۷ میلادی در آنتیوم، که در ۵۰ میلادی پسرخواندهٔ کلودیوس شد؛ امپراتور از ۵۴ تا ۶۸ میلادی، که فرمانروایی‌اش با شورش‌های وینکس، ماکر و گالبا و خودکشی‌اش در ژوئن ۶۸ میلادی پایان یافت.",
+      "facts": {
+        "knownFor": "واپسین امپراتور ژولیو-کلودی."
+      }
+    },
+    "person-galba": {
+      "label": "گالبا",
+      "summary": "زادهٔ ۲۴ دسامبر ۳ پیش از میلاد نزدیک تاراکینا، که در آوریل ۶۸ در اسپانیا شورید و از ژوئن ۶۸ امپراتور بود؛ در ژانویهٔ ۶۹ میلادی در رم به دست مردم کشته شد (یک صفحهٔ Livius ۱۵ ژوئن ۶۹ می‌گوید).",
+      "facts": {
+        "knownFor": "نخستین امپراتور سال چهار امپراتور."
+      }
+    },
+    "person-otho": {
+      "label": "اوتو",
+      "summary": "زادهٔ ۲۸ آوریل ۳۲ میلادی، که در ۶۹ میلادی با رشوه به گارد پریتوری به قدرت رسید و پس از شکست سپاهش از سپاه ویتلیوس در ۱۶ آوریل ۶۹ خود را کشت.",
+      "facts": {
+        "knownFor": "سه ماه امپراتوری در ۶۹ میلادی."
+      }
+    },
+    "person-vitellius": {
+      "label": "ویتلیوس",
+      "summary": "زادهٔ ۷ سپتامبر ۱۵ میلادی، که سپاهیانش در ۲ ژانویهٔ ۶۹ او را امپراتور خواندند و پس از مرگ اوتو سنا او را پذیرفت؛ در ۲۰ دسامبر ۶۹ میلادی، هنگامی که سپاه وسپاسیان رم را گرفت، کشته شد.",
+      "facts": {
+        "knownFor": "امپراتور در ۶۹ میلادی."
+      }
+    },
+    "person-vespasian": {
+      "label": "وسپاسیان",
+      "summary": "زادهٔ ۱۷ نوامبر ۹ میلادی در فالاکرینه، که نرون او را برای فرونشاندن شورش یهودیان فرستاد و در ۱ ژوئیهٔ ۶۹ در اسکندریه امپراتور خوانده شد؛ تا مرگش در ۲۳ ژوئن ۷۹ میلادی امپراتور بود و کولوسئوم را ساخت.",
+      "facts": {
+        "knownFor": "بنیادگذار خاندان فلاوی."
+      }
+    },
+    "person-titus": {
+      "label": "تیتوس",
+      "summary": "پسر وسپاسیان، زادهٔ ۳۰ دسامبر ۳۹ میلادی در رم، که در ۷۰ میلادی اورشلیم را گرفت؛ امپراتور از ۷۹ تا ۸۱، که در روزگارش وزوویوس فوران کرد و کولوسئوم گشوده شد. در ۱۳ سپتامبر ۸۱ میلادی درگذشت.",
+      "facts": {
+        "knownFor": "گرفتن اورشلیم در ۷۰ میلادی."
+      }
+    },
+    "person-domitian": {
+      "label": "دومیتیان",
+      "summary": "پسر وسپاسیان، زادهٔ ۲۴ اکتبر ۵۱ میلادی در رم، امپراتور از ۸۱ تا ۹۶ میلادی؛ در ۱۸ سپتامبر ۹۶ میلادی به دست درباریان کشته شد.",
+      "facts": {
+        "knownFor": "واپسین امپراتور فلاوی."
+      }
+    },
+    "person-nerva": {
+      "label": "نروا",
+      "summary": "زادهٔ ۳۰ نوامبر ۳۰ میلادی در نارنیا، امپراتور از ۱۸ سپتامبر ۹۶ میلادی، که در ۹۷ تراژان را به فرزندی پذیرفت؛ در ژانویهٔ ۹۸ میلادی درگذشت.",
+      "facts": {
+        "knownFor": "پذیرفتن تراژان به فرزندی و جانشینی."
+      }
+    },
+    "person-trajan": {
+      "label": "تراژان",
+      "summary": "زادهٔ ۱۸ سپتامبر ۵۳ میلادی در ایتالیکا، پسرخواندهٔ نروا در ۹۷ و امپراتور از ۲۸ ژانویهٔ ۹۸ میلادی تا مرگش در ۷ اوت ۱۱۷؛ داکیا را گشود و در ۱۰۶ عربستان پترایا را استان کرد.",
+      "facts": {
+        "knownFor": "گشودن داکیا."
+      }
+    },
+    "event-teutoburg": {
+      "label": "نبرد جنگل تویتوبورگ",
+      "summary": "در سپتامبر ۹ میلادی آرمینیوس با هم‌پیمانی قبیله‌های ژرمن سه لژیون رومی را به فرماندهی پوبلیوس کوینتیلیوس واروس نابود کرد؛ ژرمانیا آزاد ماند."
+    },
+    "event-death-of-augustus": {
+      "label": "مرگ آگوستوس",
+      "summary": "آگوستوس در ۱۹ اوت ۱۴ میلادی درگذشت و تیبریوس جانشینش شد."
+    },
+    "event-great-fire": {
+      "label": "آتش‌سوزی بزرگ رم",
+      "summary": "آتش‌سوزی بزرگ رم در ۶۴ میلادی، در روزگار نرون."
+    },
+    "event-death-of-nero": {
+      "label": "مرگ نرون",
+      "summary": "پس از شورش‌های وینکس، ماکر و گالبا، نرون در ژوئن ۶۸ میلادی خود را کشت – به گفتهٔ صفحهٔ او در ۹ ژوئن و به گفتهٔ گاه‌نامهٔ سال‌های ۶۸ تا ۷۰ در ۸ ژوئن."
+    },
+    "event-year-of-four-emperors": {
+      "label": "سال چهار امپراتور",
+      "summary": "در ۶۹ میلادی گالبا، اوتو، ویتلیوس و وسپاسیان یکی پس از دیگری امپراتور شدند؛ وسپاسیان در ۲۱ دسامبر ۶۹ پذیرفته شد."
+    },
+    "event-jewish-war": {
+      "label": "جنگ یهود",
+      "summary": "جنگی در یهودیه که در ۶۶ میلادی آغاز شد و با ویرانی پرستشگاه اورشلیم در ۷۰ به اوج رسید؛ واپسین ایستادگی در ماسادا تا ۷۴ ادامه یافت."
+    },
+    "event-siege-of-jerusalem": {
+      "label": "محاصرهٔ اورشلیم",
+      "summary": "تیتوس محاصرهٔ اورشلیم را در ۱۴ آوریل ۷۰ میلادی آغاز کرد و در ۸ سپتامبر بر شهر چیره شد."
+    },
+    "event-vesuvius": {
+      "label": "فوران وزوویوس",
+      "summary": "در ۷۹ میلادی، در روزگار تیتوس، وزوویوس فوران کرد و پمپئی را زیر خاکستر برد."
+    },
+    "event-colosseum": {
+      "label": "گشایش کولوسئوم",
+      "summary": "آمفی‌تئاتر فلاوی که وسپاسیان ساخت، در ۸۰ میلادی به دست تیتوس گشوده شد."
+    },
+    "event-murder-of-domitian": {
+      "label": "کشته شدن دومیتیان",
+      "summary": "دومیتیان در ۱۸ سپتامبر ۹۶ میلادی به دست درباریان کشته شد؛ نروا همان روز امپراتور شد."
+    },
+    "event-accession-of-trajan": {
+      "label": "بر تخت نشستن تراژان",
+      "summary": "با مرگ نروا در ژانویهٔ ۹۸ میلادی، تراژان، پسرخوانده‌اش، امپراتور شد."
+    }
+  },
+  "relations": {
+    "relation-romulus-holder-of-king-of-rome": {
+      "label": "شاه رم، به روایت ۳۷ سال"
+    },
+    "relation-numa-pompilius-holder-of-king-of-rome": {
+      "label": "شاه رم، به روایت ۴۳ سال"
+    },
+    "relation-numa-pompilius-successor-of-romulus": {
+      "label": "جانشینِ"
+    },
+    "relation-tullus-hostilius-holder-of-king-of-rome": {
+      "label": "شاه رم، به روایت ۳۲ سال"
+    },
+    "relation-tullus-hostilius-successor-of-numa-pompilius": {
+      "label": "جانشینِ"
+    },
+    "relation-ancus-marcius-holder-of-king-of-rome": {
+      "label": "شاه رم، به روایت ۲۴ سال"
+    },
+    "relation-ancus-marcius-successor-of-tullus-hostilius": {
+      "label": "جانشینِ"
+    },
+    "relation-tarquinius-priscus-holder-of-king-of-rome": {
+      "label": "شاه رم، به روایت ۳۸ سال"
+    },
+    "relation-tarquinius-priscus-successor-of-ancus-marcius": {
+      "label": "جانشینِ"
+    },
+    "relation-servius-tullius-holder-of-king-of-rome": {
+      "label": "شاه رم، به روایت ۴۵ سال"
+    },
+    "relation-servius-tullius-successor-of-tarquinius-priscus": {
+      "label": "جانشینِ"
+    },
+    "relation-tarquinius-superbus-holder-of-king-of-rome": {
+      "label": "شاه رم، به روایت ۲۵ سال"
+    },
+    "relation-tarquinius-superbus-successor-of-servius-tullius": {
+      "label": "جانشینِ"
+    },
+    "relation-rhea-silvia-parent-of-romulus": {
+      "label": "مادرِ، در افسانه"
+    },
+    "relation-tarquinius-priscus-parent-of-tarquinius-superbus": {
+      "label": "پدرِ، بر پایهٔ روایت"
+    },
+    "relation-romulus-founder-of-rome": {
+      "label": "بنیادگذار، در افسانه"
+    },
+    "relation-ancus-marcius-founder-of-ostia": {
+      "label": "بنیادگذار، بر پایهٔ روایت"
+    },
+    "relation-romulus-participant-in-founding-of-rome": {
+      "label": "شرکت در"
+    },
+    "relation-founding-of-rome-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-founding-of-rome-during-monarchy": {
+      "label": "در دورهٔ"
+    },
+    "relation-lucius-junius-brutus-holder-of-consul": {
+      "label": "یکی از دو کنسول نخستین، بر پایهٔ روایت"
+    },
+    "relation-lucius-junius-brutus-founder-of-roman-republic": {
+      "label": "بنیادگذار، بر پایهٔ روایت"
+    },
+    "relation-lucius-junius-brutus-participant-in-founding-of-republic": {
+      "label": "شرکت در"
+    },
+    "relation-founding-of-republic-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-founding-of-republic-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-twelve-tables-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-twelve-tables-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-camillus-participant-in-gallic-sack": {
+      "label": "شرکت در"
+    },
+    "relation-gallic-sack-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-gallic-sack-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-camillus-participant-in-licinian-sextian-laws": {
+      "label": "شرکت در"
+    },
+    "relation-licinian-sextian-laws-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-licinian-sextian-laws-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-cato-the-elder-holder-of-censor": {
+      "label": "سانسور"
+    },
+    "relation-hamilcar-barca-parent-of-hannibal": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-hannibal-opponent-of-scipio-africanus": {
+      "label": "هماوردان در زاما"
+    },
+    "relation-first-punic-war-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-hannibal-participant-in-second-punic-war": {
+      "label": "شرکت در"
+    },
+    "relation-scipio-africanus-participant-in-second-punic-war": {
+      "label": "شرکت در"
+    },
+    "relation-second-punic-war-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-hannibal-participant-in-cannae": {
+      "label": "شرکت در"
+    },
+    "relation-cannae-took-place-in-cannae": {
+      "label": "رخ داد در"
+    },
+    "relation-cannae-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-scipio-africanus-participant-in-zama": {
+      "label": "شرکت در"
+    },
+    "relation-hannibal-participant-in-zama": {
+      "label": "شرکت در"
+    },
+    "relation-zama-took-place-in-zama": {
+      "label": "رخ داد در"
+    },
+    "relation-zama-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-cato-the-elder-participant-in-third-punic-war": {
+      "label": "شرکت در"
+    },
+    "relation-third-punic-war-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-destruction-of-carthage-took-place-in-carthage": {
+      "label": "رخ داد در"
+    },
+    "relation-destruction-of-carthage-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-tiberius-gracchus-sibling-of-gaius-gracchus": {
+      "label": "خواهر یا برادرِ"
+    },
+    "relation-tiberius-gracchus-holder-of-tribune-of-the-plebs": {
+      "label": "تریبون عامه"
+    },
+    "relation-gaius-gracchus-holder-of-tribune-of-the-plebs": {
+      "label": "تریبون عامه، دو بار"
+    },
+    "relation-tiberius-gracchus-participant-in-tribunate-of-tiberius-gracchus": {
+      "label": "شرکت در"
+    },
+    "relation-tribunate-of-tiberius-gracchus-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-tribunate-of-tiberius-gracchus-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-marius-holder-of-consul": {
+      "label": "هفت بار کنسول"
+    },
+    "relation-sulla-holder-of-dictator": {
+      "label": "دیکتاتور"
+    },
+    "relation-marius-participant-in-social-war": {
+      "label": "شرکت در"
+    },
+    "relation-sulla-participant-in-social-war": {
+      "label": "شرکت در"
+    },
+    "relation-social-war-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-spartacus-participant-in-revolt-of-spartacus": {
+      "label": "شرکت در"
+    },
+    "relation-crassus-participant-in-revolt-of-spartacus": {
+      "label": "شرکت در"
+    },
+    "relation-revolt-of-spartacus-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-pompey-holder-of-consul": {
+      "label": "کنسول بی‌همکار"
+    },
+    "relation-julius-caesar-parent-of-julia": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-pompey-spouse-of-julia": {
+      "label": "همسر"
+    },
+    "relation-julius-caesar-holder-of-consul": {
+      "label": "کنسول"
+    },
+    "relation-julius-caesar-holder-of-dictator": {
+      "label": "دیکتاتور، برای ده سال و سپس برای همهٔ عمر"
+    },
+    "relation-julius-caesar-participant-in-first-triumvirate": {
+      "label": "شرکت در"
+    },
+    "relation-crassus-participant-in-first-triumvirate": {
+      "label": "شرکت در"
+    },
+    "relation-pompey-participant-in-first-triumvirate": {
+      "label": "شرکت در"
+    },
+    "relation-first-triumvirate-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-julius-caesar-participant-in-conquest-of-gaul": {
+      "label": "شرکت در"
+    },
+    "relation-conquest-of-gaul-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-crassus-participant-in-carrhae": {
+      "label": "شرکت در"
+    },
+    "relation-carrhae-took-place-in-carrhae": {
+      "label": "رخ داد در"
+    },
+    "relation-carrhae-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-julius-caesar-participant-in-rubicon": {
+      "label": "شرکت در"
+    },
+    "relation-rubicon-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-julius-caesar-participant-in-pharsalus": {
+      "label": "شرکت در"
+    },
+    "relation-pompey-participant-in-pharsalus": {
+      "label": "شرکت در"
+    },
+    "relation-pharsalus-took-place-in-pharsalus": {
+      "label": "رخ داد در"
+    },
+    "relation-pharsalus-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-julius-caesar-participant-in-murder-of-caesar": {
+      "label": "شرکت در"
+    },
+    "relation-marcus-junius-brutus-participant-in-murder-of-caesar": {
+      "label": "شرکت در"
+    },
+    "relation-murder-of-caesar-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-murder-of-caesar-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-mark-antony-spouse-of-cleopatra-vii": {
+      "label": "همسر"
+    },
+    "relation-julius-caesar-spouse-of-cleopatra-vii": {
+      "label": "همسر"
+    },
+    "relation-mark-antony-participant-in-second-triumvirate": {
+      "label": "شرکت در"
+    },
+    "relation-augustus-participant-in-second-triumvirate": {
+      "label": "شرکت در"
+    },
+    "relation-second-triumvirate-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-mark-antony-participant-in-philippi": {
+      "label": "شرکت در"
+    },
+    "relation-augustus-participant-in-philippi": {
+      "label": "شرکت در"
+    },
+    "relation-marcus-junius-brutus-participant-in-philippi": {
+      "label": "شرکت در"
+    },
+    "relation-philippi-took-place-in-philippi": {
+      "label": "رخ داد در"
+    },
+    "relation-philippi-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-augustus-participant-in-actium": {
+      "label": "شرکت در"
+    },
+    "relation-mark-antony-participant-in-actium": {
+      "label": "شرکت در"
+    },
+    "relation-cleopatra-vii-participant-in-actium": {
+      "label": "شرکت در"
+    },
+    "relation-actium-took-place-in-actium": {
+      "label": "رخ داد در"
+    },
+    "relation-actium-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-augustus-participant-in-augustan-settlement": {
+      "label": "شرکت در"
+    },
+    "relation-augustan-settlement-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-augustan-settlement-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-augustus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-tiberius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-tiberius-successor-of-augustus": {
+      "label": "جانشینِ"
+    },
+    "relation-caligula-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-caligula-successor-of-tiberius": {
+      "label": "جانشینِ"
+    },
+    "relation-claudius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-claudius-successor-of-caligula": {
+      "label": "جانشینِ"
+    },
+    "relation-nero-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-nero-successor-of-claudius": {
+      "label": "جانشینِ"
+    },
+    "relation-galba-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-galba-successor-of-nero": {
+      "label": "جانشینِ"
+    },
+    "relation-otho-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-otho-successor-of-galba": {
+      "label": "جانشینِ"
+    },
+    "relation-vitellius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-vitellius-successor-of-otho": {
+      "label": "جانشینِ"
+    },
+    "relation-vespasian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-vespasian-successor-of-vitellius": {
+      "label": "جانشینِ"
+    },
+    "relation-titus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-titus-successor-of-vespasian": {
+      "label": "جانشینِ"
+    },
+    "relation-domitian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-domitian-successor-of-titus": {
+      "label": "جانشینِ"
+    },
+    "relation-nerva-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-nerva-successor-of-domitian": {
+      "label": "جانشینِ"
+    },
+    "relation-trajan-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-trajan-successor-of-nerva": {
+      "label": "جانشینِ"
+    },
+    "relation-augustus-member-of-julio-claudian": {
+      "label": "از خاندانِ"
+    },
+    "relation-tiberius-member-of-julio-claudian": {
+      "label": "از خاندانِ"
+    },
+    "relation-caligula-member-of-julio-claudian": {
+      "label": "از خاندانِ"
+    },
+    "relation-claudius-member-of-julio-claudian": {
+      "label": "از خاندانِ"
+    },
+    "relation-nero-member-of-julio-claudian": {
+      "label": "از خاندانِ"
+    },
+    "relation-vespasian-member-of-flavian": {
+      "label": "از خاندانِ"
+    },
+    "relation-titus-member-of-flavian": {
+      "label": "از خاندانِ"
+    },
+    "relation-domitian-member-of-flavian": {
+      "label": "از خاندانِ"
+    },
+    "relation-julius-caesar-adoptive-parent-of-augustus": {
+      "label": "به فرزندی پذیرفت"
+    },
+    "relation-augustus-spouse-of-livia": {
+      "label": "همسر"
+    },
+    "relation-livia-parent-of-tiberius": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-augustus-adoptive-parent-of-tiberius": {
+      "label": "به فرزندی پذیرفت"
+    },
+    "relation-tiberius-adoptive-parent-of-germanicus": {
+      "label": "به فرزندی پذیرفت"
+    },
+    "relation-germanicus-sibling-of-claudius": {
+      "label": "خواهر یا برادرِ"
+    },
+    "relation-germanicus-parent-of-caligula": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-germanicus-parent-of-agrippina-the-younger": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-agrippina-the-younger-parent-of-nero": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-claudius-spouse-of-agrippina-the-younger": {
+      "label": "همسر"
+    },
+    "relation-claudius-adoptive-parent-of-nero": {
+      "label": "به فرزندی پذیرفت"
+    },
+    "relation-vespasian-parent-of-titus": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-vespasian-parent-of-domitian": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-titus-sibling-of-domitian": {
+      "label": "خواهر یا برادرِ"
+    },
+    "relation-nerva-adoptive-parent-of-trajan": {
+      "label": "به فرزندی پذیرفت"
+    },
+    "relation-augustus-founder-of-roman-empire": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-vespasian-founder-of-flavian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-rome-capital-of-roman-republic": {
+      "label": "پایتختِ"
+    },
+    "relation-rome-capital-of-roman-empire": {
+      "label": "پایتختِ"
+    },
+    "relation-roman-republic-successor-of-roman-monarchy": {
+      "label": "جانشینِ"
+    },
+    "relation-roman-empire-successor-of-roman-republic": {
+      "label": "جانشینِ"
+    },
+    "relation-flavian-successor-of-julio-claudian": {
+      "label": "جانشینِ"
+    },
+    "relation-julio-claudian-governs-ancient-rome": {
+      "label": "فرمانروای"
+    },
+    "relation-flavian-governs-ancient-rome": {
+      "label": "فرمانروای"
+    },
+    "relation-teutoburg-during-julio-claudian": {
+      "label": "در دورهٔ"
+    },
+    "relation-augustus-participant-in-death-of-augustus": {
+      "label": "شرکت در"
+    },
+    "relation-tiberius-participant-in-death-of-augustus": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-augustus-during-julio-claudian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nero-participant-in-great-fire": {
+      "label": "شرکت در"
+    },
+    "relation-great-fire-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-great-fire-during-julio-claudian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nero-participant-in-death-of-nero": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-nero-during-julio-claudian": {
+      "label": "در دورهٔ"
+    },
+    "relation-galba-participant-in-year-of-four-emperors": {
+      "label": "شرکت در"
+    },
+    "relation-otho-participant-in-year-of-four-emperors": {
+      "label": "شرکت در"
+    },
+    "relation-vitellius-participant-in-year-of-four-emperors": {
+      "label": "شرکت در"
+    },
+    "relation-vespasian-participant-in-year-of-four-emperors": {
+      "label": "شرکت در"
+    },
+    "relation-year-of-four-emperors-during-year-of-four-emperors": {
+      "label": "در دورهٔ"
+    },
+    "relation-vespasian-participant-in-jewish-war": {
+      "label": "شرکت در"
+    },
+    "relation-titus-participant-in-jewish-war": {
+      "label": "شرکت در"
+    },
+    "relation-jewish-war-during-flavian": {
+      "label": "در دورهٔ"
+    },
+    "relation-titus-participant-in-siege-of-jerusalem": {
+      "label": "شرکت در"
+    },
+    "relation-siege-of-jerusalem-took-place-in-jerusalem": {
+      "label": "رخ داد در"
+    },
+    "relation-siege-of-jerusalem-during-flavian": {
+      "label": "در دورهٔ"
+    },
+    "relation-vesuvius-took-place-in-pompeii": {
+      "label": "رخ داد در"
+    },
+    "relation-vesuvius-during-flavian": {
+      "label": "در دورهٔ"
+    },
+    "relation-titus-participant-in-colosseum": {
+      "label": "شرکت در"
+    },
+    "relation-colosseum-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-colosseum-during-flavian": {
+      "label": "در دورهٔ"
+    },
+    "relation-domitian-participant-in-murder-of-domitian": {
+      "label": "شرکت در"
+    },
+    "relation-nerva-participant-in-murder-of-domitian": {
+      "label": "شرکت در"
+    },
+    "relation-murder-of-domitian-during-nerva-trajan": {
+      "label": "در دورهٔ"
+    },
+    "relation-trajan-participant-in-accession-of-trajan": {
+      "label": "شرکت در"
+    },
+    "relation-accession-of-trajan-during-nerva-trajan": {
+      "label": "در دورهٔ"
+    }
+  }
+}
