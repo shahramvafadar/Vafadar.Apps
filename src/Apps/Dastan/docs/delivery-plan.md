@@ -1343,6 +1343,18 @@ exported, removed, pending changes), `AccountProfilePagesTests` extended (Englis
 head in the browser. *Written down:* ADR 0024 addendum, D-086 addendum, privacy texts, record of processing,
 operations (`database migrate` before the version starts).
 
+*Done on 2026-11-23.* *Built:* thirteen columns of the visitor and their change of form, written by hand and
+checked by the test for pending changes; `PeopleStore.Facts` and `StateFacts` with their limits (a year from
+1900 to last year; a town and a country of one line and 80 characters; up to eight languages of a list of
+64 with the names they give themselves; one address under https, without a name or password in it);
+`ShownFacts` on every profile a viewer is shown – also "see as" –, each fact where its audience allows; a
+fact that is not stated keeps no audience; a circle that is given up takes its facts back; the copy of one's
+data with who each is shown to; the form on the page of the account, one group for each fact; the facts in
+the head, the address with `rel="nofollow noopener ugc"`; a year typed in Persian digits is read. *Other than
+planned:* the facts have a form of their own beside the words and the picture, so that saving one never
+touches the other. *Tried:* `AccountFactsTests` (23), `AccountProfilePagesTests` (11 more, English and
+Persian). *Before a version with this starts:* `database migrate`.
+
 **25.6 Cards of a graph in sizes of their own (backlog A4).** Every card is 220 by 72 today, in the still
 drawing of the server and in the moving one. *To build:*
 

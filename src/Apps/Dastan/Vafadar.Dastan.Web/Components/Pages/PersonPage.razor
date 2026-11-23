@@ -22,6 +22,41 @@
        see. An account that says nothing and one that says nothing to this viewer have the same head (PRIV-012). *@
     <PersonHead Flavour="@IdentityMark.Account" Name="@_profile.Person.Name" Picture="_profile.Picture" About="@_profile.About">
         <Facts>
+            @if (!_profile.Facts.IsEmpty)
+            {
+                @* What the account states about itself (step 25.5), as far as this viewer may see each: a year,
+                   never an age; a town and a country in its own words; languages; one address of its own. *@
+                var facts = _profile.Facts;
+                <dl class="facts profile-facts compact account-facts">
+                    @if (facts.BornYear is { } year)
+                    {
+                        <dt>@T["Person_Fact_Born"]</dt>
+                        <dd>@Visitor.Number(year)</dd>
+                    }
+                    @if (facts.Town is not null || facts.Country is not null)
+                    {
+                        <dt>@T["Person_Fact_Lives"]</dt>
+                        <dd dir="auto">@string.Join(T["Explore_Aside_And"], new[] { facts.Town, facts.Country }.Where(part => part is not null))</dd>
+                    }
+                    @if (!facts.Languages.IsEmpty)
+                    {
+                        <dt>@T["Person_Fact_Languages"]</dt>
+                        <dd>
+                            @for (var index = 0; index < facts.Languages.Length; index++)
+                            {
+                                var tag = facts.Languages[index];
+                                @(index == 0 ? string.Empty : T["Explore_Aside_And"].Value)<span lang="@tag" dir="auto">@AccountLanguages.Name(tag)</span>
+                            }
+                        </dd>
+                    }
+                    @if (facts.Link is { } link)
+                    {
+                        @* An address a visitor wrote: followed by nobody for the site, and said to be a visitor's. *@
+                        <dt>@T["Person_Fact_Link"]</dt>
+                        <dd><a href="@link" rel="nofollow noopener ugc" dir="ltr">@link</a></dd>
+                    }
+                </dl>
+            }
             @if (!_profile.Affiliations.IsEmpty)
             {
                 <dl class="facts profile-facts compact">
@@ -54,6 +89,11 @@
     @if (_own && _seen is null)
     {
         <p class="note">@T["Person_Lead_Self"]</p>
+    }
+
+    @if (_saidFacts)
+    {
+        <p class="note" role="status">@T["Person_Said_stated"]</p>
     }
 
     @if (_said)
@@ -154,6 +194,81 @@
                     <p class="meta" id="self-picture-note">@T["Person_Self_Picture_Note"] <a href="account/photos">@T["Photos_Title"]</a></p>
                 }
                 <p><button type="submit" class="action">@T["Person_Self_Save"]</button></p>
+            </form>
+        </section>
+    }
+
+    @if (_own && _seen is null && _stated is not null)
+    {
+        @* The facts an account states about itself (step 25.5): none is asked for, each has an audience of its
+           own, and each begins with nobody else. *@
+        <section id="facts" aria-labelledby="facts-title">
+            <h2 id="facts-title">@T["Person_Facts_Title"]</h2>
+            <p class="note">@T["Person_Facts_Note"]</p>
+            @if (_factsProblem is not null)
+            {
+                <div class="problems" role="alert"><ul>
+                    <li>@T[$"Person_Facts_Problem_{_factsProblem}"]</li>
+                </ul></div>
+            }
+            <form method="post" action="@($"{PeopleEndpoints.Root}/facts")" class="account account-facts-form">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}{PeopleEndpoints.Person}/{Id}")" />
+                <fieldset class="fact-group">
+                    <legend>@T["Person_Fact_Born"]</legend>
+                    <p class="field">
+                        <label for="fact-born">@T["Person_Facts_Born_Label"]</label>
+                        <input id="fact-born" name="born" type="text" inputmode="numeric" maxlength="4" autocomplete="bday-year" dir="ltr" value="@_stated.BornYear?.ToString(CultureInfo.InvariantCulture)" aria-describedby="fact-born-how" />
+                        <span class="meta" id="fact-born-how">@T["Person_Facts_Born_How"]</span>
+                    </p>
+                    <p class="field">
+                        <label for="fact-born-shown">@T["Person_Facts_Shown"]</label>
+                        <AudienceChoice Id="fact-born-shown" Name="bornShown" Shown="_stated.Born.Shown" Circle="_stated.Born.Circle" Circles="_circles" />
+                    </p>
+                </fieldset>
+                <fieldset class="fact-group">
+                    <legend>@T["Person_Fact_Lives"]</legend>
+                    <p class="field">
+                        <label for="fact-town">@T["Person_Facts_Town"]</label>
+                        <input id="fact-town" name="town" type="text" maxlength="@PeopleStore.LongestPlaceOfAccount" autocomplete="address-level2" dir="auto" value="@_stated.Town" />
+                    </p>
+                    <p class="field">
+                        <label for="fact-country">@T["Person_Facts_Country"]</label>
+                        <input id="fact-country" name="country" type="text" maxlength="@PeopleStore.LongestPlaceOfAccount" autocomplete="country-name" dir="auto" value="@_stated.Country" aria-describedby="fact-lives-how" />
+                        <span class="meta" id="fact-lives-how">@T["Person_Facts_Lives_How"]</span>
+                    </p>
+                    <p class="field">
+                        <label for="fact-lives-shown">@T["Person_Facts_Shown"]</label>
+                        <AudienceChoice Id="fact-lives-shown" Name="livesShown" Shown="_stated.Lives.Shown" Circle="_stated.Lives.Circle" Circles="_circles" />
+                    </p>
+                </fieldset>
+                <fieldset class="fact-group">
+                    <legend>@T["Person_Fact_Languages"]</legend>
+                    <p class="meta" id="fact-languages-how">@string.Format(CultureInfo.CurrentCulture, T["Person_Facts_Languages_How"], Visitor.Number(AccountLanguages.Most))</p>
+                    <ul class="choices fact-languages" role="list" aria-describedby="fact-languages-how">
+                        @foreach (var (tag, name) in AccountLanguages.Known)
+                        {
+                            <li><label><input type="checkbox" name="languages" value="@tag" checked="@_stated.Languages.Contains(tag)" /> <span lang="@tag" dir="auto">@name</span></label></li>
+                        }
+                    </ul>
+                    <p class="field">
+                        <label for="fact-languages-shown">@T["Person_Facts_Shown"]</label>
+                        <AudienceChoice Id="fact-languages-shown" Name="languagesShown" Shown="_stated.Speaks.Shown" Circle="_stated.Speaks.Circle" Circles="_circles" />
+                    </p>
+                </fieldset>
+                <fieldset class="fact-group">
+                    <legend>@T["Person_Fact_Link"]</legend>
+                    <p class="field">
+                        <label for="fact-link">@T["Person_Facts_Link_Label"]</label>
+                        <input id="fact-link" name="link" type="text" inputmode="url" maxlength="@PeopleStore.LongestLink" autocomplete="url" dir="ltr" placeholder="https://" value="@_stated.Link" aria-describedby="fact-link-how" />
+                        <span class="meta" id="fact-link-how">@T["Person_Facts_Link_How"]</span>
+                    </p>
+                    <p class="field">
+                        <label for="fact-link-shown">@T["Person_Facts_Shown"]</label>
+                        <AudienceChoice Id="fact-link-shown" Name="linkShown" Shown="_stated.Linked.Shown" Circle="_stated.Linked.Circle" Circles="_circles" />
+                    </p>
+                </fieldset>
+                <p><button type="submit" class="action">@T["Person_Facts_Save"]</button></p>
             </form>
         </section>
     }
@@ -332,6 +447,11 @@
     private bool MayObject(PhotoInfo photo) =>
         _viewer is not null && photo.Owner.Id != _viewer && photo.Shown == ScopeKind.Public && photo.Tags.All(tag => tag.Person.Id != _viewer);
 
+    private static readonly string[] FactProblems = ["year", "long", "languages", "link"];
+    private AccountFacts? _stated;
+    private bool _saidFacts;
+    private string? _factsProblem;
+
     protected override void OnInitialized()
     {
         if (Desk.IsOpen && Id.Length <= 40)
@@ -353,6 +473,9 @@
                 _mine = store.Description(Id);
                 _ownPhotos = Desk.PhotoFolder is null ? [] : store.Photos(Id);
                 _said = Said == "described";
+                _stated = store.Facts(Id);
+                _saidFacts = Said == "stated";
+                _factsProblem = Form == "facts" && FactProblems.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
                 _problem = Form == "describe" && Problems.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
                 _circles = store.Circles(Id);
                 _known = [.. store.Relationships(Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other).DistinctBy(person => person.Id)];

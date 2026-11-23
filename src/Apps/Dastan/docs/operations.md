@@ -335,6 +335,9 @@ giving the name and the password on the sign-in page. `people forget` ends the 3
 for somebody who asks to be deleted at once. The commands write into the store the site writes into: run them
 where the store lies, while few people are on the site.
 
+The facts an account states about itself (step 25.5) are thirteen more columns of the visitor: `database
+migrate` is run before a version with them starts, as for every change of form.
+
 ## A family tree from a file
 
 An account can ask who runs the site to write a family tree for it from a file, instead of typing it into the

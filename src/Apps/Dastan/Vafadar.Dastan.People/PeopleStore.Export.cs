@@ -42,6 +42,12 @@ public sealed partial class PeopleStore
         var belongings = Belongings(visitor!.Id);
         var circles = Circles(id);
         var trees = Trees(id);
+
+        // Who a fact of the account is shown to, in words: nobody else, everybody, or the name of a circle.
+        string Audience(int scope, long? circle) => (ScopeKind)scope == ScopeKind.Circle && circles.FirstOrDefault(one => one.Number == circle)?.Name is { } named
+            ? $"circle: {named}"
+            : ((ScopeKind)scope).ToString().ToLowerInvariant();
+
         return new JsonObject
         {
             ["format"] = "dastan-account",
@@ -57,6 +63,15 @@ public sealed partial class PeopleStore
                 ["aboutShownTo"] = visitor.About is null ? null : ((ScopeKind)visitor.AboutScope).ToString().ToLowerInvariant(),
                 ["aboutCircle"] = visitor.About is null || visitor.AboutCircle is not { } aboutCircle ? null : circles.FirstOrDefault(circle => circle.Number == aboutCircle)?.Name,
                 ["picture"] = visitor.Picture,
+                ["bornYear"] = visitor.BornYear,
+                ["bornYearShownTo"] = visitor.BornYear is null ? null : Audience(visitor.BornScope, visitor.BornCircle),
+                ["town"] = visitor.Town,
+                ["country"] = visitor.Country,
+                ["livesShownTo"] = visitor.Town is null && visitor.Country is null ? null : Audience(visitor.LivesScope, visitor.LivesCircle),
+                ["languages"] = visitor.Languages is null ? null : new JsonArray([.. visitor.Languages.Split(',').Select(tag => (JsonNode)tag)]),
+                ["languagesShownTo"] = visitor.Languages is null ? null : Audience(visitor.LanguagesScope, visitor.LanguagesCircle),
+                ["link"] = visitor.Link,
+                ["linkShownTo"] = visitor.Link is null ? null : Audience(visitor.LinkScope, visitor.LinkCircle),
                 ["recoveryCodesLeft"] = _context.RecoveryCodes.AsNoTracking().Count(code => code.VisitorId == id && code.UsedAt == null),
                 ["signInThrough"] = new JsonArray([.. _context.AccountLogins.AsNoTracking().Where(login => login.UserId == id).Select(login => login.LoginProvider).OrderBy(provider => provider).AsEnumerable().Select(provider => (JsonNode)provider)]),
             },

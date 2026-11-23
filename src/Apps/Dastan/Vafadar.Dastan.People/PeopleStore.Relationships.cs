@@ -76,6 +76,9 @@ public sealed record ProfileView(PersonRef Person, ImmutableArray<ShownRelations
 
     /// <summary>Gets the picture of the account – one of its photographs –, when the viewer may see that photograph.</summary>
     public PhotoInfo? Picture { get; init; }
+
+    /// <summary>Gets the facts the account states about itself (step 25.5), as far as the viewer may see each.</summary>
+    public ShownFacts Facts { get; init; } = ShownFacts.None;
 }
 
 /// <content>
@@ -451,6 +454,8 @@ public sealed partial class PeopleStore
             (described.AboutScope, described.AboutCircle) = ((int)ScopeKind.Private, null);
         }
 
+        FactsOfCircleBackToNobody(circle);
+
         foreach (var photo in _context.Photos.Where(candidate => candidate.Circle == circle))
         {
             (photo.Scope, photo.Circle) = ((int)ScopeKind.Private, null);
@@ -498,6 +503,7 @@ public sealed partial class PeopleStore
             Affiliations = AffiliationsShown(account, id),
             About = about,
             Picture = picture,
+            Facts = FactsShown(person, account?.Value),
         };
     }
 
