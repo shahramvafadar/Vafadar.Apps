@@ -112,6 +112,30 @@ public static class PeopleEndpoints
             return store.Show(Me(context), relationship ?? string.Empty, chosen.Value.Kind, chosen.Value.Circle) ? Said(returnUrl, "shown") : Results.BadRequest();
         });
 
+        // What an account says about itself on its page (D-086): a few words, who reads them, and a picture.
+        forms.MapPost("/describe", (HttpContext context, AccountDesk desk, [FromForm] string? about, [FromForm] string? shown, [FromForm] string? picture, [FromForm] string? returnUrl) =>
+        {
+            if (Scope(shown) is not { } chosen)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            var me = Me(context);
+
+            // The page of the account, in the language the form came from, and nowhere else.
+            var address = ReturnAddress.Safe(returnUrl, $"{Person}/{me}");
+            var end = address.IndexOfAny(['?', '#']);
+            address = end < 0 ? address : address[..end];
+            var page = address.EndsWith($"{Person}/{me}", StringComparison.Ordinal) && address.Length <= Person.Length + me.Length + 13 ? address : $"{Person}/{me}";
+            return store.DescribeAccount(me, about, chosen.Kind, chosen.Circle, picture) switch
+            {
+                "done" => Results.Redirect($"{page}?said=described"),
+                "refused" => Results.BadRequest(),
+                var problem => Results.Redirect($"{page}?form=describe&problem={problem}#describe"),
+            };
+        });
+
         // Blocking (PRIV-009): one-sided, and the other account is not told.
         forms.MapPost("/block", (HttpContext context, AccountDesk desk, [FromForm] string? account, [FromForm] string? returnUrl) =>
         {

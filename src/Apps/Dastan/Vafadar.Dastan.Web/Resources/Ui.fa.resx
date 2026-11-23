@@ -4263,4 +4263,43 @@
   <data name="Affiliations_Entry_Look" xml:space="preserve">
     <value>ببینید همان جای شماست یا نه، و انتخابش کنید</value>
   </data>
+  <data name="Person_Head_Places" xml:space="preserve">
+    <value>بوده در</value>
+  </data>
+  <data name="Person_Head_More" xml:space="preserve">
+    <value>جاهای دیگر، پایین‌تر</value>
+  </data>
+  <data name="Person_Describe_Link" xml:space="preserve">
+    <value>تغییر آنچه صفحهٔ شما می‌گوید</value>
+  </data>
+  <data name="Person_Said_described-self" xml:space="preserve">
+    <value>نگه داشته شد. صفحهٔ شما آن را به کسانی که برگزیدید می‌گوید.</value>
+  </data>
+  <data name="Person_Self_Title" xml:space="preserve">
+    <value>آنچه صفحهٔ شما می‌گوید</value>
+  </data>
+  <data name="Person_Self_Note" xml:space="preserve">
+    <value>چند کلمه دربارهٔ خودتان و یک عکس، اگر بخواهید. کلمه‌ها را کسانی می‌خوانند که همین‌جا برمی‌گزینید. عکس یکی از عکس‌های خود شماست و کسانی آن را می‌بینند که اجازهٔ دیدن همان عکس را دارند – این را همان‌جا که عکس هست برگزینید.</value>
+  </data>
+  <data name="Person_Self_About" xml:space="preserve">
+    <value>چند کلمه دربارهٔ شما</value>
+  </data>
+  <data name="Person_Self_About_How" xml:space="preserve">
+    <value>حداکثر ۳۰۰ نویسه. برای اینکه چیزی گفته نشود خالی بگذارید.</value>
+  </data>
+  <data name="Person_Self_Shown" xml:space="preserve">
+    <value>چه کسانی این کلمه‌ها را بخوانند</value>
+  </data>
+  <data name="Person_Self_Picture_Note" xml:space="preserve">
+    <value>فقط عکس‌های خودتان می‌توانند عکس نمایهٔ شما باشند. اینکه چه کسی آن را ببیند با اجازهٔ دیدن همان عکس است:</value>
+  </data>
+  <data name="Person_Self_Save" xml:space="preserve">
+    <value>نگه دار</value>
+  </data>
+  <data name="Person_Self_Problem_long" xml:space="preserve">
+    <value>کلمه‌ها بیش از اندازه بلندند: حداکثر ۳۰۰ نویسه.</value>
+  </data>
+  <data name="Person_Self_Problem_picture" xml:space="preserve">
+    <value>آن عکس از عکس‌های شما نیست.</value>
+  </data>
 </root>

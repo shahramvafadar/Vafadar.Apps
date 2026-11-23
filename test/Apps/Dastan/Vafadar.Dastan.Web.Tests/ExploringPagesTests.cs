@@ -134,13 +134,18 @@ public sealed class ExploringPagesTests(DemoSite site) : IClassFixture<DemoSite>
     {
         var visitor = await Reader();
 
+        // The connections keep to the years themselves (D-084) and name only the kind of picture.
         var connections = await visitor.Get($"/en/{Rostam}/connections?from=900&to=1000&kind=image");
-        Assert.Contains("Not left out in this view: the years you chose, the kind of picture you chose. It is kept for the view it belongs to.", Words(connections.Main), StringComparison.Ordinal);
+        Assert.Contains("Not left out in this view: the kind of picture you chose. It is kept for the view it belongs to.", Words(connections.Main), StringComparison.Ordinal);
 
-        // The pictures leave the kind out themselves, and name only the years.
+        // The pictures keep to both and set nothing aside.
         var pictures = await visitor.Get($"/en/{Rostam}/gallery?from=900&to=1000&kind=image");
-        Assert.Contains("Not left out in this view: the years you chose. It is kept", Words(pictures.Main), StringComparison.Ordinal);
+        Assert.DoesNotContain("explore-aside", pictures.Main, StringComparison.Ordinal);
         Assert.Contains($"{Rostam}/connections?from=900&to=1000&kind=image", Views(pictures).Select(view => view.Address));
+
+        // The page of the name and its family tree show every year, and say so.
+        var family = await visitor.Get($"/en/{Rostam}/family?from=900&to=1000&kind=image");
+        Assert.Contains("Not left out in this view: the years you chose, the kind of picture you chose. It is kept for the view it belongs to.", Words(family.Main), StringComparison.Ordinal);
 
         // How far a drawing is opened leaves nothing out, and neither does what is no choice.
         Assert.DoesNotContain("explore-aside", (await visitor.Get($"/en/{Rostam}/gallery?up=3&open=character-zal&from=1000&to=900&kind=sound")).Main, StringComparison.Ordinal);
@@ -163,7 +168,7 @@ public sealed class ExploringPagesTests(DemoSite site) : IClassFixture<DemoSite>
     [Fact]
     public async Task The_bar_is_written_in_persian_too()
     {
-        var page = await (await Reader(language: "fa")).Get($"/fa/{Rostam}/connections?sel=character-zal&from=900&to=1000");
+        var page = await (await Reader(language: "fa")).Get($"/fa/{Rostam}/family?sel=character-zal&from=900&to=1000");
 
         var words = Words(page.Main);
         Assert.Contains("نمای کلی پیوندها خانواده تصویرها", words, StringComparison.Ordinal);

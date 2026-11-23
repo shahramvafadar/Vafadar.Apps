@@ -4263,4 +4263,43 @@
   <data name="Affiliations_Entry_Look" xml:space="preserve">
     <value>See whether it is your place, and choose it</value>
   </data>
+  <data name="Person_Head_Places" xml:space="preserve">
+    <value>Was at</value>
+  </data>
+  <data name="Person_Head_More" xml:space="preserve">
+    <value>More places below</value>
+  </data>
+  <data name="Person_Describe_Link" xml:space="preserve">
+    <value>Change what your page says</value>
+  </data>
+  <data name="Person_Said_described-self" xml:space="preserve">
+    <value>Kept. Your page says it to who you chose.</value>
+  </data>
+  <data name="Person_Self_Title" xml:space="preserve">
+    <value>What your page says</value>
+  </data>
+  <data name="Person_Self_Note" xml:space="preserve">
+    <value>A few words about yourself and a picture, if you want. The words are read by who you choose here. The picture is one of your photographs and is seen by who may see that photograph – choose who that is where the photograph is.</value>
+  </data>
+  <data name="Person_Self_About" xml:space="preserve">
+    <value>A few words about you</value>
+  </data>
+  <data name="Person_Self_About_How" xml:space="preserve">
+    <value>At most 300 characters. Leave it empty to say nothing.</value>
+  </data>
+  <data name="Person_Self_Shown" xml:space="preserve">
+    <value>Who may read these words</value>
+  </data>
+  <data name="Person_Self_Picture_Note" xml:space="preserve">
+    <value>Only your own photographs can be your picture. Who sees it is decided by who may see the photograph:</value>
+  </data>
+  <data name="Person_Self_Save" xml:space="preserve">
+    <value>Keep</value>
+  </data>
+  <data name="Person_Self_Problem_long" xml:space="preserve">
+    <value>The words are too long: at most 300 characters.</value>
+  </data>
+  <data name="Person_Self_Problem_picture" xml:space="preserve">
+    <value>That photograph is not one of yours.</value>
+  </data>
 </root>

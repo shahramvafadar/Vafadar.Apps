@@ -9,7 +9,9 @@
    only when who looks may see that photograph. *@
 <section class="profile" aria-labelledby="profile">
     <h2 id="profile">@T["Profile_Title"]</h2>
-    <div class="profile-body">
+    <div class="profile-body @(Headed ? "headed" : null)">
+        @if (!Headed)
+        {
         <figure class="profile-figure">
             <span class="profile-picture">
                 @if (Person.Picture is { } picture)
@@ -35,6 +37,7 @@
                 }
             </figcaption>
         </figure>
+        }
         <dl class="facts profile-facts">
             <dt>@T["Fact_born"]</dt>
             @Time(Person.Born)
@@ -94,6 +97,13 @@
     /// <summary>Gets or sets the person.</summary>
     [Parameter, EditorRequired]
     public TreePerson Person { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the page has a head that shows the picture (<c>PersonHead</c>,
+    /// D-086): the profile then is the facts alone and does not show the picture a second time.
+    /// </summary>
+    [Parameter]
+    public bool Headed { get; set; }
 
     /// <summary>Gets or sets the address of the tree, below which the pages of its people stand.</summary>
     [Parameter, EditorRequired]

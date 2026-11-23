@@ -15,22 +15,43 @@
     <PageAddress None="true" />
     <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
 
-    <header class="page-header is-record">
-        <IdentityMark Flavour="@IdentityMark.Record" />
-        <h1 dir="auto">@_person.Name</h1>
-        <p class="lead">@T["Person_In"] <a href="@($"account/trees/{_tree.Tree.Id}")" dir="auto">@_tree.Tree.Name</a></p>
-        @if (_person.Account is { } account)
-        {
-            <p class="meta">@T["Tree_Claim_Is"] <a href="@($"people/{account.Id}")"><bdi>@account.Name</bdi></a></p>
-        }
-    </header>
+    @* The head of the record (D-086): the picture this viewer may see or the drawing of a person, the name, the
+       tree, when the person was born and died, and – where the record is an account – the way to it. *@
+    <PersonHead Flavour="@IdentityMark.Record" Name="@_person.Name" Picture="_person.Picture">
+        <PictureNote>
+            @if (_person.Picture is { Caption.Length: > 0 } shown)
+            {
+                <span dir="auto">@string.Format(CultureInfo.CurrentCulture, T["Person_Picture_Of"], shown.Caption)</span>
+            }
+            else if (_person.Picture is null)
+            {
+                @T["Person_NoPicture"]
+            }
+        </PictureNote>
+        <Where>
+            <p class="lead">@T["Person_In"] <a href="@($"account/trees/{_tree.Tree.Id}")" dir="auto">@_tree.Tree.Name</a></p>
+            @if (_person.Account is { } account)
+            {
+                <p class="meta">@T["Tree_Claim_Is"] <a href="@($"people/{account.Id}")"><bdi>@account.Name</bdi></a></p>
+            }
+        </Where>
+        <Facts>
+            <PersonLife Person="_person" />
+        </Facts>
+        <ChildContent>
+            @if (_person.MayDescribe)
+            {
+                <a class="action secondary" href="@($"account/trees/{_tree.Tree.Id}/person/{_person.Id}#describe")">@T["Person_Describe_Title"]</a>
+            }
+        </ChildContent>
+    </PersonHead>
 
     @if (_said)
     {
         <p class="note" role="status">@T["Person_Said_described"]</p>
     }
 
-    <PersonProfile Tree="_tree" Person="_person" Address="@($"account/trees/{_tree.Tree.Id}")" />
+    <PersonProfile Tree="_tree" Person="_person" Address="@($"account/trees/{_tree.Tree.Id}")" Headed="true" />
 
     @if (_person.MayDescribe)
     {

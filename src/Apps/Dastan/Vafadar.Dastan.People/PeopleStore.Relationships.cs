@@ -70,6 +70,12 @@ public sealed record ProfileView(PersonRef Person, ImmutableArray<ShownRelations
 
     /// <summary>Gets the places the account says it was at, as far as the viewer may see them.</summary>
     public ImmutableArray<ShownAffiliation> Affiliations { get; init; } = [];
+
+    /// <summary>Gets the few words the account wrote about itself (D-086), when the viewer may read them.</summary>
+    public string? About { get; init; }
+
+    /// <summary>Gets the picture of the account – one of its photographs –, when the viewer may see that photograph.</summary>
+    public PhotoInfo? Picture { get; init; }
 }
 
 /// <content>
@@ -440,6 +446,11 @@ public sealed partial class PeopleStore
             }
         }
 
+        foreach (var described in _context.Visitors.Where(candidate => candidate.AboutCircle == circle))
+        {
+            (described.AboutScope, described.AboutCircle) = ((int)ScopeKind.Private, null);
+        }
+
         foreach (var photo in _context.Photos.Where(candidate => candidate.Circle == circle))
         {
             (photo.Scope, photo.Circle) = ((int)ScopeKind.Private, null);
@@ -470,6 +481,7 @@ public sealed partial class PeopleStore
             .Where(relationship => (relationship.From == id || relationship.To == id) && relationship.State == (int)RelationshipState.Accepted)
             .ToList();
         var others = Names(accepted.Select(relationship => relationship.From == id ? relationship.To : relationship.From));
+        var (about, picture) = Described(person, account?.Value);
 
         // The scope is asked before anything is produced from a relationship (PRIV-012): what a viewer may not
         // see is not counted and not hinted at.
@@ -484,6 +496,8 @@ public sealed partial class PeopleStore
         {
             Blocked = viewer is not null && Blocks(viewer, id),
             Affiliations = AffiliationsShown(account, id),
+            About = about,
+            Picture = picture,
         };
     }
 

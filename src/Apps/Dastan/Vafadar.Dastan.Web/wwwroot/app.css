@@ -550,6 +550,16 @@ main:focus {
   margin: 0;
 }
 
+/* A profile under a head that shows the picture (D-086): the facts alone, across the page. */
+.profile-body.headed {
+  display: block;
+}
+
+/* The words somebody wrote about themself keep the line ends they were written with. */
+.person-about {
+  white-space: pre-line;
+}
+
 .profile-figure figcaption {
   margin-block-start: var(--space-2);
 }

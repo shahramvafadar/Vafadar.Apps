@@ -57,6 +57,15 @@ public sealed class TreePersonPagesTests : IDisposable
         return WebUtility.HtmlDecode(page.Html[from..page.Html.IndexOf("</section>", from, StringComparison.Ordinal)]);
     }
 
+    // The head of the record (D-086): the picture or the drawing, the name, the tree and the life in two lines.
+    private static string Head(Page page)
+    {
+        var html = WebUtility.HtmlDecode(page.Html);
+        var from = html.IndexOf("<header class=\"page-header identity is-record\"", StringComparison.Ordinal);
+        Assert.True(from >= 0, "The page has no head of a record.");
+        return html[from..(html.IndexOf("</header>", from, StringComparison.Ordinal) + 9)];
+    }
+
     private static async Task<string> Bring(Browser owner, string scope)
     {
         var added = await owner.Upload("/preferences/photos/add", Photos, "IMG_0001.png", TestFiles.Png(), ("caption", "Zal in the garden"), ("taken", "1940-07-04"), ("scope", scope), ("confirmed", "on"), ("returnUrl", Photos));
@@ -81,9 +90,14 @@ public sealed class TreePersonPagesTests : IDisposable
         Assert.Matches("<dt>Born in</dt>\\s*<dd class=\"unknown\">Not known</dd>", profile);
         Assert.Matches("<dt>Died in</dt>\\s*<dd class=\"unknown\">Not known</dd>", profile);
 
-        // No picture: a drawing, which is decoration, and the words that say so.
-        Assert.Contains("<svg class=\"kind-drawing\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"", profile, StringComparison.Ordinal);
-        Assert.Contains("No picture", profile, StringComparison.Ordinal);
+        // No picture: a drawing, which is decoration, and the words that say so – in the head of the record,
+        // which says the life in two lines; the profile below is the facts and shows no picture a second time.
+        var head = Head(page);
+        Assert.Contains("<svg class=\"kind-drawing\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"", head, StringComparison.Ordinal);
+        Assert.Contains("No picture", head, StringComparison.Ordinal);
+        Assert.Matches("<dt>Born</dt>\\s*<dd><bdi>about 1250 SH</bdi></dd>", head);
+        Assert.Matches("<dt>Died</dt>\\s*<dd><bdi>21 March 1950 CE</bdi></dd>", head);
+        Assert.DoesNotContain("kind-drawing", profile, StringComparison.Ordinal);
         Assert.DoesNotContain("<script", page.Own, StringComparison.Ordinal);
         Assert.Contains("noindex", page.Html, StringComparison.Ordinal);
 
@@ -175,7 +189,7 @@ public sealed class TreePersonPagesTests : IDisposable
         Assert.Contains(saved, page.Main, StringComparison.Ordinal);
 
         // The page says at the first glance that this is a record in a tree, not an account and not a figure of a story (step 20.9).
-        Assert.Contains("<header class=\"page-header is-record\"><p class=\"identity-mark mark-record\">", page.Main, StringComparison.Ordinal);
+        Assert.Contains("<p class=\"identity-mark mark-record\">", Head(page), StringComparison.Ordinal);
         Assert.Contains("<dd><bdi>Zabol</bdi></dd>", Profile(page), StringComparison.Ordinal);
         Assert.Contains("<p class=\"person-about\" dir=\"auto\">He raised Rostam.\nHe had white hair.</p>", WebUtility.HtmlDecode(page.Html), StringComparison.Ordinal);
 
@@ -203,7 +217,7 @@ public sealed class TreePersonPagesTests : IDisposable
         var sent = await Send(mina, tree, zal, "person-describe", ("person", Id(zal)), ("bornAt", "Zabol"), ("picture", photo));
         Assert.Equal($"{zal}?said=described#profile", sent.Response.Headers.Location?.OriginalString);
 
-        var profile = Profile(await mina.Get(zal));
+        var profile = Head(await mina.Get(zal));
         Assert.Contains($"<img src=\"/photo/{photo}\"", profile, StringComparison.Ordinal);
         Assert.Contains("alt=\"Zal in the garden\"", profile, StringComparison.Ordinal);
         Assert.DoesNotContain("kind-drawing", profile, StringComparison.Ordinal);
@@ -220,13 +234,13 @@ public sealed class TreePersonPagesTests : IDisposable
         var seen = await stranger.Get(open);
         Assert.Equal(HttpStatusCode.OK, seen.Status);
         Assert.Contains("class=\"identity-mark mark-record\"", seen.Main, StringComparison.Ordinal);
-        Assert.Contains("kind-drawing", Profile(seen), StringComparison.Ordinal);
+        Assert.Contains("kind-drawing", Head(seen), StringComparison.Ordinal);
         Assert.Contains("<dd><bdi>Zabol</bdi></dd>", Profile(seen), StringComparison.Ordinal);
         Assert.DoesNotContain("person-describe", seen.Html, StringComparison.Ordinal);
         Assert.Contains($"href=\"trees/{Id(tree)}/person/{Id(zal)}\"", (await stranger.Get($"/en/trees/{Id(tree)}")).Html, StringComparison.Ordinal);
 
         await mina.Post("/preferences/photos/share", Photos, ("photo", photo), ("scope", "public"), ("confirmed", "on"), ("returnUrl", Photos));
-        Assert.Contains($"<img src=\"/photo/{photo}\"", Profile(await stranger.Get(open)), StringComparison.Ordinal);
+        Assert.Contains($"<img src=\"/photo/{photo}\"", Head(await stranger.Get(open)), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -270,7 +284,7 @@ public sealed class TreePersonPagesTests : IDisposable
         var everybody = System.Text.Json.Nodes.JsonNode.Parse((await _site.Visitor().Get($"{open}/profile.json")).Html)!;
         Assert.Equal(("Zal", $"trees/{Id(tree)}/person/{Id(zal)}"), ((string?)everybody["name"], (string?)everybody["address"]));
         Assert.Null(everybody["picture"]);
-        Assert.Contains((string)everybody["noPicture"]!, Regex.Replace(Profile(await _site.Visitor().Get(open)), "<[^>]+>", " "), StringComparison.Ordinal);
+        Assert.Contains((string)everybody["noPicture"]!, Regex.Replace(Head(await _site.Visitor().Get(open)), "<[^>]+>", " "), StringComparison.Ordinal);
     }
 
     [Fact]

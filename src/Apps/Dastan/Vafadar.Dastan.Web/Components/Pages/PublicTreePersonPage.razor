@@ -1,6 +1,7 @@
 @page "/trees/{Tree}/person/{Id}"
 @using Vafadar.Dastan.People
 @inject AccountDesk Desk
+@inject Visitor Visitor
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -13,13 +14,26 @@
     <PageAddress None="true" />
     <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
 
-    <header class="page-header is-record">
-        <IdentityMark Flavour="@IdentityMark.Record" />
-        <h1 dir="auto">@_person.Name</h1>
-        <p class="lead">@T["Person_In"] <a href="@($"trees/{_tree.Tree.Id}")" dir="auto">@_tree.Tree.Name</a></p>
-    </header>
+    <PersonHead Flavour="@IdentityMark.Record" Name="@_person.Name" Picture="_person.Picture">
+        <PictureNote>
+            @if (_person.Picture is { Caption.Length: > 0 } shown)
+            {
+                <span dir="auto">@string.Format(CultureInfo.CurrentCulture, T["Person_Picture_Of"], shown.Caption)</span>
+            }
+            else if (_person.Picture is null)
+            {
+                @T["Person_NoPicture"]
+            }
+        </PictureNote>
+        <Where>
+            <p class="lead">@T["Person_In"] <a href="@($"trees/{_tree.Tree.Id}")" dir="auto">@_tree.Tree.Name</a></p>
+        </Where>
+        <Facts>
+            <PersonLife Person="_person" />
+        </Facts>
+    </PersonHead>
 
-    <PersonProfile Tree="_tree" Person="_person" Address="@($"trees/{_tree.Tree.Id}")" />
+    <PersonProfile Tree="_tree" Person="_person" Address="@($"trees/{_tree.Tree.Id}")" Headed="true" />
 }
 
 <ReportLink />
