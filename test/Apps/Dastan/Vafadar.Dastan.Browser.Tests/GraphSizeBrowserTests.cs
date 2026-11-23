@@ -91,4 +91,51 @@ public sealed class GraphSizeBrowserTests(BrowserSite site) : IClassFixture<Brow
             Assert.True(seen.GetProperty("texts").GetInt32() < people * 3, "Every card is in the page, in sight or not.");
         }
     }
+
+    // A made-up neighbourhood: a name in the middle with the larger card, twelve cards it is connected with,
+    // and behind each of them one compact card – some with a Persian name.
+    private static string Neighbourhood()
+    {
+        static string Node(string id, string name, string? size) =>
+            $"{{\"id\":\"{id}\",\"name\":\"{name}\",\"address\":\"x/entity/{id}\",\"profile\":\"x/entity/{id}/profile.json\",\"kind\":\"Person\",\"lines\":[\"Born: 1000\",\"Made up\"],\"expandable\":false{(size is null ? string.Empty : $",\"size\":\"{size}\"")}}}";
+        static string Edge(string from, string to) =>
+            $"{{\"id\":\"{from}-{to}\",\"from\":\"{from}\",\"to\":\"{to}\",\"role\":\"relation\",\"label\":\"knows\",\"directed\":true,\"disputed\":false}}";
+
+        var near = Enumerable.Range(0, 12).ToList();
+        var nodes = new[] { Node("focus", "The name in the middle", "main") }
+            .Concat(near.Select(index => Node($"near{index}", index % 2 == 0 ? $"Near {index}" : $"نزدیک {index}", null)))
+            .Concat(near.Select(index => Node($"far{index}", index % 2 == 0 ? $"Far {index}" : $"دور {index}", "compact")));
+        var edges = near.Select(index => Edge("focus", $"near{index}")).Concat(near.Select(index => Edge($"near{index}", $"far{index}")));
+        return $"{{\"kind\":\"connections\",\"focus\":\"focus\",\"nodes\":[{string.Join(',', nodes)}],\"edges\":[{string.Join(',', edges)}]}}";
+    }
+
+    [Theory]
+    [InlineData("en")]
+    [InlineData("fa")]
+    public async Task The_cards_of_a_drawing_have_the_sizes_the_graph_names(string language)
+    {
+        var page = await site.Visitor(1280, readTo: 4, graph: true);
+        var data = Neighbourhood();
+        await page.RouteAsync("**/connections.json*", route => route.FulfillAsync(new() { ContentType = "application/json", Body = data }));
+        await page.GotoAsync($"/{language}/{BrowserSite.Story}/entity/character-rostam/connections");
+        var host = page.Locator("dastan-graph");
+        await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live", new() { Timeout = 120_000 });
+
+        var cards = await host.EvaluateAsync<JsonElement>("host => host.graph.seen.cards");
+        var sizes = cards.EnumerateArray().ToDictionary(card => card.GetProperty("id").GetString()!, card => (Width: card.GetProperty("width").GetDouble(), Height: card.GetProperty("height").GetDouble()));
+        Assert.Equal(25, sizes.Count);
+
+        // Three sizes: the name in the middle is the widest and the highest, a compact card the narrowest and the lowest.
+        var (main, usual, compact) = (sizes["focus"], sizes["near0"], sizes["far0"]);
+        Assert.True(main.Width > usual.Width && usual.Width > compact.Width, $"Widths: {main.Width}, {usual.Width}, {compact.Width}.");
+        Assert.True(main.Height >= usual.Height && usual.Height > compact.Height, $"Heights: {main.Height}, {usual.Height}, {compact.Height}.");
+        Assert.All(Enumerable.Range(0, 12), index => Assert.Equal(usual.Width, sizes[$"near{index}"].Width, 1.0));
+        Assert.All(Enumerable.Range(0, 12), index => Assert.Equal(compact.Width, sizes[$"far{index}"].Width, 1.0));
+
+        // A compact card says a name and what the node is, and nothing else.
+        var texts = await host.EvaluateAsync<string[]>("host => [...host.querySelectorAll('[data-graph-canvas] g[id^=\"n13\"] text')].map(text => text.textContent.trim()).filter(text => text.length > 0)");
+        Assert.Contains(texts, text => text.Contains("Far 0", StringComparison.Ordinal));
+        Assert.Contains(texts, text => text.Contains("Person", StringComparison.Ordinal));
+        Assert.DoesNotContain(texts, text => text.Contains("Born", StringComparison.Ordinal) || text.Contains("Made up", StringComparison.Ordinal));
+    }
 }

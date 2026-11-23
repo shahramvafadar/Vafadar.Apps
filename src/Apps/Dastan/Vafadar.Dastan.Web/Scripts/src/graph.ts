@@ -25,7 +25,7 @@ interface Picture { source: string; sizes: string | null; words: string; }
 interface GraphNode {
   id: string; name: string; address: string; profile: string; nameLanguage?: string; kind?: string;
   picture?: Picture; lines: string[]; row?: number; place?: number; expandable: boolean; timeline?: string; gallery?: string;
-  centre?: string; compare?: string;
+  centre?: string; compare?: string; size?: 'main' | 'compact';
 }
 interface GraphEdge {
   id: string; from: string; to: string; role: string; label: string; directed: boolean;
@@ -33,13 +33,26 @@ interface GraphEdge {
 }
 interface Graph { kind: string; focus: string | null; nodes: GraphNode[]; edges: GraphEdge[]; flow?: string; }
 
-// The measures of a card, in pixels of the drawing. Every card has the same width, so that the places of the
-// layout – counted in cards – are columns of the drawing.
-const cardWidth = 220, pictureSize = 44, gap = 8, inset = 8;
-const columnStep = cardWidth + 40, rowStep = 150;
-// A family that grows across the page (step 20.8): a column for each generation, with the room its lines need
-// between two columns, and the cards of one generation under each other.
-const generationStep = cardWidth + 90, besideStep = 124;
+// The measures of a card, in pixels of the drawing. A card has one of three sizes (step 25.6), which the
+// server names with the graph so that this drawing and the still one agree: the name in the middle is larger,
+// a card of a drawing with many is compact – its name and one line, no picture –, every other is the usual.
+// In a family every card has one size, so that the places of the layout – counted in cards – are columns.
+interface CardSize { width: number; height: number; name: number; line: number; picture: number; lines: number; }
+const gap = 8, inset = 8;
+const cardSizes: Record<'main' | 'usual' | 'compact', CardSize> = {
+  main: { width: 264, height: 88, name: 17, line: 13, picture: 56, lines: 3 },
+  usual: { width: 220, height: 72, name: 15, line: 12, picture: 44, lines: 3 },
+  compact: { width: 184, height: 52, name: 13, line: 11, picture: 0, lines: 1 },
+};
+const sizeOf = (node: GraphNode): CardSize => cardSizes[node.size ?? 'usual'];
+// The steps of a family: a column and a row for the widest and the highest card it has. Across the page
+// (step 20.8) a column is a generation, with the room its lines need between two columns, and the cards of
+// one generation stand under each other.
+interface Steps { column: number; row: number; generation: number; beside: number; }
+function stepsOf(nodes: GraphNode[]): Steps {
+  const width = Math.max(...nodes.map(node => sizeOf(node).width)), height = Math.max(...nodes.map(node => sizeOf(node).height));
+  return { column: width + 40, row: height + 78, generation: width + 90, beside: height + 52 };
+}
 // Above this number of cards only what is in sight is drawn.
 const manyNodes = 150;
 
@@ -113,14 +126,15 @@ class DastanGraph {
       // page that is read from right to left –, and the places of a generation run down the drawing.
       const across = this.graph.flow === 'across';
       const youngest = Math.max(...nodes.map(node => node.row!));
+      const steps = stepsOf(nodes);
       for (const node of nodes) {
         if (across) {
-          this.spot.set(node.id, { x: (this.rightToLeft ? youngest - node.row! : node.row!) * generationStep, y: node.place! * besideStep });
+          this.spot.set(node.id, { x: (this.rightToLeft ? youngest - node.row! : node.row!) * steps.generation, y: node.place! * steps.beside });
           continue;
         }
 
         const along = this.rightToLeft ? last - node.place! : node.place!;
-        this.spot.set(node.id, { x: along * columnStep, y: node.row! * rowStep });
+        this.spot.set(node.id, { x: along * steps.column, y: node.row! * steps.row });
       }
 
       return;
@@ -133,7 +147,11 @@ class DastanGraph {
 
     // One round, which grows with the number of cards on it. Seen in a browser with two rounds: the line to
     // a card of the outer round went through a card of the inner one, with its label on that card.
-    const across = Math.max(380, around.length * 46), down = Math.max(240, around.length * 30);
+    // A larger card in the middle pushes the round out by what it is larger, so that the lines to it stay as
+    // long as they were and their labels keep their room (seen in Firefox: two labels of one pair touched).
+    const middle = nodes.find(node => node.id === this.graph.focus);
+    const wider = middle ? (sizeOf(middle).width - cardSizes.usual.width) / 2 : 0, higher = middle ? (sizeOf(middle).height - cardSizes.usual.height) / 2 : 0;
+    const across = Math.max(380, around.length * 46) + wider, down = Math.max(240, around.length * 30) + higher;
     around.forEach((node, index) => {
       const angle = (2 * Math.PI * index) / around.length - Math.PI / 2;
       this.spot.set(node.id, { x: Math.cos(angle) * across, y: Math.sin(angle) * down });
@@ -175,31 +193,36 @@ class DastanGraph {
     // "not a number" and the control fail far from here.
     row.padding = { left: inset, right: inset, top: inset, bottom: inset };
 
-    const wordsWidth = cardWidth - 2 * inset - (node.picture ? pictureSize + gap : 0);
+    const size = sizeOf(node);
+    // A compact card has no picture: a drawing with many cards is read by its names.
+    const picture = size.picture > 0 ? node.picture : undefined;
+    const wordsWidth = size.width - 2 * inset - (picture ? size.picture + gap : 0);
     const words = new StackPanel();
     words.id = key + '-words';
     words.orientation = 'Vertical';
     Object.assign(words.style, { fill: 'none', strokeColor: 'none' });
     // A width alone is not honoured by a container; a least width is.
     words.minWidth = wordsWidth;
-    const name = this.text(node.name, 15, true, this.look.text, wordsWidth);
+    const name = this.text(node.name, size.name, true, this.look.text, wordsWidth);
     name.id = key + '-name';
-    const lines = node.lines.map((line, index) => {
-      const element = this.text(line, 12, false, this.look.muted, wordsWidth);
+    // A compact card says what the node is where the server says it, and else the first of its lines.
+    const said = size.lines === 1 && node.kind ? [node.kind] : node.lines.slice(0, size.lines);
+    const lines = said.map((line, index) => {
+      const element = this.text(line, size.line, false, this.look.muted, wordsWidth);
       element.id = key + '-line' + index;
       return element;
     });
     words.children = [name, ...lines];
-    if (!node.picture) {
+    if (!picture) {
       row.children = [words];
       return row;
     }
 
     const image = new ImageElement();
     image.id = key + '-picture';
-    image.source = here(node.picture.source);
-    image.width = pictureSize;
-    image.height = pictureSize;
+    image.source = here(picture.source);
+    image.width = size.picture;
+    image.height = size.picture;
     image.margin = this.rightToLeft ? { left: gap, right: 0, top: 0, bottom: 0 } : { left: 0, right: gap, top: 0, bottom: 0 };
     Object.assign(image.style, { fill: 'none', strokeColor: 'none' });
     // A row of the control has no order of its own for a page read from right to left; the picture is simply
@@ -278,7 +301,8 @@ class DastanGraph {
     const nodes: NodeModel[] = this.graph.nodes.map(node => {
       const key = this.keyOf.get(node.id)!;
       const at = this.spot.get(node.id) ?? { x: 0, y: 0 };
-      return { id: key, width: cardWidth, height: 72, offsetX: at.x, offsetY: at.y, constraints: fixed, ports: ports.get(key) ?? [] };
+      const size = sizeOf(node);
+      return { id: key, width: size.width, height: size.height, offsetX: at.x, offsetY: at.y, constraints: fixed, ports: ports.get(key) ?? [] };
     });
     this.diagram = new Diagram({
       width: '100%', height: '100%',

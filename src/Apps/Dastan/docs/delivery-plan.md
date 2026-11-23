@@ -1376,6 +1376,22 @@ rule of the three engines), the budgets of time of step 20.12 – which must hol
 fails because of the sizes the sizes are made cheaper, the budget is not raised. A look at a drawing of sixty
 cards and of three. *Written down:* ADR 0020 addendum, CHANGELOG.
 
+*Done on 2026-11-23.* *Built:* `GraphCards` – the size of every card, said by the server with the graph: the
+name in the middle of a drawing of connections has the larger card; in a drawing with 24 cards or more the
+cards that name is not connected with are compact; a family has one size for all its cards, the usual one and
+from 24 on the compact one –; in the drawing that moves three measures of a card (264 by 88, 220 by 72, 184
+by 52, with the letters and the picture to them), a compact card with its name and what it is and no picture,
+the steps of a family taken from its widest and highest card, and a round that is pushed out by what the card
+in the middle is larger. *Other than planned:* the still drawing of connections had a larger box for the name
+in the middle already and is not changed; a compact card that is chosen does not grow in place – the
+inspector beside the drawing says everything of it, and a card that changed its size under a line would
+move the line. *Tried:* `GraphDataTests` (3 more), `GraphSizeBrowserTests` (2 more: the three sizes in English
+and Persian), and `GraphBrowserTests`, `GraphSizeBrowserTests` and `FamilyTreeBrowserTests` in Chromium,
+WebKit and Firefox on this machine; the budgets of time of step 20.12 hold in Chromium as they were.
+*Found by it:* with the larger card two labels of one pair of lines touched in Firefox – the round is pushed
+out. *Seen and not of this step:* `FamilyTreeBrowserTests.Across_the_page_generations_are_columns` fails in
+Firefox on this machine by a hundredth of a pixel, with and without this change.
+
 **25.7 Trying it with the owner (backlog C).** After 25.1 to 25.6 and after the content of the backlog, part
 B, as far as it is there: the site and the tool of the editors are started on `library/` on the owner's
 machine – databases brought up with `database migrate` first –, the addresses are given to the owner, a second

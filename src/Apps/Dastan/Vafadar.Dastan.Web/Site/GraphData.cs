@@ -93,6 +93,52 @@ public sealed record GraphNode(string Id, string Name, string Address, string Pr
     /// <summary>Gets a value indicating whether the page offers to open the relations of the node.</summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Expandable { get; init; }
+
+    /// <summary>
+    /// Gets the size of the card (step 25.6): <see cref="GraphCards.Main"/> for the name in the middle,
+    /// <see cref="GraphCards.Compact"/> for a card of a drawing with many, nothing for the usual card. The
+    /// server says it, so that a drawing never decides by itself what stands out.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Size { get; init; }
+}
+
+/// <summary>
+/// The sizes of the cards of a graph (step 25.6, ADR 0020). The name a drawing of connections is about has a
+/// larger card. A drawing with many cards is read by its names: there the cards that are not connected with
+/// that name are compact – a name and what it is, no picture. A family has one size for all its cards, so that
+/// a generation stays a row: the usual one, and the compact one when it has many.
+/// </summary>
+public static class GraphCards
+{
+    /// <summary>The larger card of the name in the middle.</summary>
+    public const string Main = "main";
+
+    /// <summary>The card of a drawing with many: a name and what it is.</summary>
+    public const string Compact = "compact";
+
+    /// <summary>The number of cards from which a drawing has many.</summary>
+    public const int Many = 24;
+
+    /// <summary>Returns the nodes of a drawing of connections with their sizes.</summary>
+    /// <param name="nodes">The nodes.</param>
+    /// <param name="edges">The edges.</param>
+    /// <param name="focus">The name in the middle.</param>
+    public static IReadOnlyList<GraphNode> OfConnections(IReadOnlyList<GraphNode> nodes, IReadOnlyList<GraphEdge> edges, string focus)
+    {
+        ArgumentNullException.ThrowIfNull(nodes);
+        ArgumentNullException.ThrowIfNull(edges);
+        var beside = edges.Where(edge => edge.From == focus || edge.To == focus).SelectMany(edge => new[] { edge.From, edge.To }).ToHashSet(StringComparer.Ordinal);
+        return [.. nodes.Select(node => node with { Size = node.Id == focus ? Main : nodes.Count >= Many && !beside.Contains(node.Id) ? Compact : null })];
+    }
+
+    /// <summary>Returns the nodes of a family with their size: one for all of them.</summary>
+    /// <param name="nodes">The nodes.</param>
+    public static IReadOnlyList<GraphNode> OfFamily(IReadOnlyList<GraphNode> nodes)
+    {
+        ArgumentNullException.ThrowIfNull(nodes);
+        return nodes.Count >= Many ? [.. nodes.Select(node => node with { Size = Compact })] : nodes;
+    }
 }
 
 /// <summary>An edge of a graph: one relationship, kept apart from every other between the same two nodes.</summary>
@@ -145,7 +191,7 @@ public static class GraphDataEndpoints
         return new(
             "family",
             around.Value,
-            [.. family.Members.Select(member => Node(member.Entity, visitor, site, text, explore) with { Row = placed[member.Entity.Id].Layer, Place = placed[member.Entity.Id].Place })],
+            GraphCards.OfFamily([.. family.Members.Select(member => Node(member.Entity, visitor, site, text, explore) with { Row = placed[member.Entity.Id].Layer, Place = placed[member.Entity.Id].Place })]),
             [
                 .. family.Parentage.Select(edge => Edge(edge, "parent", directed: true, visitor, site, text)),
                 .. family.Partnerships.Select(edge => Edge(edge, "partner", directed: false, visitor, site, text)),
@@ -163,11 +209,12 @@ public static class GraphDataEndpoints
         ArgumentNullException.ThrowIfNull(visitor);
         ArgumentNullException.ThrowIfNull(site);
         var expandable = view.Expandable.Select(entity => entity.Id).ToHashSet();
+        IReadOnlyList<GraphEdge> edges = [.. view.Edges.Select(edge => Edge(edge, "relation", directed: true, visitor, site, text))];
         return new(
             "connections",
             view.Focus.Id.Value,
-            [.. view.Nodes.Select(entity => Node(entity, visitor, site, text, explore) with { Expandable = expandable.Contains(entity.Id) })],
-            [.. view.Edges.Select(edge => Edge(edge, "relation", directed: true, visitor, site, text))]);
+            GraphCards.OfConnections([.. view.Nodes.Select(entity => Node(entity, visitor, site, text, explore) with { Expandable = expandable.Contains(entity.Id) })], edges, view.Focus.Id.Value),
+            edges);
     }
 
     /// <summary>Returns a family tree of visitors as a graph.</summary>
@@ -184,6 +231,7 @@ public static class GraphDataEndpoints
         return new(
             "family",
             null,
+            GraphCards.OfFamily(
             [
                 .. tree.People.Select(person =>
                 {
@@ -198,7 +246,7 @@ public static class GraphDataEndpoints
                         Place = placed.TryGetValue(person.Id, out var along) ? along.Place : null,
                     };
                 }),
-            ],
+            ]),
             [
                 .. tree.Links.Select(link =>
                 {

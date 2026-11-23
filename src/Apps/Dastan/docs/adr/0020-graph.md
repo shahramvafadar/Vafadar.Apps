@@ -229,3 +229,22 @@ development. Where `DASTAN_BUDGETS=record` is set – the runner of CI – the t
 measurement has none; a tree read over a real network or from a database on another machine; Firefox and
 WebKit on the machine of development (the runner of CI writes their times down); memory of the server; more
 than one visitor at a time.
+
+## Addendum of 2026-11-23: cards in sizes of their own (step 25.6, D-088)
+
+Every card of the drawing that moves was 220 by 72. Now a card has one of three sizes, and **the server says
+which** (`GraphCards`, the field `size` of a node) – a drawing never decides by itself what stands out, and
+the still drawing and the moving one are told the same.
+
+* **Main** – the name in the middle of a drawing of connections: wider, higher, larger letters and picture.
+* **Usual** – every other card; said by saying nothing.
+* **Compact** – in a drawing with 24 cards or more: the cards the name in the middle is not connected with.
+  A compact card says a name and what the node is, and has no picture.
+* **A family has one size for all its cards**, so that a generation stays a row or a column: the usual one,
+  and the compact one from 24 cards on. The steps between its rows and columns are taken from its widest and
+  highest card.
+* The round of a drawing of connections is pushed out by what the card in the middle is larger, so that the
+  lines to it are as long as before and their labels keep their room.
+
+Not done: a card that grows when it is chosen. What is chosen is said in the inspector beside the drawing, and
+a card that changed its size would move the lines that end at it.

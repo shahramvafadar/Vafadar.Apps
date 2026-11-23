@@ -464,3 +464,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Your page can say a few facts about you, if you choose: the year you were born, where you live, the languages
   you speak and one address of a page of your own. None is asked for; each is seen by who you choose and begins
   with nobody else.
+- In a drawing of connections the name in the middle has a larger card, and a drawing with many cards shows the
+  far ones smaller – a name and what it is – so that more of it is in sight.
