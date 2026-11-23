@@ -315,13 +315,11 @@ public sealed class TwoPeopleJourneyBrowserTests(AccountsBrowserSite site) : ICl
         await BrowserSite.Arrived(sara, new Regex(@"/account/people\?said=accepted$"));
         Assert.Equal(1, await sara.Locator("#waiting li").CountAsync());
         Assert.Equal(1, await sara.Locator("#mine form[action$='/people/end']").CountAsync());
-        await sara.Locator("#waiting li button[value=accept]").First.ClickAsync();
-        await BrowserSite.Arrived(sara, new Regex(@"/account/people\?said=accepted$"));
+        await BrowserSite.Sent(sara, sara.Locator("#waiting li button[value=accept]").First, new Regex(@"/account/people\?said=accepted$"));
         Assert.Equal(2, await sara.Locator("#mine form[action$='/people/end']").CountAsync());
 
         // One is ended, by itself: the other stays.
-        await sara.Locator("#mine form[action$='/people/end'] button").Last.ClickAsync();
-        await BrowserSite.Arrived(sara, new Regex(@"/account/people\?said="));
+        await BrowserSite.Sent(sara, sara.Locator("#mine form[action$='/people/end'] button").Last, new Regex(@"/account/people\?said="));
         Assert.Equal(1, await sara.Locator("#mine form[action$='/people/end']").CountAsync());
         await mina.GotoAsync(People);
         Assert.Equal(1, await mina.Locator("#mine form[action$='/people/end']").CountAsync());
@@ -377,8 +375,7 @@ public sealed class TwoPeopleJourneyBrowserTests(AccountsBrowserSite site) : ICl
         Assert.True(await Fits(sara));
         member = mina.Locator("#members form[action$='/trees/member']").First;
         await member.Locator("[name=role]").SelectOptionAsync("none");
-        await member.Locator("button[type=submit]").ClickAsync();
-        await BrowserSite.Arrived(mina, new Regex(@"said=member-set#members$"));
+        await BrowserSite.Sent(mina, member.Locator("button[type=submit]"), new Regex(@"said=member-set#members$"));
         Assert.Equal(404, (await sara.GotoAsync(tree))!.Status);
 
         // A photograph: shown to everybody it is delivered to the other; taken back, it is refused to her.
@@ -395,8 +392,7 @@ public sealed class TwoPeopleJourneyBrowserTests(AccountsBrowserSite site) : ICl
         Assert.Equal(200, (await sara.APIRequest.GetAsync(photo)).Status);
         var share = mina.Locator("#mine form[action$='/photos/share']").First;
         await share.Locator("select").SelectOptionAsync("private");
-        await share.Locator("button[type=submit]").ClickAsync();
-        await BrowserSite.Arrived(mina, new Regex(@"/account/photos\?said="));
+        await BrowserSite.Sent(mina, share.Locator("button[type=submit]"), new Regex(@"/account/photos\?said="));
         Assert.Equal(404, (await sara.APIRequest.GetAsync(photo)).Status);
         Assert.Equal(200, (await mina.APIRequest.GetAsync(photo)).Status);
         Assert.True(await Fits(mina));

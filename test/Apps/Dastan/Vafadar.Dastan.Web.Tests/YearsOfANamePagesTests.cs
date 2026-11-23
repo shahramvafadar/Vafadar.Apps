@@ -316,7 +316,7 @@ public sealed class YearsOfANamePagesTests(YearsSite site) : IClassFixture<Years
         // In other years it is left out of both, counted, and the way to all years is offered.
         var other = Html(await visitor.Get($"{Partner}/family?from=1100&to=1200"));
         Assert.Contains("family-years", other, StringComparison.Ordinal);
-        Assert.Contains("Left out because they state another time: 1.", other, StringComparison.Ordinal);
+        Assert.Contains("Left out because they state another time, with what reaches this name only through them: 1.", other, StringComparison.Ordinal);
         Assert.Contains($"{Story}/entity/person-first-partner/family\"", other.Replace("?", "\"", StringComparison.Ordinal), StringComparison.Ordinal);
         var graph = (await visitor.Get($"{Partner}/family.json?from=1100&to=1200")).Html;
         Assert.DoesNotContain("relation-partners", graph, StringComparison.Ordinal);

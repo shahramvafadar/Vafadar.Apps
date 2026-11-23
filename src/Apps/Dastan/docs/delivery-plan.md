@@ -1492,6 +1492,21 @@ read whole by somebody who had not written them, with the new tests.
 * *Not looked at in a browser this time*, on the owner's rule of the same day that the site is started for
   looking only when the owner says so: the changes of this review. The tests of the browser ran.
 
+**Taking over the third review, on 2026-11-23**, on the owner's word that this conversation alone goes on.
+The third review was read again, change by change, against its tests.
+
+* *Found and corrected:* a theme of a set that contradicts itself stood in the list where the first theme of
+  its set stands, not where it is itself – a theme of a fourth collection could move it before the themes of
+  collections between them; a family tree in years counts what a partnership of another time cuts off, and
+  said all of it "states another time" – it has a sentence of its own now; a test of the browser read the
+  page it had just left: a second "accept" leads to the address the first one led to, and the wait for that
+  address found the old page (WebKit on the build server, once). Six such places in the tests wait for the
+  new page now (`BrowserSite.Sent`); the site itself was right.
+* *Looked for and found in order:* the form of the facts (a second fact that is none is found the same way
+  and stays as it was too; what was typed goes into no address), the count of what is left out, the
+  section of statements that stays in empty years, the compact card, names of the site in other letters.
+* *Not looked at in a browser*, on the owner's rule: the site was not started. The tests of the browser ran.
+
 **What is open, with what is built if the owner says nothing.** The owner was given these on 2026-11-23:
 
 | Question | Built if nothing is said |

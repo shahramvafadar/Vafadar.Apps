@@ -465,6 +465,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   you speak and one address of a page of your own. None is asked for; each is seen by who you choose and begins
   with nobody else.
 - In a drawing of connections the name in the middle has a larger card, and a drawing with many cards shows the
-  far ones smaller – a name and what it is – so that more of it is in sight.
+  far ones smaller – a name and one line – so that more of it is in sight.
 - A limit of the site per hour – of tried passwords, mails, reports – counts the last sixty minutes; the full hour
   of the clock no longer opens it again.
+- A family tree in years says that it leaves out a partnership of another time together with the family that
+  reaches the name only through it.

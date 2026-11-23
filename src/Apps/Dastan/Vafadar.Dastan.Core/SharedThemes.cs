@@ -92,19 +92,21 @@ public static class SharedThemes
         // A set is one theme of the site – unless it holds two themes of one collection. A collection has a
         // theme once; a set that says otherwise contradicts itself (one collection tells two themes apart that
         // another calls one), and then nothing of it is joined: each of its themes stands by itself, until the
-        // editors say which belongs to which.
+        // editors say which belongs to which. A theme of the site stands where its first theme does – a theme
+        // that stands by itself where it is, not where the first theme of its set is.
         return
         [
             .. Enumerable.Range(0, themes.Count)
                 .GroupBy(Of)
-                .OrderBy(group => group.Key)
-                .SelectMany(group =>
+                .SelectMany(IEnumerable<List<int>> (group) =>
                 {
-                    var members = group.Select(index => themes[index].Theme).ToList();
-                    return members.Select(member => member.Collection).Distinct(StringComparer.Ordinal).Count() == members.Count
-                        ? [new SharedTheme([.. members])]
-                        : members.Select(member => new SharedTheme([member]));
-                }),
+                    var members = group.ToList();
+                    return members.Select(index => themes[index].Theme.Collection).Distinct(StringComparer.Ordinal).Count() == members.Count
+                        ? new[] { members }
+                        : members.Select(index => new List<int> { index });
+                })
+                .OrderBy(members => members[0])
+                .Select(members => new SharedTheme([.. members.Select(index => themes[index].Theme)])),
         ];
     }
 

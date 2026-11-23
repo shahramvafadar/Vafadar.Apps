@@ -20,12 +20,13 @@
     @if (family.Years is not null)
     {
         @* The years the visitor chose (D-084, step 25.3): descent states no time and is drawn at every time; a
-           partnership that states another time is counted and said to be left out. *@
+           partnership that states another time is counted and said to be left out, with the descent that reaches the
+           name only through it. *@
         <p class="note family-years" role="status">
             @string.Format(CultureInfo.CurrentCulture, T["Family_Years"], _years)
             @if (family.LeftOut > 0)
             {
-                @(" " + string.Format(CultureInfo.CurrentCulture, T["Connections_Years_LeftOut"], Visitor.Number(family.LeftOut)))
+                @(" " + string.Format(CultureInfo.CurrentCulture, T["Family_Years_LeftOut"], Visitor.Number(family.LeftOut)))
                 @(" ")<a href="@($"{Site.Collection}/{_explore.WithYears(null).Address(ExplorationView.Family)}")">@T["Explore_Years_Clear"]</a>
             }
         </p>

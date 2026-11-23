@@ -72,8 +72,7 @@ public sealed class RelationshipsBrowserTests(AccountsBrowserSite site) : IClass
         await ask.Locator("[name=since]").FillAsync("1389");
         await ask.Locator("[name=calendar]").SelectOptionAsync("solar-hijri");
         await Fits(mina);
-        await ask.Locator("button[type=submit]").ClickAsync();
-        await BrowserSite.Arrived(mina, new Regex(@"/account/people\?said=asked$"));
+        await BrowserSite.Sent(mina, ask.Locator("button[type=submit]"), new Regex(@"/account/people\?said=asked$"));
 
         // Sara finds both and accepts each by itself.
         await sara.GotoAsync(people);
@@ -81,8 +80,7 @@ public sealed class RelationshipsBrowserTests(AccountsBrowserSite site) : IClass
         await Fits(sara);
         await sara.Locator("#waiting li button[value=accept]").First.ClickAsync();
         await BrowserSite.Arrived(sara, new Regex(@"/account/people\?said=accepted$"));
-        await sara.Locator("#waiting li button[value=accept]").First.ClickAsync();
-        await BrowserSite.Arrived(sara, new Regex(@"/account/people\?said=accepted$"));
+        await BrowserSite.Sent(sara, sara.Locator("#waiting li button[value=accept]").First, new Regex(@"/account/people\?said=accepted$"));
 
         // Both are there, side by side, each with what it says – and each with its own audience and its own end.
         var mine = await sara.Locator("#mine > ul.people").InnerTextAsync();
