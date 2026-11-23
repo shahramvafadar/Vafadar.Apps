@@ -1056,7 +1056,7 @@ named.
 | The order inside the world of a story of a collection | the owner, with content | No collection states one; a comparison file can. |
 | Cards of a graph in sizes of their own; a first answer smaller than a whole family tree | nobody yet | The measurement of step 20.12 did not ask for either. |
 | `IdentityHead` for an account and a record in a tree | – | **Decided and built on 2026-11-23** (D-086, section 24.4). |
-| Formats of the logo for print; a guide of the brand | the owner | Asked for by no step; the masters are vectors and serve print as they are. |
+| Formats of the logo for print; a guide of the brand | – | **Decided and built on 2026-11-23** (D-087, section 24.5). A proof on paper stays with the owner. |
 | A real phone, the app installed, Safari itself, a screen reader, five people who see the site for the first time | the owner | They need a device, eyes and ears. |
 | A mailbox and a sender, the clients at Google and Microsoft, the key of the licence of the graph, a host and an address | the owner | Accounts, contracts and secrets are entered by the owner alone. |
 | The legal pages read by a lawyer, the postal address | the owner | Section 18.8. |
@@ -1118,3 +1118,16 @@ profile of a person of a tree without a second picture; the privacy notice in it
 record of processing. *Tried:* `AccountDescriptionTests` (13, among them that the tables are what the history
 of their changes of form makes them), `AccountProfilePagesTests` (6, English and Persian),
 `TreePersonPagesTests` (13, brought to the head). *To do by who runs a site:* `database migrate`.
+
+**24.5 Files for print and the guide of the brand – done on 2026-11-23** (D-087,
+[ADR 0026](adr/0026-logo.md), addendum; `branding/dastan/README.md`). *Built:* the script that writes, from
+the geometry and by Node alone, the logo and the symbol for print – colour, white on indigo, black – as a PDF
+and an EPS each, outlines only, in CMYK, cut to the clear space; the guide of the brand as one page of HTML
+and as a PDF of nine pages. *Tried:* `BrandPrintTests`; the colour file read as a PDF and looked at; the guide
+looked at in a browser. *Not tried:* a proof on paper – the CMYK values are a beginning and are said to be.
+
+**What section 24 leaves open, and whose it is.** A proof of the colours on paper, a Latin font of the brand,
+the registration of the mark: the owner. Somebody who looks at the proposed places and at the reports: the
+owner, as editor. Years on a family tree and on the page of a name; themes across collections; facts of an
+account beyond a few words and a picture: asked for by nothing. Everything else that was open before stands in
+the table of section 23.

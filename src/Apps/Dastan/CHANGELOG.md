@@ -451,3 +451,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Your page can say something about you: a few words, read by who you choose, and one of your photographs as
   your picture, seen by who may see that photograph. The page of an account and the page of a person of a family
   tree begin with the picture or a drawing, the name and a few facts.
+- The logo has files for a printer (PDF and EPS, outlines, CMYK) and the brand has a guide
+  (`branding/dastan/guide`). The colours for paper are a beginning until a proof is printed.
