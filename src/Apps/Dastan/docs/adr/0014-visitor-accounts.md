@@ -54,7 +54,9 @@ same reading position, without a script ([ADR 0002](0002-one-projection.md), [00
   the machine itself, and the page then offers no form.
 * **Against programs**: a field no person sees; at most five accounts an hour from one address and at most
   thirty tried passwords or codes an hour from one address over all accounts – counted in the memory of the
-  process and forgotten with the hour, the address written nowhere. No picture puzzle and no third party.
+  process and forgotten when their hour is over, the address written nowhere. Since 2026-11-23 the hour is the
+  last sixty minutes and slides with the clock (`RequestWindow`): an hour of the clock that was emptied at the
+  full hour let a program try twice as often around it. A request that is refused is not counted. No picture puzzle and no third party.
 * **Closing** needs the password, signs out everywhere at once and keeps the account for thirty days, in which
   its name and password open it again; then the first request of a day deletes it for good with everything
   that belongs to it (D-055). The name is free again afterwards.

@@ -253,23 +253,3 @@ public sealed class Browser(HttpClient client, string? acceptLanguage, Func<stri
         return new Page(response.StatusCode, await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken), response);
     }
 }
-
-/// <summary>
-/// The hour of the clock, for the tests of what the site counts in an hour. The site counts by the hour of the
-/// clock; a test that begins a moment before the hour turns would count its first requests in one hour and its
-/// last in the next, and find the limit not reached (seen on the build server on 2026-11-23). Such a test waits
-/// for the hour to turn first – at most a minute and a half, about once in forty runs.
-/// </summary>
-public static class TestHour
-{
-    /// <summary>Waits, when the hour is about to turn, until it has.</summary>
-    public static async Task NotAboutToTurn()
-    {
-        var now = DateTimeOffset.UtcNow;
-        var left = TimeSpan.FromHours(1) - TimeSpan.FromTicks(now.Ticks % TimeSpan.TicksPerHour);
-        if (left < TimeSpan.FromSeconds(90))
-        {
-            await Task.Delay(left + TimeSpan.FromSeconds(1), TestContext.Current.CancellationToken);
-        }
-    }
-}

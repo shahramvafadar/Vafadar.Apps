@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Vafadar.Dastan.Core;
@@ -23,10 +22,9 @@ public sealed class ReportDesk
     private readonly ReportBox? _box;
     private readonly TimeProvider _time;
 
-    // Who sent how many reports in the present hour. It lives in the memory of the process and is thrown away
-    // with the hour: an address is never written anywhere.
-    private readonly ConcurrentDictionary<string, int> _sent = new(StringComparer.Ordinal);
-    private long _hour;
+    // Who sent how many reports in the last hour. It lives in the memory of the process: an address is never
+    // written anywhere.
+    private readonly RequestWindow _sent;
 
     /// <summary>Initializes a new instance of the <see cref="ReportDesk"/> class.</summary>
     public ReportDesk(IOptions<DastanOptions> options, IHostEnvironment environment, TimeProvider time)
@@ -34,6 +32,7 @@ public sealed class ReportDesk
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(environment);
         _time = time;
+        _sent = new RequestWindow(time);
         if (options.Value.Reports)
         {
             _box = new ReportBox(options.Value.DeliveryDatabase("Dastan:Reports"));
@@ -47,13 +46,7 @@ public sealed class ReportDesk
     public string Take(string sender, string collection, int? revision, string language, string statement, string text)
     {
         var now = _time.GetUtcNow();
-        var hour = now.ToUnixTimeSeconds() / 3600;
-        if (Interlocked.Exchange(ref _hour, hour) != hour)
-        {
-            _sent.Clear();
-        }
-
-        if (_sent.AddOrUpdate(sender, 1, (_, count) => count + 1) > PerHour)
+        if (!_sent.Allows(sender, PerHour))
         {
             return "later";
         }
