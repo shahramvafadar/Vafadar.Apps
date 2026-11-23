@@ -1,0 +1,851 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "ancient-china",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-ancient-china": {
+      "label": "چین باستان",
+      "summary": "چین از شیا، که روایت نخستین می‌داند، و شانگ تا هان شرقی در حدود ۱۰۰ میلادی: ژو و دولت‌هایش، یکپارچگی زیر فرمان چین (Qin)، هان غربی، شین وانگ مانگ و هان بازسازی‌شده."
+    },
+    "region-qin": {
+      "label": "چین (Qin)",
+      "summary": "دولتی در غرب جهان ژو که دوک شیائو (۳۶۱ تا ۳۳۸ پیش از میلاد) شانگ یانگ را صدراعظم کرد؛ شاهانش در ۲۲۱ پیش از میلاد چین را یکپارچه کردند."
+    },
+    "region-chu": {
+      "label": "چو (Chu)",
+      "summary": "دولتی در میانهٔ رود یانگ‌تسه که پنجاه دولت کوچک یا بیشتر را در خود گرفت."
+    },
+    "region-qi": {
+      "label": "چی (Qi)",
+      "summary": "دولتی که بر پایهٔ روایت در آغاز ژو به فرمانده شانگ‌فو، دوک بزرگ وانگ، داده شد."
+    },
+    "region-yan": {
+      "label": "یان (Yan)",
+      "summary": "دولتی که بر پایهٔ روایت در آغاز ژو به شی، دوک شائو، داده شد."
+    },
+    "region-lu": {
+      "label": "لو (Lu)",
+      "summary": "دولتی که بر پایهٔ روایت تیول دوک ژو بود؛ کنفوسیوس در آنجا زاده شد و در آن مقام‌های کوچکی داشت."
+    },
+    "place-anyang": {
+      "label": "آنیانگ",
+      "summary": "واپسین پایتخت شانگ پس از جابه‌جایی‌های بسیار، نزدیک آنیانگ امروزی؛ مختصات از شهر امروزی است."
+    },
+    "place-zhengzhou": {
+      "label": "ژنگ‌ژو",
+      "summary": "پایتختی از شانگ نزدیک ژنگ‌ژوی امروزی؛ مختصات از شهر امروزی است."
+    },
+    "place-hao": {
+      "label": "هائو",
+      "summary": "نخستین پایتخت ژو، نزدیک شی‌آن امروزی، که در سدهٔ یازدهم پیش از میلاد بنیاد نهاده شد؛ مختصات از شی‌آن است."
+    },
+    "place-luoyang": {
+      "label": "لوئویانگ",
+      "summary": "شهری کنار رود لوئو که شاه وو طرحش را ریخت و در روزگار شاه چنگ از ژو ساخته شد؛ یکی از دو پایتخت ژو در کنار هائو، نخستین پایتخت هان پیش از چانگ‌آن، و پایتخت هان شرقی."
+    },
+    "place-xianyang": {
+      "label": "شیان‌یانگ",
+      "summary": "پایتخت چین (Qin) که در ۳۵۰ پیش از میلاد نزدیک شی‌آن امروزی بنیاد نهاده شد و شیانگ یو در ۲۰۷ پیش از میلاد آن را سوزاند. گاه‌نمای کلمبیا به جای آن چانگ‌آن را پایتخت چین می‌خواند."
+    },
+    "place-changan": {
+      "label": "چانگ‌آن",
+      "summary": "پایتخت هان غربی در شی‌آن امروزی، که ساختش در ۲۰۲ تا ۲۰۰ پیش از میلاد آغاز شد و در روزگار امپراتور هویی ساخته شد؛ Livius آن را «شهر ابریشم» می‌نامد."
+    },
+    "place-kashgar": {
+      "label": "کاشغر",
+      "summary": "شهری از سرزمین‌های باختری که بان چائو هنگام بازگشت هان در ۷۵ میلادی در آن ماند."
+    },
+    "place-tomb-of-the-first-emperor": {
+      "label": "آرامگاه نخستین امپراتور",
+      "summary": "مجموعهٔ آرامگاه نخستین امپراتور چین در لین‌تونگ، خاور شیان‌یانگ، به گسترهٔ حدود ۵۶ کیلومتر مربع، با سپاه پیکره‌های سفالی که در دههٔ ۱۹۷۰ پیدا شد؛ منابع شمار پیکره‌ها را از ۶۰۰۰ تا بیش از ۸۰۰۰ می‌گویند."
+    },
+    "period-xia": {
+      "label": "شیا (روایت)",
+      "summary": "نخستین دودمان در روایت چینی که می‌گویند یوی بزرگ آن را بنیاد نهاد؛ گواه نوشته‌ای از آن نیست، هرچند بسیاری از تاریخ‌نگاران اِرلی‌تو را پایتخت آن می‌دانند. تاریخ‌های سنتی یکسان نیستند: حدود ۲۱۰۰ یا ۱۹۰۰ تا ۱۶۰۰ پیش از میلاد."
+    },
+    "period-western-zhou": {
+      "label": "ژو غربی",
+      "summary": "از پیروزی ژو بر شانگ تا سقوط پایتخت غربی در ۷۷۱ پیش از میلاد. منابع این پیروزی را حدود ۱۰۵۰ یا ۱۰۴۶ پیش از میلاد می‌گذارند."
+    },
+    "period-eastern-zhou": {
+      "label": "ژو شرقی",
+      "summary": "ژو پس از جابه‌جایی دربار به لوئویانگ در ۷۷۰ پیش از میلاد تا ۲۵۶ پیش از میلاد؛ برخی منابع آن را تا ۲۲۱ پیش از میلاد می‌کشانند."
+    },
+    "period-spring-and-autumn": {
+      "label": "دورهٔ بهار و پاییز",
+      "summary": "بخش نخست ژو شرقی، از ۷۷۰ پیش از میلاد تا حدود ۴۸۰ تا ۴۷۵ پیش از میلاد."
+    },
+    "period-warring-states": {
+      "label": "دورهٔ دولت‌های جنگنده",
+      "summary": "از حدود ۴۸۰ تا ۴۷۵ پیش از میلاد تا یکپارچگی زیر فرمان چین (Qin) در ۲۲۱ پیش از میلاد، هنگامی که دولت‌های کوچک بسیار در هفت پادشاهی گرد آمدند."
+    },
+    "dynasty-shang": {
+      "label": "شانگ",
+      "summary": "کهن‌ترین دودمان چینی که نوشته‌ها و باستان‌شناسی آن را تأیید می‌کنند، حدود ۱۶۰۰ تا ۱۰۵۰/۱۰۴۶ پیش از میلاد، شناخته با استخوان‌های پیشگویی، کهن‌ترین نوشتار چینی. پایتختش بارها جابه‌جا شد و سرانجام به آنیانگ رسید."
+    },
+    "dynasty-zhou": {
+      "label": "ژو",
+      "summary": "دودمانی که شانگ را برانداخت، برای روا نشان دادن آن اندیشهٔ «فرمان آسمان» را آورد و – نخست از هائو و سپس از لوئویانگ – تا ۲۵۶ پیش از میلاد فرمان راند."
+    },
+    "dynasty-qin": {
+      "label": "چین (Qin)",
+      "summary": "دودمانی که در ۲۲۱ پیش از میلاد چین را یکپارچه کرد و خط، سکه، وزن‌ها و اندازه‌ها را یکسان کرد؛ در ۲۰۶ پیش از میلاد فرو افتاد."
+    },
+    "dynasty-western-han": {
+      "label": "هان غربی",
+      "summary": "دودمانی که لیو بانگ بنیاد نهاد، که آغاز فرمانروایی‌اش را از ۲۰۶ پیش از میلاد می‌شمرد و در ۲۰۲ پیش از میلاد امپراتور شد، با پایتخت چانگ‌آن؛ با غصب وانگ مانگ در ۹ میلادی پایان یافت (منابع ۷، ۸ یا ۹ میلادی را می‌دهند)."
+    },
+    "dynasty-xin": {
+      "label": "شین",
+      "summary": "دودمان وانگ مانگ، که در ۹ میلادی بر تخت نشست و در ۲۳ میلادی درگذشت؛ میان‌دوره‌ای میان هان غربی و هان شرقی."
+    },
+    "dynasty-eastern-han": {
+      "label": "هان شرقی",
+      "summary": "هانِ بازسازی‌شده به دست لیو شیو، امپراتور گوانگ‌وو، که در ۲۵ میلادی لقب امپراتوری گرفت، با پایتخت لوئویانگ؛ تا ۲۲۰ میلادی پایید."
+    },
+    "office-shang-king": {
+      "label": "شاه شانگ",
+      "summary": "پادشاهی شانگ."
+    },
+    "office-zhou-king": {
+      "label": "شاه ژو",
+      "summary": "پادشاهی ژو، که «پسر آسمان» با «فرمان آسمان» آن را داشت."
+    },
+    "office-king-of-qin": {
+      "label": "شاه چین (Qin)",
+      "summary": "پادشاهی دولت چین پیش از یکپارچگی."
+    },
+    "office-qin-emperor": {
+      "label": "امپراتور چین (Qin)",
+      "summary": "لقب هوانگ‌دی، «فرمانروای شکوهمند»، که شاه چین در ۲۲۱ پیش از میلاد برگرفت."
+    },
+    "office-western-han-emperor": {
+      "label": "امپراتور هان غربی",
+      "summary": "تخت هان غربی."
+    },
+    "office-xin-emperor": {
+      "label": "امپراتور شین",
+      "summary": "تخت شینِ وانگ مانگ."
+    },
+    "office-eastern-han-emperor": {
+      "label": "امپراتور هان شرقی",
+      "summary": "تخت هان شرقی."
+    },
+    "concept-mandate-of-heaven": {
+      "label": "فرمان آسمان",
+      "summary": "اندیشه‌ای که ژو برای روا نشان دادن برانداختن شانگ آورد: فرمانروا پسر آسمان است و با فرمان آسمان فرمان می‌راند.",
+      "facts": {
+        "field": "اندیشهٔ سیاسی"
+      }
+    },
+    "person-wu-ding": {
+      "label": "وو دینگ",
+      "summary": "شاهی از شانگ پسین که از استخوان‌های پیشگویی شناخته است؛ صفحه‌های خوانده‌شده سالی برای پادشاهی‌اش نمی‌دهند.",
+      "facts": {
+        "knownFor": "شاه شانگ پسین."
+      }
+    },
+    "person-fu-hao": {
+      "label": "فو هائو",
+      "summary": "همسری از وو دینگ که از نوشته‌های استخوان‌های پیشگویی شناخته است و لشکرکشی‌ها را رهبری کرد؛ آرامگاهش در آنیانگ از حدود ۱۲۵۰ پیش از میلاد است.",
+      "facts": {
+        "knownFor": "همسر وو دینگ و سردار."
+      }
+    },
+    "person-king-wu-of-zhou": {
+      "label": "شاه وو از ژو",
+      "summary": "شاه ژو که شانگ را گشود و به گفتهٔ شی‌جی پایتختی دوم را در لوئو، لوئویانگ آینده، طرح ریخت.",
+      "facts": {
+        "knownFor": "گشایندهٔ شانگ."
+      }
+    },
+    "person-duke-of-zhou": {
+      "label": "دوک ژو",
+      "summary": "دان، برادر کوچک‌تر شاه وو، که به گفتهٔ شی‌جی هفت سال نایب‌السلطنهٔ شاه چنگ بود؛ لو تیول او بود.",
+      "facts": {
+        "knownFor": "نایب‌السلطنهٔ شاه چنگ."
+      }
+    },
+    "person-king-cheng-of-zhou": {
+      "label": "شاه چنگ از ژو",
+      "summary": "شاه ژو از ۱۰۴۲ تا ۱۰۰۶ پیش از میلاد، که در روزگارش شهر کنار رود لوئو ساخته شد.",
+      "facts": {
+        "knownFor": "ساختن لوئویانگ."
+      }
+    },
+    "person-king-you-of-zhou": {
+      "label": "شاه یو از ژو",
+      "summary": "واپسین شاه ژو غربی، از ۷۸۱ تا ۷۷۱ پیش از میلاد.",
+      "facts": {
+        "knownFor": "واپسین شاه ژو غربی."
+      }
+    },
+    "person-king-ping-of-zhou": {
+      "label": "شاه پینگ از ژو",
+      "summary": "شاهی که به گفتهٔ شی‌جی دربار ژو را به خاور، به لوئو، برد.",
+      "facts": {
+        "knownFor": "بردن دربار به خاور، به لوئویانگ."
+      }
+    },
+    "event-zhou-conquest": {
+      "label": "پیروزی ژو بر شانگ",
+      "summary": "ژو به رهبری شاه وو شانگ را برانداخت. منابع حدود ۱۰۵۰ یا ۱۰۴۶ پیش از میلاد را می‌دهند."
+    },
+    "event-fall-of-western-zhou": {
+      "label": "سقوط ژو غربی",
+      "summary": "در ۷۷۱ پیش از میلاد ژو غربی فرو افتاد و دربار به خاور، به لوئویانگ، رفت."
+    },
+    "person-confucius": {
+      "label": "کنفوسیوس",
+      "summary": "زادهٔ حدود ۵۵۱ پیش از میلاد در دولت لو، که در آنجا مقام‌های کوچکی داشت؛ آموزگاری که گفته‌هایش در «گفتارها» گرد آمد. حدود ۴۷۹ پیش از میلاد درگذشت.",
+      "facts": {
+        "knownFor": "آموزگاری که گفته‌هایش در «گفتارها» گرد آمد."
+      }
+    },
+    "person-laozi": {
+      "label": "لائوتسه",
+      "summary": "فرزانه‌ای که روایت او را حدود ۵۰۰ پیش از میلاد می‌گذارد – همان صفحه ۶۰۶ تا ۵۳۰ پیش از میلاد را نیز می‌دهد؛ تاریخ‌نگاران او را شاید ساختگی می‌دانند.",
+      "facts": {
+        "knownFor": "بر پایهٔ روایت، حدود ۵۰۰ پیش از میلاد."
+      }
+    },
+    "person-mencius": {
+      "label": "منسیوس",
+      "summary": "اندیشمندی کنفوسیوسی، ۳۷۱ تا ۲۸۹ پیش از میلاد.",
+      "facts": {
+        "knownFor": "اندیشمند کنفوسیوسی."
+      }
+    },
+    "person-xunzi": {
+      "label": "شون‌زی",
+      "summary": "اندیشمندی کنفوسیوسی، ۲۹۸ تا ۲۳۸ پیش از میلاد.",
+      "facts": {
+        "knownFor": "اندیشمند کنفوسیوسی."
+      }
+    },
+    "person-zhuangzi": {
+      "label": "جوانگ‌زی",
+      "summary": "اندیشمندی دائوئی، حدود ۳۶۹ تا ۲۸۶ پیش از میلاد.",
+      "facts": {
+        "knownFor": "اندیشمند دائوئی."
+      }
+    },
+    "person-han-feizi": {
+      "label": "هان فی‌زی",
+      "summary": "اندیشمندی قانون‌گرا (لگالیست) که در ۲۳۳ پیش از میلاد درگذشت.",
+      "facts": {
+        "knownFor": "اندیشمند قانون‌گرا."
+      }
+    },
+    "person-sunzi": {
+      "label": "سون‌زی",
+      "summary": "راهبرد‌شناسی نظامی که در حدود سدهٔ پنجم پیش از میلاد به دولت وو خدمت کرد.",
+      "facts": {
+        "knownFor": "راهبرد‌شناس نظامی."
+      }
+    },
+    "person-shang-yang": {
+      "label": "شانگ یانگ",
+      "summary": "صدراعظم دوک شیائو از چین، که اصلاحات قانون‌گرایانه‌اش دولت چین را نیرومند کرد.",
+      "facts": {
+        "knownFor": "اصلاحات قانون‌گرایانه در چین."
+      }
+    },
+    "person-duke-xiao-of-qin": {
+      "label": "دوک شیائو از چین",
+      "summary": "فرمانروای چین از ۳۶۱ تا ۳۳۸ پیش از میلاد، که شانگ یانگ را صدراعظم کرد.",
+      "facts": {
+        "knownFor": "برگزیدن شانگ یانگ به صدراعظمی."
+      }
+    },
+    "person-qin-shi-huang": {
+      "label": "چین شی هوانگ",
+      "summary": "یینگ ژنگ، زادهٔ ۲۵۹ پیش از میلاد، شاه چین از ۲۴۷ (به گفتهٔ منبعی دیگر ۲۴۶)، که از ۲۳۸ با اختیار کامل فرمان راند، در ۲۲۱ پیش از میلاد چین را یکپارچه کرد و لقب نخستین امپراتور را برگرفت؛ در ۲۱۰ پیش از میلاد نزدیک لانگ‌یه بر کرانهٔ شاندونگ درگذشت.",
+      "facts": {
+        "knownFor": "یکپارچه کردن چین در جایگاه نخستین امپراتور."
+      }
+    },
+    "person-li-si": {
+      "label": "لی سی",
+      "summary": "صدراعظم چین پس از ۲۲۱ پیش از میلاد، که خط را دگرگون کرد؛ زندانی و در ۲۰۸ پیش از میلاد اعدام شد.",
+      "facts": {
+        "knownFor": "صدراعظم چین؛ دگرگونی خط."
+      }
+    },
+    "person-qin-ershi": {
+      "label": "چین اِرشی",
+      "summary": "هوهای، پسر کوچک‌تر نخستین امپراتور، که جانشینش شد و حدود دو سال فرمان راند تا در ۲۰۷ پیش از میلاد خود را کشت.",
+      "facts": {
+        "knownFor": "دومین امپراتور چین."
+      }
+    },
+    "person-ziying": {
+      "label": "زی‌یینگ",
+      "summary": "نوهٔ نخستین امپراتور و واپسین فرمانروای چین با عنوان شاه، که تسلیم شد.",
+      "facts": {
+        "knownFor": "واپسین فرمانروای چین."
+      }
+    },
+    "event-qin-unification": {
+      "label": "یکپارچه شدن چین زیر فرمان چین (Qin)",
+      "summary": "در ۲۲۱ پیش از میلاد شاه چین گشودن دولت‌های دیگر را به پایان رساند، چین را یکپارچه کرد و لقب امپراتور برگرفت."
+    },
+    "event-fall-of-qin": {
+      "label": "فروپاشی چین (Qin)",
+      "summary": "چین در ۲۰۶ پیش از میلاد فرو افتاد؛ شیانگ یو شیان‌یانگ را در ۲۰۷ پیش از میلاد سوزاند."
+    },
+    "person-liu-bang": {
+      "label": "لیو بانگ (امپراتور گائوزو)",
+      "summary": "بنیادگذار هان، از فِنگ در بخش پِی، که در ۲۰۲ پیش از میلاد امپراتور شد؛ میجر و کوک فرمانروایی‌اش را از ۲۰۲ و اِنو از ۲۰۶ می‌شمارند. در ۱۹۵ پیش از میلاد درگذشت.",
+      "facts": {
+        "knownFor": "بنیادگذاری هان."
+      }
+    },
+    "person-han-huidi": {
+      "label": "امپراتور هویی",
+      "summary": "لیو یینگ، امپراتور از ۱۹۵ (به گفتهٔ انو ۱۹۴) تا ۱۸۸ پیش از میلاد.",
+      "facts": {
+        "knownFor": "دومین امپراتور هان."
+      }
+    },
+    "person-han-wendi": {
+      "label": "امپراتور ون",
+      "summary": "لیو هنگ، شاه دای، پسر امپراتور گائو، امپراتور از ۱۸۰ (به گفتهٔ انو ۱۷۹) تا ۱۵۷ پیش از میلاد.",
+      "facts": {
+        "knownFor": "امپراتور پس از نیابت ملکه لو."
+      }
+    },
+    "person-han-jingdi": {
+      "label": "امپراتور جینگ",
+      "summary": "لیو چی، پسر امپراتور ون و ملکه دو، امپراتور از ۱۵۷ تا ۱۴۱ پیش از میلاد.",
+      "facts": {
+        "knownFor": "پدر امپراتور وو."
+      }
+    },
+    "person-han-wudi": {
+      "label": "امپراتور وو",
+      "summary": "پسر امپراتور جینگ، امپراتور از مرگ پدرش در ۱۴۱ پیش از میلاد تا مرگ خودش در ۸۷ پیش از میلاد؛ در روزگارش ژانگ چیان به باختر سفر کرد.",
+      "facts": {
+        "knownFor": "فرمانروایی درازی که هان در آن به باختر رسید."
+      }
+    },
+    "person-han-zhaodi": {
+      "label": "امپراتور ژائو",
+      "summary": "لیو فولینگ، به گفتهٔ انو پسر امپراتور وو (میجر و کوک او را نوه می‌دانند)، امپراتور از مرگ وو در ۸۷ پیش از میلاد تا مرگ خودش در ۷۴ پیش از میلاد.",
+      "facts": {
+        "knownFor": "امپراتور پس از وو."
+      }
+    },
+    "person-han-xuandi": {
+      "label": "امپراتور شوان",
+      "summary": "لیو پینگ‌یی، نتیجهٔ امپراتور وو، امپراتور از ۷۴ تا ۴۹ پیش از میلاد.",
+      "facts": {
+        "knownFor": "نتیجهٔ امپراتور وو."
+      }
+    },
+    "person-han-yuandi": {
+      "label": "امپراتور یوان",
+      "summary": "امپراتور هان غربی از ۴۹ تا ۳۳ پیش از میلاد.",
+      "facts": {
+        "knownFor": "پدر امپراتور چنگ."
+      }
+    },
+    "person-han-chengdi": {
+      "label": "امپراتور چنگ",
+      "summary": "لیو شی، پسر امپراتور یوان و وانگ ژنگ‌جون، امپراتور از ۳۳ تا ۷ پیش از میلاد.",
+      "facts": {
+        "knownFor": "پسر امپراتور یوان."
+      }
+    },
+    "person-han-aidi": {
+      "label": "امپراتور آی",
+      "summary": "لیو شین، نوهٔ امپراتور یوان، امپراتور از ۷ تا ۱ پیش از میلاد.",
+      "facts": {
+        "knownFor": "نوهٔ امپراتور یوان."
+      }
+    },
+    "person-han-pingdi": {
+      "label": "امپراتور پینگ",
+      "summary": "لیو جی‌زی، پسر لیو شینگ، امپراتور از مرگ امپراتور آی در ۱ پیش از میلاد تا مرگ خودش در ۶ میلادی.",
+      "facts": {
+        "knownFor": "امپراتور تا ۶ میلادی، پیش از برآمدن وانگ مانگ."
+      }
+    },
+    "person-empress-lu": {
+      "label": "ملکه لو",
+      "summary": "همسر لیو بانگ، که پس از مرگ امپراتور هویی از ۱۸۸ تا ۱۸۰ پیش از میلاد به عنوان ملکهٔ مادر نیابت کرد؛ به‌طور رسمی امپراتور نبود.",
+      "facts": {
+        "knownFor": "نایب‌السلطنه از ۱۸۸ تا ۱۸۰ پیش از میلاد."
+      }
+    },
+    "person-liu-he": {
+      "label": "لیو هه",
+      "summary": "که در ۷۴ پیش از میلاد امپراتور خوانده شد و در کمتر از چهار هفته برکنار شد؛ امپراتوری مشروع شمرده نمی‌شود.",
+      "facts": {
+        "knownFor": "کمتر از چهار هفته امپراتوری."
+      }
+    },
+    "person-ruzi-ying": {
+      "label": "لیو یینگ (وارث خردسال)",
+      "summary": "کودکی که در ۶ میلادی زیر چیرگی وانگ مانگ وارث خوانده شد؛ هرگز بر تخت ننشست.",
+      "facts": {
+        "knownFor": "وارث خردسال در روزگار وانگ مانگ."
+      }
+    },
+    "person-zhang-qian": {
+      "label": "ژانگ چیان",
+      "summary": "فرستادهٔ امپراتور وو، حدود ۱۹۹ تا ۱۱۳ پیش از میلاد، که در ۱۳۸ پیش از میلاد به باختر رفت و در ۱۲۵ پیش از میلاد به چانگ‌آن بازگشت؛ منابع دیگر رفتنش را ۱۳۹ یا حدود ۱۳۰ پیش از میلاد می‌گذارند.",
+      "facts": {
+        "knownFor": "سفرهایش به سرزمین‌های باختری."
+      }
+    },
+    "person-sima-qian": {
+      "label": "سیما چیان",
+      "summary": "تاریخ‌نگار، حدود ۱۴۵ تا ۸۶ پیش از میلاد، نویسندهٔ «یادداشت‌های تاریخ‌نگار بزرگ».",
+      "facts": {
+        "knownFor": "«یادداشت‌های تاریخ‌نگار بزرگ»."
+      }
+    },
+    "work-shiji": {
+      "label": "یادداشت‌های تاریخ‌نگار بزرگ",
+      "summary": "تاریخ چین به قلم سیما چیان، شی‌جی."
+    },
+    "event-zhang-qian-mission": {
+      "label": "سفر ژانگ چیان به باختر",
+      "summary": "ژانگ چیان در ۱۳۸ پیش از میلاد (به گفتهٔ انو ۱۳۹ و به گفتهٔ Livius حدود ۱۳۰) به باختر رفت و در ۱۲۵ پیش از میلاد به چانگ‌آن بازگشت."
+    },
+    "person-wang-mang": {
+      "label": "وانگ مانگ",
+      "summary": "دولتمردی که در ۹ میلادی به عنوان امپراتور شین بر تخت نشست و در ۲۳ میلادی در چانگ‌آن، در نبرد برای جانش، کشته شد.",
+      "facts": {
+        "knownFor": "امپراتور شین."
+      }
+    },
+    "person-guangwu": {
+      "label": "امپراتور گوانگ‌وو",
+      "summary": "لیو شیو، که در پاییز ۲۵ میلادی لقب امپراتوری گرفت و هان را بازسازی کرد؛ سپاهیانش لوئویانگ را میان ۲۶ و ۳۰ میلادی گرفتند. تا ۵۷ میلادی فرمان راند.",
+      "facts": {
+        "knownFor": "بازسازی هان."
+      }
+    },
+    "person-han-mingdi": {
+      "label": "امپراتور مینگ",
+      "summary": "امپراتور از ۵۷ تا ۷۵ میلادی، که در ۷۳ میلادی لشکری به جنگ شیونگ‌نو فرستاد؛ روایت می‌گوید مرد زرینی را به خواب دید و فرستادگانی به هند فرستاد تا دربارهٔ بودا بپرسند.",
+      "facts": {
+        "knownFor": "لشکرکشی به جنگ شیونگ‌نو در ۷۳ میلادی."
+      }
+    },
+    "person-han-zhangdi": {
+      "label": "امپراتور ژانگ",
+      "summary": "امپراتور هان شرقی از ۷۵ تا ۸۸ میلادی.",
+      "facts": {
+        "knownFor": "امپراتور پس از مینگ."
+      }
+    },
+    "person-han-hedi": {
+      "label": "امپراتور هه",
+      "summary": "امپراتور از ۸۸ تا ۱۰۵ میلادی؛ ملکهٔ مادر دو از ۸۸ نیابت داشت تا او در تابستان ۹۲ میلادی خاندانش را برانداخت.",
+      "facts": {
+        "knownFor": "پایان دادن به نیابت خاندان دو."
+      }
+    },
+    "person-ban-chao": {
+      "label": "بان چائو",
+      "summary": "سردار هان در سرزمین‌های باختری، که هنگام بازگشت هان در ۷۵ میلادی در کاشغر ماند، در ۹۱ میلادی سرزمین‌های باختری را آرام کرد، در ۹۱ یا ۹۲ میلادی نگهبان کل آنجا شد، در ۹۷ میلادی گان یینگ را به باختر فرستاد و در ۱۰۲ میلادی بازگشت.",
+      "facts": {
+        "knownFor": "آوردن سرزمین‌های باختری زیر فرمان هان."
+      }
+    },
+    "person-gan-ying": {
+      "label": "گان یینگ",
+      "summary": "فرستاده‌ای که بان چائو در ۹۷ میلادی به سوی داچین فرستاد؛ او به تیائوژی کنار دریایی بزرگ رسید.",
+      "facts": {
+        "knownFor": "سفرش به سوی داچین در ۹۷ میلادی."
+      }
+    },
+    "person-ban-gu": {
+      "label": "بان گو",
+      "summary": "تاریخ‌نگار هان غربی که در ۹۲ میلادی، پیش از پایان تاریخش، درگذشت؛ خواهرش بان ژائو آن را کامل کرد.",
+      "facts": {
+        "knownFor": "تاریخ هان غربی."
+      }
+    },
+    "person-ban-zhao": {
+      "label": "بان ژائو",
+      "summary": "دانشمندی، حدود ۴۵ تا ۱۱۶ میلادی، خواهر بان گو، که تاریخ هان غربی او را کامل کرد.",
+      "facts": {
+        "knownFor": "کامل کردن تاریخ هان غربی."
+      }
+    },
+    "work-history-of-western-han": {
+      "label": "تاریخ هان غربی",
+      "summary": "تاریخ هان غربی که بان گو نوشت و خواهرش بان ژائو کامل کرد."
+    },
+    "event-gan-ying-mission": {
+      "label": "سفر گان یینگ به سوی داچین",
+      "summary": "در ۹۷ میلادی بان چائو گان یینگ را برای شناختن دوردست باختر به سوی داچین فرستاد؛ او به تیائوژی کنار دریایی بزرگ رسید."
+    },
+    "event-han-restoration": {
+      "label": "بازسازی هان",
+      "summary": "در پاییز ۲۵ میلادی لیو شیو لقب امپراتوری گرفت و هان را بازسازی کرد؛ وانگ مانگ در ۲۳ میلادی مرده بود."
+    },
+    "event-expedition-against-xiongnu": {
+      "label": "لشکرکشی به جنگ شیونگ‌نو",
+      "summary": "در ۷۳ میلادی امپراتور مینگ سپاهی به جنگ شیونگ‌نو فرستاد؛ در زمستان همان سال بان چائو دو تی را گرفتار کرد."
+    }
+  },
+  "relations": {
+    "relation-wu-ding-holder-of-shang-king": {
+      "label": "شاه شانگ"
+    },
+    "relation-wu-ding-spouse-of-fu-hao": {
+      "label": "همسر"
+    },
+    "relation-wu-ding-member-of-shang": {
+      "label": "از خاندانِ"
+    },
+    "relation-king-cheng-of-zhou-holder-of-zhou-king": {
+      "label": "شاه ژو"
+    },
+    "relation-king-you-of-zhou-holder-of-zhou-king": {
+      "label": "شاه ژو"
+    },
+    "relation-king-wu-of-zhou-holder-of-zhou-king": {
+      "label": "شاه ژو"
+    },
+    "relation-king-ping-of-zhou-holder-of-zhou-king": {
+      "label": "شاه ژو"
+    },
+    "relation-king-wu-of-zhou-member-of-zhou": {
+      "label": "از خاندانِ"
+    },
+    "relation-duke-of-zhou-member-of-zhou": {
+      "label": "از خاندانِ"
+    },
+    "relation-king-cheng-of-zhou-member-of-zhou": {
+      "label": "از خاندانِ"
+    },
+    "relation-king-you-of-zhou-member-of-zhou": {
+      "label": "از خاندانِ"
+    },
+    "relation-king-ping-of-zhou-member-of-zhou": {
+      "label": "از خاندانِ"
+    },
+    "relation-duke-of-zhou-sibling-of-king-wu-of-zhou": {
+      "label": "خواهر یا برادرِ"
+    },
+    "relation-king-wu-of-zhou-founder-of-zhou": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-duke-of-zhou-leader-of-lu": {
+      "label": "تیول او، بر پایهٔ روایت"
+    },
+    "relation-anyang-capital-of-shang": {
+      "label": "واپسین پایتخت"
+    },
+    "relation-zhengzhou-capital-of-shang": {
+      "label": "پایتختِ"
+    },
+    "relation-hao-capital-of-zhou": {
+      "label": "پایتختِ"
+    },
+    "relation-luoyang-capital-of-zhou": {
+      "label": "پایتختِ"
+    },
+    "relation-king-wu-of-zhou-participant-in-zhou-conquest": {
+      "label": "شرکت در"
+    },
+    "relation-zhou-conquest-during-western-zhou": {
+      "label": "در دورهٔ"
+    },
+    "relation-king-you-of-zhou-participant-in-fall-of-western-zhou": {
+      "label": "شرکت در"
+    },
+    "relation-fall-of-western-zhou-took-place-in-hao": {
+      "label": "رخ داد در"
+    },
+    "relation-fall-of-western-zhou-during-western-zhou": {
+      "label": "در دورهٔ"
+    },
+    "relation-duke-xiao-of-qin-leader-of-qin": {
+      "label": "دوک چین"
+    },
+    "relation-shang-yang-lived-in-qin": {
+      "label": "صدراعظم دوک شیائو از چین"
+    },
+    "relation-qin-shi-huang-holder-of-king-of-qin": {
+      "label": "شاه چین"
+    },
+    "relation-qin-shi-huang-holder-of-qin-emperor": {
+      "label": "نخستین امپراتور"
+    },
+    "relation-qin-ershi-holder-of-qin-emperor": {
+      "label": "دومین امپراتور، حدود دو سال"
+    },
+    "relation-ziying-holder-of-king-of-qin": {
+      "label": "شاه چین که تسلیم شد"
+    },
+    "relation-qin-ershi-successor-of-qin-shi-huang": {
+      "label": "جانشینِ"
+    },
+    "relation-qin-shi-huang-parent-of-qin-ershi": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-qin-shi-huang-founder-of-qin": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-li-si-employed-by-qin": {
+      "label": "صدراعظم"
+    },
+    "relation-qin-shi-huang-member-of-qin": {
+      "label": "از خاندانِ"
+    },
+    "relation-qin-ershi-member-of-qin": {
+      "label": "از خاندانِ"
+    },
+    "relation-ziying-member-of-qin": {
+      "label": "از خاندانِ"
+    },
+    "relation-xianyang-capital-of-qin": {
+      "label": "پایتختِ"
+    },
+    "relation-qin-governs-ancient-china": {
+      "label": "فرمانروای"
+    },
+    "relation-qin-shi-huang-participant-in-qin-unification": {
+      "label": "شرکت در"
+    },
+    "relation-qin-unification-during-warring-states": {
+      "label": "در دورهٔ"
+    },
+    "relation-ziying-participant-in-fall-of-qin": {
+      "label": "شرکت در"
+    },
+    "relation-fall-of-qin-took-place-in-xianyang": {
+      "label": "رخ داد در"
+    },
+    "relation-liu-bang-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-liu-bang-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-huidi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-huidi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-huidi-successor-of-liu-bang": {
+      "label": "جانشینِ"
+    },
+    "relation-han-wendi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-wendi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-wendi-successor-of-han-huidi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-jingdi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-jingdi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-jingdi-successor-of-han-wendi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-wudi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-wudi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-wudi-successor-of-han-jingdi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-zhaodi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-zhaodi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-zhaodi-successor-of-han-wudi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-xuandi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-xuandi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-xuandi-successor-of-han-zhaodi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-yuandi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-yuandi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-yuandi-successor-of-han-xuandi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-chengdi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-chengdi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-chengdi-successor-of-han-yuandi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-aidi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-aidi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-aidi-successor-of-han-chengdi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-pingdi-holder-of-western-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-pingdi-member-of-western-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-pingdi-successor-of-han-aidi": {
+      "label": "جانشینِ"
+    },
+    "relation-empress-lu-holder-of-western-han-emperor": {
+      "label": "نایب‌السلطنه در جایگاه ملکهٔ مادر"
+    },
+    "relation-liu-bang-spouse-of-empress-lu": {
+      "label": "همسر"
+    },
+    "relation-liu-he-holder-of-western-han-emperor": {
+      "label": "امپراتور خوانده و در چهار هفته برکنار شد"
+    },
+    "relation-liu-bang-parent-of-han-wendi": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-han-wendi-parent-of-han-jingdi": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-han-jingdi-parent-of-han-wudi": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-han-wudi-parent-of-han-zhaodi": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-han-yuandi-parent-of-han-chengdi": {
+      "label": "پدر یا مادرِ"
+    },
+    "relation-liu-bang-founder-of-western-han": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-changan-capital-of-western-han": {
+      "label": "پایتختِ"
+    },
+    "relation-western-han-successor-of-qin": {
+      "label": "جانشینِ"
+    },
+    "relation-western-han-governs-ancient-china": {
+      "label": "فرمانروای"
+    },
+    "relation-sima-qian-author-of-shiji": {
+      "label": "نویسندهٔ"
+    },
+    "relation-zhang-qian-participant-in-zhang-qian-mission": {
+      "label": "شرکت در"
+    },
+    "relation-wang-mang-holder-of-xin-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-wang-mang-founder-of-xin": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-xin-successor-of-western-han": {
+      "label": "جانشینِ"
+    },
+    "relation-eastern-han-successor-of-xin": {
+      "label": "جانشینِ"
+    },
+    "relation-guangwu-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-guangwu-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-mingdi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-mingdi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-mingdi-successor-of-guangwu": {
+      "label": "جانشینِ"
+    },
+    "relation-han-zhangdi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-zhangdi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-zhangdi-successor-of-han-mingdi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-hedi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-hedi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-hedi-successor-of-han-zhangdi": {
+      "label": "جانشینِ"
+    },
+    "relation-guangwu-founder-of-eastern-han": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-luoyang-capital-of-eastern-han": {
+      "label": "پایتختِ"
+    },
+    "relation-eastern-han-governs-ancient-china": {
+      "label": "فرمانروای"
+    },
+    "relation-ban-gu-author-of-history-of-western-han": {
+      "label": "نویسندهٔ"
+    },
+    "relation-ban-zhao-author-of-history-of-western-han": {
+      "label": "آن را کامل کرد"
+    },
+    "relation-ban-gu-sibling-of-ban-zhao": {
+      "label": "خواهر یا برادرِ"
+    },
+    "relation-ban-chao-employed-by-eastern-han": {
+      "label": "نگهبان کل سرزمین‌های باختری"
+    },
+    "relation-gan-ying-participant-in-gan-ying-mission": {
+      "label": "شرکت در"
+    },
+    "relation-ban-chao-participant-in-gan-ying-mission": {
+      "label": "شرکت در"
+    },
+    "relation-guangwu-participant-in-han-restoration": {
+      "label": "شرکت در"
+    },
+    "relation-han-mingdi-participant-in-expedition-against-xiongnu": {
+      "label": "شرکت در"
+    },
+    "relation-ban-chao-participant-in-expedition-against-xiongnu": {
+      "label": "شرکت در"
+    }
+  }
+}
