@@ -1131,3 +1131,16 @@ the registration of the mark: the owner. Somebody who looks at the proposed plac
 owner, as editor. Years on a family tree and on the page of a name; themes across collections; facts of an
 account beyond a few words and a picture: asked for by nothing. Everything else that was open before stands in
 the table of section 23.
+
+**Section 24 as a whole, tried and looked at on 2026-11-23.** The whole suite ran after the last change: 3435
+tests, none failed. *Looked at in a browser, with made-up content:* the gallery of a collection with its themes
+in Persian and the gallery of a theme in English, dark, 1100 px; the connections of a name in a stretch of
+years with the form of the years, English; the pictures of a name in a stretch of years in Persian at 375 px,
+where nothing reaches beyond the screen; the form that proposes a place in Persian at 375 px; the page of an
+account with its head, the form for it filled in and sent, Persian, 375 and 1100 px; the page of the proposed
+places of the tool of the editors in Persian, with the same place proposed twice standing together; the guide
+of the brand; the colour file for print read as a PDF. *Found by looking and corrected:* two sentences about
+what was left out of the years stood without a blank between them; the example of a year before the common
+era was turned around in a Persian sentence; the field for the address of a page had the look of the browser
+and not of the form. *Not looked at:* a light appearance of these pages, a phone, a screen reader, the files
+for print on paper.

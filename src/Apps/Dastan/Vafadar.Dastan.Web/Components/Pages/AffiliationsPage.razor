@@ -162,7 +162,7 @@
                 </p>
                 <p class="field">
                     <label for="propose-page">@T["Affiliations_Propose_Page"]</label>
-                    <input id="propose-page" name="page" type="url" maxlength="@Vafadar.Dastan.Data.ProposalBox.LongestLine" placeholder="https://" autocomplete="off" dir="ltr" aria-describedby="propose-page-how" />
+                    <input id="propose-page" name="page" type="text" inputmode="url" maxlength="@Vafadar.Dastan.Data.ProposalBox.LongestLine" placeholder="https://" autocomplete="off" dir="ltr" aria-describedby="propose-page-how" />
                     <span class="meta" id="propose-page-how">@T["Affiliations_Propose_Page_How"]</span>
                 </p>
                 <p class="field">
@@ -426,7 +426,7 @@
                 @string.Format(CultureInfo.CurrentCulture, T["Affiliations_Look_None"], _at)
                 @if (Proposals.IsOpen)
                 {
-                    <text> </text><a href="@($"account/affiliations?at={Uri.EscapeDataString(_at)}#propose")">@T["Affiliations_Propose_Link"]</a>
+                    @(" ")<a href="@($"account/affiliations?at={Uri.EscapeDataString(_at)}#propose")">@T["Affiliations_Propose_Link"]</a>
                 }
             </p>
         }

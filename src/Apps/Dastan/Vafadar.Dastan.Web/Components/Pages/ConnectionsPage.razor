@@ -25,7 +25,7 @@
             @string.Format(CultureInfo.CurrentCulture, T[view.InYears.Any() ? "Connections_Years" : "Connections_Years_None"], _years)
             @if (view.LeftOut > 0)
             {
-                <text> @string.Format(CultureInfo.CurrentCulture, T["Connections_Years_LeftOut"], Visitor.Number(view.LeftOut))</text>
+                @(" " + string.Format(CultureInfo.CurrentCulture, T["Connections_Years_LeftOut"], Visitor.Number(view.LeftOut)))
             }
         </p>
     }
