@@ -5,6 +5,7 @@
 @inject AccountDesk Desk
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
 @if (_entity is { } overview)
 {
@@ -46,6 +47,22 @@
 
     <ExploreBar State="_explore" />
 
+    @if (_stated.Years is not null)
+    {
+        @* The years the visitor chose (D-084, step 25.3): what is stated about the name is shown when it lies in
+           them, what states no time is shown apart, and what states another time is counted and said to be
+           left out. The head of the page – the name and its facts – is of the name and is never left out. *@
+        var leftOut = _stated.LeftOut + _connected.LeftOut;
+        <p class="note entity-years" role="status">
+            @string.Format(CultureInfo.CurrentCulture, T[_stated.In.IsEmpty && _connected.In.IsEmpty ? "Entity_Years_None" : "Entity_Years"], _years)
+            @if (leftOut > 0)
+            {
+                @(" " + string.Format(CultureInfo.CurrentCulture, T["Entity_Years_LeftOut"], Visitor.Number(leftOut)))
+                @(" ")<a href="@($"{Site.Collection}/{_explore.WithYears(null).Address(ExplorationView.Overview)}")">@T["Explore_Years_Clear"]</a>
+            }
+        </p>
+    }
+
     @if (_hasMedia || !overview.Appearances.IsEmpty)
     {
         @* In story and picture (step 20.9): what shows it and where the telling has to do with it, as cards – a
@@ -86,31 +103,28 @@
         </section>
     }
 
-    @if (!overview.Entity.Dated.IsEmpty)
+    @if (!_stated.IsEmpty)
     {
         @* What is stated about the entity itself: when something lasted or happened, how much of something. *@
         <section aria-labelledby="stated">
             <h2 id="stated">@T["Entity_Stated"]</h2>
-            <dl class="facts stated">
-                @foreach (var statement in overview.Entity.Dated)
+            @if (_stated.Years is null)
+            {
+                @Stated(_stated.In)
+            }
+            else
+            {
+                @if (!_stated.In.IsEmpty)
                 {
-                    <dt id="@($"stated-{statement.Key}")"><Loc Text="statement.Label" /> <DisputedMark Review="statement.Review" /></dt>
-                    <dd>
-                        @if (statement.Quantity is { } quantity)
-                        {
-                            <strong class="quantity">@QuantityText.Of(quantity, Visitor, T)</strong>
-                        }
-                        @if (statement.Time is { } time)
-                        {
-                            <span class="when">@TimeText.Of(time, Visitor, T)</span>
-                        }
-                        @if (statement.Summary is { } summary)
-                        {
-                            <p><Loc Text="summary" /></p>
-                        }
-                    </dd>
+                    <h3>@string.Format(CultureInfo.CurrentCulture, T["Entity_InYears"], _years)</h3>
+                    @Stated(_stated.In)
                 }
-            </dl>
+                @if (!_stated.WithoutTime.IsEmpty)
+                {
+                    <h3>@T["Connections_WithoutTime"]</h3>
+                    @Stated(_stated.WithoutTime)
+                }
+            }
             @* The same quantity stated for several times is drawn as well: the list above has every digit. *@
             @foreach (var series in QuantitySeries.Of(overview.Entity, Site.Language))
             {
@@ -121,21 +135,30 @@
 
     <section aria-labelledby="connections">
         <h2 id="connections">@T["Entity_Connections"]</h2>
-        @if (overview.Connections.IsEmpty)
+        @if (_connected.IsEmpty)
         {
-            <p class="note">@T["Entity_NoConnections"]</p>
+            <p class="note">@T[_connected.LeftOut > 0 ? "Connections_Years_Empty" : "Entity_NoConnections"]</p>
         }
         else
         {
-            <ul class="statements" role="list">
-                @foreach (var connection in overview.Connections)
+            @if (_connected.Years is null)
+            {
+                @Connected(_connected.In, overview.Entity)
+            }
+            else
+            {
+                @if (!_connected.In.IsEmpty)
                 {
-                    var edge = connection.Direction == ConnectionDirection.Incoming
-                        ? new Edge(connection.Relation, connection.Other, overview.Entity)
-                        : new Edge(connection.Relation, overview.Entity, connection.Other);
-                    <li><Statement Relation="edge" Self="overview.Entity.Id" Evidence="true" From="@_here" /></li>
+                    <h3>@string.Format(CultureInfo.CurrentCulture, T["Connections_InYears"], _years)</h3>
+                    @Connected(_connected.In, overview.Entity)
                 }
-            </ul>
+                @if (!_connected.WithoutTime.IsEmpty)
+                {
+                    <h3>@T["Connections_WithoutTime"]</h3>
+                    <p class="note">@T["Connections_WithoutTimeNote"]</p>
+                    @Connected(_connected.WithoutTime, overview.Entity)
+                }
+            }
             <p class="actions">
                 <a class="action secondary" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Connections)}")">@T["Entity_ToGraph"]</a>
                 @if (_hasFamily)
@@ -255,6 +278,59 @@
 }
 
 @code {
+    // What is stated about the name itself, as a list of facts.
+    private RenderFragment Stated(IEnumerable<DatedStatement> statements) => __builder =>
+    {
+        <dl class="facts stated">
+            @foreach (var statement in statements)
+            {
+                <dt id="@($"stated-{statement.Key}")"><Loc Text="statement.Label" /> <DisputedMark Review="statement.Review" />
+                    @if (_stated.Possibly.Contains(statement))
+                    {
+                        <span class="possibly">– @T["Connections_Possibly"]</span>
+                    }
+                </dt>
+                <dd>
+                    @if (statement.Quantity is { } quantity)
+                    {
+                        <strong class="quantity">@QuantityText.Of(quantity, Visitor, T)</strong>
+                    }
+                    @if (statement.Time is { } time)
+                    {
+                        <span class="when">@TimeText.Of(time, Visitor, T)</span>
+                    }
+                    @if (statement.Summary is { } summary)
+                    {
+                        <p><Loc Text="summary" /></p>
+                    }
+                </dd>
+            }
+        </dl>
+    };
+
+    // The connections of the name, each with its sources.
+    private RenderFragment Connected(IEnumerable<Connection> connections, Entity self) => __builder =>
+    {
+        <ul class="statements" role="list">
+            @foreach (var connection in connections)
+            {
+                var edge = connection.Direction == ConnectionDirection.Incoming
+                    ? new Edge(connection.Relation, connection.Other, self)
+                    : new Edge(connection.Relation, self, connection.Other);
+                <li>
+                    <Statement Relation="edge" Self="self.Id" Evidence="true" From="@_here" />
+                    @if (_connected.Possibly.Contains(connection))
+                    {
+                        <span class="possibly">– @T["Connections_Possibly"]</span>
+                    }
+                </li>
+            }
+        </ul>
+    };
+
+    private YearParts<DatedStatement> _stated = null!;
+    private YearParts<Connection> _connected = null!;
+    private string _years = string.Empty;
     private EntityOverview? _entity;
     private NodeProfile? _profile;
     private bool _hasFamily;
@@ -291,6 +367,12 @@
         _here = $"{Site.Collection}/entity/{_entity.Entity.Id}";
         _explore = Exploring.Of(Context, Visitor, _entity.Entity.Id, ExplorationView.Overview);
         _profile = Visitor.Projection!.Profile(_entity.Entity.Id);
+
+        // The years the visitor chose are kept to by this page too (step 25.3).
+        var present = Clock.GetUtcNow().Year;
+        _stated = YearParts.Of(_entity.Entity.Dated, statement => statement.Time, _explore.Span, present);
+        _connected = YearParts.Of(_entity.Connections, connection => connection.Relation.Time, _explore.Span, present);
+        _years = _explore.Years is { } chosen ? YearsText.Of(chosen, Visitor, T) : string.Empty;
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
         _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.IsEmpty;
         _onward = Visitor.Projection.Onward(_entity.Entity.Id);

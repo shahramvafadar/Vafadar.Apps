@@ -1258,6 +1258,19 @@ that touches), `YearsOfANamePagesTests` (the two pages, English and Persian, yea
 `ExplorationBrowserTests` for the form on the two views. *Written down:* ADR 0025 ("The years of a name",
 brought to five views), D-084 addendum, CHANGELOG.
 
+*Done on 2026-11-23.* *Built:* `YearParts` – one rule that tells what is stated apart by a stretch of years
+(in the years, without a time, at another time and counted; "may have held" where the time itself is not
+sure) – and `FamilyView.Within`; the page of a name with its statements and its connections in those three
+parts, a line that says the years and what was left out with the way to all years; the family tree in years –
+descent always, a partnership that states another time left out and counted, somebody reached only by it not
+drawn, the one the tree is about always –, the same for the drawing that moves; the form of the years on the
+bar of both views; `HonoursYears` true for every view, and the years set aside nowhere. *Other than planned:*
+the head of a page needed no projection of its own – it is never left out –, so `Profile` and `Family` keep
+their signatures and the rule is applied to their answers; a collection may date only a relation outside a
+story, so a family of a story states no time and is drawn whole in every stretch of years. *Tried:*
+`YearsOfEveryViewTests` (10), `YearsOfANamePagesTests` (12, English and Persian), `ExplorationTests`,
+`ExploringPagesTests`.
+
 **25.4 A theme across collections (backlog A2).** D-083 made a theme a record of one collection. *To build:*
 
 * The statement is the editors' and is the one a place already has (ADR 0023): two entities of the type

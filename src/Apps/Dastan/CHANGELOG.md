@@ -457,3 +457,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   build, and the site can be started on it with the launch profile `library`.
 - For who runs the site: a family tree can be written into an account from a file (`people import-tree`), whole
   or not at all, for an account that asked for it.
+- The years you choose are kept to by the page of a name and by its family tree as well: what states another time
+  is left out and counted, what states no time is shown apart, and descent is always drawn.

@@ -90,13 +90,12 @@ public sealed class ExplorationTests
     [Fact]
     public void What_was_left_out_elsewhere_and_is_shown_here_is_named()
     {
-        // The years are honoured by the chart of time, the connections and the pictures (D-084); the page of a
-        // name and its family tree show every year and say so.
+        // The years are honoured by every view of a name (D-084, step 25.3): they are never set aside.
         Assert.Equal([ExplorationFilter.WithoutEvents, ExplorationFilter.FewerLanes, ExplorationFilter.KindOfPicture], Read(ExplorationView.Connections, "from=900&to=1000&events=off&lanes=2&kind=video").SetAside);
         Assert.Equal([ExplorationFilter.KindOfPicture], Read(ExplorationView.Timeline, "from=900&to=1000&events=off&lanes=2&kind=video").SetAside);
         Assert.Empty(Read(ExplorationView.Pictures, "from=900&to=1000&kind=video").SetAside);
-        Assert.Equal([ExplorationFilter.Years, ExplorationFilter.KindOfPicture], Read(ExplorationView.Family, "from=900&to=1000&kind=video").SetAside);
-        Assert.Equal([ExplorationFilter.Years], Read(ExplorationView.Overview, "from=900&to=1000").SetAside);
+        Assert.Equal([ExplorationFilter.KindOfPicture], Read(ExplorationView.Family, "from=900&to=1000&kind=video").SetAside);
+        Assert.Empty(Read(ExplorationView.Overview, "from=900&to=1000").SetAside);
 
         // How far a drawing is opened and in which order pictures stand leave nothing out.
         Assert.Empty(Read(ExplorationView.Overview, "open=character-zal&up=3&order=oldest&tree=across&scale=4").SetAside);
@@ -211,13 +210,13 @@ public sealed class ExplorationTests
     }
 
     [Fact]
-    public void The_years_are_one_stretch_for_the_three_views_that_keep_to_them()
+    public void The_years_are_one_stretch_for_every_view_of_a_name()
     {
         var state = Read(ExplorationView.Connections, "from=-500&to=1000&open=character-zal&sel=character-zal&order=oldest");
 
         Assert.Equal((-500, 1000), state.Years);
         Assert.True(Exploration.HonoursYears(ExplorationView.Connections) && Exploration.HonoursYears(ExplorationView.Timeline) && Exploration.HonoursYears(ExplorationView.Pictures));
-        Assert.False(Exploration.HonoursYears(ExplorationView.Overview) || Exploration.HonoursYears(ExplorationView.Family));
+        Assert.True(Exploration.HonoursYears(ExplorationView.Overview) && Exploration.HonoursYears(ExplorationView.Family));
 
         // Both years are whole years of the axis: from the start of 500 BCE to the end of 1000 CE.
         Assert.Equal(new Vafadar.Temporal.YearSpan(new YearOfEra(Vafadar.Temporal.Era.BeforeCommonEra, 500).Place, new YearOfEra(Vafadar.Temporal.Era.CommonEra, 1000).Place + 1), state.Span);

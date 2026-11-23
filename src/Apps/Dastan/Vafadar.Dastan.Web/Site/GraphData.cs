@@ -222,7 +222,7 @@ public static class GraphDataEndpoints
     {
         ArgumentNullException.ThrowIfNull(endpoints);
 
-        endpoints.MapGet("/{collection}/entity/{id}/family.json", (HttpContext context, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, string collection, string id, string? up, string? down, string? beside, string? family) =>
+        endpoints.MapGet("/{collection}/entity/{id}/family.json", (HttpContext context, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, TimeProvider clock, string collection, string id, string? up, string? down, string? beside, string? family) =>
         {
             var known = collection == site.Collection && id.Length > 0 && !id.Any(char.IsWhiteSpace);
             var state = TreeState.Read(up, down, beside, family, null);
@@ -232,7 +232,8 @@ public static class GraphDataEndpoints
             var explore = Exploring.Of(context, visitor, around, ExplorationView.Family);
             var view = !known || visitor.Projection is not { } projection ? null
                 : state.Whole ? projection.Family(around) : projection.Family(around, state.Up, state.Down, state.Beside);
-            return Answer(context, view is null ? null : Of(view, around, visitor, site, text, explore));
+            // The drawing that moves shows what the page shows: the tree in the years the visitor chose (step 25.3).
+            return Answer(context, view is null ? null : Of(view.Within(around, explore.Span, clock.GetUtcNow().Year), around, visitor, site, text, explore));
         });
 
         endpoints.MapGet("/{collection}/entity/{id}/connections.json", (HttpContext context, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, TimeProvider clock, string collection, string id, string? open) =>

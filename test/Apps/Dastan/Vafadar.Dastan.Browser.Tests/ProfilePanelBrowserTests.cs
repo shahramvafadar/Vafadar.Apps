@@ -28,7 +28,7 @@ public sealed class ProfilePanelBrowserTests(BrowserSite site) : IClassFixture<B
         var page = await site.Visitor(width, readTo: 4, dark: dark);
         await page.GotoAsync($"/{language}/{Story}/entity/{entity}");
         var name = Words(await page.Locator("main h1").InnerTextAsync());
-        await page.Locator("details.fold > summary").ClickAsync();
+        await page.Locator("details.fold:not(.explore-years) > summary").ClickAsync();
         var facts = Words(await page.Locator(".profile .profile-facts").InnerTextAsync());
 
         await page.GotoAsync($"/{language}/{Story}");

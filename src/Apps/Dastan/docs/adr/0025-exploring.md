@@ -144,3 +144,23 @@ a time of a theme's gallery other than the gallery of a time of the whole collec
 
 Tests: `ExplorationTests` (the stretch, what is typed, what is none), `YearsOfANameTests` (the projection),
 `YearsOfANamePagesTests` (the pages, the form, Persian, the address of the drawing).
+
+## Addendum of 2026-11-23: the years are kept to by every view of a name (step 25.3)
+
+"The years of a name" (D-084) left two views that set the years aside and said so: the page of a name and
+its family tree. On the owner's word (D-088) they keep to them too, and "Not left out in this view: the
+years" is said nowhere any more.
+
+* **One rule.** `YearParts.Of` tells any list of what is stated apart: what states a time that reaches the
+  years; what states no time – shown apart, under its own heading, never hidden –; what states another time –
+  left out and counted. It is the rule of `YearCover` the connections and the pictures use.
+* **The page of a name.** Its statements about itself and its connections stand in those parts. Above them one
+  line says the years, how much was left out, and leads to all years. The head of the page – the name, its
+  kind, its facts – is of the name and is never left out.
+* **The family tree.** Descent states no time and is drawn at every time. A partnership that states a time is
+  drawn when it held in the years; one that states another is left out and counted, and somebody reached only
+  by it is not drawn. The one the tree is about is drawn always. The drawing that moves is asked with the same
+  years and draws the same tree.
+* **What it does not do.** A collection dates only relations outside a story, so the family of a story is
+  drawn whole whatever the years. The trees of accounts and their public pages are no content of a collection
+  and have no state of exploring.
