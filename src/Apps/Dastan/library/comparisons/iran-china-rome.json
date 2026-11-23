@@ -1,0 +1,1092 @@
+{
+  "formatVersion": "dastan-comparison-0.1",
+  "id": "iran-china-rome",
+  "status": "draft",
+  "note": "Built from the three collections of the library: every period and event says the years, with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public.",
+  "frame": "commonEraYears",
+  "title": "Iran, China and Rome side by side",
+  "summary": "What ruled in Iran, in China and in Rome from the second millennium BCE to about 100 CE, and a few moments that a reader should see side by side.",
+  "show": {
+    "from": {
+      "frame": "calendar",
+      "era": "beforeCommonEra",
+      "year": 1600
+    },
+    "to": {
+      "frame": "calendar",
+      "era": "commonEra",
+      "year": 100
+    }
+  },
+  "publication": {
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "sources": [
+    {
+      "id": "src-livius-place-ansan-tell-malyan",
+      "title": "Anšan (Tell Malyan) – Livius",
+      "url": "https://www.livius.org/articles/place/ansan-tell-malyan/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-susa",
+      "title": "Susa – Livius",
+      "url": "https://www.livius.org/articles/place/susa/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-people-medes",
+      "title": "Medes – Livius",
+      "url": "https://www.livius.org/articles/people/medes/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-medes-medes-2",
+      "title": "Medes (2) – Livius",
+      "url": "https://www.livius.org/articles/people/medes/medes-2/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-dynasty-achaemenids",
+      "title": "Achaemenids – Livius",
+      "url": "https://www.livius.org/articles/dynasty/achaemenids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-achaemenids-achaemenid-kings",
+      "title": "Achaemenid Kings (Livius) – Livius",
+      "url": "https://www.livius.org/articles/dynasty/achaemenids/achaemenid-kings/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-dynasty-seleucids",
+      "title": "Seleucids (Livius) – Livius",
+      "url": "https://www.livius.org/articles/dynasty/seleucids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-demetrius-ii-nicator",
+      "title": "Demetrius II Nicator (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/demetrius-ii-nicator/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-antiochus-vii-sidetes",
+      "title": "Antiochus VII Sidetes (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/antiochus-vii-sidetes/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-i",
+      "title": "Arsaces I – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-parthia",
+      "title": "Parthia – Livius",
+      "url": "https://www.livius.org/articles/place/parthia/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-ecbatana-hamadan-ecbatana-2",
+      "title": "Ecbatana (2) – Livius",
+      "url": "https://www.livius.org/articles/place/ecbatana-hamadan/ecbatana-2/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-cyrus-the-great-cyrus-takes-babylon",
+      "title": "Cyrus takes Babylon – Livius",
+      "url": "https://www.livius.org/articles/person/cyrus-the-great/cyrus-takes-babylon/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-babylon",
+      "title": "Babylon – Livius",
+      "url": "https://www.livius.org/articles/place/babylon/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-gaugamela-331-bce",
+      "title": "Gaugamela (331 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/gaugamela-331-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-carrhae-53-bce",
+      "title": "Carrhae (53 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/carrhae-53-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-xix-orodes-ii",
+      "title": "Arsaces XIX, Orodes II – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-xix-orodes-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-si-shang",
+      "title": "Shang dynasty – Smithsonian’s National Museum of Asian Art",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/shang-dynasty-2/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-afe-timeline",
+      "title": "Timelines: China – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/timelines/china_timeline.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-afe-keypoints",
+      "title": "Key Points: 4000 BCE – 1000 CE – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/main_pop/kpct/kp_4000bce-1000ce.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-hawaii-early-china",
+      "title": "China and East Asia to the Han Dynasty – Journeys in World History I, University of Hawaii",
+      "url": "https://pressbooks.oer.hawaii.edu/honcchist151/chapter/the-beginnings-of-asian-civilization/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-si-zhou",
+      "title": "Zhou dynasty – Smithsonian’s National Museum of Asian Art",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/zhou-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-major-cook-9",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 9: The Qin dynasty",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-9&type=chapterpdf",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-eno-qin",
+      "title": "R. Eno, The Qin Dynasty (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/546b5ff4-6c3e-40dd-a5d3-5cbe72a10a99/content",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-eno-rise-of-han",
+      "title": "R. Eno, The Rise of the Han (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/eed3bbd8-bbcb-44df-b9d3-937d6cae89c4/content",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-afe-1000bce",
+      "title": "Asia by Era: China, 1000 BCE – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/tps/1000bce_cn.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-major-cook-11",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 11: The later Western Han and Wang Mang",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-11&type=chapterpdf",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-decrespigny-later-han",
+      "title": "Rafe de Crespigny, Chronology of Later Han (Brill)",
+      "url": "https://ll-chinesereferenceshelf.brillonline.com/dictionary-han/prelims/sim-200005",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-major-cook-10",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 10: The Western Han and Emperor Wu",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-10&type=chapterpdf",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-eno-wudi",
+      "title": "R. Eno, The Reign of Wu-di, 141–87 (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/2693ed09-d574-45f5-9dae-61ed31559874/content",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-silk-road",
+      "title": "Silk Road – Livius",
+      "url": "https://www.livius.org/articles/place/silk-road/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-hill-hou-hanshu",
+      "title": "The Western Regions according to the Hou Hanshu, transl. John E. Hill – Silk Road Seattle, University of Washington",
+      "url": "https://depts.washington.edu/silkroad/texts/hhshu/hou_han_shu.html",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-eutropius-short-history-eutropius-short-history-1",
+      "title": "Eutropius, Short History 1 – Livius",
+      "url": "https://www.livius.org/sources/content/eutropius-short-history/eutropius-short-history-1/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-appian-appian-wars-of-the-roman-kings",
+      "title": "Appian, Wars of the Roman Kings – Livius",
+      "url": "https://www.livius.org/sources/content/appian/appian-wars-of-the-roman-kings/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-junius-brutus-lucius",
+      "title": "Lucius Junius Brutus – Livius",
+      "url": "https://www.livius.org/articles/person/junius-brutus-lucius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-varronian-chronology",
+      "title": "Varronian Chronology – Livius",
+      "url": "https://www.livius.org/articles/concept/varronian-chronology/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-senate",
+      "title": "Senate – Livius",
+      "url": "https://www.livius.org/articles/concept/senate/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-dynasty-julio-claudians",
+      "title": "Julio-Claudians – Livius",
+      "url": "https://www.livius.org/articles/dynasty/julio-claudians/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-vespasian",
+      "title": "Vespasian – Livius",
+      "url": "https://www.livius.org/articles/person/vespasian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-domitian",
+      "title": "Domitian – Livius",
+      "url": "https://www.livius.org/articles/person/domitian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-nerva",
+      "title": "Nerva – Livius",
+      "url": "https://www.livius.org/articles/person/nerva/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-trajan",
+      "title": "Trajan – Livius",
+      "url": "https://www.livius.org/articles/person/trajan/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-06",
+      "title": "Gaius Julius Caesar: Civil War – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-06/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-actium-31-bce",
+      "title": "Actium (31 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/actium-31-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-09",
+      "title": "Gaius Julius Caesar: Inheritance – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-09/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    }
+  ],
+  "lanes": [
+    {
+      "key": "iran",
+      "label": "Iran",
+      "periods": [
+        {
+          "key": "middle-elamite",
+          "label": "Middle Elamite period",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1500,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1100,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-place-ansan-tell-malyan",
+            "src-livius-place-susa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "medes",
+          "label": "The Median kingdom",
+          "summary": "The years rest on Herodotus.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 700
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 699
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 550
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 549
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-people-medes",
+            "src-livius-medes-medes-2"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "achaemenid",
+          "label": "The Achaemenids",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 550
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 330
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-achaemenids",
+            "src-livius-achaemenids-achaemenid-kings"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "seleucid",
+          "label": "Alexander and the Seleucids in Iran",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 330
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 129
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-seleucids",
+            "src-livius-person-demetrius-ii-nicator",
+            "src-livius-person-antiochus-vii-sidetes"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arsacid",
+          "label": "The Arsacids",
+          "summary": "Followed here to about 100 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 247
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 238
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 224
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-arsaces-i",
+            "src-livius-place-parthia",
+            "src-livius-ecbatana-hamadan-ecbatana-2"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "cyrus-takes-babylon",
+          "label": "Cyrus takes Babylon",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 539
+            }
+          },
+          "sourceIds": [
+            "src-livius-cyrus-the-great-cyrus-takes-babylon",
+            "src-livius-place-babylon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "gaugamela",
+          "label": "The battle of Gaugamela",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 331
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-gaugamela-331-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "carrhae",
+          "label": "The battle of Carrhae",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 53
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-carrhae-53-bce",
+            "src-livius-person-arsaces-xix-orodes-ii"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "china",
+      "label": "China",
+      "periods": [
+        {
+          "key": "shang",
+          "label": "The Shang",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1600,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1050
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1046
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-si-shang",
+            "src-afe-timeline",
+            "src-afe-keypoints",
+            "src-hawaii-early-china"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "western-zhou",
+          "label": "The Western Zhou",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1050
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1046
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 771
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-afe-keypoints",
+            "src-si-zhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "eastern-zhou",
+          "label": "The Eastern Zhou",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 771
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 770
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 256
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 221
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-afe-keypoints",
+            "src-hawaii-early-china",
+            "src-si-zhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "qin",
+          "label": "The Qin",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 221
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 206
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-major-cook-9",
+            "src-afe-timeline",
+            "src-eno-qin"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "western-han",
+          "label": "The Western Han",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 206
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 202
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 7
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 9
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-eno-rise-of-han",
+            "src-major-cook-9",
+            "src-afe-timeline",
+            "src-afe-1000bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "xin",
+          "label": "The Xin",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 9
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 23
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-major-cook-11"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "eastern-han",
+          "label": "The Eastern Han",
+          "summary": "Followed here to about 100 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 25
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 220
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "qin-unification",
+          "label": "The Qin unifies China",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 221
+            }
+          },
+          "sourceIds": [
+            "src-major-cook-9",
+            "src-afe-timeline"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "zhang-qian",
+          "label": "Zhang Qian travels to the west",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 139
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 125
+            }
+          },
+          "sourceIds": [
+            "src-major-cook-10",
+            "src-eno-wudi",
+            "src-livius-place-silk-road"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "gan-ying",
+          "label": "Gan Ying’s journey toward Da Qin",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 97
+            }
+          },
+          "sourceIds": [
+            "src-hill-hou-hanshu",
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "rome",
+      "label": "Rome",
+      "periods": [
+        {
+          "key": "roman-monarchy",
+          "label": "The Roman monarchy",
+          "summary": "The kings and their years rest on tradition.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 753
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 509
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-eutropius-short-history-eutropius-short-history-1",
+            "src-livius-appian-appian-wars-of-the-roman-kings"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "roman-republic",
+          "label": "The Roman Republic",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 510
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 505
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 27
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-junius-brutus-lucius",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-concept-senate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "julio-claudians",
+          "label": "The Julio-Claudians",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 31
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 68
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-julio-claudians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "flavians",
+          "label": "The Flavians",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 69
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 96
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-vespasian",
+            "src-livius-person-domitian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "nerva-trajan",
+          "label": "Nerva and Trajan",
+          "summary": "Followed here to about 100 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 96
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 117
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-nerva",
+            "src-livius-person-trajan"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "founding-of-republic",
+          "label": "The founding of the Republic",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 510
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 505
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-junius-brutus-lucius",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-concept-senate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "carrhae-rome",
+          "label": "The battle of Carrhae",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 53
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-carrhae-53-bce",
+            "src-livius-caesar-caesar-06"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "actium",
+          "label": "The battle of Actium",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 31
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-actium-31-bce",
+            "src-livius-caesar-caesar-09"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    }
+  ]
+}

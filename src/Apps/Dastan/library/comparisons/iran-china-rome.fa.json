@@ -1,0 +1,99 @@
+{
+  "formatVersion": "dastan-comparison-translation-0.1",
+  "id": "iran-china-rome",
+  "language": "fa",
+  "review": "draft",
+  "note": "A draft translation; the names are those of the Persian translations of the three collections.",
+  "title": "ایران، چین و روم در کنار هم",
+  "summary": "از هزارهٔ دوم پیش از میلاد تا حدود ۱۰۰ میلادی در ایران، چین و روم چه کسانی فرمان می‌راندند، و چند لحظه که خواننده باید کنار هم ببیند.",
+  "lanes": {
+    "iran": "ایران",
+    "china": "چین",
+    "rome": "روم"
+  },
+  "items": {
+    "middle-elamite": {
+      "label": "دورهٔ میانهٔ ایلامی"
+    },
+    "medes": {
+      "label": "پادشاهی ماد",
+      "summary": "سال‌ها بر هرودوت استوارند."
+    },
+    "achaemenid": {
+      "label": "هخامنشیان"
+    },
+    "seleucid": {
+      "label": "اسکندر و سلوکیان در ایران"
+    },
+    "arsacid": {
+      "label": "اشکانیان",
+      "summary": "در اینجا تا حدود ۱۰۰ میلادی دنبال می‌شود."
+    },
+    "cyrus-takes-babylon": {
+      "label": "گرفتن بابل به دست کوروش"
+    },
+    "gaugamela": {
+      "label": "نبرد گوگمل"
+    },
+    "carrhae": {
+      "label": "نبرد حران"
+    },
+    "shang": {
+      "label": "شانگ"
+    },
+    "western-zhou": {
+      "label": "ژو غربی"
+    },
+    "eastern-zhou": {
+      "label": "ژو شرقی"
+    },
+    "qin": {
+      "label": "چین (Qin)"
+    },
+    "western-han": {
+      "label": "هان غربی"
+    },
+    "xin": {
+      "label": "شین"
+    },
+    "eastern-han": {
+      "label": "هان شرقی",
+      "summary": "در اینجا تا حدود ۱۰۰ میلادی دنبال می‌شود."
+    },
+    "qin-unification": {
+      "label": "یکپارچه شدن چین زیر فرمان چین (Qin)"
+    },
+    "zhang-qian": {
+      "label": "سفر ژانگ چیان به باختر"
+    },
+    "gan-ying": {
+      "label": "سفر گان یینگ به سوی داچین"
+    },
+    "roman-monarchy": {
+      "label": "پادشاهی روم",
+      "summary": "شاهان و سال‌هایشان بر روایت استوارند."
+    },
+    "roman-republic": {
+      "label": "جمهوری روم"
+    },
+    "julio-claudians": {
+      "label": "ژولیو-کلودیان"
+    },
+    "flavians": {
+      "label": "فلاویان"
+    },
+    "nerva-trajan": {
+      "label": "نروا و تراژان",
+      "summary": "در اینجا تا حدود ۱۰۰ میلادی دنبال می‌شود."
+    },
+    "founding-of-republic": {
+      "label": "بنیاد جمهوری"
+    },
+    "carrhae-rome": {
+      "label": "نبرد حران"
+    },
+    "actium": {
+      "label": "نبرد آکتیوم"
+    }
+  }
+}
