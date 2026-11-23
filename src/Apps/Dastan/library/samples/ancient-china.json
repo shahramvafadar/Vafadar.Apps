@@ -1,0 +1,5619 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "ancient-china",
+  "worldId": "world-ancient-china",
+  "subjectId": "subject-ancient-china",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-afe-timeline",
+      "title": "Timelines: China – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/timelines/china_timeline.htm",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-afe-keypoints",
+      "title": "Key Points: 4000 BCE – 1000 CE – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/main_pop/kpct/kp_4000bce-1000ce.htm",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-hawaii-early-china",
+      "title": "China and East Asia to the Han Dynasty – Journeys in World History I, University of Hawaii",
+      "url": "https://pressbooks.oer.hawaii.edu/honcchist151/chapter/the-beginnings-of-asian-civilization/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-major-cook-9",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 9: The Qin dynasty",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-9&type=chapterpdf",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-uw-marquis-yi",
+      "title": "Marquis Yi’s Tomb – A Visual Sourcebook of Chinese Civilization, University of Washington",
+      "url": "https://depts.washington.edu/chinaciv/archae/2marmain.htm",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-eno-western-zhou",
+      "title": "R. Eno, The History of the Western Zhou (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/1bbbb785-6535-43dc-afe0-751e8d589b2f/content",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-si-shang",
+      "title": "Shang dynasty – Smithsonian’s National Museum of Asian Art",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/shang-dynasty-2/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-uw-fu-hao",
+      "title": "Fu Hao’s Tomb – A Visual Sourcebook of Chinese Civilization, University of Washington",
+      "url": "https://depts.washington.edu/chinaciv/archae/2fuhmain.htm",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1785294",
+      "title": "GeoNames: Anyang",
+      "url": "https://www.geonames.org/1785294/anyang.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1784658",
+      "title": "GeoNames: Zhengzhou",
+      "url": "https://www.geonames.org/1784658/zhengzhou.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-si-xian",
+      "title": "Xi’an: Geography and History – Smithsonian Folklife Festival",
+      "url": "https://festival.si.edu/2002/the-silk-road/xian-geography-and-history/smithsonian",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1790630",
+      "title": "GeoNames: Xi’an",
+      "url": "https://www.geonames.org/1790630/xi-an.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-uw-xian",
+      "title": "Xi’an – Silk Road Seattle, University of Washington",
+      "url": "https://depts.washington.edu/silkroad/cities/china/xian/xian.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1801792",
+      "title": "GeoNames: Luoyang",
+      "url": "https://www.geonames.org/1801792/luoyang.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-eno-qin",
+      "title": "R. Eno, The Qin Dynasty (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/546b5ff4-6c3e-40dd-a5d3-5cbe72a10a99/content",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-eno-early-han",
+      "title": "R. Eno, The Reigns of the Early Han Emperors (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/dspace/bitstreams/d7346363-5afd-47f9-af36-8b4d33f0d45f/download",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1790353",
+      "title": "GeoNames: Xianyang",
+      "url": "https://www.geonames.org/1790353/xianyang.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-major-cook-10",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 10: The Western Han and Emperor Wu",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-10&type=chapterpdf",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-silk-road",
+      "title": "Silk Road – Livius",
+      "url": "https://www.livius.org/articles/place/silk-road/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-decrespigny-later-han",
+      "title": "Rafe de Crespigny, Chronology of Later Han (Brill)",
+      "url": "https://ll-chinesereferenceshelf.brillonline.com/dictionary-han/prelims/sim-200005",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1280849",
+      "title": "GeoNames: Kashgar",
+      "url": "https://www.geonames.org/1280849/kashgar.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-afe-1000bce",
+      "title": "Asia by Era: China, 1000 BCE – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/tps/1000bce_cn.htm",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-si-zhou",
+      "title": "Zhou dynasty – Smithsonian’s National Museum of Asian Art",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/zhou-dynasty/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-eno-rise-of-han",
+      "title": "R. Eno, The Rise of the Han (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/eed3bbd8-bbcb-44df-b9d3-937d6cae89c4/content",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-major-cook-11",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 11: The later Western Han and Wang Mang",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-11&type=chapterpdf",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-uw-count-of-yu",
+      "title": "Count of Yu – A Visual Sourcebook of Chinese Civilization, University of Washington",
+      "url": "https://depts.washington.edu/chinaciv/archae/2coumain.htm",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-eno-wudi",
+      "title": "R. Eno, The Reign of Wu-di, 141–87 (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/2693ed09-d574-45f5-9dae-61ed31559874/content",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-hill-hou-hanshu",
+      "title": "The Western Regions according to the Hou Hanshu, transl. John E. Hill – Silk Road Seattle, University of Washington",
+      "url": "https://depts.washington.edu/silkroad/texts/hhshu/hou_han_shu.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ucla-ban-zhao",
+      "title": "Lessons for Women, Ban Zhao – UCLA Center for Chinese Studies",
+      "url": "https://www.international.ucla.edu/ccs/article/18475",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "subject-ancient-china",
+      "type": "Region",
+      "label": "Ancient China",
+      "summary": "China from the Xia, which tradition places first, and the Shang to the Eastern Han about 100 CE: the Zhou and its states, the unification under the Qin, the Western Han, the Xin of Wang Mang and the restored Han.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "region-qin",
+      "type": "Region",
+      "label": "Qin",
+      "summary": "A state in the west of the Zhou world whose Duke Xiao (361–338 BCE) took Shang Yang as chancellor; its kings unified China in 221 BCE.",
+      "sourceIds": [
+        "src-hawaii-early-china",
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ]
+    },
+    {
+      "id": "region-chu",
+      "type": "Region",
+      "label": "Chu",
+      "summary": "A state based on the middle Yangzi that absorbed fifty or more small states.",
+      "sourceIds": [
+        "src-uw-marquis-yi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ]
+    },
+    {
+      "id": "region-qi",
+      "type": "Region",
+      "label": "Qi",
+      "summary": "A state that tradition says was given to Commander Shangfu, the Grand Duke Wang, at the founding of the Zhou.",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ]
+    },
+    {
+      "id": "region-yan",
+      "type": "Region",
+      "label": "Yan",
+      "summary": "A state that tradition says was given to Shi, Duke of Shao, at the founding of the Zhou.",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ]
+    },
+    {
+      "id": "region-lu",
+      "type": "Region",
+      "label": "Lu",
+      "summary": "A state that tradition says was the estate of the Duke of Zhou; Confucius was born there and held minor offices in it.",
+      "sourceIds": [
+        "src-eno-western-zhou",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ]
+    },
+    {
+      "id": "place-anyang",
+      "type": "Place",
+      "label": "Anyang",
+      "summary": "The last capital of the Shang, after many moves, near present-day Anyang; the position is that of the modern city.",
+      "sourceIds": [
+        "src-si-shang",
+        "src-afe-timeline",
+        "src-uw-fu-hao",
+        "src-geonames-1785294"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ],
+      "position": {
+        "latitude": 36.096,
+        "longitude": 114.38278,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-zhengzhou",
+      "type": "Place",
+      "label": "Zhengzhou",
+      "summary": "A Shang capital near present-day Zhengzhou; the position is that of the modern city.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-geonames-1784658"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ],
+      "position": {
+        "latitude": 34.75778,
+        "longitude": 113.64861,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-hao",
+      "type": "Place",
+      "label": "Hao",
+      "summary": "The first capital of the Zhou, near present-day Xi’an, founded in the eleventh century BCE; the position is that of Xi’an.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-si-xian",
+        "src-geonames-1790630"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Haojing",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ],
+      "position": {
+        "latitude": 34.25833,
+        "longitude": 108.92861,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-luoyang",
+      "type": "Place",
+      "label": "Luoyang",
+      "summary": "A city on the river Luo, planned by King Wu and built under King Cheng of the Zhou; a capital of the Zhou with Hao, the first Han capital before Chang’an, and the capital of the Eastern Han.",
+      "sourceIds": [
+        "src-eno-western-zhou",
+        "src-afe-timeline",
+        "src-uw-xian",
+        "src-geonames-1801792"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ],
+      "position": {
+        "latitude": 34.67345,
+        "longitude": 112.43684,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-xianyang",
+      "type": "Place",
+      "label": "Xianyang",
+      "summary": "The capital of the Qin, founded in 350 BCE near modern Xi’an and burnt by Xiang Yu in 207 BCE. Columbia’s timeline names Chang’an as the Qin capital instead.",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-eno-qin",
+        "src-eno-early-han",
+        "src-afe-timeline",
+        "src-geonames-1790353"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ],
+      "position": {
+        "latitude": 34.33778,
+        "longitude": 108.70261,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-changan",
+      "type": "Place",
+      "label": "Chang’an",
+      "summary": "The capital of the Western Han at present-day Xi’an, begun in 202–200 BCE and built during the reign of Emperor Hui; Livius calls it the Silk City.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-uw-xian",
+        "src-major-cook-10",
+        "src-livius-place-silk-road",
+        "src-geonames-1790630"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Xi’an",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ],
+      "position": {
+        "latitude": 34.25833,
+        "longitude": 108.92861,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-kashgar",
+      "type": "Place",
+      "label": "Kashgar",
+      "summary": "A city of the Western Regions where Ban Chao stayed when the Han withdrew in 75 CE.",
+      "sourceIds": [
+        "src-decrespigny-later-han",
+        "src-geonames-1280849"
+      ],
+      "spoilerLevel": 0,
+      "names": [],
+      "position": {
+        "latitude": 39.46718,
+        "longitude": 75.98675,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-tomb-of-the-first-emperor",
+      "type": "Place",
+      "label": "The tomb of the First Emperor",
+      "summary": "The tomb complex of the First Emperor of Qin at Lintong, east of Xianyang, covering some 56 square kilometres, with the army of terracotta figures discovered in the 1970s; the sources count 6,000 to more than 8,000 figures.",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-uw-xian",
+        "src-afe-1000bce"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ]
+    },
+    {
+      "id": "period-xia",
+      "type": "Period",
+      "label": "The Xia (tradition)",
+      "summary": "The first dynasty in Chinese tradition, said to have been founded by Yu the Great; there is no written evidence of it, though many historians identify Erlitou as its capital. The traditional dates differ: about 2100 or 1900 to 1600 BCE.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2100
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1900
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1600,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-western-zhou",
+      "type": "Period",
+      "label": "The Western Zhou",
+      "summary": "From the Zhou conquest of the Shang to the fall of the Western capital in 771 BCE. The sources date the conquest about 1050 or 1046 BCE.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-afe-keypoints",
+        "src-si-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1050
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1046
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 771
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-eastern-zhou",
+      "type": "Period",
+      "label": "The Eastern Zhou",
+      "summary": "The Zhou after the move of the court to Luoyang in 770 BCE, to 256 BCE; some sources take it to 221 BCE.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-afe-keypoints",
+        "src-hawaii-early-china",
+        "src-si-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 771
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 770
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 256
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 221
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-spring-and-autumn",
+      "type": "Period",
+      "label": "The Spring and Autumn period",
+      "summary": "The first part of the Eastern Zhou, from 770 BCE to about 480–475 BCE.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 770
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 475
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-warring-states",
+      "type": "Period",
+      "label": "The Warring States",
+      "summary": "From about 480–475 BCE to the unification under the Qin in 221 BCE, when the many small states were consolidated into seven kingdoms.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-uw-marquis-yi",
+        "src-si-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 475
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 221
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-shang",
+      "type": "Dynasty",
+      "label": "The Shang",
+      "summary": "The earliest Chinese dynasty that written and archaeological evidence confirm, about 1600 to 1050/1046 BCE, known for its oracle bones, the earliest Chinese writing. Its capital moved many times, last to Anyang.",
+      "sourceIds": [
+        "src-si-shang",
+        "src-afe-timeline",
+        "src-afe-keypoints",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1600,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1050
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1046
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-anyang"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-zhou",
+      "type": "Dynasty",
+      "label": "The Zhou",
+      "summary": "The dynasty that overthrew the Shang, introducing the idea of the Mandate of Heaven to justify it, and ruled – first from Hao, then from Luoyang – until 256 BCE.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-si-zhou",
+        "src-afe-keypoints",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1050
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1046
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 256
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-luoyang"
+        },
+        {
+          "fact": "founder",
+          "entityId": "person-king-wu-of-zhou"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-qin",
+      "type": "Dynasty",
+      "label": "The Qin",
+      "summary": "The dynasty that unified China in 221 BCE and standardised script, coinage, weights and measures; it fell in 206 BCE.",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-afe-timeline",
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 221
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 206
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-xianyang"
+        },
+        {
+          "fact": "founder",
+          "entityId": "person-qin-shi-huang"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-western-han",
+      "type": "Dynasty",
+      "label": "The Western Han",
+      "summary": "The dynasty founded by Liu Bang, who dated his accession from 206 BCE and was crowned emperor in 202 BCE, with its capital at Chang’an; it ended with the usurpation of Wang Mang in 9 CE (the sources give 7, 8 or 9 CE).",
+      "sourceIds": [
+        "src-eno-rise-of-han",
+        "src-major-cook-9",
+        "src-afe-timeline",
+        "src-afe-1000bce"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 206
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 202
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 7
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 9
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-changan"
+        },
+        {
+          "fact": "founder",
+          "entityId": "person-liu-bang"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-xin",
+      "type": "Dynasty",
+      "label": "The Xin",
+      "summary": "The dynasty of Wang Mang, who took the throne in 9 CE and died in 23 CE; an interregnum between the Western and the Eastern Han.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 9
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 23
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-changan"
+        },
+        {
+          "fact": "founder",
+          "entityId": "person-wang-mang"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-eastern-han",
+      "type": "Dynasty",
+      "label": "The Eastern Han",
+      "summary": "The Han restored by Liu Xiu, Emperor Guangwu, who claimed the imperial title in 25 CE, with its capital at Luoyang; it lasted until 220 CE.",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 25
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 220
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-luoyang"
+        },
+        {
+          "fact": "founder",
+          "entityId": "person-guangwu"
+        }
+      ]
+    },
+    {
+      "id": "office-shang-king",
+      "type": "Office",
+      "label": "King of the Shang",
+      "summary": "The kingship of the Shang.",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-shang"
+        }
+      ]
+    },
+    {
+      "id": "office-zhou-king",
+      "type": "Office",
+      "label": "King of the Zhou",
+      "summary": "The kingship of the Zhou, held by the Son of Heaven with the Mandate of Heaven.",
+      "sourceIds": [
+        "src-eno-western-zhou",
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-zhou"
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-qin",
+      "type": "Office",
+      "label": "King of Qin",
+      "summary": "The kingship of the state of Qin before the unification.",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-qin"
+        }
+      ]
+    },
+    {
+      "id": "office-qin-emperor",
+      "type": "Office",
+      "label": "Emperor of the Qin",
+      "summary": "The title huangdi, “august sovereign”, taken by the king of Qin in 221 BCE.",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-qin"
+        }
+      ]
+    },
+    {
+      "id": "office-western-han-emperor",
+      "type": "Office",
+      "label": "Emperor of the Western Han",
+      "summary": "The throne of the Western Han.",
+      "sourceIds": [
+        "src-major-cook-10",
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-western-han"
+        }
+      ]
+    },
+    {
+      "id": "office-xin-emperor",
+      "type": "Office",
+      "label": "Emperor of the Xin",
+      "summary": "The throne of Wang Mang’s Xin.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-xin"
+        }
+      ]
+    },
+    {
+      "id": "office-eastern-han-emperor",
+      "type": "Office",
+      "label": "Emperor of the Eastern Han",
+      "summary": "The throne of the Eastern Han.",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-eastern-han"
+        }
+      ]
+    },
+    {
+      "id": "concept-mandate-of-heaven",
+      "type": "Concept",
+      "label": "The Mandate of Heaven",
+      "summary": "The idea, introduced by the Zhou to justify the overthrow of the Shang, that the ruler is the Son of Heaven and rules with the Mandate of Heaven.",
+      "sourceIds": [
+        "src-si-zhou",
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "field",
+          "text": "Political thought"
+        }
+      ]
+    },
+    {
+      "id": "person-wu-ding",
+      "type": "Person",
+      "label": "Wu Ding",
+      "summary": "A king of the late Shang, known from the oracle bones; the pages read give no years for his reign.",
+      "sourceIds": [
+        "src-hawaii-early-china",
+        "src-uw-fu-hao"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "King of the late Shang."
+        }
+      ]
+    },
+    {
+      "id": "person-fu-hao",
+      "type": "Person",
+      "label": "Fu Hao",
+      "summary": "A consort of Wu Ding known from the oracle bone inscriptions, who led military campaigns; her tomb at Anyang dates from about 1250 BCE.",
+      "sourceIds": [
+        "src-uw-fu-hao"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Consort of Wu Ding and general."
+        }
+      ]
+    },
+    {
+      "id": "person-king-wu-of-zhou",
+      "type": "Person",
+      "label": "King Wu of Zhou",
+      "summary": "The Zhou king who conquered the Shang and, according to the Shiji, planned a second capital at Luo, the future Luoyang.",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Conquered the Shang."
+        }
+      ]
+    },
+    {
+      "id": "person-duke-of-zhou",
+      "type": "Person",
+      "label": "The Duke of Zhou",
+      "summary": "Dan, younger brother of King Wu, who according to the Shiji was regent for King Cheng for seven years; Lu was his estate.",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Dan",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Regent for King Cheng."
+        }
+      ]
+    },
+    {
+      "id": "person-king-cheng-of-zhou",
+      "type": "Person",
+      "label": "King Cheng of Zhou",
+      "summary": "King of the Zhou from 1042 to 1006 BCE, under whom the city on the river Luo was built.",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The building of Luoyang."
+        }
+      ]
+    },
+    {
+      "id": "person-king-you-of-zhou",
+      "type": "Person",
+      "label": "King You of Zhou",
+      "summary": "The last king of the Western Zhou, from 781 to 771 BCE.",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The last king of the Western Zhou."
+        }
+      ]
+    },
+    {
+      "id": "person-king-ping-of-zhou",
+      "type": "Person",
+      "label": "King Ping of Zhou",
+      "summary": "The king who, according to the Shiji, moved the Zhou court east to Luo.",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Moved the court east to Luoyang."
+        }
+      ]
+    },
+    {
+      "id": "event-zhou-conquest",
+      "type": "Event",
+      "label": "The Zhou conquest of the Shang",
+      "summary": "The Zhou under King Wu overthrew the Shang. The sources give about 1050 or 1046 BCE.",
+      "sourceIds": [
+        "src-uw-count-of-yu",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1050
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1046
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-king-wu-of-zhou"
+        }
+      ]
+    },
+    {
+      "id": "event-fall-of-western-zhou",
+      "type": "Event",
+      "label": "The fall of the Western Zhou",
+      "summary": "In 771 BCE the Western Zhou fell; the court moved east to Luoyang.",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 771
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-hao"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-king-you-of-zhou"
+        }
+      ]
+    },
+    {
+      "id": "person-confucius",
+      "type": "Person",
+      "label": "Confucius",
+      "summary": "Born in the state of Lu in about 551 BCE, where he held minor offices; a teacher whose sayings were collected in the Analects. He died about 479 BCE.",
+      "sourceIds": [
+        "src-afe-keypoints",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 551,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 479,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Teacher whose sayings were collected in the Analects."
+        },
+        {
+          "fact": "birthPlace",
+          "entityId": "region-lu"
+        }
+      ]
+    },
+    {
+      "id": "person-laozi",
+      "type": "Person",
+      "label": "Laozi",
+      "summary": "A sage whom tradition dates about 500 BCE – the same page also gives 606–530 BCE; historians think he may be fictional.",
+      "sourceIds": [
+        "src-afe-keypoints",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Traditionally dated about 500 BCE."
+        }
+      ]
+    },
+    {
+      "id": "person-mencius",
+      "type": "Person",
+      "label": "Mencius",
+      "summary": "A Confucian thinker, 371–289 BCE.",
+      "sourceIds": [
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 371
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 289
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Confucian thinker."
+        }
+      ]
+    },
+    {
+      "id": "person-xunzi",
+      "type": "Person",
+      "label": "Xunzi",
+      "summary": "A Confucian thinker, 298–238 BCE.",
+      "sourceIds": [
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 298
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 238
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Confucian thinker."
+        }
+      ]
+    },
+    {
+      "id": "person-zhuangzi",
+      "type": "Person",
+      "label": "Zhuangzi",
+      "summary": "A Daoist thinker, about 369–286 BCE.",
+      "sourceIds": [
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 369,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 286,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Daoist thinker."
+        }
+      ]
+    },
+    {
+      "id": "person-han-feizi",
+      "type": "Person",
+      "label": "Han Feizi",
+      "summary": "A Legalist thinker who died in 233 BCE.",
+      "sourceIds": [
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 233
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Legalist thinker."
+        }
+      ]
+    },
+    {
+      "id": "person-sunzi",
+      "type": "Person",
+      "label": "Sunzi",
+      "summary": "A military strategist who served the state of Wu, about the fifth century BCE.",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Military strategist."
+        }
+      ]
+    },
+    {
+      "id": "person-shang-yang",
+      "type": "Person",
+      "label": "Shang Yang",
+      "summary": "Chancellor of Duke Xiao of Qin, whose Legalist reforms strengthened the state of Qin.",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Legalist reforms in Qin."
+        }
+      ]
+    },
+    {
+      "id": "person-duke-xiao-of-qin",
+      "type": "Person",
+      "label": "Duke Xiao of Qin",
+      "summary": "Ruler of Qin from 361 to 338 BCE, who made Shang Yang his chancellor.",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Took Shang Yang as chancellor."
+        }
+      ]
+    },
+    {
+      "id": "person-qin-shi-huang",
+      "type": "Person",
+      "label": "Qin Shi Huang",
+      "summary": "Ying Zheng, born in 259 BCE, king of Qin from 247 (246 according to another source), who ruled with full powers from 238, unified China in 221 BCE and took the title of First Emperor; he died in 210 BCE near Langye on the Shandong coast.",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-hawaii-early-china",
+        "src-eno-qin",
+        "src-afe-1000bce"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ying Zheng",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "King Zheng",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Qin Shihuangdi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 259
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 210
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Unified China as the First Emperor."
+        }
+      ]
+    },
+    {
+      "id": "person-li-si",
+      "type": "Person",
+      "label": "Li Si",
+      "summary": "Chancellor of the Qin after 221 BCE, who reformed the script; he was imprisoned and executed in 208 BCE.",
+      "sourceIds": [
+        "src-eno-qin",
+        "src-major-cook-9",
+        "src-afe-keypoints"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 208
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Chancellor of the Qin; reform of the script."
+        }
+      ]
+    },
+    {
+      "id": "person-qin-ershi",
+      "type": "Person",
+      "label": "Qin Ershi",
+      "summary": "Huhai, a younger son of the First Emperor, who succeeded him and ruled about two years until he took his own life in 207 BCE.",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Huhai",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "the Second Emperor",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 207
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The Second Emperor of the Qin."
+        }
+      ]
+    },
+    {
+      "id": "person-ziying",
+      "type": "Person",
+      "label": "Ziying",
+      "summary": "A grandson of the First Emperor, the last ruler of the Qin as king, who surrendered.",
+      "sourceIds": [
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The last ruler of the Qin."
+        }
+      ]
+    },
+    {
+      "id": "event-qin-unification",
+      "type": "Event",
+      "label": "The Qin unifies China",
+      "summary": "In 221 BCE the king of Qin completed the conquest of the other states, unified China and took the title of emperor.",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 221
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-qin-shi-huang"
+        }
+      ]
+    },
+    {
+      "id": "event-fall-of-qin",
+      "type": "Event",
+      "label": "The fall of the Qin",
+      "summary": "The Qin fell in 206 BCE; Xiang Yu burnt Xianyang in 207 BCE.",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 207
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 206
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-xianyang"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ziying"
+        }
+      ]
+    },
+    {
+      "id": "person-liu-bang",
+      "type": "Person",
+      "label": "Liu Bang (Emperor Gaozu)",
+      "summary": "The founder of the Han, from Feng in the district of Pei, who was crowned emperor in 202 BCE; Major and Cook count his reign from 202, Eno from 206. He died in 195 BCE.",
+      "sourceIds": [
+        "src-eno-rise-of-han",
+        "src-major-cook-10",
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Gaozu",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Gao-di",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 195
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founded the Han."
+        }
+      ]
+    },
+    {
+      "id": "person-han-huidi",
+      "type": "Person",
+      "label": "Emperor Hui",
+      "summary": "Liu Ying, emperor from 195 (194 according to Eno) to 188 BCE.",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Ying",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The second emperor of the Han."
+        }
+      ]
+    },
+    {
+      "id": "person-han-wendi",
+      "type": "Person",
+      "label": "Emperor Wen",
+      "summary": "Liu Heng, king of Dai, a son of Emperor Gao, emperor from 180 (179 according to Eno) to 157 BCE.",
+      "sourceIds": [
+        "src-major-cook-10",
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Heng",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor after the regency of Empress Lü."
+        }
+      ]
+    },
+    {
+      "id": "person-han-jingdi",
+      "type": "Person",
+      "label": "Emperor Jing",
+      "summary": "Liu Qi, the son of Emperor Wen and Empress Dou, emperor from 157 to 141 BCE.",
+      "sourceIds": [
+        "src-eno-early-han",
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Qi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Father of Emperor Wu."
+        }
+      ]
+    },
+    {
+      "id": "person-han-wudi",
+      "type": "Person",
+      "label": "Emperor Wu",
+      "summary": "The son of Emperor Jing, emperor from the death of his father in 141 BCE to his own death in 87 BCE; in his reign Zhang Qian travelled to the west.",
+      "sourceIds": [
+        "src-eno-wudi",
+        "src-eno-early-han",
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 87
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The long reign in which the Han reached the west."
+        }
+      ]
+    },
+    {
+      "id": "person-han-zhaodi",
+      "type": "Person",
+      "label": "Emperor Zhao",
+      "summary": "Liu Fuling, a son of Emperor Wu according to Eno (Major and Cook make him a grandson), emperor from Wu’s death in 87 BCE to his own death in 74 BCE.",
+      "sourceIds": [
+        "src-eno-wudi",
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Fuling",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 74
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor after Wu."
+        }
+      ]
+    },
+    {
+      "id": "person-han-xuandi",
+      "type": "Person",
+      "label": "Emperor Xuan",
+      "summary": "Liu Pingyi, a great-grandson of Emperor Wu, emperor from 74 to 49 BCE.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Pingyi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Great-grandson of Emperor Wu."
+        }
+      ]
+    },
+    {
+      "id": "person-han-yuandi",
+      "type": "Person",
+      "label": "Emperor Yuan",
+      "summary": "Emperor of the Western Han from 49 to 33 BCE.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Father of Emperor Cheng."
+        }
+      ]
+    },
+    {
+      "id": "person-han-chengdi",
+      "type": "Person",
+      "label": "Emperor Cheng",
+      "summary": "Liu Shi, the son of Emperor Yuan and Wang Zhengjun, emperor from 33 to 7 BCE.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Shi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Son of Emperor Yuan."
+        }
+      ]
+    },
+    {
+      "id": "person-han-aidi",
+      "type": "Person",
+      "label": "Emperor Ai",
+      "summary": "Liu Xin, a grandson of Emperor Yuan, emperor from 7 to 1 BCE.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Xin",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Grandson of Emperor Yuan."
+        }
+      ]
+    },
+    {
+      "id": "person-han-pingdi",
+      "type": "Person",
+      "label": "Emperor Ping",
+      "summary": "Liu Jizi, son of Liu Xing, emperor from the death of Emperor Ai in 1 BCE to his own death in 6 CE.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Jizi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 6
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor until 6 CE, before the rise of Wang Mang."
+        }
+      ]
+    },
+    {
+      "id": "person-empress-lu",
+      "type": "Person",
+      "label": "Empress Lü",
+      "summary": "The wife of Liu Bang, who after the death of Emperor Hui acted as regent as empress dowager from 188 to 180 BCE; she was not formally emperor.",
+      "sourceIds": [
+        "src-major-cook-10",
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 180
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Regent from 188 to 180 BCE."
+        }
+      ]
+    },
+    {
+      "id": "person-liu-he",
+      "type": "Person",
+      "label": "Liu He",
+      "summary": "Named emperor in 74 BCE and deposed within four weeks; he is not counted as a legitimate emperor.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor for less than four weeks."
+        }
+      ]
+    },
+    {
+      "id": "person-ruzi-ying",
+      "type": "Person",
+      "label": "Liu Ying (the infant heir)",
+      "summary": "An infant named heir in 6 CE under the power of Wang Mang; he was never enthroned.",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Infant heir under Wang Mang."
+        }
+      ]
+    },
+    {
+      "id": "person-zhang-qian",
+      "type": "Person",
+      "label": "Zhang Qian",
+      "summary": "An envoy of Emperor Wu, about 199–113 BCE, who set out for the west in 138 BCE and returned to Chang’an in 125 BCE; other sources date his departure 139 or about 130 BCE.",
+      "sourceIds": [
+        "src-major-cook-10",
+        "src-eno-wudi",
+        "src-livius-place-silk-road"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 199,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 113,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "His missions to the Western Regions."
+        }
+      ]
+    },
+    {
+      "id": "person-sima-qian",
+      "type": "Person",
+      "label": "Sima Qian",
+      "summary": "The historian, about 145–86 BCE, author of the Records of the Grand Historian.",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 145,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 86
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The Records of the Grand Historian."
+        }
+      ]
+    },
+    {
+      "id": "work-shiji",
+      "type": "Work",
+      "label": "The Records of the Grand Historian",
+      "summary": "The history of China written by Sima Qian, the Shiji.",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shiji",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-sima-qian"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-zhang-qian-mission",
+      "type": "Event",
+      "label": "Zhang Qian travels to the west",
+      "summary": "Zhang Qian set out for the west in 138 BCE (139 according to Eno, about 130 according to Livius) and returned to Chang’an in 125 BCE.",
+      "sourceIds": [
+        "src-major-cook-10",
+        "src-eno-wudi",
+        "src-livius-place-silk-road"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 139
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 125
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-zhang-qian"
+        }
+      ]
+    },
+    {
+      "id": "person-wang-mang",
+      "type": "Person",
+      "label": "Wang Mang",
+      "summary": "The statesman who took the throne in 9 CE as emperor of the Xin and died fighting for his life in Chang’an in 23 CE.",
+      "sourceIds": [
+        "src-major-cook-11",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 23
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor of the Xin."
+        },
+        {
+          "fact": "deathPlace",
+          "entityId": "place-changan"
+        }
+      ]
+    },
+    {
+      "id": "person-guangwu",
+      "type": "Person",
+      "label": "Emperor Guangwu",
+      "summary": "Liu Xiu, who claimed the imperial title in the autumn of 25 CE and restored the Han; his forces took Luoyang between 26 and 30 CE. He reigned until 57 CE.",
+      "sourceIds": [
+        "src-decrespigny-later-han",
+        "src-hill-hou-hanshu"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Xiu",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 57
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Restored the Han."
+        }
+      ]
+    },
+    {
+      "id": "person-han-mingdi",
+      "type": "Person",
+      "label": "Emperor Ming",
+      "summary": "Emperor from 57 to 75 CE, who sent an expedition against the Xiongnu in 73 CE; tradition says he dreamt of a golden man and sent envoys to India to ask about the Buddha.",
+      "sourceIds": [
+        "src-decrespigny-later-han",
+        "src-hill-hou-hanshu"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 75
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The expedition against the Xiongnu of 73 CE."
+        }
+      ]
+    },
+    {
+      "id": "person-han-zhangdi",
+      "type": "Person",
+      "label": "Emperor Zhang",
+      "summary": "Emperor of the Eastern Han from 75 to 88 CE.",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 88
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor after Ming."
+        }
+      ]
+    },
+    {
+      "id": "person-han-hedi",
+      "type": "Person",
+      "label": "Emperor He",
+      "summary": "Emperor from 88 to 105 CE; the Dowager Dou was regent from 88 until he destroyed her family in the summer of 92 CE.",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Ended the regency of the Dou family."
+        }
+      ]
+    },
+    {
+      "id": "person-ban-chao",
+      "type": "Person",
+      "label": "Ban Chao",
+      "summary": "The Han general of the Western Regions, who stayed at Kashgar when the Han withdrew in 75 CE, pacified the Western Regions in 91 CE, became their Protector-General in 91 or 92 CE, sent Gan Ying west in 97 CE and returned in 102 CE.",
+      "sourceIds": [
+        "src-hill-hou-hanshu",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Brought the Western Regions under the Han."
+        }
+      ]
+    },
+    {
+      "id": "person-gan-ying",
+      "type": "Person",
+      "label": "Gan Ying",
+      "summary": "An envoy sent by Ban Chao in 97 CE toward Da Qin; he reached Tiaozhi beside a large sea.",
+      "sourceIds": [
+        "src-hill-hou-hanshu",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "His journey toward Da Qin in 97 CE."
+        }
+      ]
+    },
+    {
+      "id": "person-ban-gu",
+      "type": "Person",
+      "label": "Ban Gu",
+      "summary": "The historian of the Western Han, who died in 92 CE before he had finished his history; his sister Ban Zhao completed it.",
+      "sourceIds": [
+        "src-ucla-ban-zhao"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 92
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "His history of the Western Han."
+        }
+      ]
+    },
+    {
+      "id": "person-ban-zhao",
+      "type": "Person",
+      "label": "Ban Zhao",
+      "summary": "A scholar, about 45–116 CE, sister of Ban Gu, who completed his history of the Western Han.",
+      "sourceIds": [
+        "src-ucla-ban-zhao"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 45,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 116,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Completed the history of the Western Han."
+        }
+      ]
+    },
+    {
+      "id": "work-history-of-western-han",
+      "type": "Work",
+      "label": "The history of the Western Han",
+      "summary": "The history of the Western Han written by Ban Gu and completed by his sister Ban Zhao.",
+      "sourceIds": [
+        "src-ucla-ban-zhao"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ban-gu"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-gan-ying-mission",
+      "type": "Event",
+      "label": "Gan Ying’s journey toward Da Qin",
+      "summary": "In 97 CE Ban Chao sent Gan Ying to explore the far west toward Da Qin; he reached Tiaozhi beside a large sea.",
+      "sourceIds": [
+        "src-hill-hou-hanshu",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 97
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-gan-ying"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ban-chao"
+        }
+      ]
+    },
+    {
+      "id": "event-han-restoration",
+      "type": "Event",
+      "label": "The restoration of the Han",
+      "summary": "In the autumn of 25 CE Liu Xiu claimed the imperial title and restored the Han; Wang Mang had died in 23 CE.",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 25
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-guangwu"
+        }
+      ]
+    },
+    {
+      "id": "event-expedition-against-xiongnu",
+      "type": "Event",
+      "label": "The expedition against the Xiongnu",
+      "summary": "In 73 CE Emperor Ming sent an army against the Xiongnu; in the same winter Ban Chao arrested Dou Ti.",
+      "sourceIds": [
+        "src-hill-hou-hanshu"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 73
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-han-mingdi"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ban-chao"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-wu-ding-holder-of-shang-king",
+      "from": "person-wu-ding",
+      "to": "office-shang-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King of the Shang",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wu-ding-spouse-of-fu-hao",
+      "from": "person-wu-ding",
+      "to": "person-fu-hao",
+      "type": "spouseOf",
+      "directionality": "symmetric",
+      "label": "Married",
+      "sourceIds": [
+        "src-uw-fu-hao"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wu-ding-member-of-shang",
+      "from": "person-wu-ding",
+      "to": "dynasty-shang",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-cheng-of-zhou-holder-of-zhou-king",
+      "from": "person-king-cheng-of-zhou",
+      "to": "office-zhou-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King of the Zhou",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1042
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1006
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-you-of-zhou-holder-of-zhou-king",
+      "from": "person-king-you-of-zhou",
+      "to": "office-zhou-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King of the Zhou",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 781
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 771
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-wu-of-zhou-holder-of-zhou-king",
+      "from": "person-king-wu-of-zhou",
+      "to": "office-zhou-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King of the Zhou",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-ping-of-zhou-holder-of-zhou-king",
+      "from": "person-king-ping-of-zhou",
+      "to": "office-zhou-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King of the Zhou",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-wu-of-zhou-member-of-zhou",
+      "from": "person-king-wu-of-zhou",
+      "to": "dynasty-zhou",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-duke-of-zhou-member-of-zhou",
+      "from": "person-duke-of-zhou",
+      "to": "dynasty-zhou",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-cheng-of-zhou-member-of-zhou",
+      "from": "person-king-cheng-of-zhou",
+      "to": "dynasty-zhou",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-you-of-zhou-member-of-zhou",
+      "from": "person-king-you-of-zhou",
+      "to": "dynasty-zhou",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-ping-of-zhou-member-of-zhou",
+      "from": "person-king-ping-of-zhou",
+      "to": "dynasty-zhou",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-duke-of-zhou-sibling-of-king-wu-of-zhou",
+      "from": "person-duke-of-zhou",
+      "to": "person-king-wu-of-zhou",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother or sister of",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-wu-of-zhou-founder-of-zhou",
+      "from": "person-king-wu-of-zhou",
+      "to": "dynasty-zhou",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-duke-of-zhou-leader-of-lu",
+      "from": "person-duke-of-zhou",
+      "to": "region-lu",
+      "type": "leaderOf",
+      "directionality": "directed",
+      "label": "Held it as his estate, according to tradition",
+      "sourceIds": [
+        "src-eno-western-zhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-anyang-capital-of-shang",
+      "from": "place-anyang",
+      "to": "dynasty-shang",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Last capital",
+      "sourceIds": [
+        "src-si-shang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zhengzhou-capital-of-shang",
+      "from": "place-zhengzhou",
+      "to": "dynasty-shang",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hao-capital-of-zhou",
+      "from": "place-hao",
+      "to": "dynasty-zhou",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1050
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1046
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 771
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-luoyang-capital-of-zhou",
+      "from": "place-luoyang",
+      "to": "dynasty-zhou",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-wu-of-zhou-participant-in-zhou-conquest",
+      "from": "person-king-wu-of-zhou",
+      "to": "event-zhou-conquest",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-uw-count-of-yu",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zhou-conquest-during-western-zhou",
+      "from": "event-zhou-conquest",
+      "to": "period-western-zhou",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-uw-count-of-yu",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-king-you-of-zhou-participant-in-fall-of-western-zhou",
+      "from": "person-king-you-of-zhou",
+      "to": "event-fall-of-western-zhou",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fall-of-western-zhou-took-place-in-hao",
+      "from": "event-fall-of-western-zhou",
+      "to": "place-hao",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fall-of-western-zhou-during-western-zhou",
+      "from": "event-fall-of-western-zhou",
+      "to": "period-western-zhou",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-duke-xiao-of-qin-leader-of-qin",
+      "from": "person-duke-xiao-of-qin",
+      "to": "region-qin",
+      "type": "leaderOf",
+      "directionality": "directed",
+      "label": "Duke of Qin",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 361
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 338
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shang-yang-lived-in-qin",
+      "from": "person-shang-yang",
+      "to": "region-qin",
+      "type": "livedIn",
+      "directionality": "directed",
+      "label": "Chancellor of Duke Xiao of Qin",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-shi-huang-holder-of-king-of-qin",
+      "from": "person-qin-shi-huang",
+      "to": "office-king-of-qin",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King of Qin",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 247
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 246
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 221
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-shi-huang-holder-of-qin-emperor",
+      "from": "person-qin-shi-huang",
+      "to": "office-qin-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "First Emperor",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 221
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 210
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-ershi-holder-of-qin-emperor",
+      "from": "person-qin-ershi",
+      "to": "office-qin-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Second Emperor, for about two years",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 209,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 207
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ziying-holder-of-king-of-qin",
+      "from": "person-ziying",
+      "to": "office-king-of-qin",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King of Qin, who surrendered",
+      "sourceIds": [
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-ershi-successor-of-qin-shi-huang",
+      "from": "person-qin-ershi",
+      "to": "person-qin-shi-huang",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-shi-huang-parent-of-qin-ershi",
+      "from": "person-qin-shi-huang",
+      "to": "person-qin-ershi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-shi-huang-founder-of-qin",
+      "from": "person-qin-shi-huang",
+      "to": "dynasty-qin",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-li-si-employed-by-qin",
+      "from": "person-li-si",
+      "to": "dynasty-qin",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Chancellor",
+      "sourceIds": [
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-shi-huang-member-of-qin",
+      "from": "person-qin-shi-huang",
+      "to": "dynasty-qin",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-ershi-member-of-qin",
+      "from": "person-qin-ershi",
+      "to": "dynasty-qin",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ziying-member-of-qin",
+      "from": "person-ziying",
+      "to": "dynasty-qin",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-qin"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-xianyang-capital-of-qin",
+      "from": "place-xianyang",
+      "to": "dynasty-qin",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-governs-ancient-china",
+      "from": "dynasty-qin",
+      "to": "subject-ancient-china",
+      "type": "governs",
+      "directionality": "directed",
+      "label": "Ruled",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 221
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 206
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-shi-huang-participant-in-qin-unification",
+      "from": "person-qin-shi-huang",
+      "to": "event-qin-unification",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qin-unification-during-warring-states",
+      "from": "event-qin-unification",
+      "to": "period-warring-states",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ziying-participant-in-fall-of-qin",
+      "from": "person-ziying",
+      "to": "event-fall-of-qin",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fall-of-qin-took-place-in-xianyang",
+      "from": "event-fall-of-qin",
+      "to": "place-xianyang",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-major-cook-9",
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liu-bang-holder-of-western-han-emperor",
+      "from": "person-liu-bang",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-eno-rise-of-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 206
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 202
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 195
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liu-bang-member-of-western-han",
+      "from": "person-liu-bang",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-rise-of-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-huidi-holder-of-western-han-emperor",
+      "from": "person-han-huidi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 195
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 194
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 188
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-huidi-member-of-western-han",
+      "from": "person-han-huidi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-huidi-successor-of-liu-bang",
+      "from": "person-han-huidi",
+      "to": "person-liu-bang",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wendi-holder-of-western-han-emperor",
+      "from": "person-han-wendi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 180
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 179
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 157
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wendi-member-of-western-han",
+      "from": "person-han-wendi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wendi-successor-of-han-huidi",
+      "from": "person-han-wendi",
+      "to": "person-han-huidi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-jingdi-holder-of-western-han-emperor",
+      "from": "person-han-jingdi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 157
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 141
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-jingdi-member-of-western-han",
+      "from": "person-han-jingdi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-jingdi-successor-of-han-wendi",
+      "from": "person-han-jingdi",
+      "to": "person-han-wendi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-eno-early-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wudi-holder-of-western-han-emperor",
+      "from": "person-han-wudi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 141
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 87
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wudi-member-of-western-han",
+      "from": "person-han-wudi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wudi-successor-of-han-jingdi",
+      "from": "person-han-wudi",
+      "to": "person-han-jingdi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-zhaodi-holder-of-western-han-emperor",
+      "from": "person-han-zhaodi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 87
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 74
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-zhaodi-member-of-western-han",
+      "from": "person-han-zhaodi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-zhaodi-successor-of-han-wudi",
+      "from": "person-han-zhaodi",
+      "to": "person-han-wudi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-xuandi-holder-of-western-han-emperor",
+      "from": "person-han-xuandi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 74
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 49
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-xuandi-member-of-western-han",
+      "from": "person-han-xuandi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-xuandi-successor-of-han-zhaodi",
+      "from": "person-han-xuandi",
+      "to": "person-han-zhaodi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-yuandi-holder-of-western-han-emperor",
+      "from": "person-han-yuandi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 49
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 33
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-yuandi-member-of-western-han",
+      "from": "person-han-yuandi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-yuandi-successor-of-han-xuandi",
+      "from": "person-han-yuandi",
+      "to": "person-han-xuandi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-chengdi-holder-of-western-han-emperor",
+      "from": "person-han-chengdi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 33
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 7
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-chengdi-member-of-western-han",
+      "from": "person-han-chengdi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-chengdi-successor-of-han-yuandi",
+      "from": "person-han-chengdi",
+      "to": "person-han-yuandi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-aidi-holder-of-western-han-emperor",
+      "from": "person-han-aidi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 7
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-aidi-member-of-western-han",
+      "from": "person-han-aidi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-aidi-successor-of-han-chengdi",
+      "from": "person-han-aidi",
+      "to": "person-han-chengdi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-pingdi-holder-of-western-han-emperor",
+      "from": "person-han-pingdi",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 6
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-pingdi-member-of-western-han",
+      "from": "person-han-pingdi",
+      "to": "dynasty-western-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-pingdi-successor-of-han-aidi",
+      "from": "person-han-pingdi",
+      "to": "person-han-aidi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-empress-lu-holder-of-western-han-emperor",
+      "from": "person-empress-lu",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Regent as empress dowager",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 188
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 180
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liu-bang-spouse-of-empress-lu",
+      "from": "person-liu-bang",
+      "to": "person-empress-lu",
+      "type": "spouseOf",
+      "directionality": "symmetric",
+      "label": "Married",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liu-he-holder-of-western-han-emperor",
+      "from": "person-liu-he",
+      "to": "office-western-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Named emperor and deposed within four weeks",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 74
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 74
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liu-bang-parent-of-han-wendi",
+      "from": "person-liu-bang",
+      "to": "person-han-wendi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wendi-parent-of-han-jingdi",
+      "from": "person-han-wendi",
+      "to": "person-han-jingdi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-jingdi-parent-of-han-wudi",
+      "from": "person-han-jingdi",
+      "to": "person-han-wudi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-wudi-parent-of-han-zhaodi",
+      "from": "person-han-wudi",
+      "to": "person-han-zhaodi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-eno-wudi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-yuandi-parent-of-han-chengdi",
+      "from": "person-han-yuandi",
+      "to": "person-han-chengdi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liu-bang-founder-of-western-han",
+      "from": "person-liu-bang",
+      "to": "dynasty-western-han",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-eno-rise-of-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-changan-capital-of-western-han",
+      "from": "place-changan",
+      "to": "dynasty-western-han",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-western-han-successor-of-qin",
+      "from": "dynasty-western-han",
+      "to": "dynasty-qin",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-9"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-western-han-governs-ancient-china",
+      "from": "dynasty-western-han",
+      "to": "subject-ancient-china",
+      "type": "governs",
+      "directionality": "directed",
+      "label": "Ruled",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 206
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 202
+          }
+        },
+        "end": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 7
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 9
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sima-qian-author-of-shiji",
+      "from": "person-sima-qian",
+      "to": "work-shiji",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Wrote",
+      "sourceIds": [
+        "src-major-cook-10"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zhang-qian-participant-in-zhang-qian-mission",
+      "from": "person-zhang-qian",
+      "to": "event-zhang-qian-mission",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-major-cook-10",
+        "src-eno-wudi",
+        "src-livius-place-silk-road"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wang-mang-holder-of-xin-emperor",
+      "from": "person-wang-mang",
+      "to": "office-xin-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 9
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 23
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wang-mang-founder-of-xin",
+      "from": "person-wang-mang",
+      "to": "dynasty-xin",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-xin-successor-of-western-han",
+      "from": "dynasty-xin",
+      "to": "dynasty-western-han",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-major-cook-11"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-eastern-han-successor-of-xin",
+      "from": "dynasty-eastern-han",
+      "to": "dynasty-xin",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-afe-timeline",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-guangwu-holder-of-eastern-han-emperor",
+      "from": "person-guangwu",
+      "to": "office-eastern-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 25
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 57
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-guangwu-member-of-eastern-han",
+      "from": "person-guangwu",
+      "to": "dynasty-eastern-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-mingdi-holder-of-eastern-han-emperor",
+      "from": "person-han-mingdi",
+      "to": "office-eastern-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 57
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 75
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-mingdi-member-of-eastern-han",
+      "from": "person-han-mingdi",
+      "to": "dynasty-eastern-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-mingdi-successor-of-guangwu",
+      "from": "person-han-mingdi",
+      "to": "person-guangwu",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-zhangdi-holder-of-eastern-han-emperor",
+      "from": "person-han-zhangdi",
+      "to": "office-eastern-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 75
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 88
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-zhangdi-member-of-eastern-han",
+      "from": "person-han-zhangdi",
+      "to": "dynasty-eastern-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-zhangdi-successor-of-han-mingdi",
+      "from": "person-han-zhangdi",
+      "to": "person-han-mingdi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-hedi-holder-of-eastern-han-emperor",
+      "from": "person-han-hedi",
+      "to": "office-eastern-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 88
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 105
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-hedi-member-of-eastern-han",
+      "from": "person-han-hedi",
+      "to": "dynasty-eastern-han",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-hedi-successor-of-han-zhangdi",
+      "from": "person-han-hedi",
+      "to": "person-han-zhangdi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-guangwu-founder-of-eastern-han",
+      "from": "person-guangwu",
+      "to": "dynasty-eastern-han",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-luoyang-capital-of-eastern-han",
+      "from": "place-luoyang",
+      "to": "dynasty-eastern-han",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-eastern-han-governs-ancient-china",
+      "from": "dynasty-eastern-han",
+      "to": "subject-ancient-china",
+      "type": "governs",
+      "directionality": "directed",
+      "label": "Ruled",
+      "sourceIds": [
+        "src-afe-timeline"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 25
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 220
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ban-gu-author-of-history-of-western-han",
+      "from": "person-ban-gu",
+      "to": "work-history-of-western-han",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Wrote",
+      "sourceIds": [
+        "src-ucla-ban-zhao"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ban-zhao-author-of-history-of-western-han",
+      "from": "person-ban-zhao",
+      "to": "work-history-of-western-han",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Completed it",
+      "sourceIds": [
+        "src-ucla-ban-zhao"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ban-gu-sibling-of-ban-zhao",
+      "from": "person-ban-gu",
+      "to": "person-ban-zhao",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother or sister of",
+      "sourceIds": [
+        "src-ucla-ban-zhao"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ban-chao-employed-by-eastern-han",
+      "from": "person-ban-chao",
+      "to": "dynasty-eastern-han",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Protector-General of the Western Regions",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gan-ying-participant-in-gan-ying-mission",
+      "from": "person-gan-ying",
+      "to": "event-gan-ying-mission",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-hill-hou-hanshu",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ban-chao-participant-in-gan-ying-mission",
+      "from": "person-ban-chao",
+      "to": "event-gan-ying-mission",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-hill-hou-hanshu",
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-guangwu-participant-in-han-restoration",
+      "from": "person-guangwu",
+      "to": "event-han-restoration",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-han-mingdi-participant-in-expedition-against-xiongnu",
+      "from": "person-han-mingdi",
+      "to": "event-expedition-against-xiongnu",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-hill-hou-hanshu"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ban-chao-participant-in-expedition-against-xiongnu",
+      "from": "person-ban-chao",
+      "to": "event-expedition-against-xiongnu",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-hill-hou-hanshu"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "events": [],
+  "media": []
+}
