@@ -1,0 +1,3303 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "rostam-and-sohrab",
+  "worldId": "world-shahnameh",
+  "documentVersion": "0.7",
+  "preparedAt": "2026-11-23",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-sohrab-observed-2026-11-15",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh, the twenty-one Sohrab sections.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/sohrab",
+    "upstreamAttributedByHost": "WikiDorj",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "The story of Rostam and Sohrab whole, from Rostam’s hunt to the mourning in Zabul: thirty steps over the twenty-one sections of the Ganjoor text, each step resting on its sections.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated AI summaries and museum story synopses are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this sample; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Opening and orientation"
+      },
+      {
+        "level": 1,
+        "label": "Samangan encounter"
+      },
+      {
+        "level": 2,
+        "label": "Lineage and expedition"
+      },
+      {
+        "level": 3,
+        "label": "The encounters in combat"
+      },
+      {
+        "level": 4,
+        "label": "Complete selected arc"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering.",
+    "readerKnowledgeNote": "The reader learns Sohrab's parentage in section 5; the characters' later recognition is a separate event.",
+    "distributionNote": "This complete editorial JSON includes ending spoilers. Do not expose it wholesale as a spoiler-filtered public response. Source pages can contain later material beyond the cited passage."
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-index",
+      "title": "Shahnameh: Sohrab section index",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Selected arc and section ordering; section headings are navigation, not independent textual evidence.",
+      "spoilerLevel": 0,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s02",
+      "title": "Sohrab, section 2",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Opening hunting passage, disappearance of Rakhsh, and route toward Samangan.",
+      "spoilerLevel": 0,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s03",
+      "title": "Sohrab, section 3",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "The king of Samangan welcomes Rostam and promises help finding his horse.",
+      "spoilerLevel": 0,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s04",
+      "title": "Sohrab, section 4",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Tahmineh identifies herself; marriage is arranged; Rostam gives her a token; Rakhsh is returned.",
+      "spoilerLevel": 1,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s05",
+      "title": "Sohrab, section 5",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Sohrab is named; Tahmineh identifies his father; Sohrab describes his intended expedition.",
+      "spoilerLevel": 2,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s06",
+      "title": "Sohrab, section 6",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Afrasiab supplies forces and privately instructs his commanders to prevent recognition.",
+      "spoilerLevel": 2,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s09",
+      "title": "Sohrab, section 9",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Kay Kavus summons Rostam; Rostam speaks of his son by the daughter of the king of Samangan.",
+      "spoilerLevel": 2,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s17",
+      "title": "Sohrab, section 17",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh17",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Sohrab proposes peace, wins a wrestling encounter, and releases Rostam after his claim about the rules.",
+      "spoilerLevel": 3,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s18",
+      "title": "Sohrab, section 18",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh18",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Second wrestling encounter, fatal wound, and recognition through the token on Sohrab's arm.",
+      "spoilerLevel": 4,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s19",
+      "title": "Sohrab, section 19",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh19",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Rostam requests a remedy from Kay Kavus, who withholds it.",
+      "spoilerLevel": 4,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s20",
+      "title": "Sohrab, section 20",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh20",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Rostam receives news that Sohrab has died; preparations for mourning follow.",
+      "spoilerLevel": 4,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s21",
+      "title": "Sohrab, section 21",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh21",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Return to Zabulistan, the mourning of Dastan/Zal, and the tomb.",
+      "spoilerLevel": 4,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-iranica-zal",
+      "title": "Zal, Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/zal/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Opening identification: Zal is also called Dastan and is the father of Rostam.",
+      "spoilerLevel": 0,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied.",
+      "authors": [
+        "Alireza Shapur Shahbazi",
+        "Simone Cristoforetti"
+      ],
+      "publishedAt": "2009-07-20",
+      "updatedAt": "2012-10-23"
+    },
+    {
+      "id": "src-ganjoor-lineage",
+      "title": "Shahnameh: Kay Kavus, section 7",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Rostam identifies himself and names Dastan, Sam, and Nariman as his lineage; background outside the selected arc.",
+      "spoilerLevel": 0,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-met-452419",
+      "title": "Met object 452419",
+      "url": "https://www.metmuseum.org/art/collection/search/452419",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Object metadata, depicted background episode, and Public Domain marker. Do not use the catalog narrative as the base text.",
+      "spoilerLevel": 0,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-met-453265",
+      "title": "Met object 453265",
+      "url": "https://www.metmuseum.org/art/collection/search/453265",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Object metadata and Public Domain marker. Its simplified account of Rostam's knowledge is not adopted.",
+      "spoilerLevel": 4,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-met-open-access",
+      "title": "The Met Open Access policy",
+      "url": "https://www.metmuseum.org/hubs/open-access",
+      "kind": "institutional_rights_policy",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "CC0 availability of images of public-domain works and basic collection data.",
+      "spoilerLevel": 0,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-umma-1963-1-46",
+      "title": "UMMA object 1963/1.46",
+      "url": "https://umma.umich.edu/objects/tahmina-comes-to-rustam-from-the-shahnama-of-firdausi-1963-1-46/",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-15",
+      "passageLocator": "Object date, attribution, and usage-rights direction to the museum's request process. Reuse permission has not been established.",
+      "spoilerLevel": 1,
+      "reuseNote": "Reference and original paraphrase only; no complete page, modern translation, or AI-generated summary copied."
+    },
+    {
+      "id": "src-ganjoor-s01",
+      "title": "Ganjoor: Sohrab, بخش ۱ - اندیشه در مرگ و سرنوشت",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱ - اندیشه در مرگ و سرنوشت"
+    },
+    {
+      "id": "src-ganjoor-s07",
+      "title": "Ganjoor: Sohrab, بخش ۷ - نبرد گردآفرید با سهراب، آشکار شدن روی و موی و رهایی به فریب در دژ",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۷ - نبرد گردآفرید با سهراب، آشکار شدن روی و موی و رهایی به فریب در دژ"
+    },
+    {
+      "id": "src-ganjoor-s08",
+      "title": "Ganjoor: Sohrab, بخش ۸ - نامهٔ گژدهم به کاووس از زور سهراب، ترک دژ و رای بر خواندن رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۸ - نامهٔ گژدهم به کاووس از زور سهراب، ترک دژ و رای بر خواندن رستم"
+    },
+    {
+      "id": "src-ganjoor-s10",
+      "title": "Ganjoor: Sohrab, بخش ۱۰ - خشم کاووس و فرمان بردار کردن رستم، زدن طوس، میانجیگری گودرز و بزم آشتی",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۰ - خشم کاووس و فرمان بردار کردن رستم، زدن طوس، میانجیگری گودرز و بزم آشتی"
+    },
+    {
+      "id": "src-ganjoor-s11",
+      "title": "Ganjoor: Sohrab, بخش ۱۱ - رسیدن سپاه کاووس به در دژ، بیم هومان و بی‌پروایی سهراب و می نوشیدن او",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۱ - رسیدن سپاه کاووس به در دژ، بیم هومان و بی‌پروایی سهراب و می نوشیدن او"
+    },
+    {
+      "id": "src-ganjoor-s12",
+      "title": "Ganjoor: Sohrab, بخش ۱۲ - شب رفتن رستم با جامهٔ ترکان به بزم سهراب، کشتن ژنده‌رزم و گزارش برز او به کاووس",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۲ - شب رفتن رستم با جامهٔ ترکان به بزم سهراب، کشتن ژنده‌رزم و گزارش برز او به کاووس"
+    },
+    {
+      "id": "src-ganjoor-s13",
+      "title": "Ganjoor: Sohrab, بخش ۱۳ - دیدن لشکرگاه ایران از بلندی، پرسش درفش‌ها از هجیر و نهفتن نشان رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh13",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۳ - دیدن لشکرگاه ایران از بلندی، پرسش درفش‌ها از هجیر و نهفتن نشان رستم"
+    },
+    {
+      "id": "src-ganjoor-s14",
+      "title": "Ganjoor: Sohrab, بخش ۱۴ - خروش سهراب بر کاووس، برکندن سراپرده، دیدار نخست با رستم و انکار نام",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۴ - خروش سهراب بر کاووس، برکندن سراپرده، دیدار نخست با رستم و انکار نام"
+    },
+    {
+      "id": "src-ganjoor-s15",
+      "title": "Ganjoor: Sohrab, بخش ۱۵ - نبرد روز نخست رستم و سهراب، خستگی دو پهلوان، یورش بر سپاه‌ها و پیمان جنگ بامداد",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh15",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۵ - نبرد روز نخست رستم و سهراب، خستگی دو پهلوان، یورش بر سپاه‌ها و پیمان جنگ بامداد"
+    },
+    {
+      "id": "src-ganjoor-s16",
+      "title": "Ganjoor: Sohrab, بخش ۱۶ - شب پیش از نبرد فردا: گزارش رستم از زور سهراب و وصیت به زواره",
+      "url": "https://ganjoor.net/ferdousi/shahname/sohrab/sh16",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۶ - شب پیش از نبرد فردا: گزارش رستم از زور سهراب و وصیت به زواره"
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "Shahnameh",
+      "summary": "The literary work that contains the selected Rostam and Sohrab narrative.",
+      "sourceIds": [
+        "src-ganjoor-index"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "شاهنامه"
+    },
+    {
+      "id": "story-rostam-sohrab",
+      "type": "NarrativeArc",
+      "label": "Rostam and Sohrab",
+      "summary": "A selected arc about encounters, identity, and the consequences of decisions. This sample condenses several passages.",
+      "sourceIds": [
+        "src-ganjoor-index"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "رستم و سهراب"
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "A warrior whose search for his missing horse opens this selected narrative.",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "رستم",
+      "facts": [
+        {
+          "fact": "role",
+          "text": "A warrior",
+          "sourceIds": [
+            "src-ganjoor-s02"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "character-zal",
+      "type": "Character",
+      "label": "Zal",
+      "summary": "A figure in Rostam's family, also known as Dastan.",
+      "sourceIds": [
+        "src-iranica-zal",
+        "src-ganjoor-lineage"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "زال"
+    },
+    {
+      "id": "character-tahmineh",
+      "type": "Character",
+      "label": "Tahmineh",
+      "summary": "A woman who meets Rostam in Samangan and makes a consequential choice.",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "labelFa": "تهمینه"
+    },
+    {
+      "id": "character-sohrab",
+      "type": "Character",
+      "label": "Sohrab",
+      "summary": "A young warrior who seeks his father and sets out with ambitious plans.",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "labelFa": "سهراب"
+    },
+    {
+      "id": "character-rakhsh",
+      "type": "AnimalCharacter",
+      "label": "Rakhsh",
+      "summary": "Rostam's horse; his disappearance brings Rostam to Samangan.",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "رخش",
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Rostam's horse",
+          "sourceIds": [
+            "src-ganjoor-s02"
+          ]
+        },
+        {
+          "fact": "companionOf",
+          "entityId": "character-rostam",
+          "sourceIds": [
+            "src-ganjoor-s02"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "character-king-samangan",
+      "type": "Character",
+      "label": "King of Samangan",
+      "summary": "The unnamed ruler who welcomes Rostam while he searches for Rakhsh.",
+      "sourceIds": [
+        "src-ganjoor-s03"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "شاه سمنگان"
+    },
+    {
+      "id": "character-afrasiab",
+      "type": "Character",
+      "label": "Afrasiab",
+      "summary": "A ruler who sees an opportunity in Sohrab's expedition.",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "labelFa": "افراسیاب"
+    },
+    {
+      "id": "character-kay-kavus",
+      "type": "Character",
+      "label": "Kay Kavus",
+      "summary": "The king who summons Rostam during the confrontation with Sohrab's forces.",
+      "sourceIds": [
+        "src-ganjoor-s09"
+      ],
+      "spoilerLevel": 2,
+      "labelFa": "کی‌کاووس"
+    },
+    {
+      "id": "place-samangan",
+      "type": "NarrativePlace",
+      "label": "Samangan",
+      "summary": "The narrative setting where Rostam is welcomed after losing Rakhsh. No modern coordinate match is asserted.",
+      "sourceIds": [
+        "src-ganjoor-s02",
+        "src-ganjoor-s03"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "سمنگان"
+    },
+    {
+      "id": "place-zabul",
+      "type": "NarrativeRegion",
+      "label": "Zabulistan",
+      "summary": "A region associated with Rostam and his family in the selected narrative; no modern boundary is asserted.",
+      "sourceIds": [
+        "src-ganjoor-s09"
+      ],
+      "spoilerLevel": 2,
+      "labelFa": "زابلستان"
+    },
+    {
+      "id": "place-turan",
+      "type": "NarrativeRegion",
+      "label": "Turan",
+      "summary": "The narrative region whose border is named in Rostam's opening hunting journey.",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0,
+      "labelFa": "توران"
+    },
+    {
+      "id": "object-token",
+      "type": "NarrativeObject",
+      "label": "Rostam's keepsake token",
+      "summary": "A small token Rostam entrusts to Tahmineh for a possible child.",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "labelFa": "یادگار رستم"
+    },
+    {
+      "id": "character-sam",
+      "type": "Character",
+      "label": "Sam",
+      "summary": "Ancestor of Rostam's house, named as a measure of valour.",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Ancestor of Rostam's house, named as a measure of valour"
+        }
+      ]
+    },
+    {
+      "id": "character-tus",
+      "type": "Character",
+      "label": "Tus",
+      "summary": "Iranian lord, son of Nowzar.",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian lord, son of Nowzar"
+        }
+      ]
+    },
+    {
+      "id": "character-human",
+      "type": "Character",
+      "label": "Human",
+      "summary": "Turanian captain sent by Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian captain sent by Afrasiab"
+        }
+      ]
+    },
+    {
+      "id": "character-barman",
+      "type": "Character",
+      "label": "Barman",
+      "summary": "Turanian captain sent by Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian captain sent by Afrasiab"
+        }
+      ]
+    },
+    {
+      "id": "character-hojir",
+      "type": "Character",
+      "label": "Hojir",
+      "summary": "Keeper of the White Castle.",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Keeper of the White Castle"
+        }
+      ]
+    },
+    {
+      "id": "character-gostaham",
+      "type": "Character",
+      "label": "Gostaham",
+      "summary": "Young warrior named at the White Castle; a Gostaham is also among the Iranian lords.",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Young warrior named at the White Castle; a Gostaham is also among the Iranian lords"
+        }
+      ]
+    },
+    {
+      "id": "character-gordafarid",
+      "type": "Character",
+      "label": "Gordafarid",
+      "summary": "Woman warrior of the White Castle, daughter of Gazhdaham.",
+      "sourceIds": [
+        "src-ganjoor-s07"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Woman warrior of the White Castle, daughter of Gazhdaham"
+        }
+      ]
+    },
+    {
+      "id": "character-gazhdaham",
+      "type": "Character",
+      "label": "Gazhdaham",
+      "summary": "Old lord of the White Castle.",
+      "sourceIds": [
+        "src-ganjoor-s07"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Old lord of the White Castle"
+        }
+      ]
+    },
+    {
+      "id": "character-gudarz",
+      "type": "Character",
+      "label": "Gudarz",
+      "summary": "Senior Iranian lord, son of Keshvad.",
+      "sourceIds": [
+        "src-ganjoor-s08"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Senior Iranian lord, son of Keshvad"
+        }
+      ]
+    },
+    {
+      "id": "character-giv",
+      "type": "Character",
+      "label": "Giv",
+      "summary": "Iranian warrior, son of Gudarz.",
+      "sourceIds": [
+        "src-ganjoor-s08"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior, son of Gudarz"
+        }
+      ]
+    },
+    {
+      "id": "character-gorgin",
+      "type": "Character",
+      "label": "Gorgin",
+      "summary": "Iranian warrior.",
+      "sourceIds": [
+        "src-ganjoor-s08"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior"
+        }
+      ]
+    },
+    {
+      "id": "character-bahram",
+      "type": "Character",
+      "label": "Bahram",
+      "summary": "Iranian warrior.",
+      "sourceIds": [
+        "src-ganjoor-s08"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior"
+        }
+      ]
+    },
+    {
+      "id": "character-farhad",
+      "type": "Character",
+      "label": "Farhad",
+      "summary": "Iranian warrior.",
+      "sourceIds": [
+        "src-ganjoor-s08"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior"
+        }
+      ]
+    },
+    {
+      "id": "character-zhende-razm",
+      "type": "Character",
+      "label": "Zhende Razm",
+      "summary": "Turanian-side warrior at Sohrab's side.",
+      "sourceIds": [
+        "src-ganjoor-s12"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian-side warrior at Sohrab's side"
+        }
+      ]
+    },
+    {
+      "id": "character-fariborz",
+      "type": "Character",
+      "label": "Fariborz",
+      "summary": "Son of Kay Kavus.",
+      "sourceIds": [
+        "src-ganjoor-s13"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Kay Kavus"
+        }
+      ]
+    },
+    {
+      "id": "character-gorazeh",
+      "type": "Character",
+      "label": "Gorazeh",
+      "summary": "Iranian warrior of Giv's house.",
+      "sourceIds": [
+        "src-ganjoor-s13"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior of Giv's house"
+        }
+      ]
+    },
+    {
+      "id": "character-rohham",
+      "type": "Character",
+      "label": "Rohham",
+      "summary": "Iranian warrior.",
+      "sourceIds": [
+        "src-ganjoor-s14"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior"
+        }
+      ]
+    },
+    {
+      "id": "character-zavareh",
+      "type": "Character",
+      "label": "Zavareh",
+      "summary": "Rostam's brother.",
+      "sourceIds": [
+        "src-ganjoor-s14"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Rostam's brother"
+        }
+      ]
+    },
+    {
+      "id": "character-rudabeh",
+      "type": "Character",
+      "label": "Rudabeh",
+      "summary": "Lady of Zal's house, named by Rostam.",
+      "sourceIds": [
+        "src-ganjoor-s20"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Lady of Zal's house, named by Rostam"
+        }
+      ]
+    },
+    {
+      "id": "place-hunting-ground",
+      "type": "NarrativePlace",
+      "label": "The hunting ground",
+      "summary": "Meadow at the border of Turan where Rostam hunts and sleeps.",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "Realm of Kay Kavus.",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-white-castle",
+      "type": "NarrativePlace",
+      "label": "The White Castle",
+      "summary": "Iranian border fortress.",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-iran-camp",
+      "type": "NarrativePlace",
+      "label": "The camp of Iran",
+      "summary": "Iranian encampment before the castle.",
+      "sourceIds": [
+        "src-ganjoor-s11"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-field-of-combat",
+      "type": "NarrativePlace",
+      "label": "The field of combat",
+      "summary": "Ground between the armies where the champions meet.",
+      "sourceIds": [
+        "src-ganjoor-s14"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-tomb",
+      "type": "NarrativePlace",
+      "label": "The tomb",
+      "summary": "Burial structure built in Zabul.",
+      "sourceIds": [
+        "src-ganjoor-s21"
+      ],
+      "spoilerLevel": 4
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-rostam-sohrab",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of the Shahnameh",
+      "sourceIds": [
+        "src-ganjoor-index"
+      ],
+      "spoilerLevel": 0,
+      "passageLocator": "Arc index and work hierarchy.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "character-zal",
+      "to": "character-rostam",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-zal",
+        "src-ganjoor-lineage"
+      ],
+      "spoilerLevel": 0,
+      "passageLocator": "Iranica opening identification; primary lineage declaration is corroborating background.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "background_lineage",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-rostam",
+      "to": "character-tahmineh",
+      "type": "spouseOf",
+      "label": "Marries in Samangan",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "passageLocator": "The priest conveys the request and Tahmineh's father accepts the marriage.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-rostam",
+      "to": "character-sohrab",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "passageLocator": "Tahmineh answers Sohrab's question about his father.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-09"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-tahmineh",
+      "to": "character-sohrab",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "passageLocator": "Birth, naming, and the mother's explanation of parentage.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-09"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-king-samangan",
+      "to": "character-tahmineh",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "passageLocator": "Tahmineh identifies herself as the king's daughter.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-king-samangan",
+      "to": "place-samangan",
+      "type": "rules",
+      "label": "Rules Samangan",
+      "sourceIds": [
+        "src-ganjoor-s03"
+      ],
+      "spoilerLevel": 0,
+      "passageLocator": "The welcoming ruler is identified as the king of Samangan.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "observed_narrative_context",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-rostam",
+      "to": "character-rakhsh",
+      "type": "rides",
+      "label": "Rides Rakhsh",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0,
+      "passageLocator": "The opening hunting passage names Rostam's mount.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "observed_narrative_context",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-rostam",
+      "to": "place-samangan",
+      "type": "visits",
+      "label": "Visits while seeking Rakhsh",
+      "sourceIds": [
+        "src-ganjoor-s02",
+        "src-ganjoor-s03"
+      ],
+      "spoilerLevel": 0,
+      "passageLocator": "Journey after the theft and the king's welcome.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-rostam",
+      "to": "object-token",
+      "type": "givesKeepsake",
+      "label": "Gives the token",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "passageLocator": "Rostam removes a token from his arm and gives it to Tahmineh.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-11",
+      "from": "object-token",
+      "to": "character-tahmineh",
+      "type": "entrustedTo",
+      "label": "Entrusted to Tahmineh",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "passageLocator": "Instructions for a possible daughter or son accompany the gift.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-sohrab",
+      "to": "object-token",
+      "type": "carries",
+      "label": "Carries the token on his arm",
+      "sourceIds": [
+        "src-ganjoor-s18"
+      ],
+      "spoilerLevel": 4,
+      "passageLocator": "Sohrab explains that his mother fastened it to him before his departure.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "reported_in_selected_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-26"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-afrasiab",
+      "to": "character-sohrab",
+      "type": "supportsExpeditionOf",
+      "label": "Sends military support",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "passageLocator": "Afrasiab selects forces while giving separate concealed instructions.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-rostam",
+      "to": "character-sohrab",
+      "type": "opponentOf",
+      "label": "Faces in single combat",
+      "sourceIds": [
+        "src-ganjoor-s17"
+      ],
+      "spoilerLevel": 3,
+      "passageLocator": "The wrestling encounter and release; this is an event-scoped opposition, not a permanent identity.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-24"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-15",
+      "from": "character-rostam",
+      "to": "character-kay-kavus",
+      "type": "summonedBy",
+      "label": "Summoned by Kay Kavus",
+      "sourceIds": [
+        "src-ganjoor-s09"
+      ],
+      "spoilerLevel": 2,
+      "passageLocator": "The king's letter asks Rostam to come in response to Sohrab's campaign.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-16",
+      "from": "character-rostam",
+      "to": "place-zabul",
+      "type": "returnsTo",
+      "label": "Returns with Sohrab's body",
+      "sourceIds": [
+        "src-ganjoor-s21"
+      ],
+      "spoilerLevel": 4,
+      "passageLocator": "Rostam reaches Zabulistan during the closing mourning sequence.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-30"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-17",
+      "from": "character-zal",
+      "to": "character-sohrab",
+      "type": "mourns",
+      "label": "Mourns Sohrab",
+      "sourceIds": [
+        "src-ganjoor-s21"
+      ],
+      "spoilerLevel": 4,
+      "passageLocator": "Dastan/Zal sees the coffin and mourns.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-30"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-18",
+      "from": "character-rostam",
+      "to": "place-turan",
+      "type": "huntsNear",
+      "label": "Hunts near the border",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0,
+      "passageLocator": "The opening passage locates the hunt at Turan's border.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-19",
+      "from": "character-tahmineh",
+      "to": "place-samangan",
+      "type": "appearsAt",
+      "label": "Meets Rostam in Samangan",
+      "sourceIds": [
+        "src-ganjoor-s03",
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "passageLocator": "The meeting follows the king's hospitality in Samangan.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-20",
+      "from": "character-kay-kavus",
+      "to": "character-sohrab",
+      "type": "withholdsRemedyFor",
+      "label": "Withholds the requested remedy",
+      "sourceIds": [
+        "src-ganjoor-s19"
+      ],
+      "spoilerLevel": 4,
+      "passageLocator": "The king refuses the request delivered on Rostam's behalf.",
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "selected_beat_action",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-28"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-21",
+      "from": "character-afrasiab",
+      "to": "place-turan",
+      "type": "leaderOf",
+      "label": "Rules",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-22",
+      "from": "character-kay-kavus",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "Rules",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-23",
+      "from": "character-sohrab",
+      "to": "character-kay-kavus",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-24",
+      "from": "character-afrasiab",
+      "to": "character-sohrab",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-25",
+      "from": "character-human",
+      "to": "character-sohrab",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-26",
+      "from": "character-hojir",
+      "to": "place-white-castle",
+      "type": "leaderOf",
+      "label": "Rules",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-12"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-27",
+      "from": "character-sohrab",
+      "to": "character-hojir",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-12"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-28",
+      "from": "character-gazhdaham",
+      "to": "character-gordafarid",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-s07"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-29",
+      "from": "character-gordafarid",
+      "to": "character-sohrab",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-s07"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-30",
+      "from": "character-rostam",
+      "to": "character-zhende-razm",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-18"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-31",
+      "from": "character-zhende-razm",
+      "to": "character-sohrab",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-18"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-32",
+      "from": "character-gudarz",
+      "to": "character-giv",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-s13"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-19"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-33",
+      "from": "character-kay-kavus",
+      "to": "character-fariborz",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-s13"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-19"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-34",
+      "from": "character-rostam",
+      "to": "character-zavareh",
+      "type": "siblingOf",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-ganjoor-s16"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-35",
+      "from": "character-sam",
+      "to": "character-zal",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-s21"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-sohrab",
+        "eventIds": [
+          "event-30"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "The poet reflects before the tale",
+      "summary": "The poet ponders death, fate and justice, and then announces the story he is about to tell.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "story-rostam-sohrab",
+          "role": "the tale the poet announces",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "Rostam rides out to hunt",
+      "summary": "Rostam, in low spirits, rides to the border of Turan, hunts wild asses, roasts one and falls asleep while Rakhsh grazes.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hunter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "his horse",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "Rakhsh is taken",
+      "summary": "A small band of Turkish riders finds the grazing horse, captures it and leads it away; Rostam wakes to find it gone and sets out on foot.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "owner of the lost horse",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "the captured horse",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "A welcome in Samangan",
+      "summary": "Following the tracks, Rostam reaches Samangan; its king and nobles greet him, promise to find the horse and host him at a feast.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s02",
+        "src-ganjoor-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "guest",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-samangan",
+          "role": "host",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "the missing horse",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "A visitor in the night",
+      "summary": "Late at night a young woman enters his chamber, names herself as the king's daughter and tells Rostam why she has come.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tahmineh",
+          "role": "princess of Samangan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "guest",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "A marriage is arranged",
+      "summary": "Rostam has a priest ask her father for her hand, and the king gladly gives her to him with due ceremony.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "suitor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tahmineh",
+          "role": "bride",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-samangan",
+          "role": "her father",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "A keepsake and a farewell",
+      "summary": "At dawn Rostam leaves her a famous token from his arm with instructions for a future child, the horse is returned and he departs.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "departing husband",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tahmineh",
+          "role": "wife left behind",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-samangan",
+          "role": "host",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "the returned horse",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "ancestor",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "A son is born and grows",
+      "summary": "Nine months later Tahmineh bears a son, names him Sohrab, and he grows with astonishing speed and strength.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "the child",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tahmineh",
+          "role": "mother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "resemblance named",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "ancestor",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "ancestor",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "Sohrab asks about his father",
+      "summary": "At ten Sohrab demands to know his lineage; his mother tells him who his father is, shows tokens sent from Iran and urges secrecy toward Afrasiab.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "questioning son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tahmineh",
+          "role": "mother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "the named father",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "ruler to be kept unaware",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "A plan to march on Iran",
+      "summary": "Sohrab declares he will raise a Turkish army, unseat Kay Kavus, set his father on the throne and then turn on Afrasiab; warriors gather to him.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s05"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "young commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king he means to unseat",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "Iranian lord named",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king of Turan",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "father in his plan",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "Afrasiab sends his captains",
+      "summary": "Afrasiab welcomes the news, chooses twelve thousand riders under Human and Barman and secretly orders that father and son must not learn of each other.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "king of Turan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "captain sent",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-barman",
+          "role": "captain sent",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "recipient of letter and gifts",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "subject of the plan",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "Hojir falls at the White Castle",
+      "summary": "Sohrab's army reaches the White Castle; its keeper Hojir rides out alone, is thrown from the saddle, asks for quarter and is sent bound to Human.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s06"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "attacker",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hojir",
+          "role": "keeper of the castle",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "receives the captive",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gostaham",
+          "role": "young warrior at the castle",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "Gordafarid rides out",
+      "summary": "Gazhdaham's daughter Gordafarid arms herself in secret and fights Sohrab; when caught she reveals her face, and by a ruse regains the castle and mocks him from the walls.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s07"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-gordafarid",
+          "role": "defender of the castle",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "attacker",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gazhdaham",
+          "role": "her father",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hojir",
+          "role": "captive keeper",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "The castle is abandoned",
+      "summary": "Old Gazhdaham writes to the king describing the young champion, then leads the garrison away by night; next morning Sohrab finds the castle empty.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s08"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-gazhdaham",
+          "role": "letter writer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "finds the castle empty",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hojir",
+          "role": "reported captive",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "The king summons Rostam",
+      "summary": "Kay Kavus and his lords resolve to send Giv to Zabul with a letter; Rostam receives it but lingers three days feasting before setting out.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s08",
+        "src-ganjoor-s09"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king of Iran",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "summoned champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "counsellor",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "counsellor",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gorgin",
+          "role": "counsellor",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "counsellor",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-farhad",
+          "role": "counsellor",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "present at Zabul",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "subject of the letter",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "The king's anger and a reconciliation",
+      "summary": "Angered by the delay, Kay Kavus orders Rostam and Giv hanged; Rostam strikes Tus aside and leaves, and Gudarz persuades both sides to make peace over a feast.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s10"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "angry king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "offended champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "companion",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "ordered to seize them",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "mediator",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "the threat discussed",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "The Iranian host arrives",
+      "summary": "The king's army marches to the castle and pitches its tents; Human is alarmed, but Sohrab sees no equal among them and calls for wine.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s11"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "leader of the host",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "commander",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "defender of the castle",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "alarmed companion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "invoked patron",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "A night visit in disguise",
+      "summary": "Rostam enters the castle in Turkish dress, watches Sohrab at his banquet and kills Zhende Razm who questions him; on the way back he meets Giv and reports to the king.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s12"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "disguised visitor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "host of the banquet",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zhende-razm",
+          "role": "companion at the banquet",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "at the banquet",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-barman",
+          "role": "at the banquet",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "sentry",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "receives the report",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "Questions about the banners",
+      "summary": "From a height Sohrab makes the captive Hojir name the owners of each pavilion and banner; Hojir names many but withholds one name.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s13"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "questioner",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hojir",
+          "role": "captive informant",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "named in the camp",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "named in the camp",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "named in the camp",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "named in the camp",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-fariborz",
+          "role": "named in the camp",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-gorazeh",
+          "role": "named in the camp",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "the name sought",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "A challenge to the king",
+      "summary": "Sohrab rides to the Iranian camp, taunts Kay Kavus, tears up stakes of the royal pavilion; the king sends Tus to call on Rostam, who arms himself.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s14"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "challenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "challenged king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "called to fight",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "preparing",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gorgin",
+          "role": "preparing",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rohham",
+          "role": "preparing",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "left in charge",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zhende-razm",
+          "role": "recalled",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "Face to face",
+      "summary": "The two champions meet apart from the armies; Sohrab asks the older man whether he is Rostam, and he answers that he is not.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s14"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "Iranian champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "Turanian champion",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "The first day of combat",
+      "summary": "They fight with spears, swords, maces and bows until both are spent, then each charges the other's army, and they agree to resume at dawn.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s15"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "combatant",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "combatant",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "feared for",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "Counsel in the night",
+      "summary": "Sohrab and Human weigh the day; Rostam tells Kay Kavus of the young man's strength, then gives his brother Zavareh instructions for the morrow.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s16"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "reviewing the day",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "companion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "reviewing the day",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "reports the raid",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "promises prayer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "brother receiving instructions",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "struck in the raid",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "named in the instructions",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "Suspicion and an offer of peace",
+      "summary": "Sohrab tells Human he suspects his opponent, and at dawn asks the champion to lay down arms and reveal his lineage; Rostam refuses.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s17"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "proposes peace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "adviser",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "refuses the offer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "compared horse",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-25",
+      "label": "The first wrestling bout",
+      "summary": "They wrestle on foot; Sohrab throws Rostam, who escapes by claiming a custom that spares a man thrown once; Rostam washes, prays and returns.",
+      "order": 25,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s17"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "thrown wrestler",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "victor of the bout",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "critic of the release",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-26",
+      "label": "The second bout and a token",
+      "summary": "In the second bout Rostam throws Sohrab and stabs him; the dying youth speaks of his father, and the keepsake on his arm reveals who he is.",
+      "order": 26,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s18"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "victor and father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "mortally wounded son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tahmineh",
+          "role": "mother recalled",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zhende-razm",
+          "role": "recalled escort",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-27",
+      "label": "Grief in both camps",
+      "summary": "The Iranians first fear Rostam dead; Sohrab asks him to spare the Turanian army, and the lords hold Rostam back when he turns a dagger on himself.",
+      "order": 27,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s18"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "grieving father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "dying son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king alarmed",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "lord present",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "restrains and counsels",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gostaham",
+          "role": "lord present",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-28",
+      "label": "A plea for the remedy",
+      "summary": "Rostam sends Gudarz to ask Kay Kavus for the healing elixir; the king refuses, fearing the strength of father and son together.",
+      "order": 28,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s19"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "petitioner",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "refusing king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "wounded son",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-29",
+      "label": "Lament on the field",
+      "summary": "Word comes that Sohrab is dead; Rostam laments, burns his pavilion and asks that the Turanians be spared, and Kay Kavus agrees.",
+      "order": 29,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s20"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sohrab",
+          "role": "the dead son",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "mourning father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "consoling king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "Turanian leader to be spared",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "escort of the army",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "named in the lament",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "named in the lament",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tahmineh",
+          "role": "mother named in the lament",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-30",
+      "label": "The return to Zabul",
+      "summary": "Rostam brings the coffin home to Zabul, where Zal and the nobles mourn; a tomb is built and Bahram speaks words of counsel.",
+      "order": 30,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-s21"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "mourning father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "mourning grandfather",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "returns with the army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "returns to Iran",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sohrab",
+          "role": "the dead son",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "speaks counsel",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    }
+  ],
+  "media": [
+    {
+      "id": "media-met-452419",
+      "type": "image",
+      "label": "Rostam lassoing Rakhsh",
+      "url": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/452419/904434/main-image",
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/452419",
+      "creator": "Painter not identified in the catalog record; Ferdowsi is credited as author of the underlying literary work.",
+      "rights": {
+        "status": "verified_open_access_metadata",
+        "license": "CC0-1.0",
+        "statement": "The object page marks the image Public Domain; the Met Open Access policy applies CC0 to eligible images and basic data. This does not license all prose on the website.",
+        "sourceUrl": "https://www.metmuseum.org/hubs/open-access",
+        "checkedAt": "2026-11-15"
+      },
+      "depictedEntityIds": [
+        "character-rostam",
+        "character-rakhsh"
+      ],
+      "depictedEventIds": [],
+      "depictedContext": {
+        "kind": "later_artwork_of_literary_narrative",
+        "worldId": "world-shahnameh",
+        "scope": "Background outside the selected arc: Rostam first captures Rakhsh. This is not the theft or recovery in event-01/event-02.",
+        "calendarDate": null
+      },
+      "creationDate": {
+        "label": "circa 1450 CE",
+        "year": 1450,
+        "calendar": null,
+        "precision": "year",
+        "approximate": true,
+        "refersTo": "artwork_creation",
+        "uncertaintyBounds": null,
+        "era": "CE",
+        "calendarStatus": "not_specified_in_catalogue_metadata"
+      },
+      "spoilerLevel": 0,
+      "status": "external_reference_metadata_verified",
+      "sourceIds": [
+        "src-met-452419",
+        "src-met-open-access"
+      ],
+      "catalogTitle": "Rustam Lassos Rakhsh",
+      "accessionNumber": "1972.285.2",
+      "creditLine": "The Metropolitan Museum of Art, Rogers Fund, 1972.",
+      "caption": "An approximately fifteenth-century manuscript illustration of an earlier episode involving Rostam and Rakhsh.",
+      "altText": "Manuscript illustration catalogued as Rostam lassoing Rakhsh; detailed visual description pending image review.",
+      "altTextStatus": "draft_pending_visual_review",
+      "deliveryStatus": "external_reference_only_not_bundled",
+      "digitalCaptureDate": null,
+      "uploadDate": null,
+      "publicationDate": null,
+      "sharedAt": null,
+      "demoRenderEligibility": {
+        "allowed": false,
+        "reason": "External candidate remains excluded until delivery, visual description and applicable rights gates are satisfied."
+      }
+    },
+    {
+      "id": "media-met-453265",
+      "type": "image",
+      "label": "Sohrab slain by Rostam",
+      "url": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/453265/904428/main-image",
+      "sourceUrl": "https://www.metmuseum.org/art/collection/search/453265",
+      "creator": "Painter not identified in the catalog record; Ferdowsi is credited as author of the underlying literary work.",
+      "rights": {
+        "status": "verified_open_access_metadata",
+        "license": "CC0-1.0",
+        "statement": "The object page marks the image Public Domain; the Met Open Access policy applies CC0 to eligible images and basic data. This does not license all prose on the website.",
+        "sourceUrl": "https://www.metmuseum.org/hubs/open-access",
+        "checkedAt": "2026-11-15"
+      },
+      "depictedEntityIds": [
+        "character-rostam",
+        "character-sohrab"
+      ],
+      "depictedEventIds": [
+        "event-26"
+      ],
+      "depictedContext": {
+        "kind": "later_artwork_of_literary_narrative",
+        "worldId": "world-shahnameh",
+        "scope": "A depiction of the fatal encounter; the artwork title summarizes its outcome and does not establish the precise represented instant.",
+        "calendarDate": null
+      },
+      "creationDate": {
+        "label": "circa 1610 CE",
+        "year": 1610,
+        "calendar": null,
+        "precision": "year",
+        "approximate": true,
+        "refersTo": "artwork_creation",
+        "uncertaintyBounds": null,
+        "era": "CE",
+        "calendarStatus": "not_specified_in_catalogue_metadata"
+      },
+      "spoilerLevel": 4,
+      "status": "external_reference_metadata_verified",
+      "sourceIds": [
+        "src-met-453265",
+        "src-met-open-access"
+      ],
+      "catalogTitle": "Suhrab Slain by Rustam",
+      "accessionNumber": "1985.404.1",
+      "creditLine": "The Metropolitan Museum of Art, Gift of Jeffrey Kossak, The Kronos Collections, 1985.",
+      "caption": "A manuscript illustration created around 1610, depicting the tragic encounter from the Shahnameh.",
+      "altText": "Manuscript illustration catalogued as Sohrab slain by Rostam; detailed visual description pending image review.",
+      "altTextStatus": "draft_pending_visual_review",
+      "deliveryStatus": "external_reference_only_not_bundled_or_runtime_tested",
+      "digitalCaptureDate": null,
+      "uploadDate": null,
+      "publicationDate": null,
+      "sharedAt": null,
+      "demoRenderEligibility": {
+        "allowed": false,
+        "reason": "External candidate remains excluded until delivery, visual description and applicable rights gates are satisfied."
+      }
+    },
+    {
+      "id": "media-umma-1963-1-46",
+      "type": "image",
+      "label": "Tahmineh meets Rostam",
+      "url": null,
+      "sourceUrl": "https://umma.umich.edu/objects/tahmina-comes-to-rustam-from-the-shahnama-of-firdausi-1963-1-46/",
+      "creator": "Unidentified Iranian artist; the catalog identifies the artist or cultural attribution only as Iranian.",
+      "rights": {
+        "status": "permission_not_verified",
+        "license": null,
+        "statement": "The object page directs publication users to a rights and reproductions request. No request has been sent and no reuse permission is recorded.",
+        "sourceUrl": "https://umma.umich.edu/request-image/",
+        "checkedAt": "2026-11-15"
+      },
+      "depictedEntityIds": [
+        "character-tahmineh",
+        "character-rostam"
+      ],
+      "depictedEventIds": [
+        "event-07"
+      ],
+      "depictedContext": {
+        "kind": "later_artwork_of_literary_narrative",
+        "worldId": "world-shahnameh",
+        "scope": "The meeting within the selected narrative; the reference does not establish modern geographical equivalence.",
+        "calendarDate": null
+      },
+      "creationDate": {
+        "label": "circa 1460 CE",
+        "year": 1460,
+        "calendar": null,
+        "precision": "year",
+        "approximate": true,
+        "refersTo": "artwork_creation",
+        "uncertaintyBounds": null,
+        "era": "CE",
+        "calendarStatus": "not_specified_in_catalogue_metadata"
+      },
+      "spoilerLevel": 1,
+      "status": "reference_only_pending_rights",
+      "sourceIds": [
+        "src-umma-1963-1-46"
+      ],
+      "catalogTitle": "Tahmina Comes to Rustam",
+      "accessionNumber": "1963/1.46",
+      "creditLine": "University of Michigan Museum of Art, Museum Purchase.",
+      "caption": "Catalog reference to an illustration dated around 1460; image display is not enabled in this sample.",
+      "altText": null,
+      "altTextStatus": "not_prepared_image_not_cleared",
+      "deliveryStatus": "exclude_from_public_media_rendering",
+      "digitalCaptureDate": null,
+      "uploadDate": null,
+      "publicationDate": null,
+      "sharedAt": null,
+      "demoRenderEligibility": {
+        "allowed": false,
+        "reason": "External candidate remains excluded until delivery, visual description and applicable rights gates are satisfied."
+      }
+    },
+    {
+      "id": "media-dastan-parentage-video",
+      "type": "video",
+      "label": "A connected family in the Shahnameh",
+      "url": "../media/dastan-parentage-explainer.mp4",
+      "sourceUrl": null,
+      "creator": "Original Dastan concept-stage production using project-authored text and geometric diagrams",
+      "rights": {
+        "status": "original_project_content",
+        "license": null,
+        "statement": "Original explanatory diagram and text prepared for this project; no third-party images, music, performance or narration included. Linked source publications retain their own terms.",
+        "checkedAt": "2026-11-15"
+      },
+      "depictedEntityIds": [
+        "character-zal",
+        "character-rostam",
+        "character-tahmineh",
+        "character-sohrab"
+      ],
+      "depictedEventIds": [],
+      "depictedContext": {
+        "kind": "present_day_explanatory_diagram",
+        "worldId": "world-shahnameh",
+        "scope": "Parentage in the selected story world; not archival footage, a dated historical event, or a functioning product demo.",
+        "calendarDate": null
+      },
+      "creationDate": {
+        "label": "2026-11-15",
+        "date": "2026-11-15",
+        "calendar": "Gregorian",
+        "precision": "day",
+        "approximate": false,
+        "refersTo": "video_creation",
+        "era": "CE"
+      },
+      "spoilerLevel": 2,
+      "status": "local_content_sample_created",
+      "sourceIds": [
+        "src-iranica-zal",
+        "src-ganjoor-s05"
+      ],
+      "relatedRelationIds": [
+        "relation-02",
+        "relation-04",
+        "relation-05"
+      ],
+      "caption": "A present-day explanatory diagram of Zal, Rostam, Tahmineh and Sohrab, illustrating sourced parentage links.",
+      "posterUrl": "../media/dastan-parentage-poster.png",
+      "captions": [
+        {
+          "language": "en",
+          "url": "../media/dastan-parentage-en.vtt"
+        }
+      ],
+      "transcriptUrl": "../media/dastan-parentage-transcript-en.txt",
+      "durationSeconds": 19.958333,
+      "audioTrack": false,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "deliveryStatus": "bundled_local_file_not_product_streaming_or_access_control",
+      "uploadDate": null,
+      "publicationDate": null,
+      "sharedAt": null,
+      "demoRenderEligibility": {
+        "allowed": true,
+        "reason": "Original local diagram sample; still requires the reader boundary."
+      },
+      "reviewerProvenancePath": "../media/dastan-parentage-transcript.md",
+      "reviewerProvenanceAudience": "reviewer_only",
+      "transcriptFormat": "text/plain"
+    },
+    {
+      "id": "media-dastan-family-illustration",
+      "type": "image",
+      "label": "Family connections in the Shahnameh",
+      "url": "../media/dastan-family-connections.png",
+      "sourceUrl": null,
+      "creator": "Original Dastan project diagram using geometric shapes and text",
+      "rights": {
+        "status": "original_project_content",
+        "license": null,
+        "statement": "Original explanatory relationship diagram prepared for this project. No third-party artwork or photographic image is included; cited source publications retain their own terms.",
+        "checkedAt": "2026-11-15"
+      },
+      "depictedEntityIds": [
+        "character-zal",
+        "character-rostam",
+        "character-tahmineh",
+        "character-sohrab"
+      ],
+      "depictedEventIds": [],
+      "depictedContext": {
+        "kind": "present_day_explanatory_diagram",
+        "worldId": "world-shahnameh",
+        "scope": "Sourced parentage links in the selected story world; not archival imagery or a claim of historical dates.",
+        "calendarDate": null
+      },
+      "creationDate": {
+        "label": "2026-11-15",
+        "date": "2026-11-15",
+        "calendar": "Gregorian",
+        "precision": "day",
+        "approximate": false,
+        "refersTo": "diagram_creation",
+        "era": "CE"
+      },
+      "spoilerLevel": 2,
+      "status": "local_content_sample_created",
+      "sourceIds": [
+        "src-iranica-zal",
+        "src-ganjoor-s05"
+      ],
+      "relatedRelationIds": [
+        "relation-02",
+        "relation-04",
+        "relation-05"
+      ],
+      "caption": "A present-day diagram connecting Zal to Rostam, and Rostam and Tahmineh to Sohrab, through sourced parentage relationships.",
+      "altText": "Family relationship diagram: Zal is the father of Rostam; Rostam is the father of Sohrab; Tahmineh is the mother of Sohrab. The links belong to the selected Shahnameh story context.",
+      "altTextStatus": "project_authored_for_exact_diagram",
+      "renditions": [
+        {
+          "format": "image/svg+xml",
+          "url": "../media/dastan-family-connections.svg"
+        }
+      ],
+      "deliveryStatus": "bundled_local_image_not_product_delivery_or_access_control",
+      "digitalCaptureDate": null,
+      "uploadDate": null,
+      "publicationDate": null,
+      "sharedAt": null,
+      "demoRenderEligibility": {
+        "allowed": true,
+        "reason": "Original local explanatory diagram; still requires the reader boundary."
+      },
+      "reviewerProvenancePath": "../../docs/product/17-flagship-content-and-source-plan.md",
+      "reviewerProvenanceAudience": "reviewer_only"
+    }
+  ],
+  "reviewNotes": [
+    "No historical or BCE dates are assigned to literary events, lifespans, or places.",
+    "Manuscript artwork dates describe creation of depictions, not the represented narrative events.",
+    "No modern coordinates or territorial equivalences are asserted.",
+    "No living private individuals, user accounts, invitations, or mutual social relationships occur in this sample.",
+    "All catalog-image bytes remain external references; rights metadata does not establish runtime availability or completed visual/accessibility review.",
+    "Rostam explicitly refers to having a son in section 9. Do not replace non-recognition in combat with the claim that he did not know a son existed.",
+    "A source-backed statement is not a declaration of historical fact; all narrative claims belong to the selected literary world.",
+    "An original approximately 20-second explanatory diagram video, poster, English captions and transcript were prepared for the version 0.5 content sample. It uses spoiler level 2 and does not alter the narrative calendar mapping. Container metadata and representative frames were inspected; no product playback/access behavior was tested.",
+    "Version 0.6 replaces ambiguous participant lists with role-qualified event associations, adds relationship scope and explicit local-demo eligibility, and includes an original local family illustration. Entity, relation, event and source IDs are retained."
+  ],
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false,
+    "note": "Local demonstration eligibility does not establish specialist editorial review or approval for a publicly released knowledge collection."
+  },
+  "inputContract": {
+    "datasetIdentityNote": "The existing datasetId is retained for continuity; documentVersion and schemaVersion identify the revised input.",
+    "narrativeContext": "Relations and events inherit worldId and editionContext.id unless a record explicitly narrows its scope. Artwork creation retains separate calendar meaning.",
+    "rawDatasetPubliclyServable": false,
+    "eventAssociations": "entityAssociations identifies actors, mentions, settings, objects or subjects of reports. A beat can condense several scenes and does not assert co-location or simultaneity.",
+    "publicationAndSpoilers": "Derive a local-demo or later approved-public projection first, apply the reader boundary, and recompute dependent references, labels, counts, paths and recommendations before response serialization.",
+    "mediaEligibility": "demoRenderEligibility permits only the stated local-demo use and still requires the selected spoiler level. Candidate or uncleared images are not silently rendered.",
+    "sourceLinks": "Source labels and excerpts follow the same boundary; external source pages may reveal more than the selected passage.",
+    "reviewerFilesPubliclyServable": false,
+    "reviewerProvenance": "reviewerProvenancePath and package documentation are internal review inputs, not public source or download URLs. Build UI evidence from the selected record's sourceIds and the permitted source projection. Only the viewer-safe transcriptUrl supplies transcript text; do not serve the combined transcript/provenance Markdown or follow its package links."
+  }
+}
