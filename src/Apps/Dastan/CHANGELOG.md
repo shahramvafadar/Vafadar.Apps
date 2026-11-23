@@ -444,3 +444,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The years you choose for a name are kept by its connections and its pictures as by its timeline: you see what
   lies in those years, apart from it what states no time, and how much was left out because it states another
   time. The years are asked for, changed and given up on the bar above each of these views.
+- A place you were at that the site has no entry for can be proposed to the editors, from the page of the places
+  you were at. The proposal is kept without your name and your account. When an entry of that name exists
+  later, the page says so beside your statement and lets you choose it. For editors: a page of the proposed
+  places, where the same place proposed several times stands together and is decided once.

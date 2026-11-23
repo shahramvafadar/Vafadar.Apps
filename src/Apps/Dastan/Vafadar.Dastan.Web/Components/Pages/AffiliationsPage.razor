@@ -5,6 +5,7 @@
 @inject Visitor Visitor
 @inject AccountDesk Desk
 @inject DastanLibrary Library
+@inject ProposalDesk Proposals
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -58,6 +59,13 @@
                         @if (affiliation.Terms.Institution is not null && Library.Institutions.Find(affiliation.Terms.Institution) is null)
                         {
                             <p class="note">@T["Place_Gone_Note"]</p>
+                        }
+                        @if (affiliation.Terms.Institution is null && _nowEntries.Contains(affiliation.Number))
+                        {
+                            @* A place that stands in words only, and an entry of a collection goes by those words
+                               now – one that was added since, perhaps after a proposal. Nothing is joined by a
+                               name: the visitor is told, and chooses (ADR 0023). *@
+                            <p class="note">@T["Affiliations_Entry_Now"] <a href="@($"account/affiliations?for={affiliation.Number}&at={Uri.EscapeDataString(affiliation.Terms.Organisation)}#affiliation-{affiliation.Number}")">@T["Affiliations_Entry_Look"]<span class="visually-hidden"> – @affiliation.Terms.Organisation</span></a></p>
                         }
                         @if (when.Length > 0)
                         {
@@ -113,6 +121,58 @@
             <p><button type="submit" class="action secondary">@T["Affiliations_Add_Send"]</button></p>
         </form>
     </section>
+
+    @if (Proposals.IsOpen)
+    {
+        @* A place no collection has an entry for is proposed to the editors (D-085). Proposing states nothing
+           and publishes nothing: the editors decide whether the place gets an entry, and the proposal is kept
+           without the name or the account of who wrote it. *@
+        <section id="propose" aria-labelledby="propose-title">
+            <h2 id="propose-title">@T["Affiliations_Propose_Title"]</h2>
+            @if (_proposal is not null)
+            {
+                <p class="note" role="status">@T[$"Affiliations_Said_{_proposal}"]</p>
+            }
+            @if (_form == "propose")
+            {
+                <div class="problems" role="alert"><ul>
+                    <li>@T["Affiliations_Problem_proposal"]</li>
+                </ul></div>
+            }
+            <p class="note">@T["Affiliations_Propose_Note"]</p>
+            <form method="post" action="@($"{AffiliationEndpoints.Root}/propose")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <p class="field">
+                    <label for="propose-name">@T["Affiliations_Propose_Name"]</label>
+                    <input id="propose-name" name="name" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@_at" autocomplete="off" dir="auto" />
+                </p>
+                <p class="field">
+                    <label for="propose-kind">@T["Affiliations_Propose_Kind"]</label>
+                    <select id="propose-kind" name="kind">
+                        @foreach (var type in Institutions.Types)
+                        {
+                            <option value="@type.Key"><TypeName Type="type" /></option>
+                        }
+                    </select>
+                </p>
+                <p class="field">
+                    <label for="propose-where">@T["Affiliations_Propose_Where"]</label>
+                    <input id="propose-where" name="where" type="text" maxlength="@Vafadar.Dastan.Data.ProposalBox.LongestLine" autocomplete="off" dir="auto" />
+                </p>
+                <p class="field">
+                    <label for="propose-page">@T["Affiliations_Propose_Page"]</label>
+                    <input id="propose-page" name="page" type="url" maxlength="@Vafadar.Dastan.Data.ProposalBox.LongestLine" placeholder="https://" autocomplete="off" dir="ltr" aria-describedby="propose-page-how" />
+                    <span class="meta" id="propose-page-how">@T["Affiliations_Propose_Page_How"]</span>
+                </p>
+                <p class="field">
+                    <label for="propose-note">@T["Affiliations_Propose_NoteLabel"]</label>
+                    <textarea id="propose-note" name="note" rows="3" maxlength="@Vafadar.Dastan.Data.ProposalBox.LongestNote" dir="auto"></textarea>
+                </p>
+                <p><button type="submit" class="action secondary">@T["Affiliations_Propose_Send"]</button></p>
+            </form>
+        </section>
+    }
 
     <section id="find" aria-labelledby="find-title">
         <h2 id="find-title">@T["Affiliations_Find_Title"]</h2>
@@ -228,6 +288,13 @@
     private static readonly string[] Sayings = ["added", "changed", "shown", "removed"];
     private static readonly string[] Forms = ["mine", "add"];
 
+    // What the form of a proposal may answer with; said beside that form, not at the head of the page.
+    private static readonly string[] ProposalSayings = ["proposed", "proposal-later", "proposal-full"];
+    private string? _proposal;
+
+    // The affiliations that stand in words only and that an entry of a collection goes by the words of now.
+    private readonly HashSet<long> _nowEntries = [];
+
     private VisitorSession? _me;
     private IReadOnlyList<AffiliationInfo> _mine = [];
     private IReadOnlyList<CircleInfo> _circles = [];
@@ -300,7 +367,10 @@
         _me = session;
         _here = $"/{Visitor.Language.Tag}{AffiliationEndpoints.Page}";
         _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
-        _form = Forms.Contains(Form, StringComparer.Ordinal) && Problem == "affiliation" ? Form : null;
+        _form = Forms.Contains(Form, StringComparer.Ordinal) && Problem == "affiliation" ? Form
+            : Form == "propose" && Problem == "proposal" && Proposals.IsOpen ? "propose"
+            : null;
+        _proposal = Proposals.IsOpen && ProposalSayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
         _calendar = Calendar == "solar-hijri" || (Calendar is null && TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "solar-hijri") ? "solar-hijri" : "gregorian";
         _question = Question switch { "entered" => AttendanceQuestion.EnteredIn, "graduated" => AttendanceQuestion.GraduatedIn, _ => AttendanceQuestion.AttendedDuring };
         _year = AffiliationEndpoints.Year(Year, _calendar);
@@ -311,6 +381,7 @@
         _mine = store.Affiliations(session.Id);
         _circles = store.Circles(session.Id);
         _for = _at is not null && _mine.Any(mine => mine.Number == For) ? For : null;
+        _nowEntries.UnionWith(_mine.Where(mine => mine.Terms.Institution is null && !Library.Institutions.Search(mine.Terms.Organisation).IsEmpty).Select(mine => mine.Number));
         _candidates = _at is null ? [] : Library.Institutions.Search(_at);
         if (_entry is not null)
         {
@@ -351,7 +422,13 @@
         </form>
         @if (_at is not null && _for == affiliation && _candidates.IsEmpty)
         {
-            <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Affiliations_Look_None"], _at)</p>
+            <p class="note" role="status">
+                @string.Format(CultureInfo.CurrentCulture, T["Affiliations_Look_None"], _at)
+                @if (Proposals.IsOpen)
+                {
+                    <text> </text><a href="@($"account/affiliations?at={Uri.EscapeDataString(_at)}#propose")">@T["Affiliations_Propose_Link"]</a>
+                }
+            </p>
         }
     };
 

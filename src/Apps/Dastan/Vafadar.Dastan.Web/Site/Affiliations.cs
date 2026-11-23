@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Core.Personal;
+using Vafadar.Dastan.Data;
 using Vafadar.Dastan.People;
 using Vafadar.Dastan.Web.Resources;
 using Vafadar.Temporal;
@@ -86,6 +87,28 @@ public static class AffiliationEndpoints
                 && store.ShowAffiliation(Me(context), number, found.Kind, found.Circle, when.Kind, when.Circle)
                 ? Said(returnUrl, "shown", "mine")
                 : Results.BadRequest();
+        });
+
+        // A place no collection has an entry for is proposed to the editors (D-085). What is kept is the place
+        // in the visitor's words: who proposed it is not, so nothing here asks the store of the accounts.
+        forms.MapPost("/propose", (HttpContext context, AccountDesk desk, ProposalDesk proposals, Visitor visitor,
+            [FromForm] string? name, [FromForm] string? kind, [FromForm] string? where, [FromForm] string? page, [FromForm] string? note, [FromForm] string? returnUrl) =>
+        {
+            if (!proposals.IsOpen)
+            {
+                return Results.NotFound();
+            }
+
+            if (ProposalBox.Read(new ProposedPlace(name ?? string.Empty, kind ?? string.Empty, where, page, note), [.. ProposalDesk.Kinds]) is not { } place)
+            {
+                // The name goes back with the visitor, so that the form does not begin empty again.
+                var typed = name is { Length: > 0 and <= PeopleStore.LongestOrganisation } && !name.Any(char.IsControl) ? $"&at={Uri.EscapeDataString(name.Trim())}" : null;
+                return Results.Redirect($"{Home(returnUrl)}?form=propose&problem=proposal{typed}#propose");
+            }
+
+            return !desk.Allows(context, "propose", ProposalDesk.PerHour) ? Said(returnUrl, "proposal-later", "propose")
+                : proposals.Take(place, visitor.Language.Tag) ? Said(returnUrl, "proposed", "propose")
+                : Said(returnUrl, "proposal-full", "propose");
         });
 
         forms.MapPost("/remove", (HttpContext context, AccountDesk desk, [FromForm] long? affiliation, [FromForm] string? returnUrl) =>

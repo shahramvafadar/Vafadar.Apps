@@ -74,9 +74,15 @@ public sealed class Institutions
     public static bool Is(EntityType type)
     {
         ArgumentNullException.ThrowIfNull(type);
-        return type == EntityTypes.University || type == EntityTypes.Company || type == EntityTypes.Organisation
-            || type == EntityTypes.SportsClub || type == EntityTypes.SportsTeam || type == EntityTypes.Government;
+        return Types.Contains(type);
     }
+
+    /// <summary>
+    /// Gets the types of entity that are places people can have been at, in the order a form offers them: a
+    /// visitor chooses among these when proposing a place to the editors (D-085).
+    /// </summary>
+    public static ImmutableArray<EntityType> Types { get; } =
+        [EntityTypes.University, EntityTypes.Company, EntityTypes.Organisation, EntityTypes.SportsClub, EntityTypes.SportsTeam, EntityTypes.Government];
 
     /// <summary>Returns the place a reference names, or nothing: no such entity is published, or it is no such place.</summary>
     public Institution? Find(EntityReference? reference) => reference is not null && _all.TryGetValue(reference, out var found) ? found : null;

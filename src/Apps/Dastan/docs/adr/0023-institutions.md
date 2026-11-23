@@ -97,9 +97,43 @@ names and stays words too.
 
 * **Proposing a place to the editors.** A visitor whose place is in no collection writes words; nothing
   carries those words to an editor. Whether and how visitors propose entries is an editorial process of its
-  own.
+  own. *Decided by the owner and built on 2026-11-23 – see "A place proposed to the editors" below.*
 * **Statements in words that could now point at an entry.** Nothing looks through existing statements. An
-  account can point its own statement at an entry at any time.
+  account can point its own statement at an entry at any time. *Since 2026-11-23 the page of the places says
+  so where an entry goes by the words of a statement – see below. Nothing is joined by a name.*
 * **Content.** The published collection holds no university, company or club. Everything here was built and
   tested with made-up places that say so; a visitor has something to choose once such content exists and is
   approved.
+
+## A place proposed to the editors (2026-11-23, D-085)
+
+The owner chose a way for a visitor to tell the editors of a place that is missing, with somebody who looks
+at what comes in.
+
+1. **A proposal is the place, never the person.** Who signed in can propose a place on the page of the places
+   they were at: its name, its kind – one of the types people can have been at (`Institutions.Types`) –, and,
+   as far as they say, where it is, a public page about it (an `https` address) and a note. It is kept in the
+   table `delivery."Proposals"` (`ProposalBox`) with the day and the language – no account, no name, no
+   address. So a proposal cannot be answered; the page says so before it is sent.
+2. **Proposing states and publishes nothing.** It is no affiliation of the visitor and no entry of a
+   collection. An entry is made by an editor like any other name, reviewed and published like any other.
+3. **The site takes proposals when it takes reports** (`Dastan:Reports`): both are words of visitors for the
+   editors, kept in the same database and read with the same tool. One sender proposes five places in an
+   hour at most; a box of 500 that wait takes no more until an editor has decided.
+4. **The editors decide in their tool** (`/proposals`): the same place proposed several times – written
+   another way, in another case, with the letters of Arabic for those of Persian – stands together and is
+   decided once, as added or as getting no entry. A place that was added can be noted with its entry
+   (`collection/name`, which the store has to have); a link begins the form of a new name with the name and
+   the kind that were proposed. A decision changes nothing in the store.
+5. **The loop closes without the site knowing who proposed.** A statement in words keeps its words. Where an
+   entry of a collection goes by those words now, the page of the places says so beside the statement and
+   leads to the form that offers the entry; the visitor chooses it or not. That is all the answer a proposal
+   gets, and it needs no record of the proposer.
+6. **Kept as long as a report.** `reports forget` deletes proposals an editor decided more than 90 days ago –
+   or before a day that is named – with the reports; one that waits is never deleted.
+
+The table was written into the history of the changes of form by hand (`20261123120000_Proposals`): the tool
+that writes such a change could not be run on the machine of that day. `ProposalBoxTests` asks the database
+whether the model has a change no change of form carries, so that a slip of the hand is found.
+
+Tests: `ProposalBoxTests`, `PlaceProposalPagesTests`, `StudioProposalsTests`.

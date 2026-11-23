@@ -1051,7 +1051,7 @@ named.
 |---|---|---|
 | Themes of a gallery (R-MED-02) | – | **Decided and built on 2026-11-23** (D-083, section 24): a theme is a record of its collection. Which themes a collection has stays the decision of its editors. |
 | A stretch of years that the connections and the pictures of a name honour | – | **Decided and built on 2026-11-23** (D-084, section 24.2). |
-| A way for a visitor to propose a place to the editors | the owner | An editorial process with somebody who looks at the proposals (ADR 0023). |
+| A way for a visitor to propose a place to the editors | – | **Decided and built on 2026-11-23** (D-085, section 24.3). Somebody has to look at the page of the proposals in the tool of the editors: that stays with the owner. |
 | Pictures, and content beyond the Shahnameh | the owner | Rights and sources; without them Discover has one story and drawings in the place of pictures. |
 | The order inside the world of a story of a collection | the owner, with content | No collection states one; a comparison file can. |
 | Cards of a graph in sizes of their own; a first answer smaller than a whole family tree | nobody yet | The measurement of step 20.12 did not ask for either. |
@@ -1092,3 +1092,17 @@ up, as a form that sends the rest of the state along and is kept in step by the 
 typed, also in Persian; what is no stretch of years said to be none; a picture that keeps the years of the
 gallery it was opened from, with its way back, the one before and the next. *Tried:* `ExplorationTests` (the 9
 new ones among 41), `YearsOfANameTests` (5), `YearsOfANamePagesTests` (9, English and Persian).
+
+**24.3 A place proposed to the editors – done on 2026-11-23** (D-085, [ADR 0023](adr/0023-institutions.md), "A
+place proposed to the editors"). *Built:* the table of the proposals and its box – what is a proposal and what
+is none, a box that is full, the decision of an editor, forgetting what was decided long ago –; on the page of
+the places somebody was at the form that proposes one, with the kinds people can have been at, offered also
+where looking for a place found nothing, with the name carried along; the limit of five in an hour; the word
+a statement in words gets when an entry goes by its words now, with the way to choose it; in the tool of the
+editors the page of the proposed places – the same place proposed several times as one, the way to begin its
+name with what was proposed, the decision with the entry the place has –; a new name that begins with a type
+and a name a link of the tool asks for; the command that forgets reports forgets decided proposals too; the
+privacy notice in its three languages and the record of processing name what is kept. *Tried:*
+`ProposalBoxTests` (19, among them that the tables are what the history of their changes of form makes them),
+`PlaceProposalPagesTests` (11, English and Persian), `StudioProposalsTests` (6). *To do by who runs a site:*
+`database migrate` before the new version starts.

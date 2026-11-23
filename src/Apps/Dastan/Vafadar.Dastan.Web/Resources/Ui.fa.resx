@@ -4215,4 +4215,52 @@
   <data name="Gallery_WithoutTimeNote" xml:space="preserve">
     <value>این‌ها نمی‌گویند چه زمانی را نشان می‌دهند. هر سالی انتخاب کنید نشان داده می‌شوند.</value>
   </data>
+  <data name="Affiliations_Propose_Title" xml:space="preserve">
+    <value>پیشنهاد یک مکان به ویراستاران</value>
+  </data>
+  <data name="Affiliations_Propose_Note" xml:space="preserve">
+    <value>جایی که بوده‌اید در میان مدخل‌های مجموعه‌ها نیست؟ به ویراستاران بگویید. آن‌ها تصمیم می‌گیرند که مدخلی برایش ساخته شود یا نه؛ پیشنهاد دادن چیزی دربارهٔ شما نمی‌گوید و چیزی را منتشر نمی‌کند. پیشنهاد بدون نام و بدون حساب شما نگه داشته می‌شود، پس کسی نمی‌تواند به آن پاسخ دهد – بعداً دوباره همین‌جا را نگاه کنید.</value>
+  </data>
+  <data name="Affiliations_Propose_Name" xml:space="preserve">
+    <value>نام مکان</value>
+  </data>
+  <data name="Affiliations_Propose_Kind" xml:space="preserve">
+    <value>چه نوع مکانی است</value>
+  </data>
+  <data name="Affiliations_Propose_Where" xml:space="preserve">
+    <value>کجاست – شهر، کشور (اختیاری)</value>
+  </data>
+  <data name="Affiliations_Propose_Page" xml:space="preserve">
+    <value>صفحه‌ای عمومی دربارهٔ آن (اختیاری)</value>
+  </data>
+  <data name="Affiliations_Propose_Page_How" xml:space="preserve">
+    <value>نشانی‌ای که با https:// آغاز می‌شود، مثل سایت خودِ همان مکان.</value>
+  </data>
+  <data name="Affiliations_Propose_NoteLabel" xml:space="preserve">
+    <value>هر چیز دیگری که ویراستاران باید بدانند (اختیاری)</value>
+  </data>
+  <data name="Affiliations_Propose_Send" xml:space="preserve">
+    <value>همین مکان را پیشنهاد بده</value>
+  </data>
+  <data name="Affiliations_Propose_Link" xml:space="preserve">
+    <value>آن را به ویراستاران پیشنهاد بدهید.</value>
+  </data>
+  <data name="Affiliations_Said_proposed" xml:space="preserve">
+    <value>سپاس. پیشنهاد شما به دست ویراستاران رسید؛ چیزی دربارهٔ فرستنده‌اش در آن نیست.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-later" xml:space="preserve">
+    <value>این تعداد پیشنهاد در زمانی کوتاه زیاد است. لطفاً یک ساعت دیگر دوباره بفرستید.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-full" xml:space="preserve">
+    <value>پیشنهادهای در انتظارِ ویراستاران بیش از آن است که الان بتوانند بپذیرند. لطفاً روز دیگری دوباره بفرستید.</value>
+  </data>
+  <data name="Affiliations_Problem_proposal" xml:space="preserve">
+    <value>فرستاده نشد: پیشنهاد به نام مکان نیاز دارد، و صفحه – اگر می‌نویسید – به نشانی‌ای که با https:// آغاز شود.</value>
+  </data>
+  <data name="Affiliations_Entry_Now" xml:space="preserve">
+    <value>اکنون مدخلی از یک مجموعه به همین نام هست.</value>
+  </data>
+  <data name="Affiliations_Entry_Look" xml:space="preserve">
+    <value>ببینید همان جای شماست یا نه، و انتخابش کنید</value>
+  </data>
 </root>

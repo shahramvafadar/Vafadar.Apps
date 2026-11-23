@@ -134,6 +134,10 @@ Until you remove it, or until the account is deleted.
 
 Every statement of an editorial page can be reported as wrong. The site keeps the day, the page and statement, the language and what you wrote – no name, no IP address and no account. Please write nothing about yourself or other people into the text. Legal ground: Article 6 (1) (f) GDPR (our interest in correct content). A report is deleted 90 days after an editor looked at it.
 
+## Proposing a place to the editors
+
+If you have an account and a place you were at – a university, a company, a club – is not among the entries of the site, you can propose it to the editors. The site keeps the day, the language and what you wrote about the place: its name, its kind, where it is, a public page about it and a note, as far as you give them – no name, no IP address and no account, so a proposal cannot be traced to you and cannot be answered. Please write nothing about yourself or other people into it. Legal ground: Article 6 (1) (f) GDPR (our interest in complete content). A proposal is deleted 90 days after an editor decided it.
+
 ## Reporting content (notice)
 
 With the form at {{site}}/en/notice anybody can tell us that something on the site is against the law or the terms. The site keeps the time, the address of the content, the kind of problem, your explanation, and – only if you give them – your name and e-mail address. We use this to examine the notice, to decide, to answer you, and to be able to show how we dealt with it. Whoever stored the content is told the reasons for a decision, but not who gave the notice, unless that is necessary and lawful.
@@ -256,4 +260,4 @@ We change this notice when the site or the law changes. The date below says when
 
 This notice exists in English, German and Persian. If the versions differ, the German version prevails.
 
-Last updated: 20 November 2026
+Last updated: 23 November 2026

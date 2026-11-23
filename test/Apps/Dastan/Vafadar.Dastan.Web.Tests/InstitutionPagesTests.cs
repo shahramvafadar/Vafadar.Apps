@@ -45,8 +45,19 @@ public sealed class InstitutionsSite : DemoSite
 
     private string Content => Path.Combine(_folder, _places ? "with" : "without", "content");
 
+    /// <summary>Gets a value indicating whether the site takes what visitors write to the editors: reports, and places they propose.</summary>
+    public bool TakesProposals { get; init; }
+
+    /// <summary>Gets the connection of the database of the site.</summary>
+    public string Database => TestDatabase.For(Path.Combine(_folder, "people.db"));
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        if (TakesProposals)
+        {
+            builder.UseSetting("Dastan:Reports", "true");
+        }
+
         builder.UseSetting("Dastan:Database", TestDatabase.For(Path.Combine(_folder, "people.db")));
         builder.UseSetting("Dastan:Content", Content);
         if (Directory.Exists(Content))

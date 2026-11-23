@@ -608,3 +608,14 @@ button.action {
   border: 2px solid var(--accent);
   font-weight: 600;
 }
+
+/* The places visitors proposed (D-085): what each proposal of a place says, as lines under its name. */
+.proposal-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proposal-lines > li + li {
+  margin-block-start: var(--space-2);
+}

@@ -4215,4 +4215,52 @@
   <data name="Gallery_WithoutTimeNote" xml:space="preserve">
     <value>These do not say what time they show. They are shown whatever years you choose.</value>
   </data>
+  <data name="Affiliations_Propose_Title" xml:space="preserve">
+    <value>Propose a place to the editors</value>
+  </data>
+  <data name="Affiliations_Propose_Note" xml:space="preserve">
+    <value>Is a place you were at not among the entries of the collections? Tell the editors. They decide whether it gets an entry; proposing states nothing about you and publishes nothing. The proposal is kept without your name and without your account, so nobody can answer it – look here again later.</value>
+  </data>
+  <data name="Affiliations_Propose_Name" xml:space="preserve">
+    <value>Name of the place</value>
+  </data>
+  <data name="Affiliations_Propose_Kind" xml:space="preserve">
+    <value>What kind of place it is</value>
+  </data>
+  <data name="Affiliations_Propose_Where" xml:space="preserve">
+    <value>Where it is – a city, a country (optional)</value>
+  </data>
+  <data name="Affiliations_Propose_Page" xml:space="preserve">
+    <value>A public page about it (optional)</value>
+  </data>
+  <data name="Affiliations_Propose_Page_How" xml:space="preserve">
+    <value>An address that begins with https://, such as the site of the place itself.</value>
+  </data>
+  <data name="Affiliations_Propose_NoteLabel" xml:space="preserve">
+    <value>What else the editors should know (optional)</value>
+  </data>
+  <data name="Affiliations_Propose_Send" xml:space="preserve">
+    <value>Propose this place</value>
+  </data>
+  <data name="Affiliations_Propose_Link" xml:space="preserve">
+    <value>Propose it to the editors.</value>
+  </data>
+  <data name="Affiliations_Said_proposed" xml:space="preserve">
+    <value>Thank you. The editors have your proposal; it says nothing about who sent it.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-later" xml:space="preserve">
+    <value>That is many proposals in a short time. Please try again in an hour.</value>
+  </data>
+  <data name="Affiliations_Said_proposal-full" xml:space="preserve">
+    <value>The editors have more proposals waiting than they can take at the moment. Please try again another day.</value>
+  </data>
+  <data name="Affiliations_Problem_proposal" xml:space="preserve">
+    <value>That could not be sent: a proposal needs the name of the place, and a page – if you name one – an address that begins with https://.</value>
+  </data>
+  <data name="Affiliations_Entry_Now" xml:space="preserve">
+    <value>An entry of a collection goes by these words now.</value>
+  </data>
+  <data name="Affiliations_Entry_Look" xml:space="preserve">
+    <value>See whether it is your place, and choose it</value>
+  </data>
 </root>

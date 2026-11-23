@@ -43,7 +43,9 @@ public static class ContentCommands
           reports forget <database> [--kept-days <n> | --looked-at-before <yyyy-MM-dd>]
               For whoever runs the site: deletes the reports of visitors that an editor looked at more than
               90 days ago – or another number of days, or before a day that is named. A report nobody has
-              looked at is never deleted. Says how many were deleted. Nothing runs it by itself.
+              looked at is never deleted. Places visitors proposed that an editor decided before that
+              day are deleted the same way; one nobody has decided never is. Says how many were deleted.
+              Nothing runs it by itself.
 
           photos sizes <folder>
               For whoever runs the site: makes the smaller size of every photograph of the visitors that has
@@ -113,6 +115,11 @@ public static class ContentCommands
 
         var forgotten = new ReportBox(database).Forget(before);
         output.WriteLine($"Deleted {forgotten} report(s) that were looked at before {day}.");
+
+        // What visitors write to the editors is kept as long as it is of use, whatever it is: a place that
+        // was proposed and decided before that day goes the same way (D-085).
+        var proposals = new ProposalBox(database).Forget(before);
+        output.WriteLine($"Deleted {proposals} proposed place(s) that were decided before {day}.");
         return 0;
     }
 
