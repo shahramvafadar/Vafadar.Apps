@@ -95,7 +95,7 @@ What reading the whole against the documents of the product found ([delivery pla
 | E9 | The calendar a source writes in: kept (document 04, TIME-009) or every date Gregorian (D-043) | The two contradict each other | Waits for the owner |
 | E10 | The chart of time of a history by kind, a kind put in and taken out by a link, names that do not meet sharing a row (D-099) | The page of Iran was about 36,000 px high; the chart is 410 px to begin with | Done (2026-11-24) |
 | E11 | Labels of relations that repeat the name they lead to ("King of the Medes" to an office of the same name) | Seen in the chart of Iran on 2026-11-24 | Planned, content |
-| E12 | At the width of a phone the names of bars that stand close run over each other and over their bars – more visible since E10, where many names share a lane | Seen on 2026-11-24 | Planned |
+| E12 | At the width of a phone the names of bars that stand close run over each other and over their bars – more visible since E10, where many names share a lane | Seen on 2026-11-24 | Done (2026-11-24): a row is kept for a mark as far as its name really reaches |
 
 ## Not planned
 

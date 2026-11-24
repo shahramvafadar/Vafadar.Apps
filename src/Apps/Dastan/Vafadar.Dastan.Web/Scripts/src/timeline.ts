@@ -250,8 +250,30 @@ class TimelineView {
         // A name stands after its mark. Where the view ends before the name would (seen on a phone, step 20.10:
         // the name then lay over its own mark), it stands before the mark – and the row has to be free that far.
         const long = this.long(mark.label);
-        const before = mark.shape !== 'lasting' && end + 12 + long > this.width - 4 && start - 10 - long >= 4;
-        const [needs, extent] = before ? [start - 10 - long, end + 14] : [start, end + 12 + long + 14];
+        // A bar that runs out of the view keeps its name in sight at the side of the view; every other mark,
+        // a bar that ends in sight among them, has its name beside it and never over it.
+        const runsOut = mark.shape === 'lasting' && end > this.width - 4;
+        const before = !runsOut && end + 12 + long > this.width - 4 && start - 10 - long >= 4;
+        // The row is asked for as far as the mark and its name will really reach (mark() below places the name
+        // by the same rules). Seen on a phone, with many names in one lane: a name that had no room after its
+        // mark was put at the side of the view or before the mark, over the marks that stood there already.
+        let needs = start, extent = end + 12 + long + 14;
+        if (before) {
+          [needs, extent] = [start - 10 - long, end + 14];
+        } else if (end + 12 + long > this.width - 4) {
+          if (mark.shape === 'lasting' && Math.min(end, this.width) - Math.max(start, 0) >= long + 12) {
+            // Inside the part of the bar that is in sight.
+            [needs, extent] = [start, end + 14];
+          } else if (runsOut) {
+            // Ending at the side of the view.
+            [needs, extent] = [Math.min(start, this.width - 6 - long), Math.max(end, this.width) + 14];
+          } else {
+            // Shortened on the side with more room: from the mark to the side of the view, or from the other side to the mark.
+            const ahead = start - 14 > this.width - 6 - (end + 12);
+            [needs, extent] = ahead ? [0, end + 14] : [start, this.width + 14];
+          }
+        }
+
         let row = ends.findIndex(taken => needs >= taken + 8);
         if (row < 0) {
           row = ends.length;
@@ -356,11 +378,11 @@ class TimelineView {
       if (mark.shape === 'lasting' && right - left >= long + 12) {
         name.setAttribute('x', String(left + 6));
         name.setAttribute('class', 'tlv-name tlv-name-inside');
-      } else if (mark.shape === 'lasting') {
+      } else if (mark.shape === 'lasting' && end > this.width - 4) {
         name.setAttribute('x', String(this.width - 6));
         name.setAttribute('text-anchor', 'end');
       } else {
-        // A point or a window with room for its whole name on neither side (a phone, a long name): the name is
+        // A mark that ends in sight with room for its whole name on neither side (a phone, a long name): the name is
         // shortened on the side that has more room, so that it never lies over its mark. The whole name is what
         // the mark is called for a screen reader, what its title shows, and what the table of the page says.
         const [after, ahead] = [this.width - 6 - textAt, start - 14];
