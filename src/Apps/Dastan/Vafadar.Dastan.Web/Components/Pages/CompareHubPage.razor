@@ -1,0 +1,281 @@
+@page "/compare"
+@using System.Collections.Immutable
+@inject Visitor Visitor
+@inject DastanLibrary Library
+@inject IStringLocalizer<Ui> T
+
+@* Side by side (D-092, D-093): seeing things beside each other is what Dastan is for, so it is one of the main
+   ways of the head. A visitor chooses what is compared – names of any collection, a dynasty of Iran beside a
+   dynasty of China and the Republic of Rome – and sees them on this page, as lanes over one axis of years, each
+   name with what its collection states of it with a time. The comparisons the editors made stand beside it.
+
+   The choice is the address (`pick=collection/name`, repeated): it can be passed on, Back undoes it, and the
+   page asks the projection of every collection for what this visitor may see of it – a name not read to yet is
+   no name here. The form works without the script; the script only filters its long list by a word. *@
+<PageTitle>@(_chosen.Count > 0 ? $"{string.Join(", ", _chosen.Select(name => Visitor.Text(name.Entity.Label).Value))} – " : null)@T["Compare_Hub_Title"] – @T["Site_Name"]</PageTitle>
+<PageDescription Title="@T["Compare_Hub_Title"]" Text="@T["Compare_Hub_Lead"]" />
+
+<header class="page-header">
+    <h1>@T["Compare_Hub_Title"]</h1>
+    <p class="lead">@T["Compare_Hub_Lead"]</p>
+</header>
+
+@if (_refused)
+{
+    <p class="note" role="alert">@string.Format(CultureInfo.CurrentCulture, T["Compare_Hub_Refused"], Visitor.Number(MostChosen))</p>
+}
+
+@if (_comparison is { } comparison)
+{
+    <section class="compare-made" aria-labelledby="yours">
+        <div class="section-head">
+            <h2 id="yours">@T["Compare_Hub_Yours"]</h2>
+            <a class="action secondary" href="@($"{Here}#choose")">@T["Compare_Hub_Change"]</a>
+        </div>
+        @* What is compared, each with the collection it is of; taking one out is a link without it. *@
+        <ul class="chips compare-chosen" role="list" aria-label="@T["Compare_Hub_Chosen"]">
+            @foreach (var (name, index) in _chosen.Select((name, index) => (name, index)))
+            {
+                <li class="@($"lane-{(index % 6) + 1}")">
+                    <a class="chip" href="@($"{Without(name)}#yours")">
+                        <span class="compare-swatch" aria-hidden="true"></span>
+                        <Loc Text="name.Entity.Label" />
+                        <span class="meta"> – <Loc Text="name.Of" /></span>
+                        <span aria-hidden="true"> ×</span><span class="visually-hidden"> – @T["Compare_Hub_Remove"]</span>
+                    </a>
+                </li>
+            }
+        </ul>
+        <ComparisonView Comparison="comparison" Address="compare" State="_state" LongNames="true" Carry="@Carry"
+                        SourceAddress="@(source => _sources.TryGetValue(source.Id, out var from) ? EvidenceAddress.Source(from.Collection, from.Id, Here) : source.Url.ToString())" />
+    </section>
+}
+
+@if (!Library.Comparisons.IsEmpty)
+{
+    <section aria-labelledby="made">
+        <h2 id="made">@T["Compare_Hub_Made"]</h2>
+        <ul class="cards compare-cards" role="list">
+            @foreach (var made in Library.Comparisons)
+            {
+                <li class="card compare-card">
+                    <h3><a href="@($"compare/{made.Id}")"><Loc Text="made.Title" /></a></h3>
+                    <ul class="compare-lanes" role="list" aria-label="@T["Compare_Hub_Lanes"]">
+                        @foreach (var (lane, index) in made.Lanes.Select((lane, index) => (lane, index)))
+                        {
+                            <li class="@($"lane-{(index % 6) + 1}")"><span class="compare-swatch" aria-hidden="true"></span><Loc Text="lane.Label" /></li>
+                        }
+                    </ul>
+                    <p><Loc Text="made.Summary" /></p>
+                    <p class="actions"><a class="action" href="@($"compare/{made.Id}")">@T["Discover_OpenComparison"]<span class="visually-hidden"> – @Visitor.Text(made.Title).Value</span></a></p>
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+@if (_offered.Count > 0)
+{
+    <section aria-labelledby="choose-title" id="choose">
+        <h2 id="choose-title">@T["Compare_Hub_Names"]</h2>
+        <p>@string.Format(CultureInfo.CurrentCulture, T["Compare_Hub_Names_Lead"], Visitor.Number(MostChosen))</p>
+        <form method="get" action="compare" class="compare-pick" data-compare-pick>
+            <p class="compare-filter" data-compare-filter-row hidden>
+                <label for="compare-filter">@T["Compare_Hub_Filter"]</label>
+                <input type="search" id="compare-filter" data-compare-filter autocomplete="off" dir="auto" />
+            </p>
+            @foreach (var collection in _offered)
+            {
+                var chosenHere = _chosen.Count(name => name.Collection == collection.Collection);
+                <details class="fold compare-names" open="@(chosenHere > 0 || collection.Collection == Collection || _offered.Count == 1)">
+                    <summary>
+                        <Loc Text="collection.Title" /> <span class="meta">(@Visitor.Number(collection.Names.Count))</span>
+                        @if (chosenHere > 0)
+                        {
+                            <span class="count">@string.Format(CultureInfo.CurrentCulture, T["Compare_Hub_ChosenHere"], Visitor.Number(chosenHere))</span>
+                        }
+                    </summary>
+                    @foreach (var group in collection.Names.GroupBy(name => name.Type.Key))
+                    {
+                        <fieldset>
+                            <legend><TypeName Type="group.First().Type" /></legend>
+                            <ul class="compare-options" role="list">
+                                @foreach (var name in group)
+                                {
+                                    var value = $"{collection.Collection}/{name.Id}";
+                                    var id = $"pick-{collection.Collection}-{name.Id}";
+                                    <li data-compare-option>
+                                        <input type="checkbox" id="@id" name="pick" value="@value" checked="@_chosen.Any(chosen => chosen.Collection == collection.Collection && chosen.Entity.Id == name.Id)" />
+                                        <label for="@id"><Loc Text="name.Label" /></label>
+                                    </li>
+                                }
+                            </ul>
+                        </fieldset>
+                    }
+                </details>
+            }
+            <p class="actions"><button type="submit" class="action">@T["Compare_Hub_Go"]</button></p>
+        </form>
+    </section>
+}
+
+@code {
+    /// <summary>The most names a visitor lays side by side: a chart of time stays one that can be read.</summary>
+    public const int MostChosen = 8;
+
+    private readonly List<(string Collection, LocalizedText Title, List<Entity> Names)> _offered = [];
+    private readonly List<(string Collection, LocalizedText Of, Entity Entity)> _chosen = [];
+    private readonly Dictionary<SourceId, (string Collection, SourceId Id)> _sources = [];
+    private Comparison? _comparison;
+    private ChartState _state = new();
+    private bool _refused;
+
+    /// <summary>Gets or sets the collection whose names are offered open, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "collection")]
+    public string? Collection { get; set; }
+
+    /// <summary>Gets or sets the names chosen, each as its collection, a slash and its identifier.</summary>
+    [SupplyParameterFromQuery(Name = "pick")]
+    public string[] Pick { get; set; } = [];
+
+    /// <summary>Gets or sets the direction of the chart in the address.</summary>
+    [SupplyParameterFromQuery(Name = "view")]
+    public string? View { get; set; }
+
+    /// <summary>Gets or sets the scale of the chart in the address.</summary>
+    [SupplyParameterFromQuery(Name = "scale")]
+    public string? Scale { get; set; }
+
+    /// <summary>Gets or sets the first year shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "from")]
+    public string? From { get; set; }
+
+    /// <summary>Gets or sets the last year shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "to")]
+    public string? To { get; set; }
+
+    /// <summary>Gets or sets whether the single events are shown, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "events")]
+    public string? Events { get; set; }
+
+    /// <summary>Gets or sets the number of lanes shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "lanes")]
+    public string? Lanes { get; set; }
+
+    // The address of this page with what is chosen, without how the chart is looked at.
+    private string Here => _chosen.Count == 0 ? "compare" : $"compare?{Picks(_chosen)}";
+
+    private static string Picks(IEnumerable<(string Collection, LocalizedText Of, Entity Entity)> chosen) =>
+        string.Join('&', chosen.Select(name => "pick=" + Uri.EscapeDataString($"{name.Collection}/{name.Entity.Id}")));
+
+    // The address without one of the names.
+    private string Without((string Collection, LocalizedText Of, Entity Entity) name)
+    {
+        var rest = _chosen.Where(other => other != name).ToList();
+        return rest.Count == 0 ? "compare" : $"compare?{Picks(rest)}";
+    }
+
+    // How the chart is looked at goes along with what is chosen: the tools of the chart are links of this page.
+    private string Carry(string address)
+    {
+        if (_chosen.Count == 0)
+        {
+            return address;
+        }
+
+        var cut = address.IndexOf('#', StringComparison.Ordinal);
+        var (path, hash) = cut < 0 ? (address, string.Empty) : (address[..cut], address[cut..]);
+        return $"{path}{(path.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{Picks(_chosen)}{hash}";
+    }
+
+    protected override void OnInitialized()
+    {
+        // What each collection offers: the names this visitor may see that have something with a time.
+        var views = new Dictionary<string, (Projection Projection, TimelineView View, LocalizedText Title, List<Entity> Names)>(StringComparer.Ordinal);
+        foreach (var site in Library.Collections)
+        {
+            if (Visitor.Of(site) is not { } projection)
+            {
+                continue;
+            }
+
+            var view = projection.Timeline();
+            var title = projection.Overview().Subject.Label;
+            // A name has a time when something of it is dated, or when its record says when it began or ended.
+            var dated = view.Subjects.Select(subject => subject.Id).ToHashSet();
+            List<Entity> names = [.. projection.Entities.Where(entity => dated.Contains(entity.Id) || TimelineLanes.HasLifespan(entity))];
+            views[site.Collection] = (projection, view, title, names);
+            if (names.Count > 0)
+            {
+                _offered.Add((site.Collection, title, names));
+            }
+        }
+
+        // What is chosen: names of the collections, each once, as many as a chart can hold. A name this visitor
+        // cannot see, or one without a time, is refused and said so; the rest is drawn.
+        var picks = Pick.Distinct(StringComparer.Ordinal).ToList();
+        if (picks.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var pick in picks)
+        {
+            if (!EntityReference.TryRead(pick, out var reference)
+                || !views.TryGetValue(reference.Collection, out var of)
+                || of.Names.FirstOrDefault(name => name.Id == reference.Entity) is not { } entity)
+            {
+                _refused = true;
+                continue;
+            }
+
+            _chosen.Add((reference.Collection, of.Title, entity));
+        }
+
+        if (_chosen.Count > MostChosen)
+        {
+            _refused = true;
+            _chosen.RemoveRange(MostChosen, _chosen.Count - MostChosen);
+        }
+
+        if (_chosen.Count == 0)
+        {
+            return;
+        }
+
+        // One lane for each name, in the order they were chosen. The keys of a lane and of what it cites carry
+        // the collection, so that two collections with the same names of sources stand in one chart.
+        var lanes = ImmutableArray.CreateBuilder<ComparisonLane>();
+        var sources = ImmutableArray.CreateBuilder<Source>();
+        foreach (var (collection, _, entity) in _chosen)
+        {
+            var prefix = $"{collection}~";
+            var lane = TimelineLanes.Of(entity, views[collection].View, Visitor, prefix);
+            if (TimelineLanes.Lifespan(entity, LocalizedText.Of(Visitor.Language.Tag, T[entity.Type.Key == EntityTypes.Person.Key ? "Compare_Life_Person" : "Compare_Life_Other"]), prefix) is { } life)
+            {
+                // The life of the name first, then what is stated of it with a time.
+                lane = new ComparisonLane { Key = lane.Key, Label = lane.Label, Periods = [life, .. lane.Periods], Events = lane.Events };
+            }
+
+            lanes.Add(lane);
+            var cited = lane.Periods.SelectMany(period => period.Sources).Concat(lane.Events.SelectMany(single => single.Sources)).ToHashSet();
+            foreach (var source in views[collection].Projection.Sources.Where(source => cited.Contains(new SourceId(prefix + source.Id.Value))))
+            {
+                var renamed = TimelineLanes.Renamed(source, prefix);
+                if (_sources.TryAdd(renamed.Id, (collection, source.Id)))
+                {
+                    sources.Add(renamed);
+                }
+            }
+        }
+
+        _state = ChartState.Read(View, Scale, From, To, Events, Lanes);
+        _comparison = TimelineLanes.Fitted(
+            new ComparisonId("chosen"),
+            LocalizedText.Of(Visitor.Language.Tag, T["Compare_Hub_Yours"]),
+            LocalizedText.Of(Visitor.Language.Tag, T["Compare_Hub_Lead"]),
+            lanes.ToImmutable(),
+            sources.ToImmutable(),
+            Visitor);
+    }
+}

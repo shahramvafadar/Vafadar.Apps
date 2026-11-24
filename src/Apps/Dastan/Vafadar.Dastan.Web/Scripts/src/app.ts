@@ -2,6 +2,7 @@
 // whole page, and this layer takes over where a page says so – it moves, opens and shows in place what a link
 // would open as another page. Nothing is fetched from another site, and nothing is sent that the page of the
 // same visitor would not show.
+import { narrowNames } from './compare';
 import { closeSettingsWhenLeft } from './frame';
 import { keepOrForget, sayWhatIsKept } from './offline';
 import { offerProfiles } from './profile-panel';
@@ -35,7 +36,9 @@ function drawGraphs(): void {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', offerProfiles);
   document.addEventListener('DOMContentLoaded', closeSettingsWhenLeft);
+  document.addEventListener('DOMContentLoaded', narrowNames);
 } else {
   offerProfiles();
   closeSettingsWhenLeft();
+  narrowNames();
 }

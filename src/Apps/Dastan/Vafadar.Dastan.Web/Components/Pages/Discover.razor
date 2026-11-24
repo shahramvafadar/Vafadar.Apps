@@ -40,6 +40,35 @@
         }
     </section>
 
+    @* What is laid side by side comes first after the search (D-092): it is what the site is for. Each comparison
+       names its lanes in their colours; the way to compare names of one's own choosing is beside them. *@
+    <section class="side-by-side" aria-labelledby="side-by-side">
+        <div class="section-head">
+            <h2 id="side-by-side">@T["Discover_Comparisons"]</h2>
+            <a class="action secondary" href="compare"><Icon Name="compare" /><span>@T["Discover_AllComparing"]</span></a>
+        </div>
+        <p>@T["Discover_Comparisons_Lead"]</p>
+        @if (!Library.Comparisons.IsEmpty)
+        {
+            <ul class="cards compare-cards" role="list">
+                @foreach (var comparison in Library.Comparisons)
+                {
+                    <li class="card compare-card featured">
+                        <h3><a href="@($"compare/{comparison.Id}")"><Loc Text="comparison.Title" /></a></h3>
+                        <ul class="compare-lanes" role="list" aria-label="@T["Compare_Hub_Lanes"]">
+                            @foreach (var (lane, index) in comparison.Lanes.Select((lane, index) => (lane, index)))
+                            {
+                                <li class="@($"lane-{(index % 6) + 1}")"><span class="compare-swatch" aria-hidden="true"></span><Loc Text="lane.Label" /></li>
+                            }
+                        </ul>
+                        <p><Loc Text="comparison.Summary" /></p>
+                        <p class="actions"><a class="action" href="@($"compare/{comparison.Id}")">@T["Discover_OpenComparison"]<span class="visually-hidden"> – @Visitor.Text(comparison.Title).Value</span></a></p>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
     @if (shown.Count > 0)
     {
         <section aria-labelledby="first-story">
@@ -119,22 +148,6 @@
         </section>
     }
 
-    @if (!Site.Comparisons.IsEmpty)
-    {
-        <section aria-labelledby="side-by-side">
-            <h2 id="side-by-side">@T["Discover_Comparisons"]</h2>
-            <div class="features">
-                @foreach (var comparison in Site.Comparisons)
-                {
-                    <article class="card">
-                        <h3><a href="@($"compare/{comparison.Id}")"><Loc Text="comparison.Title" /></a></h3>
-                        <p><Loc Text="comparison.Summary" /></p>
-                        <p><a class="action" href="@($"compare/{comparison.Id}")">@T["Discover_OpenComparison"]</a></p>
-                    </article>
-                }
-            </div>
-        </section>
-    }
 </div>
 
 @code {

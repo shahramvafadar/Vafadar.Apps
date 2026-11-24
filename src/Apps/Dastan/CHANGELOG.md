@@ -476,3 +476,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - When you chose the still drawing of a timeline or of a graph, its own tools – across or down, closer or wider,
   earlier or later – keep the still drawing instead of going back to the one that moves.
 - The dark appearance is black and grey instead of navy and blue.
+- "Side by side" is one of the main ways at the top of every page (at the foot on a phone). It lists the
+  comparisons – Iran, China and Rome for now – and lets you choose what to compare yourself: up to eight names
+  from any of the collections, such as the Achaemenids, the Western Han and the Roman Republic, drawn on the same
+  page over one line of years, each with its life from founding or birth to its end. A field finds a name in the
+  long list. The start shows the comparisons right after the search, every collection leads to them, and the
+  page of a name with a time offers "Compare with others".
+- Each lane of a moving chart of time has its own colour, as in the still chart.

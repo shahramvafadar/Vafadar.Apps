@@ -115,7 +115,7 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
         var page = await site.Visitor(width: 412, script: false);
 
         await page.GotoAsync("/en/");
-        await page.Locator("main h3 a").First.ClickAsync();
+        await page.Locator("main .features h3 a").First.ClickAsync();
         await Assertions.Expect(page).ToHaveURLAsync(new Regex($"/en/{Story}$"));
         await Assertions.Expect(page.Locator(".media-card")).ToHaveCountAsync(0);
 

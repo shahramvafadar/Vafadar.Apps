@@ -25,18 +25,18 @@ public sealed class SiteFrameTests : IDisposable
     private static string Words(string html) => Regex.Replace(WebUtility.HtmlDecode(Regex.Replace(html, "<[^>]+>", " ")), "\\s+", " ").Trim();
 
     [Theory]
-    [InlineData("en", "Discover My World Saved Search")]
-    [InlineData("fa", "کاوش دنیای من ذخیره‌ها جست‌وجو")]
+    [InlineData("en", "Discover Side by side My World Saved Search")]
+    [InlineData("fa", "کاوش کنار هم دنیای من ذخیره‌ها جست‌وجو")]
     public async Task The_main_ways_are_one_list_and_what_was_kept_has_its_place_while_it_is_empty(string language, string names)
     {
         var page = await _site.Visitor().Get($"/{language}/");
 
-        Assert.Equal(["./", "account", "saved", "search"], Ways(page));
+        Assert.Equal(["./", "compare", "account", "saved", "search"], Ways(page));
         Assert.Equal(names, Words(Nav(page)));
         Assert.Equal("./", Current(page));
 
         // Each way carries its drawing as decoration: the words name it.
-        Assert.Equal(4, Regex.Matches(Nav(page), "<svg class=\"icon\"[^>]*aria-hidden=\"true\"").Count);
+        Assert.Equal(5, Regex.Matches(Nav(page), "<svg class=\"icon\"[^>]*aria-hidden=\"true\"").Count);
 
         // The place of what was kept says that it is empty, and how it is filled.
         var saved = await _site.Visitor().Get($"/{language}/saved");
@@ -71,15 +71,15 @@ public sealed class SiteFrameTests : IDisposable
 
         var (mina, sara) = (await Signed("Mina"), await Signed("Sara"));
         var start = await mina.Get("/en/");
-        Assert.Equal(["./", "account/world", "saved", "search"], Ways(start));
+        Assert.Equal(["./", "compare", "account/world", "saved", "search"], Ways(start));
         Assert.Contains("<bdi class=\"name\">Mina</bdi>", start.Html, StringComparison.Ordinal);
         Assert.Equal("account/world", Current(await mina.Get("/en/account/trees")));
 
         // Somebody asks: the way to the private space leads to who waits and says how many.
         await mina.Post("/preferences/people/ask", "/en/account/people", ("name", "Sara"), ("kind", "friend"), ("returnUrl", "/en/account/people"));
         var asked = await sara.Get("/en/");
-        Assert.Equal(["./", "account/world#waiting", "saved", "search"], Ways(asked));
-        Assert.Equal("Discover My World 1 – 1 waiting Saved Search", Words(Nav(asked)));
+        Assert.Equal(["./", "compare", "account/world#waiting", "saved", "search"], Ways(asked));
+        Assert.Equal("Discover Side by side My World 1 – 1 waiting Saved Search", Words(Nav(asked)));
         Assert.Contains("<span class=\"count\" aria-hidden=\"true\">1</span>", Nav(asked), StringComparison.Ordinal);
     }
 
@@ -89,7 +89,7 @@ public sealed class SiteFrameTests : IDisposable
         using var site = new DemoSite();
         var page = await site.Visitor().Get("/en/");
 
-        Assert.Equal(["./", "saved", "search"], Ways(page));
+        Assert.Equal(["./", "compare", "saved", "search"], Ways(page));
         Assert.DoesNotContain("account-link", page.Html, StringComparison.Ordinal);
     }
 

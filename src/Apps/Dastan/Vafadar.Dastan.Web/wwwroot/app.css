@@ -3622,9 +3622,9 @@ dastan-timeline,
 }
 
 .tlv-bar {
-  fill: var(--accent);
+  fill: var(--lane, var(--accent));
   fill-opacity: 0.75;
-  stroke: var(--accent);
+  stroke: var(--lane, var(--accent));
   stroke-width: 1;
 }
 
@@ -3639,26 +3639,26 @@ dastan-timeline,
 
 .tlv-frame-of-window {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--lane, var(--accent));
   stroke-width: 1.5;
   stroke-dasharray: 5 3;
 }
 
 .tlv-point {
-  fill: var(--accent);
+  fill: var(--lane, var(--accent));
   stroke: var(--surface-raised);
   stroke-width: 1.5;
 }
 
 .tlv-point-open {
   fill: var(--surface-raised);
-  stroke: var(--accent);
+  stroke: var(--lane, var(--accent));
 }
 
 .tlv-arrow,
 .tlv-open {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--lane, var(--accent));
   stroke-width: 2;
 }
 
@@ -3678,7 +3678,7 @@ dastan-timeline,
    stands before the rules of a disputed and of a loose statement, which keep their line and their fill. */
 .tlv-spoken-of .tlv-point {
   fill: var(--surface-raised);
-  stroke: var(--accent);
+  stroke: var(--lane, var(--accent));
   stroke-width: 2;
 }
 
@@ -3770,4 +3770,193 @@ dastan-timeline > .tlv-still > :not(.stage),
 
 .theme-collection {
   margin-block-end: var(--space-4);
+}
+
+/* --- Side by side (D-092): the way into everything that is compared --- */
+
+/* The head of a section with its own way onward beside the title. */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.section-head > h2 {
+  margin: 0;
+}
+
+.section-head .action .icon,
+.side-by-side h2 .icon,
+.actions .action .icon {
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  margin-inline-end: var(--space-2);
+}
+
+/* On the start the comparisons come first after the search: a band of their own. */
+.discover .side-by-side {
+  margin-block: var(--space-6);
+  padding: var(--space-6);
+  background: var(--accent-soft);
+  border-radius: var(--radius-l);
+}
+
+.discover .side-by-side > * + * {
+  margin-block-start: var(--space-3);
+}
+
+/* On the page of a collection a short band below its head. */
+.side-by-side.compact {
+  margin-block: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-inline-start: 0.3rem solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.side-by-side.compact h2 {
+  display: flex;
+  align-items: center;
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+.compare-cards {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+}
+
+.compare-card h3 {
+  font-size: var(--step-2);
+}
+
+/* The lanes of a comparison, each with the colour it has in the chart and its name beside it. */
+.compare-lanes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-lanes li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--lane);
+  border-radius: var(--radius-full);
+  background: var(--lane-fill);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.compare-swatch {
+  inline-size: 0.75rem;
+  block-size: 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--lane);
+}
+
+/* The names of a collection to choose from: checkboxes in columns, grouped by kind. */
+.compare-names {
+  margin-block: var(--space-3);
+}
+
+.compare-names > summary {
+  font-weight: 600;
+  font-size: var(--step-1);
+}
+
+main .compare-pick {
+  max-inline-size: none;
+}
+
+.compare-pick fieldset {
+  max-inline-size: none;
+  margin-block: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+.compare-pick legend {
+  padding-inline: var(--space-2);
+  font-weight: 600;
+}
+
+.compare-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+main .compare-options li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+  max-inline-size: none;
+}
+
+.compare-options input {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  flex: none;
+}
+
+/* The button of a long list of names stays in sight at the foot of the window while the list is scrolled. */
+.compare-pick > .actions {
+  position: sticky;
+  inset-block-end: var(--bar-space);
+  margin: 0;
+  padding-block: var(--space-3);
+  background: var(--surface);
+  border-block-start: 1px solid var(--border);
+}
+
+/* What is compared (D-093): each name in the colour of its lane, with the collection it is of; a press takes it out. */
+.compare-made {
+  margin-block: var(--space-6);
+}
+
+.compare-chosen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.compare-chosen .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--lane);
+  border-radius: var(--radius-full);
+  background: var(--lane-fill);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.compare-filter input {
+  inline-size: 100%;
+  min-block-size: 2.75rem;
+}
+
+/* What the field of the list leaves out is out of sight, whatever else would lay it out. */
+.compare-pick [data-compare-option][hidden],
+.compare-pick fieldset[hidden],
+.compare-pick details[hidden],
+.compare-pick [data-compare-filter-row][hidden] {
+  display: none;
 }

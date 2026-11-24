@@ -230,7 +230,9 @@ class TimelineView {
 
     let top = axisHeight;
     const rows: (() => void)[] = [];
-    for (const lane of this.view.lanes) {
+    for (const [laneIndex, lane] of this.view.lanes.entries()) {
+      // Each lane in its own colour, as in the still chart; the colour is never the only sign of the lane.
+      const colour = ` lane-${(laneIndex % 6) + 1}`;
       const laneTop = top;
       const name = shape('text', { class: 'tlv-lane', x: sidePad, y: laneTop + 14, 'unicode-bidi': 'plaintext' }, this.svg);
       name.textContent = lane.label;
@@ -259,7 +261,7 @@ class TimelineView {
         }
 
         const y = top + row * rowHeight;
-        rows.push(() => this.mark(mark, start, end, y, before));
+        rows.push(() => this.mark(mark, start, end, y, before, colour));
       }
 
       top += Math.max(1, ends.length) * rowHeight + laneGap;
@@ -287,11 +289,11 @@ class TimelineView {
     }
   }
 
-  private mark(mark: Mark, start: number, end: number, y: number, before: boolean): void {
+  private mark(mark: Mark, start: number, end: number, y: number, before: boolean, colour: string): void {
     // Who is only spoken of at a step is said in the name of the mark and drawn hollow – as the still chart and
     // its table say it: taking part and being mentioned are not the same.
     const said = mark.presence ? ` – ${mark.presence}` : '';
-    const link = shape('a', { class: `tlv-mark tlv-${mark.shape}${mark.disputed ? ' tlv-disputed' : ''}${mark.loose ? ' tlv-loose' : ''}${mark.spokenOf ? ' tlv-spoken-of' : ''}`, href: new URL(mark.address, document.baseURI).href, 'aria-label': `${mark.label}: ${mark.when}${said}` }, this.svg);
+    const link = shape('a', { class: `tlv-mark tlv-${mark.shape}${mark.disputed ? ' tlv-disputed' : ''}${mark.loose ? ' tlv-loose' : ''}${mark.spokenOf ? ' tlv-spoken-of' : ''}${colour}`, href: new URL(mark.address, document.baseURI).href, 'aria-label': `${mark.label}: ${mark.when}${said}` }, this.svg);
     link.dataset['key'] = mark.key;
     shape('title', {}, link).textContent = `${mark.label} – ${mark.when}${said}`;
     const middle = y + barHeight / 2;

@@ -395,6 +395,8 @@ public sealed class PublicComparisonTests(PublicSite site) : IClassFixture<Publi
         Assert.Equal(HttpStatusCode.NotFound, page.Status);
         Assert.DoesNotContain("Iran, China and Rome", page.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("compare/", start.Html, StringComparison.Ordinal);
-        Assert.DoesNotContain("Side by side", start.Html, StringComparison.Ordinal);
+        // "Side by side" stays a way of the head: a visitor can lay names side by side without a comparison.
+        Assert.DoesNotContain("Iran, China and Rome", start.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Iran, China and Rome", (await site.Visitor().Get("/en/compare")).Html, StringComparison.Ordinal);
     }
 }
