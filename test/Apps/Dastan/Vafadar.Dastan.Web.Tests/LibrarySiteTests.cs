@@ -212,6 +212,54 @@ public sealed class LibrarySiteTests
         }
     }
 
+    [Theory]
+    [InlineData("en")]
+    [InlineData("fa")]
+    public async Task TheViewsOfACollectionSayWhatTheyAreAndEveryCollectionOfTheStartPageHasItsSign(string language)
+    {
+        // A page somebody is sent – the story, the chart of time, the map, a year, the pictures – says in its
+        // head what it is; on the start page every collection has the drawing of its kind, not the first alone.
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var library = site.Services.GetRequiredService<DastanLibrary>();
+        foreach (var collection in library.Collections)
+        {
+            var projection = collection.At(new ReadingLevel(0))!;
+            var views = new List<string> { "timeline", "gallery" };
+            if (projection.Story() is not null)
+            {
+                views.Add("story");
+            }
+
+            if (projection.Years() is not null)
+            {
+                views.Add("at");
+            }
+
+            if (!projection.Places().IsEmpty)
+            {
+                views.Add("places");
+            }
+
+            foreach (var view in views)
+            {
+                var page = (await visitor.Get($"/{language}/{collection.Collection}/{view}")).Html;
+                var described = System.Text.RegularExpressions.Regex.Match(page, "<meta name=\"description\" content=\"([^\"]*)\"");
+                Assert.True(described.Success && described.Groups[1].Value.Length > 20, $"The page {view} of {collection.Collection} does not say what it is.");
+            }
+        }
+
+        var start = (await visitor.Get($"/{language}/")).Html;
+        var cards = System.Text.RegularExpressions.Regex.Matches(start, "<article class=\"card feature\">(.*?)</article>", System.Text.RegularExpressions.RegexOptions.Singleline);
+        Assert.Equal(library.Collections.Count(), cards.Count);
+        Assert.All(cards, card => Assert.Contains("class=\"profile-picture", card.Value, StringComparison.Ordinal));
+    }
+
     [Fact]
     public async Task AYearAskedOfACollectionLeadsToItsAnswerPastTheForms()
     {

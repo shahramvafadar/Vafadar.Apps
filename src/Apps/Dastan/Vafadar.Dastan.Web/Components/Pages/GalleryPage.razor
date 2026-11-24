@@ -11,6 +11,7 @@
 @if (_gallery is { } gallery)
 {
     <PageTitle>@_title – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@_title" Text="@_lead" />
 
     <header class="page-header">
         @if (_explore is null)

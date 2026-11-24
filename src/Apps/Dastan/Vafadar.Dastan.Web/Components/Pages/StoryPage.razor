@@ -10,6 +10,7 @@
 {
     var title = Visitor.Text(story.Story.Label).Value;
     <PageTitle>@T["Story_Title"] – @title – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@($"{T["Story_Title"]} – {title}")" Text="@(Visitor.Text(story.Story.Summary).Value is { Length: > 0 } told ? told : T["Story_Frame"])" />
 
     <header class="page-header">
         <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], title)</a></p>

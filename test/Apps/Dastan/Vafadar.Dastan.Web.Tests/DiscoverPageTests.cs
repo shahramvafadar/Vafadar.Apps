@@ -96,9 +96,12 @@ public sealed class DiscoverPageTests(DemoSite site) : IClassFixture<DemoSite>
         var hero = Regex.Match(page.Main, "<section class=\"hero\">.*?</section>", RegexOptions.Singleline).Value;
         Assert.Contains("action=\"search\"", hero, StringComparison.Ordinal);
 
-        // Each collection is a feature; only the one the site begins with shows its picture or drawing here.
+        // Each collection is a feature with its sign. Only the one the site begins with may show a picture: the
+        // files of another collection are asked of its own pages, so it shows the drawing of its kind.
         var features = Section(page, "first-story");
         Assert.Equal(3, Regex.Matches(features, "<article class=\"card feature\">").Count);
-        Assert.Single(Regex.Matches(features, "class=\"profile-picture"));
+        Assert.Equal(3, Regex.Matches(features, "class=\"profile-picture").Count);
+        Assert.True(Regex.Matches(features, "<img ").Count <= 1);
+        Assert.True(Regex.Matches(features, "class=\"kind-drawing\"").Count >= 2);
     }
 }

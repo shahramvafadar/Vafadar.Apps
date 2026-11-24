@@ -99,6 +99,8 @@ The historical BCE/CE convention has no year zero: 1 BCE directly precedes 1 CE.
 
 **Proposal:** Public displays use clear BCE/CE labels. Any internal computational convention must preserve their meaning. Keep the source's original calendar, including Solar Hijri, lunar calendars, Gregorian, Julian, or another identified calendar. A conversion must not imply more precision than the source supports. If the calendar or conversion method is ambiguous, do not replace the source expression with an unqualified exact date.
 
+**Decided (D-043, confirmed by D-100 on 2026-11-24):** a date is stored in the Gregorian calendar only, so that dates are compared without a conversion; the calendar of a source is not what is stored. Showing a date in another calendar (Solar Hijri, Lunar Hijri) is a matter of display and is the last piece of work of the backlog.
+
 English documentation does not select the user-interface language or date-display locale. Translating a label must not silently change the calendar or its chronological meaning.
 
 ## TIME-010 — Narrative time and story order
