@@ -2,6 +2,7 @@
 @page "/{Collection}/story/{Arc}"
 @inject Visitor Visitor
 @inject DastanSite Site
+@inject DastanLibrary Library
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -19,7 +20,16 @@
 
     @if (story.Steps.IsEmpty)
     {
+        @* A story the collection names and does not tell in steps: the page says so and leads on – to what is
+           known of the story, and to a collection of the same world that tells it. *@
         <p class="note">@T["Story_None"]</p>
+        <p class="actions">
+            <a class="action" href="@($"{Site.Collection}/entity/{story.Story.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Story_ToName"], title)</a>
+            @foreach (var other in Library.SameWorld(Site).Where(other => Visitor.Of(other)?.Story() is { Steps.IsEmpty: false } told && told.Story.Id == story.Story.Id))
+            {
+                <a class="action secondary" href="@($"{other.Collection}/story")">@string.Format(CultureInfo.CurrentCulture, T["Story_ToldIn"], Visitor.Text(Visitor.Of(other)!.Overview()!.Subject.Label).Value)</a>
+            }
+        </p>
     }
     else if (_reading is { } current)
     {

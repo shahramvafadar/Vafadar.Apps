@@ -796,6 +796,18 @@ details.fold > * + * {
   margin-block-start: var(--space-4);
 }
 
+/* The cards of a list beyond its first few: under the list they continue, without a line of their own. */
+details.more-cards {
+  margin-block-start: var(--space-4);
+  border-block-start: 0;
+}
+
+/* A place in a page that an address leads to and that shows nothing itself. */
+.anchor {
+  display: block;
+  scroll-margin-block-start: var(--space-4);
+}
+
 /* Where the visitor is, and the views of the same thing: the one that is shown has the ground of what is
    chosen and a line below it. The views are as high as a finger needs and wrap on a narrow screen. */
 .view-bar {
@@ -2665,6 +2677,17 @@ main:has(> .stage) > :not(.stage) {
 
 .places-room {
   visibility: hidden;
+}
+
+/* On a narrow screen a map is wider than it is high and its stage as high as the window: the stage of a map is
+   then as high as the map, and the map is moved sideways in it – no empty ground above and below. */
+@media (max-width: 40rem) {
+  .stage:has(.places-fit) {
+    block-size: auto;
+    min-block-size: 0;
+    max-block-size: calc(100vh - 2 * var(--space-4) - var(--bar-space));
+    max-block-size: calc(100dvh - 2 * var(--space-4) - var(--bar-space));
+  }
 }
 
 .places-fit > .places-map {

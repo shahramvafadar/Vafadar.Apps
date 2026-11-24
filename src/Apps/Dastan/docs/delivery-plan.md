@@ -1543,3 +1543,23 @@ the site was not started (the owner's rule), so nothing of the look was judged b
   date in the Gregorian calendar. One of the two has to give way.
 * **Documents brought up to the day:** the backlog (content is written; trying it waits for the owner's word
   only), the format page (names `library/`), the acceptance page.
+
+### What looking at every kind of page found (2026-11-24)
+
+Every kind of page of the library was opened at the width of a phone and 700 addresses were followed from the
+start pages: no address failed, no page was wider than its window, no picture was missing and no key of a text
+stood in a page. What was found and built (backlog E13 to E15):
+
+- The page of a collection listed every story and every name as a card – 70 and 95 for the Shahnameh, about
+  43,500 px on a phone. A list shows twelve cards; the others are in the same page, in a `details` under the
+  list, so that they are found by a search in the page and by a reader without a script.
+- The Shahnameh names 70 stories and tells none in steps; each card led to a page that said "No step of the
+  story to show." A card of a story without a visible step leads to the page of its name. The page of steps,
+  an address somebody may hold, says the same as before and leads to the name and to a collection of the same
+  world that tells the story in steps.
+- "In a year" answered below its two forms. The forms and the steps to an earlier and a later year lead to
+  `#answer`.
+- The stage of a chart is as high as the window (D-040). A map of the world is wide and low; on a narrow
+  screen its stage is as high as the map.
+
+Found and left: E16 and E17 of the backlog.

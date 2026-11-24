@@ -47,9 +47,9 @@ public sealed class MomentPageTests(WorldSite world, DemoSite demo) : IClassFixt
         Assert.Contains(title, page.Main, StringComparison.Ordinal);
         Assert.Contains(choose, page.Main, StringComparison.Ordinal);
         Assert.Contains(first, page.Main, StringComparison.Ordinal);
-        Assert.Contains($"action=\"{Story}/at\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"action=\"{Story}/at#answer\"", page.Html, StringComparison.Ordinal);
         Assert.Contains("name=\"year\"", page.Html, StringComparison.Ordinal);
-        Assert.Contains($"href=\"{Story}/at?year=994\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/at?year=994#answer\"", page.Html, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -64,8 +64,8 @@ public sealed class MomentPageTests(WorldSite world, DemoSite demo) : IClassFixt
         Assert.DoesNotContain("People of the city", page.Main, StringComparison.Ordinal);
 
         // The steps lead to the years in which something changes.
-        Assert.Contains($"href=\"{Story}/at?year=994\"", page.Html, StringComparison.Ordinal);
-        Assert.Contains($"href=\"{Story}/at?year=999\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/at?year=994#answer\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/at?year=999#answer\"", page.Html, StringComparison.Ordinal);
         Assert.Contains("value=\"996\"", page.Html, StringComparison.Ordinal);
     }
 
@@ -101,7 +101,7 @@ public sealed class MomentPageTests(WorldSite world, DemoSite demo) : IClassFixt
 
         Assert.Equal(HttpStatusCode.OK, page.Status);
         Assert.Contains(nothing, page.Main, StringComparison.Ordinal);
-        Assert.Contains($"href=\"{Story}/at?year=994\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/at?year=994#answer\"", page.Html, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -150,7 +150,7 @@ public sealed class MomentPageTests(WorldSite world, DemoSite demo) : IClassFixt
 
         var year = await world.Visitor().Get($"/en/{Story}/at?time={Uri.EscapeDataString("996")}");
         Assert.Contains("in the year 996 CE", year.Main, StringComparison.Ordinal);
-        Assert.Contains($"href=\"{Story}/at?year=999\"", year.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/at?year=999#answer\"", year.Html, StringComparison.Ordinal);
 
         var before = await world.Visitor().Get($"/en/{Story}/at?time={Uri.EscapeDataString("۵۰۰ پ.م")}");
         Assert.Contains("in the year 500 BCE", before.Main, StringComparison.Ordinal);

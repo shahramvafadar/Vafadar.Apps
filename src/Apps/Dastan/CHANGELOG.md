@@ -4,6 +4,14 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The page of a large collection is short: a list of stories or of names shows its first twelve and opens the
+  others in the same page ("The other 58 stories"). The page of the Shahnameh was about forty screens of a
+  phone long.
+- A story a collection only names no longer leads to an empty page of steps: its card leads to what is known
+  of the story, and the empty page leads there and to a collection that tells the story step by step.
+- "In a year": after a year is asked for, the page shows the answer and not the forms again.
+- On a phone a map is as high as the map; the empty ground above and below it is gone.
+- The Persian text of the Shahnameh writes an order in words ("دوازدهمین") and no longer as "۱۲مین".
 - On a phone the names in a timeline no longer lie over each other or over the bars.
 - The timeline of a large collection is short: its names stand by kind – periods and dynasties, people, events –,
   names that do not meet in time share a row, and you choose which kinds the chart shows. "A lane for each

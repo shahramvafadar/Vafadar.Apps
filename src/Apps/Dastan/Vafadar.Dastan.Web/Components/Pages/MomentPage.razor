@@ -39,7 +39,7 @@
     }
     else
     {
-        <form class="search moment-form" method="get" action="@($"{Site.Collection}/at")">
+        <form class="search moment-form" method="get" action="@($"{Site.Collection}/at#answer")">
             <div class="search-row">
                 <p class="field">
                     <label for="moment-year">@T["Moment_Year"]</label>
@@ -60,7 +60,7 @@
             }
         </form>
 
-        <form class="search moment-form" method="get" action="@($"{Site.Collection}/at")">
+        <form class="search moment-form" method="get" action="@($"{Site.Collection}/at#answer")">
             <div class="search-row">
                 <p class="field">
                     <label for="moment-time">@T["Moment_Time"]</label>
@@ -84,7 +84,7 @@
             }
             @if (_years is { } from)
             {
-                <p class="actions"><a class="action secondary" href="@Address(from.First)">@string.Format(CultureInfo.CurrentCulture, T["Moment_First"], Written(from.First))</a></p>
+                <p class="actions"><a class="action secondary" href="@($"{Address(from.First)}#answer")">@string.Format(CultureInfo.CurrentCulture, T["Moment_First"], Written(from.First))</a></p>
             }
         }
         else
@@ -95,16 +95,18 @@
             var where = relations.Where(held => held.Edge.To.Type.Nature == EntityNature.Place).ToList();
             var other = relations.Where(held => held.Edge.To.Type.Nature != EntityNature.Place).ToList();
 
+            @* The answer has an address in the page: a form that asks leads to it, past the forms. *@
+            <span id="answer" class="anchor"></span>
             @if (_moment is { } moment)
             {
                 <nav class="actions" aria-label="@T["Moment_Steps"]">
                     @if (moment.Earlier is { } earlier)
                     {
-                        <a class="action secondary" rel="prev" href="@Address(earlier)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Earlier"], Written(earlier))</a>
+                        <a class="action secondary" rel="prev" href="@($"{Address(earlier)}#answer")">@string.Format(CultureInfo.CurrentCulture, T["Moment_Earlier"], Written(earlier))</a>
                     }
                     @if (moment.Later is { } later)
                     {
-                        <a class="action secondary" rel="next" href="@Address(later)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Later"], Written(later))</a>
+                        <a class="action secondary" rel="next" href="@($"{Address(later)}#answer")">@string.Format(CultureInfo.CurrentCulture, T["Moment_Later"], Written(later))</a>
                     }
                 </nav>
             }

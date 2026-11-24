@@ -4575,4 +4575,16 @@
   <data name="Timeline_ByKind" xml:space="preserve">
     <value>Names by kind, sharing rows</value>
   </data>
+  <data name="Collection_MoreStories" xml:space="preserve">
+    <value>The other {0} stories</value>
+  </data>
+  <data name="Collection_MoreSubjects" xml:space="preserve">
+    <value>The other {0} names</value>
+  </data>
+  <data name="Story_ToName" xml:space="preserve">
+    <value>What is known of {0}</value>
+  </data>
+  <data name="Story_ToldIn" xml:space="preserve">
+    <value>Told step by step in “{0}”</value>
+  </data>
 </root>
