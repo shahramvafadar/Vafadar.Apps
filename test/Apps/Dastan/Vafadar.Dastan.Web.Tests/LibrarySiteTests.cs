@@ -119,6 +119,15 @@ public sealed class LibrarySiteTests
             Assert.All(stated, entity => Assert.Contains(entity.Id, subjects));
             placed += stated.Count;
 
+            // The chart lays its lanes as the time went: no lane begins before the one above it.
+            var view = read.Timeline();
+            var begins = view.Subjects.Select(subject => TimelineLanes.Earliest(subject, view)).OfType<decimal>().Order().ToList();
+            var chartOf = await visitor.Get($"/en/{collection.Collection}/timeline");
+            var places = view.Subjects.Where(subject => TimelineLanes.Earliest(subject, view) is not null)
+                .OrderBy(subject => TimelineLanes.Earliest(subject, view)).Select(subject => chartOf.Html.IndexOf($"\"{subject.Id.Value}\"", StringComparison.Ordinal)).Where(place => place >= 0).ToList();
+            Assert.Equal(places.Order(), places);
+            Assert.Equal(begins.Count, view.Subjects.Count(subject => TimelineLanes.Earliest(subject, view) is not null));
+
             if (stated.FirstOrDefault(entity => RecordTimes.Of(entity).Any(time => time.IsSpan)) is not { } lived)
             {
                 continue;

@@ -154,6 +154,17 @@
             };
         }
 
+        else
+        {
+            // The whole collection: the lanes in the order of time, what cannot be placed among the years last
+            // and in the order of the collection. Names that begin together keep the order of the collection.
+            view = view with
+            {
+                Subjects = [.. view.Subjects.Select((subject, index) => (subject, index, At: TimelineLanes.Earliest(subject, view)))
+                    .OrderBy(lane => lane.At is null).ThenBy(lane => lane.At).ThenBy(lane => lane.index).Select(lane => lane.subject)],
+            };
+        }
+
         var lanes = ImmutableArray.CreateBuilder<ComparisonLane>();
         foreach (var subject in view.Subjects)
         {

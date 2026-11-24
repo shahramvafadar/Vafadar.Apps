@@ -224,3 +224,11 @@ other and gets a view of its own. The still chart draws no axis of depth: a tabl
   by its fact; the page of a year lists them under a heading of their own, below what is stated for the year.
   What a visitor has not read is in none of them: the facts are those of the projection. The comparison a
   visitor builds keeps its own bar of a life, open at an end that is not stated, as before.
+  *Looked at on the same day,* on the owner's word, with the library: the chart of Iran and of Rome, dark and
+  light, wide and at the width of a phone, in English and Persian, and the page of the year 540 BCE. Two things
+  were corrected by that look: a mark of when something happened was named "When" – it is named by the time
+  itself; and the lanes stood in the order of the file – the chart of a collection lays them as the time went
+  (`TimelineLanes.Earliest`), what cannot be placed last. *Seen and left:* the page of a history is about
+  36,000 px high at a wide window and 45,000 px on a phone, one lane for each of a hundred names (backlog E10);
+  at the width of a phone a long label runs over its own bar; a relation whose label repeats the name of what
+  it leads to reads twice ("King of the Medes King of the Medes") – that is content.
