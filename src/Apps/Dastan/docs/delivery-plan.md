@@ -1562,4 +1562,7 @@ stood in a page. What was found and built (backlog E13 to E15):
 - The stage of a chart is as high as the window (D-040). A map of the world is wide and low; on a narrow
   screen its stage is as high as the map.
 
-Found and left: E16 and E17 of the backlog.
+Built after it (E16, E17): the page of places is called "{name} on the map"; a map wider than its stage is moved
+sideways once by the script of the stage, so that the place in the middle of its places is in the middle of
+what is shown – without the script the map begins at its western edge, as before (ADR 0008). *Tests:*
+`LibraryPlacesBrowserTests`, in Chromium, Firefox and WebKit.

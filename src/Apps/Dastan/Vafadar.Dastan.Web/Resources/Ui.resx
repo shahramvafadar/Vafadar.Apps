@@ -1150,7 +1150,7 @@
     <value>On the map</value>
   </data>
   <data name="Places_Title" xml:space="preserve">
-    <value>Places of {0}</value>
+    <value>{0} on the map</value>
   </data>
   <data name="Places_Lead" xml:space="preserve">
     <value>The real places this collection names, where they lie to each other, and what is said to be there.</value>
