@@ -1,0 +1,1275 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "places",
+  "worldId": "world-places",
+  "subjectId": "subject-places",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ror",
+      "title": "ROR, the Research Organization Registry",
+      "url": "https://ror.org/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-05vf56z40",
+      "title": "ROR: University of Tehran",
+      "url": "https://ror.org/05vf56z40",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-university-of-tehran",
+      "title": "University of Tehran at a Glance - Admissions",
+      "url": "https://admissions.ut.ac.ir/en/page/7423",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-112931",
+      "title": "GeoNames: Tehran",
+      "url": "https://www.geonames.org/112931",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-024c2fq17",
+      "title": "ROR: Sharif University of Technology",
+      "url": "https://ror.org/024c2fq17",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-052gg0110",
+      "title": "ROR: University of Oxford",
+      "url": "https://ror.org/052gg0110",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-2640729",
+      "title": "GeoNames: Oxford",
+      "url": "https://www.geonames.org/2640729",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-038t36y30",
+      "title": "ROR: Heidelberg University",
+      "url": "https://ror.org/038t36y30",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-heidelberg-university",
+      "title": "History - Heidelberg University",
+      "url": "https://www.uni-heidelberg.de/en/university/history",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-2907911",
+      "title": "GeoNames: Heidelberg",
+      "url": "https://www.geonames.org/2907911",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-02en5vm52",
+      "title": "ROR: Sorbonne Université",
+      "url": "https://ror.org/02en5vm52",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-sorbonne-university",
+      "title": "History - Sorbonne University",
+      "url": "https://www.sorbonne-universite.fr/en/university/about-us/history",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-2988507",
+      "title": "GeoNames: Paris",
+      "url": "https://www.geonames.org/2988507",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-01111rn36",
+      "title": "ROR: University of Bologna",
+      "url": "https://ror.org/01111rn36",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-university-of-bologna",
+      "title": "Our history — University of Bologna",
+      "url": "https://www.unibo.it/en/university/who-we-are/our-history",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-3181928",
+      "title": "GeoNames: Bologna",
+      "url": "https://www.geonames.org/3181928",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-03vek6s52",
+      "title": "ROR: Harvard University",
+      "url": "https://ror.org/03vek6s52",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-harvard-university",
+      "title": "The history of Harvard",
+      "url": "https://www.harvard.edu/about/history/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-4931972",
+      "title": "GeoNames: Cambridge",
+      "url": "https://www.geonames.org/4931972",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-03dbr7087",
+      "title": "ROR: University of Toronto",
+      "url": "https://ror.org/03dbr7087",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-university-of-toronto",
+      "title": "The University’s original charter | University of Toronto Archives & Records Management Services (UTARMS)",
+      "url": "https://utarms.library.utoronto.ca/history/university-original-charter",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-6167865",
+      "title": "GeoNames: Toronto",
+      "url": "https://www.geonames.org/6167865",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-057zh3y96",
+      "title": "ROR: The University of Tokyo",
+      "url": "https://ror.org/057zh3y96",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-university-of-tokyo",
+      "title": "About UTokyo | The University of Tokyo",
+      "url": "https://www.u-tokyo.ac.jp/en/about/about.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1850147",
+      "title": "GeoNames: Tokyo",
+      "url": "https://www.geonames.org/1850147",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-02kkvpp62",
+      "title": "ROR: Technical University of Munich",
+      "url": "https://ror.org/02kkvpp62",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-technical-university-of-munich",
+      "title": "History of Technical University of Murich (TUM) - TUM",
+      "url": "https://www.tum.de/en/about-tum/our-university/history",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-2867714",
+      "title": "GeoNames: Munich",
+      "url": "https://www.geonames.org/2867714",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-01ggx4157",
+      "title": "ROR: European Organization for Nuclear Research",
+      "url": "https://ror.org/01ggx4157",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-cern",
+      "title": "Our History – Home | CERN",
+      "url": "https://home.cern/about/who-we-are/our-history",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-2660646",
+      "title": "GeoNames: Geneva",
+      "url": "https://www.geonames.org/2660646",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ror-01hhn8329",
+      "title": "ROR: Max Planck Society",
+      "url": "https://ror.org/01hhn8329",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-max-planck-society",
+      "title": "Max Planck Society | Max-Planck-Gesellschaft (history of the Max Planck Society)",
+      "url": "https://www.mpg.de/195481/history-of-the-max-planck-society",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "subject-places",
+      "type": "Concept",
+      "label": "Places of learning and work",
+      "summary": "Universities and organisations of several countries that a visitor can name as places they were at; each with its record in the Research Organization Registry (ROR).",
+      "sourceIds": [
+        "src-ror"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "field",
+          "text": "Universities and research organisations"
+        }
+      ]
+    },
+    {
+      "id": "place-tehran",
+      "type": "Place",
+      "label": "Tehran",
+      "summary": "A city in Iran.",
+      "sourceIds": [
+        "src-geonames-112931",
+        "src-ror-05vf56z40"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 35.69439,
+        "longitude": 51.42151,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-university-of-tehran",
+      "type": "University",
+      "label": "University of Tehran",
+      "summary": "The university in Tehran inaugurated in the winter of 1934, heir of the college of Dar ol-Fonun and a symbol of higher education in Iran.",
+      "sourceIds": [
+        "src-ror-05vf56z40",
+        "src-university-of-tehran"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "دانشگاه تهران",
+          "language": "fa",
+          "kind": "original_script"
+        },
+        {
+          "name": "Tehran University",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "UT",
+          "language": "en",
+          "kind": "abbreviation"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "05vf56z40",
+          "url": "https://ror.org/05vf56z40",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1934
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-tehran"
+        }
+      ]
+    },
+    {
+      "id": "university-sharif-university-of-technology",
+      "type": "University",
+      "label": "Sharif University of Technology",
+      "summary": "A university of technology in Tehran, established in 1966 as the Aryamehr University of Industry, according to its ROR record; its own site could not be read.",
+      "sourceIds": [
+        "src-ror-024c2fq17"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "دانشگاه صنعتی شریف",
+          "language": "fa",
+          "kind": "original_script"
+        },
+        {
+          "name": "Aryamehr University of Industry",
+          "language": "en",
+          "kind": "former"
+        },
+        {
+          "name": "SUT",
+          "language": "en",
+          "kind": "abbreviation"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "024c2fq17",
+          "url": "https://ror.org/024c2fq17",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1966
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-tehran"
+        }
+      ]
+    },
+    {
+      "id": "place-oxford",
+      "type": "Place",
+      "label": "Oxford",
+      "summary": "A city in United Kingdom.",
+      "sourceIds": [
+        "src-geonames-2640729",
+        "src-ror-052gg0110"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 51.75222,
+        "longitude": -1.25596,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-university-of-oxford",
+      "type": "University",
+      "label": "University of Oxford",
+      "summary": "The university in Oxford; its ROR record gives 1096 as the year it was established. Its own site could not be read.",
+      "sourceIds": [
+        "src-ror-052gg0110"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Oxford University",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Prifysgol Rhydychen",
+          "language": "cy",
+          "kind": "alternative"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "052gg0110",
+          "url": "https://ror.org/052gg0110",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1096
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-oxford"
+        }
+      ]
+    },
+    {
+      "id": "place-heidelberg",
+      "type": "Place",
+      "label": "Heidelberg",
+      "summary": "A city in Germany.",
+      "sourceIds": [
+        "src-geonames-2907911",
+        "src-ror-038t36y30"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 49.40768,
+        "longitude": 8.69079,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-heidelberg-university",
+      "type": "University",
+      "label": "Heidelberg University",
+      "summary": "The research university in Heidelberg, founded in 1386.",
+      "sourceIds": [
+        "src-ror-038t36y30",
+        "src-heidelberg-university"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ruprecht-Karls-Universität Heidelberg",
+          "language": "de",
+          "kind": "original_script"
+        },
+        {
+          "name": "University of Heidelberg",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "038t36y30",
+          "url": "https://ror.org/038t36y30",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1386
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-heidelberg"
+        }
+      ]
+    },
+    {
+      "id": "place-paris",
+      "type": "Place",
+      "label": "Paris",
+      "summary": "A city in France.",
+      "sourceIds": [
+        "src-geonames-2988507",
+        "src-ror-02en5vm52"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 48.85341,
+        "longitude": 2.3488,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-sorbonne-university",
+      "type": "University",
+      "label": "Sorbonne Université",
+      "summary": "The university in Paris that calls itself an heir of the University of Paris; it came into being on 1 January 2018, while its ROR record gives 2010 as the year it was established.",
+      "sourceIds": [
+        "src-ror-02en5vm52",
+        "src-sorbonne-university"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Sorbonne University",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "02en5vm52",
+          "url": "https://ror.org/02en5vm52",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 2018
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-paris"
+        }
+      ]
+    },
+    {
+      "id": "place-bologna",
+      "type": "Place",
+      "label": "Bologna",
+      "summary": "A city in Italy.",
+      "sourceIds": [
+        "src-geonames-3181928",
+        "src-ror-01111rn36"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 44.49381,
+        "longitude": 11.33875,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-university-of-bologna",
+      "type": "University",
+      "label": "University of Bologna",
+      "summary": "The university in Bologna, which calls itself the oldest university in the Western world; its founding is dated conventionally to 1088.",
+      "sourceIds": [
+        "src-ror-01111rn36",
+        "src-university-of-bologna"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Alma Mater Studiorum - Università di Bologna",
+          "language": "it",
+          "kind": "original_script"
+        },
+        {
+          "name": "UNIBO",
+          "language": "en",
+          "kind": "abbreviation"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "01111rn36",
+          "url": "https://ror.org/01111rn36",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1088
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-bologna"
+        }
+      ]
+    },
+    {
+      "id": "place-cambridge",
+      "type": "Place",
+      "label": "Cambridge",
+      "summary": "A city in United States.",
+      "sourceIds": [
+        "src-geonames-4931972",
+        "src-ror-03vek6s52"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 42.3751,
+        "longitude": -71.10561,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-harvard-university",
+      "type": "University",
+      "label": "Harvard University",
+      "summary": "The university in Cambridge, Massachusetts, founded on 28 October 1636 as the first college in the American colonies; it has fourteen schools.",
+      "sourceIds": [
+        "src-ror-03vek6s52",
+        "src-harvard-university"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Universidad de Harvard",
+          "language": "es",
+          "kind": "alternative"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "03vek6s52",
+          "url": "https://ror.org/03vek6s52",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1636
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-cambridge"
+        }
+      ]
+    },
+    {
+      "id": "place-toronto",
+      "type": "Place",
+      "label": "Toronto",
+      "summary": "A city in Canada.",
+      "sourceIds": [
+        "src-geonames-6167865",
+        "src-ror-03dbr7087"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 43.70643,
+        "longitude": -79.39864,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-university-of-toronto",
+      "type": "University",
+      "label": "University of Toronto",
+      "summary": "The university in Toronto, chartered as King’s College on 15 March 1827; it has been called the University of Toronto since the end of 1849.",
+      "sourceIds": [
+        "src-ror-03dbr7087",
+        "src-university-of-toronto"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "King’s College",
+          "language": "en",
+          "kind": "former"
+        },
+        {
+          "name": "U of T",
+          "language": "en",
+          "kind": "abbreviation"
+        },
+        {
+          "name": "Université de Toronto",
+          "language": "fr",
+          "kind": "alternative"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "03dbr7087",
+          "url": "https://ror.org/03dbr7087",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1827
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-toronto"
+        }
+      ]
+    },
+    {
+      "id": "place-tokyo",
+      "type": "Place",
+      "label": "Tokyo",
+      "summary": "A city in Japan.",
+      "sourceIds": [
+        "src-geonames-1850147",
+        "src-ror-057zh3y96"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 35.6895,
+        "longitude": 139.69171,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-university-of-tokyo",
+      "type": "University",
+      "label": "The University of Tokyo",
+      "summary": "The university in Tokyo, founded in 1877.",
+      "sourceIds": [
+        "src-ror-057zh3y96",
+        "src-university-of-tokyo"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "東京大学",
+          "language": "ja",
+          "kind": "original_script"
+        },
+        {
+          "name": "Todai",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "UTokyo",
+          "language": "en",
+          "kind": "abbreviation"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "057zh3y96",
+          "url": "https://ror.org/057zh3y96",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1877
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-tokyo"
+        }
+      ]
+    },
+    {
+      "id": "place-munich",
+      "type": "Place",
+      "label": "Munich",
+      "summary": "A city in Germany.",
+      "sourceIds": [
+        "src-geonames-2867714",
+        "src-ror-02kkvpp62"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 48.13743,
+        "longitude": 11.57549,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "university-technical-university-of-munich",
+      "type": "University",
+      "label": "Technical University of Munich",
+      "summary": "The technical university in Munich, founded in 1868 as the Technische Hochschule München.",
+      "sourceIds": [
+        "src-ror-02kkvpp62",
+        "src-technical-university-of-munich"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Technische Universität München",
+          "language": "de",
+          "kind": "original_script"
+        },
+        {
+          "name": "Technische Hochschule München",
+          "language": "de",
+          "kind": "former"
+        },
+        {
+          "name": "TUM",
+          "language": "en",
+          "kind": "abbreviation"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "02kkvpp62",
+          "url": "https://ror.org/02kkvpp62",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1868
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-munich"
+        }
+      ]
+    },
+    {
+      "id": "place-geneva",
+      "type": "Place",
+      "label": "Geneva",
+      "summary": "A city in Switzerland.",
+      "sourceIds": [
+        "src-geonames-2660646",
+        "src-ror-01ggx4157"
+      ],
+      "spoilerLevel": 0,
+      "position": {
+        "latitude": 46.20222,
+        "longitude": 6.14569,
+        "precision": "centre_of_area"
+      }
+    },
+    {
+      "id": "organisation-cern",
+      "type": "Organisation",
+      "label": "European Organization for Nuclear Research",
+      "summary": "The European Organization for Nuclear Research near Geneva, founded in 1954, which studies the fundamental structure of the universe.",
+      "sourceIds": [
+        "src-ror-01ggx4157",
+        "src-cern"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "CERN",
+          "language": "en",
+          "kind": "abbreviation"
+        },
+        {
+          "name": "Organisation européenne pour la recherche nucléaire",
+          "language": "fr",
+          "kind": "alternative"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "01ggx4157",
+          "url": "https://ror.org/01ggx4157",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1954
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-geneva"
+        },
+        {
+          "fact": "field",
+          "text": "Research into the fundamental structure of the universe"
+        }
+      ]
+    },
+    {
+      "id": "organisation-max-planck-society",
+      "type": "Organisation",
+      "label": "Max Planck Society",
+      "summary": "The research society founded in Göttingen on 26 February 1948 as the successor of the Kaiser Wilhelm Society; its seat is in Munich.",
+      "sourceIds": [
+        "src-ror-01hhn8329",
+        "src-max-planck-society"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Max-Planck-Gesellschaft zur Förderung der Wissenschaften",
+          "language": "de",
+          "kind": "original_script"
+        },
+        {
+          "name": "MPG",
+          "language": "en",
+          "kind": "abbreviation"
+        }
+      ],
+      "identifiers": [
+        {
+          "issuer": "ROR",
+          "value": "01hhn8329",
+          "url": "https://ror.org/01hhn8329",
+          "match": "exact"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1948
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-munich"
+        },
+        {
+          "fact": "field",
+          "text": "Scientific research"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-university-of-tehran-in-tehran",
+      "from": "university-university-of-tehran",
+      "to": "place-tehran",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-05vf56z40"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sharif-university-of-technology-in-tehran",
+      "from": "university-sharif-university-of-technology",
+      "to": "place-tehran",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-024c2fq17"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-university-of-oxford-in-oxford",
+      "from": "university-university-of-oxford",
+      "to": "place-oxford",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-052gg0110"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-heidelberg-university-in-heidelberg",
+      "from": "university-heidelberg-university",
+      "to": "place-heidelberg",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-038t36y30"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sorbonne-university-in-paris",
+      "from": "university-sorbonne-university",
+      "to": "place-paris",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-02en5vm52"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-university-of-bologna-in-bologna",
+      "from": "university-university-of-bologna",
+      "to": "place-bologna",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-01111rn36"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-harvard-university-in-cambridge",
+      "from": "university-harvard-university",
+      "to": "place-cambridge",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-03vek6s52"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-university-of-toronto-in-toronto",
+      "from": "university-university-of-toronto",
+      "to": "place-toronto",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-03dbr7087"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-university-of-tokyo-in-tokyo",
+      "from": "university-university-of-tokyo",
+      "to": "place-tokyo",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-057zh3y96"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-technical-university-of-munich-in-munich",
+      "from": "university-technical-university-of-munich",
+      "to": "place-munich",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-02kkvpp62"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-cern-in-geneva",
+      "from": "organisation-cern",
+      "to": "place-geneva",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-01ggx4157"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-max-planck-society-in-munich",
+      "from": "organisation-max-planck-society",
+      "to": "place-munich",
+      "type": "locatedIn",
+      "directionality": "directed",
+      "label": "Seat",
+      "sourceIds": [
+        "src-ror-01hhn8329"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "events": [],
+  "media": []
+}
