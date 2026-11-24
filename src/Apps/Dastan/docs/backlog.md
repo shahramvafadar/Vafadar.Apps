@@ -39,7 +39,7 @@ it is written and when it is finished. Nothing here is reviewed or released by w
 |---|---|---|
 | B1 | The Shahnameh as a work: the poet, the making of the poem, its three parts, its dynasties and kings in order, its chief heroes and their houses, its manuscripts and editions | Done 2026-11-23 (`library/samples/shahnameh.json`, with its Persian; the three parts are left out for want of a source; not yet looked at in a browser) |
 | B2 | The story of Rostam and Sohrab, whole: every step of the telling, everybody in it, its places | Done 2026-11-23 (`library/samples/rostam-and-sohrab.json`, 30 steps, with its Persian; not yet looked at in a browser) |
-| B3 | The story of Siavash, as a second story of the same world | Planned |
+| B3 | The story of Siavash, as a second story of the same world | Done 2026-11-24 (`library/samples/siavash.json`, 35 steps, with its Persian; not yet looked at in a browser) |
 | B4 | Iran to about 100 CE: Elam, the Medes, the Achaemenids, Alexander and the Seleucids, the Arsacids | Done 2026-11-23 (`library/samples/ancient-iran.json`, with its Persian; not yet looked at in a browser) |
 | B5 | China to about 100 CE: Shang, Zhou, Qin, Western Han, Xin, Eastern Han – and Xia as tradition | Done 2026-11-23 (`library/samples/ancient-china.json`, with its Persian; not yet looked at in a browser) |
 | B6 | Rome to about 100 CE: the kings, the Republic, the emperors from Augustus to Trajan | Done 2026-11-23 (`library/samples/ancient-rome.json`, with its Persian; not yet looked at in a browser) |
