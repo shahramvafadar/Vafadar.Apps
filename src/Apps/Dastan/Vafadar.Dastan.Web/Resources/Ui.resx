@@ -4506,4 +4506,25 @@
   <data name="Chart_Help" xml:space="preserve">
     <value>Guide to this chart</value>
   </data>
+  <data name="Story_ReadStepByStep" xml:space="preserve">
+    <value>Read step by step</value>
+  </data>
+  <data name="Story_ReadFromHere" xml:space="preserve">
+    <value>Read from here</value>
+  </data>
+  <data name="Story_StepOf" xml:space="preserve">
+    <value>Step {0} of {1}</value>
+  </data>
+  <data name="Story_ReaderNav" xml:space="preserve">
+    <value>Steps of the story</value>
+  </data>
+  <data name="Story_Previous" xml:space="preserve">
+    <value>Previous step</value>
+  </data>
+  <data name="Story_Next" xml:space="preserve">
+    <value>Next step</value>
+  </data>
+  <data name="Story_AllSteps" xml:space="preserve">
+    <value>All the steps</value>
+  </data>
 </root>

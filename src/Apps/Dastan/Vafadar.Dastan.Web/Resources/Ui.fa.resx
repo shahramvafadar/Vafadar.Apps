@@ -4506,4 +4506,25 @@
   <data name="Chart_Help" xml:space="preserve">
     <value>راهنمای این نمودار</value>
   </data>
+  <data name="Story_ReadStepByStep" xml:space="preserve">
+    <value>گام‌به‌گام بخوانید</value>
+  </data>
+  <data name="Story_ReadFromHere" xml:space="preserve">
+    <value>از این‌جا بخوانید</value>
+  </data>
+  <data name="Story_StepOf" xml:space="preserve">
+    <value>گام {0} از {1}</value>
+  </data>
+  <data name="Story_ReaderNav" xml:space="preserve">
+    <value>گام‌های قصه</value>
+  </data>
+  <data name="Story_Previous" xml:space="preserve">
+    <value>گام پیشین</value>
+  </data>
+  <data name="Story_Next" xml:space="preserve">
+    <value>گام بعد</value>
+  </data>
+  <data name="Story_AllSteps" xml:space="preserve">
+    <value>همهٔ گام‌ها</value>
+  </data>
 </root>
