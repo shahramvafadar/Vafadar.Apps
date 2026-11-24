@@ -4527,4 +4527,13 @@
   <data name="Story_AllSteps" xml:space="preserve">
     <value>All the steps</value>
   </data>
+  <data name="Discover_Group_Lands" xml:space="preserve">
+    <value>Lands and their history</value>
+  </data>
+  <data name="Discover_Group_Works" xml:space="preserve">
+    <value>Stories and works</value>
+  </data>
+  <data name="Discover_Group_Other" xml:space="preserve">
+    <value>More to explore</value>
+  </data>
 </root>

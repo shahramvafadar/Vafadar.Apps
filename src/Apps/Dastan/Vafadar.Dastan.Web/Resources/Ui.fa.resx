@@ -4527,4 +4527,13 @@
   <data name="Story_AllSteps" xml:space="preserve">
     <value>همهٔ گام‌ها</value>
   </data>
+  <data name="Discover_Group_Lands" xml:space="preserve">
+    <value>سرزمین‌ها و تاریخشان</value>
+  </data>
+  <data name="Discover_Group_Works" xml:space="preserve">
+    <value>قصه‌ها و آثار</value>
+  </data>
+  <data name="Discover_Group_Other" xml:space="preserve">
+    <value>چیزهای دیگر برای کاوش</value>
+  </data>
 </root>

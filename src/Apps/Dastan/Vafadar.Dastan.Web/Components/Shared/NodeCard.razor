@@ -6,7 +6,8 @@
 @inject IStringLocalizer<Ui> T
 
 <div class="@(Tall ? "node-card tall" : "node-card")">
-    <ProfilePicture Profile="Profile" Small="!Tall" />
+    @* A node of another collection shows the drawing of its kind: its picture is asked of its own pages. *@
+    <ProfilePicture Profile="@(Collection is null || Collection == Site.Collection ? Profile : Profile with { Picture = null })" Small="!Tall" />
     <div class="node-card-words">
         @if (Level == 2)
         {
@@ -57,6 +58,13 @@
     [Parameter]
     public int Level { get; set; } = 3;
 
+    /// <summary>
+    /// Gets or sets the collection the node is of, when it is not the collection of the page – a card of the start
+    /// that shows names of several collections (D-096).
+    /// </summary>
+    [Parameter]
+    public string? Collection { get; set; }
+
     protected override void OnParametersSet() =>
-        (_address, _name) = ($"{Site.Collection}/entity/{Profile.Entity.Id}", Visitor.Text(Profile.Entity.Label).Value);
+        (_address, _name) = ($"{Collection ?? Site.Collection}/entity/{Profile.Entity.Id}", Visitor.Text(Profile.Entity.Label).Value);
 }

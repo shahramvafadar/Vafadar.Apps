@@ -72,10 +72,24 @@
 
     @if (shown.Count > 0)
     {
+        // The collections in groups of what they are about (D-096): lands and their history, stories and works,
+        // the rest – each group once, in that order; one group alone needs no heading of its own.
+        var groups = shown.GroupBy(entry => entry.Projection!.Overview().Subject.Type.Nature switch
+        {
+            EntityNature.Place => "Discover_Group_Lands",
+            EntityNature.Work => "Discover_Group_Works",
+            _ => "Discover_Group_Other",
+        }).OrderBy(group => group.Key switch { "Discover_Group_Lands" => 0, "Discover_Group_Works" => 1, _ => 2 }).ToList();
         <section aria-labelledby="first-story">
             <h2 id="first-story">@T[shown.Count == 1 ? "Discover_First" : "Discover_Collections"]</h2>
+            @foreach (var group in groups)
+            {
+            if (groups.Count > 1)
+            {
+                <h3 class="collection-group">@T[group.Key]</h3>
+            }
             <div class="features">
-                @foreach (var (collection, projection) in shown)
+                @foreach (var (collection, projection) in group)
                 {
                     var overview = projection!.Overview();
                     <article class="card feature">
@@ -97,6 +111,7 @@
                     </article>
                 }
             </div>
+            }
         </section>
     }
     else if (Site.Comparisons.IsEmpty)
@@ -110,9 +125,9 @@
         <section aria-labelledby="start-with">
             <h2 id="start-with">@T["Collection_Subjects"]</h2>
             <ul class="cards picture-cards" role="list">
-                @foreach (var profile in _subjects)
+                @foreach (var (collection, profile) in _subjects)
                 {
-                    <li class="card"><NodeCard Profile="profile" Tall="true" Summary="true" /></li>
+                    <li class="card"><NodeCard Profile="profile" Tall="true" Summary="true" Collection="@collection" /></li>
                 }
             </ul>
         </section>
@@ -155,7 +170,7 @@
     // How many names the start shows as cards: a page to begin with, not the list of the collection.
     private const int MostSubjects = 6;
 
-    private readonly List<NodeProfile> _subjects = [];
+    private readonly List<(string Collection, NodeProfile Profile)> _subjects = [];
     private ConnectionsChart? _chart;
     private static readonly IReadOnlyList<EntityId> _none = [];
 
@@ -168,7 +183,24 @@
         }
 
         var subjects = projection.Overview().Subjects;
-        _subjects.AddRange(subjects.Take(MostSubjects).Select(subject => projection.Profile(subject.Id)!));
+
+        // The names to start with come from every collection this visitor may see, in turn – the first of each,
+        // then the second of each – so that one collection does not fill the start (D-096).
+        var all = Library.Collections
+            .Select(site => (site.Collection, Projection: Visitor.Of(site)))
+            .Where(entry => entry.Projection is not null)
+            .Select(entry => (entry.Collection, Projection: entry.Projection!, Names: entry.Projection!.Overview().Subjects))
+            .ToList();
+        for (var turn = 0; _subjects.Count < MostSubjects && all.Any(entry => entry.Names.Length > turn); turn++)
+        {
+            foreach (var (collection, other, names) in all.Where(entry => entry.Names.Length > turn))
+            {
+                if (_subjects.Count < MostSubjects && other.Profile(names[turn].Id) is { } profile)
+                {
+                    _subjects.Add((collection, profile));
+                }
+            }
+        }
 
         // The first of them that is connected with something: its drawing, with nothing opened.
         foreach (var subject in subjects)
