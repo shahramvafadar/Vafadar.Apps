@@ -14,6 +14,13 @@
        that the text does not move when it arrives. The address is the one the style sheet asks for – beside
        itself, inside the language – or the font would be fetched twice. *@
     <link rel="preload" href="fonts/vazirmatn-nl-wght.woff2" as="font" type="font/woff2" crossorigin />
+    @* A page in a language of Latin letters is set in Inter from its first line to its last: its font is asked for
+       with the page too, or every page would be drawn in a font of the device first and move when Inter arrives –
+       a button moves away under a finger. A Persian page asks for it only where it shows Latin letters. *@
+    @if (Visitor.Language.Direction == "ltr")
+    {
+        <link rel="preload" href="fonts/inter-wght.woff2" as="font" type="font/woff2" crossorigin />
+    }
     @* The icon of the tab (ADR 0026): the drawing where a browser takes one, three sizes of pixels where it does not. *@
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="@Assets["favicon.svg"]" type="image/svg+xml" />
