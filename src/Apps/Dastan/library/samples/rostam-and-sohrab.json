@@ -40,7 +40,7 @@
       },
       {
         "level": 4,
-        "label": "Complete selected arc"
+        "label": "The whole story"
       }
     ],
     "defaultLevel": 0,
@@ -331,7 +331,7 @@
       "id": "work-shahnameh",
       "type": "Work",
       "label": "Shahnameh",
-      "summary": "The literary work that contains the selected Rostam and Sohrab narrative.",
+      "summary": "Ferdowsi’s epic, in which the story of Rostam and Sohrab stands.",
       "sourceIds": [
         "src-ganjoor-index"
       ],
@@ -342,9 +342,10 @@
       "id": "story-rostam-sohrab",
       "type": "NarrativeArc",
       "label": "Rostam and Sohrab",
-      "summary": "A selected arc about encounters, identity, and the consequences of decisions. This sample condenses several passages.",
+      "summary": "The story of Sohrab in Ferdowsi’s Shahnameh. It begins when Rostam goes hunting and loses his horse Rakhsh, and follows him to Samangan.",
       "sourceIds": [
-        "src-ganjoor-index"
+        "src-ganjoor-index",
+        "src-ganjoor-s02"
       ],
       "spoilerLevel": 0,
       "labelFa": "رستم و سهراب"
@@ -353,7 +354,7 @@
       "id": "character-rostam",
       "type": "Character",
       "label": "Rostam",
-      "summary": "A warrior whose search for his missing horse opens this selected narrative.",
+      "summary": "A warrior whose search for his missing horse opens the story.",
       "sourceIds": [
         "src-ganjoor-s02"
       ],
@@ -479,7 +480,7 @@
       "id": "place-zabul",
       "type": "NarrativeRegion",
       "label": "Zabulistan",
-      "summary": "A region associated with Rostam and his family in the selected narrative; no modern boundary is asserted.",
+      "summary": "A region associated with Rostam and his family in the story; no modern boundary is asserted.",
       "sourceIds": [
         "src-ganjoor-s09"
       ],
