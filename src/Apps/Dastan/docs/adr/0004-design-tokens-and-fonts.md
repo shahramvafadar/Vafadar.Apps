@@ -30,7 +30,11 @@ pages have to work in two scripts, two directions and two themes from the first 
    at least 2.75 rem (44 px) high. Text runs in a column of at most 44 rem.
 6. **The font follows the language of the text, not of the page** (`:lang()`): an English title on a Persian
    page is set in the Latin stack. Arabic-script text has a taller line (1.9).
-7. **Fonts.** Latin: the system's – Segoe UI Variable, system-ui and common fallbacks; no Latin font is bundled.
+7. **Fonts.** Latin: **Inter**, bundled since 2026-11-24 (D-097): the variable file of release 4.1, unchanged
+   (`wwwroot/fonts/inter-wght.woff2`, 352 KB, SHA-256 `693b77d4…a8e3`, licence `wwwroot/fonts/inter-OFL.txt`), from
+   <https://github.com/rsms/inter>; a `unicode-range` of Latin, so that only a page with Latin letters asks for it.
+   The file is not cut to Latin (no tool for it on the machine): it also holds Greek and Cyrillic. Before it, the
+   system's fonts – Segoe UI Variable, system-ui and common fallbacks –, which stand in while it arrives.
    Arabic script: **Vazirmatn**, bundled (D-036): the variable file of version 33.003 without Latin letters
    (`wwwroot/fonts/vazirmatn-nl-wght.woff2`, 48 KB, every weight in one file), from the release of the font's
    own repository, under the SIL Open Font License 1.1, whose text lies beside it. It is served by the site

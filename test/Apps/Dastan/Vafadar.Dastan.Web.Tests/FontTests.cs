@@ -26,6 +26,25 @@ public sealed class FontTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.Contains("The Vazirmatn Project Authors", license.Html, StringComparison.Ordinal);
     }
 
+    // The file InterVariable.woff2 of the release 4.1 of Inter, as it was published (D-097).
+    private const string InterPublished = "693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3";
+
+    [Fact]
+    public async Task The_Latin_font_is_served_by_the_site_unchanged_and_with_its_license()
+    {
+        var visitor = site.Visitor();
+
+        var font = await visitor.Get("/fonts/inter-wght.woff2");
+        var license = await visitor.Get("/fonts/inter-OFL.txt");
+
+        Assert.Equal(HttpStatusCode.OK, font.Status);
+        Assert.Equal("font/woff2", font.Response.Content.Headers.ContentType!.MediaType);
+        Assert.Equal(InterPublished, Convert.ToHexStringLower(SHA256.HashData(await font.Bytes())));
+        Assert.Equal(HttpStatusCode.OK, license.Status);
+        Assert.Contains("SIL OPEN FONT LICENSE Version 1.1", license.Html, StringComparison.Ordinal);
+        Assert.Contains("The Inter Project Authors", license.Html, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("en")]
     [InlineData("fa")]
@@ -46,6 +65,7 @@ public sealed class FontTests(DemoSite site) : IClassFixture<DemoSite>
         }
 
         Assert.Matches("@font-face\\s*\\{\\s*font-family: \"Vazirmatn\";\\s*src: url\\(\"fonts/vazirmatn-nl-wght\\.woff2\"\\) format\\(\"woff2\"\\);", styles);
+        Assert.Matches("@font-face\\s*\\{\\s*font-family: \"Inter\";\\s*src: url\\(\"fonts/inter-wght\\.woff2\"\\) format\\(\"woff2\"\\);", styles);
         Assert.DoesNotMatch("url\\(\\s*[\"']?(https?:)?//", styles);
         Assert.DoesNotContain("@import", styles, StringComparison.Ordinal);
         Assert.DoesNotMatch("(src|href)=\"(https?:)?//", Regex.Replace(page.Html, "<a\\s[^>]*>|<link rel=\"(canonical|alternate)\"[^>]*>|<meta property=\"og:url\"[^>]*>", string.Empty));

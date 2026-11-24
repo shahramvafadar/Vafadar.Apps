@@ -492,4 +492,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   read are counted.
 - The start groups its collections – lands and their history, stories and works, more to explore – and the
   names to start with come from all of them, not only from one.
+- English text is set in the font Inter, which comes with the site like the Persian font.
 - The roles of the names in the steps of Siavash and of Rostam and Sohrab are in Persian on the Persian pages.
