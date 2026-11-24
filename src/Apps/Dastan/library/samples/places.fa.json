@@ -1,0 +1,150 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "places",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-places": {
+      "label": "جاهای آموختن و کار",
+      "summary": "دانشگاه‌ها و سازمان‌هایی از چند کشور که بازدیدکننده می‌تواند آن‌ها را جایی بنامد که در آن بوده است؛ هر یک با رکوردش در فهرست سازمان‌های پژوهشی (ROR).",
+      "facts": {
+        "field": "دانشگاه‌ها و سازمان‌های پژوهشی"
+      }
+    },
+    "place-tehran": {
+      "label": "تهران",
+      "summary": "شهری در ایران."
+    },
+    "university-university-of-tehran": {
+      "label": "دانشگاه تهران",
+      "summary": "دانشگاهی در تهران که در زمستان ۱۳۱۲ (۱۹۳۴) گشایش یافت، وارث مدرسهٔ دارالفنون و نماد آموزش عالی در ایران."
+    },
+    "university-sharif-university-of-technology": {
+      "label": "دانشگاه صنعتی شریف",
+      "summary": "دانشگاهی فنی در تهران که بنا بر رکورد ROR آن در ۱۹۶۶ با نام دانشگاه صنعتی آریامهر بنیاد نهاده شد؛ وبگاه خود آن خوانده نشد."
+    },
+    "place-oxford": {
+      "label": "آکسفورد",
+      "summary": "شهری در بریتانیا."
+    },
+    "university-university-of-oxford": {
+      "label": "دانشگاه آکسفورد",
+      "summary": "دانشگاهی در آکسفورد؛ رکورد ROR آن سال ۱۰۹۶ را سال بنیادش می‌دهد. وبگاه خود آن خوانده نشد."
+    },
+    "place-heidelberg": {
+      "label": "هایدلبرگ",
+      "summary": "شهری در آلمان."
+    },
+    "university-heidelberg-university": {
+      "label": "دانشگاه هایدلبرگ",
+      "summary": "دانشگاه پژوهشی در هایدلبرگ که در ۱۳۸۶ بنیاد نهاده شد."
+    },
+    "place-paris": {
+      "label": "پاریس",
+      "summary": "شهری در فرانسه."
+    },
+    "university-sorbonne-university": {
+      "label": "دانشگاه سوربن",
+      "summary": "دانشگاهی در پاریس که خود را وارث دانشگاه پاریس می‌داند؛ در ۱ ژانویهٔ ۲۰۱۸ پدید آمد، در حالی که رکورد ROR آن سال ۲۰۱۰ را می‌دهد."
+    },
+    "place-bologna": {
+      "label": "بولونیا",
+      "summary": "شهری در ایتالیا."
+    },
+    "university-university-of-bologna": {
+      "label": "دانشگاه بولونیا",
+      "summary": "دانشگاهی در بولونیا که خود را کهن‌ترین دانشگاه جهان غرب می‌داند؛ بنیادش به‌طور قراردادی ۱۰۸۸ گذاشته می‌شود."
+    },
+    "place-cambridge": {
+      "label": "کمبریج",
+      "summary": "شهری در ایالات متحده."
+    },
+    "university-harvard-university": {
+      "label": "دانشگاه هاروارد",
+      "summary": "دانشگاهی در کمبریج ماساچوست که در ۲۸ اکتبر ۱۶۳۶ همچون نخستین کالج در مستعمره‌های آمریکا بنیاد نهاده شد؛ چهارده دانشکده دارد."
+    },
+    "place-toronto": {
+      "label": "تورنتو",
+      "summary": "شهری در کانادا."
+    },
+    "university-university-of-toronto": {
+      "label": "دانشگاه تورنتو",
+      "summary": "دانشگاهی در تورنتو که در ۱۵ مارس ۱۸۲۷ با نام کینگز کالج منشور گرفت؛ از پایان ۱۸۴۹ دانشگاه تورنتو نامیده می‌شود."
+    },
+    "place-tokyo": {
+      "label": "توکیو",
+      "summary": "شهری در ژاپن."
+    },
+    "university-university-of-tokyo": {
+      "label": "دانشگاه توکیو",
+      "summary": "دانشگاهی در توکیو که در ۱۸۷۷ بنیاد نهاده شد."
+    },
+    "place-munich": {
+      "label": "مونیخ",
+      "summary": "شهری در آلمان."
+    },
+    "university-technical-university-of-munich": {
+      "label": "دانشگاه فنی مونیخ",
+      "summary": "دانشگاه فنی در مونیخ که در ۱۸۶۸ با نام مدرسهٔ عالی فنی مونیخ بنیاد نهاده شد."
+    },
+    "place-geneva": {
+      "label": "ژنو",
+      "summary": "شهری در سوئیس."
+    },
+    "organisation-cern": {
+      "label": "سرن",
+      "summary": "سازمان اروپایی پژوهش‌های هسته‌ای نزدیک ژنو، بنیادشده در ۱۹۵۴، که ساختار بنیادین جهان را می‌کاود.",
+      "facts": {
+        "field": "پژوهش در ساختار بنیادین جهان"
+      }
+    },
+    "organisation-max-planck-society": {
+      "label": "انجمن ماکس پلانک",
+      "summary": "انجمن پژوهشی که در ۲۶ فوریهٔ ۱۹۴۸ در گوتینگن همچون جانشین انجمن قیصر ویلهلم بنیاد نهاده شد؛ جایگاهش در مونیخ است.",
+      "facts": {
+        "field": "پژوهش علمی"
+      }
+    }
+  },
+  "relations": {
+    "relation-university-of-tehran-in-tehran": {
+      "label": "جایگاه"
+    },
+    "relation-sharif-university-of-technology-in-tehran": {
+      "label": "جایگاه"
+    },
+    "relation-university-of-oxford-in-oxford": {
+      "label": "جایگاه"
+    },
+    "relation-heidelberg-university-in-heidelberg": {
+      "label": "جایگاه"
+    },
+    "relation-sorbonne-university-in-paris": {
+      "label": "جایگاه"
+    },
+    "relation-university-of-bologna-in-bologna": {
+      "label": "جایگاه"
+    },
+    "relation-harvard-university-in-cambridge": {
+      "label": "جایگاه"
+    },
+    "relation-university-of-toronto-in-toronto": {
+      "label": "جایگاه"
+    },
+    "relation-university-of-tokyo-in-tokyo": {
+      "label": "جایگاه"
+    },
+    "relation-technical-university-of-munich-in-munich": {
+      "label": "جایگاه"
+    },
+    "relation-cern-in-geneva": {
+      "label": "جایگاه"
+    },
+    "relation-max-planck-society-in-munich": {
+      "label": "جایگاه"
+    }
+  }
+}
