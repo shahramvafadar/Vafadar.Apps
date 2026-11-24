@@ -93,9 +93,9 @@ What reading the whole against the documents of the product found ([delivery pla
 | E7 | The times of a picture beyond when it was made and what it shows: brought in, published, shared (MED-006) | The reader refuses them today | Planned, with the pictures of pass 5 |
 | E8 | `spoilerPolicy.correspondences` between the three collections of the world of the Shahnameh | Content, not development: a reader of one story has read a stage of another | Planned, content |
 | E9 | The calendar a source writes in: kept (document 04, TIME-009) or every date Gregorian (D-043) | The two contradict each other | Waits for the owner |
-| E10 | The chart of time of a history with a hundred lanes: grouped by kind and folded (periods and dynasties open, people and events behind a fold), or lanes shared by names that do not meet | Looked at on 2026-11-24: the page of Iran is about 36,000 px high, 45,000 px on a phone. The lanes stand in the order of time since that day | Planned – the owner chooses the form |
+| E10 | The chart of time of a history by kind, a kind put in and taken out by a link, names that do not meet sharing a row (D-099) | The page of Iran was about 36,000 px high; the chart is 410 px to begin with | Done (2026-11-24) |
 | E11 | Labels of relations that repeat the name they lead to ("King of the Medes" to an office of the same name) | Seen in the chart of Iran on 2026-11-24 | Planned, content |
-| E12 | A long label of a lane at the width of a phone runs over its own bar | Seen on 2026-11-24 | Planned |
+| E12 | At the width of a phone the names of bars that stand close run over each other and over their bars – more visible since E10, where many names share a lane | Seen on 2026-11-24 | Planned |
 
 ## Not planned
 

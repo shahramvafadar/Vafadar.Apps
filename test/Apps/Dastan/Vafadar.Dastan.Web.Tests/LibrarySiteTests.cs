@@ -122,7 +122,7 @@ public sealed class LibrarySiteTests
             // The chart lays its lanes as the time went: no lane begins before the one above it.
             var view = read.Timeline();
             var begins = view.Subjects.Select(subject => TimelineLanes.Earliest(subject, view)).OfType<decimal>().Order().ToList();
-            var chartOf = await visitor.Get($"/en/{collection.Collection}/timeline");
+            var chartOf = await visitor.Get($"/en/{collection.Collection}/timeline?by=names");
             var places = view.Subjects.Where(subject => TimelineLanes.Earliest(subject, view) is not null)
                 .OrderBy(subject => TimelineLanes.Earliest(subject, view)).Select(subject => chartOf.Html.IndexOf($"\"{subject.Id.Value}\"", StringComparison.Ordinal)).Where(place => place >= 0).ToList();
             Assert.Equal(places.Order(), places);
@@ -142,12 +142,67 @@ public sealed class LibrarySiteTests
             Assert.Contains("id=\"records\"", page.Html, StringComparison.Ordinal);
 
             // And the chart of time of the collection draws that stretch in the lane of the name.
-            var chart = await visitor.Get($"/en/{collection.Collection}/timeline");
+            var chart = await visitor.Get($"/en/{collection.Collection}/timeline?by=names");
             Assert.Contains(RecordTimes.Of(lived).First(time => time.IsSpan).Key, chart.Html, StringComparison.Ordinal);
             Assert.Contains($"{collection.Collection}/entity/{lived.Id.Value}\"", page.Html, StringComparison.Ordinal);
         }
 
         Assert.True(placed > 0, "No collection of the library states a time among its facts.");
+    }
+
+    [Theory]
+    [InlineData("en")]
+    [InlineData("fa")]
+    public async Task ACollectionOfManyNamesDrawsItsChartByKindAndEveryNameWhenAsked(string language)
+    {
+        // D-099: more than a dozen names with a time stand by kind, each kind one lane; a kind is put in and
+        // taken out by a link, and a lane for each name is one link away.
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var library = site.Services.GetRequiredService<DastanLibrary>();
+        var many = 0;
+        foreach (var collection in library.Collections)
+        {
+            var subjects = collection.At(new ReadingLevel(0))!.Timeline().Subjects;
+            var chart = $"/{language}/{collection.Collection}/timeline";
+            var page = (await visitor.Get(chart)).Html;
+            if (subjects.Length <= 12)
+            {
+                Assert.DoesNotContain("id=\"kinds\"", page, StringComparison.Ordinal);
+                continue;
+            }
+
+            many++;
+            Assert.Contains("id=\"kinds\"", page, StringComparison.Ordinal);
+            int LanesOf(string html) => System.Text.RegularExpressions.Regex.Matches(html, "<table class=\"chart-table\">").Count;
+
+            // One kind is in the chart to begin with – far fewer lanes than names – and every name is one link away.
+            Assert.Equal(1, LanesOf(page));
+            Assert.Contains("by=names", page, StringComparison.Ordinal);
+
+            // Every kind the collection has, asked for together: the page answers and names each of them once.
+            var all = (await visitor.Get($"{chart}?open=spans,people,events,works,places,other")).Html;
+            Assert.InRange(LanesOf(all), 2, 6);
+
+            // What is asked for that is no kind is not kept by the links of the chart: the chart is the one without it.
+            var odd = await visitor.Get($"{chart}?open=nothing,%22%3E");
+            Assert.Equal(HttpStatusCode.OK, odd.Status);
+            Assert.Equal(1, LanesOf(odd.Html));
+            Assert.DoesNotContain("nothing", odd.Html.Split("id=\"kinds\"")[1].Split("<h2 id=\"as-table\"")[0], StringComparison.Ordinal);
+
+            // A lane for each name: as many lanes as names, and the way back to the kinds.
+            var names = (await visitor.Get($"{chart}?by=names")).Html;
+            Assert.Equal(subjects.Length, LanesOf(names));
+            Assert.Contains("id=\"kinds\"", names, StringComparison.Ordinal);
+            Assert.DoesNotContain("open=", names.Split("id=\"kinds\"")[1].Split("</nav>")[0], StringComparison.Ordinal);
+        }
+
+        Assert.True(many > 0, "No collection of the library has many names with a time.");
     }
 
     [Fact]

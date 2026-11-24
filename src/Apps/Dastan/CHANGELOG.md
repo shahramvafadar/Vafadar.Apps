@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The timeline of a large collection is short: its names stand by kind – periods and dynasties, people, events –,
+  names that do not meet in time share a row, and you choose which kinds the chart shows. "A lane for each
+  name" shows everything as before.
 - The timeline of a collection and "in a year" show everybody and everything whose record says when: a person
   by the years of their life, a battle by its year, a dynasty from its beginning to its end. Before, a name
   stood there only through a relation with years, and most battles and many people were missing.
