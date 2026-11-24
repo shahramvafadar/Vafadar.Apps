@@ -487,3 +487,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   mark of the kind where a name has no picture instead of a large empty field. The start begins with what the
   site is for; a collection says how many names it has and which years it covers; the connections of a name
   are grouped by relation in one list of rows; the guide to a chart is folded under it.
+- A story can be read step by step: "Read step by step" opens the first step with where you are ("Step 4 of
+  19"), the previous and the next step, and the way back to all of them. Only the steps up to where you have
+  read are counted.

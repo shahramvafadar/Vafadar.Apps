@@ -21,35 +21,52 @@
     {
         <p class="note">@T["Story_None"]</p>
     }
+    else if (_reading is { } current)
+    {
+        @* The story read one step at a time (D-095): where the reader is among the steps they may read, the step
+           itself, and the way on and back. A step is an address (?step=N), so Back goes back a step and a step can
+           be passed on; a step beyond the reading position is no step here. *@
+        var at = story.Steps.IndexOf(current);
+        var count = story.Steps.Length;
+        <section class="reader" id="reading" aria-labelledby="reading-step">
+            <div class="reader-progress">
+                <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Story_StepOf"], Visitor.Number(at + 1), Visitor.Number(count))</p>
+                <progress max="@count" value="@(at + 1)" aria-hidden="true"></progress>
+            </div>
+            <article class="card reader-step">
+                <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(current.Number))</p>
+                <h2 id="reading-step"><Loc Text="current.Event.Label" /> <DisputedMark Review="current.Event.Review" /></h2>
+                @StepBody(current, $"{_base}?step={current.Number}#reading")
+            </article>
+            <nav class="reader-nav" aria-label="@T["Story_ReaderNav"]">
+                @if (at > 0)
+                {
+                    <a class="action secondary" rel="prev" href="@($"{_base}?step={story.Steps[at - 1].Number}#reading")">@T["Story_Previous"]</a>
+                }
+                @if (at < count - 1)
+                {
+                    <a class="action" rel="next" href="@($"{_base}?step={story.Steps[at + 1].Number}#reading")">@T["Story_Next"]</a>
+                }
+                <a class="action secondary" href="@($"{_base}#step-{current.Number}")">@T["Story_AllSteps"]</a>
+            </nav>
+            @if (at == count - 1)
+            {
+                <p class="note" role="status">@(story.Continues ? T["Reading_Continues"] : T["Reading_Complete"]) <a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a></p>
+            }
+        </section>
+    }
     else
     {
+        @* The first thing to do with a story is to read it: one step at a time, from the first. *@
+        <p class="actions"><a class="action" href="@($"{_base}?step={story.Steps[0].Number}#reading")"><Icon Name="story" /><span>@T["Story_ReadStepByStep"]</span></a></p>
         <ol class="steps" role="list">
             @foreach (var step in story.Steps)
             {
                 <li class="step" id="@($"step-{step.Number}")">
                     <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(step.Number))</p>
                     <h2><Loc Text="step.Event.Label" /> <DisputedMark Review="step.Event.Review" /></h2>
-                    <p><Loc Text="step.Event.Summary" /></p>
-                    @if (step.Event.CondensesSeveralScenes)
-                    {
-                        <p class="note">@T["Story_Condensed"]</p>
-                    }
-                    <h3 class="visually-hidden">@T["Story_Participants"]</h3>
-                    <ul class="participants" role="list">
-                        @foreach (var association in step.Event.Associations)
-                        {
-                            <li>
-                                <a href="@($"{Site.Collection}/entity/{association.Entity}")"><Loc Text="Visitor.Projection!.Find(association.Entity)!.Label" /></a>
-                                <span class="role"><Loc Text="association.Role" /></span>
-                                <span class="presence">@T[$"Presence_{association.Presence}"]</span>
-                            </li>
-                        }
-                    </ul>
-                    <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, step.Event.Id, $"{_base}#step-{step.Number}")">@T["Story_StepEvidence"]<span class="visually-hidden"> – @Visitor.Text(step.Event.Label).Value</span></a></p>
-                    @if (!Visitor.Projection!.Gallery(step.Event.Id)!.IsEmpty)
-                    {
-                        <p><a href="@($"{Site.Collection}/event/{step.Event.Id}/gallery")">@T["Gallery_StepLink"]</a></p>
-                    }
+                    @StepBody(step, $"{_base}#step-{step.Number}")
+                    <p><a class="read-from" href="@($"{_base}?step={step.Number}#reading")">@T["Story_ReadFromHere"]<span class="visually-hidden"> – @Visitor.Text(step.Event.Label).Value</span></a></p>
                 </li>
             }
         </ol>
@@ -190,6 +207,13 @@
     [SupplyParameterFromQuery(Name = "heads")]
     public string? Heads { get; set; }
 
+    /// <summary>Gets or sets the number of the step read on its own, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "step")]
+    public string? Step { get; set; }
+
+    // The step read on its own, when the address asks for one the reader may read.
+    private StoryStep? _reading;
+
     protected override void OnInitialized()
     {
         _story = Collection == Site.Collection ? Visitor.Projection?.Story(Arc is null ? null : new EntityId(Arc)) : null;
@@ -200,6 +224,11 @@
         }
 
         _base = StoryAddress.Of(Site, Visitor, _story.Story.Id);
+
+        // A step the address names that is not among the steps this reader may read is no step: the list is shown.
+        _reading = int.TryParse(Step, NumberStyles.None, CultureInfo.InvariantCulture, out var number)
+            ? _story.Steps.FirstOrDefault(step => step.Number == number)
+            : null;
         _lanes = Visitor.Projection!.Lanes(_story.Story.Id)!;
         _timeline = TimelineViews.OfStory(_lanes);
 
@@ -215,6 +244,33 @@
         };
         _here = $"{_base}{_state.Query()}";
     }
+
+    // What a step says, in the list and in the reading view alike: its summary, who and what are part of it and
+    // how, its sources and its pictures. `back` is where the page of its sources leads back to.
+    private RenderFragment StepBody(StoryStep step, string back) => __builder =>
+    {
+        <p><Loc Text="step.Event.Summary" /></p>
+        @if (step.Event.CondensesSeveralScenes)
+        {
+            <p class="note">@T["Story_Condensed"]</p>
+        }
+        <h3 class="visually-hidden">@T["Story_Participants"]</h3>
+        <ul class="participants" role="list">
+            @foreach (var association in step.Event.Associations)
+            {
+                <li>
+                    <a href="@($"{Site.Collection}/entity/{association.Entity}")"><Loc Text="Visitor.Projection!.Find(association.Entity)!.Label" /></a>
+                    <span class="role"><Loc Text="association.Role" /></span>
+                    <span class="presence">@T[$"Presence_{association.Presence}"]</span>
+                </li>
+            }
+        </ul>
+        <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, step.Event.Id, back)">@T["Story_StepEvidence"]<span class="visually-hidden"> – @Visitor.Text(step.Event.Label).Value</span></a></p>
+        @if (!Visitor.Projection!.Gallery(step.Event.Id)!.IsEmpty)
+        {
+            <p><a href="@($"{Site.Collection}/event/{step.Event.Id}/gallery")">@T["Gallery_StepLink"]</a></p>
+        }
+    };
 
     // The steps of a side of the stage.
     private RenderFragment Steps(string name, StoryChartState? fewer, StoryChartState? more) =>

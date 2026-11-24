@@ -4256,3 +4256,64 @@ ul.statements .evidence-link {
   padding: 22%;
   stroke: var(--accent);
 }
+
+/* --- The story read one step at a time (D-095): where the reader is, the step, the way on and back --- */
+
+.reader {
+  max-inline-size: var(--measure);
+  scroll-margin-block-start: var(--space-4);
+}
+
+.reader-progress {
+  display: grid;
+  gap: var(--space-1);
+  margin-block-end: var(--space-4);
+}
+
+.reader-progress progress {
+  inline-size: 100%;
+  block-size: 0.5rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  overflow: hidden;
+  appearance: none;
+}
+
+.reader-progress progress::-webkit-progress-bar {
+  background: var(--surface-sunken);
+}
+
+.reader-progress progress::-webkit-progress-value {
+  background: var(--accent);
+  border-radius: var(--radius-full);
+}
+
+.reader-progress progress::-moz-progress-bar {
+  background: var(--accent);
+  border-radius: var(--radius-full);
+}
+
+.reader-step h2 {
+  margin-block: var(--space-1) var(--space-3);
+  font-size: var(--step-2);
+}
+
+.reader-step > p:not(.meta):not(.note) {
+  font-size: var(--step-1);
+}
+
+.reader-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block: var(--space-6);
+}
+
+.reader-nav .action {
+  margin: 0;
+}
+
+.read-from {
+  font-size: var(--step--1);
+}
