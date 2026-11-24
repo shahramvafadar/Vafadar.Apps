@@ -335,6 +335,12 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
         // Beside them the page names its own address and its address in each language (step 14.4).
         Assert.Equal(10, files.Count);
         Assert.Contains("<link rel=\"preload\" href=\"fonts/vazirmatn-nl-wght.woff2\" as=\"font\" type=\"font/woff2\" crossorigin", page.Html, StringComparison.Ordinal);
+
+        // The Latin font is asked for with a page of Latin letters, so that its text does not move when the font
+        // arrives; a Persian page asks for it only where it shows such letters.
+        const string Latin = "<link rel=\"preload\" href=\"fonts/inter-wght.woff2\" as=\"font\" type=\"font/woff2\" crossorigin";
+        Assert.DoesNotContain(Latin, page.Html, StringComparison.Ordinal);
+        Assert.Contains(Latin, (await visitor.Get("/en/")).Html, StringComparison.Ordinal);
         foreach (var file in files)
         {
             Assert.Equal(HttpStatusCode.OK, (await visitor.Get(new Uri(new Uri("http://localhost/fa/"), file).AbsolutePath)).Status);

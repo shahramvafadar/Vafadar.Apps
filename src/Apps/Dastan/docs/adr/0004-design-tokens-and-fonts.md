@@ -35,6 +35,10 @@ pages have to work in two scripts, two directions and two themes from the first 
    <https://github.com/rsms/inter>; a `unicode-range` of Latin, so that only a page with Latin letters asks for it.
    The file is not cut to Latin (no tool for it on the machine): it also holds Greek and Cyrillic. Before it, the
    system's fonts – Segoe UI Variable, system-ui and common fallbacks –, which stand in while it arrives.
+   A page in a language of Latin letters asks for the file with the page (`preload`), as every page does for
+   Vazirmatn: without it each page was drawn in a font of the device first and moved when Inter arrived – seen
+   on the day the font came in as a button that moved away under a click in WebKit. A Persian page does not
+   ask for it ahead: it has few Latin letters, and 352 KB is much to fetch for them.
    Arabic script: **Vazirmatn**, bundled (D-036): the variable file of version 33.003 without Latin letters
    (`wwwroot/fonts/vazirmatn-nl-wght.woff2`, 48 KB, every weight in one file), from the release of the font's
    own repository, under the SIL Open Font License 1.1, whose text lies beside it. It is served by the site
