@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A link to the story, the timeline, the map, a year or the pictures of a collection shows what the page is
+  when it is passed on: these pages have a description now.
+- On the start page every collection has the sign of its kind; before, only the first had one.
 - On a phone a map begins where its places are: the map of ancient Iran no longer opens on Greece.
 - The page of the places of a collection is called "… on the map", like the link that leads to it.
 - The page of a large collection is short: a list of stories or of names shows its first twelve and opens the

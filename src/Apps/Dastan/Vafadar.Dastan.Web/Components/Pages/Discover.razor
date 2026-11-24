@@ -93,11 +93,12 @@
                 {
                     var overview = projection!.Overview();
                     <article class="card feature">
-                        @if (collection == Site && projection.Profile(overview.Subject.Id) is { } profile)
+                        @if (projection.Profile(overview.Subject.Id) is { } profile)
                         {
                             @* The picture of what the collection is about, or the drawing of its kind. A collection
-                               that is not the one of this page shows no picture: its files are asked of its own pages. *@
-                            <ProfilePicture Profile="profile" />
+                               that is not the one of this page shows the drawing only – its files are asked of its
+                               own pages –, so that every card of the row has its sign. *@
+                            <ProfilePicture Profile="profile" DrawingOnly="@(collection != Site)" />
                         }
                         <div class="feature-words">
                             <h3><a href="@collection.Collection"><Loc Text="overview.Subject.Label" /></a></h3>

@@ -13,6 +13,7 @@
     var name = Visitor.Text(subject.Label).Value;
     var title = string.Format(CultureInfo.CurrentCulture, T["Places_Title"], name);
     <PageTitle>@title – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@title" Text="@T["Places_Lead"]" />
 
     <header class="page-header">
         <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], name)</a></p>

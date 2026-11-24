@@ -15,6 +15,7 @@
 {
     var title = string.Format(CultureInfo.CurrentCulture, T["Timeline_Title"], Visitor.Text((_of ?? story).Label).Value);
     <PageTitle>@title – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@title" Text="@T[_of is null ? "Timeline_Lead" : "Timeline_LeadOf"]" />
 
     <header class="page-header">
         @if (_of is { } of)

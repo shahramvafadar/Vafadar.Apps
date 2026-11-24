@@ -92,7 +92,7 @@ What reading the whole against the documents of the product found ([delivery pla
 | E6 | A relation of a person to the land they come from, in a story | "Sudabeh of Hamavaran" | Planned |
 | E7 | The times of a picture beyond when it was made and what it shows: brought in, published, shared (MED-006) | The reader refuses them today | Planned, with the pictures of pass 5 |
 | E8 | `spoilerPolicy.correspondences` between the three collections of the world of the Shahnameh | Content, not development: a reader of one story has read a stage of another | Planned, content |
-| E9 | The calendar a source writes in: kept (document 04, TIME-009) or every date Gregorian (D-043) | The two contradict each other | Waits for the owner |
+| E9 | The calendar a source writes in: kept (document 04, TIME-009) or every date Gregorian (D-043) | The two contradicted each other | Decided (2026-11-24, D-100): every date Gregorian; see E18 |
 | E10 | The chart of time of a history by kind, a kind put in and taken out by a link, names that do not meet sharing a row (D-099) | The page of Iran was about 36,000 px high; the chart is 410 px to begin with | Done (2026-11-24) |
 | E11 | Labels of relations that repeat the name they lead to ("King of the Medes" to an office of the same name) | Seen in the chart of Iran on 2026-11-24 | Planned, content |
 | E12 | At the width of a phone the names of bars that stand close run over each other and over their bars – more visible since E10, where many names share a lane | Seen on 2026-11-24 | Done (2026-11-24): a row is kept for a mark as far as its name really reaches |
@@ -101,6 +101,9 @@ What reading the whole against the documents of the product found ([delivery pla
 | E15 | Persian orders written in words in the text of the Shahnameh (148 places) | "۱مین پادشاهی" is not Persian | Done (2026-11-24), content, still a draft |
 | E16 | The title of the page of places reads "{name} on the map", as the link to it does | "Places of Places of learning and work" | Done (2026-11-24) |
 | E17 | A map wider than its stage is moved sideways once, so that the place in the middle of its places stands in the middle (`stage.ts`) | On a phone the map of ancient Iran began with Greece | Done (2026-11-24) |
+| E18 | A visitor sees a date in another calendar – Solar Hijri, Lunar Hijri – beside or instead of the Gregorian one; what is stored stays Gregorian (D-100) | The owner's word of 2026-11-24 | Planned, the last piece of work |
+| E19 | The pages of the story, the chart of time, the places, a year and the gallery say what they are in their head (`PageDescription`); every collection of the start page has the drawing of its kind | A second look on 2026-11-24: 260 pages read for names of links and fields, double identifiers, the order of headings – nothing found there; these pages had no description, and one card of the start page alone had a sign | Done (2026-11-24) |
+| E20 | The title of a source in the language of the source (`lang`), so that a screen reader reads an English title in a Persian page as English | Seen on 2026-11-24 | Planned |
 
 ## Not planned
 

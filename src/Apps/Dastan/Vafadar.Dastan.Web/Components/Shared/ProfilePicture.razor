@@ -75,9 +75,16 @@
     [Parameter]
     public bool Small { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether only the drawing of the kind is shown: for a name of a collection
+    /// other than the one of the page, whose files are asked of its own pages.
+    /// </summary>
+    [Parameter]
+    public bool DrawingOnly { get; set; }
+
     protected override void OnParametersSet()
     {
-        _file = Profile.Picture is { Kind: MediaKind.Image } item && Site.ContentFile(item.File) is not null ? MediaAddress.File(Site.Collection, item.Id) : null;
+        _file = !DrawingOnly && Profile.Picture is { Kind: MediaKind.Image } item && Site.ContentFile(item.File) is not null ? MediaAddress.File(Site.Collection, item.Id) : null;
 
         // On a card the name stands beside the picture and says what it is; on the page the picture is described
         // by the words written for it, or by its title where nobody wrote any.

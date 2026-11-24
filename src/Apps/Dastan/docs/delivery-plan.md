@@ -1539,7 +1539,8 @@ the site was not started (the owner's rule), so nothing of the look was judged b
 * **Found and written down, not built** – rows of [the backlog](backlog.md), part E: what the content needs of
   the formats (five rows of the content roadmap), kinds of a picture of a history, the further times of a
   picture, correspondences between the three collections of the world of the Shahnameh.
-* **For the owner:** document 04 asks to keep the calendar a source writes in (TIME-009); D-043 stores every
+* **Decided on 2026-11-24 (D-100):** every date stays Gregorian; seeing a date in another calendar is the last
+  piece of work (backlog E18). The question was: document 04 asks to keep the calendar a source writes in (TIME-009); D-043 stores every
   date in the Gregorian calendar. One of the two has to give way.
 * **Documents brought up to the day:** the backlog (content is written; trying it waits for the owner's word
   only), the format page (names `library/`), the acceptance page.
