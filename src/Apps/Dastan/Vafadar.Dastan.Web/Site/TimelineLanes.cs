@@ -108,15 +108,34 @@ public static class TimelineLanes
     /// Returns what a time of the record of a name is called: "Life" for the years of a person, "From beginning to
     /// end" for those of anything else, and the name of the fact for one time – "Born", "When it happened".
     /// </summary>
-    public static LocalizedText Named(Entity subject, RecordTime time, Visitor visitor, Microsoft.Extensions.Localization.IStringLocalizer text)
+    public static LocalizedText Named(Entity subject, RecordTime time, Visitor visitor, Microsoft.Extensions.Localization.IStringLocalizer<Vafadar.Dastan.Web.Resources.Ui> text)
     {
         ArgumentNullException.ThrowIfNull(subject);
         ArgumentNullException.ThrowIfNull(time);
         ArgumentNullException.ThrowIfNull(visitor);
         ArgumentNullException.ThrowIfNull(text);
+        // When something happened is the whole of what such a fact says: its mark is named by the time itself,
+        // not by "When" – the lane already says what happened.
         return LocalizedText.Of(visitor.Language.Tag, time.IsSpan
             ? text[subject.Type.Key == EntityTypes.Person.Key ? "Compare_Life_Person" : "Compare_Life_Other"].Value
+            : time.From.Key == ProfileFacts.Happened.Key ? TimeText.Of(time.Time, visitor, text)
             : text[$"Fact_{time.From.Key}"].Value);
+    }
+
+    /// <summary>
+    /// Returns where on the axis of years the earliest of what a lane of a name holds begins – its record, what
+    /// is stated of it, what is said between it and another name – or nothing when none of it can be placed
+    /// there. The chart of a collection lays its lanes in this order, so that it reads as the time went.
+    /// </summary>
+    public static decimal? Earliest(Entity subject, TimelineView view)
+    {
+        ArgumentNullException.ThrowIfNull(subject);
+        ArgumentNullException.ThrowIfNull(view);
+        var reaches = RecordTimes.Of(subject).Select(time => (TemporalExpression?)time.Time)
+            .Concat(subject.Dated.Select(dated => dated.Time))
+            .Concat(view.Held.Where(edge => edge.From.Id == subject.Id).Select(edge => edge.Relation.Time))
+            .Select(time => YearCover.Reach(time)).OfType<YearSpan>().ToList();
+        return reaches.Count == 0 ? null : reaches.Min(reach => reach.From);
     }
 
     /// <summary>
