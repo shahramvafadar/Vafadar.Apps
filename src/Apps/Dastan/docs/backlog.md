@@ -99,8 +99,8 @@ What reading the whole against the documents of the product found ([delivery pla
 | E13 | A list of the page of a collection shows its first twelve cards and folds the others; a story without a step leads to its name, and its page of steps leads on | The page of the Shahnameh was about 43,500 px high on a phone; its 70 stories all led to "No step of the story to show" | Done (2026-11-24) |
 | E14 | A year asked for leads to its answer (`#answer`); the stage of a map is as high as the map on a narrow screen | Seen on a phone on 2026-11-24: the forms filled the first screen again; a map stood in the middle of an empty stage | Done (2026-11-24) |
 | E15 | Persian orders written in words in the text of the Shahnameh (148 places) | "۱مین پادشاهی" is not Persian | Done (2026-11-24), content, still a draft |
-| E16 | The title of the page of places of a collection whose name begins with "Places" reads "Places of Places of …" | Seen on 2026-11-24; a matter of the name of that collection | Planned, content |
-| E17 | The map of a collection opens at its western edge on a phone, whatever the places are | Seen on 2026-11-24 with ancient Iran: the first screen shows Greece | Planned |
+| E16 | The title of the page of places reads "{name} on the map", as the link to it does | "Places of Places of learning and work" | Done (2026-11-24) |
+| E17 | A map wider than its stage is moved sideways once, so that the place in the middle of its places stands in the middle (`stage.ts`) | On a phone the map of ancient Iran began with Greece | Done (2026-11-24) |
 
 ## Not planned
 

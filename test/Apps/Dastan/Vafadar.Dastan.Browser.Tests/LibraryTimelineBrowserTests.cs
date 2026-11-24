@@ -84,3 +84,57 @@ public sealed class LibraryTimelineBrowserTests(LibraryBrowserSite site) : IClas
         Assert.False(await page.EvaluateAsync<bool>("() => document.documentElement.scrollWidth > window.innerWidth"));
     }
 }
+
+/// <summary>
+/// The map of a collection at the width of a phone: its stage is as high as the map, and what it shows first is
+/// where the places are – not the western edge of the map.
+/// </summary>
+public sealed class LibraryPlacesBrowserTests(LibraryBrowserSite site) : IClassFixture<LibraryBrowserSite>
+{
+    [Theory]
+    [InlineData("fa")]
+    [InlineData("en")]
+    public async Task On_a_phone_a_map_is_as_high_as_the_map_and_begins_where_its_places_are(string language)
+    {
+        if (!LibraryBrowserSite.HasCollections)
+        {
+            return;
+        }
+
+        var seen = 0;
+        foreach (var collection in site.Services.GetRequiredService<DastanLibrary>().Collections)
+        {
+            if (collection.At(new ReadingLevel(0))?.Places().IsEmpty != false)
+            {
+                continue;
+            }
+
+            var page = await site.Visitor(375);
+            await page.GotoAsync($"/{language}/{collection.Collection}/places");
+            var frame = page.Locator(".stage-frame");
+            if (await frame.Locator(".map-mark").CountAsync() == 0)
+            {
+                await page.CloseAsync();
+                continue;
+            }
+
+            seen++;
+            var measured = await frame.EvaluateAsync<JsonElement>(
+                """
+                frame => {
+                  const shown = frame.getBoundingClientRect();
+                  const middles = [...frame.querySelectorAll('.map-mark')].map(mark => { const box = mark.getBoundingClientRect(); return box.left + box.width / 2; }).sort((a, b) => a - b);
+                  const middle = middles[Math.floor(middles.length / 2)];
+                  const room = frame.querySelector('.places-room').getBoundingClientRect();
+                  return { inSight: middle >= shown.left && middle <= shown.right, spare: Math.round(shown.height - room.height), wide: document.documentElement.scrollWidth > window.innerWidth };
+                }
+                """);
+            Assert.True(measured.GetProperty("inSight").GetBoolean(), $"The map of {collection.Collection} begins away from its places.");
+            Assert.True(measured.GetProperty("spare").GetInt32() <= 24, $"The stage of the map of {collection.Collection} is higher than the map.");
+            Assert.False(measured.GetProperty("wide").GetBoolean());
+            await page.CloseAsync();
+        }
+
+        Assert.True(seen > 0, "No collection of the library has a map.");
+    }
+}

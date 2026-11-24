@@ -8,7 +8,12 @@ export function bringNamesIntoSight(): void {
   for (const frame of document.querySelectorAll<HTMLElement>('.stage-frame')) {
     // The box is asked for by its place in the drawing: an engine does not say where an element inside it is.
     const name = frame.querySelector('.graph-focus')?.closest('foreignObject');
-    if (!name || frame.clientHeight === 0) {
+    if (frame.clientHeight === 0) {
+      continue;
+    }
+
+    if (!name) {
+      bringPlacesIntoSight(frame);
       continue;
     }
 
@@ -22,4 +27,20 @@ export function bringNamesIntoSight(): void {
       frame.scrollLeft += place.left + (place.width / 2) - (shown.left + (shown.width / 2));
     }
   }
+}
+
+/**
+ * A map that is wider than its stage – on a phone – begins at its western edge, whatever it shows: the map of
+ * ancient Iran began with Greece. The stage is moved sideways once, so that the place in the middle of the
+ * places – as many to its west as to its east – stands in the middle of what is shown.
+ */
+function bringPlacesIntoSight(frame: HTMLElement): void {
+  const marks = [...frame.querySelectorAll('.places-map .map-mark')];
+  if (marks.length === 0 || frame.scrollWidth <= frame.clientWidth) {
+    return;
+  }
+
+  const middles = marks.map(mark => { const box = mark.getBoundingClientRect(); return box.left + (box.width / 2); }).sort((a, b) => a - b);
+  const shown = frame.getBoundingClientRect();
+  frame.scrollLeft += (middles[Math.floor(middles.length / 2)] ?? shown.left) - (shown.left + (shown.width / 2));
 }

@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- On a phone a map begins where its places are: the map of ancient Iran no longer opens on Greece.
+- The page of the places of a collection is called "… on the map", like the link that leads to it.
 - The page of a large collection is short: a list of stories or of names shows its first twelve and opens the
   others in the same page ("The other 58 stories"). The page of the Shahnameh was about forty screens of a
   phone long.

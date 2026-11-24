@@ -12,8 +12,8 @@ public sealed class PlacesPageTests(WorldSite world, DemoSite demo) : IClassFixt
     private const string Story = "story-rostam-sohrab";
 
     [Theory]
-    [InlineData("en", "On the map", "Places of", "about there", "Places without a position", "36.2972° N, 59.6067° E")]
-    [InlineData("fa", "روی نقشه", "جاهای", "کم‌وبیش همان‌جا", "جاهای بدون موقعیت", "شمالی")]
+    [InlineData("en", "On the map", "on the map</h1>", "about there", "Places without a position", "36.2972° N, 59.6067° E")]
+    [InlineData("fa", "روی نقشه", "روی نقشه</h1>", "کم‌وبیش همان‌جا", "جاهای بدون موقعیت", "شمالی")]
     public async Task A_collection_with_real_places_offers_their_page_in_the_language_of_the_visitor(string language, string link, string title, string about, string unmapped, string position)
     {
         var visitor = world.Visitor();

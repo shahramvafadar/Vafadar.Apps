@@ -1150,7 +1150,7 @@
     <value>روی نقشه</value>
   </data>
   <data name="Places_Title" xml:space="preserve">
-    <value>جاهای {0}</value>
+    <value>{0} روی نقشه</value>
   </data>
   <data name="Places_Lead" xml:space="preserve">
     <value>جاهای واقعی‌ای که این مجموعه از آن‌ها نام می‌برد، این‌که نسبت به هم کجا هستند، و آنچه گفته شده آن‌جاست.</value>
@@ -1159,7 +1159,7 @@
     <value>این نگاره ساحل‌ها، رودها و دریاچه‌ها را نشان می‌دهد و مرزی ندارد، و این سایت از هیچ‌کس نقشه‌ای بار نمی‌کند: ساحل‌ها همراه خود سایت‌اند (Natural Earth). شبکهٔ درجه‌ها می‌گوید جاها کجای زمین‌اند؛ هر موقعیت در نقشهٔ دستگاه شما باز می‌شود.</value>
   </data>
   <data name="Places_Graph" xml:space="preserve">
-    <value>نگارهٔ جاهای {0}</value>
+    <value>نگارهٔ نقشهٔ {0}</value>
   </data>
   <data name="Places_List" xml:space="preserve">
     <value>جاها</value>
