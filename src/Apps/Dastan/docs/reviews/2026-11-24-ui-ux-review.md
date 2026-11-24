@@ -122,5 +122,5 @@ Content gap found on the way, not a design step: the Persian of the role notes i
 Steps 1 and 9 on 2026-11-24 (D-092, D-093): "Side by side" as a main way, a comparison a visitor builds of names of
 any collections, lanes in colour. Steps 2–7 on the same day (D-094): type and actions, cards, the start, the head
 of a collection, groups of connections, the guide of a chart folded. Step 8 on the same day (D-095): the story read one step at a time,
-with where the reader is and the previous and the next step. Not done yet: the grouping of the collections of the start by kind, nor
-"start with" drawn from several collections. A Latin font (decision 3) is not chosen.
+with where the reader is and the previous and the next step. The grouping of the collections of the start by
+kind and "start with" drawn from all collections on the same day (D-096). A Latin font (decision 3) is not chosen.

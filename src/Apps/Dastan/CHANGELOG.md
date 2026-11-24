@@ -490,3 +490,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A story can be read step by step: "Read step by step" opens the first step with where you are ("Step 4 of
   19"), the previous and the next step, and the way back to all of them. Only the steps up to where you have
   read are counted.
+- The start groups its collections – lands and their history, stories and works, more to explore – and the
+  names to start with come from all of them, not only from one.
+- The roles of the names in the steps of Siavash and of Rostam and Sohrab are in Persian on the Persian pages.
