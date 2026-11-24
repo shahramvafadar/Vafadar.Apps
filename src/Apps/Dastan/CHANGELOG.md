@@ -483,3 +483,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   long list. The start shows the comparisons right after the search, every collection leads to them, and the
   page of a name with a time offers "Compare with others".
 - Each lane of a moving chart of time has its own colour, as in the still chart.
+- A new look across the site: clearer titles and buttons, rounded cards with short summaries, a small round
+  mark of the kind where a name has no picture instead of a large empty field. The start begins with what the
+  site is for; a collection says how many names it has and which years it covers; the connections of a name
+  are grouped by relation in one list of rows; the guide to a chart is folded under it.

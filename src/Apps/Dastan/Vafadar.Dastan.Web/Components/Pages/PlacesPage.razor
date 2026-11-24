@@ -35,7 +35,7 @@
     {
         @if (_map is { } map)
         {
-            <p class="note">@T["Places_NoTiles"] @T["Stage_Lead"]</p>
+            <ChartHelp>@T["Places_NoTiles"] @T["Stage_Lead"]</ChartHelp>
             <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Places_Graph"], name)" FrameDirection="ltr">
                 <PlacesChart Map="map" Here="@_here" />
             </ChartStage>

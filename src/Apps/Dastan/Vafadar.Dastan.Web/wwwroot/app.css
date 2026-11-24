@@ -3960,3 +3960,299 @@ main .compare-options li {
 .compare-pick [data-compare-filter-row][hidden] {
   display: none;
 }
+
+/* ===================================================================================================
+   The layer of design (review of 2026-11-24, D-094): one clear first thing on a page, quieter second
+   things, cards that show content instead of the place of a picture that is not there. It stands last
+   and only sharpens what is above it: no rule above changes its meaning.
+   =================================================================================================== */
+
+/* --- Type: a clear order from the title down to the small print --- */
+
+h1 {
+  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.7rem);
+  font-weight: 750;
+}
+
+h3 {
+  font-weight: 700;
+}
+
+.lead {
+  font-size: var(--step-1);
+  color: var(--text-muted);
+}
+
+.meta {
+  font-size: var(--step--1);
+}
+
+/* A title of a page stands apart from what follows it. */
+.page-header {
+  padding-block-end: var(--space-4);
+  margin-block-end: var(--space-4);
+  border-block-end: 1px solid var(--border);
+}
+
+/* --- Actions: the main thing to do is filled; a second thing is a quiet outline; both answer a press --- */
+
+.action {
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+.action:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+.action:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.action.secondary {
+  border-color: var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: none;
+}
+
+.action.secondary:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action,
+  .action:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* --- Cards: rounded, raised a little, and lifted where the whole card leads somewhere --- */
+
+.card {
+  border-radius: var(--radius-l);
+  padding: var(--space-6);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.cards > .card:hover,
+.features > .card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-2);
+}
+
+.cards > .card h3 a,
+.features > .card h3 a {
+  text-decoration: none;
+}
+
+.cards > .card h3 a:hover,
+.features > .card h3 a:hover {
+  text-decoration: underline;
+}
+
+/* What a card says of a name is its beginning: the whole stands on the page of the name. */
+.cards .node-card-words > p:not(.meta):not(.peek),
+.features .feature-words > p:not(.meta):not(.actions) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Where no picture is, the drawing of the kind is a small mark beside the name, not a large empty field:
+   the place of a picture is kept for a picture. A real picture keeps its size and shape. */
+.node-card.tall:has(.kind-drawing) {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.node-card.tall .profile-picture:has(.kind-drawing),
+.feature .profile-picture:has(.kind-drawing) {
+  inline-size: 3rem;
+  aspect-ratio: 1;
+  flex: none;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+}
+
+.node-card.tall .profile-picture:has(.kind-drawing) .kind-drawing,
+.feature .profile-picture:has(.kind-drawing) .kind-drawing {
+  padding: 22%;
+  stroke: var(--accent);
+}
+
+.feature:has(.kind-drawing) {
+  grid-template-columns: 3rem 1fr;
+}
+
+@media (max-width: 40rem) {
+  .node-card.tall .profile-picture:has(.kind-drawing) {
+    aspect-ratio: 1;
+  }
+
+  .feature:has(.kind-drawing) {
+    grid-template-columns: 3rem 1fr;
+  }
+
+  .feature .profile-picture:has(.kind-drawing) {
+    inline-size: 3rem;
+  }
+}
+
+/* The facts of a card in one quiet block under the words. */
+.cards .profile-facts {
+  font-size: var(--step--1);
+}
+
+/* --- Sections: room between them, so that a page reads as parts --- */
+
+main > section + section,
+.discover > section + section {
+  margin-block-start: var(--space-12);
+}
+
+/* --- The start (D-094): what the site is for, large, then how to begin --- */
+
+.discover .hero {
+  padding-block: var(--space-12) var(--space-8);
+}
+
+.discover .hero h1 {
+  font-size: clamp(2.2rem, 1.6rem + 2.6vw, 3.4rem);
+}
+
+/* --- The head of a collection: what it holds in a line, and its views as a row of ways --- */
+
+.collection-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+
+.collection-stats span {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.view-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.view-links .action {
+  margin: 0;
+}
+
+.view-links .action .icon {
+  inline-size: 1.25em;
+  block-size: 1.25em;
+}
+
+/* --- The guide to a chart: folded under the chart's tools, opened by who wants it --- */
+
+.chart-help {
+  margin-block: var(--space-3);
+}
+
+.chart-help > summary {
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  cursor: pointer;
+}
+
+/* --- Connections of a name in groups of one relation, each with its count --- */
+
+.relation-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block: var(--space-6) var(--space-2);
+  font-size: var(--step-0);
+  color: var(--text-muted);
+}
+
+.relation-group .count,
+.compare-names .count {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--text);
+  font-size: var(--step--1);
+}
+
+/* --- A list of statements as one card of rows (D-094): each relation a row, its sources at the end of it --- */
+
+ul.statements {
+  gap: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+
+ul.statements > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  max-inline-size: none;
+}
+
+ul.statements > li + li {
+  border-block-start: 1px solid var(--border);
+}
+
+ul.statements > li:hover {
+  background: var(--accent-soft);
+}
+
+ul.statements .statement {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+ul.statements .evidence-link {
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+/* The small drawing of a kind beside a name in a list: the same quiet round mark as in the grids. */
+.profile-picture.small:has(.kind-drawing) {
+  inline-size: 3rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+}
+
+.profile-picture.small:has(.kind-drawing) .kind-drawing {
+  padding: 22%;
+  stroke: var(--accent);
+}

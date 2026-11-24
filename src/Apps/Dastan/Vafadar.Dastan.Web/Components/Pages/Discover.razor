@@ -19,9 +19,10 @@
 
 <div class="discover">
     <section class="hero">
-        <h1>@T["Site_Name"]</h1>
-        <p class="tagline">@T["Site_Tagline"]</p>
-        <p>@T["Discover_Lead"]</p>
+        @* The name of the site stands in its head already (the logo): the first thing of the start is what the
+           site is for, then how to begin (D-094). *@
+        <h1>@T["Site_Tagline"]</h1>
+        <p class="lead">@T["Discover_Lead"]</p>
         @if (shown.Count == 1)
         {
             <SearchForm />

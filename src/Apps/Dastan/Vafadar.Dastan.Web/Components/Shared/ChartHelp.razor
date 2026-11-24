@@ -1,0 +1,14 @@
+@* How to read and use a chart (D-094): said once, folded, so that the chart comes first. The words stay in the
+   page – a screen reader and a search find them – and are opened by who wants them. *@
+@inject IStringLocalizer<Ui> T
+
+<details class="fold chart-help">
+    <summary>@T["Chart_Help"]</summary>
+    <p class="note">@ChildContent</p>
+</details>
+
+@code {
+    /// <summary>Gets or sets what is said of the chart.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = null!;
+}
