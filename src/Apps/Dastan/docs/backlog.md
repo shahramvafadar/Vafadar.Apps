@@ -1,6 +1,6 @@
 # Dastan – backlog
 
-What is left to do for Dastan, in one place, as of 2026-11-23. The history of what was built is in the
+What is left to do for Dastan, in one place, as of 2026-11-24. The history of what was built is in the
 [delivery plan](delivery-plan.md); the decisions are in
 [the decisions of the product](product/12-decisions-questions-and-change-log.md). This page says what comes
 next, who does it and when it is done.
@@ -58,7 +58,7 @@ collections, and the owner looks.
 
 | # | Item | Who | Status |
 |---|---|---|---|
-| C1 | The site and the tool of the editors, started on `library/`, with the addresses given to the owner | this line of work | Waits for B |
+| C1 | The site and the tool of the editors, started on `library/`, with the addresses given to the owner | this line of work | Done once on 2026-11-24, on the owner's word; the owner's findings became [the review of the look](reviews/2026-11-24-ui-ux-review.md), whose nine steps are built. Started again only on the owner's word |
 | C2 | A second account with a made-up name, so that relationships, circles and "who was here" have two sides | this line of work | Waits for C1 |
 | C3 | The light appearance of the pages of sections 24 and 25 of the delivery plan. Looked at on 2026-11-23, light and at the width of a phone, in English and Persian: the themes of the site, the page of a name and a family tree in a stretch of years, the form of the facts of an account. Not yet: the gallery and the page of a picture with their themes, the connections and the pictures in a stretch of years, the form that proposes a place, the head of a record of a tree, the drawing of connections with its card sizes | this line of work | Waits for the owner's word to start the site (AGENTS.md) |
 | C4 | A real phone, the site installed as an app, Safari itself, a screen reader | the owner | Waits |
@@ -76,6 +76,24 @@ collections, and the owner looks.
 | D5 | The legal pages read by a lawyer; the postal address | Section 18.8 of the delivery plan | Waits |
 | D6 | Somebody who looks at the reports of visitors and at the proposed places | An editorial duty (D-085) | Waits |
 | D7 | A proof of the colours of the brand on paper; a Latin font of the brand; the registration of the mark | D-087 | Waits |
+
+## E. Found by the review of 2026-11-24
+
+What reading the whole against the documents of the product found ([delivery plan](delivery-plan.md), section
+26). The first row is built; the others are planned and wait for the owner's order among them.
+
+| # | Item | Why | Status |
+|---|---|---|---|
+| E1 | The views of time read the times a record states among its facts (D-098) | The library states its dates as facts; 134 of 212 names with a time were in no view of time | Done (2026-11-24) |
+| E2 | A reign known only by its length, without years | The Roman kings; the reigns of the Shahnameh ([content roadmap](content-roadmap.md)) | Planned |
+| E3 | A picture of a history as a media reference: a relief, a coin, a bronze – and with it the kinds of picture document 15 names (a later photograph of an object, a reconstruction, a map) | `depictedContext` knows a later artwork of a story and a diagram of today only | Planned |
+| E4 | A command of the content tool that reads every source of a collection and compares a stored quote with it | Done by hand for the first pass of content | Planned |
+| E5 | Quantities of a work as dated statements in the generator of the writer | The length of the Shahnameh | Planned |
+| E6 | A relation of a person to the land they come from, in a story | "Sudabeh of Hamavaran" | Planned |
+| E7 | The times of a picture beyond when it was made and what it shows: brought in, published, shared (MED-006) | The reader refuses them today | Planned, with the pictures of pass 5 |
+| E8 | `spoilerPolicy.correspondences` between the three collections of the world of the Shahnameh | Content, not development: a reader of one story has read a stage of another | Planned, content |
+| E9 | The calendar a source writes in: kept (document 04, TIME-009) or every date Gregorian (D-043) | The two contradict each other | Waits for the owner |
+| E10 | The chart of time of a history with a hundred lanes: looked at, and grouped or folded if it is too long | E1 puts every dated name of a collection into the chart | Waits for the owner's word to start the site |
 
 ## Not planned
 

@@ -516,27 +516,26 @@ public sealed class Projection
     }
 
     /// <summary>
-    /// Returns what the collection has with a time of the calendar: the entities something dated is stated about,
-    /// and the media, each of which was made at some time. The story itself is not in it – it has an order, no dates.
+    /// Returns what the collection has with a time of the calendar: the entities something dated is stated about
+    /// – in a statement, in a relation, or among the facts of their own record (<see cref="RecordTimes"/>) – and
+    /// the media, each of which was made at some time. The story itself is not in it – it has an order, no dates.
     /// </summary>
     public TimelineView Timeline()
     {
         // A relation with a time stands in the lane of the entity it reads from: "played for" in the lane of the player.
         ImmutableArray<Edge> held = [.. Relations.Where(relation => relation.Time is not null).Select(ToEdge)];
         var holders = held.Select(edge => edge.From.Id).ToHashSet();
-        return new([.. Entities.Where(entity => entity.Dated.Any(dated => dated.Time is not null) || holders.Contains(entity.Id))], Media, held);
+        return new([.. Entities.Where(entity => entity.Dated.Any(dated => dated.Time is not null) || holders.Contains(entity.Id) || RecordTimes.Any(entity))], Media, held);
     }
 
     /// <summary>
-    /// Returns the years the collection says something about – through a relation that states when it held, or a
-    /// statement about an entity with a time – or <see langword="null"/> when nothing the visitor may see can be
-    /// placed among the years.
+    /// Returns the years the collection says something about – through a relation that states when it held, a
+    /// statement about an entity with a time, or a time of the record of an entity – or <see langword="null"/>
+    /// when nothing the visitor may see can be placed among the years.
     /// </summary>
     public YearsCovered? Years()
     {
-        var reaches = Relations.Select(relation => relation.Time)
-            .Concat(Entities.SelectMany(entity => entity.Dated.Select(dated => dated.Time)))
-            .Select(time => YearCover.Reach(time)).OfType<YearSpan>().ToList();
+        var reaches = Times().Select(time => YearCover.Reach(time)).OfType<YearSpan>().ToList();
         if (reaches.Count == 0)
         {
             return null;
@@ -562,8 +561,19 @@ public sealed class Projection
             [.. Entities.SelectMany(entity => entity.Dated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, year))))
                 .Where(stated => stated.Holding != Holding.No)],
             turns.Where(turn => turn.Place < year.Place).Select(turn => (YearOfEra?)turn).LastOrDefault(),
-            turns.Where(turn => turn.Place > year.Place).Select(turn => (YearOfEra?)turn).FirstOrDefault());
+            turns.Where(turn => turn.Place > year.Place).Select(turn => (YearOfEra?)turn).FirstOrDefault())
+        {
+            Records = [.. Entities.SelectMany(entity => RecordTimes.Of(entity).Select(time => new RecordThen(entity, time, YearCover.Of(time.Time, year))))
+                .Where(record => record.Holding != Holding.No)],
+        };
     }
+
+    // Every time the collection states, as far as the visitor may see it: of its relations, of the statements
+    // about its entities, and of the records of its entities.
+    private IEnumerable<TemporalExpression?> Times() =>
+        Relations.Select(relation => relation.Time)
+            .Concat(Entities.SelectMany(entity => entity.Dated.Select(dated => dated.Time)))
+            .Concat(Entities.SelectMany(entity => RecordTimes.Of(entity).Select(time => (TemporalExpression?)time.Time)));
 
     /// <summary>
     /// Returns whether the collection says of anything when it was, so that a time can be asked for: a year of
@@ -571,8 +581,7 @@ public sealed class Projection
     /// </summary>
     /// <param name="present">The year of the common era the visitor asks in.</param>
     public bool SaysWhen(int present) =>
-        Relations.Select(relation => relation.Time).Concat(Entities.SelectMany(entity => entity.Dated.Select(dated => dated.Time)))
-            .Any(time => YearCover.Reach(time, present) is not null);
+        Times().Any(time => YearCover.Reach(time, present) is not null);
 
     /// <summary>
     /// Returns what the collection says of a time that was asked for (ADR 0021): a year, a stretch of years or a
@@ -589,7 +598,11 @@ public sealed class Projection
             [.. Relations.Select(relation => (Relation: relation, Holding: YearCover.Of(relation.Time, span, present)))
                 .Where(held => held.Holding != Holding.No).Select(held => new HeldThen(ToEdge(held.Relation), held.Holding))],
             [.. Entities.SelectMany(entity => entity.Dated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, span, present))))
-                .Where(stated => stated.Holding != Holding.No)]);
+                .Where(stated => stated.Holding != Holding.No)])
+        {
+            Records = [.. Entities.SelectMany(entity => RecordTimes.Of(entity).Select(time => new RecordThen(entity, time, YearCover.Of(time.Time, span, present))))
+                .Where(record => record.Holding != Holding.No)],
+        };
     }
 
     /// <summary>

@@ -56,8 +56,11 @@ public readonly record struct YearOfEra(Era Era, int Number)
 /// <param name="Stated">What is stated of the entities for it.</param>
 public sealed record HeldInTime(AskedTime Asked, ImmutableArray<HeldThen> Relations, ImmutableArray<StatedThen> Stated)
 {
+    /// <summary>Gets what the records of the entities state for it: who lived, what existed, what happened.</summary>
+    public ImmutableArray<RecordThen> Records { get; init; } = [];
+
     /// <summary>Gets a value indicating whether nothing is said of the time.</summary>
-    public bool IsEmpty => Relations.IsEmpty && Stated.IsEmpty;
+    public bool IsEmpty => Relations.IsEmpty && Stated.IsEmpty && Records.IsEmpty;
 }
 
 public sealed record YearsCovered(YearOfEra First, YearOfEra Last, ImmutableArray<YearOfEra> Turns);
@@ -70,8 +73,11 @@ public sealed record YearsCovered(YearOfEra First, YearOfEra Last, ImmutableArra
 /// <param name="Later">The nearest later year in which something begins, ends or happens.</param>
 public sealed record MomentView(YearOfEra Year, ImmutableArray<HeldThen> Relations, ImmutableArray<StatedThen> Stated, YearOfEra? Earlier, YearOfEra? Later)
 {
+    /// <summary>Gets what the records of the entities state for the year: who lived, what existed, what happened.</summary>
+    public ImmutableArray<RecordThen> Records { get; init; } = [];
+
     /// <summary>Gets a value indicating whether nothing is stated for the year.</summary>
-    public bool IsEmpty => Relations.IsEmpty && Stated.IsEmpty;
+    public bool IsEmpty => Relations.IsEmpty && Stated.IsEmpty && Records.IsEmpty;
 }
 
 /// <summary>

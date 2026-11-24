@@ -149,7 +149,9 @@ After the connections as a chart (step 9.3): 1012 without a browser and 308 in t
 | The content of the first comparison is right | **Not verified** | Its periods and years are the commonly given ones, written down without sources; every statement is "proposed" and the page says so. Checking them against sources is editorial work that was not done |
 
 Not checked for the charts: a phone, a screen reader, Safari itself, and how a drawing behaves
-with hundreds of periods or of people. Timelines of a collection's own records (step 8.6) are not built.
+with hundreds of periods or of people. The times a record states among its facts stand in the timeline of its
+collection and under a year since 2026-11-24 (D-098; `RecordTimesTests`, `LibrarySiteTests`); a chart with the
+hundred lanes of a history of the library was not looked at in a browser.
 
 ## Three browser engines (step 9.2)
 
