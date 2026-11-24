@@ -4539,4 +4539,40 @@
   <data name="Moment_Records" xml:space="preserve">
     <value>Who lived, what lasted and what happened then</value>
   </data>
+  <data name="Timeline_Groups" xml:space="preserve">
+    <value>What the chart shows</value>
+  </data>
+  <data name="Timeline_GroupsLead" xml:space="preserve">
+    <value>The names of this collection stand by kind, each with the stretch it lived or lasted, and names that do not meet in time share a row. Choose which kinds the chart shows; a lane for each name shows everything.</value>
+  </data>
+  <data name="Timeline_Group_Chip" xml:space="preserve">
+    <value>{0} ({1}) · {2} – {3}</value>
+  </data>
+  <data name="Timeline_Group_ChipNoYears" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
+  <data name="Timeline_Group_spans" xml:space="preserve">
+    <value>Periods, dynasties and states</value>
+  </data>
+  <data name="Timeline_Group_people" xml:space="preserve">
+    <value>People</value>
+  </data>
+  <data name="Timeline_Group_events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="Timeline_Group_works" xml:space="preserve">
+    <value>Works and objects</value>
+  </data>
+  <data name="Timeline_Group_places" xml:space="preserve">
+    <value>Places</value>
+  </data>
+  <data name="Timeline_Group_other" xml:space="preserve">
+    <value>Offices and other names</value>
+  </data>
+  <data name="Timeline_ByName" xml:space="preserve">
+    <value>A lane for each name</value>
+  </data>
+  <data name="Timeline_ByKind" xml:space="preserve">
+    <value>Names by kind, sharing rows</value>
+  </data>
 </root>

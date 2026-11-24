@@ -127,7 +127,13 @@ public static class TimelineLanes
     /// is stated of it, what is said between it and another name – or nothing when none of it can be placed
     /// there. The chart of a collection lays its lanes in this order, so that it reads as the time went.
     /// </summary>
-    public static decimal? Earliest(Entity subject, TimelineView view)
+    public static decimal? Earliest(Entity subject, TimelineView view) => Reach(subject, view)?.From;
+
+    /// <summary>
+    /// Returns the stretch of the axis of years everything a lane of a name holds lies in, or nothing when none
+    /// of it can be placed there.
+    /// </summary>
+    public static YearSpan? Reach(Entity subject, TimelineView view)
     {
         ArgumentNullException.ThrowIfNull(subject);
         ArgumentNullException.ThrowIfNull(view);
@@ -135,7 +141,73 @@ public static class TimelineLanes
             .Concat(subject.Dated.Select(dated => dated.Time))
             .Concat(view.Held.Where(edge => edge.From.Id == subject.Id).Select(edge => edge.Relation.Time))
             .Select(time => YearCover.Reach(time)).OfType<YearSpan>().ToList();
-        return reaches.Count == 0 ? null : reaches.Min(reach => reach.From);
+        return reaches.Count == 0 ? null : new YearSpan(reaches.Min(reach => reach.From), reaches.Max(reach => reach.To));
+    }
+
+    /// <summary>
+    /// Returns of the lane of a name what stands for the name where many names share a lane (D-099): the stretch
+    /// it lived or lasted, where its record states one; otherwise the stretches that are stated of it; otherwise
+    /// its single times. The rest is in the lane of the name itself, which the chart of every name and the page
+    /// of the name draw.
+    /// </summary>
+    public static ComparisonLane Chief(Entity subject, ComparisonLane lane)
+    {
+        ArgumentNullException.ThrowIfNull(subject);
+        ArgumentNullException.ThrowIfNull(lane);
+        var own = subject.Id.Value + "~";
+        var whole = lane.Periods.Where(period => period.Key.Contains(own, StringComparison.Ordinal)).ToImmutableArray();
+        return new ComparisonLane
+        {
+            Key = lane.Key,
+            Label = lane.Label,
+            Periods = !whole.IsEmpty ? whole : lane.Periods,
+            Events = whole.IsEmpty && lane.Periods.IsEmpty ? lane.Events : [],
+        };
+    }
+
+    /// <summary>
+    /// Returns one lane for several names (D-099): everything their own lanes hold, each bar and mark named by
+    /// whose it is. The chart lays what does not meet in time into one row, so that a lane of forty people is a
+    /// few rows and not forty lanes. The stretch a name lived or lasted and the time something happened are
+    /// named by the name alone; everything else by the name and what is said.
+    /// </summary>
+    /// <param name="key">The key of the lane among the lanes of the chart.</param>
+    /// <param name="label">What the lane is called: the kind of its names.</param>
+    /// <param name="lanes">The names with the lane of each, in the order they are to stand.</param>
+    /// <param name="visitor">Who asks: the language the names are said in.</param>
+    public static ComparisonLane Shared(string key, LocalizedText label, IEnumerable<(Entity Subject, ComparisonLane Lane)> lanes, Visitor visitor)
+    {
+        ArgumentNullException.ThrowIfNull(lanes);
+        ArgumentNullException.ThrowIfNull(visitor);
+        var periods = ImmutableArray.CreateBuilder<ComparisonPeriod>();
+        var events = ImmutableArray.CreateBuilder<ComparisonEvent>();
+        foreach (var (subject, lane) in lanes)
+        {
+            var own = subject.Id.Value + "~";
+            LocalizedText Of(string item, LocalizedText what, bool whole) => whole
+                ? subject.Label
+                : LocalizedText.Of(visitor.Language.Tag, $"{visitor.Text(subject.Label).Value} – {visitor.Text(what).Value}");
+            periods.AddRange(lane.Periods.Select(period => new ComparisonPeriod
+            {
+                Key = period.Key,
+                Label = Of(period.Key, period.Label, period.Key.Contains(own, StringComparison.Ordinal)),
+                Summary = period.Summary,
+                Time = period.Time,
+                Sources = period.Sources,
+                Review = period.Review,
+            }));
+            events.AddRange(lane.Events.Select(single => new ComparisonEvent
+            {
+                Key = single.Key,
+                Label = Of(single.Key, single.Label, single.Key.EndsWith(own + ProfileFacts.Happened.Key, StringComparison.Ordinal)),
+                Summary = single.Summary,
+                Time = single.Time,
+                Sources = single.Sources,
+                Review = single.Review,
+            }));
+        }
+
+        return new ComparisonLane { Key = key, Label = label, Periods = periods.ToImmutable(), Events = events.ToImmutable() };
     }
 
     /// <summary>

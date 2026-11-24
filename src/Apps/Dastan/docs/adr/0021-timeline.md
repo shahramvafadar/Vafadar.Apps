@@ -232,3 +232,17 @@ other and gets a view of its own. The still chart draws no axis of depth: a tabl
   36,000 px high at a wide window and 45,000 px on a phone, one lane for each of a hundred names (backlog E10);
   at the width of a phone a long label runs over its own bar; a relation whose label repeats the name of what
   it leads to reads twice ("King of the Medes King of the Medes") – that is content.
+* **A collection of many names is drawn by kind** (D-099, 2026-11-24). A lane for each of a hundred names made
+  a page of 36,000 px. With more than twelve names the chart of a collection has one lane for each kind that
+  is in it (`TimelineLanes.Shared`): periods, dynasties and states; people; events; works and objects; places;
+  offices and other names. Both drawings already lay what does not meet in time into one row of a lane, so
+  nothing of the script changed. In such a lane a name stands with one thing (`TimelineLanes.Chief`): the
+  stretch it lived or lasted where its record states one, otherwise the stretches stated of it, otherwise its
+  single times – named by the name. Which kinds are in the chart is in the address (`?open=spans,people`) and
+  chosen by links above the chart, each saying how many names the kind has and the years they lie in; the
+  chart begins with what lasts, or with the first kind there is. `?by=names` is the chart as it was, a lane
+  for each name with everything of it. The chart of one name and a collection of few names are as before.
+  *Looked at* with the library, Persian and English, dark and light, wide and at phone width: the chart of
+  Iran is 410 px high to begin with and 1,800 px with people and events in it. *Seen and left:* at the width
+  of a phone the names of bars that stand close run over each other (backlog E12, more visible now); a person
+  of whom only an office with years is stated carries the long label of that office.

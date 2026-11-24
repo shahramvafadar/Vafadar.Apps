@@ -39,9 +39,43 @@
         <ExploreBar State="_explore" />
     }
 
+    @if (_canGroup)
+    {
+        @* A collection of many names (D-099): its names by kind, each kind one lane in which names that do not
+           meet in time share a row. A kind is put into the chart and taken out by a link; one that is out says
+           how many names it has and the years they lie in. *@
+        <nav class="chart-tools timeline-kinds" id="kinds" aria-label="@T["Timeline_Groups"]">
+            @if (_grouped)
+            {
+                <p class="note">@T["Timeline_GroupsLead"]</p>
+                <p class="chart-tool">
+                    @foreach (var kind in _kinds)
+                    {
+                        var words = kind.Reach is { } reach
+                            ? string.Format(CultureInfo.CurrentCulture, T["Timeline_Group_Chip"], T[$"Timeline_Group_{kind.Key}"], kind.Names, YearAt(reach.From), YearAt(reach.To - 0.0001m))
+                            : string.Format(CultureInfo.CurrentCulture, T["Timeline_Group_ChipNoYears"], T[$"Timeline_Group_{kind.Key}"], kind.Names);
+                        if (kind.Open && _open.Count == 1)
+                        {
+                            <span class="choice" aria-current="true">@words</span>
+                        }
+                        else
+                        {
+                            <a class="choice" href="@Chosen(null, kind.Open ? _open.Where(key => key != kind.Key) : _open.Append(kind.Key))" aria-current="@(kind.Open ? "true" : null)">@words</a>
+                        }
+                    }
+                </p>
+                <p class="chart-tool"><a class="choice" href="@Chosen("names", null)">@T["Timeline_ByName"]</a></p>
+            }
+            else
+            {
+                <p class="chart-tool"><a class="choice" href="@Chosen(null, null)">@T["Timeline_ByKind"]</a></p>
+            }
+        </nav>
+    }
+
     @if (_timeline is { } timeline)
     {
-        <ComparisonView Comparison="timeline" Address="@_page" State="_state" LongNames="true" Carry="@(_explore is null ? null : _explore.Carry)"
+        <ComparisonView Comparison="timeline" Address="@_page" State="_state" LongNames="true" Carry="@(_explore is null ? Kept : _explore.Carry)"
                         SourceAddress="@(source => EvidenceAddress.Source(Site.Collection, source.Id, _here))" />
     }
     else
@@ -66,6 +100,18 @@
 
     // The name of the lane of the images and videos among the keys of the chart; no record of a collection has it.
     private const string MadeLane = "timeline-made";
+
+    // From how many names on the chart of a collection is drawn by kind, unless the visitor asks for every name.
+    private const int Many = 12;
+
+    // The kinds of names of a chart, in the order they stand: what lasts first, then who lived and what happened.
+    private static readonly string[] Kinds = ["spans", "people", "events", "works", "places", "other"];
+
+    private bool _canGroup;
+    private bool _grouped;
+    private HashSet<string> _open = [];
+    private List<(string Key, int Names, YearSpan? Reach, bool Open)> _kinds = [];
+    private string _kept = string.Empty;
 
     private Entity? _story;
     private Entity? _of;
@@ -107,6 +153,14 @@
     [SupplyParameterFromQuery(Name = "lanes")]
     public string? Lanes { get; set; }
 
+    /// <summary>Gets or sets how the lanes of a collection of many names are made, in the address: "names" for a lane of each name.</summary>
+    [SupplyParameterFromQuery(Name = "by")]
+    public string? By { get; set; }
+
+    /// <summary>Gets or sets the kinds of names that are in the chart, in the address, with commas between them.</summary>
+    [SupplyParameterFromQuery(Name = "open")]
+    public string? Open { get; set; }
+
     protected override void OnInitialized()
     {
         if (Collection != Site.Collection || Visitor.Projection is not { } projection)
@@ -133,9 +187,41 @@
 
         _page = _of is null ? $"{Site.Collection}/timeline" : $"{Site.Collection}/entity/{_of.Id}/timeline";
         _explore = _of is null ? null : Exploring.Of(Context, Visitor, _of.Id, ExplorationView.Timeline);
-        _here = $"{_page}{_state.Query()}";
+        // What the visitor chose of the kinds is kept by every link of the chart; anything else in the address is not.
+        var asked = (Open ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Where(Kinds.Contains).Distinct().ToList();
+        _kept = _of is not null ? string.Empty : By == "names" ? "by=names" : asked.Count > 0 ? "open=" + string.Join(',', Kinds.Where(asked.Contains)) : string.Empty;
+        _open = [.. asked];
+        _here = Kept($"{_page}{_state.Query()}");
         _timeline = Build(projection);
     }
+
+    // An address of the chart with what the visitor chose of the kinds.
+    private string Kept(string address) => _kept.Length == 0 ? address : $"{address}{(address.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{_kept}";
+
+    // The address of the chart as it is looked at, with another choice of the kinds.
+    private string Chosen(string? by, IEnumerable<string>? open)
+    {
+        var address = $"{_page}{_state.Query()}";
+        var kept = by is not null ? "by=" + by : open is null ? string.Empty : "open=" + string.Join(',', Kinds.Where(open.Contains));
+        return (kept.Length == 0 ? address : $"{address}{(address.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{kept}") + "#kinds";
+    }
+
+    private string YearAt(decimal place)
+    {
+        var (era, year) = YearAxis.YearAt(place);
+        return TimeText.Year(era, year, Visitor, T);
+    }
+
+    // The kind a name is of in the chart of a collection.
+    private static string KindOf(Entity entity) => entity.Type.Nature switch
+    {
+        EntityNature.Being => "people",
+        EntityNature.Occasion => entity.Type.Key == EntityTypes.Period.Key ? "spans" : "events",
+        EntityNature.Group => "spans",
+        EntityNature.Work or EntityNature.Object => "works",
+        EntityNature.Place => "places",
+        _ => "other",
+    };
 
     // The lanes of the chart: one for every entity something dated is stated about (TimelineLanes), and one for the
     // images and videos. Nothing is added to what the projection gives, and nothing is dated that states no date.
@@ -166,9 +252,40 @@
         }
 
         var lanes = ImmutableArray.CreateBuilder<ComparisonLane>();
-        foreach (var subject in view.Subjects)
+        _canGroup = _of is null && view.Subjects.Length > Many;
+        _grouped = _canGroup && By != "names";
+        if (_grouped)
         {
-            lanes.Add(TimelineLanes.Of(subject, view, Visitor, named: (name, time) => TimelineLanes.Named(name, time, Visitor, T)));
+            // By kind (D-099): one lane for each kind that is in the chart. Asked for nothing that is there, the
+            // chart begins with what lasts – the periods and the dynasties – or with the first kind it has.
+            var kinds = view.Subjects.GroupBy(KindOf).ToDictionary(kind => kind.Key, kind => kind.ToList(), StringComparer.Ordinal);
+            _open.IntersectWith(kinds.Keys);
+            if (_open.Count == 0)
+            {
+                _open = [kinds.ContainsKey("spans") ? "spans" : Kinds.First(kinds.ContainsKey)];
+            }
+
+            foreach (var key in Kinds.Where(kinds.ContainsKey))
+            {
+                var names = kinds[key];
+                var reaches = names.Select(name => TimelineLanes.Reach(name, view)).OfType<YearSpan>().ToList();
+                _kinds.Add((key, names.Count, reaches.Count == 0 ? null : new YearSpan(reaches.Min(reach => reach.From), reaches.Max(reach => reach.To)), _open.Contains(key)));
+                if (_open.Contains(key))
+                {
+                    lanes.Add(TimelineLanes.Shared(
+                        "kind-" + key,
+                        LocalizedText.Of(Visitor.Language.Tag, T[$"Timeline_Group_{key}"]),
+                        names.Select(name => (name, TimelineLanes.Chief(name, TimelineLanes.Of(name, view, Visitor, named: (of, time) => TimelineLanes.Named(of, time, Visitor, T))))),
+                        Visitor));
+                }
+            }
+        }
+        else
+        {
+            foreach (var subject in view.Subjects)
+            {
+                lanes.Add(TimelineLanes.Of(subject, view, Visitor, named: (name, time) => TimelineLanes.Named(name, time, Visitor, T)));
+            }
         }
 
         if (!view.Made.IsEmpty)

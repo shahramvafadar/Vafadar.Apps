@@ -4539,4 +4539,40 @@
   <data name="Moment_Records" xml:space="preserve">
     <value>چه کسی زنده بود، چه چیزی برقرار بود و چه رخ داد</value>
   </data>
+  <data name="Timeline_Groups" xml:space="preserve">
+    <value>نمودار چه چیزی را نشان می‌دهد</value>
+  </data>
+  <data name="Timeline_GroupsLead" xml:space="preserve">
+    <value>نام‌های این مجموعه بر پایهٔ نوع آمده‌اند، هر یک با بازه‌ای که زیست یا برقرار بود، و نام‌هایی که هم‌زمان نیستند در یک ردیف می‌آیند. برگزینید نمودار کدام نوع‌ها را نشان دهد؛ «هر نام در ردیف خودش» همه چیز را نشان می‌دهد.</value>
+  </data>
+  <data name="Timeline_Group_Chip" xml:space="preserve">
+    <value>{0} ({1}) · {2} تا {3}</value>
+  </data>
+  <data name="Timeline_Group_ChipNoYears" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
+  <data name="Timeline_Group_spans" xml:space="preserve">
+    <value>دوره‌ها، دودمان‌ها و دولت‌ها</value>
+  </data>
+  <data name="Timeline_Group_people" xml:space="preserve">
+    <value>اشخاص</value>
+  </data>
+  <data name="Timeline_Group_events" xml:space="preserve">
+    <value>رویدادها</value>
+  </data>
+  <data name="Timeline_Group_works" xml:space="preserve">
+    <value>آثار و اشیا</value>
+  </data>
+  <data name="Timeline_Group_places" xml:space="preserve">
+    <value>جاها</value>
+  </data>
+  <data name="Timeline_Group_other" xml:space="preserve">
+    <value>منصب‌ها و نام‌های دیگر</value>
+  </data>
+  <data name="Timeline_ByName" xml:space="preserve">
+    <value>هر نام در ردیف خودش</value>
+  </data>
+  <data name="Timeline_ByKind" xml:space="preserve">
+    <value>نام‌ها بر پایهٔ نوع، در ردیف‌های مشترک</value>
+  </data>
 </root>
