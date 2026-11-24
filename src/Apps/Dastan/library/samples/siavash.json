@@ -1,0 +1,3101 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "siavash",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-siavash",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-24",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-siavash-2026-11-24",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh, the Siavash sections 2 to 12 and the beginning of 14.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/siavosh",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "The story of Siavash from his birth to his death and what follows at once, to Rostam’s vow of vengeance; the poet’s preface and the story of Kay Khosrow are not part of it.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "A woman at the border of Turan"
+      },
+      {
+        "level": 1,
+        "label": "Birth, upbringing and Sudabeh"
+      },
+      {
+        "level": 2,
+        "label": "War and the broken peace"
+      },
+      {
+        "level": 3,
+        "label": "A new home in Turan"
+      },
+      {
+        "level": 4,
+        "label": "Garsivaz's plot"
+      },
+      {
+        "level": 5,
+        "label": "The news reaches Iran"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-siavosh-index",
+      "title": "Ganjoor: the story of Siavash, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-siavosh-s02",
+      "title": "Ganjoor: بخش ۲ - نخچیر طوس و گیو در مرز توران، یافتن ماه‌روی و ستیز تا سپردن او به کاووس",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲ - نخچیر طوس و گیو در مرز توران، یافتن ماه‌روی و ستیز تا سپردن او به کاووس"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s03",
+      "title": "Ganjoor: بخش ۳ - زادن سیاوش، پرورشش به دست رستم، بازگشت به کاووس و آغاز دلباختگی سودابه",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۳ - زادن سیاوش، پرورشش به دست رستم، بازگشت به کاووس و آغاز دلباختگی سودابه"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s04",
+      "title": "Ganjoor: بخش ۴ - کام‌جویی سودابه از سیاوش، تهمت ناروا و گذر بی‌گزند او از کوه آتش",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۴ - کام‌جویی سودابه از سیاوش، تهمت ناروا و گذر بی‌گزند او از کوه آتش"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s05",
+      "title": "Ganjoor: بخش ۵ - داوطلب شدن سیاوش برای جنگ افراسیاب، گشودن بلخ و نامهٔ کاووس در نهی از شتاب",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۵ - داوطلب شدن سیاوش برای جنگ افراسیاب، گشودن بلخ و نامهٔ کاووس در نهی از شتاب"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s06",
+      "title": "Ganjoor: بخش ۶ - خواب سهمگین افراسیاب، تعبیر موبدان و فرستادن گرسیوز با پیام آشتی به سیاوش",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۶ - خواب سهمگین افراسیاب، تعبیر موبدان و فرستادن گرسیوز با پیام آشتی به سیاوش"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s07",
+      "title": "Ganjoor: بخش ۷ - آمدن گرسیوز با خواستهٔ آشتی، گروگان و بازگشت افراسیاب، و خشم کاووس و گسیل طوس",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۷ - آمدن گرسیوز با خواستهٔ آشتی، گروگان و بازگشت افراسیاب، و خشم کاووس و گسیل طوس"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s08",
+      "title": "Ganjoor: بخش ۸ - نامهٔ پرخشم کاووس، امتناع سیاوش از پیمان‌شکنی و دعوت افراسیاب به توران",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۸ - نامهٔ پرخشم کاووس، امتناع سیاوش از پیمان‌شکنی و دعوت افراسیاب به توران"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s09",
+      "title": "Ganjoor: بخش ۹ - ورود سیاوش به توران، پذیرایی پیران و افراسیاب، پیوند با جریره و فرنگیس و بنیاد سیاوش‌گرد",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۹ - ورود سیاوش به توران، پذیرایی پیران و افراسیاب، پیوند با جریره و فرنگیس و بنیاد سیاوش‌گرد"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s10",
+      "title": "Ganjoor: بخش ۱۰ - رشک گرسیوز از جاه و هنر سیاوش، بدگویی نزد افراسیاب و فریب سیاوش به زاری دروغین",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۰ - رشک گرسیوز از جاه و هنر سیاوش، بدگویی نزد افراسیاب و فریب سیاوش به زاری دروغین"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s11",
+      "title": "Ganjoor: بخش ۱۱ - فریب گرسیوز، خشم افراسیاب و بریدن سر بی‌گناه سیاوش به دست گروی زره",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۱ - فریب گرسیوز، خشم افراسیاب و بریدن سر بی‌گناه سیاوش به دست گروی زره"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s12",
+      "title": "Ganjoor: بخش ۱۲ - بریدن سر سیاوش، کشانیدن فرنگیس به قتلگاه، و رهانیدن او به دست پیران و بردن به ختن",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۲ - بریدن سر سیاوش، کشانیدن فرنگیس به قتلگاه، و رهانیدن او به دست پیران و بردن به ختن"
+    },
+    {
+      "id": "src-ganjoor-siavosh-s14",
+      "title": "Ganjoor: بخش ۱۴ - خبر قتل سیاوش، سوگ کاووس و رستم، کشتن سودابه و آغاز کین با سر بریدن ورازاد و سرخه",
+      "url": "https://ganjoor.net/ferdousi/shahname/siavosh/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-24",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۴ - خبر قتل سیاوش، سوگ کاووس و رستم، کشتن سودابه و آغاز کین با سر بریدن ورازاد و سرخه"
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "Shahnameh",
+      "summary": "The literary work in which the story of Siavash is told.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-siavash",
+      "type": "NarrativeArc",
+      "label": "Siavash",
+      "summary": "The story of the prince Siavash, son of Kay Kavus, and of his years in Iran and in Turan.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-siavash",
+      "type": "Character",
+      "label": "Siavash",
+      "summary": "Son of Kay Kavus, raised by Rostam.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Kay Kavus, raised by Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-siavash-mother",
+      "type": "Character",
+      "label": "The mother of Siavash",
+      "summary": "Young woman of Turanian and royal descent, unnamed in the text.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Young woman of Turanian and royal descent, unnamed in the text"
+        }
+      ]
+    },
+    {
+      "id": "character-kay-kavus",
+      "type": "Character",
+      "label": "Kay Kavus",
+      "summary": "King of Iran, father of Siavash.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran, father of Siavash"
+        }
+      ]
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "Hero of Zabulistan who raises the prince.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Hero of Zabulistan who raises the prince"
+        }
+      ]
+    },
+    {
+      "id": "character-zal",
+      "type": "Character",
+      "label": "Zal",
+      "summary": "Lord of Zabulistan, also called Dastan.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Lord of Zabulistan, also called Dastan"
+        }
+      ]
+    },
+    {
+      "id": "character-zavareh",
+      "type": "Character",
+      "label": "Zavareh",
+      "summary": "Warrior of Zabulistan.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Zabulistan"
+        }
+      ]
+    },
+    {
+      "id": "character-tus",
+      "type": "Character",
+      "label": "Tus",
+      "summary": "Iranian noble and commander.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian noble and commander"
+        }
+      ]
+    },
+    {
+      "id": "character-giv",
+      "type": "Character",
+      "label": "Giv",
+      "summary": "Iranian noble, son of Gudarz.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian noble, son of Gudarz"
+        }
+      ]
+    },
+    {
+      "id": "character-gudarz",
+      "type": "Character",
+      "label": "Gudarz",
+      "summary": "Iranian noble, father of Giv and Bahram.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian noble, father of Giv and Bahram"
+        }
+      ]
+    },
+    {
+      "id": "character-sudabeh",
+      "type": "Character",
+      "label": "Sudabeh",
+      "summary": "Wife of Kay Kavus, from Hamavaran.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Wife of Kay Kavus, from Hamavaran"
+        }
+      ]
+    },
+    {
+      "id": "character-hirbad",
+      "type": "Character",
+      "label": "Hirbad",
+      "summary": "Keeper of the royal women's quarters.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Keeper of the royal women's quarters"
+        }
+      ]
+    },
+    {
+      "id": "character-sorceress",
+      "type": "Character",
+      "label": "The sorceress",
+      "summary": "Pregnant woman in Sudabeh's service, unnamed in the text.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Pregnant woman in Sudabeh's service, unnamed in the text"
+        }
+      ]
+    },
+    {
+      "id": "character-afrasiab",
+      "type": "Character",
+      "label": "Afrasiab",
+      "summary": "King of Turan.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-garsivaz",
+      "type": "Character",
+      "label": "Garsivaz",
+      "summary": "Brother of Afrasiab and Turanian commander.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Brother of Afrasiab and Turanian commander"
+        }
+      ]
+    },
+    {
+      "id": "character-barman",
+      "type": "Character",
+      "label": "Barman",
+      "summary": "Turanian commander.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian commander"
+        }
+      ]
+    },
+    {
+      "id": "character-sepahram",
+      "type": "Character",
+      "label": "Sepahram",
+      "summary": "Turanian commander.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian commander"
+        }
+      ]
+    },
+    {
+      "id": "character-bahram",
+      "type": "Character",
+      "label": "Bahram",
+      "summary": "Iranian warrior, son of Gudarz.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior, son of Gudarz"
+        }
+      ]
+    },
+    {
+      "id": "character-zangeh",
+      "type": "Character",
+      "label": "Zangeh-ye Shavaran",
+      "summary": "Iranian warrior and envoy.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Iranian warrior and envoy"
+        }
+      ]
+    },
+    {
+      "id": "character-piran",
+      "type": "Character",
+      "label": "Piran",
+      "summary": "Chief counsellor and commander of Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s08"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Chief counsellor and commander of Afrasiab"
+        }
+      ]
+    },
+    {
+      "id": "character-golshahr",
+      "type": "Character",
+      "label": "Golshahr",
+      "summary": "Wife of Piran.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Wife of Piran"
+        }
+      ]
+    },
+    {
+      "id": "character-jarira",
+      "type": "Character",
+      "label": "Jarira",
+      "summary": "Eldest daughter of Piran.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Eldest daughter of Piran"
+        }
+      ]
+    },
+    {
+      "id": "character-farangis",
+      "type": "Character",
+      "label": "Farangis",
+      "summary": "Eldest daughter of Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Eldest daughter of Afrasiab"
+        }
+      ]
+    },
+    {
+      "id": "character-forud",
+      "type": "Character",
+      "label": "Farud",
+      "summary": "Son of Jarira.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Jarira"
+        }
+      ]
+    },
+    {
+      "id": "character-garuy-zereh",
+      "type": "Character",
+      "label": "Garuy-ye Zereh",
+      "summary": "Turanian warrior in Garsivaz's following.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian warrior in Garsivaz's following"
+        }
+      ]
+    },
+    {
+      "id": "character-damur",
+      "type": "Character",
+      "label": "Damur",
+      "summary": "Turanian warrior in Garsivaz's following.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian warrior in Garsivaz's following"
+        }
+      ]
+    },
+    {
+      "id": "character-aghriras",
+      "type": "Character",
+      "label": "Aghriras",
+      "summary": "Brother of Afrasiab, recalled in speech.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Brother of Afrasiab, recalled in speech"
+        }
+      ]
+    },
+    {
+      "id": "character-behzad",
+      "type": "AnimalCharacter",
+      "label": "Behzad",
+      "summary": "Black horse of Siavash.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Black horse of Siavash"
+        }
+      ]
+    },
+    {
+      "id": "character-pilsam",
+      "type": "Character",
+      "label": "Pilsam",
+      "summary": "Younger brother of Piran.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Younger brother of Piran"
+        }
+      ]
+    },
+    {
+      "id": "character-lahhak",
+      "type": "Character",
+      "label": "Lahhak",
+      "summary": "Turanian noble.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s12"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian noble"
+        }
+      ]
+    },
+    {
+      "id": "character-farshidvard",
+      "type": "Character",
+      "label": "Farshidvard",
+      "summary": "Turanian noble.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s12"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Turanian noble"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "Kingdom of Kay Kavus.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-turan",
+      "type": "NarrativeRegion",
+      "label": "Turan",
+      "summary": "Kingdom of Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-zabulistan",
+      "type": "NarrativeRegion",
+      "label": "Zabulistan",
+      "summary": "Land of Rostam and Zal.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "place-kohestan",
+      "type": "NarrativeRegion",
+      "label": "Kohestan",
+      "summary": "Land granted to Siavash, also called Transoxiana in the text.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "place-hamavaran",
+      "type": "NarrativeRegion",
+      "label": "Hamavaran",
+      "summary": "Homeland of Sudabeh.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "place-herat",
+      "type": "NarrativePlace",
+      "label": "Herat",
+      "summary": "City on the army's route.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-balkh",
+      "type": "NarrativePlace",
+      "label": "Balkh",
+      "summary": "Border city fought over.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-termez",
+      "type": "NarrativePlace",
+      "label": "Termez",
+      "summary": "Town beyond the river.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-jeyhun",
+      "type": "NarrativePlace",
+      "label": "Jeyhun",
+      "summary": "River between Iran and Turan.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-sogd",
+      "type": "NarrativeRegion",
+      "label": "Sogd",
+      "summary": "Region where Afrasiab camps.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-gang",
+      "type": "NarrativePlace",
+      "label": "Gang",
+      "summary": "City of Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s07"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-khotan",
+      "type": "NarrativePlace",
+      "label": "Khotan",
+      "summary": "City of Piran.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-gang-dezh",
+      "type": "NarrativePlace",
+      "label": "Gang-dezh",
+      "summary": "Mountain stronghold built by Siavash.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-siavashgerd",
+      "type": "NarrativePlace",
+      "label": "Siavashgerd",
+      "summary": "City founded by Siavash.",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-siavash",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of the Shahnameh",
+      "sourceIds": [
+        "src-ganjoor-siavosh-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-siavash",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-siavosh-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-gudarz",
+      "to": "character-giv",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-kay-kavus",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "Rules",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-siavash-mother",
+      "to": "character-siavash",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-kay-kavus",
+      "to": "character-siavash",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-rostam",
+      "to": "character-siavash",
+      "type": "teacherOf",
+      "label": "Raised and taught",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-03"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-sudabeh",
+      "to": "character-kay-kavus",
+      "type": "spouseOf",
+      "label": "Married",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-sudabeh",
+      "to": "character-siavash",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-08"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-afrasiab",
+      "to": "character-kay-kavus",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-11",
+      "from": "character-rostam",
+      "to": "character-siavash",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-barman",
+      "to": "character-garsivaz",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-garsivaz",
+      "to": "character-afrasiab",
+      "type": "siblingOf",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s06"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-15"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-gudarz",
+      "to": "character-bahram",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s08"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-18"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-15",
+      "from": "character-bahram",
+      "to": "character-siavash",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s08"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-18"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-16",
+      "from": "character-zangeh",
+      "to": "character-siavash",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s08"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-18"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-17",
+      "from": "character-afrasiab",
+      "to": "place-turan",
+      "type": "leaderOf",
+      "label": "Rules",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s08"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-19"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-18",
+      "from": "character-piran",
+      "to": "character-siavash",
+      "type": "alliedWith",
+      "label": "On the same side",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-20"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-19",
+      "from": "character-piran",
+      "to": "character-jarira",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-22"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-20",
+      "from": "character-golshahr",
+      "to": "character-jarira",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-22"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-21",
+      "from": "character-siavash",
+      "to": "character-jarira",
+      "type": "spouseOf",
+      "label": "Married",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-22"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-22",
+      "from": "character-afrasiab",
+      "to": "character-farangis",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-23",
+      "from": "character-siavash",
+      "to": "character-farangis",
+      "type": "spouseOf",
+      "label": "Married",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-24",
+      "from": "character-golshahr",
+      "to": "character-piran",
+      "type": "spouseOf",
+      "label": "Married",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-25",
+      "from": "character-jarira",
+      "to": "character-forud",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-26"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-26",
+      "from": "character-siavash",
+      "to": "character-forud",
+      "type": "parentOf",
+      "label": "Parent of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-26"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-27",
+      "from": "character-garsivaz",
+      "to": "character-siavash",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-27"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-28",
+      "from": "character-aghriras",
+      "to": "character-afrasiab",
+      "type": "siblingOf",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-28"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-29",
+      "from": "character-pilsam",
+      "to": "character-piran",
+      "type": "siblingOf",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-31"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-30",
+      "from": "character-garuy-zereh",
+      "to": "character-siavash",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-31"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "A woman found at the Turan border",
+      "summary": "Out hunting near the frontier of Turan, Tus and Giv come upon a beautiful young woman in a thicket who says she fled her drunken father. Both claim her, so they take her to Kay Kavus, who hears her noble descent and places her in his women's quarters.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tus",
+          "role": "hunting noble who finds her",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "hunting noble who finds her",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "named as Giv's father",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-siavash-mother",
+          "role": "young woman found in the thicket",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who settles the dispute",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "named by her as a kinsman",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "frontier near the hunt",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "A son is born to Kavus",
+      "summary": "The woman gives birth to a son and the king names him Siavash. The star-readers see trouble in the child's fortune, and Kavus turns to God over it.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "newborn prince",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash-mother",
+          "role": "mother of the child",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "father who names the child",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "Rostam raises the boy in Zabulistan",
+      "summary": "Rostam asks to bring the child up himself, and Kavus agrees. In Zabulistan Rostam teaches him riding, archery, the hunt, courtly custom and the leading of armies.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hero who raises the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince in training",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who entrusts his son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-zabulistan",
+          "role": "where the prince is raised",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "The prince returns to his father",
+      "summary": "Grown up, Siavash asks to see his father, and Rostam escorts him back amid great celebration. Kavus welcomes him, tests him for seven years and then gives him a crown and the land of Kohestan.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "returning prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "escort of the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who receives and tests him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "noble sent to meet him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "noble sent to meet him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kohestan",
+          "role": "land granted to the prince",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "An invitation to the women's quarters",
+      "summary": "Sudabeh, the king's wife, sees Siavash and secretly invites him to the women's quarters; he refuses, so she asks Kavus, who orders the visit. Led by Hirbad, Siavash is embraced at length by Sudabeh and senses that her affection is not innocent.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen who invites the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince who visits reluctantly",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who orders the visit",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hirbad",
+          "role": "keeper of the women's quarters",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "A marriage is proposed",
+      "summary": "Sudabeh proposes that Siavash marry one of her daughters, and Kavus asks his son to choose a bride. Siavash asks that Sudabeh be kept out of it, but the king laughs and says her words come from care for him.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen proposing the match",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king seeking a bride for his son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince asked to choose",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "Sudabeh reveals her desire",
+      "summary": "On a second visit Sudabeh shows him the young maidens, then offers herself and asks him to swear to protect her after the king. Unwilling to betray his father and wary of her anger, Siavash answers gently and asks only for her daughter.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen who declares herself",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince who evades her",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hirbad",
+          "role": "messenger to the prince",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "Refusal and a cry of outrage",
+      "summary": "At a third meeting she declares a long-held love and threatens him, and he refuses outright. She tears her clothes and face, cries out, and tells Kavus that Siavash laid hands on her.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen who accuses the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince who refuses her",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who hears the outcry",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "The king seeks the truth",
+      "summary": "Kavus questions both and smells Siavash's hands and body, finding no trace of Sudabeh's scent. He judges his son innocent but holds back from punishing Sudabeh, mindful of Hamavaran, her past loyalty, his love and their young children.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who investigates",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "accused prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sudabeh",
+          "role": "accusing queen",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "The stillborn twins",
+      "summary": "Sudabeh has a pregnant woman versed in sorcery abort her twins and presents them as the king's own children, lost through Siavash. Astrologers find they are not the king's, the woman denies everything, and Sudabeh says all fear to speak against Rostam's ward.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen who stages false proof",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sorceress",
+          "role": "woman who aids the queen",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who consults astrologers",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince blamed for the loss",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "named by the queen as the prince's protector",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "Riding through the fire",
+      "summary": "On a mobed's advice Kavus orders a trial by fire between two mountains of burning wood, and Siavash accepts it. Dressed in white, he rides through the flames and comes out unharmed while the crowd rejoices.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince who undergoes the ordeal",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who orders the ordeal",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen who watches from the palace",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "A sentence and a pardon",
+      "summary": "Kavus condemns Sudabeh to be hanged, but Siavash asks him to spare her and the king pardons her. In time the king's love for her returns, and she again works in secret against Siavash.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who passes sentence",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sudabeh",
+          "role": "condemned queen",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince who pleads for her",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "blamed by the queen for sorcery",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "Siavash asks to lead the war",
+      "summary": "News comes that Afrasiab is marching on Iran with a hundred thousand riders. Hoping to escape Sudabeh and win renown, Siavash asks to command; Kavus sends Rostam with him, and father and son part in tears.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince who volunteers to command",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who agrees",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero sent with the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "invading king of Turan",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander who joins the muster",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "warrior chosen for the army",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zangeh",
+          "role": "warrior chosen for the army",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen the prince wishes to escape",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "Balkh falls; the king urges patience",
+      "summary": "Marching by way of Zabulistan and Herat, Siavash takes Balkh after three days of fighting, and Garsivaz and Barman fall back across the river. Kavus writes back that he should hold his ground and let Afrasiab come to him.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s05"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "commander of Iran's army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero with the army",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "host of the army in Zabulistan",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "Rostam's kinsman at the feasts",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "Turanian commander at Balkh",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-barman",
+          "role": "Turanian commander at Balkh",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sepahram",
+          "role": "Turanian commander at Balkh",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who replies by letter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king of Turan who hears the report",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-balkh",
+          "role": "city taken in battle",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "Afrasiab's terrible dream",
+      "summary": "Afrasiab wakes screaming from a dream of blood, defeat and the young son of Kavus striking him down. His mobeds warn that war with Siavash brings ruin either way, so he resolves on peace and sends Garsivaz with rich gifts.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s06"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "king troubled by a dream",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "brother sent with the peace offer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince seen in the dream",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero also to receive gifts",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "Peace for a hundred hostages",
+      "summary": "Garsivaz brings the gifts to Balkh, and on Rostam's advice Siavash asks for a hundred of Afrasiab's kin as hostages and the Iranian lands he holds. Afrasiab agrees, sends the hostages and withdraws to Gang.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s07"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-garsivaz",
+          "role": "envoy of Turan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince who sets the terms",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "adviser to the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who accepts the terms",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "Kavus rejects the peace",
+      "summary": "Rostam carries Siavash's letter to Kavus, who rages, orders the hostages sent to him for execution and demands war. When Rostam objects, the king blames him and appoints Tus instead, and Rostam leaves in anger.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s07"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "messenger who defends the peace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who rejects the peace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander appointed in Rostam's place",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince whose letter is read",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "A harsh letter and a hard choice",
+      "summary": "Kavus's angry letter orders Siavash to send the hostages and fight, or hand the army to Tus. Unwilling to break his oath or send innocent men to death, Siavash tells Bahram and Zangeh he will seek another land, and they fail to dissuade him.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s08"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince facing his father's order",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who sends the letter",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "confidant of the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zangeh",
+          "role": "confidant of the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander expected to take over",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen recalled by the prince",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "An invitation from Afrasiab",
+      "summary": "Zangeh returns the hostages to Afrasiab and asks for passage. On Piran's advice Afrasiab writes inviting Siavash to stay in Turan as a son, and Siavash, after writing to his father, hands the army to Bahram and leaves with three hundred riders.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s08"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zangeh",
+          "role": "envoy who returns the hostages",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who sends the invitation",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "counsellor of Afrasiab",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince who accepts and departs",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "warrior left in charge of the army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who receives his son's letter",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "A welcome across the river",
+      "summary": "Siavash crosses the Jeyhun and Piran meets him with a great escort; remembering Iran, Siavash weeps, and Piran pledges to protect him like a father. At Gang, Afrasiab comes out on foot to embrace him and gives him a palace.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince arriving in Turan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "noble who escorts the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who receives the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-jeyhun",
+          "role": "river crossed into Turan",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-gang",
+          "role": "Afrasiab's city",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "Feats at polo, archery and hunt",
+      "summary": "Siavash outshines everyone at polo, strings a bow Garsivaz cannot, hits the mark again and again and cuts a wild ass in two on the hunt. Some Turks murmur, but Afrasiab keeps him constantly at his side.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince showing his skills",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who admires him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "noble who fails to string the bow",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "player on the king's side",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "Marriage to Jarira",
+      "summary": "After a year Piran urges him to take a wife in Turan and offers his eldest daughter, Jarira. Golshahr prepares the bride, and Siavash lives happily with her.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-piran",
+          "role": "father who offers his daughter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "bridegroom",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jarira",
+          "role": "bride",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-golshahr",
+          "role": "mother who prepares the bride",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "Marriage to Farangis",
+      "summary": "Piran then proposes Afrasiab's daughter Farangis, and Siavash, accepting he may never see Iran again, agrees in tears. Afrasiab hesitates over a star-reading about an heir of the two lines but yields to Piran, and after the wedding grants Siavash a realm reaching to the sea of China.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-piran",
+          "role": "go-between for the match",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "bridegroom",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "father of the bride",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farangis",
+          "role": "bride",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-golshahr",
+          "role": "Piran's wife who brings the bride",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "A city site and dark forebodings",
+      "summary": "Free to choose his seat, Siavash travels with Piran by way of Khotan and builds the mountain stronghold of Gang-dezh. When astrologers call his chosen site unlucky he grieves, and he tells Piran that he foresees misfortune for himself and both lands.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince seeking a seat",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "companion who promises loyalty",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farangis",
+          "role": "wife travelling with him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-khotan",
+          "role": "Piran's city on the way",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-gang-dezh",
+          "role": "stronghold built by the prince",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-25",
+      "label": "Siavashgerd rises",
+      "summary": "While Piran collects tribute as far as India, Siavash builds a garden city adorned with paintings of kings and heroes and names it Siavashgerd. Piran visits and praises it to Afrasiab, who sends Garsivaz to see it.",
+      "order": 25,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "founder of the city",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "visitor who reports to the king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farangis",
+          "role": "wife who greets the visitor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who hears the report",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "noble sent to visit",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-siavashgerd",
+          "role": "city founded by the prince",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-26",
+      "label": "Garsivaz visits Siavashgerd",
+      "summary": "Garsivaz arrives as news comes that Jarira has borne Siavash a son, Farud, and the sight of Siavash's power and Farangis's palace fills him with envy. In contests Siavash pierces armour and shields and throws the champions Garuy-ye Zereh and Damur from their saddles.",
+      "order": 26,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-garsivaz",
+          "role": "visiting noble of Turan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "host of the visit",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farangis",
+          "role": "wife who receives the guest",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jarira",
+          "role": "mother of the newborn",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "newborn son",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "grandfather who sends the news",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-garuy-zereh",
+          "role": "Turanian champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-damur",
+          "role": "Turanian champion",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-27",
+      "label": "Slander at Afrasiab's court",
+      "summary": "Back at court Garsivaz tells Afrasiab that Siavash is in secret contact with Kavus and other kings. Afrasiab is torn and thinks of sending him back to his father; Garsivaz argues against it, keeps up his accusations and is sent to summon Siavash and Farangis.",
+      "order": 27,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-garsivaz",
+          "role": "accuser of the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who hesitates",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "accused prince",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king named in the accusation",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-28",
+      "label": "False tears",
+      "summary": "Siavash gladly prepares to go, but Garsivaz weeps and warns him that Afrasiab has turned against him, recalling how Afrasiab killed his own brother Aghriras. Siavash believes him and agrees to write instead and let Garsivaz plead for him.",
+      "order": 28,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s10"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-garsivaz",
+          "role": "envoy who feigns grief",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "prince who is persuaded",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king described by the envoy",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-aghriras",
+          "role": "brother of Afrasiab recalled by the envoy",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-29",
+      "label": "A letter and a lie",
+      "summary": "Siavash writes that Farangis is ill and he cannot come. Garsivaz hurries to Afrasiab and claims that Siavash scorned him and awaits foreign armies, and Afrasiab sets out with his troops.",
+      "order": 29,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince who writes to the king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "envoy who misreports",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who takes up arms",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farangis",
+          "role": "wife named as ill in the letter",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-30",
+      "label": "A dream of fire and water",
+      "summary": "Siavash wakes from a dream of a river, a mountain of fire and Afrasiab, and scouts report the Turanian army approaching. Farangis begs him to flee; he tells her what he foresees, whispers to his horse Behzad and sets out toward Iran.",
+      "order": 30,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince troubled by a dream",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farangis",
+          "role": "wife who urges flight",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-behzad",
+          "role": "the prince's black horse",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king whose army approaches",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "sender of a warning message",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-31",
+      "label": "Overtaken on the road",
+      "summary": "Afrasiab's army overtakes him, and Garsivaz points to his armour as proof of hostility. Siavash will not fight, his men are cut down, and he is wounded and bound by Garuy-ye Zereh; Pilsam and Farangis plead for him, and Farangis is locked away.",
+      "order": 31,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "captured prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who orders the attack",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "accuser at the king's side",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garuy-zereh",
+          "role": "warrior who binds the prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-damur",
+          "role": "warrior who urges the king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-pilsam",
+          "role": "young noble who pleads for restraint",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farangis",
+          "role": "wife who pleads with her father",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-32",
+      "label": "The death of Siavash",
+      "summary": "Dragged on foot out of the city, Siavash prays for a descendant to avenge him and sends a farewell to Piran through Pilsam. Garuy-ye Zereh takes Garsivaz's dagger and beheads him over a golden basin, and a black wind darkens the sky.",
+      "order": 32,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s11"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-siavash",
+          "role": "prince led to execution",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garuy-zereh",
+          "role": "executioner",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "noble who hands over the dagger",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-pilsam",
+          "role": "noble who follows in grief",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "recipient of the farewell",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-33",
+      "label": "Piran saves Farangis",
+      "summary": "Farangis cuts her hair and curses her father, who orders her dragged out and beaten. Pilsam, Lahhak and Farshidvard ride to Piran, who rushes to court, wins her from Afrasiab and takes her to Khotan into Golshahr's care.",
+      "order": 33,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s12"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-farangis",
+          "role": "widow in danger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who orders her punished",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "noble given the order",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-pilsam",
+          "role": "messenger to Piran",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-lahhak",
+          "role": "companion of the messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farshidvard",
+          "role": "companion of the messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "noble who rescues her",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-golshahr",
+          "role": "wife entrusted with her care",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "slain prince",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-khotan",
+          "role": "Piran's city where she is sheltered",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-34",
+      "label": "The news reaches Iran",
+      "summary": "When word of Siavash's killing reaches Kavus he falls from his throne, and the nobles mourn in black and dust. In Zabulistan Rostam faints at the news and Zal tears his face.",
+      "order": 34,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s14"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "grieving father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "mourning noble",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "mourning noble",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "mourning noble",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "grieving guardian",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "grieving elder of Zabulistan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "slain prince",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-35",
+      "label": "Rostam's reckoning and vow",
+      "summary": "Rostam comes to court, blames Kavus for following Sudabeh, then drags her from her chamber and kills her while the king does not move. He swears before the gathered heroes to avenge Siavash, and the army prepares to march.",
+      "order": 35,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s14"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hero who confronts the court",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who stays silent",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sudabeh",
+          "role": "queen blamed by Rostam",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "noble at the gathering",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "noble at the gathering",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "noble at the gathering",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "noble at the gathering",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garuy-zereh",
+          "role": "named by Rostam as the slayer",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "slain prince",
+          "presence": "deceased_subject"
+        }
+      ]
+    }
+  ],
+  "media": []
+}
