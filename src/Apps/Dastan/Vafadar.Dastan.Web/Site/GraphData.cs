@@ -351,7 +351,7 @@ public static class GraphDataEndpoints
             // The ways on are offered only where they lead to something: a timeline with a statement, a gallery with a picture.
             Centre = explore is null || explore.Subject == entity.Id ? null : $"{site.Collection}/{explore.Centre(entity.Id).Address(explore.View)}",
             Compare = explore is null || !Exploring.CanCompare(visitor.Projection, explore, entity.Id) ? null : $"{site.Collection}/{explore.Choose(entity.Id).Compare(entity.Id).Address(explore.View)}",
-            Timeline = !entity.Dated.IsEmpty ? profile.Address + "/timeline" : null,
+            Timeline = !entity.Dated.IsEmpty || RecordTimes.Any(entity) ? profile.Address + "/timeline" : null,
             Gallery = visitor.Projection.Gallery(entity.Id) is { IsEmpty: false } ? profile.Address + "/gallery" : null,
             NameLanguage = profile.NameLanguage,
             Kind = profile.Kind,

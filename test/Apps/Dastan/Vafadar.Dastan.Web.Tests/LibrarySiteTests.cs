@@ -1,6 +1,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Data;
 using Vafadar.Dastan.Web.Site;
 
@@ -94,6 +95,50 @@ public sealed class LibrarySiteTests
             var page = await visitor.Get(address);
             Assert.True(page.Status == HttpStatusCode.OK, $"{address} answered {(int)page.Status}.");
         }
+    }
+
+    [Fact]
+    public async Task ACollectionOfTheLibraryPlacesItsNamesInTimeByWhatTheirRecordsState()
+    {
+        // The collections of the library say when somebody lived and when a battle was fought as facts of the
+        // record (D-098): every such name stands in the chart of time, and a year names who lived in it.
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var library = site.Services.GetRequiredService<DastanLibrary>();
+        var placed = 0;
+        foreach (var collection in library.Collections)
+        {
+            var read = collection.At(new ReadingLevel(0))!;
+            var stated = read.Entities.Where(RecordTimes.Any).ToList();
+            var subjects = read.Timeline().Subjects.Select(subject => subject.Id).ToHashSet();
+            Assert.All(stated, entity => Assert.Contains(entity.Id, subjects));
+            placed += stated.Count;
+
+            if (stated.FirstOrDefault(entity => RecordTimes.Of(entity).Any(time => time.IsSpan)) is not { } lived)
+            {
+                continue;
+            }
+
+            // The middle of the first stretch the collection states: the page of that year names its owner.
+            var reach = YearCover.Reach(RecordTimes.Of(lived).First(time => time.IsSpan).Time)!.Value;
+            var year = YearOfEra.At((reach.From + reach.To) / 2);
+            Assert.Contains(read.At(year).Records, record => record.Entity.Id == lived.Id);
+            var page = await visitor.Get($"/en/{collection.Collection}/at?year={year.Number}{(year.Era == Vafadar.Temporal.Era.BeforeCommonEra ? "&era=bce" : null)}");
+            Assert.Equal(HttpStatusCode.OK, page.Status);
+            Assert.Contains("id=\"records\"", page.Html, StringComparison.Ordinal);
+
+            // And the chart of time of the collection draws that stretch in the lane of the name.
+            var chart = await visitor.Get($"/en/{collection.Collection}/timeline");
+            Assert.Contains(RecordTimes.Of(lived).First(time => time.IsSpan).Key, chart.Html, StringComparison.Ordinal);
+            Assert.Contains($"{collection.Collection}/entity/{lived.Id.Value}\"", page.Html, StringComparison.Ordinal);
+        }
+
+        Assert.True(placed > 0, "No collection of the library states a time among its facts.");
     }
 
     [Fact]

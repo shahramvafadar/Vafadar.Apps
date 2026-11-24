@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The timeline of a collection and "in a year" show everybody and everything whose record says when: a person
+  by the years of their life, a battle by its year, a dynasty from its beginning to its end. Before, a name
+  stood there only through a relation with years, and most battles and many people were missing.
 - A page in English asks for its font with the page: its text and its buttons no longer move a moment after the
   page is shown.
 - The product specification, the editorial sample and the original media are in the repository

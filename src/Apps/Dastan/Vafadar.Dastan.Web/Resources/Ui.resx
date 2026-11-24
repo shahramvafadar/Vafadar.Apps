@@ -4536,4 +4536,7 @@
   <data name="Discover_Group_Other" xml:space="preserve">
     <value>More to explore</value>
   </data>
+  <data name="Moment_Records" xml:space="preserve">
+    <value>Who lived, what lasted and what happened then</value>
+  </data>
 </root>

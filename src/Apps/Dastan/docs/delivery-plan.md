@@ -1518,3 +1518,28 @@ The third review was read again, change by change, against its tests.
 | Places people can have been at | ten to fifteen well-known universities and organisations, unless the owner names their own |
 | 25.5: which facts of an account | the four of the table |
 | 25.6: from how many cards a drawing is compact | set after looking at real collections, in one constant |
+
+## 26. A review of the whole on 2026-11-24 (D-098)
+
+On the owner's word: is everything complete, can the look be better, is the structure of the information whole.
+The repository, the build server, the documents of the product and the collections of the library were read;
+the site was not started (the owner's rule), so nothing of the look was judged by eye.
+
+* **Found and corrected, the build server:** the commit that brought Inter in failed two tests of the browser in
+  WebKit. A page in English was drawn in a font of the device and moved when the 352 KB of Inter arrived; a click
+  fell beside a button now and then. Such a page asks for the font with the page now (ADR 0004). Twelve runs of
+  the two tests in WebKit and the whole suite passed.
+* **Found and corrected, the views of time (D-098):** the collections of the library state their dates as facts
+  of the record, and the chart of time of a collection, the years it covers and "what held in a year" read only
+  dated statements and relations. 134 of 212 names with such a time were in none of them, 67 events among them. The three views read
+  the times of a record now (`RecordTimes`, ADR 0021). *Tests:* `RecordTimesTests` – a stretch and one time,
+  the chart, the years, a year and a stretch of years, a later reading stage – and
+  `LibrarySiteTests.ACollectionOfTheLibraryPlacesItsNamesInTimeByWhatTheirRecordsState`, which asks every
+  collection of the library. *Not looked at:* the chart of a history with its hundred lanes, in a browser.
+* **Found and written down, not built** – rows of [the backlog](backlog.md), part E: what the content needs of
+  the formats (five rows of the content roadmap), kinds of a picture of a history, the further times of a
+  picture, correspondences between the three collections of the world of the Shahnameh.
+* **For the owner:** document 04 asks to keep the calendar a source writes in (TIME-009); D-043 stores every
+  date in the Gregorian calendar. One of the two has to give way.
+* **Documents brought up to the day:** the backlog (content is written; trying it waits for the owner's word
+  only), the format page (names `library/`), the acceptance page.

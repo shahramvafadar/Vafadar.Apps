@@ -211,3 +211,16 @@ other and gets a view of its own. The still chart draws no axis of depth: a tabl
   below the caption and is kept under what the place names (`places` of a translation); a place whose caption
   is emptied is taken out with its translation. An empty list of sources and an empty list of places are not
   written. Whether an item may stand in a place is still asked of the readers, not of the form.
+* **The times of a record are times too** (D-098, 2026-11-24, `RecordTimes` in Core). A collection says when
+  somebody lived and when a battle was fought as facts of the record – `born`, `died`, `founded`, `dissolved`,
+  `began`, `ended`, `happened`, `created` – and not as dated statements. Until this day the chart of time of a
+  collection, the years it covers and "what held in a year" read only the dated statements and the relations
+  with a time: of the 212 names of the library that state such a time, 134 were in no view of time, 67 battles and other
+  events among them. The three views read these facts
+  now, through one place. *A stretch* – a life, the time something lasted – is given only where both its ends
+  are stated with a time that can be placed: somebody of whom only the birth is known is not said to "may have
+  lived" in every later year; the birth is one time then. A time that is unknown or does not apply gives
+  nothing. The chart draws a stretch as a bar ("Life", "From founding to end") and one time as a mark named
+  by its fact; the page of a year lists them under a heading of their own, below what is stated for the year.
+  What a visitor has not read is in none of them: the facts are those of the projection. The comparison a
+  visitor builds keeps its own bar of a life, open at an end that is not stated, as before.

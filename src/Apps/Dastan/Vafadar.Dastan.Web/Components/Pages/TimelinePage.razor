@@ -157,7 +157,7 @@
         var lanes = ImmutableArray.CreateBuilder<ComparisonLane>();
         foreach (var subject in view.Subjects)
         {
-            lanes.Add(TimelineLanes.Of(subject, view, Visitor));
+            lanes.Add(TimelineLanes.Of(subject, view, Visitor, named: (name, time) => TimelineLanes.Named(name, time, Visitor, T)));
         }
 
         if (!view.Made.IsEmpty)

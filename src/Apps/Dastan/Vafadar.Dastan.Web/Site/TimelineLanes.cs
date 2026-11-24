@@ -20,7 +20,11 @@ public static class TimelineLanes
     /// What is put before every key of the lane and of the sources it cites, so that lanes of several collections
     /// stand in one chart without two keys meeting; empty for the chart of one collection.
     /// </param>
-    public static ComparisonLane Of(Entity subject, TimelineView view, Visitor visitor, string prefix = "")
+    /// <param name="named">
+    /// What a time of the record of the name is called in the language of the page (<see cref="Named"/>). Without
+    /// it the lane holds the statements and the relations only – for a chart that lays the life of a name itself.
+    /// </param>
+    public static ComparisonLane Of(Entity subject, TimelineView view, Visitor visitor, string prefix = "", Func<Entity, RecordTime, LocalizedText>? named = null)
     {
         ArgumentNullException.ThrowIfNull(subject);
         ArgumentNullException.ThrowIfNull(view);
@@ -34,12 +38,23 @@ public static class TimelineLanes
         ImmutableArray<SourceId> Cited(ImmutableArray<SourceId> sources) =>
             prefix.Length == 0 ? sources : [.. sources.Select(source => new SourceId(prefix + source.Value))];
 
+        // What the record of the name states of the name itself (D-098): the stretch it lived or lasted, or the
+        // one time it was born, happened or was made.
+        var record = named is null ? [] : RecordTimes.Of(subject);
         return new ComparisonLane
         {
             Key = prefix + subject.Id.Value,
             Label = subject.Label,
             Periods =
             [
+                .. record.Where(time => time.Time is Period).Select(time => new ComparisonPeriod
+                {
+                    Key = prefix + time.Key,
+                    Label = named!(subject, time),
+                    Time = (Period)time.Time,
+                    Sources = Cited(time.Sources),
+                    Review = ReviewStatus.SourcedReviewPending,
+                }),
                 .. subject.Dated.Where(dated => dated.Time is Period).Select(dated => new ComparisonPeriod
                 {
                     Key = prefix + dated.Key,
@@ -60,6 +75,14 @@ public static class TimelineLanes
             ],
             Events =
             [
+                .. record.Where(time => time.Time is not Period).Select(time => new ComparisonEvent
+                {
+                    Key = prefix + time.Key,
+                    Label = named!(subject, time),
+                    Time = time.Time,
+                    Sources = Cited(time.Sources),
+                    Review = ReviewStatus.SourcedReviewPending,
+                }),
                 .. subject.Dated.Where(dated => dated.Time is not null and not Period).Select(dated => new ComparisonEvent
                 {
                     Key = prefix + dated.Key,
@@ -79,6 +102,21 @@ public static class TimelineLanes
                 }),
             ],
         };
+    }
+
+    /// <summary>
+    /// Returns what a time of the record of a name is called: "Life" for the years of a person, "From beginning to
+    /// end" for those of anything else, and the name of the fact for one time – "Born", "When it happened".
+    /// </summary>
+    public static LocalizedText Named(Entity subject, RecordTime time, Visitor visitor, Microsoft.Extensions.Localization.IStringLocalizer text)
+    {
+        ArgumentNullException.ThrowIfNull(subject);
+        ArgumentNullException.ThrowIfNull(time);
+        ArgumentNullException.ThrowIfNull(visitor);
+        ArgumentNullException.ThrowIfNull(text);
+        return LocalizedText.Of(visitor.Language.Tag, time.IsSpan
+            ? text[subject.Type.Key == EntityTypes.Person.Key ? "Compare_Life_Person" : "Compare_Life_Other"].Value
+            : text[$"Fact_{time.From.Key}"].Value);
     }
 
     /// <summary>

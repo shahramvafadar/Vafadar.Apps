@@ -8,7 +8,8 @@ on. The site shows it as pages, lists and charts, never further than a reader ha
 editorial file a collection is read from. How to work with it – the rules, the command that checks it – is in the
 [guide for writers](content-guide.md).
 
-* Files: `content/samples/<name>.json`, with translations beside it as `<name>.<language>.json`.
+* Files: `content/samples/<name>.json` for what the tests are written against and `library/samples/<name>.json`
+  for the collections that are written to be published, with translations beside each as `<name>.<language>.json`.
 * Reader: `Vafadar.Dastan.Data.PilotSample`; model: `Vafadar.Dastan.Core.Catalogue`.
 * The file is input of the app and not a public interface: the format may change with its version, and the reader
   refuses what it does not understand – a field it does not know, a required field that is missing or empty, a
@@ -178,7 +179,7 @@ time is not known where they say that.
 | `fact` | The key of the fact – one the type of the entity has. A fact is stated once, except the few that may be stated several times (`founder`, `creator`, `participant`) |
 | `text` | For a fact that is said in words: the words, in the language of the collection |
 | `entityId` | For a fact that names a place or another entity: its identifier. A place is an entity whose type is a place |
-| `time` | For a fact that says when: the time as in `dated`. `{ "kind": "unknown" }` states that nobody knows; `{ "kind": "inapplicable" }` that there is none – somebody who lives has no time of death |
+| `time` | For a fact that says when: the time as in `dated`. `{ "kind": "unknown" }` states that nobody knows; `{ "kind": "inapplicable" }` that there is none – somebody who lives has no time of death. The views of time read these times (D-098): a name stands in the chart of time and under a year by `born`/`died`, `founded`/`dissolved`, `began`/`ended`, `happened` and `created` – a stretch where both ends are stated, otherwise the one time. Nothing has to be written a second time as `dated` |
 | `sourceIds` | Optional: the sources the fact rests on |
 | `spoilerLevel` | Optional: the stage from which the fact is told – not before its entity. Until then it is shown like one nobody stated |
 

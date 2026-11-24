@@ -91,6 +91,7 @@
         {
             var relations = _moment?.Relations ?? _held!.Relations;
             var statements = _moment?.Stated ?? _held!.Stated;
+            var records = _moment?.Records ?? _held!.Records;
             var where = relations.Where(held => held.Edge.To.Type.Nature == EntityNature.Place).ToList();
             var other = relations.Where(held => held.Edge.To.Type.Nature != EntityNature.Place).ToList();
 
@@ -111,7 +112,7 @@
             @* What was chosen is carried on (R-EXP-05): the same time, as a gallery of what shows it. *@
             <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/gallery?time={Uri.EscapeDataString(_time)}")">@T["Moment_Pictures"]</a></p>
 
-            @if (relations.IsEmpty && statements.IsEmpty)
+            @if (relations.IsEmpty && statements.IsEmpty && records.IsEmpty)
             {
                 <p class="note" role="status">@T[_held is null ? "Moment_Nothing" : "Moment_NothingTime"]</p>
             }
@@ -139,6 +140,30 @@
                                     }
                                     <span class="when">@TimeText.Of(stated.Statement.Time!, Visitor, T)</span>
                                     @if (stated.Holding == Holding.Possibly)
+                                    {
+                                        <span class="meta possibly">– @T["Moment_Possibly"]</span>
+                                    }
+                                </dd>
+                            }
+                        </dl>
+                    </section>
+                }
+
+                @* What the records of the names say of themselves (D-098): who lived, what lasted, what happened. *@
+                @if (!records.IsEmpty)
+                {
+                    <section aria-labelledby="records">
+                        <h2 id="records">@T["Moment_Records"]</h2>
+                        <dl class="facts stated">
+                            @foreach (var record in records)
+                            {
+                                <dt>
+                                    <a href="@($"{Site.Collection}/entity/{record.Entity.Id}")"><Loc Text="record.Entity.Label" /></a>:
+                                    <Loc Text="TimelineLanes.Named(record.Entity, record.Time, Visitor, T)" />
+                                </dt>
+                                <dd>
+                                    <span class="when">@TimeText.Of(record.Time.Time, Visitor, T)</span>
+                                    @if (record.Holding == Holding.Possibly)
                                     {
                                         <span class="meta possibly">– @T["Moment_Possibly"]</span>
                                     }

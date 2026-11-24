@@ -4536,4 +4536,7 @@
   <data name="Discover_Group_Other" xml:space="preserve">
     <value>چیزهای دیگر برای کاوش</value>
   </data>
+  <data name="Moment_Records" xml:space="preserve">
+    <value>چه کسی زنده بود، چه چیزی برقرار بود و چه رخ داد</value>
+  </data>
 </root>
