@@ -246,3 +246,12 @@ other and gets a view of its own. The still chart draws no axis of depth: a tabl
   Iran is 410 px high to begin with and 1,800 px with people and events in it. *Seen and left:* at the width
   of a phone the names of bars that stand close run over each other (backlog E12, more visible now); a person
   of whom only an office with years is stated carries the long label of that office.
+* **A name never lies over a name or a mark** (2026-11-24, backlog E12). The moving chart asked a row for a
+  mark as if its name always stood after it; where the view ended first, the name was put at the side of the
+  view or before the mark – over what stood there already. With many names in one lane, at the width of a
+  phone, names lay over each other. A row is asked for as far as the mark and its name really reach, by the
+  rules that place the name; and a bar that ends in sight has its name beside it – before it where that has
+  room, shortened otherwise – and at the side of the view only where the bar itself runs out of it. *Seen in
+  a browser* with the library at 375 px and 1280 px, Persian and English: of 90 and of 76 marks no name over a
+  name, over its own mark or over another. `LibraryTimelineBrowserTests` asks the same of the collection with
+  the most names, in Chromium, Firefox and WebKit.

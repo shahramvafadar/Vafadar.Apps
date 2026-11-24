@@ -4,6 +4,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- On a phone the names in a timeline no longer lie over each other or over the bars.
 - The timeline of a large collection is short: its names stand by kind – periods and dynasties, people, events –,
   names that do not meet in time share a row, and you choose which kinds the chart shows. "A lane for each
   name" shows everything as before.
