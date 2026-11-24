@@ -286,13 +286,54 @@ class DastanGraph {
           // The words of a line stay on one line of text: the control would break them at every space, and
           // the marks of the direction must stand around a whole line.
           // Seen in Firefox, where the letters are a little larger: the labels of two lines between the same
-          // two cards touched. So each also stands at its own part of the way along its line.
-          annotations: named ? [{ content: directed(label), offset: share, style: { fontFamily: this.look.font, fontSize: 12, color: this.look.text, fill: this.look.surface, textWrapping: 'NoWrap' } }] : [],
+          // two cards touched. So each also stands at its own part of the way along its line – spread from near
+          // the first card to near the second, as far apart as they can be, since the Latin font is wider (D-097).
+          annotations: named ? [{ content: directed(label), offset: edges.length > 1 ? 0.15 + (0.7 * index / (edges.length - 1)) : 0.5, style: { fontFamily: this.look.font, fontSize: 12, color: this.look.text, fill: this.look.surface, textWrapping: 'NoWrap' } }] : [],
         });
       });
     }
 
     return { connectors, ports };
+  }
+
+  // The words of two lines can fall on one another where the lines cross or run side by side – more so in a
+  // wider font (D-097). Where they do, the words of the later line are moved along it, away from its middle, a
+  // few times at most; a line keeps its words, only their place on it changes.
+  private apart(): void {
+    if (!this.diagram) {
+      return;
+    }
+
+    const overlaps = (a: DOMRect, b: DOMRect): boolean =>
+      a.left < b.right - 2 && b.left < a.right - 2 && a.top < b.bottom - 2 && b.top < a.bottom - 2;
+    for (let pass = 0; pass < 8; pass++) {
+      const boxes = this.diagram.connectors
+        .filter(line => (line.annotations?.length ?? 0) > 0)
+        .map(line => ({ line, box: this.canvas.querySelector(`[id="${line.id}_groupElement"] text`)?.getBoundingClientRect() }))
+        .filter((entry): entry is { line: typeof entry.line; box: DOMRect } => entry.box !== undefined && entry.box.width > 0);
+      let moved = false;
+      for (let one = 0; one < boxes.length; one++) {
+        for (let other = one + 1; other < boxes.length; other++) {
+          if (!overlaps(boxes[one]!.box, boxes[other]!.box)) {
+            continue;
+          }
+
+          const words = boxes[other]!.line.annotations![0]!;
+          const at = words.offset ?? 0.5;
+          const next = at <= 0.5 ? Math.max(0.08, at - 0.12) : Math.min(0.92, at + 0.12);
+          if (next !== at) {
+            words.offset = next;
+            moved = true;
+          }
+        }
+      }
+
+      if (!moved) {
+        return;
+      }
+
+      this.diagram.dataBind();
+    }
   }
 
   draw(): void {
@@ -323,6 +364,7 @@ class DastanGraph {
       scrollChange: () => this.keepStanding(),
     });
     this.diagram.appendTo(this.canvas);
+    this.apart();
     this.diagram.fitToPage({ mode: 'Page', region: 'Content', canZoomIn: false, margin: { left: 24, right: 24, top: 24, bottom: 24 } });
 
     // A visitor who comes back to this place of the history finds the drawing as large and as far moved as it
@@ -907,6 +949,15 @@ async function start(host: HTMLElement): Promise<void> {
     if (host.dataset['key']) {
       registerLicense(host.dataset['key']);
     }
+
+    // Texts are measured in the font of the page: where it has not arrived yet – the Latin font is asked for only
+    // when Latin letters are shown – the drawing waits for it a little, or labels measured in the font that
+    // stands in would lie on one another once it has arrived (D-097).
+    const family = getComputedStyle(host).fontFamily;
+    await Promise.race([
+      Promise.all([document.fonts.load(`12px ${family}`, 'Aa'), document.fonts.load(`bold 12px ${family}`, 'Aa')]),
+      new Promise(resolve => setTimeout(resolve, 2000)),
+    ]).catch(() => undefined);
 
     // The drawing is measured where it is shown: the place is opened first.
     live.hidden = false;
