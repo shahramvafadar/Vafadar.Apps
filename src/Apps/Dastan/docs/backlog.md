@@ -96,6 +96,11 @@ What reading the whole against the documents of the product found ([delivery pla
 | E10 | The chart of time of a history by kind, a kind put in and taken out by a link, names that do not meet sharing a row (D-099) | The page of Iran was about 36,000 px high; the chart is 410 px to begin with | Done (2026-11-24) |
 | E11 | Labels of relations that repeat the name they lead to ("King of the Medes" to an office of the same name) | Seen in the chart of Iran on 2026-11-24 | Planned, content |
 | E12 | At the width of a phone the names of bars that stand close run over each other and over their bars – more visible since E10, where many names share a lane | Seen on 2026-11-24 | Done (2026-11-24): a row is kept for a mark as far as its name really reaches |
+| E13 | A list of the page of a collection shows its first twelve cards and folds the others; a story without a step leads to its name, and its page of steps leads on | The page of the Shahnameh was about 43,500 px high on a phone; its 70 stories all led to "No step of the story to show" | Done (2026-11-24) |
+| E14 | A year asked for leads to its answer (`#answer`); the stage of a map is as high as the map on a narrow screen | Seen on a phone on 2026-11-24: the forms filled the first screen again; a map stood in the middle of an empty stage | Done (2026-11-24) |
+| E15 | Persian orders written in words in the text of the Shahnameh (148 places) | "۱مین پادشاهی" is not Persian | Done (2026-11-24), content, still a draft |
+| E16 | The title of the page of places of a collection whose name begins with "Places" reads "Places of Places of …" | Seen on 2026-11-24; a matter of the name of that collection | Planned, content |
+| E17 | The map of a collection opens at its western edge on a phone, whatever the places are | Seen on 2026-11-24 with ancient Iran: the first screen shows Greece | Planned |
 
 ## Not planned
 

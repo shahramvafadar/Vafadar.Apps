@@ -4575,4 +4575,16 @@
   <data name="Timeline_ByKind" xml:space="preserve">
     <value>نام‌ها بر پایهٔ نوع، در ردیف‌های مشترک</value>
   </data>
+  <data name="Collection_MoreStories" xml:space="preserve">
+    <value>{0} داستان دیگر</value>
+  </data>
+  <data name="Collection_MoreSubjects" xml:space="preserve">
+    <value>{0} نام دیگر</value>
+  </data>
+  <data name="Story_ToName" xml:space="preserve">
+    <value>آنچه دربارهٔ «{0}» گفته شده</value>
+  </data>
+  <data name="Story_ToldIn" xml:space="preserve">
+    <value>گام‌به‌گام در «{0}»</value>
+  </data>
 </root>

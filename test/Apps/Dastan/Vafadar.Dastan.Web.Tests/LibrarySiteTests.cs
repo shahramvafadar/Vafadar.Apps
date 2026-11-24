@@ -153,6 +153,94 @@ public sealed class LibrarySiteTests
     [Theory]
     [InlineData("en")]
     [InlineData("fa")]
+    public async Task AListOfAPageOfACollectionShowsAFewAndNoStoryLeadsToAnEmptyPage(string language)
+    {
+        // A work of seventy stories and a hundred names: a list shows its first twelve cards and folds the others
+        // into the same page; a story the collection only names leads to what is known of it, and its page of
+        // steps – an address somebody may still hold – leads there too.
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var library = site.Services.GetRequiredService<DastanLibrary>();
+        foreach (var collection in library.Collections)
+        {
+            var projection = collection.At(new ReadingLevel(0))!;
+            var overview = projection.Overview()!;
+            var page = (await visitor.Get($"/{language}/{collection.Collection}")).Html;
+
+            // Outside the folds no list has more than twelve cards.
+            var open = System.Text.RegularExpressions.Regex.Replace(page, "<details class=\"fold more-cards\">.*?</details>", string.Empty, System.Text.RegularExpressions.RegexOptions.Singleline);
+            foreach (System.Text.RegularExpressions.Match list in System.Text.RegularExpressions.Regex.Matches(open, "<ul class=\"cards\" role=\"list\">.*?</ul>", System.Text.RegularExpressions.RegexOptions.Singleline))
+            {
+                Assert.True(System.Text.RegularExpressions.Regex.Matches(list.Value, "<li class=\"card\">").Count <= 12, $"A list of {collection.Collection} shows more than twelve cards.");
+            }
+
+            Assert.Equal(overview.Subjects.Length > 12 || overview.Stories.Length > 12, page.Contains("more-cards", StringComparison.Ordinal));
+            foreach (var subject in overview.Subjects)
+            {
+                Assert.Contains($"href=\"{collection.Collection}/entity/{subject.Id}\"", page, StringComparison.Ordinal);
+            }
+
+            if (overview.Stories.Length <= 1)
+            {
+                continue;
+            }
+
+            foreach (var story in overview.Stories)
+            {
+                var steps = projection.Story(story.Id)!.Steps;
+                var told = story.Id == overview.Stories[0].Id ? $"{collection.Collection}/story" : $"{collection.Collection}/story/{story.Id}";
+                if (!steps.IsEmpty)
+                {
+                    Assert.Contains($"href=\"{told}\"", page, StringComparison.Ordinal);
+                    continue;
+                }
+
+                Assert.DoesNotContain($"href=\"{told}\"", page, StringComparison.Ordinal);
+            }
+
+            var named = overview.Stories.FirstOrDefault(story => projection.Story(story.Id)!.Steps.IsEmpty);
+            if (named is not null)
+            {
+                var empty = (await visitor.Get($"/{language}/{collection.Collection}/story/{named.Id}")).Html;
+                Assert.Contains($"class=\"action\" href=\"{collection.Collection}/entity/{named.Id}\"", empty, StringComparison.Ordinal);
+            }
+        }
+    }
+
+    [Fact]
+    public async Task AYearAskedOfACollectionLeadsToItsAnswerPastTheForms()
+    {
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var library = site.Services.GetRequiredService<DastanLibrary>();
+        foreach (var collection in library.Collections)
+        {
+            if (collection.At(new ReadingLevel(0))!.Years() is not { } years)
+            {
+                continue;
+            }
+
+            var asked = $"/en/{collection.Collection}/at?year={years.First.Number.ToString(System.Globalization.CultureInfo.InvariantCulture)}{(years.First.Era == Vafadar.Temporal.Era.BeforeCommonEra ? "&era=bce" : null)}";
+            var page = (await visitor.Get(asked)).Html;
+            Assert.Contains($"action=\"{collection.Collection}/at#answer\"", page, StringComparison.Ordinal);
+            Assert.Contains("id=\"answer\"", page, StringComparison.Ordinal);
+            Assert.DoesNotContain("id=\"answer\"", (await visitor.Get($"/en/{collection.Collection}/at")).Html, StringComparison.Ordinal);
+        }
+    }
+
+    [Theory]
+    [InlineData("en")]
+    [InlineData("fa")]
     public async Task ACollectionOfManyNamesDrawsItsChartByKindAndEveryNameWhenAsked(string language)
     {
         // D-099: more than a dozen names with a time stand by kind, each kind one lane; a kind is put in and

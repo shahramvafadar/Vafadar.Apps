@@ -100,14 +100,24 @@
         <section aria-labelledby="stories">
             <h2 id="stories">@T["Collection_Stories"]</h2>
             <ul class="cards" role="list">
-                @foreach (var told in overview.Stories)
+                @foreach (var told in overview.Stories.Take(Few))
                 {
-                    <li class="card">
-                        <h3><a href="@StoryAddress.Of(Site, Visitor, told.Id)"><Loc Text="told.Label" /></a></h3>
-                        <p><Loc Text="told.Summary" /></p>
-                    </li>
+                    @StoryCard(told)
                 }
             </ul>
+            @if (overview.Stories.Length > Few)
+            {
+                @* A work of many stories names the first of them; the others are one step away, in the same page. *@
+                <details class="fold more-cards">
+                    <summary>@string.Format(CultureInfo.CurrentCulture, T["Collection_MoreStories"], Visitor.Number(overview.Stories.Length - Few))</summary>
+                    <ul class="cards" role="list">
+                        @foreach (var told in overview.Stories.Skip(Few))
+                        {
+                            @StoryCard(told)
+                        }
+                    </ul>
+                </details>
+            }
         </section>
     }
 
@@ -161,21 +171,48 @@
     <section aria-labelledby="subjects">
         <h2 id="subjects">@T["Collection_Subjects"]</h2>
         <ul class="cards" role="list">
-            @foreach (var subject in overview.Subjects)
+            @foreach (var subject in overview.Subjects.Take(Few))
             {
-                @* Each subject as its card (ADR 0017): picture or drawing of its kind, name, kind, and what is known of it. *@
-                <li class="card">
-                    <NodeCard Profile="Visitor.Projection!.Profile(subject.Id)!" Summary="true" />
-                </li>
+                @SubjectCard(subject)
             }
         </ul>
+        @if (overview.Subjects.Length > Few)
+        {
+            @* To start with, a few: the names that come first. The others stand in the same page, one step away. *@
+            <details class="fold more-cards">
+                <summary>@string.Format(CultureInfo.CurrentCulture, T["Collection_MoreSubjects"], Visitor.Number(overview.Subjects.Length - Few))</summary>
+                <ul class="cards" role="list">
+                    @foreach (var subject in overview.Subjects.Skip(Few))
+                    {
+                        @SubjectCard(subject)
+                    }
+                </ul>
+            </details>
+        }
     </section>
 
     <ReadingControl Overview="overview" ReturnUrl="@($"/{Visitor.Language.Tag}/{Site.Collection}#reading")" />
 }
 
 @code {
+    // How many cards a list of the page shows before the others fold: a page of a work of seventy stories and a
+    // hundred names is otherwise forty screens of a phone long.
+    private const int Few = 12;
+
     private CollectionOverview? _overview;
+
+    // A story the collection tells in steps leads to its steps; a story it only names leads to what is known of it.
+    private RenderFragment StoryCard(Entity told) =>
+        @<li class="card">
+            <h3><a href="@(Visitor.Projection!.Story(told.Id) is { Steps.IsEmpty: false } ? StoryAddress.Of(Site, Visitor, told.Id) : $"{Site.Collection}/entity/{told.Id}")"><Loc Text="told.Label" /></a></h3>
+            <p><Loc Text="told.Summary" /></p>
+        </li>;
+
+    // Each subject as its card (ADR 0017): picture or drawing of its kind, name, kind, and what is known of it.
+    private RenderFragment SubjectCard(Entity subject) =>
+        @<li class="card">
+            <NodeCard Profile="Visitor.Projection!.Profile(subject.Id)!" Summary="true" />
+        </li>;
 
     // Whether two names of the collection have a time, so that they can be laid side by side.
     private bool _comparable;
