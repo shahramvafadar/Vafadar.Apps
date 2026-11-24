@@ -6,7 +6,14 @@
 
 @* A place in the drawing is measured in the font of the drawing; only the letters are smaller, so their size is
    on a span inside the text (as in the chart of time). *@
-<svg class="places-map" width="@Em(Map.Width + (2 * Pad))" height="@Em(Map.Height + (2 * Pad))" dir="ltr">
+@* The drawing is measured in the font, and its box of view is the same measure in the units of the drawing (a
+   letter of the drawing is 16 of them): so it can grow to fill its stage, letters and marks with it. It is never
+   smaller than it was drawn: an empty drawing of the same size holds the place open (the policy of the site
+   allows no style written into an element, so the least size cannot stand on the map itself). *@
+<div class="places-fit">
+<svg class="places-room" width="@Em(Map.Width + (2 * Pad))" height="@Em(Map.Height + (2 * Pad))" aria-hidden="true"></svg>
+<svg class="places-map" width="@Em(Map.Width + (2 * Pad))" height="@Em(Map.Height + (2 * Pad))"
+     viewBox="0 0 @Number((Map.Width + (2 * Pad)) * Unit) @Number((Map.Height + (2 * Pad)) * Unit)" dir="ltr">
     <rect class="map-ground" x="@Em(Pad)" y="@Em(Pad)" width="@Em(Map.Width)" height="@Em(Map.Height)" />
     @if (!Map.Coasts.IsEmpty || !Map.Waters.IsEmpty)
     {
@@ -49,10 +56,14 @@
         </a>
     }
 </svg>
+</div>
 
 @code {
     // The room around the drawing for the degrees of its grid.
     private const double Pad = 3.2;
+
+    // A letter of the drawing (1rem) in the units of its box of view.
+    private const double Unit = 16;
 
     /// <summary>Gets or sets the drawing.</summary>
     [Parameter, EditorRequired]

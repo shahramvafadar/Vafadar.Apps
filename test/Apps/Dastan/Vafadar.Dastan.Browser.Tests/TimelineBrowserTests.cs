@@ -387,6 +387,28 @@ public sealed class TimelineBrowserTests(TimesBrowserSite site) : IClassFixture<
     }
 
     [Fact]
+    public async Task The_still_chart_that_was_chosen_stays_when_one_of_its_tools_asks_for_the_page_again()
+    {
+        var page = await site.Visitor(1280, graph: true);
+        var host = await Drawn(page, $"/en/{Page}");
+        await host.Locator("[data-timeline-to-still]").ClickAsync();
+        Assert.Contains("still=1", page.Url, StringComparison.Ordinal);
+
+        // A tool of the still chart is a link that asks the server for the page again: the still chart stays.
+        await host.Locator("[data-timeline-still] a[href*='view=down']").First.ClickAsync();
+        await page.WaitForURLAsync(url => url.Contains("view=down", StringComparison.Ordinal));
+        host = page.Locator("dastan-timeline");
+        await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "still", new() { Timeout = 30_000 });
+        await Assertions.Expect(host.Locator("[data-timeline-live]")).ToBeHiddenAsync();
+        await Assertions.Expect(host.Locator("[data-timeline-to-live]")).ToBeVisibleAsync();
+
+        // Choosing the moving chart again takes the choice out of the address and out of the tools.
+        await host.Locator("[data-timeline-to-live]").ClickAsync();
+        Assert.DoesNotContain("still=1", page.Url, StringComparison.Ordinal);
+        Assert.DoesNotContain("still=1", await host.Locator("[data-timeline-still] a[href*='view=']").First.GetAttributeAsync("href") ?? string.Empty, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task Without_the_script_the_still_chart_is_the_chart()
     {
         var without = await site.Visitor(360, script: false);

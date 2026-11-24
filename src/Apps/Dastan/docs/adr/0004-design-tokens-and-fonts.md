@@ -18,7 +18,9 @@ pages have to work in two scripts, two directions and two themes from the first 
    `--surface`, `--surface-raised`, `--text`, `--text-muted`, `--border`, `--accent`, `--accent-text`, `--focus`,
    `--mark`. No rule uses a colour value directly. The names are the contract of `Vafadar.Web`'s base sheet.
 2. **Provisional palette:** indigo on warm paper, amber for focus and marks. Light: text `#1c1b2e` on `#fbfaf7`,
-   accent `#3b3a8f`. Dark: text `#ecebf5` on `#14132a`, accent `#b1b0ff`. These pairs are far above the 4.5 : 1
+   accent `#3b3a8f`. Dark: text `#ecebf5` on `#14132a`, accent `#b1b0ff` – replaced on 2026-11-24 (D-091) by black and grey: text
+   `#ededed` on `#121212`, raised `#1e1e1e`, muted text `#b4b4b4`, lines `#3d3d3d`, accent `#d4d4d4` with text
+   `#121212` on it; amber for focus and marks stays, and so do the colours of the lanes of a chart. These pairs are far above the 4.5 : 1
    contrast of normal text (computed from the values; not yet checked with a contrast tool in the browser).
 3. **Theme:** the visitor's choice (`data-theme`) wins; without a choice the device decides
    (`prefers-color-scheme`). The dark values stand twice in the sheet for that reason and have to be kept the same.

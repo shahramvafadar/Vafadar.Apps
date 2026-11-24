@@ -34,6 +34,62 @@ export function carry(name: string, value: string | null): void {
   inStep([name]);
 }
 
+// The name under which the address says that the visitor chose the still drawing of a page. The tools of a still
+// drawing – across or down, closer or wider, earlier or later – are links that ask the server for the page again;
+// without this name the script would draw the moving drawing again over the choice the visitor made.
+const stillName = 'still';
+
+/** Whether the address says that the still drawing of the page was chosen. */
+export function stillChosen(): boolean {
+  return said(stillName) === '1';
+}
+
+/**
+ * Keeps the choice between the still and the moving drawing: in the address of the page, and in the links and
+ * forms of the still drawing that ask for the same page again, so that its tools keep the still drawing.
+ */
+export function keepStill(still: HTMLElement, chosen: boolean): void {
+  const address = new URL(location.href);
+  if (chosen) {
+    address.searchParams.set(stillName, '1');
+  } else {
+    address.searchParams.delete(stillName);
+  }
+
+  history.replaceState(history.state, '', address);
+  for (const link of still.querySelectorAll<HTMLAnchorElement>('a[href]')) {
+    const target = new URL(link.href);
+    if (target.origin !== location.origin || target.pathname !== location.pathname) {
+      continue;
+    }
+
+    if (chosen) {
+      target.searchParams.set(stillName, '1');
+    } else {
+      target.searchParams.delete(stillName);
+    }
+
+    link.href = target.href;
+  }
+
+  for (const form of still.querySelectorAll<HTMLFormElement>('form')) {
+    if (form.method.toLowerCase() !== 'get' || new URL(form.action).pathname !== location.pathname) {
+      continue;
+    }
+
+    let field = form.querySelector<HTMLInputElement>(`input[type="hidden"][name="${stillName}"]`);
+    if (!chosen) {
+      field?.remove();
+    } else if (!field) {
+      field = document.createElement('input');
+      field.type = 'hidden';
+      field.name = stillName;
+      field.value = '1';
+      form.prepend(field);
+    }
+  }
+}
+
 /** Brings the links of the views in step with what the address of the page says under some names. */
 export function inStep(names: string[]): void {
   const now = new URLSearchParams(location.search);
