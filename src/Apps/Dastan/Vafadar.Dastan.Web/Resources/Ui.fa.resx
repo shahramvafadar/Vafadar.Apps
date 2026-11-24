@@ -4431,4 +4431,70 @@
   <data name="Person_Facts_Problem_Rest" xml:space="preserve">
     <value>همان یکی مثل قبل می‌ماند؛ بقیهٔ آنچه وارد کردید نگه داشته شد.</value>
   </data>
+  <data name="Nav_Compare" xml:space="preserve">
+    <value>کنار هم</value>
+  </data>
+  <data name="Compare_Hub_Title" xml:space="preserve">
+    <value>کنار هم ببینید</value>
+  </data>
+  <data name="Compare_Hub_Lead" xml:space="preserve">
+    <value>آنچه در جاهای گوناگون هم‌زمان بوده، و این‌که فرمانروایی‌ها، دودمان‌ها و زندگی‌ها چگونه کنار هم می‌ایستند: هر چه را می‌خواهید مقایسه کنید از هر مجموعه‌ای برگزینید و همین‌جا روی یک خط سال‌ها ببینید – یا مقایسه‌ای را که ویراستاران ساخته‌اند باز کنید.</value>
+  </data>
+  <data name="Compare_Hub_Made" xml:space="preserve">
+    <value>مقایسه‌های آماده</value>
+  </data>
+  <data name="Compare_Hub_Lanes" xml:space="preserve">
+    <value>آنچه کنار هم می‌ایستد</value>
+  </data>
+  <data name="Compare_Hub_Names" xml:space="preserve">
+    <value>آنچه را می‌خواهید مقایسه کنید برگزینید</value>
+  </data>
+  <data name="Compare_Hub_Names_Lead" xml:space="preserve">
+    <value>تا {0} نام از هر کدام از مجموعه‌ها برگزینید – کسان، دودمان‌ها، پادشاهی‌ها، جاها، رویدادها – تا روی همان سال‌ها زیر هم کشیده شوند.</value>
+  </data>
+  <data name="Compare_Hub_Refused" xml:space="preserve">
+    <value>بخشی از آنچه خواسته شد را نمی‌توان مقایسه کرد – نامی که این‌جا نیست یا زمانی ندارد، یا بیش از {0} نام – و کنار گذاشته شد.</value>
+  </data>
+  <data name="Compare_Hub_Go" xml:space="preserve">
+    <value>کنار هم نشان بده</value>
+  </data>
+  <data name="Discover_AllComparing" xml:space="preserve">
+    <value>همهٔ راه‌های مقایسه</value>
+  </data>
+  <data name="Discover_Comparisons_Lead" xml:space="preserve">
+    <value>دستان چیزها را کنار هم می‌گذارد: پادشاهی‌ها، فرمانروایی‌ها و رویدادهای سرزمین‌های گوناگون روی یک خط سال‌ها.</value>
+  </data>
+  <data name="Collection_SideBySide" xml:space="preserve">
+    <value>کنار هم ببینید</value>
+  </data>
+  <data name="Collection_CompareNames" xml:space="preserve">
+    <value>نام‌های این مجموعه را مقایسه کنید</value>
+  </data>
+  <data name="Entity_CompareWith" xml:space="preserve">
+    <value>مقایسه با دیگران</value>
+  </data>
+  <data name="Compare_Hub_Yours" xml:space="preserve">
+    <value>مقایسهٔ شما</value>
+  </data>
+  <data name="Compare_Hub_Change" xml:space="preserve">
+    <value>نام‌های بیشتر یا دیگری برگزینید</value>
+  </data>
+  <data name="Compare_Hub_Chosen" xml:space="preserve">
+    <value>آنچه مقایسه می‌شود</value>
+  </data>
+  <data name="Compare_Hub_Remove" xml:space="preserve">
+    <value>بیرون بردن از مقایسه</value>
+  </data>
+  <data name="Compare_Hub_Filter" xml:space="preserve">
+    <value>نامی را در فهرست پیدا کنید</value>
+  </data>
+  <data name="Compare_Hub_ChosenHere" xml:space="preserve">
+    <value>{0} برگزیده</value>
+  </data>
+  <data name="Compare_Life_Person" xml:space="preserve">
+    <value>زندگی</value>
+  </data>
+  <data name="Compare_Life_Other" xml:space="preserve">
+    <value>از بنیاد تا پایان</value>
+  </data>
 </root>

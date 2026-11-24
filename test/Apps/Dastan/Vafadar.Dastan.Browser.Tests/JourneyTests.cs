@@ -24,7 +24,7 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
         var page = await site.Visitor();
 
         await page.GotoAsync("/en/");
-        await page.Locator("main h3 a").First.ClickAsync();
+        await page.Locator("main .features h3 a").First.ClickAsync();
         await Arrived(page, new Regex($"/en/{Story}$"));
         Assert.Equal("Rostam and Sohrab", await Heading(page));
 

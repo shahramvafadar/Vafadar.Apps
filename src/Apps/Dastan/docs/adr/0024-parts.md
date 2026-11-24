@@ -71,7 +71,8 @@ A visitor who asks the device for more contrast gets lines and secondary text as
 **Drawings.** The icons are Dastan's own: lines on a grid of 24, drawn for this site in `Icon.razor`. They
 were not taken from a set of somebody else, so no licence of a third party applies and nothing has to be
 attributed; like the rest of the repository they are the owner's. They stand in the page (`svg`), take the
-colour of the words beside them, and are decoration: the words say what a control does.
+colour of the words beside them, and are decoration: the words say what a control does. "Compare" (D-092): three
+lanes of different lengths and one line across them – what was at the same time.
 
 **Where no picture is,** the drawing of the kind stands in its place on the lower ground
 (`ProfilePicture`, ADR 0017). It is never a photograph or an illustration that pretends to show the thing.

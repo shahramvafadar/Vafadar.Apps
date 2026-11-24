@@ -19,6 +19,8 @@
     <a class="wordmark" href="./" aria-label="@T["Site_Name"]"><Logo /></a>
     <nav class="site-nav" aria-label="@T["Nav_Main"]">
         <a href="./" aria-current="@Current(string.Empty)"><Icon Name="discover" /><span>@T["Nav_Discover"]</span></a>
+        @* Seeing things side by side is what the site is for (D-092): it is a main way, next to the start. *@
+        <a href="compare" aria-current="@Current("compare")"><Icon Name="compare" /><span>@T["Nav_Compare"]</span></a>
         @if (Accounts.IsOpen)
         {
             @* The private space of who signed in; everybody else is shown what it is and where to sign in.

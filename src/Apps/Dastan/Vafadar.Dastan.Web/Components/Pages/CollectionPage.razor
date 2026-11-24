@@ -17,6 +17,24 @@
         <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Subject.Id, Site.Collection)">@T["Evidence_Title"]</a></p>
     </header>
 
+    @if (!Library.Comparisons.IsEmpty || _comparable)
+    {
+        @* What the site is for (D-092): the collection beside others, and its names beside each other. *@
+        <section class="side-by-side compact" aria-labelledby="side-by-side">
+            <h2 id="side-by-side"><Icon Name="compare" /> @T["Collection_SideBySide"]</h2>
+            <p class="actions">
+                @foreach (var comparison in Library.Comparisons)
+                {
+                    <a class="action" href="@($"compare/{comparison.Id}")"><Loc Text="comparison.Title" /></a>
+                }
+                @if (_comparable)
+                {
+                    <a class="action secondary" href="@($"compare?collection={Uri.EscapeDataString(Site.Collection)}#choose")">@T["Collection_CompareNames"]</a>
+                }
+            </p>
+        </section>
+    }
+
     @if (overview is { Work: { } work, Edition: { } edition })
     {
         <dl class="facts">
@@ -150,6 +168,9 @@
 @code {
     private CollectionOverview? _overview;
 
+    // Whether two names of the collection have a time, so that they can be laid side by side.
+    private bool _comparable;
+
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
     public string Collection { get; set; } = string.Empty;
@@ -160,6 +181,9 @@
         if (_overview is null)
         {
             Navigation.NotFound();
+            return;
         }
+
+        _comparable = Visitor.Projection!.Timeline().Subjects.Length + Visitor.Projection!.Entities.Count(TimelineLanes.HasLifespan) >= 2;
     }
 }

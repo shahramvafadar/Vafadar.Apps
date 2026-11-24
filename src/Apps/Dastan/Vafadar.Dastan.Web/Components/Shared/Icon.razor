@@ -17,6 +17,10 @@
             <circle cx="18.500" cy="16.500" r="2.200" />
             <path d="M10.700 9.300 6.800 14.700M13.300 9.300 17.200 14.700M7.700 16.500h8.600" />
             break;
+        case "compare":
+            @* Three lanes of different lengths and one line across them: what was at the same time. *@
+            <path d="M3 7h10M7 12h14M3 17h8M15 3.500v17" />
+            break;
         case "saved":
             @* A marker in a book. *@
             <path d="M7 4h10v16.500l-5-4-5 4z" />
@@ -97,7 +101,7 @@
 
 @code {
     /// <summary>The drawings there are, by their names.</summary>
-    public static readonly string[] Names = ["discover", "world", "saved", "search", "account", "settings", "connections", "timeline", "pictures", "overview", "family", "story", "globe", "waiting", "nothing", "failed"];
+    public static readonly string[] Names = ["discover", "compare", "world", "saved", "search", "account", "settings", "connections", "timeline", "pictures", "overview", "family", "story", "globe", "waiting", "nothing", "failed"];
 
     /// <summary>Gets or sets the name of the drawing.</summary>
     [Parameter, EditorRequired]

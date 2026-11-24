@@ -4431,4 +4431,70 @@
   <data name="Person_Facts_Problem_Rest" xml:space="preserve">
     <value>That one stays as it was; what else you entered is kept.</value>
   </data>
+  <data name="Nav_Compare" xml:space="preserve">
+    <value>Side by side</value>
+  </data>
+  <data name="Compare_Hub_Title" xml:space="preserve">
+    <value>Side by side</value>
+  </data>
+  <data name="Compare_Hub_Lead" xml:space="preserve">
+    <value>What was at the same time in different places, and how reigns, dynasties and lives stand beside each other: choose what you want to compare, from any collection, and see it here on one line of years – or open a comparison the editors made.</value>
+  </data>
+  <data name="Compare_Hub_Made" xml:space="preserve">
+    <value>Comparisons to open</value>
+  </data>
+  <data name="Compare_Hub_Lanes" xml:space="preserve">
+    <value>What stands side by side</value>
+  </data>
+  <data name="Compare_Hub_Names" xml:space="preserve">
+    <value>Choose what to compare</value>
+  </data>
+  <data name="Compare_Hub_Names_Lead" xml:space="preserve">
+    <value>Tick up to {0} names from any of the collections – people, dynasties, kingdoms, places, events – and they are drawn one above the other on the same years.</value>
+  </data>
+  <data name="Compare_Hub_Refused" xml:space="preserve">
+    <value>Some of what was asked for cannot be compared – a name that is not here or has no time, or more than {0} names – and is left out.</value>
+  </data>
+  <data name="Compare_Hub_Go" xml:space="preserve">
+    <value>Show them side by side</value>
+  </data>
+  <data name="Discover_AllComparing" xml:space="preserve">
+    <value>All ways to compare</value>
+  </data>
+  <data name="Discover_Comparisons_Lead" xml:space="preserve">
+    <value>Dastan lays things side by side: kingdoms, reigns and events of different lands on one line of years.</value>
+  </data>
+  <data name="Collection_SideBySide" xml:space="preserve">
+    <value>See it side by side</value>
+  </data>
+  <data name="Collection_CompareNames" xml:space="preserve">
+    <value>Compare names of this collection</value>
+  </data>
+  <data name="Entity_CompareWith" xml:space="preserve">
+    <value>Compare with others</value>
+  </data>
+  <data name="Compare_Hub_Yours" xml:space="preserve">
+    <value>Your comparison</value>
+  </data>
+  <data name="Compare_Hub_Change" xml:space="preserve">
+    <value>Choose more or other names</value>
+  </data>
+  <data name="Compare_Hub_Chosen" xml:space="preserve">
+    <value>What is compared</value>
+  </data>
+  <data name="Compare_Hub_Remove" xml:space="preserve">
+    <value>take out of the comparison</value>
+  </data>
+  <data name="Compare_Hub_Filter" xml:space="preserve">
+    <value>Find a name in the list</value>
+  </data>
+  <data name="Compare_Hub_ChosenHere" xml:space="preserve">
+    <value>{0} chosen</value>
+  </data>
+  <data name="Compare_Life_Person" xml:space="preserve">
+    <value>Life</value>
+  </data>
+  <data name="Compare_Life_Other" xml:space="preserve">
+    <value>From founding to end</value>
+  </data>
 </root>

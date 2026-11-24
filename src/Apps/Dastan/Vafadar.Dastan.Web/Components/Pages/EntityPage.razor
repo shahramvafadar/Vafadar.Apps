@@ -35,6 +35,11 @@
         </Where>
         <ChildContent>
             <a class="action" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Connections)}")">@T["Entity_Explore"]</a>
+            @if (Exploring.HasTimes(Visitor.Projection, overview.Entity.Id) || TimelineLanes.HasLifespan(overview.Entity))
+            {
+                @* A name with a time can be laid beside others (D-092, D-093): the comparison begins with this one; more are chosen there. *@
+                <a class="action secondary" href="@($"compare?pick={Uri.EscapeDataString($"{Site.Collection}/{overview.Entity.Id}")}#yours")"><Icon Name="compare" /><span>@T["Entity_CompareWith"]</span></a>
+            }
             <SaveControl Kind="SavedKind.Entity" Id="@overview.Entity.Id.Value" />
             @if (Desk.IsOpen && Library.Institutions.Find(new EntityReference(Site.Collection, overview.Entity.Id)) is not null)
             {
