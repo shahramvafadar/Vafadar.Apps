@@ -11,7 +11,7 @@ import {
   NodeConstraints, type NodeModel, type PointPortModel, PortVisibility, PrintAndExport, Size, SnapConstraints, StackPanel, TextElement,
 } from '@syncfusion/ej2-diagrams';
 import { registerLicense, Telemetry } from '@syncfusion/ej2-base';
-import { carry, explores, said } from './explore';
+import { carry, explores, keepStill, said, stillChosen } from './explore';
 import { drawn as profileDrawn, type Profile } from './profile-panel';
 
 // Found in a browser (step 19.8): the control comes with a count of its use that it sends to a host of its
@@ -941,10 +941,15 @@ async function start(host: HTMLElement): Promise<void> {
 
     on('svg', () => void drawn.picture('svg').then(blob => save(blob, 'dastan.svg')));
     on('png', () => void drawn.picture('png').then(blob => save(blob, 'dastan.png')));
-    on('to-still', () => show(false));
-    on('to-live', () => { show(true); drawn.fit(); });
+    on('to-still', () => { show(false); keepStill(still, true); });
+    on('to-live', () => { show(true); keepStill(still, false); drawn.fit(); });
     // What a test of the browser asks the drawing.
     (host as unknown as { graph: DastanGraph }).graph = drawn;
+    // The visitor chose the still drawing and then one of its tools, which asked for the page again: it stays.
+    if (stillChosen()) {
+      show(false);
+      keepStill(still, true);
+    }
   } catch {
     // Whatever went wrong: the still drawing is the drawing.
     live.hidden = true;

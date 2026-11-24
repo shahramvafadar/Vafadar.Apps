@@ -9,7 +9,7 @@
 //
 // The script is asked for by a page that holds a <dastan-timeline>, after the page is shown. Until it has
 // drawn, and where it cannot, the still chart of the server stays.
-import { inStep } from './explore';
+import { inStep, keepStill, stillChosen } from './explore';
 
 type Axis = 'calendar' | 'depth' | 'order';
 type Edge = 'known' | 'between' | 'ongoing' | 'endedAtUnknownTime' | 'unknown';
@@ -548,9 +548,17 @@ function start(host: HTMLElement): void {
       back.hidden = moving;
       host.dataset['state'] = moving ? 'live' : 'still';
     };
-    host.querySelector<HTMLElement>('[data-timeline-to-still]')?.addEventListener('click', () => show(false));
-    host.querySelector<HTMLElement>('[data-timeline-to-live]')?.addEventListener('click', () => show(true));
+    const choose = (moving: boolean): void => {
+      show(moving);
+      keepStill(still, !moving);
+    };
+    host.querySelector<HTMLElement>('[data-timeline-to-still]')?.addEventListener('click', () => choose(false));
+    host.querySelector<HTMLElement>('[data-timeline-to-live]')?.addEventListener('click', () => choose(true));
     host.dataset['state'] = 'live';
+    // The visitor chose the still chart and then one of its tools, which asked for the page again: it stays.
+    if (stillChosen()) {
+      choose(false);
+    }
     // What a test of the browser asks the views.
     (host as unknown as { views: TimelineView[] }).views = drawn;
   } catch {

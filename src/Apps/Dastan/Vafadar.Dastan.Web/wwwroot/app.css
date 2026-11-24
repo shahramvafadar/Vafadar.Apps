@@ -73,19 +73,19 @@
 
 /* Colour – dark, for a visitor who chose it … */
 :root[data-theme="dark"] {
-  --surface: #14132a;
-  --surface-raised: #1f1e3d;
-  --text: #ecebf5;
-  --text-muted: #b6b4cc;
-  --border: #3a3960;
-  --accent: #b1b0ff;
+  --surface: #121212;
+  --surface-raised: #1e1e1e;
+  --text: #ededed;
+  --text-muted: #b4b4b4;
+  --border: #3d3d3d;
+  --accent: #d4d4d4;
   --logo-symbol: #ffffff;
   --logo-word: #ffffff;
-  --accent-text: #14132a;
+  --accent-text: #121212;
   --focus: #fbbf24;
   --mark: #fcd34d;
-  --surface-sunken: #0f0e22;
-  --accent-soft: #2b2a55;
+  --surface-sunken: #0a0a0a;
+  --accent-soft: #2e2e2e;
   --danger: #ffb4a8;
   --ok: #8ee0b0;
   --shadow-1: 0 1px 2px rgb(0 0 0 / 0.5);
@@ -95,19 +95,19 @@
 /* … and for a visitor who made no choice and whose device is dark. Keep the two blocks the same. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --surface: #14132a;
-    --surface-raised: #1f1e3d;
-    --text: #ecebf5;
-    --text-muted: #b6b4cc;
-    --border: #3a3960;
-    --accent: #b1b0ff;
+    --surface: #121212;
+    --surface-raised: #1e1e1e;
+    --text: #ededed;
+    --text-muted: #b4b4b4;
+    --border: #3d3d3d;
+    --accent: #d4d4d4;
     --logo-symbol: #ffffff;
     --logo-word: #ffffff;
-    --accent-text: #14132a;
+    --accent-text: #121212;
     --focus: #fbbf24;
     --mark: #fcd34d;
-    --surface-sunken: #0f0e22;
-    --accent-soft: #2b2a55;
+    --surface-sunken: #0a0a0a;
+    --accent-soft: #2e2e2e;
     --danger: #ffb4a8;
     --ok: #8ee0b0;
     --shadow-1: 0 1px 2px rgb(0 0 0 / 0.5);
@@ -175,13 +175,20 @@ p + p {
 
 /* --- Frame of every page --- */
 
+/* A page is as wide as its head, so that a wide screen is used: cards, tables and drawings stand side by side
+   and take the room. What is read as running text keeps the measure of text – a line longer than that is hard
+   to follow – and so do the fields of a form. */
 .site-header,
 main,
 .site-footer {
   inline-size: 100%;
-  max-inline-size: var(--measure);
+  max-inline-size: var(--measure-wide);
   margin-inline: auto;
   padding-inline: var(--space-4);
+}
+
+main :is(p, li, dd, blockquote, figcaption, form, fieldset) {
+  max-inline-size: var(--measure);
 }
 
 /* The head of every page (step 20.5): the name, the main ways, the account, and the language and the appearance
@@ -2631,6 +2638,29 @@ main:has(> .stage) > :not(.stage) {
   max-width: none;
   margin: auto;
   font-size: 1rem;
+}
+
+/* The map fills its frame, as far as its shape allows. An empty drawing of the size the map is drawn at keeps the
+   place at least that large, so the map is never smaller than it is drawn, and the frame scrolls when the window
+   is narrower than that. */
+.places-fit {
+  position: relative;
+  flex: 1 0 auto;
+  align-self: flex-start;
+  min-block-size: 100%;
+  display: grid;
+}
+
+.places-room {
+  visibility: hidden;
+}
+
+.places-fit > .places-map {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
 }
 
 .places-map .map-ground {

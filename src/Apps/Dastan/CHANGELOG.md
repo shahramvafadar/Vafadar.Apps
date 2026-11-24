@@ -470,3 +470,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   of the clock no longer opens it again.
 - A family tree in years says that it leaves out a partnership of another time together with the family that
   reaches the name only through it.
+- A wide screen is used: a page is as wide as the head of the site, cards and drawings stand side by side, and
+  running text keeps a length of line that can be read.
+- The map of the places fills its frame instead of a small part of it; on a phone it keeps its size and scrolls.
+- When you chose the still drawing of a timeline or of a graph, its own tools – across or down, closer or wider,
+  earlier or later – keep the still drawing instead of going back to the one that moves.
+- The dark appearance is black and grey instead of navy and blue.

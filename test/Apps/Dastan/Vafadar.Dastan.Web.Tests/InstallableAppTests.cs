@@ -83,7 +83,7 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.Matches("<link rel=\"manifest\" href=\"/manifest.webmanifest\" ?/?>", page.Html);
         Assert.Matches("<link rel=\"apple-touch-icon\" href=\"/icons/apple-touch-icon.png\" ?/?>", page.Html);
         Assert.Matches("<meta name=\"theme-color\" content=\"#fbfaf7\" media=\"[(]prefers-color-scheme: light[)]\" ?/?>", page.Html);
-        Assert.Matches("<meta name=\"theme-color\" content=\"#14132a\" media=\"[(]prefers-color-scheme: dark[)]\" ?/?>", page.Html);
+        Assert.Matches("<meta name=\"theme-color\" content=\"#121212\" media=\"[(]prefers-color-scheme: dark[)]\" ?/?>", page.Html);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
         var page = await visitor.Get("/en/");
 
         Assert.Single(Regex.Matches(page.Html, "<meta name=\"theme-color\""));
-        Assert.Matches("<meta name=\"theme-color\" content=\"#14132a\" ?/?>", page.Html);
+        Assert.Matches("<meta name=\"theme-color\" content=\"#121212\" ?/?>", page.Html);
     }
 
     // --- The one script, the service worker and the page for "no connection" ---
