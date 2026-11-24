@@ -4497,4 +4497,13 @@
   <data name="Compare_Life_Other" xml:space="preserve">
     <value>از بنیاد تا پایان</value>
   </data>
+  <data name="Collection_Names" xml:space="preserve">
+    <value>{0} نام</value>
+  </data>
+  <data name="Collection_Span" xml:space="preserve">
+    <value>از {0} تا {1}</value>
+  </data>
+  <data name="Chart_Help" xml:space="preserve">
+    <value>راهنمای این نمودار</value>
+  </data>
 </root>

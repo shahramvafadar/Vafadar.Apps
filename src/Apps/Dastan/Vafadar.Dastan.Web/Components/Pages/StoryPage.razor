@@ -89,7 +89,7 @@
            is said about that chart alone – its marks, how much of it is shown – stands with it. *@
         <p class="note">@T["Story_OnTimelineLead"]</p>
         <TimelineLive Timeline="_timeline" Here="@_base">
-            <p class="note">@T["Story_ChartLead"] @T["Stage_Lead"]</p>
+            <ChartHelp>@T["Story_ChartLead"] @T["Stage_Lead"]</ChartHelp>
             <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Story_ChartShown"], Visitor.Number(_chart.First), Visitor.Number(_chart.Last), Visitor.Number(_chart.StepCount), Visitor.Number(_chart.Lanes.Length), Visitor.Number(_chart.LaneCount))</p>
             @if (Visitor.Language.IsRightToLeft)
             {

@@ -4497,4 +4497,13 @@
   <data name="Compare_Life_Other" xml:space="preserve">
     <value>From founding to end</value>
   </data>
+  <data name="Collection_Names" xml:space="preserve">
+    <value>{0} names</value>
+  </data>
+  <data name="Collection_Span" xml:space="preserve">
+    <value>{0} to {1}</value>
+  </data>
+  <data name="Chart_Help" xml:space="preserve">
+    <value>Guide to this chart</value>
+  </data>
 </root>

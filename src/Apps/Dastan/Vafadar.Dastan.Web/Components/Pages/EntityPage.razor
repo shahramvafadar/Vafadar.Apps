@@ -318,8 +318,30 @@
         </dl>
     };
 
-    // The connections of the name, each with its sources.
+    // The connections of the name, each with its sources. Many connections stand in groups of the same relation
+    // – parents, rule, places – each with its count (D-094), in the order the first of each appears.
     private RenderFragment Connected(IEnumerable<Connection> connections, Entity self) => __builder =>
+    {
+        var all = connections.ToList();
+        var groups = all.GroupBy(connection => Visitor.Text(connection.Relation.Label).Value, StringComparer.Ordinal).ToList();
+        if (all.Count > GroupFrom && groups.Count > 1)
+        {
+            foreach (var group in groups)
+            {
+                <h3 class="relation-group">@group.Key <span class="count">@Visitor.Number(group.Count())</span></h3>
+                <text>@ConnectedList(group, self)</text>
+            }
+        }
+        else
+        {
+            <text>@ConnectedList(all, self)</text>
+        }
+    };
+
+    // From how many connections on they are grouped: a few read well as one list.
+    private const int GroupFrom = 6;
+
+    private RenderFragment ConnectedList(IEnumerable<Connection> connections, Entity self) => __builder =>
     {
         <ul class="statements" role="list">
             @foreach (var connection in connections)

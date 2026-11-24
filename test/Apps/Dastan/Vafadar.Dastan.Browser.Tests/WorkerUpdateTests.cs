@@ -37,7 +37,7 @@ public sealed class WorkerUpdateTests(BrowserSite site) : IClassFixture<BrowserS
 
         // The page was not closed and not loaded again: the new worker is in charge of it, and the old store is gone.
         Assert.Equal(["dastan-shell-3"], stores);
-        Assert.Equal("Dastan", await page.Locator("h1").InnerTextAsync());
+        Assert.Equal("Discover how stories connect.", await page.Locator("h1").InnerTextAsync());
 
         // What the worker is there for still works, from the new store.
         // Without a connection: what Playwright turns on in Firefox is Firefox's own "work offline", which answers
