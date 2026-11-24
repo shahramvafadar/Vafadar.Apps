@@ -48,6 +48,9 @@ it is written and when it is finished. Nothing here is reviewed or released by w
 | B9 | The owner's family tree, written into the owner's account on the owner's machine – never into the repository | Waits for the owner's account – the command is there (A5) |
 | B10 | Persian for all of the above | Done 2026-11-24 with each item (drafts, not reviewed) |
 
+The passes after this first one – the further stories of the Shahnameh, the histories into late antiquity, the
+neighbours, other works, pictures and comparisons – are planned in [the content roadmap](content-roadmap.md).
+
 ## C. Trying it – with the owner
 
 After A and B. The site and the tool of the editors are started on the owner's machine with the real
