@@ -1,6 +1,6 @@
 # Dastan – backlog
 
-What is left to do for Dastan, in one place, as of 2026-11-24. The history of what was built is in the
+What is left to do for Dastan, in one place, as of 2026-11-25. The history of what was built is in the
 [delivery plan](delivery-plan.md); the decisions are in
 [the decisions of the product](product/12-decisions-questions-and-change-log.md). This page says what comes
 next, who does it and when it is done.
@@ -80,7 +80,12 @@ collections, and the owner looks.
 ## E. Found by the review of 2026-11-24
 
 What reading the whole against the documents of the product found ([delivery plan](delivery-plan.md), section
-26). The first row is built; the others are planned and wait for the owner's order among them.
+26). What is planned is planned in full – what is built, the tests, the documents, when it is done, what has
+to be settled first – in the [delivery plan](delivery-plan.md), section 27 (E2 is 27.2, E6 is 27.3, E5 is 27.4,
+E3 and E7 are 27.5, E4 is 27.6, E20 is 27.7, E11 is 27.8, E18 is 27.9). **Two matters wait for the owner's
+word** before anything is begun: the order among them (27.10; proposed: lengths of reigns first, pictures
+immediately before the pictures of the content, the calendars last) and the way E11 is put right (27.8;
+proposed: a rule of the content guide, the labels corrected, a test that refuses a repeat).
 
 | # | Item | Why | Status |
 |---|---|---|---|

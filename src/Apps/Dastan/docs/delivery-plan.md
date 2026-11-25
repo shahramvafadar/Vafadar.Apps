@@ -1567,3 +1567,183 @@ Built after it (E16, E17): the page of places is called "{name} on the map"; a m
 sideways once by the script of the stage, so that the place in the middle of its places is in the middle of
 what is shown – without the script the map begins at its western edge, as before (ADR 0008). *Tests:*
 `LibraryPlacesBrowserTests`, in Chromium, Firefox and WebKit.
+
+## 27. The plan of what remains (2026-11-25)
+
+Written on the owner's word ("for now only document the planning completely"). Nothing of this section is
+built. It says, for every piece of development that is left, what it is, why, what is built, how it is tested,
+which documents change, when it is done and what has to be settled first. The rows are those of
+[the backlog](backlog.md), part E; what is the owner's or the content's (parts B, C and D there) is named at the
+end, so that the whole of what remains stands in one place.
+
+**The rule for every step**, as before: one step whole – built, tested, documented, merged into `main`, the
+checks of the repository green – before the next. A format changes together with `collection-format.md`, the
+reader, the check of the content tool and a test that refuses what is wrong. Nothing here marks content as
+reviewed or releases it.
+
+### 27.1 What is decided and what waits
+
+| Matter | State |
+|---|---|
+| Every date is stored in the Gregorian calendar; another calendar is a matter of display and the last piece of work | Decided (D-100, 2026-11-24) |
+| The order among 27.2 to 27.7 | **Proposed, waits for the owner's word** – the three ways are in 27.10 |
+| How the labels that repeat a name are put right (27.8) | **Proposed, waits for the owner's word** – the three ways are in 27.8 |
+
+### 27.2 A reign known only by its length (E2)
+
+* **What and why.** A source says "Kayumars reigned thirty years" or gives a Roman king a length and no years.
+  The formats know a time that can be placed in the calendar and the order of a telling, not a length alone.
+  Fifty reigns of the Shahnameh and the seven kings of Rome have no time today, and no view of time shows them.
+* **What is built.** A length as a time of its own: a number, a unit (years; months and days where a source
+  gives them), the same marks of certainty a date has (exact, about, according to a tradition), and its sources.
+  It is no date and is never turned into one: no view places it in the calendar (TIME-005, no hidden assumption;
+  TIME-010, the time of a telling). Where the order of the holders of an office is stated – the reigns of the
+  poem are – a chart can show the lengths one after another on a line of their own, named as lengths of the
+  telling and not as years. The page of a name and of a relation says the length in words.
+* **To settle when the step begins.** Whether a length belongs to a relation (holder of an office), to a fact of
+  a record, or to both; whether the chart of lengths is part of this step or a second one. Proposed: the
+  relation and the fact, words first, the chart as the second half of the same step.
+* **Tests.** The reader: a length is read, a length with a year is refused where the format forbids both. The
+  projection: a length is in no view of time. The pages: the words in English and Persian. The library: the
+  check passes with lengths written.
+* **Documents.** `collection-format.md`, ADR 0021 (time), the content guide (how a length is written), the
+  content roadmap (the row is closed), the acceptance page.
+* **Done when** the Roman kings and the reigns of the poem can be written with their lengths, the site says
+  them, and nothing places them in the calendar.
+* **Afterwards, content:** the lengths are written into `shahnameh.json` and `ancient-rome.json`.
+
+### 27.3 A relation of a person to the land they come from, in a story (E6)
+
+* **What and why.** "Sudabeh of Hamavaran": the story says where somebody is from. The relations of today say
+  where somebody was born, lived or ruled – a fact of a history – and none says "is of this land" inside a
+  telling.
+* **What is built.** A kind of relation "from" (a being or a group to a place), allowed in a story and in a
+  history, with its label in both directions in English and Persian, shown on the page of the name, in the
+  connections and on the map where the place is real.
+* **To settle.** Whether the catalogue of kinds of relations is extended (proposed) or an existing kind is
+  widened; the wording of the two directions.
+* **Tests.** The reader accepts the kind between the right natures and refuses it elsewhere; the page of
+  connections and the graph show it; the Persian label.
+* **Documents.** `collection-format.md`, the content guide.
+* **Done when** the relation is written for Sudabeh in `siavash.json` and stands on her page.
+
+### 27.4 Quantities of a work as dated statements (E5)
+
+* **What and why.** "About fifty thousand couplets by the count of one edition, sixty thousand by another" is
+  a statement with a source and a time, and two sources disagree. Today it stands only in the summary of the
+  work. The format has dated statements; the generator the writer of content uses does not write quantities
+  of a work as such.
+* **What is built.** The generator writes a quantity (a number, what is counted, by whose count, when) as a
+  statement of the work; the page of the work shows the counts side by side with their sources and says that
+  they differ (TIME-011, sources that disagree).
+* **To settle.** Whether the format already carries all of it and only the generator and the page change
+  (to be read first), or a field is missing.
+* **Tests.** The generator; the page of a work with two counts; the check of the library.
+* **Documents.** `content-guide.md`, `collection-format.md` if a field is added.
+* **Done when** the two counts of the Shahnameh are statements of the work and leave its summary.
+
+### 27.5 Pictures of a history, and the times of a picture (E3 and E7, one step)
+
+* **What and why.** `depictedContext` knows a later artwork of a story and a diagram of today. A history
+  needs more (document 15): a photograph of today of an old object (a relief, a coin, a bronze), a
+  reconstruction, a map, a picture made in the time it shows. And MED-006 names seven times of a picture; the
+  reader takes when it was made and what it shows, and refuses when it was brought in, published and shared.
+* **What is built.** The kinds of what a picture shows, each with the rule of which times it may state – a
+  photograph of today of an old object has a time of taking and a time of the object, and the gallery arranges
+  it by the time of the object and says so. The further times of MED-006 are read and kept; the page of a
+  picture shows those a visitor is helped by (made, shows, published) and keeps the others for the editors.
+* **To settle.** The list of kinds (proposed: the four above); which of the seven times are shown to a
+  visitor.
+* **Tests.** The reader for each kind and each time; the gallery arranged by the time of what is shown; the
+  page of a picture in both languages; the tool of the editors accepts and shows the fields.
+* **Documents.** `collection-format.md`, ADR 0006 and ADR 0027, document 15 (what of MED-006 is built), the
+  content guide.
+* **Done when** the Behistun relief, the Cyrus Cylinder and the terracotta army can be written as pictures of
+  their histories. **When:** immediately before the pass of content that brings pictures (content roadmap,
+  pass 5) – built earlier it has nothing to show. Showing a picture still needs its rights (backlog D2).
+
+### 27.6 A command that compares stored quotes with their sources (E4)
+
+* **What and why.** For the first pass every quote of a collection was compared with its source by hand. A
+  quote that drifts from its source is the most serious error a collection can have and the one a reader
+  cannot see.
+* **What is built.** A command of the content tool that goes through the sources of a collection, reads a
+  copy of each source kept beside the collection (the tool asks no address of the network by itself; a copy is
+  brought in by who runs it), and reports each stored quote that is not found in its source, with the place.
+  It changes nothing and marks nothing as reviewed.
+* **To settle.** Where the copies of sources are kept and whether they may be in the repository (rights: a
+  text under copyright may not; proposed: a folder beside the library that is not committed, and the command
+  says which sources have no copy).
+* **Tests.** A quote that is found, one that is not, one that differs by spaces or marks only, a source
+  without a copy.
+* **Documents.** `content-guide.md`, the work order for content, `operations-studio.md`.
+* **Done when** the command runs over every collection of the library and its report is empty or explained.
+
+### 27.7 The title of a source in the language of the source (E20)
+
+* **What and why.** On a Persian page the English title of a source is read by a screen reader as Persian.
+* **What is built.** A source states its language (the format has the field or gets it); the title is written
+  with `lang` and its direction wherever a source is named.
+* **Tests.** The pages of sources and of evidence in Persian carry the language of an English title.
+* **Done when** no title of a source stands in a page of another language without its `lang`. Small; done
+  with whichever step touches the pages of sources first.
+
+### 27.8 Labels of relations that repeat the name they lead to (E11)
+
+* **What and why.** Where little is known of somebody, the site writes the label of a relation and the name it
+  leads to one after the other: "Deioces – King of the Medes, according to Herodotus King of the Medes". The
+  label of the relation repeats the name of the office.
+* **The three ways.** (a) Content only: the labels are shortened by hand. (b) Display only: the site leaves
+  out a name that a label repeats – it would cut into written text and can make a wrong sentence in Persian.
+  (c) Both a rule and a check: the content guide says that a label does not repeat the name it leads to, the
+  labels of the three histories are corrected, and a test of the library refuses a label that begins or ends
+  with the name of its other end.
+* **Proposed: (c).** What is written is shown as written, and the test keeps the error from coming back.
+  Waits for the owner's word.
+* **Done when** the test passes for every collection of the library in both languages.
+
+### 27.9 Dates in other calendars – the last piece of work (E18, D-100)
+
+* **What and why.** A reader who thinks in the Solar Hijri or the Lunar Hijri calendar sees a date in it.
+  What is stored stays Gregorian (D-043, D-100), so that everything is compared without a conversion.
+* **What is built.** A choice of the visitor among Gregorian, Solar Hijri and Lunar Hijri, kept like the
+  other choices of appearance; a date is shown in the chosen calendar, with the Gregorian one beside it where
+  the two could be confused. The conversion is done by `Vafadar.Temporal`, never in a page.
+* **Rules that are fixed already.** A conversion never says more than the source: a year stays a year (and
+  may become "1399 or 1400" where a Gregorian year covers two), "about" stays "about", a date before the
+  beginning of a calendar is shown in the Gregorian one (TIME-009: no false precision). The charts keep their
+  one line of years; which calendar its marks are named in follows the choice. Typing a year in a form in
+  another calendar is part of the step.
+* **To settle when the step begins.** Which Lunar Hijri calendar (the tabular one or Umm al-Qura – they differ
+  by a day now and then, and only for exact days); whether a Persian page begins with Solar Hijri or stays
+  Gregorian until the visitor chooses (proposed: stays Gregorian – the histories of the library are before
+  the Hijra almost throughout).
+* **Tests.** The conversions against known days; a year and an approximate year; a date before the calendar;
+  the pages, the charts and the forms in both languages; the choice kept and carried.
+* **Documents.** ADR 0021, document 04 (TIME-009), `collection-format.md` (says once more that the stored
+  date is Gregorian), the acceptance page.
+* **Done when** every date of every page can be read in the three calendars and nothing stored has changed.
+
+### 27.10 The order
+
+Three ways were put to the owner on 2026-11-24:
+
+1. **What a reader sees first** – 27.2 (lengths of reigns), then 27.3 and 27.4, then 27.6, with 27.5 put
+   immediately before the pictures of the content and 27.7 with the first step that touches sources.
+2. **Pictures first** – 27.5, then the others. Worth it only if the next pass of content is pictures.
+3. **The check of the quotes first** – 27.6, then the others. Finds errors sooner and adds nothing a visitor
+   sees.
+
+**Proposed: the first.** The lengths fill the largest gap a visitor can see; pictures of the histories have
+nothing to show until pictures are brought. 27.8 is content with one test and can be done at any time once
+its way is chosen. 27.9 is last by the owner's word (D-100). **The order waits for the owner's word; until it
+is given nothing of this section is begun.**
+
+### 27.11 What is not development
+
+| What | Whose | Where it is planned |
+|---|---|---|
+| The further passes of content; the correspondences of reading positions between the three collections of the world of the Shahnameh (E8) | the line of work of content | [content roadmap](content-roadmap.md), [work order](content-work-order.md) |
+| The owner's family tree, in the owner's account (B9) | waits for the owner's account | backlog, part B |
+| A second made-up account; a real phone, Safari, a screen reader; five first-time visitors; the owner's photographs (C2 to C6) | the owner, with this line of work | backlog, part C |
+| Reviewing and publishing; rights of pictures; mailbox, clients, host; `database migrate`; the legal pages; who looks at reports; the brand on paper (D1 to D7) | the owner | backlog, part D |
