@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The plan of everything that is left to build is written down (delivery plan, section 27). Nothing of it is
+  built yet.
 - A link to the story, the timeline, the map, a year or the pictures of a collection shows what the page is
   when it is passed on: these pages have a description now.
 - On the start page every collection has the sign of its kind; before, only the first had one.
