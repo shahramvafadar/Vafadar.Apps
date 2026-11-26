@@ -79,6 +79,41 @@ dotnet run --project $content -- check src/Apps/Dastan/content/samples/my-story.
   addresses at `example.org`). A file with notices is not finished.
 * A translation is checked together with the file it translates; naming either is enough.
 
+### Comparing quotes with their sources
+
+A statement rests on a passage of its source. Keep the passage while you write, and let the command compare
+every passage with the source it is taken from – before a hand-over, and again when a source was looked at
+anew:
+
+```powershell
+dotnet run --project $content -- quotes src/Apps/Dastan/library/samples/my-story.json --quotes .local/quotes/my-story.quotes.json --sources .local/sources/my-story
+```
+
+* **The file of quotes** is yours and is no part of the collection:
+
+  ```json
+  {
+    "formatVersion": "dastan-quotes-0.1",
+    "datasetId": "my-story",
+    "quotes": [
+      { "record": "relation-08", "sourceId": "src-a-source", "quote": "the words as the source has them" }
+    ]
+  }
+  ```
+
+  `record` is the identifier of an entity, a relation, an event or a media item, or the `key` of a statement
+  with a date; `sourceId` is a source that record cites.
+* **The folder of sources** holds a copy of each source as plain text, named `<source id>.txt` – the text of
+  the page as you saved it. The command asks no address of the network.
+* **Neither is committed.** A passage of a source and a copy of it are the text of somebody else; they stay on
+  your machine (`.local/` is not part of the repository). The repository holds the collection and its
+  citations, not the sources.
+* What is compared is the letters, not how a page sets them: blanks, kinds of quotation marks and dashes,
+  capitals, the Arabic and the Persian form of a letter and vowel signs make no difference.
+* The answer: each quote that is not in its source, each source of which there is no copy (its quotes were
+  not compared), and how many relations, events and statements with a date have no quote. Exit code `0` when
+  every quote was compared and found, `1` otherwise. The command changes nothing and records no review.
+
 ## How to work
 
 1. **Read** this page and the page of the format you write.
