@@ -4644,4 +4644,13 @@
   <data name="Calendar_LunarHijri" xml:space="preserve">
     <value>هجری قمری</value>
   </data>
+  <data name="Compare_Life_Period" xml:space="preserve">
+    <value>از آغاز تا پایان</value>
+  </data>
+  <data name="Compare_Happened" xml:space="preserve">
+    <value>زمان رخ دادن</value>
+  </data>
+  <data name="Compare_Created" xml:space="preserve">
+    <value>زمان ساخته شدن</value>
+  </data>
 </root>

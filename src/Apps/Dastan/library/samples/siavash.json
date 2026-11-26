@@ -908,7 +908,7 @@
       "from": "character-gudarz",
       "to": "character-giv",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-siavosh-s02"
       ],
@@ -952,7 +952,7 @@
       "from": "character-siavash-mother",
       "to": "character-siavash",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-ganjoor-siavosh-s03"
       ],
@@ -974,7 +974,7 @@
       "from": "character-kay-kavus",
       "to": "character-siavash",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-siavosh-s03"
       ],
@@ -1150,7 +1150,7 @@
       "from": "character-gudarz",
       "to": "character-bahram",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-siavosh-s08"
       ],
@@ -1260,7 +1260,7 @@
       "from": "character-piran",
       "to": "character-jarira",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-siavosh-s09"
       ],
@@ -1282,7 +1282,7 @@
       "from": "character-golshahr",
       "to": "character-jarira",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-ganjoor-siavosh-s09"
       ],
@@ -1326,7 +1326,7 @@
       "from": "character-afrasiab",
       "to": "character-farangis",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-siavosh-s09"
       ],
@@ -1392,7 +1392,7 @@
       "from": "character-jarira",
       "to": "character-forud",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-ganjoor-siavosh-s10"
       ],
@@ -1414,7 +1414,7 @@
       "from": "character-siavash",
       "to": "character-forud",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-siavosh-s10"
       ],

@@ -5621,7 +5621,7 @@
       "to": "person-untash-napirisha",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-dur-untas-choga-zanbil-choga-zanbil-ziggurat"
       ],
@@ -6115,7 +6115,7 @@
       "to": "person-astyages",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-cyaxares"
       ],
@@ -6875,7 +6875,7 @@
       "to": "person-arsames",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-ariaramnes"
       ],
@@ -6892,7 +6892,7 @@
       "to": "person-hystaspes",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsames"
       ],
@@ -6909,7 +6909,7 @@
       "to": "person-darius-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-darius-the-great-3-youth"
       ],
@@ -6926,7 +6926,7 @@
       "to": "person-cambyses-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-cambyses-i"
       ],
@@ -6943,7 +6943,7 @@
       "to": "person-cyrus-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-cyrus-the-great"
       ],
@@ -6996,7 +6996,7 @@
       "to": "person-cambyses-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-cambyses-ii"
       ],
@@ -7013,7 +7013,7 @@
       "to": "person-bardiya",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-gaumata-smerdis"
       ],
@@ -7030,7 +7030,7 @@
       "to": "person-atossa",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-atossa"
       ],
@@ -7064,7 +7064,7 @@
       "to": "person-xerxes-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-xerxes-i"
       ],
@@ -7081,7 +7081,7 @@
       "to": "person-xerxes-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-livius-person-atossa"
       ],
@@ -7115,7 +7115,7 @@
       "to": "person-artaxerxes-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-artaxerxes-i-makrocheir"
       ],
@@ -7132,7 +7132,7 @@
       "to": "person-artaxerxes-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-livius-person-artaxerxes-i-makrocheir"
       ],
@@ -7149,7 +7149,7 @@
       "to": "person-xerxes-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-artaxerxes-i-makrocheir"
       ],
@@ -7166,7 +7166,7 @@
       "to": "person-sogdianus",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-xerxes-ii-and-sogdianus"
       ],
@@ -7183,7 +7183,7 @@
       "to": "person-darius-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-darius-ii-nothus"
       ],
@@ -7217,7 +7217,7 @@
       "to": "person-artaxerxes-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-artaxerxes-ii-mnemon"
       ],
@@ -7234,7 +7234,7 @@
       "to": "person-artaxerxes-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-livius-person-artaxerxes-ii-mnemon"
       ],
@@ -7268,7 +7268,7 @@
       "to": "person-artaxerxes-iii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-artaxerxes-iii-ochus"
       ],
@@ -7285,7 +7285,7 @@
       "to": "person-artaxerxes-iv",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-artaxerxes-iv-arses"
       ],
@@ -7302,7 +7302,7 @@
       "to": "person-darius-iii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-darius-iii-codomannus"
       ],
@@ -9389,7 +9389,7 @@
       "to": "person-antiochus-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-antiochus-i-soter"
       ],
@@ -9406,7 +9406,7 @@
       "to": "person-antiochus-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-livius-person-antiochus-i-soter"
       ],
@@ -9423,7 +9423,7 @@
       "to": "person-antiochus-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-antiochus-ii-theos"
       ],
@@ -9440,7 +9440,7 @@
       "to": "person-seleucus-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-seleucus-ii-callinicus"
       ],
@@ -9457,7 +9457,7 @@
       "to": "person-antiochus-iii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-antiochus-iii-the-great"
       ],
@@ -9474,7 +9474,7 @@
       "to": "person-antiochus-iv",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-antiochus-iv-epiphanes"
       ],
@@ -11180,7 +11180,7 @@
       "to": "person-arsaces-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-i"
       ],
@@ -11197,7 +11197,7 @@
       "to": "person-phraates-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-iii-phriapatius"
       ],
@@ -11214,7 +11214,7 @@
       "to": "person-mithridates-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-iii-phriapatius"
       ],
@@ -11231,7 +11231,7 @@
       "to": "person-phraates-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-vi-mithradates-i-the-great"
       ],
@@ -11248,7 +11248,7 @@
       "to": "person-mithridates-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-xi-mithradates-ii"
       ],
@@ -11265,7 +11265,7 @@
       "to": "person-gotarzes-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-xiii-gotarzes-i"
       ],
@@ -11282,7 +11282,7 @@
       "to": "person-phraates-iii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-xii-sinatruces"
       ],
@@ -11299,7 +11299,7 @@
       "to": "person-mithridates-iv",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-xvii-phraates-iii"
       ],
@@ -11316,7 +11316,7 @@
       "to": "person-orodes-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-xvii-phraates-iii"
       ],
@@ -11333,7 +11333,7 @@
       "to": "person-phraates-iv",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-arsaces-xix-orodes-ii"
       ],
@@ -11350,7 +11350,7 @@
       "to": "person-phraataces",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-phraates-iv"
       ],
@@ -11367,7 +11367,7 @@
       "to": "person-phraataces",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-livius-person-phraates-iv"
       ],
@@ -11384,7 +11384,7 @@
       "to": "person-orodes-iii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-orodes-iii"
       ],
@@ -11401,7 +11401,7 @@
       "to": "person-vonones-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-orodes-iii"
       ],
@@ -11418,7 +11418,7 @@
       "to": "person-vardanes-i",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-vardanes-i"
       ],
@@ -11435,7 +11435,7 @@
       "to": "person-gotarzes-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-vardanes-i"
       ],

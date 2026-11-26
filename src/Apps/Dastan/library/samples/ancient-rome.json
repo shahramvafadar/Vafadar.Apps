@@ -2189,7 +2189,12 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 229
+            }
           }
         },
         {
@@ -5171,7 +5176,7 @@
       "to": "person-hannibal",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-hannibal-3-barca"
       ],
@@ -5830,7 +5835,7 @@
       "to": "person-julia",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-caesar-caesar-01"
       ],
@@ -7462,7 +7467,7 @@
       "to": "person-tiberius",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-livius-person-livia"
       ],
@@ -7532,7 +7537,7 @@
       "to": "person-caligula",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-caligula"
       ],
@@ -7549,7 +7554,7 @@
       "to": "person-agrippina-the-younger",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-agrippina-minor"
       ],
@@ -7566,7 +7571,7 @@
       "to": "person-nero",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Mother of",
       "sourceIds": [
         "src-livius-person-nero"
       ],
@@ -7618,7 +7623,7 @@
       "to": "person-titus",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-vespasian",
         "src-livius-person-titus"
@@ -7636,7 +7641,7 @@
       "to": "person-domitian",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-livius-person-vespasian",
         "src-livius-person-domitian"

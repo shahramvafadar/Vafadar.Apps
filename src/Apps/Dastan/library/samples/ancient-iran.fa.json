@@ -814,7 +814,7 @@
       "label": "دارندهٔ سمتِ"
     },
     "relation-shutur-nahhunte-parent-of-untash-napirisha": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-shilhak-inshushinak-successor-of-kudur-nahhunte": {
       "label": "جانشینِ"
@@ -884,7 +884,7 @@
       "note": "به گفتهٔ هرودوت."
     },
     "relation-cyaxares-parent-of-astyages": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-astyages-parent-of-mandane": {
       "label": "پدرِ",
@@ -972,19 +972,19 @@
       "note": "به گفتهٔ داریوش یکم."
     },
     "relation-ariaramnes-parent-of-arsames": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-arsames-parent-of-hystaspes": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-hystaspes-parent-of-darius-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-cyrus-i-parent-of-cambyses-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-cambyses-i-parent-of-cyrus-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-mandane-parent-of-cyrus-ii": {
       "label": "مادرِ",
@@ -995,61 +995,61 @@
       "note": "به گفتهٔ هرودوت؛ شاید ساختگی."
     },
     "relation-cyrus-ii-parent-of-cambyses-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-cyrus-ii-parent-of-bardiya": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-cyrus-ii-parent-of-atossa": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-darius-i-spouse-of-atossa": {
       "label": "همسر"
     },
     "relation-darius-i-parent-of-xerxes-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-atossa-parent-of-xerxes-i": {
-      "label": "پدر یا مادرِ"
+      "label": "مادرِ"
     },
     "relation-xerxes-i-spouse-of-amestris": {
       "label": "همسر"
     },
     "relation-xerxes-i-parent-of-artaxerxes-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-amestris-parent-of-artaxerxes-i": {
-      "label": "پدر یا مادرِ"
+      "label": "مادرِ"
     },
     "relation-artaxerxes-i-parent-of-xerxes-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-artaxerxes-i-parent-of-sogdianus": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-artaxerxes-i-parent-of-darius-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-darius-ii-spouse-of-parysatis": {
       "label": "همسر"
     },
     "relation-darius-ii-parent-of-artaxerxes-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-parysatis-parent-of-artaxerxes-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "مادرِ"
     },
     "relation-artaxerxes-ii-sibling-of-cyrus-the-younger": {
       "label": "برادرِ"
     },
     "relation-artaxerxes-ii-parent-of-artaxerxes-iii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-artaxerxes-iii-parent-of-artaxerxes-iv": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-astanes-parent-of-darius-iii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-cyrus-ii-successor-of-cambyses-i": {
       "label": "جانشینِ"
@@ -1366,22 +1366,22 @@
       "label": "همسر"
     },
     "relation-seleucus-i-parent-of-antiochus-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-apame-parent-of-antiochus-i": {
-      "label": "پدر یا مادرِ"
+      "label": "مادرِ"
     },
     "relation-antiochus-i-parent-of-antiochus-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-antiochus-ii-parent-of-seleucus-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-seleucus-ii-parent-of-antiochus-iii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-antiochus-iii-parent-of-antiochus-iv": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-seleucus-iii-sibling-of-antiochus-iii": {
       "label": "برادرِ"
@@ -1588,52 +1588,52 @@
       "label": "از خاندانِ"
     },
     "relation-arsaces-i-parent-of-arsaces-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-phriapatius-parent-of-phraates-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-phriapatius-parent-of-mithridates-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-mithridates-i-parent-of-phraates-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-artabanus-i-parent-of-mithridates-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-mithridates-ii-parent-of-gotarzes-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-sinatruces-parent-of-phraates-iii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-phraates-iii-parent-of-mithridates-iv": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-phraates-iii-parent-of-orodes-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-orodes-ii-parent-of-phraates-iv": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-phraates-iv-parent-of-phraataces": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-musa-parent-of-phraataces": {
-      "label": "پدر یا مادرِ"
+      "label": "مادرِ"
     },
     "relation-phraates-iv-parent-of-orodes-iii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-phraates-iv-parent-of-vonones-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-artabanus-ii-parent-of-vardanes-i": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-artabanus-ii-parent-of-gotarzes-ii": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-phraates-iv-spouse-of-musa": {
       "label": "همسر"
