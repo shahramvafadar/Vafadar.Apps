@@ -500,7 +500,7 @@
   },
   "relations": {
     "relation-wu-ding-holder-of-shang-king": {
-      "label": "شاه شانگ"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-wu-ding-spouse-of-fu-hao": {
       "label": "همسر"
@@ -509,16 +509,16 @@
       "label": "از خاندانِ"
     },
     "relation-king-cheng-of-zhou-holder-of-zhou-king": {
-      "label": "شاه ژو"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-king-you-of-zhou-holder-of-zhou-king": {
-      "label": "شاه ژو"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-king-wu-of-zhou-holder-of-zhou-king": {
-      "label": "شاه ژو"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-king-ping-of-zhou-holder-of-zhou-king": {
-      "label": "شاه ژو"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-king-wu-of-zhou-member-of-zhou": {
       "label": "از خاندانِ"
@@ -542,7 +542,8 @@
       "label": "بنیادگذارِ"
     },
     "relation-duke-of-zhou-leader-of-lu": {
-      "label": "تیول او، بر پایهٔ روایت"
+      "label": "تیول او",
+      "note": "بر پایهٔ روایت."
     },
     "relation-anyang-capital-of-shang": {
       "label": "واپسین پایتخت"
@@ -572,13 +573,13 @@
       "label": "در دورهٔ"
     },
     "relation-duke-xiao-of-qin-leader-of-qin": {
-      "label": "دوک چین"
+      "label": "دوکِ"
     },
     "relation-shang-yang-lived-in-qin": {
-      "label": "صدراعظم دوک شیائو از چین"
+      "label": "صدراعظم دوک شیائو در"
     },
     "relation-qin-shi-huang-holder-of-king-of-qin": {
-      "label": "شاه چین"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-qin-shi-huang-holder-of-qin-emperor": {
       "label": "نخستین امپراتور"
@@ -587,7 +588,8 @@
       "label": "دومین امپراتور، حدود دو سال"
     },
     "relation-ziying-holder-of-king-of-qin": {
-      "label": "شاه چین که تسلیم شد"
+      "label": "دارندهٔ سمتِ",
+      "note": "تسلیم شد."
     },
     "relation-qin-ershi-successor-of-qin-shi-huang": {
       "label": "جانشینِ"

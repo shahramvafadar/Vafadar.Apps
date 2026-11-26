@@ -5504,7 +5504,7 @@
       "to": "office-king-of-anshan-and-susa",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Anšan and Susa",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-place-dur-untas-choga-zanbil"
       ],
@@ -5543,7 +5543,7 @@
       "to": "office-king-of-anshan-and-susa",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Elam",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-susa-photos-susa-temple-of-the-sutrukids"
       ],
@@ -5582,7 +5582,7 @@
       "to": "office-king-of-anshan-and-susa",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Elam",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-susa-photos-susa-temple-of-the-sutrukids"
       ],
@@ -5795,7 +5795,8 @@
       "to": "office-king-of-the-medes",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Medes, according to Herodotus",
+      "label": "Held the office of",
+      "note": "According to Herodotus.",
       "sourceIds": [
         "src-livius-people-medes"
       ],
@@ -5842,7 +5843,8 @@
       "to": "office-king-of-the-medes",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Medes, according to Herodotus",
+      "label": "Held the office of",
+      "note": "According to Herodotus.",
       "sourceIds": [
         "src-livius-people-medes"
       ],
@@ -5889,7 +5891,7 @@
       "to": "office-king-of-the-medes",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Medes",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-cyaxares"
       ],
@@ -5928,7 +5930,8 @@
       "to": "office-king-of-the-medes",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Medes, according to Herodotus",
+      "label": "Held the office of",
+      "note": "According to Herodotus.",
       "sourceIds": [
         "src-livius-people-medes"
       ],
@@ -6094,7 +6097,8 @@
       "to": "person-cyaxares",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Father of, according to Herodotus",
+      "label": "Father of",
+      "note": "According to Herodotus.",
       "sourceIds": [
         "src-livius-person-cyaxares"
       ],
@@ -6128,7 +6132,8 @@
       "to": "person-mandane",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Father of, according to Herodotus",
+      "label": "Father of",
+      "note": "According to Herodotus.",
       "sourceIds": [
         "src-livius-person-astyages"
       ],
@@ -6145,7 +6150,8 @@
       "to": "place-ecbatana",
       "type": "founderOf",
       "directionality": "directed",
-      "label": "Founded, according to tradition",
+      "label": "Founded",
+      "note": "According to tradition.",
       "sourceIds": [
         "src-livius-place-ecbatana-hamadan"
       ],
@@ -6179,7 +6185,8 @@
       "to": "region-media",
       "type": "governs",
       "directionality": "directed",
-      "label": "Ruled Media, according to Herodotus",
+      "label": "Ruled",
+      "note": "According to Herodotus.",
       "sourceIds": [
         "src-livius-people-medes"
       ],
@@ -6280,7 +6287,7 @@
       "to": "office-king-of-anshan",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King in Anšan",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-cambyses-i"
       ],
@@ -6312,7 +6319,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King, from 550 BCE of the Persian empire",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6349,7 +6356,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6386,7 +6393,8 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King (as Darius calls him, the usurper Gaumâta)",
+      "label": "Held the office of",
+      "note": "As Darius calls him, the usurper Gaumâta.",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6423,7 +6431,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6460,7 +6468,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6497,7 +6505,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6534,7 +6542,8 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King, according to Ctesias",
+      "label": "Held the office of",
+      "note": "According to Ctesias.",
       "sourceIds": [
         "src-livius-person-xerxes-ii-and-sogdianus"
       ],
@@ -6571,7 +6580,8 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King, according to Ctesias",
+      "label": "Held the office of",
+      "note": "According to Ctesias.",
       "sourceIds": [
         "src-livius-person-xerxes-ii-and-sogdianus"
       ],
@@ -6608,7 +6618,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6645,7 +6655,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6682,7 +6692,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6719,7 +6729,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6756,7 +6766,7 @@
       "to": "office-king-of-kings",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-achaemenids-achaemenid-kings"
       ],
@@ -6793,7 +6803,8 @@
       "to": "office-king-of-anshan",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Anšan, as the Cyrus Cylinder calls him",
+      "label": "Held the office of",
+      "note": "As the Cyrus Cylinder calls him.",
       "sourceIds": [
         "src-livius-cyrus-cylinder-cyrus-cylinder-translation"
       ],
@@ -6810,7 +6821,8 @@
       "to": "office-king-of-anshan",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Anšan, as the Cyrus Cylinder calls him",
+      "label": "Held the office of",
+      "note": "As the Cyrus Cylinder calls him.",
       "sourceIds": [
         "src-livius-cyrus-cylinder-cyrus-cylinder-translation"
       ],
@@ -6827,7 +6839,8 @@
       "to": "person-teispes",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Father of, according to Darius I",
+      "label": "Father of",
+      "note": "According to Darius I.",
       "sourceIds": [
         "src-livius-person-ariaramnes"
       ],
@@ -6844,7 +6857,8 @@
       "to": "person-ariaramnes",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Father of, according to Darius I",
+      "label": "Father of",
+      "note": "According to Darius I.",
       "sourceIds": [
         "src-livius-person-ariaramnes"
       ],
@@ -6946,7 +6960,8 @@
       "to": "person-cyrus-ii",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Mother of, according to Herodotus",
+      "label": "Mother of",
+      "note": "According to Herodotus.",
       "sourceIds": [
         "src-livius-person-astyages"
       ],
@@ -6963,7 +6978,8 @@
       "to": "person-mandane",
       "type": "spouseOf",
       "directionality": "symmetric",
-      "label": "Married, according to Herodotus – perhaps invented",
+      "label": "Married",
+      "note": "According to Herodotus; perhaps invented.",
       "sourceIds": [
         "src-livius-person-cambyses-i"
       ],
@@ -7694,7 +7710,8 @@
       "to": "dynasty-achaemenid",
       "type": "founderOf",
       "directionality": "directed",
-      "label": "Legendary founder",
+      "label": "Founder",
+      "note": "In the legend.",
       "sourceIds": [
         "src-livius-dynasty-achaemenids"
       ],
@@ -8868,7 +8885,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -8922,7 +8939,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -8976,7 +8993,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -9030,7 +9047,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -9084,7 +9101,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -9138,7 +9155,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -9192,7 +9209,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -9246,7 +9263,8 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king, first reign",
+      "label": "Held the office of",
+      "note": "First reign.",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -9300,7 +9318,7 @@
       "to": "office-seleucid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Seleucid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-seleucids-seleucid-kings"
       ],
@@ -9888,7 +9906,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-i"
       ],
@@ -9942,7 +9960,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-ii"
       ],
@@ -9996,7 +10014,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-iii-phriapatius"
       ],
@@ -10050,7 +10068,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-v-phraates-i"
       ],
@@ -10104,7 +10122,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-vi-mithradates-i-the-great"
       ],
@@ -10158,7 +10176,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-vii-phraates-ii"
       ],
@@ -10212,7 +10230,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-ix-artabanus-i"
       ],
@@ -10266,7 +10284,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-xi-mithradates-ii"
       ],
@@ -10320,7 +10338,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-xiii-gotarzes-i"
       ],
@@ -10374,7 +10392,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-xv-orodes-i"
       ],
@@ -10433,7 +10451,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-xii-sinatruces"
       ],
@@ -10497,7 +10515,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-xvii-phraates-iii"
       ],
@@ -10561,7 +10579,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-xviii-mithradates-iv"
       ],
@@ -10620,7 +10638,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-arsaces-xix-orodes-ii"
       ],
@@ -10674,7 +10692,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-phraates-iv"
       ],
@@ -10728,7 +10746,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-phraataces"
       ],
@@ -10782,7 +10800,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-orodes-iii"
       ],
@@ -10838,7 +10856,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-vonones-i"
       ],
@@ -10892,7 +10910,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-artabanus-ii"
       ],
@@ -10946,7 +10964,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-vardanes-i"
       ],
@@ -11000,7 +11018,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-gotarzes-ii"
       ],
@@ -11054,7 +11072,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-vologases-i"
       ],
@@ -11108,7 +11126,7 @@
       "to": "office-arsacid-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Arsacid king",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-person-pacorus-ii"
       ],
@@ -11604,7 +11622,7 @@
       "to": "dynasty-seleucid",
       "type": "successorOf",
       "directionality": "directed",
-      "label": "Took the Iranian lands of the Seleucids",
+      "label": "Took the Iranian lands of",
       "sourceIds": [
         "src-livius-person-antiochus-vii-sidetes",
         "src-livius-place-parthia"
@@ -11622,7 +11640,8 @@
       "to": "dynasty-achaemenid",
       "type": "successorOf",
       "directionality": "directed",
-      "label": "A continuation of the Achaemenid empire, as Livius calls it",
+      "label": "A continuation of",
+      "note": "As Livius calls it.",
       "sourceIds": [
         "src-livius-dynasty-achaemenids"
       ],

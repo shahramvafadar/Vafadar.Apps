@@ -994,19 +994,19 @@
       "label": "پیشکش به"
     },
     "relation-reign-kayumars-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-kayumars-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-kayumars-member-of-pishdadian": {
       "label": "از خاندانِ"
     },
     "relation-reign-hushang-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-hushang-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-hushang-successor-of-kayumars": {
       "label": "شاه پس از"
@@ -1015,10 +1015,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-tahmuras-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-tahmuras-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-tahmuras-successor-of-hushang": {
       "label": "شاه پس از"
@@ -1027,10 +1027,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-jamshid-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-jamshid-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-jamshid-successor-of-tahmuras": {
       "label": "شاه پس از"
@@ -1039,19 +1039,19 @@
       "label": "از خاندانِ"
     },
     "relation-reign-zahhak-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-zahhak-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-zahhak-successor-of-jamshid": {
       "label": "شاه پس از"
     },
     "relation-reign-fereydun-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-fereydun-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-fereydun-successor-of-zahhak": {
       "label": "شاه پس از"
@@ -1060,10 +1060,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-manuchehr-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-manuchehr-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-manuchehr-successor-of-fereydun": {
       "label": "شاه پس از"
@@ -1072,10 +1072,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-nowzar-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-nowzar-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-nowzar-successor-of-manuchehr": {
       "label": "شاه پس از"
@@ -1084,10 +1084,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-zav-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-zav-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-zav-successor-of-nowzar": {
       "label": "شاه پس از"
@@ -1096,10 +1096,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-garshasp-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-garshasp-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-garshasp-successor-of-zav": {
       "label": "شاه پس از"
@@ -1108,10 +1108,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-kay-qobad-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-kay-qobad-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-kay-qobad-successor-of-garshasp": {
       "label": "شاه پس از"
@@ -1120,10 +1120,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-kay-kavus-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-kay-kavus-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-kay-kavus-successor-of-kay-qobad": {
       "label": "شاه پس از"
@@ -1132,10 +1132,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-kay-khosrow-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-kay-khosrow-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-kay-khosrow-successor-of-kay-kavus": {
       "label": "شاه پس از"
@@ -1144,10 +1144,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-lohrasp-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-lohrasp-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-lohrasp-successor-of-kay-khosrow": {
       "label": "شاه پس از"
@@ -1156,10 +1156,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-goshtasp-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-goshtasp-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-goshtasp-successor-of-lohrasp": {
       "label": "شاه پس از"
@@ -1168,10 +1168,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-bahman-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-bahman-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-bahman-successor-of-goshtasp": {
       "label": "شاه پس از"
@@ -1180,10 +1180,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-homay-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-homay-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-homay-successor-of-bahman": {
       "label": "شاه پس از"
@@ -1192,10 +1192,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-darab-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-darab-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-darab-successor-of-homay": {
       "label": "شاه پس از"
@@ -1204,10 +1204,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-dara-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-dara-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-dara-successor-of-darab": {
       "label": "شاه پس از"
@@ -1216,22 +1216,22 @@
       "label": "از خاندانِ"
     },
     "relation-reign-eskandar-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-eskandar-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-eskandar-successor-of-dara": {
       "label": "شاه پس از"
     },
     "relation-reign-ashkanian-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-reign-ardashir-i-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-ardashir-i-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-ardashir-i-successor-of-eskandar": {
       "label": "شاه پس از"
@@ -1240,10 +1240,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-shapur-i-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-shapur-i-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-shapur-i-successor-of-ardashir-i": {
       "label": "شاه پس از"
@@ -1252,10 +1252,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-ormazd-i-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-ormazd-i-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-ormazd-i-successor-of-shapur-i": {
       "label": "شاه پس از"
@@ -1264,10 +1264,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-bahram-i-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-bahram-i-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-bahram-i-successor-of-ormazd-i": {
       "label": "شاه پس از"
@@ -1276,10 +1276,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-bahram-ii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-bahram-ii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-bahram-ii-successor-of-bahram-i": {
       "label": "شاه پس از"
@@ -1288,10 +1288,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-bahram-iii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-bahram-iii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-bahram-iii-successor-of-bahram-ii": {
       "label": "شاه پس از"
@@ -1300,10 +1300,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-narsi-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-narsi-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-narsi-successor-of-bahram-iii": {
       "label": "شاه پس از"
@@ -1312,10 +1312,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-ormazd-ii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-ormazd-ii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-ormazd-ii-successor-of-narsi": {
       "label": "شاه پس از"
@@ -1324,10 +1324,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-shapur-ii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-shapur-ii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-shapur-ii-successor-of-ormazd-ii": {
       "label": "شاه پس از"
@@ -1336,10 +1336,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-ardashir-ii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-ardashir-ii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-ardashir-ii-successor-of-shapur-ii": {
       "label": "شاه پس از"
@@ -1348,10 +1348,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-shapur-iii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-shapur-iii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-shapur-iii-successor-of-ardashir-ii": {
       "label": "شاه پس از"
@@ -1360,10 +1360,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-bahram-iv-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-bahram-iv-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-bahram-iv-successor-of-shapur-iii": {
       "label": "شاه پس از"
@@ -1372,10 +1372,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-yazdegerd-i-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-yazdegerd-i-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-yazdegerd-i-successor-of-bahram-iv": {
       "label": "شاه پس از"
@@ -1384,10 +1384,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-bahram-v-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-bahram-v-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-bahram-v-successor-of-yazdegerd-i": {
       "label": "شاه پس از"
@@ -1396,10 +1396,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-yazdegerd-ii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-yazdegerd-ii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-yazdegerd-ii-successor-of-bahram-v": {
       "label": "شاه پس از"
@@ -1408,10 +1408,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-hormoz-iii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-hormoz-iii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-hormoz-iii-successor-of-yazdegerd-ii": {
       "label": "شاه پس از"
@@ -1420,10 +1420,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-piruz-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-piruz-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-piruz-successor-of-hormoz-iii": {
       "label": "شاه پس از"
@@ -1432,10 +1432,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-balash-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-balash-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-balash-successor-of-piruz": {
       "label": "شاه پس از"
@@ -1444,10 +1444,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-qobad-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-qobad-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-qobad-successor-of-balash": {
       "label": "شاه پس از"
@@ -1456,10 +1456,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-kesra-anushirvan-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-kesra-anushirvan-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-kesra-anushirvan-successor-of-qobad": {
       "label": "شاه پس از"
@@ -1468,10 +1468,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-hormozd-iv-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-hormozd-iv-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-hormozd-iv-successor-of-kesra-anushirvan": {
       "label": "شاه پس از"
@@ -1480,10 +1480,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-khosrow-parviz-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-khosrow-parviz-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-khosrow-parviz-successor-of-hormozd-iv": {
       "label": "شاه پس از"
@@ -1492,10 +1492,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-shiruy-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-shiruy-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-shiruy-successor-of-khosrow-parviz": {
       "label": "شاه پس از"
@@ -1504,10 +1504,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-ardashir-iii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-ardashir-iii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-ardashir-iii-successor-of-shiruy": {
       "label": "شاه پس از"
@@ -1516,10 +1516,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-farayin-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-farayin-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-farayin-successor-of-ardashir-iii": {
       "label": "شاه پس از"
@@ -1528,10 +1528,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-puran-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-puran-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-puran-successor-of-farayin": {
       "label": "شاه پس از"
@@ -1540,10 +1540,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-azarmdokht-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-azarmdokht-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-azarmdokht-successor-of-puran": {
       "label": "شاه پس از"
@@ -1552,10 +1552,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-farrokhzad-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-farrokhzad-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-farrokhzad-successor-of-azarmdokht": {
       "label": "شاه پس از"
@@ -1564,10 +1564,10 @@
       "label": "از خاندانِ"
     },
     "relation-reign-yazdegerd-iii-part-of-shahnameh": {
-      "label": "بخشی از شاهنامه"
+      "label": "بخشی از"
     },
     "relation-yazdegerd-iii-holder-of-king-of-iran": {
-      "label": "شاه ایران"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-yazdegerd-iii-successor-of-farrokhzad": {
       "label": "شاه پس از"
@@ -1576,121 +1576,121 @@
       "label": "از خاندانِ"
     },
     "relation-haft-khan-rostam-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-haft-khan-rostam-part-of-reign-kay-kavus": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-kavus-hamavaran-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-kavus-hamavaran-part-of-reign-kay-kavus": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-rostam-sohrab-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-rostam-sohrab-part-of-reign-kay-kavus": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-siavash-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-siavash-part-of-reign-kay-kavus": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-forud-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-forud-part-of-reign-kay-khosrow": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-kamus-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-kamus-part-of-reign-kay-khosrow": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-khaqan-chin-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-khaqan-chin-part-of-reign-kay-khosrow": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-akvan-div-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-akvan-div-part-of-reign-kay-khosrow": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-bizhan-manizheh-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-bizhan-manizheh-part-of-reign-kay-khosrow": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-davazdah-rokh-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-davazdah-rokh-part-of-reign-kay-khosrow": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-great-war-kay-khosrow-afrasiab-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-great-war-kay-khosrow-afrasiab-part-of-reign-kay-khosrow": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-haft-khan-esfandiar-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-haft-khan-esfandiar-part-of-reign-goshtasp": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-rostam-esfandiar-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-rostam-esfandiar-part-of-reign-goshtasp": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-rostam-shaghad-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-rostam-shaghad-part-of-reign-goshtasp": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-zal-birth-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-zal-birth-part-of-reign-manuchehr": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-mazdak-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-mazdak-part-of-reign-qobad": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-bozorgmehr-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-bozorgmehr-part-of-reign-kesra-anushirvan": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-chess-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-chess-part-of-reign-kesra-anushirvan": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-kalila-dimna-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-kalila-dimna-part-of-reign-kesra-anushirvan": {
       "label": "روایت‌شده در این پادشاهی"
     },
     "relation-khosrow-shirin-part-of-shahnameh": {
-      "label": "داستانی از شاهنامه"
+      "label": "داستانی از"
     },
     "relation-khosrow-shirin-part-of-reign-khosrow-parviz": {
       "label": "روایت‌شده در این پادشاهی"
@@ -1891,13 +1891,13 @@
       "label": "از خاندانِ، در شعر"
     },
     "relation-florence-shahnameh-edition-of-shahnameh": {
-      "label": "دست‌نویسی از شاهنامه"
+      "label": "دست‌نویسی از"
     },
     "relation-baysonghori-shahnameh-edition-of-shahnameh": {
-      "label": "دست‌نویسی از شاهنامه"
+      "label": "دست‌نویسی از"
     },
     "relation-shah-tahmasp-shahnameh-edition-of-shahnameh": {
-      "label": "دست‌نویسی از شاهنامه"
+      "label": "دست‌نویسی از"
     },
     "relation-florence-shahnameh-kept-at-bncf": {
       "label": "نگهداری در"
@@ -1921,10 +1921,10 @@
       "label": "در"
     },
     "relation-moscow-edition-edition-of-shahnameh": {
-      "label": "ویراستی از شاهنامه"
+      "label": "ویراستی از"
     },
     "relation-khaleghi-motlagh-edition-edition-of-shahnameh": {
-      "label": "ویراستی از شاهنامه"
+      "label": "ویراستی از"
     }
   }
 }

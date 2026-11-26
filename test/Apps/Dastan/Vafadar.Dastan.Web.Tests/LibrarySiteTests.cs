@@ -260,6 +260,33 @@ public sealed class LibrarySiteTests
         Assert.All(cards, card => Assert.Contains("class=\"profile-picture", card.Value, StringComparison.Ordinal));
     }
 
+    [Theory]
+    [InlineData("en", "for 37 years", "By tradition.")]
+    [InlineData("fa", "به مدت ۳۷ سال", "بر پایهٔ روایت.")]
+    public async Task ALengthOfAReignIsSaidWithTheRelationAndWhoseAccountItIsWithItsSources(string language, string length, string note)
+    {
+        // D-102: a relation says how long it held where a source gives a length and no years; whose account it
+        // is stands with the sources of the relation, not where the relation is listed.
+        const string Rome = "subject-ancient-rome";
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var reign = site.Services.GetRequiredService<DastanLibrary>().Collections.Single(collection => collection.Collection == Rome)
+            .At(new ReadingLevel(0))!.Relations.First(relation => relation.Length is { Value: 37 });
+
+        var name = (await visitor.Get($"/{language}/{Rome}/entity/{reign.From}")).Main;
+        Assert.Contains(length, name, StringComparison.Ordinal);
+        Assert.DoesNotContain(note, name, StringComparison.Ordinal);
+
+        var sources = (await visitor.Get($"/{language}/{Rome}/evidence/relation/{reign.Id}")).Main;
+        Assert.Contains(length, sources, StringComparison.Ordinal);
+        Assert.Contains(note, sources, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task AYearAskedOfACollectionLeadsToItsAnswerPastTheForms()
     {

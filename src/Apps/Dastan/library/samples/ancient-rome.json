@@ -4507,7 +4507,12 @@
       "to": "office-king-of-rome",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Rome, by tradition for 37 years",
+      "label": "Held the office of",
+      "length": {
+        "value": 37,
+        "unit": "years"
+      },
+      "note": "By tradition.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1"
       ],
@@ -4524,7 +4529,12 @@
       "to": "office-king-of-rome",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Rome, by tradition for 43 years",
+      "label": "Held the office of",
+      "length": {
+        "value": 43,
+        "unit": "years"
+      },
+      "note": "By tradition.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1"
       ],
@@ -4558,7 +4568,12 @@
       "to": "office-king-of-rome",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Rome, by tradition for 32 years",
+      "label": "Held the office of",
+      "length": {
+        "value": 32,
+        "unit": "years"
+      },
+      "note": "By tradition.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1"
       ],
@@ -4592,7 +4607,12 @@
       "to": "office-king-of-rome",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Rome, by tradition for 24 years",
+      "label": "Held the office of",
+      "length": {
+        "value": 24,
+        "unit": "years"
+      },
+      "note": "By tradition.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1"
       ],
@@ -4626,7 +4646,12 @@
       "to": "office-king-of-rome",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Rome, by tradition for 38 years",
+      "label": "Held the office of",
+      "length": {
+        "value": 38,
+        "unit": "years"
+      },
+      "note": "By tradition.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1"
       ],
@@ -4660,7 +4685,12 @@
       "to": "office-king-of-rome",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Rome, by tradition for 45 years",
+      "label": "Held the office of",
+      "length": {
+        "value": 45,
+        "unit": "years"
+      },
+      "note": "By tradition.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1"
       ],
@@ -4694,7 +4724,12 @@
       "to": "office-king-of-rome",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Rome, by tradition for 25 years",
+      "label": "Held the office of",
+      "length": {
+        "value": 25,
+        "unit": "years"
+      },
+      "note": "By tradition.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1"
       ],
@@ -4728,7 +4763,8 @@
       "to": "person-romulus",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Mother of, in the legend",
+      "label": "Mother of",
+      "note": "In the legend.",
       "sourceIds": [
         "src-livius-person-romulus"
       ],
@@ -4745,7 +4781,8 @@
       "to": "person-tarquinius-superbus",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Father of, according to tradition",
+      "label": "Father of",
+      "note": "According to tradition.",
       "sourceIds": [
         "src-livius-appian-appian-wars-of-the-roman-kings"
       ],
@@ -4762,7 +4799,8 @@
       "to": "place-rome",
       "type": "founderOf",
       "directionality": "directed",
-      "label": "Founder, in the legend",
+      "label": "Founder",
+      "note": "In the legend.",
       "sourceIds": [
         "src-livius-person-romulus"
       ],
@@ -4779,7 +4817,8 @@
       "to": "place-ostia",
       "type": "founderOf",
       "directionality": "directed",
-      "label": "Founder, according to tradition",
+      "label": "Founder",
+      "note": "According to tradition.",
       "sourceIds": [
         "src-livius-place-ostia"
       ],
@@ -4853,7 +4892,8 @@
       "to": "office-consul",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "One of the first two consuls, according to tradition",
+      "label": "Held the office of",
+      "note": "One of the first two consuls, according to tradition.",
       "sourceIds": [
         "src-livius-person-junius-brutus-lucius"
       ],
@@ -4870,7 +4910,8 @@
       "to": "government-roman-republic",
       "type": "founderOf",
       "directionality": "directed",
-      "label": "Founder, according to tradition",
+      "label": "Founder",
+      "note": "According to tradition.",
       "sourceIds": [
         "src-livius-person-junius-brutus-lucius"
       ],
@@ -5093,7 +5134,7 @@
       "to": "office-censor",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Censor",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-livy-livy-periochae-36-40"
       ],
@@ -5444,7 +5485,7 @@
       "to": "office-tribune-of-the-plebs",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Tribune of the plebs",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-livy-livy-periochae-56-60"
       ],
@@ -5481,7 +5522,8 @@
       "to": "office-tribune-of-the-plebs",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Tribune of the plebs, twice",
+      "label": "Held the office of",
+      "note": "Twice.",
       "sourceIds": [
         "src-livius-livy-livy-periochae-56-60"
       ],
@@ -5569,7 +5611,8 @@
       "to": "office-consul",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Consul seven times",
+      "label": "Held the office of",
+      "note": "Seven times.",
       "sourceIds": [
         "src-livius-person-julia-1"
       ],
@@ -5606,7 +5649,7 @@
       "to": "office-dictator",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Dictator",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-livy-livy-periochae-86-90",
         "src-livius-caesar-caesar-01"
@@ -5749,7 +5792,8 @@
       "to": "office-consul",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Consul without a colleague",
+      "label": "Held the office of",
+      "note": "Without a colleague.",
       "sourceIds": [
         "src-livius-caesar-caesar-06"
       ],
@@ -5820,7 +5864,7 @@
       "to": "office-consul",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Consul",
+      "label": "Held the office of",
       "sourceIds": [
         "src-livius-caesar-caesar-03"
       ],
@@ -5857,7 +5901,8 @@
       "to": "office-dictator",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "Dictator, for ten years and then for life",
+      "label": "Held the office of",
+      "note": "For ten years and then for life.",
       "sourceIds": [
         "src-livius-caesar-caesar-08"
       ],

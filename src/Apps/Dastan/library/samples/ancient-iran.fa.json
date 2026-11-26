@@ -805,13 +805,13 @@
   },
   "relations": {
     "relation-untash-napirisha-holder-of-king-of-anshan-and-susa": {
-      "label": "شاه انشان و شوش"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-kudur-nahhunte-holder-of-king-of-anshan-and-susa": {
-      "label": "شاه ایلام"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-shilhak-inshushinak-holder-of-king-of-anshan-and-susa": {
-      "label": "شاه ایلام"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-shutur-nahhunte-parent-of-untash-napirisha": {
       "label": "پدر یا مادرِ"
@@ -844,16 +844,19 @@
       "label": "رخ داد در"
     },
     "relation-deioces-holder-of-king-of-the-medes": {
-      "label": "شاه ماد، به گفتهٔ هرودوت"
+      "label": "دارندهٔ سمتِ",
+      "note": "به گفتهٔ هرودوت."
     },
     "relation-phraortes-holder-of-king-of-the-medes": {
-      "label": "شاه ماد، به گفتهٔ هرودوت"
+      "label": "دارندهٔ سمتِ",
+      "note": "به گفتهٔ هرودوت."
     },
     "relation-cyaxares-holder-of-king-of-the-medes": {
-      "label": "شاه ماد"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-astyages-holder-of-king-of-the-medes": {
-      "label": "شاه ماد، به گفتهٔ هرودوت"
+      "label": "دارندهٔ سمتِ",
+      "note": "به گفتهٔ هرودوت."
     },
     "relation-deioces-member-of-median": {
       "label": "از خاندانِ"
@@ -877,22 +880,26 @@
       "label": "جانشینِ"
     },
     "relation-phraortes-parent-of-cyaxares": {
-      "label": "پدرِ، به گفتهٔ هرودوت"
+      "label": "پدرِ",
+      "note": "به گفتهٔ هرودوت."
     },
     "relation-cyaxares-parent-of-astyages": {
       "label": "پدر یا مادرِ"
     },
     "relation-astyages-parent-of-mandane": {
-      "label": "پدرِ، به گفتهٔ هرودوت"
+      "label": "پدرِ",
+      "note": "به گفتهٔ هرودوت."
     },
     "relation-deioces-founder-of-ecbatana": {
-      "label": "بنیاد نهاد، بر پایهٔ روایت"
+      "label": "بنیاد نهاد",
+      "note": "بر پایهٔ روایت."
     },
     "relation-ecbatana-capital-of-media": {
       "label": "پایتختِ"
     },
     "relation-median-governs-media": {
-      "label": "فرمانروای ماد، به گفتهٔ هرودوت"
+      "label": "فرمانروای",
+      "note": "به گفتهٔ هرودوت."
     },
     "relation-cyaxares-participant-in-fall-of-nineveh": {
       "label": "شرکت در"
@@ -904,58 +911,65 @@
       "label": "در دورهٔ"
     },
     "relation-cambyses-i-holder-of-king-of-anshan": {
-      "label": "شاه انشان"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-cyrus-ii-holder-of-king-of-kings": {
-      "label": "شاه؛ از ۵۵۰ پیش از میلاد شاهنشاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-cambyses-ii-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-bardiya-holder-of-king-of-kings": {
-      "label": "شاه (به گفتهٔ داریوش، گئوماتِ غاصب)"
+      "label": "دارندهٔ سمتِ",
+      "note": "به گفتهٔ داریوش، گئوماتِ غاصب."
     },
     "relation-darius-i-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-xerxes-i-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-artaxerxes-i-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-xerxes-ii-holder-of-king-of-kings": {
-      "label": "شاه، به گفتهٔ کتزیاس"
+      "label": "دارندهٔ سمتِ",
+      "note": "به گفتهٔ کتزیاس."
     },
     "relation-sogdianus-holder-of-king-of-kings": {
-      "label": "شاه، به گفتهٔ کتزیاس"
+      "label": "دارندهٔ سمتِ",
+      "note": "به گفتهٔ کتزیاس."
     },
     "relation-darius-ii-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-artaxerxes-ii-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-artaxerxes-iii-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-artaxerxes-iv-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-darius-iii-holder-of-king-of-kings": {
-      "label": "شاه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-teispes-holder-of-king-of-anshan": {
-      "label": "شاه انشان، چنان‌که استوانهٔ کوروش می‌گوید"
+      "label": "دارندهٔ سمتِ",
+      "note": "چنان‌که استوانهٔ کوروش می‌گوید."
     },
     "relation-cyrus-i-holder-of-king-of-anshan": {
-      "label": "شاه انشان، چنان‌که استوانهٔ کوروش می‌گوید"
+      "label": "دارندهٔ سمتِ",
+      "note": "چنان‌که استوانهٔ کوروش می‌گوید."
     },
     "relation-achaemenes-parent-of-teispes": {
-      "label": "پدرِ، به گفتهٔ داریوش یکم"
+      "label": "پدرِ",
+      "note": "به گفتهٔ داریوش یکم."
     },
     "relation-teispes-parent-of-ariaramnes": {
-      "label": "پدرِ، به گفتهٔ داریوش یکم"
+      "label": "پدرِ",
+      "note": "به گفتهٔ داریوش یکم."
     },
     "relation-ariaramnes-parent-of-arsames": {
       "label": "پدر یا مادرِ"
@@ -973,10 +987,12 @@
       "label": "پدر یا مادرِ"
     },
     "relation-mandane-parent-of-cyrus-ii": {
-      "label": "مادرِ، به گفتهٔ هرودوت"
+      "label": "مادرِ",
+      "note": "به گفتهٔ هرودوت."
     },
     "relation-cambyses-i-spouse-of-mandane": {
-      "label": "همسر، به گفتهٔ هرودوت – شاید ساختگی"
+      "label": "همسر",
+      "note": "به گفتهٔ هرودوت؛ شاید ساختگی."
     },
     "relation-cyrus-ii-parent-of-cambyses-ii": {
       "label": "پدر یا مادرِ"
@@ -1105,7 +1121,8 @@
       "label": "از خاندانِ"
     },
     "relation-achaemenes-founder-of-achaemenid": {
-      "label": "بنیادگذار افسانه‌ای"
+      "label": "بنیادگذار",
+      "note": "در افسانه."
     },
     "relation-cyrus-ii-founder-of-achaemenid": {
       "label": "بنیادگذار شاهنشاهی"
@@ -1291,55 +1308,56 @@
       "label": "در دورهٔ"
     },
     "relation-seleucus-i-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-seleucus-i-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-antiochus-i-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-antiochus-i-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-antiochus-ii-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-antiochus-ii-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-seleucus-ii-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-seleucus-ii-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-seleucus-iii-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-seleucus-iii-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-antiochus-iii-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-antiochus-iii-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-antiochus-iv-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-antiochus-iv-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-demetrius-ii-holder-of-seleucid-king": {
-      "label": "شاه سلوکی، نخستین دوره"
+      "label": "دارندهٔ سمتِ",
+      "note": "نخستین دوره."
     },
     "relation-demetrius-ii-member-of-seleucid": {
       "label": "از خاندانِ"
     },
     "relation-antiochus-vii-holder-of-seleucid-king": {
-      "label": "شاه سلوکی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-antiochus-vii-member-of-seleucid": {
       "label": "از خاندانِ"
@@ -1432,139 +1450,139 @@
       "label": "در دورهٔ"
     },
     "relation-arsaces-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-arsaces-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-arsaces-ii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-arsaces-ii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-phriapatius-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-phriapatius-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-phraates-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-phraates-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-mithridates-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-mithridates-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-phraates-ii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-phraates-ii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-artabanus-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-artabanus-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-mithridates-ii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-mithridates-ii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-gotarzes-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-gotarzes-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-orodes-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-orodes-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-sinatruces-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-sinatruces-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-phraates-iii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-phraates-iii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-mithridates-iv-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-mithridates-iv-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-orodes-ii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-orodes-ii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-phraates-iv-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-phraates-iv-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-phraataces-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-phraataces-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-orodes-iii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-orodes-iii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-vonones-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-vonones-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-artabanus-ii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-artabanus-ii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-vardanes-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-vardanes-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-gotarzes-ii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-gotarzes-ii-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-vologases-i-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-vologases-i-member-of-arsacid": {
       "label": "از خاندانِ"
     },
     "relation-pacorus-ii-holder-of-arsacid-king": {
-      "label": "شاه اشکانی"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-pacorus-ii-member-of-arsacid": {
       "label": "از خاندانِ"
@@ -1648,10 +1666,11 @@
       "label": "جانشینِ"
     },
     "relation-arsacid-successor-of-seleucid": {
-      "label": "جانشین سلوکیان در سرزمین‌های ایرانی"
+      "label": "در سرزمین‌های ایرانی جانشینِ"
     },
     "relation-seleucid-successor-of-achaemenid": {
-      "label": "دنبالهٔ شاهنشاهی هخامنشی، به گفتهٔ Livius"
+      "label": "دنبالهٔ",
+      "note": "چنان‌که Livius می‌گوید."
     },
     "relation-arsaces-i-founder-of-arsacid": {
       "label": "بنیادگذارِ"

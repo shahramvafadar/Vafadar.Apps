@@ -257,6 +257,7 @@ time (the number of verses of a poem) has `quantity` alone.
 | `titles` | Titles won |
 | `seats` | Seats of a hall or of a parliament |
 | `years` | A length of time in years – not a date |
+| `months` | A length of time in months |
 | `days` | A length of time in days |
 | `metres` | A length or a height |
 | `kilometres` | A distance |
@@ -369,7 +370,9 @@ A place – of the story or real – takes part in a step of the story only as i
 | `from`, `to` | The two entities. A relation with a direction reads from the first to the second |
 | `type` | One of the relation types of the story: `partOf`, `parentOf`, `spouseOf`, `rules`, `rides`, `visits`, `givesKeepsake`, `entrustedTo`, `carries`, `supportsExpeditionOf`, `opponentOf`, `summonedBy`, `returnsTo`, `mourns`, `huntsNear`, `appearsAt`, `withholdsRemedyFor` – or of the world outside it, see "The relations of the world outside the story". `spouseOf`, `opponentOf` and `siblingOf` are the same from both sides; the others read from the first entity to the second |
 | `directionality` | `directed` or `symmetric`; it has to agree with the type |
-| `label` | The relation in words, read from the first entity: "Father of" |
+| `label` | The relation in words, read from the first entity: "Father of". It says what the relation is and nothing else: it names neither of the two entities – a page writes them beside it – and not whose account the statement is ("according to Herodotus"); that is the `note` |
+| `length` | Optional: how long the relation held, where a source states a length and no years – "by tradition 37 years". Written like a quantity (`value`, `unit`, optional `approximate`), with the unit `years`, `months` or `days`. A length is no date: nothing places it in the calendar, and it may stand in a relation of a story too – a telling says how long a king reigned |
+| `note` | Optional: what stands behind the statement, in a sentence or two – whose account it is, what the accounts differ on. It is shown with the sources of the relation, not where the relation is listed |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage at which the relation is told – not earlier than both entities |
 | `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed`; taken back by the editors `withdrawn` – see "Disputed and withdrawn statements" |
@@ -541,7 +544,7 @@ stops in an order a reader can follow: the later the stage, the later the stop.
 | `note` | Optional remark of the translator |
 | `readingStages` | Level → name of the stage: `{ "0": "…", "1": "…" }` |
 | `entities` | Identifier → `label`, `summary` |
-| `relations` | Identifier → `label` |
+| `relations` | Identifier → `label`, `note` |
 | `events` | Identifier → `label`, `summary`, and `roles`: entity identifier → the role of that entity in the event |
 | `media` | Identifier → `label`, `caption`, `altText` |
 | `threads` | Identifier → `label`, `summary`, and `notes`: the identifier of what a stop names → the note of that stop |

@@ -12,6 +12,11 @@
     {
         <span class="when">(@TimeText.Of(time, Visitor, T))</span>
     }
+    @if (Relation.Relation.Length is { } length)
+    {
+        @* A length a source states – "37 years" – is said as a length: it is no date and stands in no chart. *@
+        <span class="when">(@string.Format(CultureInfo.CurrentCulture, T["Relation_Length"], QuantityText.Of(length, Visitor, T)))</span>
+    }
     <DisputedMark Review="Relation.Relation.Review" />
 </span>
 @if (Evidence)

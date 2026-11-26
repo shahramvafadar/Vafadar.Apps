@@ -3039,7 +3039,7 @@
       "to": "office-shang-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Shang",
+      "label": "Held the office of",
       "sourceIds": [
         "src-hawaii-early-china"
       ],
@@ -3090,7 +3090,7 @@
       "to": "office-zhou-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Zhou",
+      "label": "Held the office of",
       "sourceIds": [
         "src-eno-western-zhou"
       ],
@@ -3127,7 +3127,7 @@
       "to": "office-zhou-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Zhou",
+      "label": "Held the office of",
       "sourceIds": [
         "src-eno-western-zhou"
       ],
@@ -3164,7 +3164,7 @@
       "to": "office-zhou-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Zhou",
+      "label": "Held the office of",
       "sourceIds": [
         "src-eno-western-zhou"
       ],
@@ -3181,7 +3181,7 @@
       "to": "office-zhou-king",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of the Zhou",
+      "label": "Held the office of",
       "sourceIds": [
         "src-eno-western-zhou"
       ],
@@ -3317,7 +3317,8 @@
       "to": "region-lu",
       "type": "leaderOf",
       "directionality": "directed",
-      "label": "Held it as his estate, according to tradition",
+      "label": "Held it as his estate",
+      "note": "According to tradition.",
       "sourceIds": [
         "src-eno-western-zhou"
       ],
@@ -3514,7 +3515,7 @@
       "to": "region-qin",
       "type": "leaderOf",
       "directionality": "directed",
-      "label": "Duke of Qin",
+      "label": "Duke of",
       "sourceIds": [
         "src-hawaii-early-china"
       ],
@@ -3551,7 +3552,7 @@
       "to": "region-qin",
       "type": "livedIn",
       "directionality": "directed",
-      "label": "Chancellor of Duke Xiao of Qin",
+      "label": "Chancellor of Duke Xiao in",
       "sourceIds": [
         "src-hawaii-early-china"
       ],
@@ -3568,7 +3569,7 @@
       "to": "office-king-of-qin",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Qin",
+      "label": "Held the office of",
       "sourceIds": [
         "src-major-cook-9",
         "src-hawaii-early-china"
@@ -3686,7 +3687,8 @@
       "to": "office-king-of-qin",
       "type": "holderOf",
       "directionality": "directed",
-      "label": "King of Qin, who surrendered",
+      "label": "Held the office of",
+      "note": "He surrendered.",
       "sourceIds": [
         "src-eno-qin"
       ],

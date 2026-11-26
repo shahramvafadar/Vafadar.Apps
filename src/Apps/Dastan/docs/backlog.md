@@ -82,15 +82,13 @@ collections, and the owner looks.
 What reading the whole against the documents of the product found ([delivery plan](delivery-plan.md), section
 26). What is planned is planned in full – what is built, the tests, the documents, when it is done, what has
 to be settled first – in the [delivery plan](delivery-plan.md), section 27 (E2 is 27.2, E6 is 27.3, E5 is 27.4,
-E3 and E7 are 27.5, E4 is 27.6, E20 is 27.7, E11 is 27.8, E18 is 27.9). **Two matters wait for the owner's
-word** before anything is begun: the order among them (27.10; proposed: lengths of reigns first, pictures
-immediately before the pictures of the content, the calendars last) and the way E11 is put right (27.8;
-proposed: a rule of the content guide, the labels corrected, a test that refuses a repeat).
+E3 and E7 are 27.5, E4 is 27.6, E20 is 27.7, E11 is 27.8, E18 is 27.9). Both matters that waited are decided (2026-11-26): the order is set by who builds, by what needs what (D-101),
+and a label of a relation says what the relation is and nothing else (D-102).
 
 | # | Item | Why | Status |
 |---|---|---|---|
 | E1 | The views of time read the times a record states among its facts (D-098) | The library states its dates as facts; 134 of 212 names with a time were in no view of time | Done (2026-11-24) |
-| E2 | A reign known only by its length, without years | The Roman kings; the reigns of the Shahnameh ([content roadmap](content-roadmap.md)) | Planned |
+| E2 | A reign known only by its length, without years: `length` of a relation (years, months, days), said with the relation and placed in no chart | The Roman kings; the reigns of the Shahnameh ([content roadmap](content-roadmap.md)) | Done (2026-11-26); the seven kings of Rome carry their lengths. The lengths of the reigns of the Shahnameh are content still to be written |
 | E3 | A picture of a history as a media reference: a relief, a coin, a bronze – and with it the kinds of picture document 15 names (a later photograph of an object, a reconstruction, a map) | `depictedContext` knows a later artwork of a story and a diagram of today only | Planned |
 | E4 | A command of the content tool that reads every source of a collection and compares a stored quote with it | Done by hand for the first pass of content | Planned |
 | E5 | Quantities of a work as dated statements in the generator of the writer | The length of the Shahnameh | Planned |
@@ -99,7 +97,7 @@ proposed: a rule of the content guide, the labels corrected, a test that refuses
 | E8 | `spoilerPolicy.correspondences` between the three collections of the world of the Shahnameh | Content, not development: a reader of one story has read a stage of another | Planned, content |
 | E9 | The calendar a source writes in: kept (document 04, TIME-009) or every date Gregorian (D-043) | The two contradicted each other | Decided (2026-11-24, D-100): every date Gregorian; see E18 |
 | E10 | The chart of time of a history by kind, a kind put in and taken out by a link, names that do not meet sharing a row (D-099) | The page of Iran was about 36,000 px high; the chart is 410 px to begin with | Done (2026-11-24) |
-| E11 | Labels of relations that repeat the name they lead to ("King of the Medes" to an office of the same name) | Seen in the chart of Iran on 2026-11-24 | Planned, content |
+| E11 | A label of a relation says what the relation is: it names neither end and not whose account it is (D-102). `note` of a relation carries the account and is shown with its sources | "King of the Medes, according to Herodotus – King of the Medes" in the chart of Iran | Done (2026-11-26): 229 labels of the library corrected in both languages; a test refuses a label that breaks the rule |
 | E12 | At the width of a phone the names of bars that stand close run over each other and over their bars – more visible since E10, where many names share a lane | Seen on 2026-11-24 | Done (2026-11-24): a row is kept for a mark as far as its name really reaches |
 | E13 | A list of the page of a collection shows its first twelve cards and folds the others; a story without a step leads to its name, and its page of steps leads on | The page of the Shahnameh was about 43,500 px high on a phone; its 70 stories all led to "No step of the story to show" | Done (2026-11-24) |
 | E14 | A year asked for leads to its answer (`#answer`); the stage of a map is as high as the map on a narrow screen | Seen on a phone on 2026-11-24: the forms filled the first screen again; a map stood in the middle of an empty stage | Done (2026-11-24) |
