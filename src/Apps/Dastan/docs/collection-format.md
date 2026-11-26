@@ -416,6 +416,7 @@ name of the same thing is no relation either.
 | `alliedWith` | Allies; the same from both sides | somebody or a group | somebody or a group |
 | `supporterOf` | The first is known as a supporter of the group | somebody | a group |
 | `livedIn` | The first lived or worked in the place | somebody or a group | a place |
+| `nativeOf` | The first comes from the place or land – "Sudabeh of Hamavaran"; it does not say born there or living there | somebody or a group | a place |
 | `translatorOf` | The first translated the work | somebody or a group | a work |
 | `illustratorOf` | The first illustrated or painted the work | somebody or a group | a work |
 | `publisherOf` | The first published the work | somebody or a group | a work |

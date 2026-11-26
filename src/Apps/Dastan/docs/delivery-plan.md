@@ -1773,3 +1773,24 @@ which needs nothing of the others; then 27.5, the largest change of a format; 27
 * **Not built here.** The lengths of the fifty reigns of the Shahnameh are not in the collection yet: that is
   content, to be written from the poem. A chart that lays lengths one after another is not built; nothing
   asks for it yet.
+
+### 27.13 Built: somebody comes from a land (2026-11-26; E6)
+
+The relation type `nativeOf` – from somebody or a group to a place – says where a telling or a source says
+somebody is from, without saying born there (`bornIn`) or living there (`livedIn`). It holds in a story and in
+a history. Written for Sudabeh and Hamavaran in `siavash.json`, on the passage that names Hamavaran with her
+(the step where Kavus holds back from punishing her). *Tests:* `RealWorldTypesTests` – accepted to a place,
+refused to anything else; the check of the library.
+
+### 27.14 Built: the counts of a work, and the language of a source title (2026-11-26; E5 and E20)
+
+* **E5.** Reading the format first showed that nothing was missing: a statement about an entity may state a
+  quantity and no time. The two counts of the couplets of the Shahnameh are two statements of the work, each
+  with its source – about 50,000 by the Aga Khan Museum, 60,000 by the Golha project – and the sentence left
+  the summary of the work in both languages. The count of the Golha project was read again on its page on
+  2026-11-26; the page of the museum could not be read by a command and its count stands as the first pass
+  wrote it. *Test:* `LibrarySiteTests.TwoCountsOfAWorkStandSideBySideEachWithItsSource`.
+* **E20.** The pages of sources, of evidence and of a picture already marked a title with the language of the
+  collection. The charts did not: there a title is marked now – a comparison is written in English, the chart
+  of a collection in the language the collection names. *Test:*
+  `LibrarySiteTests.TheTitleOfASourceIsMarkedAsTheLanguageItIsWrittenIn`.

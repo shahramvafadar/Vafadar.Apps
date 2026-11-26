@@ -91,8 +91,8 @@ and a label of a relation says what the relation is and nothing else (D-102).
 | E2 | A reign known only by its length, without years: `length` of a relation (years, months, days), said with the relation and placed in no chart | The Roman kings; the reigns of the Shahnameh ([content roadmap](content-roadmap.md)) | Done (2026-11-26); the seven kings of Rome carry their lengths. The lengths of the reigns of the Shahnameh are content still to be written |
 | E3 | A picture of a history as a media reference: a relief, a coin, a bronze – and with it the kinds of picture document 15 names (a later photograph of an object, a reconstruction, a map) | `depictedContext` knows a later artwork of a story and a diagram of today only | Planned |
 | E4 | A command of the content tool that reads every source of a collection and compares a stored quote with it | Done by hand for the first pass of content | Planned |
-| E5 | Quantities of a work as dated statements in the generator of the writer | The length of the Shahnameh | Planned |
-| E6 | A relation of a person to the land they come from, in a story | "Sudabeh of Hamavaran" | Planned |
+| E5 | Quantities of a work as statements with a source | The length of the Shahnameh | Done (2026-11-26): the format had it (a statement with a `quantity` and no time); the two counts of the Shahnameh are two statements of the work and left its summary |
+| E6 | A relation of a person to the land they come from, in a story: the type `nativeOf` | "Sudabeh of Hamavaran" | Done (2026-11-26); written for Sudabeh in `siavash.json` |
 | E7 | The times of a picture beyond when it was made and what it shows: brought in, published, shared (MED-006) | The reader refuses them today | Planned, with the pictures of pass 5 |
 | E8 | `spoilerPolicy.correspondences` between the three collections of the world of the Shahnameh | Content, not development: a reader of one story has read a stage of another | Planned, content |
 | E9 | The calendar a source writes in: kept (document 04, TIME-009) or every date Gregorian (D-043) | The two contradicted each other | Decided (2026-11-24, D-100): every date Gregorian; see E18 |
@@ -106,7 +106,7 @@ and a label of a relation says what the relation is and nothing else (D-102).
 | E17 | A map wider than its stage is moved sideways once, so that the place in the middle of its places stands in the middle (`stage.ts`) | On a phone the map of ancient Iran began with Greece | Done (2026-11-24) |
 | E18 | A visitor sees a date in another calendar – Solar Hijri, Lunar Hijri – beside or instead of the Gregorian one; what is stored stays Gregorian (D-100) | The owner's word of 2026-11-24 | Planned, the last piece of work |
 | E19 | The pages of the story, the chart of time, the places, a year and the gallery say what they are in their head (`PageDescription`); every collection of the start page has the drawing of its kind | A second look on 2026-11-24: 260 pages read for names of links and fields, double identifiers, the order of headings – nothing found there; these pages had no description, and one card of the start page alone had a sign | Done (2026-11-24) |
-| E20 | The title of a source in the language of the source (`lang`), so that a screen reader reads an English title in a Persian page as English | Seen on 2026-11-24 | Planned |
+| E20 | The title of a source in the language it is written in (`lang`), so that a screen reader reads an English title in a Persian page as English | Seen on 2026-11-24 | Done (2026-11-26): the charts were the one place that named a source without its language |
 
 ## Not planned
 

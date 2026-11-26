@@ -76,7 +76,7 @@
 
     @if (_timeline is { } timeline)
     {
-        <ComparisonView Comparison="timeline" Address="@_page" State="_state" LongNames="true" Carry="@(_explore is null ? Kept : _explore.Carry)"
+        <ComparisonView Comparison="timeline" SourceLanguage="@Site.Language" Address="@_page" State="_state" LongNames="true" Carry="@(_explore is null ? Kept : _explore.Carry)"
                         SourceAddress="@(source => EvidenceAddress.Source(Site.Collection, source.Id, _here))" />
     }
     else

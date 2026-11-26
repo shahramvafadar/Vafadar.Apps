@@ -1518,6 +1518,28 @@
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
       },
       "directionality": "symmetric"
+    },
+    {
+      "id": "relation-31",
+      "from": "character-sudabeh",
+      "to": "place-hamavaran",
+      "type": "nativeOf",
+      "label": "Comes from",
+      "sourceIds": [
+        "src-ganjoor-siavosh-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-siavash",
+        "eventIds": [
+          "event-09"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
     }
   ],
   "events": [

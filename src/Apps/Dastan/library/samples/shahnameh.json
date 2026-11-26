@@ -1079,7 +1079,7 @@
       "id": "work-shahnameh",
       "type": "Work",
       "label": "The Shahnameh",
-      "summary": "Ferdowsi’s epic of the kings of Iran from the first king to the Arab conquest, begun about 977 and finished on 8 March 1010; the Aga Khan Museum counts about 50,000 couplets, another source 60,000. It draws on the prose Shahnameh made for Abu Mansur and takes up about a thousand couplets of Daqiqi.",
+      "summary": "Ferdowsi’s epic of the kings of Iran from the first king to the Arab conquest, begun about 977 and finished on 8 March 1010. It draws on the prose Shahnameh made for Abu Mansur and takes up about a thousand couplets of Daqiqi.",
       "sourceIds": [
         "src-iranica-ferdowsi-i",
         "src-agakhan-firdausi-court-poets",
@@ -1115,6 +1115,37 @@
             },
             "continuity": "notAsserted"
           }
+        }
+      ],
+      "dated": [
+        {
+          "key": "dated-shahnameh-couplets-aga-khan",
+          "label": "Couplets of the poem",
+          "summary": "The count the Aga Khan Museum gives.",
+          "quantity": {
+            "value": 50000,
+            "unit": "verses",
+            "approximate": true
+          },
+          "sourceIds": [
+            "src-agakhan-firdausi-court-poets"
+          ],
+          "spoilerLevel": 0,
+          "reviewStatus": "sourcedReviewPending"
+        },
+        {
+          "key": "dated-shahnameh-couplets-golha",
+          "label": "Couplets of the poem",
+          "summary": "The count the Golha project gives.",
+          "quantity": {
+            "value": 60000,
+            "unit": "verses"
+          },
+          "sourceIds": [
+            "src-golha-ferdowsi"
+          ],
+          "spoilerLevel": 0,
+          "reviewStatus": "sourcedReviewPending"
         }
       ]
     },

@@ -156,7 +156,7 @@ the vocabulary against documents 03 (DOM-002 to DOM-012) and 14.
   in a file is its key with a capital, except the names the first files chose (`NarrativeArc`).
 * **Forty-seven more relation types**, each with its meaning and its ends, in the groups of the documents:
   persons and offices (`holderOf`, `successorOf`, `patronOf`, `employedBy`, `leaderOf`, `ownerOf`,
-  `studiedAt`, `alliedWith`, `supporterOf`, `livedIn`, `adoptiveParentOf`); works (`translatorOf`,
+  `studiedAt`, `alliedWith`, `supporterOf`, `livedIn`, `nativeOf` – added on 2026-11-26 –, `adoptiveParentOf`); works (`translatorOf`,
   `illustratorOf`, `publisherOf`, `commissionerOf`, `dedicatedTo`, `adaptationOf`, `translationOf`,
   `editionOf`, `about`, `keptAt`); identity (`portrayalOf`, `possiblySameAs`, `confusedWith` – DOM-003,
   DOM-004: none of them makes two entities one); organisations (`acquired`, `mergedInto`, `spunOffFrom`,

@@ -167,6 +167,14 @@ RenderFragment Lanes(string stage) => Steps(
 </section>
 
 @code {
+    /// <summary>
+    /// Gets or sets the language the titles of the sources are written in: a comparison is written in English, a
+    /// collection in the language it names. A title is marked as that language, so that a screen reader reads
+    /// an English title on a Persian page as English.
+    /// </summary>
+    [Parameter]
+    public string SourceLanguage { get; set; } = "en";
+
     private ChartState _state = new();
     private ComparisonChart _chart = null!;
     private Timeline _timeline = null!;
@@ -334,7 +342,7 @@ RenderFragment Lanes(string stage) => Steps(
                     {
                         foreach (var source in Comparison.Sources.Where(source => sources.Contains(source.Id)))
                         {
-                            <a href="@(SourceAddress is null ? source.Url.ToString() : SourceAddress(source))" rel="@(SourceAddress is null ? "noopener noreferrer" : null)"><bdi>@source.Title</bdi></a>
+                            <a href="@(SourceAddress is null ? source.Url.ToString() : SourceAddress(source))" rel="@(SourceAddress is null ? "noopener noreferrer" : null)"><bdi lang="@SourceLanguage" dir="@ForeignText.Direction(SourceLanguage)">@source.Title</bdi></a>
                             @* A blank between two sources: Razor leaves none between two elements. *@
                             <text> </text>
                         }
