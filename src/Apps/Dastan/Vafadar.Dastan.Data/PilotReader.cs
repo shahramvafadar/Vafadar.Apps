@@ -1031,8 +1031,25 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             timed = true;
         }
 
+        // How long it held, where a source states a length and no years: a length of time, never a date.
+        var lasted = record.Child("length", required: false) is not null;
+        var length = lasted ? ReadQuantity(record.Child("length", required: false)!) : null;
+        if (length is not null && length.Unit is not ("years" or "months" or "days"))
+        {
+            record.Problem("length is a length of time: its unit is years, months or days.");
+            length = null;
+        }
+
+        if (length is { Value: <= 0 })
+        {
+            record.Problem("length is more than nothing.");
+            length = null;
+        }
+
+        var note = record.Text("note", required: false);
+
         record.Finish();
-        if (timed && time is null)
+        if ((timed && time is null) || (lasted && length is null))
         {
             return null;
         }
@@ -1053,6 +1070,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Sources = [.. sources.Select(source => new SourceId(source))],
             PassageLocator = locator,
             Time = time,
+            Length = length,
+            Note = note is null ? null : Localized(note, $"relations/{id}/note"),
             Review = review,
             Reviewed = reviewed,
             Level = level.Value,
@@ -1924,7 +1943,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     internal static readonly ImmutableArray<ContentTexts> Translated =
     [
         new("entities", ["label", "summary"], Facts: true),
-        new("relations", ["label"]),
+        new("relations", ["label", "note"]),
         new("events", ["label", "summary"], Roles: true),
         new("media", ["label", "caption", "altText"], Places: true),
         new("dated", ["label", "summary"]),

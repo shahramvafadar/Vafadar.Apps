@@ -1586,8 +1586,8 @@ reviewed or releases it.
 | Matter | State |
 |---|---|
 | Every date is stored in the Gregorian calendar; another calendar is a matter of display and the last piece of work | Decided (D-100, 2026-11-24) |
-| The order among 27.2 to 27.7 | **Proposed, waits for the owner's word** – the three ways are in 27.10 |
-| How the labels that repeat a name are put right (27.8) | **Proposed, waits for the owner's word** – the three ways are in 27.8 |
+| The order among 27.2 to 27.7 | Decided (D-101, 2026-11-26): set by who builds, by what needs what – see 27.10 |
+| How the labels that repeat a name are put right (27.8) | Decided (D-102, 2026-11-26): the care of who writes content, and a test; the site changes no written text |
 
 ### 27.2 A reign known only by its length (E2)
 
@@ -1736,8 +1736,11 @@ Three ways were put to the owner on 2026-11-24:
 
 **Proposed: the first.** The lengths fill the largest gap a visitor can see; pictures of the histories have
 nothing to show until pictures are brought. 27.8 is content with one test and can be done at any time once
-its way is chosen. 27.9 is last by the owner's word (D-100). **The order waits for the owner's word; until it
-is given nothing of this section is begun.**
+its way is chosen. 27.9 is last by the owner's word (D-100). **Decided on 2026-11-26 (D-101):** the owner sets no order – the site is used when all of it is built – and
+asks that what needs what is foreseen. The order that follows from it: the length and the note of a relation
+first (27.2 and 27.8 together: the labels of the Roman kings carried their lengths, so the labels could be
+put right only once a length had its place); then 27.3, 27.4 and 27.7, which change one thing each; then 27.6,
+which needs nothing of the others; then 27.5, the largest change of a format; 27.9 last.
 
 ### 27.11 What is not development
 
@@ -1747,3 +1750,26 @@ is given nothing of this section is begun.**
 | The owner's family tree, in the owner's account (B9) | waits for the owner's account | backlog, part B |
 | A second made-up account; a real phone, Safari, a screen reader; five first-time visitors; the owner's photographs (C2 to C6) | the owner, with this line of work | backlog, part C |
 | Reviewing and publishing; rights of pictures; mailbox, clients, host; `database migrate`; the legal pages; who looks at reports; the brand on paper (D1 to D7) | the owner | backlog, part D |
+
+### 27.12 Built: the length and the note of a relation, and the labels put right (2026-11-26; E2 and E11)
+
+* **The owner's rule (D-102).** "According to Herodotus – King of the Medes" need not stand in the main view;
+  it gives nothing there. Whose account a statement is belongs to the details, and where accounts differ the
+  details say what each says and on what it rests. Who writes content takes care of it; the site does nothing
+  to a text by itself; a test finds mistakes.
+* **The format.** A relation has two optional fields: `length` – a quantity in years, months or days, more
+  than nothing – and `note`, which a translation translates. `months` is a unit of a quantity now. A length
+  is allowed in a relation of a story too and dates nothing: a relation with a length and no time is in no
+  view of time (TIME-005).
+* **The pages.** Where a relation is written as a sentence its length follows it in words ("for 37 years").
+  The note stands on the page of the sources of the relation and nowhere else.
+* **The content.** 229 labels of the seven collections of the library, in English and Persian: a holder of an
+  office reads "Held the office of"; "Section of the Shahnameh", "Rides Rakhsh" and the like lost the name they
+  repeated; "according to …", "by tradition", "in the legend" became notes; the seven kings of Rome carry
+  their lengths as lengths. Nothing was marked as reviewed.
+* **Tests.** `RelationLengthAndNoteTests` – the reader, what is refused, no view of time, and the rule of the
+  labels asked of every collection of the library in both languages; `LibrarySiteTests` – a length with the
+  relation and the note with its sources, in both languages.
+* **Not built here.** The lengths of the fifty reigns of the Shahnameh are not in the collection yet: that is
+  content, to be written from the poem. A chart that lays lengths one after another is not built; nothing
+  asks for it yet.

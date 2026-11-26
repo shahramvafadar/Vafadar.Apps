@@ -31,6 +31,12 @@
 
             case EvidenceSubject.Relation:
                 <p><Statement Relation="evidence.Relation!" /></p>
+                @if (evidence.Relation!.Relation.Note is { } behind)
+                {
+                    @* What stands behind the statement – whose account it is, what the accounts differ on – is
+                       said here, with its sources, and not in the label of the relation. *@
+                    <p class="relation-note"><Loc Text="behind" /></p>
+                }
                 break;
 
             case EvidenceSubject.Event:

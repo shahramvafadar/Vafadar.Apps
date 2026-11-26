@@ -871,7 +871,7 @@
       "from": "story-siavash",
       "to": "work-shahnameh",
       "type": "partOf",
-      "label": "Part of the Shahnameh",
+      "label": "Part of",
       "sourceIds": [
         "src-ganjoor-siavosh-index"
       ],

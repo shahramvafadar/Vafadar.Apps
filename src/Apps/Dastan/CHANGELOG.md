@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A relation says what it is and no more: "Held the office of – King of the Medes" instead of "King of the
+  Medes, according to Herodotus – King of the Medes". Whose account a statement is stands with its sources.
+- How long something lasted is said where only a length is known: a king of Rome "for 37 years".
 - The plan of everything that is left to build is written down (delivery plan, section 27). Nothing of it is
   built yet.
 - A link to the story, the timeline, the map, a year or the pictures of a collection shows what the page is

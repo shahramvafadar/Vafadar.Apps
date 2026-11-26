@@ -188,6 +188,7 @@ public static class QuantityUnits
         ("titles", "Titles won"),
         ("seats", "Seats of a hall or of a parliament"),
         ("years", "A length of time in years – not a date"),
+        ("months", "A length of time in months"),
         ("days", "A length of time in days"),
         ("metres", "A length or a height"),
         ("kilometres", "A distance"),
@@ -299,6 +300,20 @@ public sealed class Relation
     /// joins two tenures into one.
     /// </summary>
     public TemporalExpression? Time { get; init; }
+
+    /// <summary>
+    /// Gets how long the relation held, where a source states a length – "thirty years", "by tradition 37 years" –
+    /// in years, months or days. A length is no date: nothing places it in the calendar and nothing derives a
+    /// year from it. A relation of a story may state one too: a telling says how long a king reigned.
+    /// </summary>
+    public Quantity? Length { get; init; }
+
+    /// <summary>
+    /// Gets what stands behind the statement, in a sentence or two: whose account it is, what the accounts
+    /// differ on. It belongs to the details of the relation – the page of its sources – and is no part of its
+    /// label: a label says what the relation is and names neither an author nor the other end.
+    /// </summary>
+    public LocalizedText? Note { get; init; }
 
     /// <summary>Gets how far the editors have come with the statement.</summary>
     public required ReviewStatus Review { get; init; }

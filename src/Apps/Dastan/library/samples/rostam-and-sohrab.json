@@ -880,7 +880,7 @@
       "from": "story-rostam-sohrab",
       "to": "work-shahnameh",
       "type": "partOf",
-      "label": "Part of the Shahnameh",
+      "label": "Part of",
       "sourceIds": [
         "src-ganjoor-index"
       ],
@@ -1015,7 +1015,7 @@
       "from": "character-king-samangan",
       "to": "place-samangan",
       "type": "rules",
-      "label": "Rules Samangan",
+      "label": "Rules",
       "sourceIds": [
         "src-ganjoor-s03"
       ],
@@ -1038,7 +1038,7 @@
       "from": "character-rostam",
       "to": "character-rakhsh",
       "type": "rides",
-      "label": "Rides Rakhsh",
+      "label": "Rides",
       "sourceIds": [
         "src-ganjoor-s02"
       ],
@@ -1108,7 +1108,7 @@
       "from": "object-token",
       "to": "character-tahmineh",
       "type": "entrustedTo",
-      "label": "Entrusted to Tahmineh",
+      "label": "Entrusted to",
       "sourceIds": [
         "src-ganjoor-s04"
       ],
@@ -1200,7 +1200,7 @@
       "from": "character-rostam",
       "to": "character-kay-kavus",
       "type": "summonedBy",
-      "label": "Summoned by Kay Kavus",
+      "label": "Summoned by",
       "sourceIds": [
         "src-ganjoor-s09"
       ],
@@ -1246,7 +1246,7 @@
       "from": "character-zal",
       "to": "character-sohrab",
       "type": "mourns",
-      "label": "Mourns Sohrab",
+      "label": "Mourns",
       "sourceIds": [
         "src-ganjoor-s21"
       ],
@@ -1292,7 +1292,7 @@
       "from": "character-tahmineh",
       "to": "place-samangan",
       "type": "appearsAt",
-      "label": "Meets Rostam in Samangan",
+      "label": "Meets Rostam in",
       "sourceIds": [
         "src-ganjoor-s03",
         "src-ganjoor-s04"

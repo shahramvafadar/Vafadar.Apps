@@ -108,7 +108,17 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
 * A collection and a comparison are written in **English**. Other languages are separate translation files; a
   translation may leave texts out, and may not name anything its file does not have.
 * A summary says what the source says, in your own words. Do not copy a modern translation or a page of a site.
-* A label of a relation is read from its first entity: `Zal —Father of→ Rostam`.
+* A label of a relation is read from its first entity: `Zal —Father of→ Rostam`. **It says what the relation
+  is and nothing else** (the owner's rule of 2026-11-26, D-102):
+  * It does not name either of the two entities – a page writes them beside it. Write `Rides`, not
+    `Rides Rakhsh`; for somebody who held an office, `Held the office of`, not the name of the office again.
+  * It does not say whose account the statement is. "According to Herodotus", "by tradition", "in the legend",
+    "perhaps invented" are written in the `note` of the relation, which is shown with its sources. Where the
+    accounts differ, the note says what each says and on what it rests.
+  * How long something lasted is the `length` of the relation (`{ "value": 37, "unit": "years" }`), not words
+    in its label.
+  * A test of the repository reads every label of the library, in every language, and refuses one that
+    repeats a name or carries such words. Nothing in the site shortens a label: it is shown as it is written.
 * Identifiers are stable names in lower case with hyphens (`character-rostam`). Once a file is handed over, an
   identifier does not change: addresses, translations and other records point to it.
 
@@ -165,7 +175,9 @@ What a collection can say ([format](collection-format.md)):
   objects and subjects of knowledge ("The types of entities"), and says between them what the list of relation
   types holds ("The relations of the world outside the story"; `-- vocabulary` prints every type with its
   meaning). A type has one meaning: do not use one for something it does not say.
-* A relation of the world says **when it held** (`time`); somebody who came back is two relations.
+* A relation of the world says **when it held** (`time`); somebody who came back is two relations. Any
+  relation says **how long it held** where a source states a length and no years (`length`), and **what stands
+  behind it** (`note`).
 * A statement about an entity states a **date, a quantity or both**: a population in a year, the number of
   verses of a poem ("A quantity").
 * An entity has **other names** – earlier names, titles, short forms – and **identifiers** of other catalogues.

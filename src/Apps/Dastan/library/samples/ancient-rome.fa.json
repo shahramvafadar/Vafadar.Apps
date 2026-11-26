@@ -602,55 +602,66 @@
   },
   "relations": {
     "relation-romulus-holder-of-king-of-rome": {
-      "label": "شاه رم، به روایت ۳۷ سال"
+      "label": "دارندهٔ سمتِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-numa-pompilius-holder-of-king-of-rome": {
-      "label": "شاه رم، به روایت ۴۳ سال"
+      "label": "دارندهٔ سمتِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-numa-pompilius-successor-of-romulus": {
       "label": "جانشینِ"
     },
     "relation-tullus-hostilius-holder-of-king-of-rome": {
-      "label": "شاه رم، به روایت ۳۲ سال"
+      "label": "دارندهٔ سمتِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-tullus-hostilius-successor-of-numa-pompilius": {
       "label": "جانشینِ"
     },
     "relation-ancus-marcius-holder-of-king-of-rome": {
-      "label": "شاه رم، به روایت ۲۴ سال"
+      "label": "دارندهٔ سمتِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-ancus-marcius-successor-of-tullus-hostilius": {
       "label": "جانشینِ"
     },
     "relation-tarquinius-priscus-holder-of-king-of-rome": {
-      "label": "شاه رم، به روایت ۳۸ سال"
+      "label": "دارندهٔ سمتِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-tarquinius-priscus-successor-of-ancus-marcius": {
       "label": "جانشینِ"
     },
     "relation-servius-tullius-holder-of-king-of-rome": {
-      "label": "شاه رم، به روایت ۴۵ سال"
+      "label": "دارندهٔ سمتِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-servius-tullius-successor-of-tarquinius-priscus": {
       "label": "جانشینِ"
     },
     "relation-tarquinius-superbus-holder-of-king-of-rome": {
-      "label": "شاه رم، به روایت ۲۵ سال"
+      "label": "دارندهٔ سمتِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-tarquinius-superbus-successor-of-servius-tullius": {
       "label": "جانشینِ"
     },
     "relation-rhea-silvia-parent-of-romulus": {
-      "label": "مادرِ، در افسانه"
+      "label": "مادرِ",
+      "note": "در افسانه."
     },
     "relation-tarquinius-priscus-parent-of-tarquinius-superbus": {
-      "label": "پدرِ، بر پایهٔ روایت"
+      "label": "پدرِ",
+      "note": "بر پایهٔ روایت."
     },
     "relation-romulus-founder-of-rome": {
-      "label": "بنیادگذار، در افسانه"
+      "label": "بنیادگذار",
+      "note": "در افسانه."
     },
     "relation-ancus-marcius-founder-of-ostia": {
-      "label": "بنیادگذار، بر پایهٔ روایت"
+      "label": "بنیادگذار",
+      "note": "بر پایهٔ روایت."
     },
     "relation-romulus-participant-in-founding-of-rome": {
       "label": "شرکت در"
@@ -662,10 +673,12 @@
       "label": "در دورهٔ"
     },
     "relation-lucius-junius-brutus-holder-of-consul": {
-      "label": "یکی از دو کنسول نخستین، بر پایهٔ روایت"
+      "label": "دارندهٔ سمتِ",
+      "note": "یکی از دو کنسول نخستین، بر پایهٔ روایت."
     },
     "relation-lucius-junius-brutus-founder-of-roman-republic": {
-      "label": "بنیادگذار، بر پایهٔ روایت"
+      "label": "بنیادگذار",
+      "note": "بر پایهٔ روایت."
     },
     "relation-lucius-junius-brutus-participant-in-founding-of-republic": {
       "label": "شرکت در"
@@ -701,7 +714,7 @@
       "label": "در دورهٔ"
     },
     "relation-cato-the-elder-holder-of-censor": {
-      "label": "سانسور"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-hamilcar-barca-parent-of-hannibal": {
       "label": "پدر یا مادرِ"
@@ -758,10 +771,11 @@
       "label": "خواهر یا برادرِ"
     },
     "relation-tiberius-gracchus-holder-of-tribune-of-the-plebs": {
-      "label": "تریبون عامه"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-gaius-gracchus-holder-of-tribune-of-the-plebs": {
-      "label": "تریبون عامه، دو بار"
+      "label": "دارندهٔ سمتِ",
+      "note": "دو بار."
     },
     "relation-tiberius-gracchus-participant-in-tribunate-of-tiberius-gracchus": {
       "label": "شرکت در"
@@ -773,10 +787,11 @@
       "label": "در دورهٔ"
     },
     "relation-marius-holder-of-consul": {
-      "label": "هفت بار کنسول"
+      "label": "دارندهٔ سمتِ",
+      "note": "هفت بار."
     },
     "relation-sulla-holder-of-dictator": {
-      "label": "دیکتاتور"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-marius-participant-in-social-war": {
       "label": "شرکت در"
@@ -797,7 +812,8 @@
       "label": "در دورهٔ"
     },
     "relation-pompey-holder-of-consul": {
-      "label": "کنسول بی‌همکار"
+      "label": "دارندهٔ سمتِ",
+      "note": "بی‌همکار."
     },
     "relation-julius-caesar-parent-of-julia": {
       "label": "پدر یا مادرِ"
@@ -806,10 +822,11 @@
       "label": "همسر"
     },
     "relation-julius-caesar-holder-of-consul": {
-      "label": "کنسول"
+      "label": "دارندهٔ سمتِ"
     },
     "relation-julius-caesar-holder-of-dictator": {
-      "label": "دیکتاتور، برای ده سال و سپس برای همهٔ عمر"
+      "label": "دارندهٔ سمتِ",
+      "note": "برای ده سال و سپس برای همهٔ عمر."
     },
     "relation-julius-caesar-participant-in-first-triumvirate": {
       "label": "شرکت در"
