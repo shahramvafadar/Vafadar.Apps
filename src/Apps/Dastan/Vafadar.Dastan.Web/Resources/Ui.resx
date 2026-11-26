@@ -1267,7 +1267,7 @@
     <value>When</value>
   </data>
   <data name="Search_Year_How" xml:space="preserve">
-    <value>A year, a stretch of years or a depth of time: 1200 · 500 BCE · 300 to 400 · 12 ka · 50 to 60 million years ago</value>
+    <value>A year, a stretch of years or a depth of time: 1200 · 500 BCE · 300 to 400 · 400 SH · 400 AH · 12 ka · 50 to 60 million years ago</value>
   </data>
   <data name="Search_Any" xml:space="preserve">
     <value>any</value>
@@ -4628,5 +4628,20 @@
   </data>
   <data name="Media_Changed" xml:space="preserve">
     <value>Its description last changed</value>
+  </data>
+  <data name="Date_ConvertedYears" xml:space="preserve">
+    <value>{0} or {1}</value>
+  </data>
+  <data name="Calendar_Label" xml:space="preserve">
+    <value>Dates also in</value>
+  </data>
+  <data name="Calendar_Gregorian" xml:space="preserve">
+    <value>Gregorian only</value>
+  </data>
+  <data name="Calendar_SolarHijri" xml:space="preserve">
+    <value>Solar Hijri</value>
+  </data>
+  <data name="Calendar_LunarHijri" xml:space="preserve">
+    <value>Lunar Hijri</value>
   </data>
 </root>

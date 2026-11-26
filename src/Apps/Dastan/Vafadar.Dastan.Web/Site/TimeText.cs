@@ -163,9 +163,29 @@ public static class TimeText
         // The date as it was written – and beside it, where it is exact enough for that, the same day in the
         // calendar the reader of the page reads in, said to be converted (ADR 0021, R-TIME-05).
         var written = Written(position, visitor, text);
-        return CalendarConversion.To(position, CalendarConversion.Of(visitor.Language.Tag)) is { } converted
-            ? string.Format(CultureInfo.CurrentCulture, text["Date_Converted"], written, Written(converted, visitor, text))
-            : written;
+        if (CalendarConversion.To(position, visitor.Calendar) is { } converted)
+        {
+            return string.Format(CultureInfo.CurrentCulture, text["Date_Converted"], written, Written(converted, visitor, text));
+        }
+
+        // A bare year lies in two years of a Hijri calendar: both are said, never one as if it were the year (D-100).
+        if (CalendarConversion.YearsIn(position, visitor.Calendar) is { } years)
+        {
+            if (years.First == years.Last)
+            {
+                return string.Format(CultureInfo.CurrentCulture, text["Date_Converted"], written, Written(years.First, visitor, text));
+            }
+
+            // "355 or 356 SH": the era is said once, and "about" once for both.
+            var both = string.Format(
+                CultureInfo.CurrentCulture,
+                text["Date_ConvertedYears"],
+                visitor.Number(years.First.Year),
+                Written(CalendarPosition.OfYear(years.Last.Calendar, years.Last.Era, years.Last.Year), visitor, text));
+            return string.Format(CultureInfo.CurrentCulture, text["Date_Converted"], written, position.IsApproximate ? string.Format(CultureInfo.CurrentCulture, text["Date_About"], both) : both);
+        }
+
+        return written;
     }
 
     private static string Written(CalendarPosition position, Visitor visitor, IStringLocalizer<Ui> text)

@@ -255,3 +255,24 @@ other and gets a view of its own. The still chart draws no axis of depth: a tabl
   a browser* with the library at 375 px and 1280 px, Persian and English: of 90 and of 76 marks no name over a
   name, over its own mark or over another. `LibraryTimelineBrowserTests` asks the same of the collection with
   the most names, in Chromium, Firefox and WebKit.
+
+## Addendum (2026-11-26): the calendar of the visitor, and a year in another calendar (D-100)
+
+* **What is stored stays Gregorian** (D-043, D-100), so that every date is compared without a conversion. A
+  date is shown as it is stored, and the same date in another calendar stands beside it and is said to be
+  converted. This was so for a day; it is so for a year now.
+* **The visitor chooses the calendar** – Gregorian only, Solar Hijri or Lunar Hijri – in the settings of every
+  page (`CalendarPreference`, the cookie `dastan.calendar`, a choice of the visitor like the colours).
+  Somebody who chose nothing reads in the calendar of the language of the page, as before: Solar Hijri on a
+  Persian page, nothing beside a date on an English one.
+* **A year is no year of another calendar.** A year of the common era lies in two years of a Hijri calendar;
+  both are said – "1010 CE (converted: 388 or 389 SH)" – and never one of them as if it were the year.
+  "About" a year stays "about" both. A year before a calendar begins, a year before the common era and a
+  month are not converted (`CalendarConversion.YearsIn`). The Lunar Hijri calendar is the one
+  `Vafadar.Core.Dates.LunarHijri` counts, as for a day.
+* **A Hijri year can be typed** where a year or a time is asked for ("1400 SH", "۴۰۰ ه.ق"): it asks for the
+  years of the common era it lies in (`AskedTime`).
+* **The axis of a chart stays Gregorian.** A chart lays everything on one line of years so that it is compared;
+  marks at round Gregorian years have no round Hijri years, and two axes would be two charts. The table under
+  a chart and every page say a date in the calendar of the visitor. This departs from the plan of section 27.9
+  of the delivery plan, which let the marks of the axis follow the choice.

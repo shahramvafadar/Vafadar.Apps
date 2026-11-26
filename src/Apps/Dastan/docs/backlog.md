@@ -1,6 +1,7 @@
 # Dastan – backlog
 
-What is left to do for Dastan, in one place, as of 2026-11-25. The history of what was built is in the
+What is left to do for Dastan, in one place, as of 2026-11-26. **Every row of development is done**; what is
+left is content (part B and the content roadmap), trying it with the owner (part C) and going online (part D). The history of what was built is in the
 [delivery plan](delivery-plan.md); the decisions are in
 [the decisions of the product](product/12-decisions-questions-and-change-log.md). This page says what comes
 next, who does it and when it is done.
@@ -104,7 +105,7 @@ and a label of a relation says what the relation is and nothing else (D-102).
 | E15 | Persian orders written in words in the text of the Shahnameh (148 places) | "۱مین پادشاهی" is not Persian | Done (2026-11-24), content, still a draft |
 | E16 | The title of the page of places reads "{name} on the map", as the link to it does | "Places of Places of learning and work" | Done (2026-11-24) |
 | E17 | A map wider than its stage is moved sideways once, so that the place in the middle of its places stands in the middle (`stage.ts`) | On a phone the map of ancient Iran began with Greece | Done (2026-11-24) |
-| E18 | A visitor sees a date in another calendar – Solar Hijri, Lunar Hijri – beside or instead of the Gregorian one; what is stored stays Gregorian (D-100) | The owner's word of 2026-11-24 | Planned, the last piece of work |
+| E18 | A visitor sees a date in another calendar – Solar Hijri, Lunar Hijri – beside the Gregorian one; what is stored stays Gregorian (D-100) | The owner's word of 2026-11-24 | Done (2026-11-26): a choice in the settings of every page; a day was converted before, a year is converted now ("1010 CE (converted: 388 or 389 SH)"); a Hijri year can be typed where a year is asked for. The axis of a chart stays Gregorian |
 | E19 | The pages of the story, the chart of time, the places, a year and the gallery say what they are in their head (`PageDescription`); every collection of the start page has the drawing of its kind | A second look on 2026-11-24: 260 pages read for names of links and fields, double identifiers, the order of headings – nothing found there; these pages had no description, and one card of the start page alone had a sign | Done (2026-11-24) |
 | E20 | The title of a source in the language it is written in (`lang`), so that a screen reader reads an English title in a Persian page as English | Seen on 2026-11-24 | Done (2026-11-26): the charts were the one place that named a source without its language |
 
