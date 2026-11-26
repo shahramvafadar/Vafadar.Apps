@@ -269,6 +269,8 @@ public static class RelationTypes
             "the first is known as a supporter of the group", [EntityNature.Being], [EntityNature.Group]),
         new("livedIn", Directionality.Directed, Kinship.None,
             "the first lived or worked in the place", [EntityNature.Being, EntityNature.Group], [EntityNature.Place]),
+        new("nativeOf", Directionality.Directed, Kinship.None,
+            "the first comes from the place or land – \"Sudabeh of Hamavaran\"; it does not say born there or living there", [EntityNature.Being, EntityNature.Group], [EntityNature.Place]),
         new("translatorOf", Directionality.Directed, Kinship.None,
             "the first translated the work", [EntityNature.Being, EntityNature.Group], [EntityNature.Work]),
         new("illustratorOf", Directionality.Directed, Kinship.None,

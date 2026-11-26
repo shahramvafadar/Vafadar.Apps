@@ -287,6 +287,56 @@ public sealed class LibrarySiteTests
         Assert.Contains(note, sources, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("en", "about 50,000 verses", "60,000 verses")]
+    [InlineData("fa", "حدود ۵۰٬۰۰۰ بیت", "۶۰٬۰۰۰ بیت")]
+    public async Task TwoCountsOfAWorkStandSideBySideEachWithItsSource(string language, string one, string other)
+    {
+        // The length of the Shahnameh is counted differently by two sources: two statements of the work, not a
+        // sentence of its summary.
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var page = (await site.Visitor().Get($"/{language}/work-shahnameh/entity/work-shahnameh")).Main;
+
+        Assert.Contains(one, page, StringComparison.Ordinal);
+        Assert.Contains(other, page, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task TheTitleOfASourceIsMarkedAsTheLanguageItIsWrittenIn()
+    {
+        // On a Persian page an English title of a source is read as English by a screen reader.
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var library = site.Services.GetRequiredService<DastanLibrary>();
+        var pages = library.Comparisons.Select(comparison => $"/fa/compare/{comparison.Id}")
+            .Concat(library.Collections.Select(collection => $"/fa/{collection.Collection}/timeline?by=names"));
+        var titles = 0;
+        foreach (var address in pages)
+        {
+            var page = (await visitor.Get(address)).Html;
+            foreach (System.Text.RegularExpressions.Match summary in System.Text.RegularExpressions.Regex.Matches(page, "<span class=\"chart-summary\">(.*?)</span>", System.Text.RegularExpressions.RegexOptions.Singleline))
+            {
+                foreach (System.Text.RegularExpressions.Match title in System.Text.RegularExpressions.Regex.Matches(summary.Value, "<a [^>]*><bdi[^>]*>"))
+                {
+                    titles++;
+                    Assert.Contains("lang=\"", title.Value, StringComparison.Ordinal);
+                }
+            }
+        }
+
+        Assert.True(titles > 0, "No chart of the library names a source.");
+    }
+
     [Fact]
     public async Task AYearAskedOfACollectionLeadsToItsAnswerPastTheForms()
     {

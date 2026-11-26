@@ -125,8 +125,8 @@ Each is a row for the development backlog when the owner wants it.
 | A reign known only by its length ("thirty-seven years"), without years | the Roman kings; the reigns of the Shahnameh ("Kayumars thirty years") |
 | A picture of a history: a relief, a coin, a bronze as a media reference (`depictedContext` knows only stories and diagrams) | the Behistun relief, the Cyrus Cylinder, the terracotta army |
 | A check that reads every source of a collection and compares a stored quote with it, kept with the collection | done by hand for this pass; worth a command of the content tool |
-| Quantities of a work as dated statements in the generator of the writer (verses, volumes) | the length of the Shahnameh (50,000 or 60,000 couplets) |
-| A relation of a person to the land they come from, in a story ("Sudabeh of Hamavaran") | Siavash |
+| Quantities of a work as dated statements in the generator of the writer (verses, volumes) – the format has it; written by hand on 2026-11-26 | the length of the Shahnameh (50,000 or 60,000 couplets) |
+| A relation of a person to the land they come from, in a story ("Sudabeh of Hamavaran") – built on 2026-11-26: the type `nativeOf` | Siavash |
 
 ## How long
 

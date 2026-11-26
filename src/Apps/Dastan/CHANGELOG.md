@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The Shahnameh shows its two counts of couplets side by side, each with its source.
+- A collection can say where somebody comes from: Sudabeh comes from Hamavaran.
 - A relation says what it is and no more: "Held the office of – King of the Medes" instead of "King of the
   Medes, according to Herodotus – King of the Medes". Whose account a statement is stands with its sources.
 - How long something lasted is said where only a length is known: a king of Rome "for 37 years".

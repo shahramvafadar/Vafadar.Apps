@@ -130,6 +130,27 @@ public sealed class RealWorldTypesTests
     }
 
     [Fact]
+    public void Somebody_comes_from_a_land_in_a_story_as_in_a_history_and_from_nothing_else()
+    {
+        // "Sudabeh of Hamavaran": a telling says where somebody is from without saying born there.
+        var catalogue = SampleFiles.Read(sample =>
+        {
+            sample["entities"]!.AsArray().Add(Entity("person-native", "Person", "Test data native"));
+            sample["entities"]!.AsArray().Add(Entity("place-land", "Region", "Test data land"));
+            sample["relations"]!.AsArray().Add(Relation("world-native", "person-native", "place-land", "nativeOf"));
+        });
+        Assert.Equal("nativeOf", catalogue.Find(new RelationId("world-native"))!.Type.Key);
+
+        var refused = SampleFiles.Problems(sample =>
+        {
+            sample["entities"]!.AsArray().Add(Entity("person-native", "Person", "Test data native"));
+            sample["entities"]!.AsArray().Add(Entity("person-other", "Person", "Test data other"));
+            sample["relations"]!.AsArray().Add(Relation("world-native", "person-native", "person-other", "nativeOf"));
+        });
+        Assert.Contains("nativeOf", Assert.Single(refused), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void The_list_for_writers_says_what_a_new_relation_type_means_and_between_what_it_holds()
     {
         var types = ContentVocabulary.Collection.Single(choices => choices.Field == "relations[].type").Values.ToDictionary(value => value.Name, value => value.Note);
