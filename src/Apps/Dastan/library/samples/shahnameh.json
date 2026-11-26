@@ -1072,6 +1072,38 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-23",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-daqiqi",
+      "title": "Daqiqi, Abu Mansur Ahmad – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/daqiqi/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-abu-mansur",
+      "title": "Abu Mansur ʿAbd-al-Razzaq – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/abu-mansur-mohammad/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-mahmud",
+      "title": "Mahmud of Ghazna – Britannica",
+      "url": "https://www.britannica.com/biography/Mahmud-king-of-Ghazna",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-berthels",
+      "title": "Berthels, Evgeniĭ Èduardovich – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/berthels-evgenii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -1208,7 +1240,8 @@
       "summary": "The poet who first began to put the Shahnameh into verse; Ferdowsi continued his work after his death, and about a thousand of his couplets stand in the poem.",
       "sourceIds": [
         "src-iranica-ferdowsi-i",
-        "src-ganjoor-goshtasp-sh1"
+        "src-ganjoor-goshtasp-sh1",
+        "src-iranica-daqiqi"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -1221,7 +1254,13 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 976,
+              "approximate": true
+            }
           }
         },
         {
@@ -1237,7 +1276,8 @@
       "summary": "The lord of Tus for whom the prose Shahnameh, Ferdowsi’s chief source, was compiled in 957.",
       "sourceIds": [
         "src-iranica-ferdowsi-i",
-        "src-golha-ferdowsi"
+        "src-golha-ferdowsi",
+        "src-iranica-abu-mansur"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -1250,7 +1290,12 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 961
+            }
           }
         },
         {
@@ -1290,20 +1335,31 @@
       "summary": "The sultan to whom Ferdowsi dedicated the Shahnameh; he came to the throne in 997.",
       "sourceIds": [
         "src-iranica-ferdowsi-i",
-        "src-agakhan-firdausi-court-poets"
+        "src-agakhan-firdausi-court-poets",
+        "src-britannica-mahmud"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 971
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1030
+            }
           }
         },
         {
@@ -4135,20 +4191,31 @@
       "label": "E. E. Bertels",
       "summary": "The chief editor of the Moscow edition of the Shahnameh, who died before its first volume appeared.",
       "sourceIds": [
-        "src-moscow-edition-vol1"
+        "src-moscow-edition-vol1",
+        "src-iranica-berthels"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1890
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1957
+            }
           }
         },
         {

@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Twelve more people have years and can be laid side by side: Ashurbanipal, Surena, Camillus, Spartacus,
+  Julia, Ban Chao, Shang Yang, King Wu of Zhou, Daqiqi, Abu Mansur, Mahmud of Ghazni and Bertels. Each year
+  comes from a source that states it (Britannica or Encyclopaedia Iranica), which the person now cites.
 - You choose the calendar dates are also shown in – Solar Hijri, Lunar Hijri or Gregorian only – in the
   settings of every page. A year is shown with the two Hijri years it lies in: "1010 CE (converted: 388 or
   389 SH)". A Hijri year can be typed where a year is asked for ("1400 SH").

@@ -799,6 +799,30 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-23",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-camillus",
+      "title": "Marcus Furius Camillus – Britannica",
+      "url": "https://www.britannica.com/biography/Marcus-Furius-Camillus",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-spartacus",
+      "title": "Spartacus – Britannica",
+      "url": "https://www.britannica.com/biography/Spartacus-Roman-gladiator",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-pompey-first-triumvirate",
+      "title": "Pompey the Great: The First Triumvirate – Britannica",
+      "url": "https://www.britannica.com/biography/Pompey-the-Great/The-First-Triumvirate",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -2006,7 +2030,8 @@
       "summary": "A Roman leader whom Livy’s summaries connect with the deliverance of Rome from the Gauls and with the time of the Licinian-Sextian laws.",
       "sourceIds": [
         "src-livius-livy-livy-periochae-1-5",
-        "src-livius-concept-plebs"
+        "src-livius-concept-plebs",
+        "src-britannica-camillus"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2019,7 +2044,12 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 365
+            }
           }
         },
         {
@@ -2729,7 +2759,8 @@
       "label": "Spartacus",
       "summary": "The leader of a slave revolt that began at Capua and grew into a full-scale war in 73–71 BCE; his body was never found.",
       "sourceIds": [
-        "src-livius-person-spartacus"
+        "src-livius-person-spartacus",
+        "src-britannica-spartacus"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2742,7 +2773,12 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 71
+            }
           }
         },
         {
@@ -2977,7 +3013,8 @@
       "summary": "Daughter of Julius Caesar by Cornelia, married to Pompey to seal the alliance of 60 BCE.",
       "sourceIds": [
         "src-livius-caesar-caesar-01",
-        "src-livius-caesar-caesar-03"
+        "src-livius-caesar-caesar-03",
+        "src-britannica-pompey-first-triumvirate"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2990,7 +3027,12 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 54
+            }
           }
         },
         {
