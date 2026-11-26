@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A picture of a history says what it is: a photograph of today of an old object, a work of its own time, a
+  later picture, a reconstruction or a map – so that none is taken for another.
 - For writers of content: a command compares the passages a collection rests on with copies of their sources
   (`quotes`).
 - The Shahnameh shows its two counts of couplets side by side, each with its source.

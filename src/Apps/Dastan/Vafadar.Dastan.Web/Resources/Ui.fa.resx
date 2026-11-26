@@ -4593,4 +4593,40 @@
   <data name="Unit_months" xml:space="preserve">
     <value>{0} ماه</value>
   </data>
+  <data name="Media_Representation_PhotographOfHistoricalObject" xml:space="preserve">
+    <value>عکس امروزی از چیزی از گذشته</value>
+  </data>
+  <data name="Media_Representation_WorkOfItsTime" xml:space="preserve">
+    <value>اثری از همان زمانی که نشان می‌دهد</value>
+  </data>
+  <data name="Media_Representation_LaterDepictionOfHistory" xml:space="preserve">
+    <value>تصویری که مدت‌ها پس از موضوعش ساخته شده</value>
+  </data>
+  <data name="Media_Representation_PresentDayReconstruction" xml:space="preserve">
+    <value>بازسازی امروزی</value>
+  </data>
+  <data name="Media_Representation_PresentDayMap" xml:space="preserve">
+    <value>نقشه‌ای که امروز کشیده شده</value>
+  </data>
+  <data name="Media_RepresentationNote_PhotographOfHistoricalObject" xml:space="preserve">
+    <value>عکسی که مدت‌ها پس از ساخته‌شدن آن چیز گرفته شده است؛ تاریخ عکس تاریخ خودِ آن چیز نیست.</value>
+  </data>
+  <data name="Media_RepresentationNote_WorkOfItsTime" xml:space="preserve">
+    <value>در همان زمانی که نشان می‌دهد یا نزدیک به آن ساخته شده است؛ نشان می‌دهد سازندگانش می‌خواستند آن زمان چگونه دیده شود.</value>
+  </data>
+  <data name="Media_RepresentationNote_LaterDepictionOfHistory" xml:space="preserve">
+    <value>تصویری که هنرمندی مدت‌ها بعد از یک موضوع تاریخی ساخته است؛ تصویری از همان زمان نیست.</value>
+  </data>
+  <data name="Media_RepresentationNote_PresentDayReconstruction" xml:space="preserve">
+    <value>پیشنهادی امروزی دربارهٔ این‌که چیزی چگونه به نظر می‌رسید؛ سند یا مدرک نیست.</value>
+  </data>
+  <data name="Media_RepresentationNote_PresentDayMap" xml:space="preserve">
+    <value>امروز کشیده شده است؛ مرزها و نام‌هایش انتخاب سازندهٔ آن است و سرزمین‌های گذشته چنین خط‌هایی نداشتند.</value>
+  </data>
+  <data name="Media_BroughtIn" xml:space="preserve">
+    <value>افزوده‌شده به این مجموعه</value>
+  </data>
+  <data name="Media_Changed" xml:space="preserve">
+    <value>آخرین تغییر توضیح آن</value>
+  </data>
 </root>

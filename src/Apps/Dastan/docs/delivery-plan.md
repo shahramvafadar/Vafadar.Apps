@@ -1816,3 +1816,24 @@ refused to anything else; the check of the library.
   command and its exit code.
 * **Not done.** No collection of the library has a file of quotes: the next pass of content writes them as it
   reads its sources.
+
+### 27.16 Built: pictures of a history and the times of a picture (2026-11-26; E3 and E7)
+
+* **What was found first.** The two times a picture of a history needs most were there already: when an item
+  was made (`creationDate`) and the time it shows (`depictedTime`), kept apart and never guessed from each
+  other, and the gallery of a time finds an item by the second. Missing were the kinds of what a picture is,
+  and the times of the collection.
+* **The kinds.** Beside a later artwork of a story and a diagram of today: `photograph_of_historical_object`,
+  `work_of_its_time`, `later_depiction_of_history`, `present_day_reconstruction`, `present_day_map`. Each has
+  its words beside a picture and its sentence on the page of the picture, in English and Persian – a
+  photograph of today is not taken for a picture of the time of the thing, a reconstruction and a map not for
+  a record. The format says for each kind which time is which.
+* **The times of MED-006.** Of the seven: made or taken, and shown, were built; brought in (`addedAt`) and last
+  changed (`changedAt`) are read now and shown on the page of a picture; published is the day of the revision
+  that first has the item and is not stored a second time; shared belongs to a private space. A change before
+  the item was brought in is refused.
+* **Tests.** `MediaOfHistoryTests` – each kind read, an unknown kind refused, the two days, their order, and
+  that every kind has its words in both languages of the pages.
+* **Not done.** No picture of a history is in the library: bringing them is pass 5 of the content, and showing
+  one to everybody needs its rights (backlog D2). The order "oldest first" of a gallery stays the order of
+  making and says so; an order by the time shown is not built – nothing asks for it yet.

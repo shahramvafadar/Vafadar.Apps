@@ -141,6 +141,20 @@
             <dt>@T["Media_Creator"]</dt>
             <dd><Foreign Text="@item.Creator" /></dd>
 
+            @* The times of the collection (MED-006): when the item came into it and when what is said of it
+               last changed – neither is a time of the item or of what it shows. *@
+            @if (item.BroughtIn is { } broughtIn)
+            {
+                <dt>@T["Media_BroughtIn"]</dt>
+                <dd>@TimeText.Of(broughtIn, Visitor, T)</dd>
+            }
+
+            @if (item.Changed is { } changed)
+            {
+                <dt>@T["Media_Changed"]</dt>
+                <dd>@TimeText.Of(changed, Visitor, T)</dd>
+            }
+
             @if (item.CreditLine is { } credit)
             {
                 <dt>@T["Media_Credit"]</dt>

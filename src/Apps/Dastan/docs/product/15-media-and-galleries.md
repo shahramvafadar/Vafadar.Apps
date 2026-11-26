@@ -75,6 +75,8 @@ A visitor can follow “depicts this character,” “from this event,” or “
 | Share time | When an item was shared with a particular audience. | An old public or private item newly shared with an authorized family circle. |
 | Last modification | When metadata, captions, or another permitted field changed. | Correcting a spelling without creating a new memory or share. |
 
+**Built (2026-11-26, delivery plan 27.16):** for an item of a collection – the time it was made or taken (`creationDate`), the time it shows (`depictedTime`), the day it was brought into the collection (`addedAt`) and the day what is said of it last changed (`changedAt`). Publication is the day of the published revision that first has the item and is not written twice. Share time belongs to a private space and is kept there, with the photographs of visitors.
+
 Temporal meaning uses the common time model, including partial dates, uncertain ranges, relative or narrative time, and source conventions. Source and extracted metadata can disagree; camera metadata is evidence to review, not an automatic replacement for a contributor's supported date.
 
 **MED-007 — Proposed:** Every time-dependent gallery identifies its basis. “About this period” uses depicted or contextual time. “Created during this period” uses creation time. “Recently shared with me” uses qualifying share actions. An entity gallery or event sequence need not be sorted newest first. Unknown or incompatible dates are grouped or explained rather than assigned invented chronological positions.

@@ -103,7 +103,12 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
 
     private static readonly FrozenDictionary<string, MediaRepresentation> RepresentationNames = Names(
         ("later_artwork_of_literary_narrative", MediaRepresentation.LaterArtwork),
-        ("present_day_explanatory_diagram", MediaRepresentation.PresentDayExplanatoryDiagram));
+        ("present_day_explanatory_diagram", MediaRepresentation.PresentDayExplanatoryDiagram),
+        ("photograph_of_historical_object", MediaRepresentation.PhotographOfHistoricalObject),
+        ("work_of_its_time", MediaRepresentation.WorkOfItsTime),
+        ("later_depiction_of_history", MediaRepresentation.LaterDepictionOfHistory),
+        ("present_day_reconstruction", MediaRepresentation.PresentDayReconstruction),
+        ("present_day_map", MediaRepresentation.PresentDayMap));
 
     private static readonly FrozenDictionary<string, AltTextStatus> AltTextNames = Names(
         ("not_prepared_image_not_cleared", AltTextStatus.NotPrepared),
@@ -359,7 +364,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             new("events[].entityAssociations[].presence", "What an entity has to do with an event.", Of(PresenceNames.Keys)),
             new("media[].type", "An image or a video.", Of(MediaKindNames.Keys)),
             new("media[].rights.status", "Whether the item may be shown.", Of(RightsNames.Keys)),
-            new("media[].depictedContext.kind", "What kind of picture of the story the item is.", Of(RepresentationNames.Keys)),
+            new("media[].depictedContext.kind", "What kind of picture the item is: of a story, or of a history – a photograph of a thing of the past, a work of its time, a later picture, a reconstruction, a map.", Of(RepresentationNames.Keys)),
             new("media[].altTextStatus", "Optional: the state of the text alternative.", Of(AltTextNames.Keys)),
             new("media[].creationDate.precision", "How exactly the date an item was made is known.", Of(["year", "day"])),
             new("media[].creationDate.era", "The era of that date.", Of(EraNames.Keys)),
@@ -1412,6 +1417,15 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var shows = record.IsStated("depictedTime")
             ? ReadTime(record, "depictedTime is a place in a telling: the steps an item shows are its depictedEventIds.", "depictedTime")
             : null;
+
+        // The times of the collection, apart from the times of the item and of what it shows (MED-006).
+        var broughtIn = record.Day("addedAt", required: false);
+        var changed = record.Day("changedAt", required: false);
+        if (broughtIn is { } added && changed is { } later && later < added)
+        {
+            record.Problem("changedAt is before addedAt: what is said of an item cannot change before the item is there.");
+        }
+
         var sources = Ids(record, "sourceIds");
         var level = Level(record);
         record.Notes("status", "deliveryStatus");
@@ -1569,6 +1583,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             RepresentationScope = representationScope,
             Created = created,
             Shows = shows,
+            BroughtIn = broughtIn,
+            Changed = changed,
             DepictedEntities = [.. depictedEntities.Select(entity => new EntityId(entity))],
             DepictedEvents = [.. depictedEvents.Select(storyEvent => new EventId(storyEvent))],
             RelatedRelations = [.. relatedRelations.Select(relation => new RelationId(relation))],

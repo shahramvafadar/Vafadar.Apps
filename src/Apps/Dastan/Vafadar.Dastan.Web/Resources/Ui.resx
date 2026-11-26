@@ -4593,4 +4593,40 @@
   <data name="Unit_months" xml:space="preserve">
     <value>{0} months</value>
   </data>
+  <data name="Media_Representation_PhotographOfHistoricalObject" xml:space="preserve">
+    <value>Photograph of today of a thing of the past</value>
+  </data>
+  <data name="Media_Representation_WorkOfItsTime" xml:space="preserve">
+    <value>Work of the time it shows</value>
+  </data>
+  <data name="Media_Representation_LaterDepictionOfHistory" xml:space="preserve">
+    <value>Picture made long after what it shows</value>
+  </data>
+  <data name="Media_Representation_PresentDayReconstruction" xml:space="preserve">
+    <value>Reconstruction made today</value>
+  </data>
+  <data name="Media_Representation_PresentDayMap" xml:space="preserve">
+    <value>Map drawn today</value>
+  </data>
+  <data name="Media_RepresentationNote_PhotographOfHistoricalObject" xml:space="preserve">
+    <value>A photograph taken long after the thing it shows was made. The date of the photograph is not the date of the thing.</value>
+  </data>
+  <data name="Media_RepresentationNote_WorkOfItsTime" xml:space="preserve">
+    <value>Made in the time it shows, or close to it. It says how its makers wanted that time to be seen.</value>
+  </data>
+  <data name="Media_RepresentationNote_LaterDepictionOfHistory" xml:space="preserve">
+    <value>An artist’s picture of a subject of history, made long after it. It is not a picture from that time.</value>
+  </data>
+  <data name="Media_RepresentationNote_PresentDayReconstruction" xml:space="preserve">
+    <value>A proposal of today of how something looked. It is not a record and not evidence.</value>
+  </data>
+  <data name="Media_RepresentationNote_PresentDayMap" xml:space="preserve">
+    <value>Drawn today. Its borders and names are those its maker chose; lands of the past had no such lines.</value>
+  </data>
+  <data name="Media_BroughtIn" xml:space="preserve">
+    <value>Brought into this collection</value>
+  </data>
+  <data name="Media_Changed" xml:space="preserve">
+    <value>Its description last changed</value>
+  </data>
 </root>

@@ -187,6 +187,12 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
   about the subject.
 * The picture of a profile (`picture` of an entity) is one of these items – an image that depicts the entity and may be shown. Without one the page shows a drawing of the kind and says so; an image of a museum that is only a reference cannot be a picture that is seen.
 
+**A picture of a history says what kind of picture it is** (`depictedContext.kind`; the format lists the seven
+kinds): a photograph of today of a relief is not a picture from the time of the relief, a painting of 1850 of a
+battle of 1020 is not a picture of 1020, a reconstruction and a map of today are proposals. Write the time the
+item was made or taken as `creationDate` and the time of what it shows as `depictedTime` – never one for the
+other, and never a guess.
+
 ## Adding to a file and correcting it
 
 * Keep identifiers; change `documentVersion` and `preparedAt` of a collection when you hand a new state over.
