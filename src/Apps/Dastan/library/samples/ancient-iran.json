@@ -1023,6 +1023,14 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-23",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-surenas",
+      "title": "Surenas – Britannica",
+      "url": "https://www.britannica.com/biography/Surenas",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -1981,7 +1989,17 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 631
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 627
+            }
           }
         },
         {
@@ -5329,7 +5347,8 @@
       "summary": "The Parthian general who defeated Crassus at Carrhae in 53 BCE for Orodes II, and who had earlier captured Mithradates IV for him.",
       "sourceIds": [
         "src-livius-battle-carrhae-53-bce",
-        "src-livius-person-arsaces-xviii-mithradates-iv"
+        "src-livius-person-arsaces-xviii-mithradates-iv",
+        "src-britannica-surenas"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -5342,7 +5361,13 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 53,
+              "approximate": true
+            }
           }
         },
         {

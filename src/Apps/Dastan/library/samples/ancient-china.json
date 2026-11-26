@@ -255,6 +255,30 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-23",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-ban-chao",
+      "title": "Ban Chao – Britannica",
+      "url": "https://www.britannica.com/biography/Ban-Chao",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-shang-yang",
+      "title": "Shang Yang – Britannica",
+      "url": "https://www.britannica.com/biography/Shang-Yang",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-wuwang",
+      "title": "Wuwang – Britannica",
+      "url": "https://www.britannica.com/biography/Wuwang",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -1228,7 +1252,8 @@
       "label": "King Wu of Zhou",
       "summary": "The Zhou king who conquered the Shang and, according to the Shiji, planned a second capital at Luo, the future Luoyang.",
       "sourceIds": [
-        "src-eno-western-zhou"
+        "src-eno-western-zhou",
+        "src-britannica-wuwang"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -1241,7 +1266,13 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1043,
+              "approximate": true
+            }
           }
         },
         {
@@ -1690,20 +1721,32 @@
       "label": "Shang Yang",
       "summary": "Chancellor of Duke Xiao of Qin, whose Legalist reforms strengthened the state of Qin.",
       "sourceIds": [
-        "src-hawaii-early-china"
+        "src-hawaii-early-china",
+        "src-britannica-shang-yang"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 390,
+              "approximate": true
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 338
+            }
           }
         },
         {
@@ -2795,20 +2838,31 @@
       "summary": "The Han general of the Western Regions, who stayed at Kashgar when the Han withdrew in 75 CE, pacified the Western Regions in 91 CE, became their Protector-General in 91 or 92 CE, sent Gan Ying west in 97 CE and returned in 102 CE.",
       "sourceIds": [
         "src-hill-hou-hanshu",
-        "src-decrespigny-later-han"
+        "src-decrespigny-later-han",
+        "src-britannica-ban-chao"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 32
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 102
+            }
           }
         },
         {
