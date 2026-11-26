@@ -3722,7 +3722,7 @@
       "to": "person-qin-ershi",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-major-cook-9"
       ],
@@ -4820,7 +4820,7 @@
       "to": "person-han-wendi",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-major-cook-10"
       ],
@@ -4837,7 +4837,7 @@
       "to": "person-han-jingdi",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-major-cook-10"
       ],
@@ -4854,7 +4854,7 @@
       "to": "person-han-wudi",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-eno-wudi"
       ],
@@ -4871,7 +4871,7 @@
       "to": "person-han-zhaodi",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-eno-wudi"
       ],
@@ -4888,7 +4888,7 @@
       "to": "person-han-chengdi",
       "type": "parentOf",
       "directionality": "directed",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-major-cook-11"
       ],

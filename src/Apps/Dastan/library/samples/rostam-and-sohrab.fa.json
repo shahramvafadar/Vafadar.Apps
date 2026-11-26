@@ -301,7 +301,7 @@
       "label": "هماوردان"
     },
     "relation-28": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-29": {
       "label": "هماوردان"
@@ -313,16 +313,16 @@
       "label": "هم‌پیمان"
     },
     "relation-32": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-33": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-34": {
       "label": "برادرِ"
     },
     "relation-35": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     }
   },
   "events": {

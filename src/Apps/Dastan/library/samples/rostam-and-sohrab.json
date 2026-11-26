@@ -1493,7 +1493,7 @@
       "from": "character-gazhdaham",
       "to": "character-gordafarid",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-s07"
       ],
@@ -1581,7 +1581,7 @@
       "from": "character-gudarz",
       "to": "character-giv",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-s13"
       ],
@@ -1603,7 +1603,7 @@
       "from": "character-kay-kavus",
       "to": "character-fariborz",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-s13"
       ],
@@ -1647,7 +1647,7 @@
       "from": "character-sam",
       "to": "character-zal",
       "type": "parentOf",
-      "label": "Parent of",
+      "label": "Father of",
       "sourceIds": [
         "src-ganjoor-s21"
       ],

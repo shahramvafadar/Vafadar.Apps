@@ -76,6 +76,19 @@ public sealed class CompareNamesTests(LibrarySite site) : IClassFixture<LibraryS
     }
 
     [Fact]
+    public async Task Events_and_periods_are_laid_beside_each_other_by_when_they_happened_began_and_ended()
+    {
+        Assert.SkipWhen(LibrarySite.Collections.Count == 0, "The library holds no collection.");
+        var page = await site.Visitor().Get($"/en/compare?{Pick(Iran, "event-fall-of-nineveh")}&{Pick(China, "period-western-zhou")}");
+
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.DoesNotContain("Some of what was asked for cannot be compared", page.Main, StringComparison.Ordinal);
+        Assert.Contains("When it happened", page.Main, StringComparison.Ordinal);
+        Assert.Contains("From beginning to end", page.Main, StringComparison.Ordinal);
+        Assert.Matches($"value=\"{China}/period-western-zhou\" checked", page.Html);
+    }
+
+    [Fact]
     public async Task A_name_that_is_not_here_is_left_out_and_said_so()
     {
         Assert.SkipWhen(LibrarySite.Collections.Count == 0, "The library holds no collection.");

@@ -217,8 +217,42 @@ public static class TimelineLanes
     public static bool HasLifespan(Entity subject)
     {
         ArgumentNullException.ThrowIfNull(subject);
-        return Begins(subject) is not null || Ends(subject) is not null;
+        return Begins(subject) is not null || Ends(subject) is not null || Moments(subject).Any();
     }
+
+    /// <summary>
+    /// Returns when a name happened or was made – an event, a battle, a book –, as its record states it: a time of
+    /// its own on the lane of the name (D-098). A stretch of time is a bar, a moment or a window a mark.
+    /// </summary>
+    /// <param name="subject">The name, as the projection of the visitor gives it.</param>
+    /// <param name="label">What the time is called, by the kind of fact: "When it happened", "When it was made".</param>
+    /// <param name="prefix">What is put before its keys and its sources, as for <see cref="Of"/>.</param>
+    public static (ImmutableArray<ComparisonPeriod> Periods, ImmutableArray<ComparisonEvent> Events) Times(Entity subject, Func<FactKind, LocalizedText> label, string prefix = "")
+    {
+        ArgumentNullException.ThrowIfNull(subject);
+        ArgumentNullException.ThrowIfNull(label);
+        var periods = ImmutableArray.CreateBuilder<ComparisonPeriod>();
+        var events = ImmutableArray.CreateBuilder<ComparisonEvent>();
+        foreach (var (fact, index) in Moments(subject).Select((fact, index) => (fact, index)))
+        {
+            var key = $"{prefix}{subject.Id.Value}~{fact.Kind.Key}~{index}";
+            ImmutableArray<SourceId> sources = [.. fact.Sources.Select(source => new SourceId(prefix + source.Value))];
+            if (fact.Time is Period period)
+            {
+                periods.Add(new ComparisonPeriod { Key = key, Label = label(fact.Kind), Time = period, Sources = sources, Review = ReviewStatus.SourcedReviewPending });
+            }
+            else
+            {
+                events.Add(new ComparisonEvent { Key = key, Label = label(fact.Kind), Time = fact.Time!, Sources = sources, Review = ReviewStatus.SourcedReviewPending });
+            }
+        }
+
+        return (periods.ToImmutable(), events.ToImmutable());
+    }
+
+    // What a name states of when it happened or was made, with a time that can be placed.
+    private static IEnumerable<ProfileFact> Moments(Entity subject) => subject.Facts.Where(fact =>
+        (fact.Kind.Key == ProfileFacts.Happened.Key || fact.Kind.Key == ProfileFacts.Created.Key) && fact.Time is Occurrence or OccurrenceWindow or Period);
 
     /// <summary>
     /// Returns the life of a name as a period – from when it was born or founded to when it died or was dissolved,
@@ -260,11 +294,12 @@ public static class TimelineLanes
     }
 
     // The first stated beginning and end of a name that can be placed: a single time or a window of time.
+    // A period begins and ends as a life does (D-098).
     private static ProfileFact? Begins(Entity subject) => subject.Facts.FirstOrDefault(fact =>
-        (fact.Kind.Key == ProfileFacts.Born.Key || fact.Kind.Key == ProfileFacts.Founded.Key) && fact.Time is Occurrence or OccurrenceWindow);
+        (fact.Kind.Key == ProfileFacts.Born.Key || fact.Kind.Key == ProfileFacts.Founded.Key || fact.Kind.Key == ProfileFacts.Began.Key) && fact.Time is Occurrence or OccurrenceWindow);
 
     private static ProfileFact? Ends(Entity subject) => subject.Facts.FirstOrDefault(fact =>
-        (fact.Kind.Key == ProfileFacts.Died.Key || fact.Kind.Key == ProfileFacts.Dissolved.Key) && fact.Time is Occurrence or OccurrenceWindow);
+        (fact.Kind.Key == ProfileFacts.Died.Key || fact.Kind.Key == ProfileFacts.Dissolved.Key || fact.Kind.Key == ProfileFacts.Ended.Key) && fact.Time is Occurrence or OccurrenceWindow);
 
     /// <summary>Returns a source under the key a lane with that prefix cites it by.</summary>
     public static Source Renamed(Source source, string prefix)

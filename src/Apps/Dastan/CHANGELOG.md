@@ -529,4 +529,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The start groups its collections – lands and their history, stories and works, more to explore – and the
   names to start with come from all of them, not only from one.
 - English text is set in the font Inter, which comes with the site like the Persian font.
+- Events and periods can be compared too: the fall of Nineveh, the founding of the Roman Republic, the Western
+  Zhou, the age of the kings of Rome stand side by side by when they happened, began and ended.
+- In the histories and the stories a parent is named father or mother, no longer "father or mother".
 - The roles of the names in the steps of Siavash and of Rostam and Sohrab are in Persian on the Persian pages.

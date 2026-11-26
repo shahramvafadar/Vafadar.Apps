@@ -251,11 +251,18 @@
         {
             var prefix = $"{collection}~";
             var lane = TimelineLanes.Of(entity, views[collection].View, Visitor, prefix);
-            if (TimelineLanes.Lifespan(entity, LocalizedText.Of(Visitor.Language.Tag, T[entity.Type.Key == EntityTypes.Person.Key ? "Compare_Life_Person" : "Compare_Life_Other"]), prefix) is { } life)
+            // The life of the name first – born to died, founded to dissolved, begun to ended –, then when it
+            // happened or was made, then what else is stated of it with a time (D-098).
+            var lifeLabel = entity.Type.Key == EntityTypes.Person.Key ? "Compare_Life_Person" : entity.Type.Key == EntityTypes.Period.Key ? "Compare_Life_Period" : "Compare_Life_Other";
+            var life = TimelineLanes.Lifespan(entity, LocalizedText.Of(Visitor.Language.Tag, T[lifeLabel]), prefix);
+            var (spans, moments) = TimelineLanes.Times(entity, kind => LocalizedText.Of(Visitor.Language.Tag, T[kind.Key == ProfileFacts.Created.Key ? "Compare_Created" : "Compare_Happened"]), prefix);
+            lane = new ComparisonLane
             {
-                // The life of the name first, then what is stated of it with a time.
-                lane = new ComparisonLane { Key = lane.Key, Label = lane.Label, Periods = [life, .. lane.Periods], Events = lane.Events };
-            }
+                Key = lane.Key,
+                Label = lane.Label,
+                Periods = [.. (life is null ? Array.Empty<ComparisonPeriod>() : new[] { life }), .. spans, .. lane.Periods],
+                Events = [.. moments, .. lane.Events],
+            };
 
             lanes.Add(lane);
             var cited = lane.Periods.SelectMany(period => period.Sources).Concat(lane.Events.SelectMany(single => single.Sources)).ToHashSet();

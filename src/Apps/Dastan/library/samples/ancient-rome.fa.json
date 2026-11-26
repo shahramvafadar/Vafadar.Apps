@@ -717,7 +717,7 @@
       "label": "دارندهٔ سمتِ"
     },
     "relation-hamilcar-barca-parent-of-hannibal": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-hannibal-opponent-of-scipio-africanus": {
       "label": "هماوردان در زاما"
@@ -816,7 +816,7 @@
       "note": "بی‌همکار."
     },
     "relation-julius-caesar-parent-of-julia": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-pompey-spouse-of-julia": {
       "label": "همسر"
@@ -1045,7 +1045,7 @@
       "label": "همسر"
     },
     "relation-livia-parent-of-tiberius": {
-      "label": "پدر یا مادرِ"
+      "label": "مادرِ"
     },
     "relation-augustus-adoptive-parent-of-tiberius": {
       "label": "به فرزندی پذیرفت"
@@ -1057,13 +1057,13 @@
       "label": "خواهر یا برادرِ"
     },
     "relation-germanicus-parent-of-caligula": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-germanicus-parent-of-agrippina-the-younger": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-agrippina-the-younger-parent-of-nero": {
-      "label": "پدر یا مادرِ"
+      "label": "مادرِ"
     },
     "relation-claudius-spouse-of-agrippina-the-younger": {
       "label": "همسر"
@@ -1072,10 +1072,10 @@
       "label": "به فرزندی پذیرفت"
     },
     "relation-vespasian-parent-of-titus": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-vespasian-parent-of-domitian": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-titus-sibling-of-domitian": {
       "label": "خواهر یا برادرِ"

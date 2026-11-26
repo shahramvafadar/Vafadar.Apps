@@ -595,7 +595,7 @@
       "label": "جانشینِ"
     },
     "relation-qin-shi-huang-parent-of-qin-ershi": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-qin-shi-huang-founder-of-qin": {
       "label": "بنیادگذارِ"
@@ -736,19 +736,19 @@
       "label": "امپراتور خوانده و در چهار هفته برکنار شد"
     },
     "relation-liu-bang-parent-of-han-wendi": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-han-wendi-parent-of-han-jingdi": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-han-jingdi-parent-of-han-wudi": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-han-wudi-parent-of-han-zhaodi": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-han-yuandi-parent-of-han-chengdi": {
-      "label": "پدر یا مادرِ"
+      "label": "پدرِ"
     },
     "relation-liu-bang-founder-of-western-han": {
       "label": "بنیادگذارِ"
