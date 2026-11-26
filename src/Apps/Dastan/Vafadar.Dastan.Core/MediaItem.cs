@@ -11,6 +11,24 @@ public enum MediaRepresentation
 
     /// <summary>A diagram made today to explain something. It is not evidence and not a historical record.</summary>
     PresentDayExplanatoryDiagram = 1,
+
+    /// <summary>
+    /// A photograph of today of a thing of the past – a relief, a coin, a bronze, a ruin. The photograph has
+    /// its own date; the time of the thing is the time the item shows.
+    /// </summary>
+    PhotographOfHistoricalObject = 2,
+
+    /// <summary>A work made in the time it shows, or close to it: a relief of a king carved in his reign.</summary>
+    WorkOfItsTime = 3,
+
+    /// <summary>A picture of a subject of history made long after it: a painting of 1850 of a battle of 1020.</summary>
+    LaterDepictionOfHistory = 4,
+
+    /// <summary>A reconstruction made today of how something of the past looked. It is a proposal, not a record.</summary>
+    PresentDayReconstruction = 5,
+
+    /// <summary>A map drawn today of lands and places of the past. Its borders are those its maker drew.</summary>
+    PresentDayMap = 6,
 }
 
 /// <summary>What is known about the text alternative of an image.</summary>
@@ -101,6 +119,18 @@ public sealed class MediaItem
     /// shows is not a time of the world – that is <see cref="DepictedEvents"/>.
     /// </summary>
     public TemporalExpression? Shows { get; init; }
+
+    /// <summary>
+    /// Gets the day the item was brought into the collection, where the editors state it (MED-006). It is the
+    /// time of the collection, not of the item and not of what it shows.
+    /// </summary>
+    public DateOnly? BroughtIn { get; init; }
+
+    /// <summary>
+    /// Gets the day what is said of the item – its caption, its catalogue data – was last changed, where the
+    /// editors state it (MED-006). A changed caption makes no new item.
+    /// </summary>
+    public DateOnly? Changed { get; init; }
 
     /// <summary>Gets the entities the item shows.</summary>
     public ImmutableArray<EntityId> DepictedEntities { get; init; } = [];

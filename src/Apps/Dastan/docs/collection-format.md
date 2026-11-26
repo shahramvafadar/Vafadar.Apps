@@ -489,9 +489,10 @@ not say what each has to do with the step.
 | `label`, `caption` | The name and the caption |
 | `creator` | Who made it |
 | `rights` | `status` – `original_project_content`, `verified_open_access_metadata` or `permission_not_verified`; `statement`; `checkedAt` (a day); optional `license` and `sourceUrl` (the page of the policy) |
-| `depictedContext` | `kind` – `later_artwork_of_literary_narrative` or `present_day_explanatory_diagram`; `worldId`; optional `scope`. `calendarDate` is refused: an artwork does not date the story |
+| `depictedContext` | `kind` – see "What kind of picture an item is"; `worldId`; optional `scope`. `calendarDate` is refused: an artwork does not date the story |
 | `creationDate` | When the item was made – see below |
 | `depictedTime` | Optional: the time the item shows, where it shows a time of the world – apart from `creationDate`, and never guessed from it. Written like the `time` of a dated statement (a date of a calendar, a window between two, a depth of time). A step of the telling an item shows is not written here: that is `depictedEventIds`. The gallery of a time finds an item by this time |
+| `addedAt`, `changedAt` | Optional days (MED-006): when the item was brought into the collection, and when what is said of it – its caption, its catalogue data – last changed; `changedAt` is not before `addedAt`. They are times of the collection, not of the item. When an item was published is the day of the revision that first has it; when it was shared with somebody belongs to a private space, not to a collection |
 | `placements` | Optional: the places the item stands in with words of their own (R-MED-07). Each names one `entityId` or one `eventId` – one the item lists in `depictedEntityIds` or `depictedEventIds`, each at most once – with a `caption` and optional `sourceIds`. The item is referred to, not copied: where it has no placement its own `caption` is shown |
 | `demoRenderEligibility` | `allowed` – whether a local demonstration shows the item; optional `reason` |
 | `publicRenderEligibility` | Optional: `allowed` – whether the item is shown to everybody in a published revision, a decision of its own; optional `reason`. It needs rights that are `original_project_content` or `verified_open_access_metadata`, and what showing an item needs |
@@ -514,6 +515,24 @@ playing time, captions and a transcript. An item without established permission 
 (`true` for "about"), `era` (`CE` or `BCE`), and `year` for the precision `year` or `date` (`yyyy-MM-dd`) for
 `day`. `calendar` is `Gregorian`; a year whose calendar the catalogue does not name leaves it out, a day always
 names it. Optional notes: `refersTo`, `calendarStatus`.
+
+### What kind of picture an item is
+
+`depictedContext.kind` says how an item relates to what it shows; a page says it in words beside the item, so
+that no picture is taken for something it is not.
+
+| `kind` | What it is | Its times |
+|---|---|---|
+| `later_artwork_of_literary_narrative` | An artwork made long after the story it illustrates | `creationDate`: when the artwork was made. It shows steps of the telling (`depictedEventIds`), not a time |
+| `present_day_explanatory_diagram` | A diagram made today to explain something; no record and no evidence | `creationDate` |
+| `photograph_of_historical_object` | A photograph of today of a thing of the past – a relief, a coin, a bronze, a ruin | `creationDate`: when the photograph was taken. `depictedTime`: the time of the thing, where a source states it |
+| `work_of_its_time` | A work made in the time it shows, or close to it | `creationDate`: when it was made; `depictedTime` only where it shows another time than its own |
+| `later_depiction_of_history` | A picture of a subject of history made long after it | `creationDate`: when the picture was made. `depictedTime`: the time it shows |
+| `present_day_reconstruction` | A reconstruction made today of how something looked; a proposal, no record | `creationDate`; `depictedTime`: the time it reconstructs |
+| `present_day_map` | A map drawn today of lands and places of the past | `creationDate`; `depictedTime`: the time the map is drawn for |
+
+The gallery of a time finds an item by `depictedTime`; the order "oldest first" of a gallery is the order of
+`creationDate` and says so. Nothing guesses one time from the other.
 
 ## A thread
 
