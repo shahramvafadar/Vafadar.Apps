@@ -20,6 +20,7 @@ Legal ground for storing and reading: § 25 (2) no. 2 TDDDG – the storage is s
 
 - "vafadar.language" – the language you chose, as two letters ("en" or "fa"). Written when you change the language on the site; used to open the site in that language the next time. Kept for one year after it was last written.
 - "vafadar.theme" – the colours you chose ("light" or "dark"). Written when you choose them; removed when you go back to "automatic". Kept for one year.
+- "dastan.calendar" – the calendar you chose to read dates in beside the Gregorian one ("gregorian", "solar-hijri" or "lunar-hijri"). Written when you choose it. Kept for one year.
 - "dastan.reading." followed by the name of a collection – how far you said you have read in a story, as a number, so that pages do not tell you what comes later. Written when you choose a stage; removed when you go back to the beginning. Kept for one year. If you are signed in, this is kept with your account instead.
 - "dastan.saved" – the pages you put on your list, by their short names. Written when you save a page; kept for one year. If you are signed in, the list is kept with your account instead.
 - "dastan.notice" – that you have read the note about storage, so that it is not shown again; the value is the version of the note ("1"). Written when you press "Understood". Kept for one year.

@@ -24,6 +24,7 @@ public sealed class Visitor
         _context = context;
         Language = context.GetSiteLanguage();
         Theme = ThemePreference.Read(context);
+        Calendar = CalendarPreference.Read(context, Language.Tag);
         Boundary = ReadingPreference.Read(context, site);
         Projection = site.At(Boundary);
     }
@@ -33,6 +34,12 @@ public sealed class Visitor
 
     /// <summary>Gets the appearance the visitor chose.</summary>
     public ThemeChoice Theme { get; }
+
+    /// <summary>
+    /// Gets the calendar the visitor reads dates in beside the Gregorian one: their choice, else the calendar
+    /// of the language of the page. Gregorian means that nothing stands beside a date.
+    /// </summary>
+    public Vafadar.Temporal.CalendarSystem Calendar { get; }
 
     /// <summary>Gets the stage the visitor has read to.</summary>
     public ReadingLevel Boundary { get; }

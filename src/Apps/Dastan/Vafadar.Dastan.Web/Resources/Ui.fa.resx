@@ -1267,7 +1267,7 @@
     <value>در چه زمانی</value>
   </data>
   <data name="Search_Year_How" xml:space="preserve">
-    <value>یک سال، یک بازه یا ژرفای زمان: ۱۲۰۰ · ۵۰۰ پ.م · ۳۰۰ تا ۴۰۰ · ۱۰ تا ۲۰ هزار سال پیش · ۵۵ میلیون سال پیش</value>
+    <value>یک سال، یک بازه یا ژرفای زمان: ۱۲۰۰ · ۵۰۰ پ.م · ۳۰۰ تا ۴۰۰ · ۴۰۰ ه.ش · ۴۰۰ ه.ق · ۱۰ تا ۲۰ هزار سال پیش · ۵۵ میلیون سال پیش</value>
   </data>
   <data name="Search_Any" xml:space="preserve">
     <value>هر کدام</value>
@@ -4628,5 +4628,20 @@
   </data>
   <data name="Media_Changed" xml:space="preserve">
     <value>آخرین تغییر توضیح آن</value>
+  </data>
+  <data name="Date_ConvertedYears" xml:space="preserve">
+    <value>{0} یا {1}</value>
+  </data>
+  <data name="Calendar_Label" xml:space="preserve">
+    <value>تاریخ‌ها همچنین به</value>
+  </data>
+  <data name="Calendar_Gregorian" xml:space="preserve">
+    <value>فقط میلادی</value>
+  </data>
+  <data name="Calendar_SolarHijri" xml:space="preserve">
+    <value>هجری شمسی</value>
+  </data>
+  <data name="Calendar_LunarHijri" xml:space="preserve">
+    <value>هجری قمری</value>
   </data>
 </root>

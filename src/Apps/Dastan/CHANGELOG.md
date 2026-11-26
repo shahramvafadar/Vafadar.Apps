@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- You choose the calendar dates are also shown in – Solar Hijri, Lunar Hijri or Gregorian only – in the
+  settings of every page. A year is shown with the two Hijri years it lies in: "1010 CE (converted: 388 or
+  389 SH)". A Hijri year can be typed where a year is asked for ("1400 SH").
 - A picture of a history says what it is: a photograph of today of an old object, a work of its own time, a
   later picture, a reconstruction or a map – so that none is taken for another.
 - For writers of content: a command compares the passages a collection rests on with copies of their sources

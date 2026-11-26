@@ -73,6 +73,17 @@
                     <button type="submit" name="theme" value="light" aria-pressed="@Pressed(ThemeChoice.Light)">@T["Theme_Light"]</button>
                     <button type="submit" name="theme" value="dark" aria-pressed="@Pressed(ThemeChoice.Dark)">@T["Theme_Dark"]</button>
                 </form>
+                @* The calendar dates are also shown in (D-100): what is stored is Gregorian and is always shown;
+                   the same date in the calendar chosen here stands beside it. *@
+                <p class="meta" id="settings-calendar">@T["Calendar_Label"]</p>
+                <form method="post" action="@CalendarPreference.Address" class="theme" aria-labelledby="settings-calendar">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@ReturnUrl" />
+                    @foreach (var calendar in new[] { Vafadar.Temporal.CalendarSystem.Gregorian, Vafadar.Temporal.CalendarSystem.SolarHijri, Vafadar.Temporal.CalendarSystem.LunarHijri })
+                    {
+                        <button type="submit" name="calendar" value="@CalendarPreference.Word(calendar)" aria-pressed="@(Visitor.Calendar == calendar ? "true" : "false")">@T[$"Calendar_{calendar}"]</button>
+                    }
+                </form>
             </div>
         </details>
     </div>

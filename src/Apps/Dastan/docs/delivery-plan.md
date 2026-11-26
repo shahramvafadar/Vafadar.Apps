@@ -1837,3 +1837,27 @@ refused to anything else; the check of the library.
 * **Not done.** No picture of a history is in the library: bringing them is pass 5 of the content, and showing
   one to everybody needs its rights (backlog D2). The order "oldest first" of a gallery stays the order of
   making and says so; an order by the time shown is not built – nothing asks for it yet.
+
+### 27.17 Built: dates in other calendars (2026-11-26; E18, D-100) – the last step
+
+* **What was found first.** Much was there: a day stated in a calendar was shown as it is stored, with the same
+  day in the calendar of the language of the page beside it – Solar Hijri on a Persian page – and the Lunar
+  Hijri calendar was counted. Missing were the choice of the visitor, a year, and typing a Hijri year.
+* **The choice.** In the settings of every page: Gregorian only, Solar Hijri, Lunar Hijri. It is remembered on
+  the device (`dastan.calendar`); the page of what the site stores names it in its three languages. Who chose
+  nothing reads as before, by the language of the page.
+* **A year.** A year of the common era lies in two years of a Hijri calendar and both are said, the era once:
+  "1010 CE (converted: 388 or 389 SH)", "about 977 CE (converted: about 355 or 356 SH)". Nothing before a
+  calendar begins is converted – the three histories of the library end about 100 CE and show Gregorian dates
+  alone, whatever is chosen.
+* **Typing.** "1400 SH", "1447 AH", "۱۴۰۰ ه.ش", "۱۴۴۷ قمری" ask for the years of the common era the year lies in.
+* **Where the plan was left (27.9).** The axis of a chart stays Gregorian – see the addendum of ADR 0021. The
+  Lunar Hijri calendar is the one the shared library counts; the question "tabular or Umm al-Qura" of 27.9 is
+  thereby answered by what was there, not decided anew.
+* **Tests.** `CalendarYearsTests` – the two years of a year in both calendars, "about", what is not
+  converted, the years of a Hijri year, what is typed; `CalendarPreferenceTests` – the pages in English and
+  Persian with each choice, what lies before a calendar, the form and its cookie, the page of what is stored.
+* **Looked at** in a browser at the width of a phone: the three buttons in the settings and a converted period
+  on the page of the Shahnameh.
+
+With this step every row of development of the backlog is done.

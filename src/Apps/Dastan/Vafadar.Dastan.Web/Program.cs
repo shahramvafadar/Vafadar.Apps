@@ -170,6 +170,7 @@ app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapThemePreference();
+app.MapCalendarPreference();
 app.MapReadingPreference();
 app.MapMediaFiles();
 app.MapSiteHealth();

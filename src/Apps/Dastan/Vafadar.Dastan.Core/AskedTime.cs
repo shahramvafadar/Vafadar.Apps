@@ -32,7 +32,7 @@ public abstract partial record AskedTime
 
     /// <summary>
     /// Reads what a visitor typed: "1200", "500 BCE", "-500", "600 to 500 BCE", "12 ka", "55 million years
-    /// ago", "50-60 Ma", and the same in Persian ("۵۰۰ پ.م"، "۵۰ تا ۶۰ میلیون سال پیش"). Digits of Persian
+    /// ago", "50-60 Ma", a year of a Hijri calendar ("1400 SH", "400 AH") and the same in Persian ("۵۰۰ پ.م"، "۵۰ تا ۶۰ میلیون سال پیش"). Digits of Persian
     /// and Arabic are read as digits. What is no time – no number, a year 0, a year beyond the calendar, a
     /// stretch that ends before it begins – is <see langword="null"/>, never an error.
     /// </summary>
@@ -61,6 +61,16 @@ public abstract partial record AskedTime
 
             var (older, younger) = (Math.Max(first, second) * unit, Math.Min(first, second) * unit);
             return older > AgePosition.MaxYears || older <= 0 ? null : new Ago(older, younger);
+        }
+
+        // A year of a Hijri calendar ("1400 SH", "۴۰۰ ه.ق") asks for the years of the common era it lies in.
+        if (HijriYear().Match(text) is { Success: true } hijri)
+        {
+            var calendar = hijri.Groups["solar"].Success ? CalendarSystem.SolarHijri : CalendarSystem.LunarHijri;
+            return int.TryParse(hijri.Groups["year"].Value, NumberStyles.None, CultureInfo.InvariantCulture, out var stated)
+                && CalendarConversion.CommonEraYearsOf(calendar, stated) is { } covered && covered.Last <= FurthestYear
+                ? new Years(new(Era.CommonEra, covered.First), new(Era.CommonEra, covered.Last))
+                : null;
         }
 
         if (YearsOfEra().Match(text) is { Success: true } years)
@@ -139,6 +149,10 @@ public abstract partial record AskedTime
 
     [GeneratedRegex(@"^(?<first>\d+(\.\d+)?)( ?(-|to|تا) ?(?<second>\d+(\.\d+)?))? ?(?<unit>ka|kya|ma|mya|ga|bya|thousand years ago|million years ago|billion years ago|years ago|هزار سال پیش|میلیون سال پیش|میلیارد سال پیش|سال پیش)$", RegexOptions.CultureInvariant)]
     private static partial Regex DepthOfTime();
+
+    // "sh", "ah" and the Persian words and short forms, with or without the joiner and the points.
+    [GeneratedRegex(@"^(?<year>\d+) ?((?<solar>sh|ه[\u200d ]?\.? ?ش\.?|هجری (شمسی|خورشیدی)|شمسی|خورشیدی)|(?<lunar>ah|ه[\u200d ]?\.? ?ق\.?|هجری قمری|قمری))$", RegexOptions.CultureInvariant)]
+    private static partial Regex HijriYear();
 
     private const string EraWords = @"bce|bc|ce|ad|ق\.م\.?|پ\.م\.?|پیش از میلاد|میلادی|م\.?";
 
