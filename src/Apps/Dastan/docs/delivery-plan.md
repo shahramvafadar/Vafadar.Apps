@@ -1794,3 +1794,25 @@ refused to anything else; the check of the library.
   collection. The charts did not: there a title is marked now – a comparison is written in English, the chart
   of a collection in the language the collection names. *Test:*
   `LibrarySiteTests.TheTitleOfASourceIsMarkedAsTheLanguageItIsWrittenIn`.
+
+### 27.15 Built: the comparison of quotes with their sources (2026-11-26; E4)
+
+* **What was found first.** A collection stores no quote: it cites a source and, at most, says in words where
+  the passage is. The passages of the first pass were compared by hand and kept nowhere. So the step is not
+  only a command but also a place for the passages.
+* **Where the passages and the copies are kept – settled without the owner.** A passage of a source and a
+  copy of a page are the text of somebody else. Kept in a public repository they would be a matter of rights
+  for every source; kept by the writer, outside the repository, they are none. The command therefore reads a
+  file of quotes and a folder of copies that the writer names, and the repository holds neither. Should the
+  owner want the passages in the collection itself – shown to a visitor as the words a statement rests on –
+  that is a decision about rights, source by source, and a change of the format; it is not built.
+* **The command.** `quotes <collection> --quotes <file> --sources <folder> [--json]` (`QuoteCheck`): for
+  each passage the record, the source and the words; the record exists and cites that source; the words stand
+  in the copy of the source. Letters are compared, not how a page sets them. It names what is not found, the
+  sources without a copy and the number of statements without a quote; it asks no address of the network,
+  changes nothing and records no review.
+* **Tests.** `QuoteCheckTests` – found, not found, the same letters set differently in English and Persian,
+  a source without a copy, a record and a source that do not exist, a source a record does not cite, the
+  command and its exit code.
+* **Not done.** No collection of the library has a file of quotes: the next pass of content writes them as it
+  reads its sources.

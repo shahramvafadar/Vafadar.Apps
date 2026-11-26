@@ -35,6 +35,13 @@ public static class ContentCommands
               Writes the smallest file of that kind the site accepts, to start from. Never over a file.
               "collection" tells a story; "subject" is about a company, a club, a person and tells none.
 
+          quotes <collection> --quotes <file> --sources <folder> [--json]
+              Compares the passages the statements of a collection rest on with their sources. The file of
+              quotes names for each passage the record, the source and the words quoted; the folder holds a
+              copy of each source as plain text, <source id>.txt. Both are the writer's own and belong to no
+              collection. Says which quotes are not in their source, which sources have no copy and how many
+              statements have no quote. Asks no address of the network and changes nothing.
+
           revision <file> --number <n> --date <yyyy-MM-dd> --out <file> [--previous <file>] [--note <text>]
               For the editors: makes a published revision out of their working file – numbered, with the
               history of the revisions before and what this one changes. Refuses a file in which a statement
@@ -80,6 +87,8 @@ public static class ContentCommands
             ["vocabulary", "collection" or "comparison"] => Vocabulary(words[1], output, json),
             ["template", "collection" or "subject" or "comparison", _] => Template(words[1], words[2], null, output, today),
             ["template", "collection" or "subject" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
+            ["quotes", _, "--quotes", _, "--sources", _] => Quotes(words[1], words[3], words[5], output, json),
+            ["quotes", _, "--sources", _, "--quotes", _] => Quotes(words[1], words[5], words[3], output, json),
             ["revision", _, ..] => Revision(words[1], words[2..], output),
             ["reports", "forget", _, "--looked-at-before", _] => ForgetReports(words[2], words[4], output),
             ["photos", "sizes", _] => PhotoSizesOf(words[2], output),
@@ -133,6 +142,57 @@ public static class ContentCommands
 
         output.WriteLine($"Made {PhotoSizes.MakeMissing(folder)} smaller size(s).");
         return 0;
+    }
+
+    private static int Quotes(string collection, string quotes, string sources, TextWriter output, bool json)
+    {
+        if (!Directory.Exists(sources))
+        {
+            output.WriteLine($"{sources}: there is no such folder.");
+            return NotUsable;
+        }
+
+        var report = QuoteCheck.Compare(collection, quotes, sources);
+        if (json)
+        {
+            Write(output, writer =>
+            {
+                writer.WriteStartObject();
+                writer.WriteBoolean("inOrder", report.InOrder);
+                writer.WriteNumber("compared", report.Compared);
+                writer.WriteNumber("found", report.Found);
+                writer.WriteNumber("statementsWithoutQuote", report.WithoutQuote);
+                writer.WriteStartArray("problems");
+                foreach (var problem in report.Problems)
+                {
+                    writer.WriteStringValue(problem);
+                }
+
+                writer.WriteEndArray();
+                writer.WriteStartArray("sourcesWithoutCopy");
+                foreach (var source in report.WithoutCopy)
+                {
+                    writer.WriteStringValue(source);
+                }
+
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+            });
+            return report.InOrder ? Done : NotUsable;
+        }
+
+        foreach (var problem in report.Problems)
+        {
+            output.WriteLine(problem);
+        }
+
+        foreach (var source in report.WithoutCopy)
+        {
+            output.WriteLine($"{source}: the folder holds no copy ({source}.txt); its quotes were not compared.");
+        }
+
+        output.WriteLine($"{report.Found} of {report.Compared} quote(s) stand in their source. {report.WithoutQuote} statement(s) of the collection have no quote.");
+        return report.InOrder ? Done : NotUsable;
     }
 
     private static int NotAsked(TextWriter output)

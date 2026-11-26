@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- For writers of content: a command compares the passages a collection rests on with copies of their sources
+  (`quotes`).
 - The Shahnameh shows its two counts of couplets side by side, each with its source.
 - A collection can say where somebody comes from: Sudabeh comes from Hamavaran.
 - A relation says what it is and no more: "Held the office of – King of the Medes" instead of "King of the
