@@ -4,6 +4,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The comparison carries the earlier periods of Iran, China and Rome; the shown stretch stays and a visitor
+  moves back.
+- Rome reaches back to Italy before the city: the Villanovan culture, the Etruscans, the Greek colonies of the
+  south and Alba Longa of tradition.
 - Iran reaches back to the first settlement at Susa about 5000 BCE: the Proto-Elamite period, the Burnt City,
   the Old Elamite dynasties of Awan, Simashki and the Epartids with their dated kings, and the Neo-Elamite
   period.
