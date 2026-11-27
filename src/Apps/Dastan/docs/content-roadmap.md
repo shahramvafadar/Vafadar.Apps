@@ -77,6 +77,8 @@ of the Shahnameh.
 
 About 4 collections of 100–150 records each, and the comparison.
 
+Done in part on 2026-11-27: the comparison holds every period and event of the three histories that has years – 21 periods and 66 events to about 100 CE, with the sources and the Persian of their collections. Left out: Awan and Šimaški (no years), a period that begins and ends in the same year, a dynasty with the years of a period already there. What it still lacks waits for 2.1 to 2.4: everything after 100 CE, and China, which has only 8 dated events against 24 of Iran and 34 of Rome. 32 people of the histories have no year at all, because their sources give none.
+
 ## Pass 3 – the neighbours
 
 | # | Collection | Why |

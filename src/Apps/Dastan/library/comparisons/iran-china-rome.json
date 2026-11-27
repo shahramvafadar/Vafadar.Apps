@@ -2,15 +2,15 @@
   "formatVersion": "dastan-comparison-0.1",
   "id": "iran-china-rome",
   "status": "draft",
-  "note": "Built from the three collections of the library: every period and event says the years, with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public.",
+  "note": "Built from the three collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year (Awan and Šimaški), a period that begins and ends in the same year, and a dynasty whose years are those of a period already here.",
   "frame": "commonEraYears",
   "title": "Iran, China and Rome side by side",
-  "summary": "What ruled in Iran, in China and in Rome from the second millennium BCE to about 100 CE, and a few moments that a reader should see side by side.",
+  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE to about 100 CE, and every dated event of the three collections, side by side.",
   "show": {
     "from": {
       "frame": "calendar",
       "era": "beforeCommonEra",
-      "year": 1600
+      "year": 2100
     },
     "to": {
       "frame": "calendar",
@@ -337,6 +337,475 @@
       "url": "https://www.livius.org/articles/person/caesar/caesar-09/",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-assurbanipal",
+      "title": "Aššurbanipal – Livius",
+      "url": "https://www.livius.org/articles/person/assurbanipal/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-elam",
+      "title": "Elam – Livius",
+      "url": "https://www.livius.org/articles/place/elam/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cyaxares",
+      "title": "Cyaxares – Livius",
+      "url": "https://www.livius.org/articles/person/cyaxares/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cyrus-the-great",
+      "title": "Cyrus the Great – Livius",
+      "url": "https://www.livius.org/articles/person/cyrus-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-astyages",
+      "title": "Astyages – Livius",
+      "url": "https://www.livius.org/articles/person/astyages/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-croesus",
+      "title": "Croesus – Livius",
+      "url": "https://www.livius.org/articles/person/croesus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-sardes",
+      "title": "Sardes – Livius",
+      "url": "https://www.livius.org/articles/place/sardes/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cambyses-ii",
+      "title": "Cambyses II – Livius",
+      "url": "https://www.livius.org/articles/person/cambyses-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-darius-the-great",
+      "title": "Darius the Great (1) – Livius",
+      "url": "https://www.livius.org/articles/person/darius-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-darius-the-great-5-civil-war",
+      "title": "Darius the Great (5): Civil War – Livius",
+      "url": "https://www.livius.org/articles/person/darius-the-great/5-civil-war/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-thermopylae-480-bce",
+      "title": "Thermopylae (480 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/thermopylae-480-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-salamis-480-bce",
+      "title": "Salamis (480 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/salamis-480-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-plataea-479-bce",
+      "title": "Plataea (479 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/plataea-479-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cyrus-the-younger",
+      "title": "Cyrus the Younger – Livius",
+      "url": "https://www.livius.org/articles/person/cyrus-the-younger/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-artaxerxes-iii-ochus",
+      "title": "Artaxerxes III Ochus – Livius",
+      "url": "https://www.livius.org/articles/person/artaxerxes-iii-ochus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-issus",
+      "title": "Issus – Livius",
+      "url": "https://www.livius.org/articles/battle/issus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-darius-iii-codomannus",
+      "title": "Darius III Codomannus – Livius",
+      "url": "https://www.livius.org/articles/person/darius-iii-codomannus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-persepolis",
+      "title": "Persepolis – Livius",
+      "url": "https://www.livius.org/articles/place/persepolis/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-alexander-the-great-alexander-2-10",
+      "title": "Alexander the Great (2.10) – Livius",
+      "url": "https://www.livius.org/articles/person/alexander-the-great/alexander-2.10/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-alexander-the-great-alexander-2-15",
+      "title": "Alexander 2.15 Susa (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/alexander-the-great/alexander-2.15/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-seleucus-i-nicator",
+      "title": "Seleucus I Nicator (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/seleucus-i-nicator/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-antiochus-iii-the-great",
+      "title": "Antiochus III the Great (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/antiochus-iii-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-iii-phriapatius",
+      "title": "Arsaces III Phriapatius – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-iii-phriapatius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-vi-mithradates-i-the-great",
+      "title": "Arsaces VI, Mithradates I the Great – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-vi-mithradates-i-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-vii-phraates-ii",
+      "title": "Arsaces VII, Phraates II – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-vii-phraates-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-mark-antony",
+      "title": "Mark Antony – Livius",
+      "url": "https://www.livius.org/articles/person/mark-antony/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-misc-parthian-empire",
+      "title": "Parthian Empire – Livius",
+      "url": "https://www.livius.org/articles/misc/parthian-empire/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-content-augustus-res-gestae",
+      "title": "Augustus, Res Gestae – Livius",
+      "url": "https://www.livius.org/sources/content/augustus-res-gestae/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-vologases-i",
+      "title": "Vologases I – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-domitius-corbulo-domitius-corbulo-2",
+      "title": "Gnaeus Domitius Corbulo (2) – Livius",
+      "url": "https://www.livius.org/articles/person/domitius-corbulo/domitius-corbulo-2/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-uw-marquis-yi",
+      "title": "Marquis Yi’s Tomb – A Visual Sourcebook of Chinese Civilization, University of Washington",
+      "url": "https://depts.washington.edu/chinaciv/archae/2marmain.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-uw-count-of-yu",
+      "title": "Count of Yu – A Visual Sourcebook of Chinese Civilization, University of Washington",
+      "url": "https://depts.washington.edu/chinaciv/archae/2coumain.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-eno-early-han",
+      "title": "R. Eno, The Reigns of the Early Han Emperors (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/dspace/bitstreams/d7346363-5afd-47f9-af36-8b4d33f0d45f/download",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-batavian-revolt",
+      "title": "Batavian Revolt – Livius",
+      "url": "https://www.livius.org/articles/concept/batavian-revolt/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-batavian-revolt-batavian-revolt-chrono",
+      "title": "Batavian Revolt: Chronology of the years 68-70 – Livius",
+      "url": "https://www.livius.org/articles/concept/batavian-revolt/batavian-revolt-chrono/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-romulus",
+      "title": "Romulus – Livius",
+      "url": "https://www.livius.org/articles/person/romulus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-plebs",
+      "title": "Plebs – Livius",
+      "url": "https://www.livius.org/articles/concept/plebs/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-livy-livy-periochae-1-5",
+      "title": "Livy, Periochae 1-5 – Livius",
+      "url": "https://www.livius.org/sources/content/livy/livy-periochae-1-5/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-roman-law",
+      "title": "Roman Law – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-law/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-allia",
+      "title": "Allia (387 or 386 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/allia/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-first-punic-war",
+      "title": "First Punic War – Livius",
+      "url": "https://www.livius.org/articles/concept/first-punic-war/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-hannibal-3-barca",
+      "title": "Hannibal Barca – Livius",
+      "url": "https://www.livius.org/articles/person/hannibal-3-barca/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-carthage-roman-wars",
+      "title": "Carthage: Roman Wars – Livius",
+      "url": "https://www.livius.org/articles/place/carthage/roman-wars/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-livy-livy-periochae-46-50",
+      "title": "Livy, Periochae 46-50 – Livius",
+      "url": "https://www.livius.org/sources/content/livy/livy-periochae-46-50/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-carthage",
+      "title": "Carthage – Livius",
+      "url": "https://www.livius.org/articles/place/carthage/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-corinth",
+      "title": "Corinth – Livius",
+      "url": "https://www.livius.org/articles/place/corinth/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-livy-livy-periochae-56-60",
+      "title": "Livy, Periochae 56-60 – Livius",
+      "url": "https://www.livius.org/sources/content/livy/livy-periochae-56-60/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-01",
+      "title": "Gaius Julius Caesar: Youth – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-01/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-spartacus",
+      "title": "Spartacus – Livius",
+      "url": "https://www.livius.org/articles/person/spartacus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-03",
+      "title": "Gaius Julius Caesar: Consul – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-03/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-triumvir",
+      "title": "Triumvir – Livius",
+      "url": "https://www.livius.org/articles/concept/triumvir/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-05",
+      "title": "Gaius Julius Caesar: Reconquest – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-05/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-rubico-49-bce",
+      "title": "Rubico (49 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/rubico-49-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-pharsalus-48-bce",
+      "title": "Pharsalus (48 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/pharsalus-48-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-pharsalus",
+      "title": "Pharsalus – Livius",
+      "url": "https://www.livius.org/articles/place/pharsalus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-08",
+      "title": "Gaius Julius Caesar: Constitutional problems – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-08/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-philippi-42-bce",
+      "title": "Philippi (42 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/philippi-42-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-philippi",
+      "title": "Philippi – Livius",
+      "url": "https://www.livius.org/articles/place/philippi/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-augustus",
+      "title": "Augustus – Livius",
+      "url": "https://www.livius.org/articles/person/augustus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-teutoburg-forest-9-ce",
+      "title": "Teutoburg Forest (9 CE) – Livius",
+      "url": "https://www.livius.org/articles/battle/teutoburg-forest-9-ce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-nero",
+      "title": "Nero – Livius",
+      "url": "https://www.livius.org/articles/person/nero/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-roman-jewish-wars-roman-jewish-wars-3",
+      "title": "Jewish War (66-70) – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-jewish-wars/roman-jewish-wars-3/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-roman-jewish-wars-roman-jewish-wars-5",
+      "title": "Chronology 66-74 – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-jewish-wars/roman-jewish-wars-5/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-roman-jewish-wars-roman-jewish-wars-4",
+      "title": "Titus' Siege of Jerusalem – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-jewish-wars/roman-jewish-wars-4/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-titus",
+      "title": "Titus – Livius",
+      "url": "https://www.livius.org/articles/person/titus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-pompeii",
+      "title": "Pompeii – Livius",
+      "url": "https://www.livius.org/articles/place/pompeii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-rome-photos-rome-amphitheatrum-flavium",
+      "title": "Rome, Amphitheatrum Flavium – Livius",
+      "url": "https://www.livius.org/articles/place/rome/rome-photos/rome-amphitheatrum-flavium/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
     }
   ],
   "lanes": [
@@ -513,6 +982,87 @@
       ],
       "events": [
         {
+          "key": "sack-of-susa",
+          "label": "The Assyrian sack of Susa",
+          "summary": "Aššurbanipal destroyed Susa and the sanctuary of Dur-Untaš. The Livius pages differ on the year: 646 BCE, between 645 and 640 BCE, or the subjection of Elam in 643 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 646
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 640
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-assurbanipal",
+            "src-livius-place-susa",
+            "src-livius-place-elam"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-nineveh",
+          "label": "The fall of Nineveh",
+          "summary": "The Medes under Cyaxares and the Babylonians captured the Assyrian capital Nineveh in July 612 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 612
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cyaxares",
+            "src-livius-people-medes"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "cyrus-defeats-astyages",
+          "label": "Cyrus defeats Astyages",
+          "summary": "Cyrus rose against his overlord Astyages of Media; the army of Astyages revolted and handed him over, and Cyrus took Ecbatana. Livius gives 550 BCE, and mentions a chronology of 554/553.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 550
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-achaemenids",
+            "src-livius-person-cyrus-the-great",
+            "src-livius-person-astyages"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "conquest-of-lydia",
+          "label": "Cyrus conquers Lydia",
+          "summary": "Cyrus defeated Croesus of Lydia and took Sardis. The traditional year 547 BCE rests on a reading of the Nabonidus Chronicle that most scholars now doubt; it was perhaps later.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 547,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cyrus-the-great",
+            "src-livius-person-croesus",
+            "src-livius-place-sardes"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "cyrus-takes-babylon",
           "label": "Cyrus takes Babylon",
           "time": {
@@ -526,6 +1076,146 @@
           "sourceIds": [
             "src-livius-cyrus-the-great-cyrus-takes-babylon",
             "src-livius-place-babylon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "conquest-of-egypt",
+          "label": "Cambyses conquers Egypt",
+          "summary": "In 525 BCE Cambyses II conquered Egypt; the pharaoh Psammetichus III was captured alive.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 525
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cambyses-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "darius-seizes-power",
+          "label": "Darius seizes power",
+          "summary": "On 29 September 522 BCE Darius and six noblemen killed the king whom Darius calls the usurper Gaumâta; Darius then fought nineteen battles in one year against rebels from Persia, Elam, Media, Babylonia and other lands, the last revolt ending in December 521 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 522
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-darius-the-great",
+            "src-livius-darius-the-great-5-civil-war"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "thermopylae",
+          "label": "The battle of Thermopylae",
+          "summary": "In September 480 BCE the army of Xerxes defeated the Greeks under the Spartan king Leonidas at the pass of Thermopylae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-thermopylae-480-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "salamis",
+          "label": "The battle of Salamis",
+          "summary": "At the end of September 480 BCE the Greek fleet defeated the Persian fleet at Salamis, while Xerxes watched from a hill.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-salamis-480-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "plataea",
+          "label": "The battle of Plataea",
+          "summary": "In the summer of 479 BCE the Greeks under Pausanias defeated the Persian army of Mardonius near Plataea.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 479
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-plataea-479-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "cunaxa",
+          "label": "The battle of Cunaxa",
+          "summary": "In 401 BCE Cyrus the Younger, with an army including Greek mercenaries, fought his brother Artaxerxes II at Cunaxa near Babylon; his army won, but Cyrus fell.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 401
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cyrus-the-younger",
+            "src-livius-dynasty-achaemenids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "reconquest-of-egypt",
+          "label": "The reconquest of Egypt",
+          "summary": "In 343 BCE the generals of Artaxerxes III, Bagoas and Mentor of Rhodes, reconquered Egypt.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 343
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-artaxerxes-iii-ochus",
+            "src-livius-dynasty-achaemenids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "issus",
+          "label": "The battle of Issus",
+          "summary": "In November 333 BCE Alexander defeated Darius III near Issus.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 333
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-issus",
+            "src-livius-person-darius-iii-codomannus"
           ],
           "reviewStatus": "proposed"
         },
@@ -546,6 +1236,121 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "burning-of-persepolis",
+          "label": "The burning of Persepolis",
+          "summary": "Alexander captured Persepolis in the first weeks of 330 BCE and burnt several palace buildings in April 330 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 330
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-persepolis",
+            "src-livius-alexander-the-great-alexander-2-10"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-darius-iii",
+          "label": "The death of Darius III",
+          "summary": "In July 330 BCE Darius III, fleeing from Alexander, was murdered by his own courtiers at Choara near modern Damghan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 330
+            }
+          },
+          "sourceIds": [
+            "src-livius-alexander-the-great-alexander-2-10",
+            "src-livius-person-darius-iii-codomannus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "susa-weddings",
+          "label": "The weddings at Susa",
+          "summary": "In March 324 BCE Alexander held a mass wedding at Susa where his officers married Iranian women by Persian rites; Alexander married a daughter of Darius III, and Seleucus married Apame.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 324
+            }
+          },
+          "sourceIds": [
+            "src-livius-alexander-the-great-alexander-2-15",
+            "src-livius-person-seleucus-i-nicator"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "eastern-campaign-antiochus-iii",
+          "label": "The eastern campaign of Antiochus III",
+          "summary": "Antiochus III campaigned in the east, forcing Arsaces II of Parthia (209 BCE) and the king of Bactria to accept his overlordship. Livius dates the campaign 212–205 BCE on one page and 209–204 on another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 212
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 204
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-antiochus-iii-the-great",
+            "src-livius-dynasty-seleucids",
+            "src-livius-person-arsaces-iii-phriapatius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "parthians-take-babylonia",
+          "label": "The Parthians take Babylonia",
+          "summary": "Mithradates I of Parthia captured Seleucia, the Seleucid capital in Babylonia, in 141 BCE – between April and June according to one Livius page, in July according to another – after taking Media; Susa followed in 139 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 141
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-demetrius-ii-nicator",
+            "src-livius-dynasty-seleucids",
+            "src-livius-person-arsaces-vi-mithradates-i-the-great"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "defeat-of-antiochus-vii",
+          "label": "The defeat of Antiochus VII",
+          "summary": "In 130 BCE Antiochus VII drove the Parthians out of Babylonia and Media; in 129 BCE they defeated him, he took his own life, and the Parthians retook all Seleucid territory in Iran.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 129
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-antiochus-vii-sidetes",
+            "src-livius-person-arsaces-vii-phraates-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "carrhae",
           "label": "The battle of Carrhae",
           "time": {
@@ -561,6 +1366,60 @@
             "src-livius-person-arsaces-xix-orodes-ii"
           ],
           "reviewStatus": "proposed"
+        },
+        {
+          "key": "antony-parthian-war",
+          "label": "Antony’s Parthian war",
+          "summary": "In 36 BCE the Roman Mark Antony invaded the Parthian empire and failed; another Livius page connects his eastern campaigns with 34/33 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 36
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-mark-antony",
+            "src-livius-misc-parthian-empire"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "return-of-standards",
+          "label": "The return of the Roman standards",
+          "summary": "In 20 BCE the Parthians gave back to Rome the standards they had taken from Roman armies; Augustus records it in his Res Gestae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 20
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-carrhae-53-bce",
+            "src-livius-content-augustus-res-gestae"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "armenia-settlement",
+          "label": "The settlement over Armenia",
+          "summary": "After a Roman army surrendered to the Parthians at Rhandeia (about 62 CE), Rome and Vologases I agreed in 63 CE that his brother Tiridates would be king of Armenia.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 63
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-vologases-i",
+            "src-livius-domitius-corbulo-domitius-corbulo-2"
+          ],
+          "reviewStatus": "proposed"
         }
       ]
     },
@@ -568,6 +1427,42 @@
       "key": "china",
       "label": "China",
       "periods": [
+        {
+          "key": "xia",
+          "label": "The Xia (tradition)",
+          "summary": "The first dynasty in Chinese tradition, said to have been founded by Yu the Great; there is no written evidence of it, though many historians identify Erlitou as its capital. The traditional dates differ: about 2100 or 1900 to 1600 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2100
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1900
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1600,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-hawaii-early-china"
+          ],
+          "reviewStatus": "proposed"
+        },
         {
           "key": "shang",
           "label": "The Shang",
@@ -677,6 +1572,77 @@
             "src-afe-timeline",
             "src-afe-keypoints",
             "src-hawaii-early-china",
+            "src-si-zhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "spring-and-autumn",
+          "label": "The Spring and Autumn period",
+          "summary": "The first part of the Eastern Zhou, from 770 BCE to about 480–475 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 770
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 480
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 475
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-afe-keypoints"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "warring-states",
+          "label": "The Warring States",
+          "summary": "From about 480–475 BCE to the unification under the Qin in 221 BCE, when the many small states were consolidated into seven kingdoms.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 480
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 475
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 221
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-uw-marquis-yi",
             "src-si-zhou"
           ],
           "reviewStatus": "proposed"
@@ -813,6 +1779,46 @@
       ],
       "events": [
         {
+          "key": "zhou-conquest",
+          "label": "The Zhou conquest of the Shang",
+          "summary": "The Zhou under King Wu overthrew the Shang. The sources give about 1050 or 1046 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1050
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1046
+            }
+          },
+          "sourceIds": [
+            "src-uw-count-of-yu",
+            "src-hawaii-early-china"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-western-zhou",
+          "label": "The fall of the Western Zhou",
+          "summary": "In 771 BCE the Western Zhou fell; the court moved east to Luoyang.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 771
+            }
+          },
+          "sourceIds": [
+            "src-afe-timeline"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "qin-unification",
           "label": "The Qin unifies China",
           "time": {
@@ -826,6 +1832,29 @@
           "sourceIds": [
             "src-major-cook-9",
             "src-afe-timeline"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-qin",
+          "label": "The fall of the Qin",
+          "summary": "The Qin fell in 206 BCE; Xiang Yu burnt Xianyang in 207 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 207
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 206
+            }
+          },
+          "sourceIds": [
+            "src-major-cook-9",
+            "src-eno-early-han"
           ],
           "reviewStatus": "proposed"
         },
@@ -849,6 +1878,40 @@
             "src-major-cook-10",
             "src-eno-wudi",
             "src-livius-place-silk-road"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "han-restoration",
+          "label": "The restoration of the Han",
+          "summary": "In the autumn of 25 CE Liu Xiu claimed the imperial title and restored the Han; Wang Mang had died in 23 CE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 25
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "expedition-against-xiongnu",
+          "label": "The expedition against the Xiongnu",
+          "summary": "In 73 CE Emperor Ming sent an army against the Xiongnu; in the same winter Ban Chao arrested Dou Ti.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 73
+            }
+          },
+          "sourceIds": [
+            "src-hill-hou-hanshu"
           ],
           "reviewStatus": "proposed"
         },
@@ -969,6 +2032,36 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "year-of-four-emperors",
+          "label": "The year of the four emperors",
+          "summary": "The civil war after Nero’s death, when Galba, Otho, Vitellius and Vespasian were emperors in turn.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 68
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 69
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-concept-batavian-revolt",
+            "src-livius-batavian-revolt-batavian-revolt-chrono"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "flavians",
           "label": "The Flavians",
           "time": {
@@ -1030,6 +2123,25 @@
       ],
       "events": [
         {
+          "key": "founding-of-rome",
+          "label": "The founding of Rome",
+          "summary": "According to tradition Romulus founded Rome on the Palatine on 21 April 753 BCE; Livius calls this Varronian date an artificial calculation.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 753
+            }
+          },
+          "sourceIds": [
+            "src-livius-eutropius-short-history-eutropius-short-history-1",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-person-romulus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "founding-of-republic",
           "label": "The founding of the Republic",
           "time": {
@@ -1053,6 +2165,289 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "twelve-tables",
+          "label": "The Twelve Tables",
+          "summary": "The first codification of Roman law, written by a board of ten men in the middle of the fifth century BCE: ten tables in 451 and two more in 450 BCE in the traditional chronology.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 451
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 450
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-plebs",
+            "src-livius-livy-livy-periochae-1-5",
+            "src-livius-concept-roman-law"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "gallic-sack",
+          "label": "The Gauls take Rome",
+          "summary": "After their victory at the Allia the Gauls occupied Rome and besieged the Capitol until the Romans bought their freedom with gold – in 390 BCE in the traditional chronology, in 387 or 386 according to Livius.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 390
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 386
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-allia",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-livy-livy-periochae-1-5"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "licinian-sextian-laws",
+          "label": "The Licinian-Sextian laws",
+          "summary": "Laws first proposed in 376 and passed in 367 BCE (traditional chronology) that opened the consulship to plebeians, adjusted debts and limited the ownership of public land.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 367
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-plebs",
+            "src-livius-concept-senate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "first-punic-war",
+          "label": "The First Punic War",
+          "summary": "The war of Rome and Carthage from 264 to 241 BCE, in which Rome conquered Sicily.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 264
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 241
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-first-punic-war"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "second-punic-war",
+          "label": "The Second Punic War",
+          "summary": "The war of Rome and Carthage from 218 to 202 BCE, in which Hannibal crossed the Alps; the peace was signed in 201 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 218
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 201
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hannibal-3-barca"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "cannae",
+          "label": "The battle of Cannae",
+          "summary": "On 2 August 216 BCE Hannibal destroyed the army of the two Roman consuls at Cannae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 216
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hannibal-3-barca"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "zama",
+          "label": "The battle of Zama",
+          "summary": "On 19 October 202 BCE Scipio defeated Hannibal at Zama in Africa.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 202
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hannibal-3-barca",
+            "src-livius-carthage-roman-wars"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "third-punic-war",
+          "label": "The Third Punic War",
+          "summary": "The last war against Carthage, begun in 149 BCE after Cato had urged it; it ended in 146 BCE with the destruction of the city.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 149
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 146
+            }
+          },
+          "sourceIds": [
+            "src-livius-livy-livy-periochae-46-50",
+            "src-livius-place-carthage"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "destruction-of-carthage",
+          "label": "The destruction of Carthage",
+          "summary": "In 146 BCE Rome took and sacked Carthage; Corinth was sacked in the same year.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 146
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-carthage",
+            "src-livius-place-corinth"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tribunate-of-tiberius-gracchus",
+          "label": "The tribunate of Tiberius Gracchus",
+          "summary": "In 133 BCE Tiberius Gracchus proposed his land bill; he was killed on the Capitol in the same year.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 133
+            }
+          },
+          "sourceIds": [
+            "src-livius-livy-livy-periochae-56-60"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "social-war",
+          "label": "The Social War",
+          "summary": "The war with Rome’s Italian allies, which began in 91 BCE; citizenship was promised to loyal allies in 90 and to those who surrendered in 89. Marius and Sulla fought on the Roman side.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 91
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-01"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "revolt-of-spartacus",
+          "label": "The revolt of Spartacus",
+          "summary": "A slave revolt that began at Capua and was suppressed by Crassus; the Livius page dates the war 73–71 BCE in one place and 73–70 in another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 73
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 71
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-spartacus",
+            "src-livius-caesar-caesar-03"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "first-triumvirate",
+          "label": "The alliance of Caesar, Crassus and Pompey",
+          "summary": "In 60 BCE Caesar, Crassus and Pompey made a private agreement, sealed by Pompey’s marriage to Caesar’s daughter Julia; modern historians call it the First Triumvirate.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 60
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-triumvir",
+            "src-livius-caesar-caesar-03"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "conquest-of-gaul",
+          "label": "Caesar conquers Gaul",
+          "summary": "From 58 to 50 BCE Caesar conquered Gaul; in 52 BCE Vercingetorix surrendered to him at Alesia.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 58
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 50
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-05"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "carrhae-rome",
           "label": "The battle of Carrhae",
           "time": {
@@ -1070,6 +2465,97 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "rubicon",
+          "label": "Caesar crosses the Rubicon",
+          "summary": "In the night of 10/11 January 49 BCE Caesar crossed the Rubicon, the border of Cisalpine Gaul and Italy, and began the second civil war; where the river was is not certain.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 49
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-06",
+            "src-livius-battle-rubico-49-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "pharsalus",
+          "label": "The battle of Pharsalus",
+          "summary": "On 9 August 48 BCE Caesar defeated Pompey at Pharsalus; Pompey fled to Egypt and was murdered there.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 48
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-pharsalus-48-bce",
+            "src-livius-place-pharsalus",
+            "src-livius-caesar-caesar-06"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "murder-of-caesar",
+          "label": "The murder of Caesar",
+          "summary": "On the Ides of March, 15 March 44 BCE, Caesar was murdered by a group led by Gaius Cassius, Decimus Brutus and Marcus Junius Brutus.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 44
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-08"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "second-triumvirate",
+          "label": "The Second Triumvirate",
+          "summary": "In 43 BCE Antony and Octavian became triumvirs with a third colleague, an official magistracy with dictatorial powers.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 43
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-triumvir",
+            "src-livius-caesar-caesar-09",
+            "src-livius-person-mark-antony"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "philippi",
+          "label": "The battle of Philippi",
+          "summary": "In October 42 BCE Mark Antony and Octavian defeated Brutus and Cassius at Philippi.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 42
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-philippi-42-bce",
+            "src-livius-place-philippi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "actium",
           "label": "The battle of Actium",
           "time": {
@@ -1083,6 +2569,204 @@
           "sourceIds": [
             "src-livius-battle-actium-31-bce",
             "src-livius-caesar-caesar-09"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "augustan-settlement",
+          "label": "The settlement of Augustus",
+          "summary": "In January 27 BCE Octavian accepted the title Augustus (16 January); the rule of the emperors begins here.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 27
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-09",
+            "src-livius-person-augustus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "teutoburg",
+          "label": "The battle in the Teutoburg Forest",
+          "summary": "In September 9 CE Arminius, leading a coalition of Germanic tribes, annihilated three Roman legions under Publius Quintilius Varus; Germania remained independent.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 9
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-teutoburg-forest-9-ce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-augustus",
+          "label": "The death of Augustus",
+          "summary": "Augustus died on 19 August 14 CE and Tiberius succeeded him.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 14
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-augustus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "great-fire",
+          "label": "The Great Fire of Rome",
+          "summary": "The great fire of Rome in 64 CE, under Nero.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 64
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-nero"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "jewish-war",
+          "label": "The Jewish War",
+          "summary": "The war in Judaea that began in 66 CE and culminated in the destruction of the temple of Jerusalem in 70; the last resistance at Masada held out until 74.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 66
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 70
+            }
+          },
+          "sourceIds": [
+            "src-livius-roman-jewish-wars-roman-jewish-wars-3",
+            "src-livius-roman-jewish-wars-roman-jewish-wars-5"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-nero",
+          "label": "The death of Nero",
+          "summary": "After the revolts of Vindex, Macer and Galba Nero took his own life in June 68 CE – on 9 June according to his page, on 8 June according to the chronology of 68–70.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 68
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-nero",
+            "src-livius-concept-batavian-revolt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "siege-of-jerusalem",
+          "label": "The siege of Jerusalem",
+          "summary": "Titus began the siege of Jerusalem on 14 April 70 CE and was master of the city on 8 September.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 70
+            }
+          },
+          "sourceIds": [
+            "src-livius-roman-jewish-wars-roman-jewish-wars-4"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "vesuvius",
+          "label": "The eruption of Vesuvius",
+          "summary": "In 79 CE, in the reign of Titus, Vesuvius erupted and buried Pompeii.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 79
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-titus",
+            "src-livius-place-pompeii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "colosseum",
+          "label": "The dedication of the Colosseum",
+          "summary": "The Amphitheatrum Flavium, built by Vespasian, was dedicated by Titus in 80 CE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 80
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-titus",
+            "src-livius-rome-photos-rome-amphitheatrum-flavium"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "murder-of-domitian",
+          "label": "The murder of Domitian",
+          "summary": "Domitian was murdered by courtiers on 18 September 96 CE; Nerva became emperor the same day.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 96
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-domitian",
+            "src-livius-person-nerva"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "accession-of-trajan",
+          "label": "Trajan becomes emperor",
+          "summary": "On Nerva’s death in January 98 CE Trajan, his adopted son, became emperor.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 98
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-trajan"
           ],
           "reviewStatus": "proposed"
         }
