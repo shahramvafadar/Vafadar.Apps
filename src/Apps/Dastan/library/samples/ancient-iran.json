@@ -1447,6 +1447,30 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-27",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-lakhmids",
+      "title": "Lakhmids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/lakhmids/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-hephthalites",
+      "title": "Hephthalites – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/hephthalites/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-912800",
+      "title": "Pleiades: [(al-)Hir(t)a]/Ertha?",
+      "url": "https://pleiades.stoa.org/places/912800",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -9034,6 +9058,388 @@
         {
           "fact": "participant",
           "entityId": "person-yazdgard-iii"
+        }
+      ]
+    },
+    {
+      "id": "place-hira",
+      "type": "Place",
+      "label": "Hira",
+      "summary": "The capital of the Lakhmid kings on the desert fringes of central Iraq, a centre of Nestorian Christian learning, where Bahram V was brought up.",
+      "sourceIds": [
+        "src-iranica-lakhmids",
+        "src-pleiades-912800"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "al-Hira",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "region-babylonia"
+        }
+      ],
+      "position": {
+        "latitude": 31.8833,
+        "longitude": 44.4499,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "dynasty-lakhmid",
+      "type": "Dynasty",
+      "label": "The Lakhmids",
+      "summary": "An Arab dynasty that ruled central Iraq from Hira for about three centuries, from about 300 to 602, mostly as allies and clients of the Sasanian kings and their bulwark against Byzantium and the Ghassanids.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 300,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 602
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-hira"
+        }
+      ]
+    },
+    {
+      "id": "office-lakhmid-king",
+      "type": "Office",
+      "label": "King of Hira",
+      "summary": "The kingship of the Lakhmid house at Hira.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-lakhmid"
+        }
+      ]
+    },
+    {
+      "id": "person-amr-ibn-adi",
+      "type": "Person",
+      "label": "ʿAmr b. ʿAdi",
+      "summary": "The Lakhmid who brought his family to prominence at the end of the third century, made Hira his capital and tried to extend his power across the Syrian desert.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Made Hira the Lakhmid capital."
+        }
+      ]
+    },
+    {
+      "id": "person-imru-al-qays-ibn-amr",
+      "type": "Person",
+      "label": "Emroʾ-al-Qays b. ʿAmr",
+      "summary": "Son of ʿAmr b. ʿAdi and second of the Lakhmid line, at first governor for the Sasanians over the tribes of the Syrian desert; he later went over to the Byzantines and became a Christian. The inscription of Namāra of 328 calls him king of all the Arabs.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Called king of all the Arabs in 328."
+        }
+      ]
+    },
+    {
+      "id": "person-mundhir-iii",
+      "type": "Person",
+      "label": "Monḏer III",
+      "summary": "Son of Noʿmān II, the Lakhmid king who dominated the sixth century and reigned for half a century, from 503 to 554; Khusrau I entrusted Arabia to him.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "al-Mundhir III",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Reigned for half a century."
+        }
+      ]
+    },
+    {
+      "id": "person-numan-iii",
+      "type": "Person",
+      "label": "Noʿmān III",
+      "summary": "Son of Monḏer IV and the last Lakhmid king, from 580 to 602; he became a Christian and his court at Hira drew the leading Arab poets. Khusrau II had him killed in 602, ending the Lakhmid house.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "al-Nuʿman III",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 602
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The last Lakhmid king."
+        }
+      ]
+    },
+    {
+      "id": "event-bahram-v-takes-throne",
+      "type": "Event",
+      "label": "Bahram V takes the throne with Lakhmid help",
+      "summary": "Bahram V, brought up at the Lakhmid court of Hira, gained the throne at Ctesiphon in 420 with the help of the Lakhmid king against the nobles who had killed his brother Shapur.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 420
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-ctesiphon"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-bahram-v"
+        }
+      ]
+    },
+    {
+      "id": "event-end-of-the-lakhmids",
+      "type": "Event",
+      "label": "The end of the Lakhmids",
+      "summary": "Khusrau II had the Lakhmid king Noʿmān III killed in 602 and soon after brought Hira under direct Persian rule, removing the Arab bulwark of Iraq.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 602
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-hira"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-khusrau-ii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-numan-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-dhu-qar",
+      "type": "Event",
+      "label": "The battle of Ḏu Qār",
+      "summary": "In 604 the Banu Bakr defeated a Persian force at Ḏu Qār, which Tabari saw as a consequence of Khusrau II’s action against Noʿmān.",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 604
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "government-hephthalites",
+      "type": "Government",
+      "label": "The Hephthalites",
+      "summary": "A people of “Hunnish” invaders, also called White Huns, who from the mid-fourth century pressed on Iran and India and after the defeats of Peroz I held Central Asia, Khorasan and Afghanistan; Khusrau I and the Turks crushed them near Bukhara between 558 and 561.",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "White Huns",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": []
+    },
+    {
+      "id": "event-peroz-against-the-hephthalites",
+      "type": "Event",
+      "label": "Peroz’s campaigns against the Hephthalites",
+      "summary": "Peroz I led three disastrous campaigns against the Hephthalites: in the first he was forced to surrender, in the third, in 484, he died with his cavalry in a hidden ditch. The Shahnameh gives the fullest account of his defeats.",
+      "sourceIds": [
+        "src-iranica-hephthalites",
+        "src-livius-person-peroz-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 484
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-peroz-i"
+        }
+      ]
+    },
+    {
+      "id": "event-defeat-of-the-hephthalites",
+      "type": "Event",
+      "label": "The Hephthalites crushed near Bukhara",
+      "summary": "Between 558 and 561 Khusrau I, acting with the newly arrived Turks, crushed the Hephthalites in a great battle near Bukhara, and the two powers divided their land along the Oxus.",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 558
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 561
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-khusrau-i"
         }
       ]
     }
@@ -20764,6 +21170,441 @@
       "label": "Founded",
       "sourceIds": [
         "src-livius-place-ardasir-khureh-firuzabad"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hira-capital-of-lakhmid",
+      "from": "place-hira",
+      "to": "dynasty-lakhmid",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-lakhmid-governs-babylonia",
+      "from": "dynasty-lakhmid",
+      "to": "region-babylonia",
+      "type": "governs",
+      "directionality": "directed",
+      "label": "Ruled central Iraq",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 300,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 602
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amr-ibn-adi-parent-of-imru-al-qays-ibn-amr",
+      "from": "person-amr-ibn-adi",
+      "to": "person-imru-al-qays-ibn-amr",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amr-ibn-adi-founder-of-lakhmid",
+      "from": "person-amr-ibn-adi",
+      "to": "dynasty-lakhmid",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Brought to power",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mundhir-iii-holder-of-lakhmid-king",
+      "from": "person-mundhir-iii",
+      "to": "office-lakhmid-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 503
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 554
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mundhir-iii-employed-by-sasanian",
+      "from": "person-mundhir-iii",
+      "to": "dynasty-sasanian",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Ally of",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-numan-iii-holder-of-lakhmid-king",
+      "from": "person-numan-iii",
+      "to": "office-lakhmid-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 580
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 602
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bahram-v-participant-in-bahram-v-takes-throne",
+      "from": "person-bahram-v",
+      "to": "event-bahram-v-takes-throne",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bahram-v-takes-throne-took-place-in-ctesiphon",
+      "from": "event-bahram-v-takes-throne",
+      "to": "place-ctesiphon",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bahram-v-takes-throne-during-sasanian",
+      "from": "event-bahram-v-takes-throne",
+      "to": "period-sasanian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-khusrau-ii-participant-in-end-of-the-lakhmids",
+      "from": "person-khusrau-ii",
+      "to": "event-end-of-the-lakhmids",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-numan-iii-participant-in-end-of-the-lakhmids",
+      "from": "person-numan-iii",
+      "to": "event-end-of-the-lakhmids",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-end-of-the-lakhmids-took-place-in-hira",
+      "from": "event-end-of-the-lakhmids",
+      "to": "place-hira",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-end-of-the-lakhmids-during-sasanian",
+      "from": "event-end-of-the-lakhmids",
+      "to": "period-sasanian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-dhu-qar-during-sasanian",
+      "from": "event-battle-of-dhu-qar",
+      "to": "period-sasanian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-lakhmids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-peroz-i-participant-in-peroz-against-the-hephthalites",
+      "from": "person-peroz-i",
+      "to": "event-peroz-against-the-hephthalites",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-peroz-against-the-hephthalites-during-sasanian",
+      "from": "event-peroz-against-the-hephthalites",
+      "to": "period-sasanian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hephthalites-participant-in-peroz-against-the-hephthalites",
+      "from": "government-hephthalites",
+      "to": "event-peroz-against-the-hephthalites",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-khusrau-i-participant-in-defeat-of-the-hephthalites",
+      "from": "person-khusrau-i",
+      "to": "event-defeat-of-the-hephthalites",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-defeat-of-the-hephthalites-during-sasanian",
+      "from": "event-defeat-of-the-hephthalites",
+      "to": "period-sasanian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hephthalites-participant-in-defeat-of-the-hephthalites",
+      "from": "government-hephthalites",
+      "to": "event-defeat-of-the-hephthalites",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-kavad-i-employed-by-hephthalites",
+      "from": "person-kavad-i",
+      "to": "government-hephthalites",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Restored to the throne with the help of",
+      "sourceIds": [
+        "src-iranica-hephthalites"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

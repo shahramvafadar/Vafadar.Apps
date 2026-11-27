@@ -4,6 +4,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Iran fills gaps before 651: the Lakhmid kings of Hira as allies of the Sasanians, from ʿAmr b. ʿAdi to Noʿmān
+  III, Bahram V taken to the throne with their help, their end in 602 and the battle of Ḏu Qār; the
+  Hephthalites, the defeats of Peroz I and their fall near Bukhara under Khusrau I – from the Encyclopaedia
+  Iranica, with their Persian.
 - China fills gaps to 705: the Liu-Song, Southern Qi and Southern Chen at Jiankang, the Northern Zhou, the last
   Sui emperor Gongdi, Liu Yu, Gu Kaizhi, Wang Xizhi and Wang Xianzhi, and seven events of the Jin from the legal
   code of 268 to the gathering at the Orchid Pavilion, from Britannica, with their Persian.

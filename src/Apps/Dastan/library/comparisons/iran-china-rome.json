@@ -1324,6 +1324,20 @@
       "url": "https://www.britannica.com/biography/Wang-Xizhi",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-lakhmids",
+      "title": "Lakhmids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/lakhmids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-hephthalites",
+      "title": "Hephthalites – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/hephthalites/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
     }
   ],
   "lanes": [
@@ -2244,6 +2258,23 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "bahram-v-takes-throne",
+          "label": "Bahram V takes the throne with Lakhmid help",
+          "summary": "Bahram V, brought up at the Lakhmid court of Hira, gained the throne at Ctesiphon in 420 with the help of the Lakhmid king against the nobles who had killed his brother Shapur.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 420
+            }
+          },
+          "sourceIds": [
+            "src-iranica-lakhmids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "war-of-421",
           "label": "Bahram V’s war with Rome",
           "summary": "A brief war between Bahram V and the Romans in 421–422.",
@@ -2297,6 +2328,24 @@
           "sourceIds": [
             "src-livius-person-peroz-i",
             "src-livius-person-kavad-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "peroz-against-the-hephthalites",
+          "label": "Peroz’s campaigns against the Hephthalites",
+          "summary": "Peroz I led three disastrous campaigns against the Hephthalites: in the first he was forced to surrender, in the third, in 484, he died with his cavalry in a hidden ditch. The Shahnameh gives the fullest account of his defeats.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 484
+            }
+          },
+          "sourceIds": [
+            "src-iranica-hephthalites",
+            "src-livius-person-peroz-i"
           ],
           "reviewStatus": "proposed"
         },
@@ -2362,6 +2411,28 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "defeat-of-the-hephthalites",
+          "label": "The Hephthalites crushed near Bukhara",
+          "summary": "Between 558 and 561 Khusrau I, acting with the newly arrived Turks, crushed the Hephthalites in a great battle near Bukhara, and the two powers divided their land along the Oxus.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 558
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 561
+            }
+          },
+          "sourceIds": [
+            "src-iranica-hephthalites"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "revolt-of-bahram-vi",
           "label": "The revolt of Bahram VI",
           "summary": "In 590 the general Bahram VI revolted and marched west; Hormizd IV was executed and his son Khusrau II fled to the Byzantines, who brought him back in 591.",
@@ -2375,6 +2446,40 @@
           },
           "sourceIds": [
             "src-livius-person-bahram-vi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "end-of-the-lakhmids",
+          "label": "The end of the Lakhmids",
+          "summary": "Khusrau II had the Lakhmid king Noʿmān III killed in 602 and soon after brought Hira under direct Persian rule, removing the Arab bulwark of Iraq.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 602
+            }
+          },
+          "sourceIds": [
+            "src-iranica-lakhmids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-dhu-qar",
+          "label": "The battle of Ḏu Qār",
+          "summary": "In 604 the Banu Bakr defeated a Persian force at Ḏu Qār, which Tabari saw as a consequence of Khusrau II’s action against Noʿmān.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 604
+            }
+          },
+          "sourceIds": [
+            "src-iranica-lakhmids"
           ],
           "reviewStatus": "proposed"
         },

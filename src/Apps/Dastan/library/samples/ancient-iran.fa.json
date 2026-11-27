@@ -1359,6 +1359,70 @@
     "event-death-of-yazdgard-iii": {
       "label": "مرگ یزدگرد سوم",
       "summary": "یزدگرد سوم، واپسین شاه ساسانی، در ۶۵۱، ده سال پس از نهاوند، آواره درگذشت؛ با او شاهنشاهی ساسانی به پایان رسید."
+    },
+    "place-hira": {
+      "label": "حیره",
+      "summary": "پایتخت شاهان لخمی بر کرانهٔ بیابان در میانهٔ عراق، کانونی از دانش مسیحیان نسطوری، که بهرام پنجم در آنجا بزرگ شد."
+    },
+    "dynasty-lakhmid": {
+      "label": "لخمیان",
+      "summary": "دودمانی عرب که حدود سه سده، از حدود ۳۰۰ تا ۶۰۲، از حیره بر میانهٔ عراق فرمان راند، بیشتر در جایگاه هم‌پیمان و دست‌نشاندهٔ شاهان ساسانی و سپر آنان در برابر بیزانس و غسانیان."
+    },
+    "office-lakhmid-king": {
+      "label": "شاه حیره",
+      "summary": "پادشاهی خاندان لخمی در حیره."
+    },
+    "person-amr-ibn-adi": {
+      "label": "عمرو بن عدی",
+      "summary": "لخمی‌ای که خاندانش را در پایان سدهٔ سوم برکشید، حیره را پایتخت کرد و کوشید قدرتش را تا آن سوی بیابان سوریه بگستراند.",
+      "facts": {
+        "knownFor": "حیره را پایتخت لخمیان کرد."
+      }
+    },
+    "person-imru-al-qays-ibn-amr": {
+      "label": "امرؤالقیس بن عمرو",
+      "summary": "پسر عمرو بن عدی و دومین فرمانروای لخمی، نخست فرماندار از سوی ساسانیان بر قبیله‌های بیابان سوریه؛ سپس به بیزانس پیوست و مسیحی شد. سنگ‌نبشتهٔ نماره از ۳۲۸ او را شاه همهٔ عرب‌ها می‌خواند.",
+      "facts": {
+        "knownFor": "در ۳۲۸ شاه همهٔ عرب‌ها خوانده شد."
+      }
+    },
+    "person-mundhir-iii": {
+      "label": "منذر سوم",
+      "summary": "پسر نعمان دوم، شاه لخمی‌ای که بر سدهٔ ششم چیره بود و نیم سده، از ۵۰۳ تا ۵۵۴، فرمان راند؛ خسرو یکم عربستان را به او سپرد.",
+      "facts": {
+        "knownFor": "نیم سده فرمان راند."
+      }
+    },
+    "person-numan-iii": {
+      "label": "نعمان سوم",
+      "summary": "پسر منذر چهارم و واپسین شاه لخمی، از ۵۸۰ تا ۶۰۲؛ مسیحی شد و دربارش در حیره سرآمدان شعر عرب را گرد آورد. خسرو دوم در ۶۰۲ او را کشت و خاندان لخمی پایان یافت.",
+      "facts": {
+        "knownFor": "واپسین شاه لخمی."
+      }
+    },
+    "event-bahram-v-takes-throne": {
+      "label": "بهرام پنجم با یاری لخمیان بر تخت می‌نشیند",
+      "summary": "بهرام پنجم که در دربار لخمی حیره بزرگ شده بود، در ۴۲۰ با یاری شاه لخمی در برابر بزرگانی که برادرش شاپور را کشته بودند، تخت تیسفون را به دست آورد."
+    },
+    "event-end-of-the-lakhmids": {
+      "label": "پایان لخمیان",
+      "summary": "خسرو دوم در ۶۰۲ نعمان سوم شاه لخمی را کشت و اندکی بعد حیره را زیر فرمان مستقیم ایران آورد و سپر عرب عراق را از میان برداشت."
+    },
+    "event-battle-of-dhu-qar": {
+      "label": "نبرد ذوقار",
+      "summary": "در ۶۰۴ بنی‌بکر سپاهی ایرانی را در ذوقار شکست دادند، که طبری آن را پیامد کار خسرو دوم با نعمان می‌دانست."
+    },
+    "government-hephthalites": {
+      "label": "هپتالیان",
+      "summary": "مردمی از یورشگران «هونی»، که هون‌های سپید هم خوانده می‌شوند، و از میانهٔ سدهٔ چهارم بر ایران و هند فشار آوردند و پس از شکست‌های پیروز یکم بر آسیای میانه، خراسان و افغانستان فرمان راندند؛ خسرو یکم و ترکان میان ۵۵۸ و ۵۶۱ نزدیک بخارا آنان را درهم شکستند."
+    },
+    "event-peroz-against-the-hephthalites": {
+      "label": "لشکرکشی‌های پیروز بر هپتالیان",
+      "summary": "پیروز یکم سه لشکرکشی شکست‌خورده بر هپتالیان کرد: در نخستین ناچار به تسلیم شد و در سومین، در ۴۸۴، با سوارانش در خندقی پنهان جان داد. شاهنامه کامل‌ترین گزارش شکست‌های او را دارد."
+    },
+    "event-defeat-of-the-hephthalites": {
+      "label": "درهم شکستن هپتالیان نزدیک بخارا",
+      "summary": "میان ۵۵۸ و ۵۶۱ خسرو یکم همراه ترکانِ تازه‌رسیده هپتالیان را در نبردی بزرگ نزدیک بخارا درهم شکست و دو قدرت سرزمینشان را در امتداد جیحون بخش کردند."
     }
   },
   "relations": {
@@ -3009,6 +3073,72 @@
     },
     "relation-ardashir-i-founder-of-firuzabad": {
       "label": "بنیاد نهاد"
+    },
+    "relation-hira-capital-of-lakhmid": {
+      "label": "پایتختِ"
+    },
+    "relation-lakhmid-governs-babylonia": {
+      "label": "فرمانروای میانهٔ عراق"
+    },
+    "relation-amr-ibn-adi-parent-of-imru-al-qays-ibn-amr": {
+      "label": "پدرِ"
+    },
+    "relation-amr-ibn-adi-founder-of-lakhmid": {
+      "label": "به قدرت رساند"
+    },
+    "relation-mundhir-iii-holder-of-lakhmid-king": {
+      "label": "شاه"
+    },
+    "relation-mundhir-iii-employed-by-sasanian": {
+      "label": "هم‌پیمانِ"
+    },
+    "relation-numan-iii-holder-of-lakhmid-king": {
+      "label": "شاه"
+    },
+    "relation-bahram-v-participant-in-bahram-v-takes-throne": {
+      "label": "شرکت در"
+    },
+    "relation-bahram-v-takes-throne-took-place-in-ctesiphon": {
+      "label": "رخ داد در"
+    },
+    "relation-bahram-v-takes-throne-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-khusrau-ii-participant-in-end-of-the-lakhmids": {
+      "label": "شرکت در"
+    },
+    "relation-numan-iii-participant-in-end-of-the-lakhmids": {
+      "label": "شرکت در"
+    },
+    "relation-end-of-the-lakhmids-took-place-in-hira": {
+      "label": "رخ داد در"
+    },
+    "relation-end-of-the-lakhmids-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-battle-of-dhu-qar-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-peroz-i-participant-in-peroz-against-the-hephthalites": {
+      "label": "شرکت در"
+    },
+    "relation-peroz-against-the-hephthalites-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-hephthalites-participant-in-peroz-against-the-hephthalites": {
+      "label": "شرکت در"
+    },
+    "relation-khusrau-i-participant-in-defeat-of-the-hephthalites": {
+      "label": "شرکت در"
+    },
+    "relation-defeat-of-the-hephthalites-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-hephthalites-participant-in-defeat-of-the-hephthalites": {
+      "label": "شرکت در"
+    },
+    "relation-kavad-i-employed-by-hephthalites": {
+      "label": "با یاری اینان به تخت بازگشت"
     }
   }
 }
