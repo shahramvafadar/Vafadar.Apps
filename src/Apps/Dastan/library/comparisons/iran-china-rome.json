@@ -5,7 +5,7 @@
   "note": "Built from the three collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year (Awan and Šimaški), a period that begins and ends in the same year, and a dynasty whose years are those of a period already here.",
   "frame": "commonEraYears",
   "title": "Iran, China and Rome side by side",
-  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE to about 100 CE, and every dated event of the three collections, side by side.",
+  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE to about 100 CE, Iran on to the end of the Sasanians in 651, and every dated event of the three collections, side by side.",
   "show": {
     "from": {
       "frame": "calendar",
@@ -15,7 +15,7 @@
     "to": {
       "frame": "calendar",
       "era": "commonEra",
-      "year": 100
+      "year": 651
     }
   },
   "publication": {
@@ -806,6 +806,216 @@
       "url": "https://www.livius.org/articles/place/rome/rome-photos/rome-amphitheatrum-flavium/",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-sasanians-sasanian-kings",
+      "title": "Sasanian Kings – Livius",
+      "url": "https://www.livius.org/articles/dynasty/sasanians/sasanian-kings/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-sasanians",
+      "title": "Sasanians – Livius",
+      "url": "https://www.livius.org/articles/dynasty/sasanians/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-yazdgard-iii",
+      "title": "Yazdgard III – Livius",
+      "url": "https://www.livius.org/articles/person/yazdgard-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-osroes-i",
+      "title": "Osroes I – Livius",
+      "url": "https://www.livius.org/articles/person/osroes-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-ctesiphon",
+      "title": "Ctesiphon – Livius",
+      "url": "https://www.livius.org/articles/place/ctesiphon/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-vologases-iv",
+      "title": "Vologases IV – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-iv/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-vologases-v",
+      "title": "Vologases V – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-v/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-artabanus-iv",
+      "title": "Artabanus IV – Livius",
+      "url": "https://www.livius.org/articles/person/artabanus-iv/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-vologases-vi",
+      "title": "Vologases VI – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-vi/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-ardasir-khureh-firuzabad",
+      "title": "Ardašir Khureh (Firuzabad) – Livius",
+      "url": "https://www.livius.org/articles/place/ardasir-khureh-firuzabad/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-istakhr",
+      "title": "Istakhr – Livius",
+      "url": "https://www.livius.org/articles/place/istakhr/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-ardasir-i",
+      "title": "Ardašir I – Livius",
+      "url": "https://www.livius.org/articles/person/ardasir-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shapur-i",
+      "title": "Shapur I – Livius",
+      "url": "https://www.livius.org/articles/person/shapur-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-gordian-iii",
+      "title": "Gordian III – Livius",
+      "url": "https://www.livius.org/articles/person/gordian-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-valerian",
+      "title": "Valerian – Livius",
+      "url": "https://www.livius.org/articles/person/valerian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-bishapur",
+      "title": "Bishapur – Livius",
+      "url": "https://www.livius.org/articles/place/bishapur/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-ii",
+      "title": "Bahram II – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-galerius",
+      "title": "Galerius – Livius",
+      "url": "https://www.livius.org/articles/person/galerius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-julian-the-apostate",
+      "title": "Julian the Apostate – Livius",
+      "url": "https://www.livius.org/articles/person/julian-the-apostate/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-jovian",
+      "title": "Jovian – Livius",
+      "url": "https://www.livius.org/articles/person/jovian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shapur-ii",
+      "title": "Shapur II – Livius",
+      "url": "https://www.livius.org/articles/person/shapur-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shapur-iii",
+      "title": "Shapur III – Livius",
+      "url": "https://www.livius.org/articles/person/shapur-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-iv",
+      "title": "Bahram IV – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-iv/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-v",
+      "title": "Bahram V – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-v/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-peroz-i",
+      "title": "Peroz I – Livius",
+      "url": "https://www.livius.org/articles/person/peroz-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-kavad-i",
+      "title": "Kavad I – Livius",
+      "url": "https://www.livius.org/articles/person/kavad-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-vi",
+      "title": "Bahram VI – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-vi/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-heraclius",
+      "title": "Heraclius – Livius",
+      "url": "https://www.livius.org/articles/person/heraclius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shahrbaraz",
+      "title": "Shahrbaraz – Livius",
+      "url": "https://www.livius.org/articles/person/shahrbaraz/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-kavad-ii",
+      "title": "Kavad II – Livius",
+      "url": "https://www.livius.org/articles/person/kavad-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
     }
   ],
   "lanes": [
@@ -946,7 +1156,6 @@
         {
           "key": "arsacid",
           "label": "The Arsacids",
-          "summary": "Followed here to about 100 CE.",
           "time": {
             "kind": "period",
             "start": {
@@ -976,6 +1185,37 @@
             "src-livius-person-arsaces-i",
             "src-livius-place-parthia",
             "src-livius-ecbatana-hamadan-ecbatana-2"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sasanian",
+          "label": "The Sasanian period",
+          "summary": "The rule of the Sasanian kings, from the revolt of Ardašir in 224 to the death of Yazdgard III in 651 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 224
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 651
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-sasanians-sasanian-kings",
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-yazdgard-iii"
           ],
           "reviewStatus": "proposed"
         }
@@ -1418,6 +1658,624 @@
           "sourceIds": [
             "src-livius-person-vologases-i",
             "src-livius-domitius-corbulo-domitius-corbulo-2"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "trajan-takes-ctesiphon",
+          "label": "Trajan takes Ctesiphon",
+          "summary": "In Trajan’s war against Osroes I (114–117), the Romans took Babylon, Seleucia and Ctesiphon in 116; after Trajan’s death in 117 Hadrian gave up the conquests.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 116
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-osroes-i",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "ctesiphon-taken-164",
+          "label": "The Romans take Ctesiphon under Vologases IV",
+          "summary": "In the war that began over Armenia in 161, the Roman general Avidius Cassius took the Parthian capital; Livius dates it to 164 on one page and 165 on another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 164
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 165
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-vologases-iv",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "severus-takes-ctesiphon",
+          "label": "Septimius Severus takes Ctesiphon",
+          "summary": "In a new war with Vologases V, the emperor Septimius Severus took Seleucia and Ctesiphon; Livius dates it to 197 on one page and 198 on another. He then failed to take Hatra.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 197
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 198
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-vologases-v",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "artabanus-defeats-macrinus",
+          "label": "Artabanus IV against Macrinus at Nisibis",
+          "summary": "After Caracalla’s attack and murder, Artabanus IV met the new emperor Macrinus near Nisibis in 217; the sources present it as a Roman defeat, and Rome paid an indemnity.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 217
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-artabanus-iv",
+            "src-livius-person-vologases-vi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "ardashir-defeats-artabanus",
+          "label": "Ardašir defeats Artabanus IV",
+          "summary": "Artabanus IV marched against the insurrection of Ardašir in Persis in 224 and was defeated; a relief near Firuzabad shows the victory. It marks the beginning of the Sasanian empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 224
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-ardasir-khureh-firuzabad",
+            "src-livius-person-vologases-vi",
+            "src-livius-place-istakhr"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "ardashir-takes-ctesiphon",
+          "label": "Ardašir takes Ctesiphon",
+          "summary": "Two years after his victory, Ardašir took Ctesiphon, the Parthian capital, and was recognised as ruler of the former Parthian empire; Ctesiphon became the city where Sasanian kings were inaugurated.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 226
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-ardasir-i",
+            "src-livius-place-ctesiphon",
+            "src-livius-dynasty-sasanians",
+            "src-livius-place-ardasir-khureh-firuzabad"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "war-with-rome-230",
+          "label": "Ardašir’s war with Rome begins",
+          "summary": "Ardašir’s siege of Nisibis began a long war with Rome; Livius dates the siege to 230 on its page on Ardašir and the first fighting on the Euphrates to 231 on its page on the Sasanians.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 230
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 231
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-ardasir-i",
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "defeat-of-gordian-iii",
+          "label": "The defeat and death of Gordian III",
+          "summary": "The emperor Gordian III invaded Mesopotamia in 244, was defeated near Ctesiphon and died – killed in action, or lynched by his soldiers, as the Livius pages differ; his successor Philip made a peace that left Armenia to the Persians.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 244
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-shapur-i",
+            "src-livius-person-gordian-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "capture-of-valerian",
+          "label": "Shapur captures Valerian",
+          "summary": "In 260 Shapur I defeated the Roman emperor Valerian and took him captive; reliefs at Bishapur and Naqš-e Rustam show the triumph, and the captured soldiers built Bishapur.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 260
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-valerian",
+            "src-livius-person-shapur-i",
+            "src-livius-place-bishapur"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "carus-takes-ctesiphon",
+          "label": "Carus takes Ctesiphon",
+          "summary": "The emperor Carus took Ctesiphon in 283; Bahram II lost the war and with it Armenia and northern Mesopotamia.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 283
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-ctesiphon",
+            "src-livius-person-bahram-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "treaty-of-nisibis-298",
+          "label": "The peace of 298",
+          "summary": "After Galerius defeated Narseh, a treaty concluded at Nisibis in 298 made the Persians give up territories in northern Mesopotamia and gave Rome lands east of the Tigris.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 298
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-galerius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "shapur-ii-takes-amida",
+          "label": "Shapur II takes Amida",
+          "summary": "The Sasanian king Shapur II captured the Roman city of Amida in 359.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 359
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-julian-the-apostate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-julian",
+          "label": "The death of Julian and the peace of 363",
+          "summary": "The emperor Julian invaded Mesopotamia and reached Ctesiphon, but was defeated by Shapur II and killed in action on 26 June 363; his successor Jovian made a peace that gave up Nisibis and other eastern lands.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 363
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-julian-the-apostate",
+            "src-livius-person-jovian",
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-shapur-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "division-of-armenia",
+          "label": "Armenia divided",
+          "summary": "In 387 Shapur III made peace with Rome, and Armenia was divided between the two empires.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 387
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-shapur-iii",
+            "src-livius-person-bahram-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "war-of-421",
+          "label": "Bahram V’s war with Rome",
+          "summary": "A brief war between Bahram V and the Romans in 421–422.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 421
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 422
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-bahram-v"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "yazdgard-ii-invades-armenia",
+          "label": "Yazdgard II invades Roman Armenia",
+          "summary": "In 451 Yazdgard II invaded the Roman province of Armenia; the borders in the end remained unchanged.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 451
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-peroz",
+          "label": "Peroz I killed in battle",
+          "summary": "Peroz I was killed in action in 484 – Livius places the war in the northeast on one page and on the northwestern frontier on another – which brought a crisis on the Sasanian empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 484
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-peroz-i",
+            "src-livius-person-kavad-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "kavad-takes-amida",
+          "label": "Kavad I takes Amida",
+          "summary": "Kavad I attacked the Byzantine empire and captured Amida in 502/503; a second Roman attempt in the winter of 505 recovered it, but the Romans had to pay the Persian garrison to leave.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 502
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 503
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-kavad-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "suppression-of-mazdakism",
+          "label": "The Mazdakites suppressed",
+          "summary": "Khusrau I suppressed the religious movement called Mazdakism in the 530s; its adherents may have fled to Arabia.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 530
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 539
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "khusrau-i-takes-antioch",
+          "label": "Khusrau I takes Antioch",
+          "summary": "In 540 Khusrau I conquered Antioch, the capital of Roman Syria, and settled its people in a new city near Ctesiphon, \"Khusrau’s Antioch\".",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 540
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "revolt-of-bahram-vi",
+          "label": "The revolt of Bahram VI",
+          "summary": "In 590 the general Bahram VI revolted and marched west; Hormizd IV was executed and his son Khusrau II fled to the Byzantines, who brought him back in 591.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 590
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-bahram-vi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "persians-take-jerusalem",
+          "label": "The Persians take Jerusalem",
+          "summary": "The armies of Khusrau II under Shahrbaraz took Antioch in 612 and Damascus in 613, and sacked Jerusalem in 614, carrying off the relic of the True Cross.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 614
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "persians-take-alexandria",
+          "label": "The Persians take Alexandria",
+          "summary": "The armies of Khusrau II invaded Egypt and captured Alexandria in 619, cutting the corn supply of Constantinople.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 619
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "siege-of-constantinople-626",
+          "label": "The Persians before Constantinople",
+          "summary": "In 626 Persian forces under Shahrbaraz reached the Asian shore of the Bosphorus, a mile from Constantinople, while the Avars besieged the city; they could not take it.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 626
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-shahrbaraz",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-nineveh-627",
+          "label": "Heraclius defeats the Persians near Nineveh",
+          "summary": "In December 627 Heraclius, who had invaded Mesopotamia, defeated a large Persian army near the ruins of Nineveh.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 627
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius",
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-khusrau-ii",
+          "label": "The fall of Khusrau II",
+          "summary": "After the defeat, the army mutinied; early in 628 the crown prince Sheroe imprisoned his father Khusrau II, who died soon after, and became king as Kavad II.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 628
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-kavad-ii",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "return-of-the-true-cross",
+          "label": "The True Cross returned to Jerusalem",
+          "summary": "After peace was made, Heraclius returned the relic of the True Cross to Jerusalem in 630.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 630
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius",
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arabs-invade-mesopotamia",
+          "label": "The first Arab invasion of Mesopotamia",
+          "summary": "In 633 an army of Christians and Muslims invaded Mesopotamia; a Sasanian counteroffensive was followed by an Arab one.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 633
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arabs-take-ctesiphon",
+          "label": "The Arabs take Ctesiphon",
+          "summary": "The Arabs captured Ctesiphon, the beginning of their conquest of Mesopotamia; Livius dates it to 636 on its page on the Sasanians and to 637 on its page on Ctesiphon.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 636
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 637
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-nehavand",
+          "label": "The battle of Nehavand",
+          "summary": "The Arabs invaded Iran and defeated Yazdgard III at Nehavand, after which he retreated to the northeast; Livius dates it to 641 on one page and 642 on another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-istakhr",
+          "label": "The Arabs take Istakhr",
+          "summary": "The walled city of Istakhr repulsed a first Arab attack in about 644, but was captured and sacked in about 650.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 650,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-istakhr"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-yazdgard-iii",
+          "label": "The death of Yazdgard III",
+          "summary": "Yazdgard III, the last Sasanian king, died as a fugitive in 651, ten years after Nehavand; with him the Sasanian empire ended.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 651
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-yazdgard-iii"
           ],
           "reviewStatus": "proposed"
         }

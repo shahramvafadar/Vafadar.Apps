@@ -4,6 +4,12 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Ancient Iran goes on to the end of the Sasanians in 651: the last Arsacid kings from Osroes I to
+  Artabanus IV, and every Sasanian king and queen from Ardašir I to Yazdgard III, each with the years of the
+  reign, the house, the line of succession and the parents the sources name; the Roman emperors they fought;
+  Bishapur, Istakhr, Firuzabad, Taq-e Bostan and Nehavand; and 32 events from Trajan in Ctesiphon to the death
+  of Yazdgard III – 54 people in all, read from Livius and placed by Pleiades, with their Persian. Iran, China
+  and Rome side by side carries them too: 98 events and 22 periods, the chart running to 651.
 - Iran, China and Rome side by side now hold every dated event and period of the three histories: 66 events
   instead of 9 and 21 periods instead of 17 – among them the Persian wars, the Punic wars, the fall of the
   Western Zhou and the Xia of tradition – each with its years, its uncertainty and the sources of its collection,

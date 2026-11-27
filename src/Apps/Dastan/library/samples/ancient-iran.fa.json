@@ -9,7 +9,7 @@
   "entities": {
     "subject-ancient-iran": {
       "label": "ایران باستان",
-      "summary": "سرزمین‌های فلات ایران و همسایگانش از نخستین پادشاهی‌های ایلام تا حدود ۱۰۰ میلادی: ایلام، مادها، شاهنشاهی هخامنشی، اسکندر و سلوکیان، و اشکانیان پارت."
+      "summary": "سرزمین‌های فلات ایران و همسایگانش از نخستین پادشاهی‌های ایلام تا پایان ساسانیان در ۶۵۱ میلادی: ایلام، مادها، شاهنشاهی هخامنشی، اسکندر و سلوکیان، اشکانیان پارت و ساسانیان."
     },
     "region-elam": {
       "label": "ایلام",
@@ -137,7 +137,7 @@
     },
     "period-arsacid": {
       "label": "دورهٔ اشکانی",
-      "summary": "فرمانروایی شاهان اشکانی پارت از اشک یکم تا ۲۲۴ میلادی؛ این مجموعه آن را تا حدود ۱۰۰ میلادی دنبال می‌کند. سال‌ها از گاه‌شماری اسار است که Livius به کار می‌برد."
+      "summary": "فرمانروایی شاهان اشکانی پارت از اشک یکم تا ۲۲۴ میلادی. سال‌ها از گاه‌شماری اسار است که Livius به کار می‌برد."
     },
     "office-king-of-anshan-and-susa": {
       "label": "شاه انشان و شوش",
@@ -760,7 +760,7 @@
     },
     "person-pacorus-ii": {
       "label": "پاکر دوم",
-      "summary": "شاه اشکانی از ۷۸ تا ۱۰۵ میلادی، که تیسفون را گسترش داد؛ در حدود ۱۰۰ میلادی، پایان این مجموعه، بر تخت بود.",
+      "summary": "شاه اشکانی از ۷۸ تا ۱۰۵ میلادی، که تیسفون را گسترش داد؛ در سال‌های پایانی‌اش بلاش سوم در خاور بر او شورید.",
       "facts": {
         "knownFor": "گسترش تیسفون."
       }
@@ -801,6 +801,564 @@
     "event-armenia-settlement": {
       "label": "توافق بر سر ارمنستان",
       "summary": "پس از تسلیم سپاهی رومی به پارت‌ها در رنده (حدود ۶۲ میلادی)، رم و بلاش یکم در ۶۳ میلادی پذیرفتند که برادر او تیرداد شاه ارمنستان باشد."
+    },
+    "person-vologases-ii": {
+      "label": "بلاش دوم",
+      "summary": "شاهی اشکانی که تنها از سکه‌هایی شناخته می‌شود که از ۷۷/۷۸ تا ۷۹/۸۰ میلادی در سلوکیه زده شد؛ شاید بر بلاش یکم شورید یا در کنار او فرمان راند، و گویا سلوکیه را به پاکر دوم باخت.",
+      "facts": {
+        "knownFor": "تنها از سکه‌هایش شناخته می‌شود."
+      }
+    },
+    "person-osroes-i": {
+      "label": "خسرو یکم اشکانی",
+      "summary": "برادر و جانشین پاکر دوم، شاه اشکانی از حدود ۱۰۵ تا ۱۲۹ میلادی. هرگز شورش بلاش سوم را در خاور فرو ننشاند و در جنگ تراژان (۱۱۴ تا ۱۱۷) ارمنستان، بابل، سلوکیه و تیسفون را تا چندی از دست داد.",
+      "facts": {
+        "knownFor": "تیسفون را تا چندی به تراژان باخت."
+      }
+    },
+    "person-vologases-iii": {
+      "label": "بلاش سوم",
+      "summary": "شاه اشکانی رقیبی که در پایان پادشاهی پاکر دوم در خاور برخاست و بنا بر سکه‌هایش از حدود ۱۰۵ تا ۱۴۷ میلادی در آنجا فرمان راند.",
+      "facts": {
+        "knownFor": "خاور شاهنشاهی را در برابر شاهان باختر نگه داشت."
+      }
+    },
+    "person-mithradates-v": {
+      "label": "مهرداد پنجم",
+      "summary": "شاهزاده‌ای اشکانی که بر تراژان شورید و هم‌فرمانروا و جانشین خسرو یکم شد؛ Livius پادشاهی‌اش را ۱۱۵ تا ۱۴۷ میلادی می‌داند، و صفحهٔ بلاش سوم مرگ خسرو را ۱۲۹ می‌گذارد.",
+      "facts": {
+        "knownFor": "سکه‌هایش را در هگمتانه زد."
+      }
+    },
+    "person-vologases-iv": {
+      "label": "بلاش چهارم",
+      "summary": "پسر و جانشین مهرداد پنجم، شاه اشکانی از ۱۴۷ تا ۱۹۱ میلادی، که شاهنشاهی را دوباره یکپارچه کرد؛ در جنگ او با رم، رومیان در ۱۶۴ تیسفون را گرفتند.",
+      "facts": {
+        "knownFor": "شاهنشاهی پارت را دوباره یکپارچه کرد."
+      }
+    },
+    "person-vologases-v": {
+      "label": "بلاش پنجم",
+      "summary": "پسر بلاش چهارم، شاه ارمنستان از ۱۸۰ و شاه اشکانی از ۱۹۱ تا ۲۰۸ میلادی؛ در جنگ داخلی رم از سوی بازنده پشتیبانی کرد و سپتیمیوس سوروس در ۱۹۷ سلوکیه و تیسفون را گرفت.",
+      "facts": {
+        "knownFor": "تیسفون را به سپتیمیوس سوروس باخت."
+      }
+    },
+    "person-vologases-vi": {
+      "label": "بلاش ششم",
+      "summary": "پسر بلاش پنجم، شاه اشکانی از ۲۰۸ تا حدود ۲۲۶ میلادی؛ تیسفون و سلوکیه را نگه داشت در حالی که برادرش اردوان چهارم بر خاور فرمان می‌راند، تا آنکه اردشیر شهرهایش را گرفت.",
+      "facts": {
+        "knownFor": "تیسفون را تا گرفتنش به دست اردشیر نگه داشت."
+      }
+    },
+    "person-artabanus-iv": {
+      "label": "اردوان چهارم",
+      "summary": "پسر بلاش پنجم و واپسین شاه اشکانی (۲۱۴ تا ۲۲۴ میلادی). در ۲۱۷ امپراتور روم ماکرینوس را نزدیک نصیبین شکست داد و در ۲۲۴ از اردشیر شکست خورد.",
+      "facts": {
+        "knownFor": "واپسین شاه اشکانی."
+      }
+    },
+    "dynasty-sasanian": {
+      "label": "ساسانیان",
+      "summary": "واپسین خاندان ایرانی که پیش از گشودن ایران به دست عرب‌ها فرمان راند، نام‌گرفته از ساسان، نیای آن؛ شاهان و شهبانوهای آن از ۲۲۴ تا ۶۵۱ میلادی فرمان راندند، نخست از استخر و فیروزآباد در پارس، سپس از تیسفون."
+    },
+    "office-sasanian-king": {
+      "label": "شاهنشاه ساسانی",
+      "summary": "پادشاهی ساسانیان؛ اردشیر یکم لقب «شاه شاهان» را برگرفت که شاهان اشکانی و، سده‌ها پیش، هخامنشیان به کار برده بودند، و شاهان در تیسفون بر تخت نشانده می‌شدند."
+    },
+    "period-sasanian": {
+      "label": "دورهٔ ساسانی",
+      "summary": "فرمانروایی شاهان ساسانی، از شورش اردشیر در ۲۲۴ تا مرگ یزدگرد سوم در ۶۵۱ میلادی."
+    },
+    "region-persis": {
+      "label": "پارس",
+      "summary": "سرزمین ساسانیان در جنوب ایران، فارس امروزی؛ پیش از اردشیر دست‌نشاندهٔ شاهنشاهی اشکانی."
+    },
+    "place-firuzabad": {
+      "label": "اردشیرخوره (فیروزآباد)",
+      "summary": "شهری گرد در پارس که اردشیر در ربع نخست سدهٔ سوم میلادی بنیاد نهاد، با برجی بلند در میانه؛ نزدیک آن نگاره‌هایی پیروزی او بر اردوان چهارم و تاج‌گیری‌اش را نشان می‌دهند."
+    },
+    "place-istakhr": {
+      "label": "استخر",
+      "summary": "شهری بارودار نزدیک تخت جمشید و یکی از اقامتگاه‌های اردشیر؛ سازندگانش سنگ‌های تخت جمشید را دوباره به کار بردند. در حدود ۶۴۴ در برابر عرب‌ها ایستاد و در حدود ۶۵۰ تاراج شد."
+    },
+    "place-bishapur": {
+      "label": "بیشاپور",
+      "summary": "شهری در پارس که شاپور یکم بنیاد نهاد و سربازان رومیِ اسیرشده با والرین در ۲۶۰ آن را ساختند؛ نگاره‌هایش شکست والرین را نشان می‌دهند."
+    },
+    "place-naqsh-e-rajab": {
+      "label": "نقش رجب",
+      "summary": "جایی سه کیلومتر شمالِ تخت جمشید با نگاره‌های تاج‌گیری اردشیر یکم و شاپور یکم بر سنگ."
+    },
+    "place-sarvestan": {
+      "label": "سروستان",
+      "summary": "شهری در خاور فارس با کاخی کوچک که بهرام پنجم ساخت و کاربردش – کاخ، شکارگاه یا نیایشگاه – دانسته نیست."
+    },
+    "place-taq-e-bostan": {
+      "label": "طاق بستان",
+      "summary": "جایی نزدیک کرمانشاه با نگاره‌های ساسانی بر سنگ: تاج‌گیری شاپور دوم و غار بزرگ خسرو دوم."
+    },
+    "place-nisibis": {
+      "label": "نصیبین",
+      "summary": "شهری در سرزمین دجلهٔ بالا که مهم‌ترین هدف جنگ‌های رم و ایرانیان بود؛ رومیان در ۳۶۳ آن را واگذاشتند."
+    },
+    "place-amida": {
+      "label": "آمد",
+      "summary": "شهری رومی کنار دجلهٔ بالا که شاپور دوم در ۳۵۹ و قباد یکم در ۵۰۲/۵۰۳ آن را گرفتند."
+    },
+    "place-nehavand": {
+      "label": "نهاوند",
+      "summary": "جایی که عرب‌ها هنگام یورش به ایران یزدگرد سوم را شکست دادند."
+    },
+    "person-sasan": {
+      "label": "ساسان",
+      "summary": "موبدی پارسی که ساسانیان به نام او خوانده می‌شوند، نیای این خاندان.",
+      "facts": {
+        "knownFor": "نیای ساسانیان."
+      }
+    },
+    "person-papak": {
+      "label": "پاپک",
+      "summary": "پسر ساسان که در آغاز سدهٔ سوم میلادی بر اردوان چهارم، شاه اشکانی، شورید؛ پدر اردشیر یکم.",
+      "facts": {
+        "knownFor": "بر اردوان چهارم شورید."
+      }
+    },
+    "person-ardashir-i": {
+      "label": "اردشیر یکم",
+      "summary": "پسر پاپک و بنیادگذار شاهنشاهی ساسانی. در ۲۲۴ بر اردوان چهارم شورید، در ۲۲۶ تیسفون را گرفت و لقب شاهنشاه را برگرفت؛ محاصرهٔ نصیبین به دست او در ۲۳۰ جنگی دراز با رم را آغاز کرد. در ۲۴۱ به مرگ طبیعی درگذشت.",
+      "facts": {
+        "knownFor": "بنیادگذار شاهنشاهی ساسانی."
+      }
+    },
+    "person-shapur-i": {
+      "label": "شاپور یکم",
+      "summary": "پسر و جانشین اردشیر یکم، شاه از ۲۴۰ یا ۲۴۱ تا ۲۷۲. در ۲۴۴ گوردیان سوم را شکست داد، با فیلیپ آشتی کرد، در ۲۶۰ امپراتور والرین را اسیر گرفت و بیشاپور را بنیاد نهاد.",
+      "facts": {
+        "knownFor": "امپراتور روم والرین را اسیر گرفت."
+      }
+    },
+    "person-hormizd-i": {
+      "label": "هرمز یکم",
+      "summary": "شاه ساسانی از ۲۷۲ تا ۲۷۳ که اردشیر دوم نیز شمرده می‌شود؛ پیش از شاهی بر ارمنستان، که شاپور یکم گشوده بود، فرمان می‌راند.",
+      "facts": {
+        "knownFor": "در زمان شاپور یکم بر ارمنستان فرمان راند."
+      }
+    },
+    "person-bahram-i": {
+      "label": "بهرام یکم",
+      "summary": "برادر و جانشین هرمز یکم، شاه از ۲۷۳ تا ۲۷۶ (هر دو سال مورد بحث است)؛ در پادشاهی او مانی گرفتار و کشته شد.",
+      "facts": {
+        "knownFor": "در پادشاهی‌اش مانی کشته شد."
+      }
+    },
+    "person-bahram-ii": {
+      "label": "بهرام دوم",
+      "summary": "شاه از ۲۷۶ تا ۲۹۳، در روزگار ناتوانی ساسانیان: در ۲۸۳ جنگی را به امپراتور کاروس باخت و با آن ارمنستان و شمال میان‌رودان را؛ دست‌کم ده نگاره بر سنگ از او مانده است.",
+      "facts": {
+        "knownFor": "دست‌کم ده نگاره بر سنگ از او مانده است."
+      }
+    },
+    "person-bahram-iii": {
+      "label": "بهرام سوم",
+      "summary": "پسر بهرام دوم که در ۲۹۳ اندک زمانی شاه بود؛ تقریباً بی‌درنگ نرسه جای او را گرفت و احتمالاً کشته شد.",
+      "facts": {
+        "knownFor": "تنها اندک زمانی شاه بود."
+      }
+    },
+    "person-narseh": {
+      "label": "نرسه",
+      "summary": "ملقب به «شاه سکایی»، شاه ساسانی از ۲۹۳ تا ۳۰۳؛ پیش از آن بر ارمنستان فرمان می‌راند. گالریوس در ۲۹۸ او را شکست داد و پیمان نصیبین سرزمین‌هایی در خاور دجله را به رم داد.",
+      "facts": {
+        "knownFor": "در ۲۹۸ سرزمین‌هایی در خاور دجله را به رم باخت."
+      }
+    },
+    "person-hormizd-ii": {
+      "label": "هرمز دوم",
+      "summary": "پسر و جانشین نرسه، شاه از ۳۰۳ تا ۳۰۹؛ نگاره‌ای در نقش رستم او را در حال شکست دادن دشمنی نشان می‌دهد.",
+      "facts": {
+        "knownFor": "نگارهٔ پیروزی‌اش در نقش رستم است."
+      }
+    },
+    "person-shapur-ii": {
+      "label": "شاپور دوم",
+      "summary": "پسر هرمز دوم که گفته می‌شود در کودکی تاج بر سر نهاد؛ شاه از ۳۰۹ تا ۳۷۹. با عرب‌ها و کوشانیان جنگید، در ۳۵۹ آمد را گرفت و در ۳۶۳ یولیانوس را شکست داد، که پس از آن ژوویان نصیبین و سرزمین‌های دیگری را واگذاشت.",
+      "facts": {
+        "knownFor": "امپراتور یولیانوس را شکست داد."
+      }
+    },
+    "person-ardashir-iii": {
+      "label": "اردشیر سوم",
+      "summary": "برادر شاپور دوم، شاه از ۳۷۹ تا ۳۸۳ و نایب‌السلطنهٔ شاپور سوم جوان.",
+      "facts": {
+        "knownFor": "نایب‌السلطنهٔ شاپور سوم."
+      }
+    },
+    "person-shapur-iii": {
+      "label": "شاپور سوم",
+      "summary": "پسر شاپور دوم، شاه از ۳۸۳ تا ۳۸۸؛ در ۳۸۷ با رم آشتی کرد و ارمنستان بخش شد.",
+      "facts": {
+        "knownFor": "ارمنستان را با رم بخش کرد."
+      }
+    },
+    "person-bahram-iv": {
+      "label": "بهرام چهارم",
+      "summary": "پسر شاپور سوم، شاه از ۳۸۸ تا ۳۹۹، که بر سر ارمنستان و با هون‌ها جنگید.",
+      "facts": {
+        "knownFor": "در ۳۹۵ با هون‌ها جنگید."
+      }
+    },
+    "person-yazdgard-i": {
+      "label": "یزدگرد یکم",
+      "summary": "شاه ساسانی از ۳۹۹ تا ۴۲۰، ملقب به «بزه‌گر»؛ پدر بهرام پنجم.",
+      "facts": {
+        "knownFor": "ملقب به بزه‌گر."
+      }
+    },
+    "person-bahram-v": {
+      "label": "بهرام پنجم",
+      "summary": "پسر کهتر یزدگرد یکم که در میان عرب‌های لخمی بزرگ شد، شاه از ۴۲۰ تا ۴۳۸؛ در ۴۲۱ تا ۴۲۲ جنگی کوتاه با رم کرد، مرو و باختر را بازگرفت و کاخ سروستان را ساخت. گاه او را گور می‌خوانند.",
+      "facts": {
+        "knownFor": "کاخ سروستان را ساخت."
+      }
+    },
+    "person-yazdgard-ii": {
+      "label": "یزدگرد دوم",
+      "summary": "پسر بهرام پنجم، شاه از ۴۳۸ تا ۴۵۷؛ در شمال خاوری با هپتالیان جنگید، اقامتگاهش را به نیشابور برد و در ۴۵۱ به ارمنستانِ رومی تاخت.",
+      "facts": {
+        "knownFor": "اقامتگاهش را به نیشابور برد."
+      }
+    },
+    "person-hormizd-iii": {
+      "label": "هرمز سوم",
+      "summary": "پسر یزدگرد دوم، شاه از ۴۵۷ تا ۴۵۹، که جنگ داخلی را به برادرش پیروز باخت.",
+      "facts": {
+        "knownFor": "از برادرش پیروز شکست خورد."
+      }
+    },
+    "person-peroz-i": {
+      "label": "پیروز یکم",
+      "summary": "پسر یزدگرد دوم، شاه از ۴۵۷ تا ۴۸۴؛ با یاری هپتالیان بر برادرش هرمز سوم چیره شد، سپس چند بار با آنان جنگید و در ۴۸۴ در نبرد کشته شد.",
+      "facts": {
+        "knownFor": "در ۴۸۴ در نبرد کشته شد."
+      }
+    },
+    "person-valkash": {
+      "label": "بلاش ساسانی",
+      "summary": "برادر پیروز یکم، شاه از ۴۸۴ تا ۴۸۸، که با هپتالیان آشتی کرد و مرو و باختر را به آنان واگذاشت.",
+      "facts": {
+        "knownFor": "با هپتالیان آشتی کرد."
+      }
+    },
+    "person-kavad-i": {
+      "label": "قباد یکم",
+      "summary": "شاه از ۴۸۸ تا ۴۹۶ و دوباره از ۴۹۸ تا ۵۳۰ یا ۵۳۱. اصلاحاتش بر ضد قدرت بزرگان به زندانی شدنش انجامید؛ به نزد هپتالیان گریخت، بازگشت، در ۵۰۲/۵۰۳ آمد را از رومیان گرفت و بنیاد شاهنشاهی شکوفایی را گذاشت.",
+      "facts": {
+        "knownFor": "دو بار شاه شد."
+      }
+    },
+    "person-zamasp": {
+      "label": "جاماسب",
+      "summary": "برادر قباد یکم که از ۴۹۶ تا ۴۹۸/۴۹۹، هنگامی که بزرگان قباد را زندانی کرده بودند، شاه بود.",
+      "facts": {
+        "knownFor": "در زندان بودن قباد یکم شاه بود."
+      }
+    },
+    "person-khusrau-i": {
+      "label": "خسرو یکم",
+      "summary": "جانشین قباد یکم، شاه از ۵۳۱ تا ۵۷۹، ملقب به «روان جاوید». در دههٔ ۵۳۰ مزدکیان را سرکوب کرد و در ۵۴۰ انطاکیه را گرفت و مردمش را نزدیک تیسفون نشاند.",
+      "facts": {
+        "knownFor": "مزدکیان را سرکوب کرد."
+      }
+    },
+    "person-hormizd-iv": {
+      "label": "هرمز چهارم",
+      "summary": "شاه از ۵۷۹ تا ۵۹۰، ملقب به «ترک»؛ سردار شورشی بهرام ششم بر او شورید و او کشته شد.",
+      "facts": {
+        "knownFor": "در شورش بهرام ششم کشته شد."
+      }
+    },
+    "person-khusrau-ii": {
+      "label": "خسرو دوم",
+      "summary": "پسر هرمز چهارم، شاه از ۵۹۰ تا ۶۲۸، ملقب به «پیروز». در ۵۹۱ سپاهی بیزانسی او را به تخت بازگرداند؛ سپس بر بیزانس تاخت، در ۶۱۴ اورشلیم و در ۶۱۹ اسکندریه را گرفت؛ پس از آنکه هراکلیوس او را شکست داد، پسرش او را برکنار کرد و در ۶۲۸ درگذشت.",
+      "facts": {
+        "knownFor": "در ۶۱۴ اورشلیم را گرفت."
+      }
+    },
+    "person-bahram-vi": {
+      "label": "بهرام ششم",
+      "summary": "سرداری پارتی و قهرمان جنگ با ترکان که بر هرمز چهارم شورید و در ۵۹۰ تا ۵۹۱ شاه بود، تا آنکه سپاهی بیزانسی خسرو دوم را بازآورد؛ به نزد ترکان گریخت و کشته شد. از ساسانیان نبود.",
+      "facts": {
+        "knownFor": "سرداری شورشی که تخت را گرفت."
+      }
+    },
+    "person-bistam": {
+      "label": "بستام",
+      "summary": "شورشی‌ای پارتی، نه ساسانی، که از ۵۹۱/۵۹۲ تا ۵۹۷ لقب شاه داشت و پیروان بهرام ششم از او پشتیبانی کردند.",
+      "facts": {
+        "knownFor": "شاهی شورشی در برابر خسرو دوم."
+      }
+    },
+    "person-hormizd-v": {
+      "label": "هرمز پنجم",
+      "summary": "شاهی ساسانی که Livius او را در حدود ۵۹۳ می‌گذارد.",
+      "facts": {
+        "knownFor": "تنها از فهرست شاهان شناخته می‌شود."
+      }
+    },
+    "person-kavad-ii": {
+      "label": "قباد دوم",
+      "summary": "شیرویه، ولیعهدی که در آغاز ۶۲۸ پدرش خسرو دوم را زندانی کرد، با نام قباد دوم بر تخت نشست، برادرانش را کشت و از هراکلیوس آشتی خواست. پس از پادشاهی کوتاهی درگذشت: Livius در صفحه‌ای مرگش را ۶۲۸ و در صفحهٔ دیگر ۶۳۰ می‌گذارد.",
+      "facts": {
+        "knownFor": "پدرش خسرو دوم را برکنار کرد."
+      }
+    },
+    "person-ardashir-iv": {
+      "label": "اردشیر چهارم",
+      "summary": "پسر خردسال قباد دوم، شاه از ۶۲۸ تا ۶۳۰، که سردار شهربراز جای او را گرفت.",
+      "facts": {
+        "knownFor": "با بیزانس آشتی کرد."
+      }
+    },
+    "person-shahrbaraz": {
+      "label": "شهربراز",
+      "summary": "سردار پارتیِ خسرو دوم که نامش «گراز کشور» معنا می‌دهد؛ انطاکیه، دمشق و اورشلیم را گرفت، در ۶۲۶ قسطنطنیه را محاصره کرد، در حدود ۶۳۰ تخت را گرفت، با بیزانس آشتی کرد و چهل روز بعد کشته شد. از ساسانیان نبود؛ Livius پادشاهی‌اش را ۶۳۰ و در صفحهٔ هراکلیوس ۶۲۹ می‌گذارد.",
+      "facts": {
+        "knownFor": "در ۶۲۶ قسطنطنیه را محاصره کرد."
+      }
+    },
+    "person-buran": {
+      "label": "پوران",
+      "summary": "دختر خسرو دوم و شهبانوی ایران از ۶۳۰ تا ۶۳۲؛ در دسیسه‌های دربار خواهرش آزرمیدخت اندک زمانی جای او را گرفت، تا او را دوباره بر تخت نشاندند و کشتند.",
+      "facts": {
+        "knownFor": "شهبانوی ایران."
+      }
+    },
+    "person-hormizd-vi": {
+      "label": "هرمز ششم",
+      "summary": "یکی از شاهان سال‌های آشوب پس از خسرو دوم که از ۶۳۱ تا ۶۳۲ فرمان راند.",
+      "facts": {
+        "knownFor": "از فهرست شاهان شناخته می‌شود."
+      }
+    },
+    "person-azarmedukht": {
+      "label": "آزرمیدخت",
+      "summary": "خواهر پوران و شهبانوی ایران در ۶۳۱.",
+      "facts": {
+        "knownFor": "شهبانوی ایران."
+      }
+    },
+    "person-peroz-ii": {
+      "label": "پیروز دوم",
+      "summary": "شاهی ساسانی در حدود ۶۳۱.",
+      "facts": {
+        "knownFor": "از فهرست شاهان شناخته می‌شود."
+      }
+    },
+    "person-khusrau-iii": {
+      "label": "خسرو سوم",
+      "summary": "شاهی ساسانی در حدود ۶۳۱.",
+      "facts": {
+        "knownFor": "از فهرست شاهان شناخته می‌شود."
+      }
+    },
+    "person-khusrau-iv": {
+      "label": "خسرو چهارم",
+      "summary": "شاهی ساسانی که Livius او را از ۶۳۱ تا ۶۳۷ می‌شمارد.",
+      "facts": {
+        "knownFor": "از فهرست شاهان شناخته می‌شود."
+      }
+    },
+    "person-yazdgard-iii": {
+      "label": "یزدگرد سوم",
+      "summary": "واپسین شاه ساسانی، از ۶۳۲ تا ۶۵۱. عرب‌ها در ۶۳۳ به میان‌رودان تاختند، تیسفون را گرفتند و او را در نهاوند شکست دادند؛ به شمال خاوری پس نشست و در ۶۵۱ آواره درگذشت.",
+      "facts": {
+        "knownFor": "واپسین شاه ساسانی."
+      }
+    },
+    "person-mani": {
+      "label": "مانی",
+      "summary": "پیامبری (۲۱۶ تا ۲۷۶) که کوشید مسیحیت، بودایی‌گری و دین زرتشتی را به هم بپیوندد؛ در زمان بهرام یکم گرفتار و کشته شد.",
+      "facts": {
+        "knownFor": "بنیادگذار دین مانوی."
+      }
+    },
+    "person-kartir": {
+      "label": "کرتیر",
+      "summary": "موبد بزرگ زرتشتی که بهرام دوم سرانجام قدرت را به او باخت؛ نقش خود را بر نگاره‌ای در نقش رجب افزود.",
+      "facts": {
+        "knownFor": "موبد بزرگ در زمان بهرام دوم."
+      }
+    },
+    "person-gordian-iii": {
+      "label": "گوردیان سوم",
+      "summary": "امپراتور روم (۲۳۸ تا ۲۴۴) که با شاپور یکم جنگید و در ۲۴۴ در شرایطی ناروشن درگذشت: یک صفحهٔ Livius می‌گوید نزدیک تیسفون در نبرد کشته شد و دیگری که پس از شکستی سربازانش او را کشتند.",
+      "facts": {
+        "knownFor": "در جنگ با شاپور یکم درگذشت."
+      }
+    },
+    "person-valerian": {
+      "label": "والرین",
+      "summary": "امپراتور روم (۲۵۳ تا ۲۶۰) که در ۲۶۰ از شاپور یکم شکست خورد و اسیر شد و در ۲۶۲ در اسارت درگذشت.",
+      "facts": {
+        "knownFor": "به دست شاپور یکم اسیر شد."
+      }
+    },
+    "person-galerius": {
+      "label": "گالریوس",
+      "summary": "امپراتور روم که در جایگاه قیصر در ۲۹۸ نرسه را شکست داد و به پیمان نصیبین انجامید.",
+      "facts": {
+        "knownFor": "در ۲۹۸ نرسه را شکست داد."
+      }
+    },
+    "person-julian": {
+      "label": "یولیانوس مرتد",
+      "summary": "امپراتور روم (۳۶۰ تا ۳۶۳) که به شاهنشاهی ساسانی تاخت، به تیسفون رسید و در ۳۶۳ در نبرد کشته شد.",
+      "facts": {
+        "knownFor": "در نبرد با شاپور دوم کشته شد."
+      }
+    },
+    "person-jovian": {
+      "label": "ژوویان",
+      "summary": "امپراتور رومی که در ۳۶۳ جانشین یولیانوس شد و با شاپور دوم آشتی کرد و برای نخستین بار سرزمین‌هایی در خاور، از جمله نصیبین، را واگذاشت.",
+      "facts": {
+        "knownFor": "نصیبین را به شاپور دوم واگذاشت."
+      }
+    },
+    "person-heraclius": {
+      "label": "هراکلیوس",
+      "summary": "امپراتور روم خاوری (۶۱۰ تا ۶۴۱) که به شاهنشاهی ساسانی تاخت، در ۶۲۷ سپاهی ایرانی را نزدیک نینوا شکست داد و در ۶۳۰ صلیب راستین را به اورشلیم بازگرداند.",
+      "facts": {
+        "knownFor": "خسرو دوم را شکست داد."
+      }
+    },
+    "event-trajan-takes-ctesiphon": {
+      "label": "تراژان تیسفون را می‌گیرد",
+      "summary": "در جنگ تراژان با خسرو یکم اشکانی (۱۱۴ تا ۱۱۷)، رومیان در ۱۱۶ بابل، سلوکیه و تیسفون را گرفتند؛ پس از مرگ تراژان در ۱۱۷، هادریان آن گشوده‌ها را واگذاشت."
+    },
+    "event-ctesiphon-taken-164": {
+      "label": "رومیان در زمان بلاش چهارم تیسفون را می‌گیرند",
+      "summary": "در جنگی که در ۱۶۱ بر سر ارمنستان آغاز شد، سردار رومی آویدیوس کاسیوس پایتخت اشکانی را گرفت؛ Livius آن را در صفحه‌ای ۱۶۴ و در صفحهٔ دیگر ۱۶۵ می‌گذارد."
+    },
+    "event-severus-takes-ctesiphon": {
+      "label": "سپتیمیوس سوروس تیسفون را می‌گیرد",
+      "summary": "در جنگی نو با بلاش پنجم، امپراتور سپتیمیوس سوروس سلوکیه و تیسفون را گرفت؛ Livius آن را در صفحه‌ای ۱۹۷ و در صفحهٔ دیگر ۱۹۸ می‌گذارد. سپس در گرفتن هترا ناکام ماند."
+    },
+    "event-artabanus-defeats-macrinus": {
+      "label": "اردوان چهارم در برابر ماکرینوس در نصیبین",
+      "summary": "پس از یورش و کشته شدن کاراکالا، اردوان چهارم در ۲۱۷ نزدیک نصیبین با امپراتور تازه ماکرینوس روبه‌رو شد؛ منابع آن را شکست رومیان می‌نمایند و رم تاوان پرداخت."
+    },
+    "event-ardashir-defeats-artabanus": {
+      "label": "اردشیر اردوان چهارم را شکست می‌دهد",
+      "summary": "اردوان چهارم در ۲۲۴ به سرکوب شورش اردشیر در پارس آمد و شکست خورد؛ نگاره‌ای نزدیک فیروزآباد این پیروزی را نشان می‌دهد. این آغاز شاهنشاهی ساسانی است."
+    },
+    "event-ardashir-takes-ctesiphon": {
+      "label": "اردشیر تیسفون را می‌گیرد",
+      "summary": "دو سال پس از پیروزی‌اش، اردشیر تیسفون، پایتخت اشکانیان، را گرفت و فرمانروای شاهنشاهی پیشین پارت شناخته شد؛ تیسفون شهری شد که شاهان ساسانی در آن بر تخت می‌نشستند."
+    },
+    "event-war-with-rome-230": {
+      "label": "جنگ اردشیر با رم آغاز می‌شود",
+      "summary": "محاصرهٔ نصیبین به دست اردشیر جنگی دراز با رم را آغاز کرد؛ Livius محاصره را در صفحهٔ اردشیر ۲۳۰ و نخستین درگیری کنار فرات را در صفحهٔ ساسانیان ۲۳۱ می‌گذارد."
+    },
+    "event-defeat-of-gordian-iii": {
+      "label": "شکست و مرگ گوردیان سوم",
+      "summary": "امپراتور گوردیان سوم در ۲۴۴ به میان‌رودان تاخت، نزدیک تیسفون شکست خورد و درگذشت – در نبرد کشته شد یا سربازانش او را کشتند، که صفحه‌های Livius در آن یکسان نیستند؛ جانشینش فیلیپ آشتی‌ای کرد که ارمنستان را به ایرانیان واگذاشت."
+    },
+    "event-capture-of-valerian": {
+      "label": "شاپور والرین را اسیر می‌گیرد",
+      "summary": "در ۲۶۰ شاپور یکم امپراتور روم والرین را شکست داد و اسیر گرفت؛ نگاره‌هایی در بیشاپور و نقش رستم این پیروزی را نشان می‌دهند و سربازان اسیر بیشاپور را ساختند."
+    },
+    "event-carus-takes-ctesiphon": {
+      "label": "کاروس تیسفون را می‌گیرد",
+      "summary": "امپراتور کاروس در ۲۸۳ تیسفون را گرفت؛ بهرام دوم جنگ را باخت و با آن ارمنستان و شمال میان‌رودان را."
+    },
+    "event-treaty-of-nisibis-298": {
+      "label": "آشتی ۲۹۸",
+      "summary": "پس از آنکه گالریوس نرسه را شکست داد، پیمانی که در ۲۹۸ در نصیبین بسته شد ایرانیان را به واگذاشتن سرزمین‌هایی در شمال میان‌رودان واداشت و سرزمین‌هایی در خاور دجله را به رم داد."
+    },
+    "event-shapur-ii-takes-amida": {
+      "label": "شاپور دوم آمد را می‌گیرد",
+      "summary": "شاپور دوم، شاه ساسانی، در ۳۵۹ شهر رومی آمد را گرفت."
+    },
+    "event-death-of-julian": {
+      "label": "مرگ یولیانوس و آشتی ۳۶۳",
+      "summary": "امپراتور یولیانوس به میان‌رودان تاخت و به تیسفون رسید، اما از شاپور دوم شکست خورد و در ۲۶ ژوئن ۳۶۳ در نبرد کشته شد؛ جانشینش ژوویان آشتی‌ای کرد که نصیبین و سرزمین‌های دیگری در خاور را واگذاشت."
+    },
+    "event-division-of-armenia": {
+      "label": "بخش شدن ارمنستان",
+      "summary": "در ۳۸۷ شاپور سوم با رم آشتی کرد و ارمنستان میان دو شاهنشاهی بخش شد."
+    },
+    "event-war-of-421": {
+      "label": "جنگ بهرام پنجم با رم",
+      "summary": "جنگی کوتاه میان بهرام پنجم و رومیان در ۴۲۱ تا ۴۲۲."
+    },
+    "event-yazdgard-ii-invades-armenia": {
+      "label": "یزدگرد دوم به ارمنستان رومی می‌تازد",
+      "summary": "در ۴۵۱ یزدگرد دوم به ایالت رومی ارمنستان تاخت؛ مرزها سرانجام دگرگون نشدند."
+    },
+    "event-death-of-peroz": {
+      "label": "کشته شدن پیروز یکم در نبرد",
+      "summary": "پیروز یکم در ۴۸۴ در نبرد کشته شد – Livius در صفحه‌ای جنگ را در شمال خاوری و در صفحهٔ دیگر در مرز شمال باختری می‌گذارد – و شاهنشاهی ساسانی در بحران افتاد."
+    },
+    "event-kavad-takes-amida": {
+      "label": "قباد یکم آمد را می‌گیرد",
+      "summary": "قباد یکم به بیزانس تاخت و در ۵۰۲/۵۰۳ آمد را گرفت؛ دومین کوشش رومیان در زمستان ۵۰۵ آن را بازپس گرفت، اما رومیان ناچار شدند به پادگان ایرانی برای رفتنش پول بدهند."
+    },
+    "event-suppression-of-mazdakism": {
+      "label": "سرکوب مزدکیان",
+      "summary": "خسرو یکم جنبش دینی‌ای را که مزدکی‌گری خوانده می‌شود در دههٔ ۵۳۰ سرکوب کرد؛ پیروانش شاید به عربستان گریختند."
+    },
+    "event-khusrau-i-takes-antioch": {
+      "label": "خسرو یکم انطاکیه را می‌گیرد",
+      "summary": "در ۵۴۰ خسرو یکم انطاکیه، پایتخت سوریهٔ رومی، را گشود و مردمش را در شهری نو نزدیک تیسفون، «انطاکیهٔ خسرو»، نشاند."
+    },
+    "event-revolt-of-bahram-vi": {
+      "label": "شورش بهرام ششم",
+      "summary": "در ۵۹۰ سردار بهرام ششم شورید و به باختر لشکر کشید؛ هرمز چهارم کشته شد و پسرش خسرو دوم به بیزانس گریخت، که در ۵۹۱ او را بازگرداند."
+    },
+    "event-persians-take-jerusalem": {
+      "label": "ایرانیان اورشلیم را می‌گیرند",
+      "summary": "سپاهیان خسرو دوم به سرداری شهربراز در ۶۱۲ انطاکیه و در ۶۱۳ دمشق را گرفتند و در ۶۱۴ اورشلیم را تاراج کردند و صلیب راستین را با خود بردند."
+    },
+    "event-persians-take-alexandria": {
+      "label": "ایرانیان اسکندریه را می‌گیرند",
+      "summary": "سپاهیان خسرو دوم به مصر تاختند و در ۶۱۹ اسکندریه را گرفتند و راه غلهٔ قسطنطنیه را بستند."
+    },
+    "event-siege-of-constantinople-626": {
+      "label": "ایرانیان در برابر قسطنطنیه",
+      "summary": "در ۶۲۶ سپاهیان ایرانی به سرداری شهربراز به کرانهٔ آسیایی بسفر، یک میل از قسطنطنیه، رسیدند در حالی که آوارها شهر را محاصره کرده بودند؛ نتوانستند آن را بگیرند."
+    },
+    "event-battle-of-nineveh-627": {
+      "label": "هراکلیوس ایرانیان را نزدیک نینوا شکست می‌دهد",
+      "summary": "در دسامبر ۶۲۷ هراکلیوس که به میان‌رودان تاخته بود سپاهی بزرگ از ایرانیان را نزدیک ویرانه‌های نینوا شکست داد."
+    },
+    "event-fall-of-khusrau-ii": {
+      "label": "برافتادن خسرو دوم",
+      "summary": "پس از آن شکست، سپاه سر به شورش برداشت؛ در آغاز ۶۲۸ ولیعهد شیرویه پدرش خسرو دوم را زندانی کرد، که اندکی بعد درگذشت، و با نام قباد دوم شاه شد."
+    },
+    "event-return-of-the-true-cross": {
+      "label": "بازگشت صلیب راستین به اورشلیم",
+      "summary": "پس از آشتی، هراکلیوس در ۶۳۰ صلیب راستین را به اورشلیم بازگرداند."
+    },
+    "event-arabs-invade-mesopotamia": {
+      "label": "نخستین یورش عرب‌ها به میان‌رودان",
+      "summary": "در ۶۳۳ سپاهی از مسیحیان و مسلمانان به میان‌رودان تاخت؛ پس از ضدحملهٔ ساسانیان، ضدحملهٔ عرب‌ها آمد."
+    },
+    "event-arabs-take-ctesiphon": {
+      "label": "عرب‌ها تیسفون را می‌گیرند",
+      "summary": "عرب‌ها تیسفون را گرفتند، و این آغاز گشودن میان‌رودان به دست آنان بود؛ Livius آن را در صفحهٔ ساسانیان ۶۳۶ و در صفحهٔ تیسفون ۶۳۷ می‌گذارد."
+    },
+    "event-battle-of-nehavand": {
+      "label": "نبرد نهاوند",
+      "summary": "عرب‌ها به ایران تاختند و یزدگرد سوم را در نهاوند شکست دادند و او پس از آن به شمال خاوری پس نشست؛ Livius آن را در صفحه‌ای ۶۴۱ و در صفحهٔ دیگر ۶۴۲ می‌گذارد."
+    },
+    "event-fall-of-istakhr": {
+      "label": "عرب‌ها استخر را می‌گیرند",
+      "summary": "شهر بارودار استخر نخستین یورش عرب‌ها را در حدود ۶۴۴ پس زد، اما در حدود ۶۵۰ گشوده و تاراج شد."
+    },
+    "event-death-of-yazdgard-iii": {
+      "label": "مرگ یزدگرد سوم",
+      "summary": "یزدگرد سوم، واپسین شاه ساسانی، در ۶۵۱، ده سال پس از نهاوند، آواره درگذشت؛ با او شاهنشاهی ساسانی به پایان رسید."
     }
   },
   "relations": {
@@ -1722,6 +2280,735 @@
     },
     "relation-armenia-settlement-during-arsacid": {
       "label": "در دورهٔ"
+    },
+    "relation-vologases-ii-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-vologases-ii-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-osroes-i-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-osroes-i-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-vologases-iii-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-vologases-iii-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-mithradates-v-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-mithradates-v-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-vologases-iv-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-vologases-iv-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-vologases-v-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-vologases-v-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-vologases-vi-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-vologases-vi-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-artabanus-iv-holder-of-arsacid-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-artabanus-iv-member-of-arsacid": {
+      "label": "از خاندانِ"
+    },
+    "relation-osroes-i-sibling-of-pacorus-ii": {
+      "label": "برادرِ"
+    },
+    "relation-osroes-i-successor-of-pacorus-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-mithradates-v-successor-of-osroes-i": {
+      "label": "جانشینِ"
+    },
+    "relation-mithradates-v-parent-of-vologases-iv": {
+      "label": "پدرِ"
+    },
+    "relation-vologases-iv-successor-of-mithradates-v": {
+      "label": "جانشینِ"
+    },
+    "relation-vologases-iv-parent-of-vologases-v": {
+      "label": "پدرِ"
+    },
+    "relation-vologases-v-successor-of-vologases-iv": {
+      "label": "جانشینِ"
+    },
+    "relation-vologases-v-parent-of-vologases-vi": {
+      "label": "پدرِ"
+    },
+    "relation-vologases-v-parent-of-artabanus-iv": {
+      "label": "پدرِ"
+    },
+    "relation-vologases-vi-successor-of-vologases-v": {
+      "label": "جانشینِ"
+    },
+    "relation-artabanus-iv-sibling-of-vologases-vi": {
+      "label": "برادرِ"
+    },
+    "relation-sasanian-successor-of-arsacid": {
+      "label": "جانشینِ"
+    },
+    "relation-ardashir-i-founder-of-sasanian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-ctesiphon-capital-of-sasanian": {
+      "label": "پایتختِ"
+    },
+    "relation-istakhr-capital-of-sasanian": {
+      "label": "اقامتگاه شاهی"
+    },
+    "relation-firuzabad-capital-of-sasanian": {
+      "label": "اقامتگاه شاهی"
+    },
+    "relation-sasanian-governs-persis": {
+      "label": "فرمانروای"
+    },
+    "relation-sasan-parent-of-papak": {
+      "label": "پدرِ"
+    },
+    "relation-papak-parent-of-ardashir-i": {
+      "label": "پدرِ"
+    },
+    "relation-sasan-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-papak-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-ardashir-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-ardashir-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-shapur-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-shapur-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-hormizd-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-hormizd-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-bahram-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-bahram-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-bahram-ii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-bahram-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-bahram-iii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-bahram-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-narseh-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-narseh-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-hormizd-ii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-hormizd-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-shapur-ii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-shapur-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-ardashir-iii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-ardashir-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-shapur-iii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-shapur-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-bahram-iv-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-bahram-iv-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-yazdgard-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-yazdgard-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-bahram-v-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-bahram-v-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-yazdgard-ii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-yazdgard-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-hormizd-iii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-hormizd-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-peroz-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-peroz-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-valkash-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-valkash-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-kavad-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-kavad-i-holder-of-sasanian-king-2": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-kavad-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-zamasp-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-zamasp-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-khusrau-i-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-khusrau-i-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-hormizd-iv-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-hormizd-iv-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-khusrau-ii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-khusrau-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-bahram-vi-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-bistam-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-hormizd-v-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-hormizd-v-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-kavad-ii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-kavad-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-ardashir-iv-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-ardashir-iv-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-shahrbaraz-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-buran-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-buran-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-hormizd-vi-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-hormizd-vi-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-azarmedukht-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-azarmedukht-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-peroz-ii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-peroz-ii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-khusrau-iii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-khusrau-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-khusrau-iv-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-khusrau-iv-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-yazdgard-iii-holder-of-sasanian-king": {
+      "label": "دارندهٔ سمتِ"
+    },
+    "relation-yazdgard-iii-member-of-sasanian": {
+      "label": "از خاندانِ"
+    },
+    "relation-ardashir-i-parent-of-shapur-i": {
+      "label": "پدرِ"
+    },
+    "relation-hormizd-i-sibling-of-bahram-i": {
+      "label": "برادرِ"
+    },
+    "relation-bahram-ii-parent-of-bahram-iii": {
+      "label": "پدرِ"
+    },
+    "relation-narseh-parent-of-hormizd-ii": {
+      "label": "پدرِ"
+    },
+    "relation-hormizd-ii-parent-of-shapur-ii": {
+      "label": "پدرِ"
+    },
+    "relation-shapur-ii-sibling-of-ardashir-iii": {
+      "label": "برادرِ"
+    },
+    "relation-shapur-ii-parent-of-shapur-iii": {
+      "label": "پدرِ"
+    },
+    "relation-shapur-iii-parent-of-bahram-iv": {
+      "label": "پدرِ"
+    },
+    "relation-yazdgard-i-parent-of-bahram-v": {
+      "label": "پدرِ"
+    },
+    "relation-bahram-v-parent-of-yazdgard-ii": {
+      "label": "پدرِ"
+    },
+    "relation-yazdgard-ii-parent-of-hormizd-iii": {
+      "label": "پدرِ"
+    },
+    "relation-yazdgard-ii-parent-of-peroz-i": {
+      "label": "پدرِ"
+    },
+    "relation-peroz-i-sibling-of-hormizd-iii": {
+      "label": "برادرِ"
+    },
+    "relation-peroz-i-sibling-of-valkash": {
+      "label": "برادرِ"
+    },
+    "relation-kavad-i-sibling-of-zamasp": {
+      "label": "برادرِ"
+    },
+    "relation-hormizd-iv-parent-of-khusrau-ii": {
+      "label": "پدرِ"
+    },
+    "relation-khusrau-ii-parent-of-kavad-ii": {
+      "label": "پدرِ"
+    },
+    "relation-kavad-ii-parent-of-ardashir-iv": {
+      "label": "پدرِ"
+    },
+    "relation-khusrau-ii-parent-of-buran": {
+      "label": "پدرِ"
+    },
+    "relation-buran-sibling-of-azarmedukht": {
+      "label": "خواهرِ"
+    },
+    "relation-shapur-i-successor-of-ardashir-i": {
+      "label": "جانشینِ"
+    },
+    "relation-hormizd-i-successor-of-shapur-i": {
+      "label": "جانشینِ"
+    },
+    "relation-bahram-i-successor-of-hormizd-i": {
+      "label": "جانشینِ"
+    },
+    "relation-bahram-ii-successor-of-bahram-i": {
+      "label": "جانشینِ"
+    },
+    "relation-bahram-iii-successor-of-bahram-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-narseh-successor-of-bahram-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-hormizd-ii-successor-of-narseh": {
+      "label": "جانشینِ"
+    },
+    "relation-shapur-ii-successor-of-hormizd-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-ardashir-iii-successor-of-shapur-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-shapur-iii-successor-of-ardashir-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-bahram-iv-successor-of-shapur-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-yazdgard-i-successor-of-bahram-iv": {
+      "label": "جانشینِ"
+    },
+    "relation-bahram-v-successor-of-yazdgard-i": {
+      "label": "جانشینِ"
+    },
+    "relation-yazdgard-ii-successor-of-bahram-v": {
+      "label": "جانشینِ"
+    },
+    "relation-peroz-i-successor-of-yazdgard-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-valkash-successor-of-peroz-i": {
+      "label": "جانشینِ"
+    },
+    "relation-kavad-i-successor-of-valkash": {
+      "label": "جانشینِ"
+    },
+    "relation-zamasp-successor-of-kavad-i": {
+      "label": "جانشینِ"
+    },
+    "relation-khusrau-i-successor-of-kavad-i": {
+      "label": "جانشینِ"
+    },
+    "relation-hormizd-iv-successor-of-khusrau-i": {
+      "label": "جانشینِ"
+    },
+    "relation-khusrau-ii-successor-of-hormizd-iv": {
+      "label": "جانشینِ"
+    },
+    "relation-kavad-ii-successor-of-khusrau-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-ardashir-iv-successor-of-kavad-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-shahrbaraz-successor-of-ardashir-iv": {
+      "label": "جانشینِ"
+    },
+    "relation-buran-successor-of-shahrbaraz": {
+      "label": "جانشینِ"
+    },
+    "relation-yazdgard-iii-successor-of-buran": {
+      "label": "جانشینِ"
+    },
+    "relation-ardashir-i-successor-of-artabanus-iv": {
+      "label": "شاهنشاهی را گرفت از"
+    },
+    "relation-osroes-i-participant-in-trajan-takes-ctesiphon": {
+      "label": "شرکت در"
+    },
+    "relation-trajan-takes-ctesiphon-took-place-in-ctesiphon": {
+      "label": "رخ داد در"
+    },
+    "relation-trajan-takes-ctesiphon-during-arsacid": {
+      "label": "در دورهٔ"
+    },
+    "relation-vologases-iv-participant-in-ctesiphon-taken-164": {
+      "label": "شرکت در"
+    },
+    "relation-ctesiphon-taken-164-took-place-in-ctesiphon": {
+      "label": "رخ داد در"
+    },
+    "relation-ctesiphon-taken-164-during-arsacid": {
+      "label": "در دورهٔ"
+    },
+    "relation-vologases-v-participant-in-severus-takes-ctesiphon": {
+      "label": "شرکت در"
+    },
+    "relation-severus-takes-ctesiphon-took-place-in-ctesiphon": {
+      "label": "رخ داد در"
+    },
+    "relation-severus-takes-ctesiphon-during-arsacid": {
+      "label": "در دورهٔ"
+    },
+    "relation-artabanus-iv-participant-in-artabanus-defeats-macrinus": {
+      "label": "شرکت در"
+    },
+    "relation-artabanus-defeats-macrinus-took-place-in-nisibis": {
+      "label": "رخ داد در"
+    },
+    "relation-artabanus-defeats-macrinus-during-arsacid": {
+      "label": "در دورهٔ"
+    },
+    "relation-ardashir-i-participant-in-ardashir-defeats-artabanus": {
+      "label": "شرکت در"
+    },
+    "relation-artabanus-iv-participant-in-ardashir-defeats-artabanus": {
+      "label": "شرکت در"
+    },
+    "relation-ardashir-defeats-artabanus-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-ardashir-i-participant-in-ardashir-takes-ctesiphon": {
+      "label": "شرکت در"
+    },
+    "relation-ardashir-takes-ctesiphon-took-place-in-ctesiphon": {
+      "label": "رخ داد در"
+    },
+    "relation-ardashir-takes-ctesiphon-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-ardashir-i-participant-in-war-with-rome-230": {
+      "label": "شرکت در"
+    },
+    "relation-war-with-rome-230-took-place-in-nisibis": {
+      "label": "رخ داد در"
+    },
+    "relation-war-with-rome-230-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-shapur-i-participant-in-defeat-of-gordian-iii": {
+      "label": "شرکت در"
+    },
+    "relation-gordian-iii-participant-in-defeat-of-gordian-iii": {
+      "label": "شرکت در"
+    },
+    "relation-defeat-of-gordian-iii-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-shapur-i-participant-in-capture-of-valerian": {
+      "label": "شرکت در"
+    },
+    "relation-valerian-participant-in-capture-of-valerian": {
+      "label": "شرکت در"
+    },
+    "relation-capture-of-valerian-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-bahram-ii-participant-in-carus-takes-ctesiphon": {
+      "label": "شرکت در"
+    },
+    "relation-carus-takes-ctesiphon-took-place-in-ctesiphon": {
+      "label": "رخ داد در"
+    },
+    "relation-carus-takes-ctesiphon-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-narseh-participant-in-treaty-of-nisibis-298": {
+      "label": "شرکت در"
+    },
+    "relation-galerius-participant-in-treaty-of-nisibis-298": {
+      "label": "شرکت در"
+    },
+    "relation-treaty-of-nisibis-298-took-place-in-nisibis": {
+      "label": "رخ داد در"
+    },
+    "relation-treaty-of-nisibis-298-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-shapur-ii-participant-in-shapur-ii-takes-amida": {
+      "label": "شرکت در"
+    },
+    "relation-shapur-ii-takes-amida-took-place-in-amida": {
+      "label": "رخ داد در"
+    },
+    "relation-shapur-ii-takes-amida-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-shapur-ii-participant-in-death-of-julian": {
+      "label": "شرکت در"
+    },
+    "relation-julian-participant-in-death-of-julian": {
+      "label": "شرکت در"
+    },
+    "relation-jovian-participant-in-death-of-julian": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-julian-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-shapur-iii-participant-in-division-of-armenia": {
+      "label": "شرکت در"
+    },
+    "relation-division-of-armenia-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-bahram-v-participant-in-war-of-421": {
+      "label": "شرکت در"
+    },
+    "relation-war-of-421-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-yazdgard-ii-participant-in-yazdgard-ii-invades-armenia": {
+      "label": "شرکت در"
+    },
+    "relation-yazdgard-ii-invades-armenia-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-peroz-i-participant-in-death-of-peroz": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-peroz-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-kavad-i-participant-in-kavad-takes-amida": {
+      "label": "شرکت در"
+    },
+    "relation-kavad-takes-amida-took-place-in-amida": {
+      "label": "رخ داد در"
+    },
+    "relation-kavad-takes-amida-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-khusrau-i-participant-in-suppression-of-mazdakism": {
+      "label": "شرکت در"
+    },
+    "relation-suppression-of-mazdakism-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-khusrau-i-participant-in-khusrau-i-takes-antioch": {
+      "label": "شرکت در"
+    },
+    "relation-khusrau-i-takes-antioch-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-bahram-vi-participant-in-revolt-of-bahram-vi": {
+      "label": "شرکت در"
+    },
+    "relation-hormizd-iv-participant-in-revolt-of-bahram-vi": {
+      "label": "شرکت در"
+    },
+    "relation-khusrau-ii-participant-in-revolt-of-bahram-vi": {
+      "label": "شرکت در"
+    },
+    "relation-revolt-of-bahram-vi-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-khusrau-ii-participant-in-persians-take-jerusalem": {
+      "label": "شرکت در"
+    },
+    "relation-shahrbaraz-participant-in-persians-take-jerusalem": {
+      "label": "شرکت در"
+    },
+    "relation-persians-take-jerusalem-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-khusrau-ii-participant-in-persians-take-alexandria": {
+      "label": "شرکت در"
+    },
+    "relation-persians-take-alexandria-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-shahrbaraz-participant-in-siege-of-constantinople-626": {
+      "label": "شرکت در"
+    },
+    "relation-siege-of-constantinople-626-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-heraclius-participant-in-battle-of-nineveh-627": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-nineveh-627-took-place-in-nineveh": {
+      "label": "رخ داد در"
+    },
+    "relation-battle-of-nineveh-627-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-khusrau-ii-participant-in-fall-of-khusrau-ii": {
+      "label": "شرکت در"
+    },
+    "relation-kavad-ii-participant-in-fall-of-khusrau-ii": {
+      "label": "شرکت در"
+    },
+    "relation-fall-of-khusrau-ii-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-heraclius-participant-in-return-of-the-true-cross": {
+      "label": "شرکت در"
+    },
+    "relation-return-of-the-true-cross-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-yazdgard-iii-participant-in-arabs-invade-mesopotamia": {
+      "label": "شرکت در"
+    },
+    "relation-arabs-invade-mesopotamia-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-yazdgard-iii-participant-in-arabs-take-ctesiphon": {
+      "label": "شرکت در"
+    },
+    "relation-arabs-take-ctesiphon-took-place-in-ctesiphon": {
+      "label": "رخ داد در"
+    },
+    "relation-arabs-take-ctesiphon-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-yazdgard-iii-participant-in-battle-of-nehavand": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-nehavand-took-place-in-nehavand": {
+      "label": "رخ داد در"
+    },
+    "relation-battle-of-nehavand-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-fall-of-istakhr-took-place-in-istakhr": {
+      "label": "رخ داد در"
+    },
+    "relation-fall-of-istakhr-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-yazdgard-iii-participant-in-death-of-yazdgard-iii": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-yazdgard-iii-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-shapur-i-founder-of-bishapur": {
+      "label": "بنیاد نهاد"
+    },
+    "relation-ardashir-i-founder-of-firuzabad": {
+      "label": "بنیاد نهاد"
     }
   }
 }
