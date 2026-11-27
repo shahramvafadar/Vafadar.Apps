@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The comparison reaches 1025: the embassies between the Sui, the Tang and the last Sasanians, Peroz at the Tang
+  court, the Talas River, the Roman envoys of 166 and the siege of 626 now stand in each lane they concern.
 - China goes on to 1025: the late Tang emperors, An Lushan and Huang Chao, the Five Dynasties, the Liao of the
   Khitan and the Song from Taizu to Renzong, with 17 events from the Talas River to the peace of 1004; the
   collection is now called "China".

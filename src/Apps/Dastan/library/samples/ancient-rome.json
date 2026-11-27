@@ -1607,6 +1607,14 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-decrespigny-later-han",
+      "title": "Rafe de Crespigny, Chronology of Later Han (Brill)",
+      "url": "https://ll-chinesereferenceshelf.brillonline.com/dictionary-han/prelims/sim-200005",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -11929,6 +11937,60 @@
         {
           "fact": "participant",
           "entityId": "person-basil-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-roman-envoys-166",
+      "type": "Event",
+      "label": "Envoys from Rome at the Han court",
+      "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of the Han emperor Huan.",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 166
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-siege-of-constantinople-626",
+      "type": "Event",
+      "label": "The Persians before Constantinople",
+      "summary": "In 626 the Avars attacked Constantinople while a Persian army under Shahrbaraz stood across the Bosphorus; the walls held, the Avars retreated and Heraclius kept to his campaign in the east.",
+      "sourceIds": [
+        "src-livius-person-heraclius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 626
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-constantinople"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-heraclius"
         }
       ]
     }
@@ -25233,6 +25295,57 @@
       "label": "During",
       "sourceIds": [
         "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-roman-envoys-166-during-antonine",
+      "from": "event-roman-envoys-166",
+      "to": "period-antonine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-heraclius-participant-in-siege-of-constantinople-626",
+      "from": "person-heraclius",
+      "to": "event-siege-of-constantinople-626",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-heraclius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-siege-of-constantinople-626-took-place-in-constantinople",
+      "from": "event-siege-of-constantinople-626",
+      "to": "place-constantinople",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-person-heraclius"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

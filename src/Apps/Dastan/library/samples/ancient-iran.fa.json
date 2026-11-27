@@ -1717,6 +1717,29 @@
     "event-biruni-completes-india": {
       "label": "پایان کتاب هند بیرونی",
       "summary": "در ۱۰۳۰، اندکی پس از مرگ محمود، بیرونی کتاب بزرگش دربارهٔ هند، تحقیق ماللهند، را به پایان رساند."
+    },
+    "person-peroz-iii": {
+      "label": "پیروز، پسر یزدگرد سوم",
+      "summary": "پسر واپسین شاه ساسانی، که پس از مرگ پدرش در ۶۵۱ از تخارستان از چین یاری خواست، از سوی تانگ فرماندار پارس در زرنگ شناخته شد و میان ۶۷۰ و ۶۷۳ به دربار تانگ پناه برد.",
+      "facts": {
+        "knownFor": "از تانگ در برابر عرب‌ها یاری خواست."
+      }
+    },
+    "event-sui-embassy-to-khusrau-ii": {
+      "label": "تبادل سفیران سویی و خسرو دوم",
+      "summary": "یانگ‌دی سویی، امپراتور از ۶۰۵ تا ۶۱۷، سفیرانی نزد خسرو دوم فرستاد و در پاسخ سفیرانی از ایران به چین آمدند."
+    },
+    "event-yazdgard-iii-embassy-to-china": {
+      "label": "فرستادن سفیر از سوی یزدگرد سوم به چین",
+      "summary": "یزدگرد سوم که نخست از ترکان باختری و سپس از عرب‌ها در تنگنا بود، در ۶۳۸ سفیرانی به دربار تانگ فرستاد."
+    },
+    "event-peroz-iii-at-the-tang-court": {
+      "label": "پیروز، پسر یزدگرد سوم، در دربار تانگ",
+      "summary": "پیروز، پسر واپسین شاه ساسانی، از تانگ در برابر عرب‌ها یاری خواست، پس از ۶۵۹ همچون فرماندار پارس در زرنگ شناخته شد و چون نتوانست ایستادگی کند، میان ۶۷۰ و ۶۷۳ به دربار تانگ پناه برد."
+    },
+    "event-battle-of-talas": {
+      "label": "نبرد رود تالاس",
+      "summary": "در ۷۵۱ عرب‌ها سپاهیان تانگ را در کنار رود تالاس شکست دادند و چیرگی عرب‌ها را بر فرارود استوار کردند."
     }
   },
   "relations": {
@@ -3564,7 +3587,7 @@
       "label": "در دورهٔ"
     },
     "relation-ray-capital-of-buyid": {
-      "label": "پایتخت امیرنشین شمالی آل‌بویه"
+      "label": "پایتخت امیرنشین شمالیِ"
     },
     "relation-rukn-al-dawla-holder-of-buyid-amir": {
       "label": "امیر"
@@ -3673,6 +3696,33 @@
     },
     "relation-biruni-completes-india-during-abbasid-caliphate": {
       "label": "در دورهٔ"
+    },
+    "relation-yazdgard-iii-parent-of-peroz-iii": {
+      "label": "پدرِ"
+    },
+    "relation-khusrau-ii-participant-in-sui-embassy-to-khusrau-ii": {
+      "label": "شرکت در"
+    },
+    "relation-sui-embassy-to-khusrau-ii-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-yazdgard-iii-participant-in-yazdgard-iii-embassy-to-china": {
+      "label": "شرکت در"
+    },
+    "relation-yazdgard-iii-embassy-to-china-during-sasanian": {
+      "label": "در دورهٔ"
+    },
+    "relation-peroz-iii-participant-in-peroz-iii-at-the-tang-court": {
+      "label": "شرکت در"
+    },
+    "relation-peroz-iii-at-the-tang-court-during-umayyad-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-battle-of-talas-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-abbasid-participant-in-battle-of-talas": {
+      "label": "شرکت در"
     }
   }
 }
