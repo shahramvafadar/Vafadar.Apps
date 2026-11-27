@@ -4,6 +4,11 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Iran reaches back to the first settlement at Susa about 5000 BCE: the Proto-Elamite period, the Burnt City,
+  the Old Elamite dynasties of Awan, Simashki and the Epartids with their dated kings, and the Neo-Elamite
+  period.
+- China reaches back to the first pottery of the tenth millennium BCE: the Yangshao, Hongshan, Liangzhu and
+  Longshan cultures, Erlitou, and the Shang kings the source dates.
 - The comparison reaches 1025: the embassies between the Sui, the Tang and the last Sasanians, Peroz at the Tang
   court, the Talas River, the Roman envoys of 166 and the siege of 626 now stand in each lane they concern.
 - China goes on to 1025: the late Tang emperors, An Lushan and Huang Chao, the Five Dynasties, the Liao of the
