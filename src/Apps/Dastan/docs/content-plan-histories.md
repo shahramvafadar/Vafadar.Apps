@@ -161,3 +161,5 @@ was left out, and – if E5 allows – the chart looked at.
 | B2 | 2026-11-28 | 7 periods, the Burnt City as a place, 5 kings, the fall of Ur in 2004 BCE, 12 quotes. Left out: Ganj Dareh (no page found) and Jiroft (the Iranica article on its excavations did not load). |
 | B3 | 2026-11-28 | 1 period, 2 regions, 4 places by Pleiades, 4 events, 6 quotes. Bronze Age Italy (the Terramare) left out: Britannica has only a generated summary for it, not an article. |
 | B4 | 2026-11-28 | Rebuilt: 62 periods, 238 events; the subject descriptions name the earliest stretch. Shown stretch unchanged. |
+| C1 | 2026-11-28 | In part: 5 portrayals (Ardashir I, Shapur II, Bahram V, Khosrow I, Khosrow II), 6 works. The other Sasanian kings of the poem wait for a page that says the poem portrays them; offices beyond the throne and positions of the remaining places stay open. |
+| C2 | 2026-11-28 | In part: 3 writers, 7 works, the Pantheon. Tacitus, Polybius, Ovid, Horace, Cicero and the Colosseum have no Livius page; they wait for another source. |

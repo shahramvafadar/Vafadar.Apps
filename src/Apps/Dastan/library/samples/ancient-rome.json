@@ -1687,6 +1687,38 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-virgil",
+      "title": "Virgil – Livius",
+      "url": "https://www.livius.org/articles/person/virgil/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-livy",
+      "title": "Livy – Livius",
+      "url": "https://www.livius.org/articles/person/livy/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-procopius",
+      "title": "Procopius – Livius",
+      "url": "https://www.livius.org/articles/person/procopius/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-rome-pantheon",
+      "title": "Rome, Pantheon – Livius",
+      "url": "https://www.livius.org/articles/place/rome/rome-photos/rome-pantheon/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -12366,6 +12398,329 @@
         {
           "fact": "where",
           "entityId": "place-cumae"
+        }
+      ]
+    },
+    {
+      "id": "person-virgil",
+      "type": "Person",
+      "label": "Virgil",
+      "summary": "Publius Vergilius Maro, Roman poet born at Mantua, of the circle of Maecenas and Octavian, author of the Eclogues and of the Aeneid, the national poem of the Romans.",
+      "sourceIds": [
+        "src-livius-person-virgil"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Publius Vergilius Maro",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 70
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 19
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Poet of the Aeneid."
+        }
+      ]
+    },
+    {
+      "id": "work-aeneid",
+      "type": "Work",
+      "label": "The Aeneid",
+      "summary": "Virgil’s epic of Aeneas, the national poem of the Romans.",
+      "sourceIds": [
+        "src-livius-person-virgil"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-virgil"
+        }
+      ]
+    },
+    {
+      "id": "work-eclogues",
+      "type": "Work",
+      "label": "The Eclogues",
+      "summary": "Virgil’s shepherds’ songs, inspired by Theocritus and published between 42 and 39 BCE.",
+      "sourceIds": [
+        "src-livius-person-virgil"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-virgil"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 42
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 39
+              }
+            },
+            "continuity": "notAsserted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-livy",
+      "type": "Person",
+      "label": "Livy",
+      "summary": "Titus Livius, Roman historian, author of the History of Rome from its foundation, the authorized version of the history of the Republic; Jerome dates his life from 59 BCE to 17 CE.",
+      "sourceIds": [
+        "src-livius-person-livy"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Titus Livius",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 59
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 17
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Historian of Rome from its foundation."
+        }
+      ]
+    },
+    {
+      "id": "work-ab-urbe-condita",
+      "type": "Work",
+      "label": "History of Rome from its foundation",
+      "summary": "Livy’s voluminous history of Rome from its foundation; the first five books appeared between 27 and 25 BCE.",
+      "sourceIds": [
+        "src-livius-person-livy"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ab urbe condita",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-livy"
+        }
+      ]
+    },
+    {
+      "id": "person-procopius",
+      "type": "Person",
+      "label": "Procopius",
+      "summary": "Procopius of Caesarea, born about 495, secretary and legal adviser of Belisarius from 527 on his campaigns, author of the History of the Wars, the Buildings and the Secret History; prefect of the city in 562.",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Procopius of Caesarea",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 495,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Historian of Justinian’s wars."
+        }
+      ]
+    },
+    {
+      "id": "work-history-of-the-wars",
+      "type": "Work",
+      "label": "History of the Wars",
+      "summary": "Procopius’ account of the wars of Belisarius against the Persians, the Vandals and the Ostrogoths, published in 550 or 551.",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-procopius"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 550
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 551
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "work-buildings-of-procopius",
+      "type": "Work",
+      "label": "The Buildings",
+      "summary": "Procopius’ overview of the monuments built and restored by Justinian, published in 554.",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-procopius"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 554
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "work-secret-history",
+      "type": "Work",
+      "label": "The Secret History",
+      "summary": "Procopius’ hostile account of Justinian, Theodora, Belisarius and Antonina, published after his death.",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-procopius"
+        }
+      ]
+    },
+    {
+      "id": "work-pantheon",
+      "type": "Work",
+      "label": "The Pantheon",
+      "summary": "The temple in Rome rebuilt by Hadrian between 118 and 125 under the name of its first builder, when it received its famous vaulted roof; reckoned among Rome’s greatest wonders.",
+      "sourceIds": [
+        "src-livius-rome-pantheon"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-hadrian"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 118
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 125
+              }
+            },
+            "continuity": "notAsserted"
+          }
         }
       ]
     }
@@ -25823,6 +26178,174 @@
       "label": "During",
       "sourceIds": [
         "src-livius-place-cumae"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-virgil-author-of-work-aeneid",
+      "from": "person-virgil",
+      "to": "work-aeneid",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Poet",
+      "sourceIds": [
+        "src-livius-person-virgil"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-virgil-author-of-work-eclogues",
+      "from": "person-virgil",
+      "to": "work-eclogues",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Poet",
+      "sourceIds": [
+        "src-livius-person-virgil"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-virgil-employed-by-roman-republic",
+      "from": "person-virgil",
+      "to": "government-roman-republic",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Of the circle of Maecenas and Octavian under",
+      "sourceIds": [
+        "src-livius-person-virgil"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-livy-author-of-work-ab-urbe-condita",
+      "from": "person-livy",
+      "to": "work-ab-urbe-condita",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-livius-person-livy"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-procopius-employed-by-roman-empire",
+      "from": "person-procopius",
+      "to": "government-roman-empire",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Secretary of Belisarius in the service of",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 527
+          }
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-procopius-author-of-work-history-of-the-wars",
+      "from": "person-procopius",
+      "to": "work-history-of-the-wars",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-procopius-author-of-work-buildings-of-procopius",
+      "from": "person-procopius",
+      "to": "work-buildings-of-procopius",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-procopius-author-of-work-secret-history",
+      "from": "person-procopius",
+      "to": "work-secret-history",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-livius-person-procopius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hadrian-commissioner-of-work-pantheon",
+      "from": "person-hadrian",
+      "to": "work-pantheon",
+      "type": "commissionerOf",
+      "directionality": "directed",
+      "label": "Rebuilt",
+      "sourceIds": [
+        "src-livius-rome-pantheon"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
