@@ -1615,6 +1615,78 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-villanovan-culture",
+      "title": "Villanovan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Villanovan-culture",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-veii",
+      "title": "Veii – Livius",
+      "url": "https://www.livius.org/articles/place/veii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-cumae",
+      "title": "Cumae – Livius",
+      "url": "https://www.livius.org/articles/place/cumae/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-magna-graecia",
+      "title": "Magna Graecia – Britannica",
+      "url": "https://www.britannica.com/place/Magna-Graecia",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-alba-longa",
+      "title": "Alba Longa – Britannica",
+      "url": "https://www.britannica.com/place/Alba-Longa",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-422824",
+      "title": "Pleiades: Alba Longa",
+      "url": "https://pleiades.stoa.org/places/422824",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-423116",
+      "title": "Pleiades: Veii",
+      "url": "https://pleiades.stoa.org/places/423116",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-432808",
+      "title": "Pleiades: Cumae/Kyme (Campanian)",
+      "url": "https://pleiades.stoa.org/places/432808",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-433026",
+      "title": "Pleiades: Pithekoussai (settlement)",
+      "url": "https://pleiades.stoa.org/places/433026",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -1622,7 +1694,7 @@
       "id": "subject-ancient-rome",
       "type": "Region",
       "label": "Rome",
-      "summary": "The city of Rome and the state it ruled, from its traditional founding in 753 BCE through the kings, the Republic and the emperors to the end of the empire in the west in 476, and the empire in the east, from Constantinople, to the death of Basil II in 1025.",
+      "summary": "Italy before Rome - the Villanovans, the Etruscans, the Greek colonies and Alba Longa of tradition - and the city of Rome and the state it ruled, from its traditional founding in 753 BCE through the kings, the Republic and the emperors to the end of the empire in the west in 476, and the empire in the east, from Constantinople, to the death of Basil II in 1025.",
       "sourceIds": [
         "src-livius-rome-rome-photos",
         "src-livius-eutropius-short-history-eutropius-short-history-1",
@@ -11991,6 +12063,309 @@
         {
           "fact": "participant",
           "entityId": "person-heraclius"
+        }
+      ]
+    },
+    {
+      "id": "period-villanovan",
+      "type": "Period",
+      "label": "The Villanovan culture",
+      "summary": "The Early Iron Age culture of Italy, named after Villanova near Bologna, whose cremating people appeared in the tenth or ninth century BCE and worked the copper and iron mines of Tuscany; in Tuscany an Orientalizing civilization, presumably Etruscan, overlaid it in the first quarter of the seventh century.",
+      "sourceIds": [
+        "src-britannica-villanovan-culture",
+        "src-livius-people-etruscans"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Villanova culture",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1000
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 801
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 700
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 676
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "region-etruria",
+      "type": "Region",
+      "label": "Etruria",
+      "summary": "The land of the Etruscans between the rivers Tiber and Arno, whose material culture in the ninth century BCE was the Villanovan; by the eighth century they traded metal for Greek wine, and by the sixth their trade reached Spain.",
+      "sourceIds": [
+        "src-livius-people-etruscans"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "land of the Etruscans",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": []
+    },
+    {
+      "id": "region-magna-graecia",
+      "type": "Region",
+      "label": "Magna Graecia",
+      "summary": "The Greek cities along the coast of southern Italy, from the first Euboean colonies of Pithecussae and Cumae about 750 BCE to Tarentum, Sybaris, Croton, Locri and Rhegium; seat of the Pythagorean and Eleatic philosophies.",
+      "sourceIds": [
+        "src-britannica-magna-graecia"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Megale Hellas",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": []
+    },
+    {
+      "id": "place-alba-longa",
+      "type": "Place",
+      "label": "Alba Longa",
+      "summary": "The ancient city of Latium in the Alban Hills near Castel Gandolfo, by tradition founded by Ascanius and the oldest Latin city, mother of Rome; its cemeteries go back to the tenth century BCE, and Rome destroyed it about 600 BCE.",
+      "sourceIds": [
+        "src-britannica-alba-longa",
+        "src-pleiades-422824"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-rome"
+        }
+      ],
+      "position": {
+        "latitude": 41.74448,
+        "longitude": 12.64968,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-veii",
+      "type": "Place",
+      "label": "Veii",
+      "summary": "An Etruscan city eighteen kilometres north of Rome, with origins in the ninth century BCE and its Portonaccio sanctuary from about 700 BCE; it fought Rome in the fifth century BCE.",
+      "sourceIds": [
+        "src-livius-place-veii",
+        "src-pleiades-423116"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "region-etruria"
+        }
+      ],
+      "position": {
+        "latitude": 42.02134,
+        "longitude": 12.39052,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-pithecusae",
+      "type": "Place",
+      "label": "Pithecusae",
+      "summary": "The first Greek colony in Italy, on the island of Ischia, founded by Euboeans about 750 BCE.",
+      "sourceIds": [
+        "src-britannica-magna-graecia",
+        "src-pleiades-433026"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Pithekoussai",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "region-magna-graecia"
+        }
+      ],
+      "position": {
+        "latitude": 40.75803,
+        "longitude": 13.882,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-cumae",
+      "type": "Place",
+      "label": "Cumae",
+      "summary": "The Euboean colony on the coast of Campania, founded with Pithecusae about 750 BCE; off it the Cumaeans and Syracusans defeated the Etruscans at sea about 474 BCE.",
+      "sourceIds": [
+        "src-britannica-magna-graecia",
+        "src-livius-place-cumae",
+        "src-pleiades-432808"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Kyme",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "region-magna-graecia"
+        }
+      ],
+      "position": {
+        "latitude": 40.84795,
+        "longitude": 14.05638,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "event-founding-of-alba-longa",
+      "type": "Event",
+      "label": "The founding of Alba Longa (tradition)",
+      "summary": "Tradition attributes the founding of Alba Longa, about 1152 BCE, to Ascanius, son of Aeneas, making it the oldest Latin city and the mother of Rome.",
+      "sourceIds": [
+        "src-britannica-alba-longa"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1152,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-alba-longa"
+        }
+      ]
+    },
+    {
+      "id": "event-first-greek-colonies-in-italy",
+      "type": "Event",
+      "label": "The first Greek colonies in Italy",
+      "summary": "About 750 BCE Euboeans founded the first Greek colonies in Italy, Pithecussae and Cumae; Spartans, Achaeans, Locrians and Chalcidians followed.",
+      "sourceIds": [
+        "src-britannica-magna-graecia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 750,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-pithecusae"
+        }
+      ]
+    },
+    {
+      "id": "event-destruction-of-alba-longa",
+      "type": "Event",
+      "label": "Rome destroys Alba Longa",
+      "summary": "Alba Longa, head of a Latin league, was destroyed by Rome about 600 BCE; distinguished families, among them the Julian clan, were said to have moved to Rome.",
+      "sourceIds": [
+        "src-britannica-alba-longa"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 600,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-alba-longa"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-cumae",
+      "type": "Event",
+      "label": "The naval battle of Cumae",
+      "summary": "About 474 BCE the Cumaeans and Syracusans defeated the Etruscans in a naval battle off Cumae.",
+      "sourceIds": [
+        "src-livius-place-cumae"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 474,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-cumae"
         }
       ]
     }
@@ -25346,6 +25721,108 @@
       "label": "Took place in",
       "sourceIds": [
         "src-livius-person-heraclius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-founding-of-alba-longa-took-place-in-alba-longa",
+      "from": "event-founding-of-alba-longa",
+      "to": "place-alba-longa",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-alba-longa"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-first-greek-colonies-in-italy-took-place-in-pithecusae",
+      "from": "event-first-greek-colonies-in-italy",
+      "to": "place-pithecusae",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-magna-graecia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-destruction-of-alba-longa-took-place-in-alba-longa",
+      "from": "event-destruction-of-alba-longa",
+      "to": "place-alba-longa",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-alba-longa"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-destruction-of-alba-longa-during-monarchy",
+      "from": "event-destruction-of-alba-longa",
+      "to": "period-monarchy",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-alba-longa"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-cumae-took-place-in-cumae",
+      "from": "event-battle-of-cumae",
+      "to": "place-cumae",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-cumae"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-cumae-during-republic",
+      "from": "event-battle-of-cumae",
+      "to": "period-republic",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-cumae"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

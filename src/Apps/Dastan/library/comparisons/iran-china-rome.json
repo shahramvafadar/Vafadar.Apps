@@ -1485,6 +1485,104 @@
       "url": "https://www.iranicaonline.org/articles/chinese-iranian-i/",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-content-awan-king-list",
+      "title": "Awan King List – Livius",
+      "url": "https://www.livius.org/sources/content/awan-king-list/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-iranica-elam-i",
+      "title": "Elam i. The history of Elam – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/elam-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-unesco-shahr-i-sokhta",
+      "title": "Shahr-i Sokhta – UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/1456/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-awan",
+      "title": "Awan – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/awan/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-history-of-china-prehistory",
+      "title": "History of China: prehistory and the Neolithic period – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-yangshao-culture",
+      "title": "Yangshao culture – Britannica",
+      "url": "https://www.britannica.com/topic/Yangshao-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-hongshan-culture",
+      "title": "Hongshan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Hongshan-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-longshan-culture",
+      "title": "Longshan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Longshan-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-erlitou-culture",
+      "title": "Erlitou culture – Britannica",
+      "url": "https://www.britannica.com/topic/Erlitou-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-villanovan-culture",
+      "title": "Villanovan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Villanovan-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-people-etruscans",
+      "title": "Etruscans – Livius",
+      "url": "https://www.livius.org/articles/people/etruscans/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-britannica-alba-longa",
+      "title": "Alba Longa – Britannica",
+      "url": "https://www.britannica.com/place/Alba-Longa",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-magna-graecia",
+      "title": "Magna Graecia – Britannica",
+      "url": "https://www.britannica.com/place/Magna-Graecia",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-cumae",
+      "title": "Cumae – Livius",
+      "url": "https://www.livius.org/articles/place/cumae/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
     }
   ],
   "lanes": [
@@ -1492,6 +1590,225 @@
       "key": "iran",
       "label": "Iran",
       "periods": [
+        {
+          "key": "shahr-i-sokhta",
+          "label": "The Burnt City inhabited",
+          "summary": "Shahr-i Sokhta was founded around 3200 BCE and inhabited through four periods until 1800 BCE, one of the first complex societies of eastern Iran.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3200,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1800
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-unesco-shahr-i-sokhta"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "proto-elamite",
+          "label": "The Proto-Elamite period",
+          "summary": "From about 3200 BCE numerical and then proto-Elamite tablets appear at Susa and across the plateau as far as Shahr-i Sokhta; the undeciphered script remained in use until about 2700 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3200,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2700,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "awan-shimashki",
+          "label": "Awan and Šimaški",
+          "summary": "The kings of Awan and Šimaški, who ruled Elam from about 2400 to 1970 BCE, the first two dynasties of the Old Elamite period; a king list from Susa names them without the years of their reigns.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2400,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1970,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-content-awan-king-list",
+            "src-livius-place-susa",
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "old-elamite",
+          "label": "The Old Elamite period",
+          "summary": "The age of the three dynasties of Awan, Šimaški and the Epartids (sukkalmahs), about 2400 to 1600 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2400,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1600,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "awan-dynasty",
+          "label": "The Awan dynasty",
+          "summary": "The first Old Elamite dynasty, about 2400 to 2100 BCE, partly contemporary with Sargon of Akkad; its last king Puzur-Inšušinak reigned in the time of Ur-Nammu.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2400,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2100,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i",
+            "src-iranica-awan"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "simashki-dynasty",
+          "label": "The Šimaški dynasty",
+          "summary": "The second Old Elamite dynasty, about 2100 to 1970 BCE, whose king Kindattu conquered Ur in 2004 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2100,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1970,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "epartid-dynasty",
+          "label": "The Epartids (sukkalmahs)",
+          "summary": "The third Old Elamite dynasty, about 1970 to 1600 BCE, named after its founder Eparti and called “of the sukkalmahs” after the title of its rulers; contemporary with the Old Babylonian period.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1970,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1600,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
         {
           "key": "middle-elamite",
           "label": "Middle Elamite period",
@@ -1520,6 +1837,35 @@
           "sourceIds": [
             "src-livius-place-ansan-tell-malyan",
             "src-livius-place-susa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "neo-elamite",
+          "label": "The Neo-Elamite period",
+          "summary": "The last age of Elam, from 1100 to 539 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1100
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 539
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
           ],
           "reviewStatus": "proposed"
         },
@@ -1748,6 +2094,40 @@
         }
       ],
       "events": [
+        {
+          "key": "first-settlement-at-susa",
+          "label": "People settle at Susa",
+          "summary": "Excavations show people living on the acropolis of Susa in 5000 BCE and urban structures about 4000 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 5000
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-susa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "elamites-conquer-ur",
+          "label": "The Elamites conquer Ur",
+          "summary": "In 2004 BCE the Elamites, allied with the people of Susiana under Kindattu of Šimaški, conquered Ur, ended its empire and led its king Ibbi-Sin away as a prisoner.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2004
+            }
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
         {
           "key": "sack-of-susa",
           "label": "The Assyrian sack of Susa",
@@ -3266,6 +3646,169 @@
       "label": "China",
       "periods": [
         {
+          "key": "first-pottery-china",
+          "label": "The first pottery of southern China",
+          "summary": "At Xianrendong in Jiangxi and Zengpiyan in Guangxi, from the tenth to the seventh millennium BCE, people left low-fired cord-marked shards and mostly chipped stone tools.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 10000
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 9001
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 7000
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 6001
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-prehistory"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "yangshao",
+          "label": "The Yangshao culture",
+          "summary": "The prehistoric culture of the Yellow River basin, from 5000 to 3000 BCE, known by its painted pottery; its people grew millet, kept animals, made silk and fired pottery in kilns.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 5000
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3000
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-yangshao-culture"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "hongshan",
+          "label": "The Hongshan culture",
+          "summary": "A prehistoric culture of far northern China, about 4000 to 3000 BCE, centred in western Liaoning and eastern Inner Mongolia, with a three-tiered elite buried in complex tombs and fine jades.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 4000,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3000,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-hongshan-culture",
+            "src-britannica-history-of-china-prehistory"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "liangzhu",
+          "label": "The Liangzhu culture",
+          "summary": "A jade-working culture of the eastern coast, about 3300 to 2200 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3300,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2200,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-hongshan-culture",
+            "src-britannica-history-of-china-prehistory"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "longshan",
+          "label": "The Longshan culture",
+          "summary": "The Neolithic culture of central China, about 2600 to 2000 BCE, named for its site in Shandong, with black burnished wheel-turned pottery, walls of rammed earth and divination by heating cattle bones.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2600,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2000,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-longshan-culture"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "xia",
           "label": "The Xia (tradition)",
           "summary": "The first dynasty in Chinese tradition, said to have been founded by Yu the Great; there is no written evidence of it, though many historians identify Erlitou as its capital. The traditional dates differ: about 2100 or 1900 to 1600 BCE.",
@@ -3298,6 +3841,35 @@
           "sourceIds": [
             "src-afe-timeline",
             "src-hawaii-early-china"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "erlitou",
+          "label": "The Erlitou culture",
+          "summary": "The culture of the central plains of northern China, from 1900 to 1350 BCE, the first state-level society in China, with palaces, royal tombs, paved roads and bronze; its remains are taken to correspond to the Xia of tradition.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1900
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1350
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-erlitou-culture"
           ],
           "reviewStatus": "proposed"
         },
@@ -5051,6 +5623,46 @@
       "label": "Rome",
       "periods": [
         {
+          "key": "villanovan",
+          "label": "The Villanovan culture",
+          "summary": "The Early Iron Age culture of Italy, named after Villanova near Bologna, whose cremating people appeared in the tenth or ninth century BCE and worked the copper and iron mines of Tuscany; in Tuscany an Orientalizing civilization, presumably Etruscan, overlaid it in the first quarter of the seventh century.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1000
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 801
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 700
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 676
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-villanovan-culture",
+            "src-livius-people-etruscans"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "roman-monarchy",
           "label": "The Roman monarchy",
           "summary": "The kings and their years rest on tradition.",
@@ -5590,6 +6202,24 @@
       ],
       "events": [
         {
+          "key": "founding-of-alba-longa",
+          "label": "The founding of Alba Longa (tradition)",
+          "summary": "Tradition attributes the founding of Alba Longa, about 1152 BCE, to Ascanius, son of Aeneas, making it the oldest Latin city and the mother of Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1152,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-britannica-alba-longa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "founding-of-rome",
           "label": "The founding of Rome",
           "summary": "According to tradition Romulus founded Rome on the Palatine on 21 April 753 BCE; Livius calls this Varronian date an artificial calculation.",
@@ -5605,6 +6235,42 @@
             "src-livius-eutropius-short-history-eutropius-short-history-1",
             "src-livius-concept-varronian-chronology",
             "src-livius-person-romulus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "first-greek-colonies-in-italy",
+          "label": "The first Greek colonies in Italy",
+          "summary": "About 750 BCE Euboeans founded the first Greek colonies in Italy, Pithecussae and Cumae; Spartans, Achaeans, Locrians and Chalcidians followed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 750,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-britannica-magna-graecia"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "destruction-of-alba-longa",
+          "label": "Rome destroys Alba Longa",
+          "summary": "Alba Longa, head of a Latin league, was destroyed by Rome about 600 BCE; distinguished families, among them the Julian clan, were said to have moved to Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 600,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-britannica-alba-longa"
           ],
           "reviewStatus": "proposed"
         },
@@ -5628,6 +6294,24 @@
             "src-livius-person-junius-brutus-lucius",
             "src-livius-concept-varronian-chronology",
             "src-livius-concept-senate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-cumae",
+          "label": "The naval battle of Cumae",
+          "summary": "About 474 BCE the Cumaeans and Syracusans defeated the Etruscans in a naval battle off Cumae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 474,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-cumae"
           ],
           "reviewStatus": "proposed"
         },
