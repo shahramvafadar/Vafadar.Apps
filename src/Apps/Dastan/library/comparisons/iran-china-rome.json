@@ -5,7 +5,7 @@
   "note": "Built from the three collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year (Awan and Šimaški), a period that begins and ends in the same year, and a dynasty whose years are those of a period already here.",
   "frame": "commonEraYears",
   "title": "Iran, China and Rome side by side",
-  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE to about 100 CE, Iran on to the end of the Sasanians in 651, and every dated event of the three collections, side by side.",
+  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran to the end of the Sasanians in 651, Rome to Heraclius in 641, China to about 100 CE – and every dated event of the three collections, side by side.",
   "show": {
     "from": {
       "frame": "calendar",
@@ -1014,6 +1014,188 @@
       "id": "src-livius-person-kavad-ii",
       "title": "Kavad II – Livius",
       "url": "https://www.livius.org/articles/person/kavad-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-antonines",
+      "title": "Antonines – Livius",
+      "url": "https://www.livius.org/articles/dynasty/antonines/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-severans",
+      "title": "Severans – Livius",
+      "url": "https://www.livius.org/articles/dynasty/severans/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-constantinian-dynasty",
+      "title": "Constantinian Dynasty – Livius",
+      "url": "https://www.livius.org/articles/dynasty/constantinian-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-valentinian-dynasty",
+      "title": "Valentinian Dynasty – Livius",
+      "url": "https://www.livius.org/articles/dynasty/valentinian-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-theodosian-dynasty",
+      "title": "Theodosian Dynasty – Livius",
+      "url": "https://www.livius.org/articles/dynasty/theodosian-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-concept-tetrarchy",
+      "title": "Tetrarchy – Livius",
+      "url": "https://www.livius.org/articles/concept/tetrarchy/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-honorius",
+      "title": "Honorius – Livius",
+      "url": "https://www.livius.org/articles/person/honorius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-romulus-augustulus",
+      "title": "Romulus Augustulus – Livius",
+      "url": "https://www.livius.org/articles/person/romulus-augustulus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-hadrian",
+      "title": "Hadrian – Livius",
+      "url": "https://www.livius.org/articles/person/hadrian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-marcus-aurelius",
+      "title": "Marcus Aurelius – Livius",
+      "url": "https://www.livius.org/articles/person/marcus-aurelius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-pertinax",
+      "title": "Pertinax – Livius",
+      "url": "https://www.livius.org/articles/person/pertinax/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-septimius-severus",
+      "title": "Septimius Severus – Livius",
+      "url": "https://www.livius.org/articles/person/septimius-severus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-caracalla",
+      "title": "Caracalla – Livius",
+      "url": "https://www.livius.org/articles/person/caracalla/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-gallienus",
+      "title": "Gallienus – Livius",
+      "url": "https://www.livius.org/articles/person/gallienus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-aurelian",
+      "title": "Aurelian – Livius",
+      "url": "https://www.livius.org/articles/person/aurelian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-zenobia",
+      "title": "Zenobia – Livius",
+      "url": "https://www.livius.org/articles/person/zenobia/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-diocletian",
+      "title": "Diocletian – Livius",
+      "url": "https://www.livius.org/articles/person/diocletian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-constantine-the-great",
+      "title": "Constantine The Great – Livius",
+      "url": "https://www.livius.org/articles/person/constantine-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-maxentius",
+      "title": "Maxentius – Livius",
+      "url": "https://www.livius.org/articles/person/maxentius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-theodosius-i",
+      "title": "Theodosius I – Livius",
+      "url": "https://www.livius.org/articles/person/theodosius-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-valens",
+      "title": "Valens – Livius",
+      "url": "https://www.livius.org/articles/person/valens/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-valentinian-iii",
+      "title": "Valentinian Iii – Livius",
+      "url": "https://www.livius.org/articles/person/valentinian-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-avitus",
+      "title": "Avitus – Livius",
+      "url": "https://www.livius.org/articles/person/avitus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-petronius-maximus",
+      "title": "Petronius Maximus – Livius",
+      "url": "https://www.livius.org/articles/person/petronius-maximus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-justinian",
+      "title": "Justinian – Livius",
+      "url": "https://www.livius.org/articles/person/justinian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-justin-ii",
+      "title": "Justin Ii – Livius",
+      "url": "https://www.livius.org/articles/person/justin-ii/",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-27"
     }
@@ -2977,6 +3159,212 @@
             "src-livius-person-trajan"
           ],
           "reviewStatus": "proposed"
+        },
+        {
+          "key": "antonine",
+          "label": "The Antonines",
+          "summary": "The family of Antoninus Pius, Marcus Aurelius, Lucius Verus and Commodus, who ruled from about 138 to 192; their years are often called the golden age of the empire.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 138,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 192
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-antonines"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "severan",
+          "label": "The Severans",
+          "summary": "The dynasty of Septimius Severus, which ruled from 193 to 235 with a break in 217–218.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 193
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 235
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-severans"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tetrarchy",
+          "label": "The first tetrarchy",
+          "summary": "The rule of two augusti, Diocletian and Maximian, with two caesares, Galerius and Constantius, from 293 until the augusti resigned in 305.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 293
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 305
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-concept-tetrarchy"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "constantinian",
+          "label": "The Constantinian dynasty",
+          "summary": "The family of Constantine the Great, which ruled the empire or parts of it from 305 to 363; under it Christianity was no longer persecuted and Constantinople was founded.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 305
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 363
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-constantinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "valentinian",
+          "label": "The Valentinian dynasty",
+          "summary": "The family of Valentinian I, which ruled the empire or parts of it from 363 to 392, in a western and an eastern branch.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 363
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 392
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-valentinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "theodosian",
+          "label": "The Theodosian dynasty",
+          "summary": "The dynasty of Theodosius I, which ruled from 378 to 457; his sons founded an eastern and a western line, and in its time Britain and Gaul were lost and Constantinople became the chief city of the empire.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 378
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 457
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-theodosian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "west-roman-empire",
+          "label": "The divided empire, west",
+          "summary": "The western half of the empire under its own emperors, from the death of Theodosius I in 395 to the deposition of Romulus Augustulus in 476.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 395
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 476
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-theodosian-dynasty",
+            "src-livius-person-honorius",
+            "src-livius-person-romulus-augustulus"
+          ],
+          "reviewStatus": "proposed"
         }
       ],
       "events": [
@@ -3625,6 +4013,501 @@
           },
           "sourceIds": [
             "src-livius-person-trajan"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "bar-kochba-revolt",
+          "label": "The revolt of Bar Kochba",
+          "summary": "A Jewish insurrection that began in 132 under Hadrian; Hadrian took Bethar in 135/136 and the last fighting in Galilee was in 136.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 132
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 136
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hadrian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "antonine-plague",
+          "label": "The plague under Marcus Aurelius",
+          "summary": "A plague broke out in 165, during the Parthian war, and reached Rome in 167.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 165
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-marcus-aurelius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "year-of-five-emperors",
+          "label": "The year of the five emperors",
+          "summary": "After the murder of Pertinax in 193, Didius Julianus, Pescennius Niger, Clodius Albinus and Septimius Severus were all proclaimed emperor; Severus won the civil wars that followed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 193
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-pertinax",
+            "src-livius-person-septimius-severus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "constitutio-antoniniana",
+          "label": "Citizenship for all free men",
+          "summary": "In 212 Caracalla gave Roman citizenship to all free-born men of the empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 212
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-caracalla",
+            "src-livius-dynasty-severans"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-capture-of-valerian",
+          "label": "Shapur captures Valerian",
+          "summary": "In 260 the emperor Valerian was defeated and taken captive by the Sasanian king Shapur I; he died in captivity in 262, and in the following years many usurpers rose in the empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 260
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-valerian",
+            "src-livius-person-gallienus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "aurelian-wall",
+          "label": "A new wall for Rome",
+          "summary": "In 271 Aurelian ordered the building of a new wall around Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 271
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-aurelian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "aurelian-takes-palmyra",
+          "label": "Aurelian takes Palmyra",
+          "summary": "In 272 Aurelian defeated Zenobia and her son Vaballathus and captured Palmyra; in 274 he defeated the Gallic emperor Tetricus.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 272
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-aurelian",
+            "src-livius-person-zenobia"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tetrarchy-founded",
+          "label": "The first tetrarchy",
+          "summary": "In 293 Diocletian and Maximian each appointed a caesar, Galerius and Constantius, who were to succeed them.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 293
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-tetrarchy",
+            "src-livius-person-diocletian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "abdication-of-diocletian",
+          "label": "Diocletian and Maximian resign",
+          "summary": "In May 305 the two augusti laid down their power, and the caesares Galerius and Constantius became augusti – for the first time in ages a transfer of power without bloodshed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 305
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-tetrarchy",
+            "src-livius-person-diocletian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "milvian-bridge",
+          "label": "The battle of the Milvian Bridge",
+          "summary": "In 312 Constantine crossed the Alps and defeated Maxentius at the Milvian Bridge, where Maxentius was killed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 312
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great",
+            "src-livius-person-maxentius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "edict-of-milan",
+          "label": "The meeting at Milan",
+          "summary": "In 313 Constantine and Licinius met at Milan; the agreement is known as the Edict of Milan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 313
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "founding-of-constantinople",
+          "label": "The founding of Constantinople",
+          "summary": "After defeating Licinius in 324, Constantine became sole ruler and founded a new residence at Byzantium, Constantinople.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 324
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great",
+            "src-livius-dynasty-constantinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "council-of-nicaea",
+          "label": "The Council of Nicaea",
+          "summary": "The first ecumenical council of the Church met at Nicaea from 20 May to 19 June 325.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 325
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-death-of-julian",
+          "label": "The death of Julian and the peace of 363",
+          "summary": "Julian invaded the Sasanian empire and was killed in action on 26 June 363; Jovian then made a peace with Shapur II that gave up Nisibis.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 363
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-julian-the-apostate",
+            "src-livius-person-jovian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-adrianople",
+          "label": "The battle of Adrianople",
+          "summary": "In 378 the Goths defeated and killed the emperor Valens at Adrianople, and Theodosius was made emperor in the east.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 378
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-theodosius-i",
+            "src-livius-person-valens",
+            "src-livius-dynasty-valentinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "division-of-the-empire",
+          "label": "The empire divided between two sons",
+          "summary": "At the death of Theodosius I in 395, his sons Arcadius and Honorius succeeded him in the east and the west.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 395
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-theodosian-dynasty",
+            "src-livius-person-honorius",
+            "src-livius-person-theodosius-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sack-of-rome-410",
+          "label": "The Visigoths take Rome",
+          "summary": "In 410 the Visigoths captured Rome; Alaric died the same year, and Britain was evacuated.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 410
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-honorius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "vandals-take-carthage",
+          "label": "The Vandals take Carthage",
+          "summary": "The Vandals invaded Africa in 429 and took Carthage in 439.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 439
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-valentinian-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "attila-in-gaul",
+          "label": "Attila defeated in Gaul",
+          "summary": "In 451 the Huns crossed the Rhine and invaded Gaul; Aetius defeated Attila near Troyes. In 452 the Huns invaded Italy.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 451
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-valentinian-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "vandal-sack-of-rome",
+          "label": "The Vandals sack Rome",
+          "summary": "In 455, after the murder of Valentinian III and the death of Petronius Maximus, the Vandals sacked Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 455
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-avitus",
+            "src-livius-person-petronius-maximus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "end-of-the-west",
+          "label": "The end of the empire in the west",
+          "summary": "In 476 the soldiers in Italy revolted and their leader Odoacer deposed Romulus Augustulus, the last emperor in the west.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 476
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-romulus-augustulus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "nika-riots",
+          "label": "The Nika riots",
+          "summary": "In January 532 the Nika riots broke out in Constantinople under Justinian.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 532
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "codification-of-roman-law",
+          "label": "Roman law codified",
+          "summary": "In 533 the codification of Roman law, the Institutes and the Digest, was completed under Justinian.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 533
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "belisarius-takes-carthage",
+          "label": "Belisarius conquers Africa",
+          "summary": "Justinian’s general Belisarius conquered Africa and entered Carthage on 15 September 534; he went on to Sicily and took Rome in 536.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 534
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "hagia-sophia",
+          "label": "The Hagia Sophia inaugurated",
+          "summary": "The Hagia Sophia in Constantinople was inaugurated on 26 December 537.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 537
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "narses-conquers-italy",
+          "label": "Narses conquers Italy",
+          "summary": "Justinian’s general Narses completed the conquest of Italy in 552.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 552
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "langobards-invade-italy",
+          "label": "The Langobards invade Italy",
+          "summary": "In 568, under Justin II, the Langobards invaded Italy.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 568
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justin-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-battle-of-nineveh-627",
+          "label": "Heraclius defeats the Persians near Nineveh",
+          "summary": "In December 627 Heraclius defeated a large Persian army near the ruins of Nineveh; Khusrau II fell soon after, and in 630 Heraclius returned the True Cross to Jerusalem.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 627
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius"
           ],
           "reviewStatus": "proposed"
         }

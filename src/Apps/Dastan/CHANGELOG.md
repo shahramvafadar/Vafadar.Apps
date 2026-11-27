@@ -4,6 +4,12 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Ancient Rome goes on from Trajan to Heraclius: 74 emperors from Hadrian to Heraclius, each with the years
+  of the reign, the house and the line of succession – the Antonines, the Severans, the soldier emperors, the
+  tetrarchy, the houses of Constantine, Valentinian and Theodosius, the last emperors in the west to 476 and
+  the emperors in the east to 641 –, Zenobia, Constantinople, Palmyra and the Milvian Bridge, and 28 events
+  from the revolt of Bar Kochba to Heraclius at Nineveh, read from Livius, with their Persian. Iran, China
+  and Rome side by side now hold 126 events and 29 periods.
 - Ancient Iran goes on to the end of the Sasanians in 651: the last Arsacid kings from Osroes I to
   Artabanus IV, and every Sasanian king and queen from Ardašir I to Yazdgard III, each with the years of the
   reign, the house, the line of succession and the parents the sources name; the Roman emperors they fought;
