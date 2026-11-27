@@ -1303,6 +1303,78 @@
     "event-battle-of-nineveh-627": {
       "label": "هراکلیوس ایرانیان را نزدیک نینوا شکست می‌دهد",
       "summary": "در دسامبر ۶۲۷ هراکلیوس سپاهی بزرگ از ایرانیان را نزدیک ویرانه‌های نینوا شکست داد؛ خسرو دوم اندکی بعد برافتاد و هراکلیوس در ۶۳۰ صلیب راستین را به اورشلیم بازگرداند."
+    },
+    "person-zeno": {
+      "label": "زنون",
+      "summary": "ایسوری‌ای که در زمان لئون یکم برآمد و با دخترش آریادنه زناشویی کرد؛ از ۴۷۴ امپراتور در خاور بود، در ۴۷۵ باسیلیسکوس اندک زمانی او را برکنار کرد، در ۴۷۶ با یاری تئودوریک شاه استروگوت بازگشت و تا مرگ طبیعی‌اش در ۴۹۱ فرمان راند.",
+      "facts": {
+        "knownFor": "امپراتور در روزگار پایان امپراتوری باختر."
+      }
+    },
+    "person-basiliscus": {
+      "label": "باسیلیسکوس",
+      "summary": "برادر ورینا، بیوهٔ لئون یکم، که با پشتیبانی او در ۴۷۵ زنون را برکنار کرد و تا بازگشت زنون در ۴۷۶ تخت را داشت.",
+      "facts": {
+        "knownFor": "یک سال زنون را برکنار کرد."
+      }
+    },
+    "government-kingdom-of-italy": {
+      "label": "پادشاهی ایتالیا",
+      "summary": "فرمانروایی ادواکر و سپس تئودوریک شاه استروگوت بر ایتالیا پس از برکناری واپسین امپراتور باختر در ۴۷۶؛ پایتخت تئودوریک راونا بود."
+    },
+    "office-king-of-italy": {
+      "label": "شاه ایتالیا",
+      "summary": "لقبی که ادواکر در ایتالیا برگرفت در حالی که امپراتور خاور را سرور خود می‌شناخت؛ تئودوریک پس از او آن را داشت."
+    },
+    "person-odoacer": {
+      "label": "ادواکر",
+      "summary": "جنگاوری ژرمن، احتمالاً از اسکیرها، که در سپاه روم به فرماندهی رسید؛ در ۴۷۶ سپاهیانش او را شاه خواندند، رومولوس آگوستولوس را برکنار کرد و تا گشودن ایتالیا به دست تئودوریک بر آن فرمان راند؛ در ۴۹۳ درگذشت.",
+      "facts": {
+        "knownFor": "نخستین شاه بربر ایتالیا."
+      }
+    },
+    "person-theodoric": {
+      "label": "تئودوریک بزرگ",
+      "summary": "شاه استروگوت‌ها از ۴۷۱، که در کودکی گروگانی در قسطنطنیه بود؛ در ۴۸۸ به ایتالیا تاخت، تا ۴۹۳ آن را با سیسیل گشود و تا مرگش در ۵۲۶ از راونا شاه ایتالیا بود.",
+      "facts": {
+        "knownFor": "از راونا شاه ایتالیا بود."
+      }
+    },
+    "event-theodoric-conquers-italy": {
+      "label": "تئودوریک ایتالیا را می‌گشاید",
+      "summary": "استروگوت‌ها به رهبری تئودوریک در ۴۸۸ به ایتالیا تاختند و تا ۴۹۳ تقریباً همهٔ شبه‌جزیره و سیسیل را گشودند و به فرمانروایی ادواکر پایان دادند."
+    },
+    "person-attila": {
+      "label": "آتیلا",
+      "summary": "شاه هون‌ها از ۴۳۴ تا ۴۵۳، نخست همراه برادرش بلدا که در ۴۴۵ او را کشت؛ هر سال باجی زرین از امپراتوری خاور گرفت و به گل و ایتالیا تاخت.",
+      "facts": {
+        "knownFor": "ملقب به تازیانهٔ خدا."
+      }
+    },
+    "person-aetius": {
+      "label": "فلاویوس آئتیوس",
+      "summary": "سردار رومی‌ای که در زمان والنتینیان سوم بر امپراتوری باختر چیره بود: فرماندهٔ هر دو سپاه از ۴۳۰، پاتریکیوس از ۴۳۵ و سه بار کنسول؛ آتیلا را در گل شکست داد و در ۴۵۴ کشته شد.",
+      "facts": {
+        "knownFor": "آتیلا را در گل شکست داد."
+      }
+    },
+    "person-stilicho": {
+      "label": "فلاویوس استیلیکو",
+      "summary": "نیمی رومی و نیمی وندال، فرماندهٔ کل سپاه و نایب‌السلطنهٔ هونوریوس از ۳۹۴ تا ۴۰۸؛ با ویزیگوت‌های آلاریک جنگید و در ۴۰۶ یورشی به ایتالیا را پس زد، و در ۴۰۸ به فرمان هونوریوس سرش را بریدند.",
+      "facts": {
+        "knownFor": "نایب‌السلطنهٔ هونوریوس."
+      }
+    },
+    "person-belisarius": {
+      "label": "بلیزاریوس",
+      "summary": "سردار ژوستینین که نخستین پیروزی‌اش را در ۵۳۰ بر ساسانیان به دست آورد، شورش نیکا را در ۵۳۲ فرو نشاند و گشودن دوبارهٔ آفریقا و ایتالیا را رهبری کرد؛ در ۵۶۵ درگذشت.",
+      "facts": {
+        "knownFor": "آفریقا و ایتالیا را برای ژوستینین بازگشود."
+      }
+    },
+    "event-battle-of-dara": {
+      "label": "بلیزاریوس ایرانیان را شکست می‌دهد",
+      "summary": "بلیزاریوس نخستین پیروزی‌اش را در جایگاه فرمانده در ۵۳۰ بر ایران ساسانی در جبههٔ میان‌رودان به دست آورد."
     }
   },
   "relations": {
@@ -2647,6 +2719,72 @@
       "label": "شرکت در"
     },
     "relation-heraclius-participant-in-battle-of-nineveh-627": {
+      "label": "شرکت در"
+    },
+    "relation-zeno-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-zeno-holder-of-east-roman-emperor-2": {
+      "label": "امپراتور"
+    },
+    "relation-zeno-parent-of-leo-ii": {
+      "label": "پدرِ"
+    },
+    "relation-zeno-successor-of-leo-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-anastasius-i-successor-of-zeno": {
+      "label": "جانشینِ"
+    },
+    "relation-basiliscus-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-odoacer-holder-of-king-of-italy": {
+      "label": "شاه"
+    },
+    "relation-odoacer-founder-of-kingdom-of-italy": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-theodoric-holder-of-king-of-italy": {
+      "label": "شاه"
+    },
+    "relation-theodoric-successor-of-odoacer": {
+      "label": "جانشینِ"
+    },
+    "relation-theodoric-participant-in-theodoric-conquers-italy": {
+      "label": "شرکت در"
+    },
+    "relation-odoacer-participant-in-theodoric-conquers-italy": {
+      "label": "شرکت در"
+    },
+    "relation-theodoric-conquers-italy-during-west-roman-empire": {
+      "label": "در دورهٔ"
+    },
+    "relation-odoacer-participant-in-end-of-the-west": {
+      "label": "شرکت در"
+    },
+    "relation-aetius-employed-by-roman-empire": {
+      "label": "سردار امپراتوری باختر در زمان والنتینیان سوم"
+    },
+    "relation-attila-participant-in-attila-in-gaul": {
+      "label": "شرکت در"
+    },
+    "relation-aetius-participant-in-attila-in-gaul": {
+      "label": "شرکت در"
+    },
+    "relation-stilicho-employed-by-roman-empire": {
+      "label": "نایب‌السلطنهٔ هونوریوس"
+    },
+    "relation-belisarius-employed-by-roman-empire": {
+      "label": "سردار ژوستینین"
+    },
+    "relation-belisarius-participant-in-battle-of-dara": {
+      "label": "شرکت در"
+    },
+    "relation-belisarius-participant-in-nika-riots": {
+      "label": "شرکت در"
+    },
+    "relation-belisarius-participant-in-belisarius-takes-carthage": {
       "label": "شرکت در"
     }
   }

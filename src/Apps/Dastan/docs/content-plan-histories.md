@@ -37,6 +37,11 @@ changes only the batches after it.
 | E7 | **The Shahnameh stories 1.6–1.10** | (a) outside this goal; (b) one story after each phase | (a): the owner asked for the civilizations first |
 | E8 | **Pictures** (pass 5) | (a) only references to museum pages whose terms allow showing; (b) none in this goal | (b): the rights of pictures are the owner's (backlog D2) |
 
+**As taken (2026-11-28).** The owner set the goal to carry out this plan to the end without answering E1–E8
+one by one; the recommendations are taken: E1 (a) 1025 CE, E2 (a), E3 (a), E4 (a), E6 (b) outside the goal,
+E7 (a), E8 (b). For E5 the goal gives no word to start the site, and the work order allows it only on the
+owner's word, so E5 is taken as (b): the site is not started and batch D5 is left to the owner.
+
 ## How every batch is done
 
 The goal runs as a sequence of **batches**. One batch is one civilization and one stretch of time – never two
@@ -51,8 +56,9 @@ civilizations at once, as the owner asked. A batch is finished only when all of 
    no source is listed that nothing cites.
 4. **Comparison**: the comparison is rebuilt from the collections (every period and event with years, same
    years, same uncertainty, same sources).
-5. **Tests**: the whole suite of Dastan. A browser test that fails only on a time budget is run once alone; if
-   it passes alone it is recorded as unsteady, not as a failure of content.
+5. **Tests**: after each batch the tests that read the library (`LibrarySiteTests`, `LibraryTests`); the whole
+   suite of Dastan at the end of each phase. A browser test that fails only on a time budget is run once alone;
+   if it passes alone it is recorded as unsteady, not as a failure of content.
 6. **Record**: a line in the changelog, the batch marked done in this file with the day and what was left out
    for want of a source.
 7. **Commit** on `content/dastan-<name>`, merged into `main`, pushed – as the owner, naming no tool.
@@ -144,4 +150,4 @@ was left out, and – if E5 allows – the chart looked at.
 
 | Batch | Done | Note |
 |---|---|---|
-| A1–A7, B1–B4, C1–C3, D1–D6 | – | not started; waits for the decisions E1–E8 |
+| A1 | 2026-11-28 | Zeno, Basiliscus, the kingdom of Italy (Odoacer, Theodoric), Attila, Aetius, Stilicho, Belisarius, 2 events, 11 quotes found. Left out: Libius Severus (no page could be read: Britannica began a browser check, which is not to be passed; De Imperatoribus Romanis the same). |
