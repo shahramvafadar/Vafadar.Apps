@@ -5,7 +5,7 @@
   "note": "Built from the three collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year (Awan and Šimaški), a period that begins and ends in the same year, and a dynasty whose years are those of a period already here.",
   "frame": "commonEraYears",
   "title": "Iran, China and Rome side by side",
-  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran through the Sasanians and the caliphate to the Ghaznavids in 1030, Rome to the death of Basil II in 1025, China to the Tang in 705 – and every dated event of the three collections, side by side.",
+  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran through the Sasanians and the caliphate to the Ghaznavids in 1030, Rome to the death of Basil II in 1025, China to the Northern Song in 1025 – and every dated event of the three collections, side by side.",
   "show": {
     "from": {
       "frame": "calendar",
@@ -1455,6 +1455,27 @@
       "id": "src-britannica-constantine-iv",
       "title": "Constantine IV – Britannica",
       "url": "https://www.britannica.com/biography/Constantine-IV",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-history-of-china-tang",
+      "title": "History of China: the Tang dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Sui-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-history-of-china-five-dynasties",
+      "title": "History of China: the Five Dynasties and the Ten Kingdoms, the Song dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Five-Dynasties-and-the-Ten-Kingdoms",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-taizu-emperor-of-song-dynasty",
+      "title": "Taizu, emperor of the Song dynasty – Britannica",
+      "url": "https://www.britannica.com/biography/Taizu-emperor-of-Song-dynasty",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-28"
     }
@@ -3735,7 +3756,7 @@
         {
           "key": "tang",
           "label": "The Tang",
-          "summary": "The rule of the Tang, from 618 to 907; this collection follows it to 705.",
+          "summary": "The rule of the Tang, from 618 to 907; its high point came under Xuanzong, and after the rebellion of An Lushan in 755 the generals and provinces grew strong until the dynasty ended in 907.",
           "time": {
             "kind": "period",
             "start": {
@@ -3758,7 +3779,95 @@
           },
           "sourceIds": [
             "src-britannica-tang-dynasty",
-            "src-si-tang"
+            "src-si-tang",
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "late-tang",
+          "label": "The late Tang",
+          "summary": "From the rebellion of An Lushan in 755 to the end of the dynasty in 907, an age of provincial governors, eunuch power at court and great uprisings.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 755
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 907
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "five-dynasties",
+          "label": "The Five Dynasties and Ten Kingdoms",
+          "summary": "The half century of disunity between the Tang and the Song, from 907 to 960: five short-lived dynasties followed one another in the north while ten kingdoms held the south.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 907
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 960
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "northern-song",
+          "label": "The Northern Song",
+          "summary": "The first part of the Song, from 960 to 1127, when the dynasty ruled the north as well as the south.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 960
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1127
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
           ],
           "reviewStatus": "proposed"
         }
@@ -4485,6 +4594,306 @@
           },
           "sourceIds": [
             "src-britannica-wuhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "xuanzong-takes-power",
+          "label": "Xuanzong takes full power",
+          "summary": "After Ruizong ceded the throne in 712, a second coup in 713 put Xuanzong completely in charge; Ruizong retired and the princess Taiping took her life.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 713
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-talas",
+          "label": "The battle of the Talas River",
+          "summary": "In 751 the overextended Tang armies in the far west were defeated by the Arabs on the Talas River.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 751
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "an-lushan-rebellion",
+          "label": "The rebellion of An Lushan",
+          "summary": "The rebellion of An Lushan broke out in 755, took Luoyang and Chang’an in 756 and, carried on after his murder by his son and by Shi Siming, was not suppressed until 763.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 763
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rebels-take-changan",
+          "label": "The rebels take Chang’an",
+          "summary": "Early in 756 An Lushan’s rebels captured the eastern capital Luoyang, and in July of the same year the main capital Chang’an.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 756
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tibetans-loot-changan",
+          "label": "The Tibetans loot Chang’an",
+          "summary": "In 763 the Tibetans, allied with Nanzhao, occupied present-day Gansu and late in the year took and looted the capital.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 763
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "dezong-tax-reform",
+          "label": "The tax reform of 780",
+          "summary": "In 780 Dezong promulgated a new system of taxation in which each province was assessed a quota to be collected by its own government.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 780
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sweet-dew-incident",
+          "label": "The Sweet Dew coup",
+          "summary": "In 835 Wenzong’s scheme against the eunuchs misfired in the Sweet Dew (Ganlu) coup and led to the deaths of several ministers and officials.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 835
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "suppression-of-buddhism",
+          "label": "The suppression of Buddhism",
+          "summary": "In 843–845 the emperor Wuzong, a fanatical Daoist, suppressed Buddhism and dissolved the monasteries.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 843
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 845
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "huang-chao-takes-changan",
+          "label": "Huang Chao takes Chang’an",
+          "summary": "Huang Chao, leader of the greatest uprising, took Luoyang late in 880 and Chang’an in 881; in 883 he was forced to abandon the capital.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 881
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "end-of-the-tang",
+          "label": "The end of the Tang",
+          "summary": "In 907 Zhu Wen deposed the last Tang emperor, bringing the dynasty to its formal end and beginning the Five Dynasties.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "founding-of-the-liao",
+          "label": "The Khitan found the Liao",
+          "summary": "In 907 the Khitan founded the Liao dynasty, expanding from the border of Mongolia into southern Manchuria and the sixteen prefectures south of the Great Wall.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "founding-of-the-song",
+          "label": "The founding of the Song",
+          "summary": "In 960 Zhao Kuangyin, Taizu, founded the Song, ending the rapid succession of the Five Dynasties.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 960
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties",
+            "src-britannica-taizu-emperor-of-song-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "song-conquers-sichuan",
+          "label": "The Song take Sichuan",
+          "summary": "Taizu’s strategy of reunification first took Sichuan in 965, then the far south in 971.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 965
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "wuyue-surrenders",
+          "label": "The Wu-Yue surrender",
+          "summary": "In 978 the Wu-Yue, the last of the Ten Kingdoms in the south, surrendered to the Song without a war.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 978
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "song-conquers-northern-han",
+          "label": "The Song conquer the Northern Han",
+          "summary": "In 979 Taizong conquered the Northern Han, the last of the Ten Kingdoms, completing the reunification.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 979
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "song-defeated-by-khitan",
+          "label": "The Song defeated by the Khitan",
+          "summary": "Fighting on against the Khitan in the north, Taizong suffered a disastrous defeat in 986.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 986
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "song-liao-peace",
+          "label": "The sworn peace of the Song and the Liao",
+          "summary": "After a Khitan offensive met by Zhenzong himself, the two empires pledged peaceful coexistence in 1004 through an exchange of sworn documents.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1004
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
           ],
           "reviewStatus": "proposed"
         }

@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- China goes on to 1025: the late Tang emperors, An Lushan and Huang Chao, the Five Dynasties, the Liao of the
+  Khitan and the Song from Taizu to Renzong, with 17 events from the Talas River to the peace of 1004; the
+  collection is now called "China".
 - Rome goes on to 1025: the East-Roman emperors from Constantine III to Basil II with their houses, the age of
   Iconoclasm, and 26 events from the fall of Alexandria to the death of Basil II; the collection is now called
   "Rome".
