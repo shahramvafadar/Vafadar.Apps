@@ -1639,6 +1639,30 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-elam-i",
+      "title": "Elam i. The history of Elam – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/elam-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-awan",
+      "title": "Awan – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/awan/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-unesco-shahr-i-sokhta",
+      "title": "Shahr-i Sokhta – UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/1456/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -2227,23 +2251,36 @@
       "id": "period-awan-shimashki",
       "type": "Period",
       "label": "Awan and Šimaški",
-      "summary": "The kings of Awan and Šimaški, who ruled Elam in the last third of the third millennium BCE, are known from a king list written down later; the sources give no exact years.",
+      "summary": "The kings of Awan and Šimaški, who ruled Elam from about 2400 to 1970 BCE, the first two dynasties of the Old Elamite period; a king list from Susa names them without the years of their reigns.",
       "sourceIds": [
         "src-livius-content-awan-king-list",
-        "src-livius-place-susa"
+        "src-livius-place-susa",
+        "src-iranica-elam-i"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "began",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2400,
+              "approximate": true
+            }
           }
         },
         {
           "fact": "ended",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1970,
+              "approximate": true
+            }
           }
         }
       ]
@@ -11547,6 +11584,498 @@
               "year": 751
             }
           }
+        }
+      ]
+    },
+    {
+      "id": "event-first-settlement-at-susa",
+      "type": "Event",
+      "label": "People settle at Susa",
+      "summary": "Excavations show people living on the acropolis of Susa in 5000 BCE and urban structures about 4000 BCE.",
+      "sourceIds": [
+        "src-livius-place-susa"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 5000
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-susa"
+        }
+      ]
+    },
+    {
+      "id": "place-shahr-i-sokhta",
+      "type": "Place",
+      "label": "Shahr-i Sokhta",
+      "summary": "The “Burnt City” in Sistan, at the junction of Bronze Age trade routes across the Iranian plateau, founded around 3200 BCE and lived in during four periods until 1800 BCE; proto-Elamite tablets were found there.",
+      "sourceIds": [
+        "src-unesco-shahr-i-sokhta",
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shahr-e Sukhteh",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Burnt City",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [],
+      "position": {
+        "latitude": 30.59389,
+        "longitude": 61.32778,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "period-shahr-i-sokhta",
+      "type": "Period",
+      "label": "The Burnt City inhabited",
+      "summary": "Shahr-i Sokhta was founded around 3200 BCE and inhabited through four periods until 1800 BCE, one of the first complex societies of eastern Iran.",
+      "sourceIds": [
+        "src-unesco-shahr-i-sokhta"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 3200,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1800
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-proto-elamite",
+      "type": "Period",
+      "label": "The Proto-Elamite period",
+      "summary": "From about 3200 BCE numerical and then proto-Elamite tablets appear at Susa and across the plateau as far as Shahr-i Sokhta; the undeciphered script remained in use until about 2700 BCE.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 3200,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2700,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-old-elamite",
+      "type": "Period",
+      "label": "The Old Elamite period",
+      "summary": "The age of the three dynasties of Awan, Šimaški and the Epartids (sukkalmahs), about 2400 to 1600 BCE.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2400,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1600,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-awan-dynasty",
+      "type": "Period",
+      "label": "The Awan dynasty",
+      "summary": "The first Old Elamite dynasty, about 2400 to 2100 BCE, partly contemporary with Sargon of Akkad; its last king Puzur-Inšušinak reigned in the time of Ur-Nammu.",
+      "sourceIds": [
+        "src-iranica-elam-i",
+        "src-iranica-awan"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2400,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2100,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-simashki-dynasty",
+      "type": "Period",
+      "label": "The Šimaški dynasty",
+      "summary": "The second Old Elamite dynasty, about 2100 to 1970 BCE, whose king Kindattu conquered Ur in 2004 BCE.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2100,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1970,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-epartid-dynasty",
+      "type": "Period",
+      "label": "The Epartids (sukkalmahs)",
+      "summary": "The third Old Elamite dynasty, about 1970 to 1600 BCE, named after its founder Eparti and called “of the sukkalmahs” after the title of its rulers; contemporary with the Old Babylonian period.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1970,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1600,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-neo-elamite",
+      "type": "Period",
+      "label": "The Neo-Elamite period",
+      "summary": "The last age of Elam, from 1100 to 539 BCE.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1100
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 539
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-awan",
+      "type": "Office",
+      "label": "King of Awan",
+      "summary": "The kingship of Awan, the nominal seat of Elamite rulers in the late third millennium BCE, whose location is unknown.",
+      "sourceIds": [
+        "src-iranica-awan"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "person-luhhishshan",
+      "type": "Person",
+      "label": "Luhhiššan",
+      "summary": "The eighth ruler in the Awan king list from Susa, dated by independent texts to about 2300 BCE.",
+      "sourceIds": [
+        "src-iranica-awan"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "King of Awan about 2300 BCE."
+        }
+      ]
+    },
+    {
+      "id": "person-puzur-inshushinak",
+      "type": "Person",
+      "label": "Puzur-Inšušinak",
+      "summary": "The twelfth and last king of Awan, dated to about 2100 BCE and thought to have reigned in the time of Ur-Nammu.",
+      "sourceIds": [
+        "src-iranica-awan",
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Last king of Awan."
+        }
+      ]
+    },
+    {
+      "id": "person-kindattu",
+      "type": "Person",
+      "label": "Kindattu",
+      "summary": "Sixth king of Šimaški, who led the Elamites and the people of Susiana in conquering Ur in 2004 BCE.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Conquered Ur."
+        }
+      ]
+    },
+    {
+      "id": "person-eparti",
+      "type": "Person",
+      "label": "Eparti",
+      "summary": "Named as the ninth king of Šimaški, the founder of the Epartid or sukkalmah dynasty.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ebarat",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Epartids."
+        }
+      ]
+    },
+    {
+      "id": "person-shilhaha",
+      "type": "Person",
+      "label": "Šilhaha",
+      "summary": "The second Epartid ruler, after Eparti; later kings still called themselves “son of the sister of Šilhaha”.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Second Epartid."
+        }
+      ]
+    },
+    {
+      "id": "event-elamites-conquer-ur",
+      "type": "Event",
+      "label": "The Elamites conquer Ur",
+      "summary": "In 2004 BCE the Elamites, allied with the people of Susiana under Kindattu of Šimaški, conquered Ur, ended its empire and led its king Ibbi-Sin away as a prisoner.",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2004
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-kindattu"
         }
       ]
     }
@@ -25498,6 +26027,126 @@
       "label": "Took part in",
       "sourceIds": [
         "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-first-settlement-at-susa-took-place-in-susa",
+      "from": "event-first-settlement-at-susa",
+      "to": "place-susa",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-susa"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-luhhishshan-holder-of-king-of-awan",
+      "from": "person-luhhishshan",
+      "to": "office-king-of-awan",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-iranica-awan"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "occurrence",
+        "at": {
+          "frame": "calendar",
+          "era": "beforeCommonEra",
+          "year": 2300,
+          "approximate": true
+        }
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-puzur-inshushinak-holder-of-king-of-awan",
+      "from": "person-puzur-inshushinak",
+      "to": "office-king-of-awan",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-iranica-awan"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "occurrence",
+        "at": {
+          "frame": "calendar",
+          "era": "beforeCommonEra",
+          "year": 2100,
+          "approximate": true
+        }
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shilhaha-successor-of-eparti",
+      "from": "person-shilhaha",
+      "to": "person-eparti",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-kindattu-participant-in-elamites-conquer-ur",
+      "from": "person-kindattu",
+      "to": "event-elamites-conquer-ur",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-elamites-conquer-ur-during-simashki-dynasty",
+      "from": "event-elamites-conquer-ur",
+      "to": "period-simashki-dynasty",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-elam-i"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

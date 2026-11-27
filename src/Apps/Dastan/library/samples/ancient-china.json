@@ -495,6 +495,54 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-history-of-china-prehistory",
+      "title": "History of China: prehistory and the Neolithic period – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-yangshao-culture",
+      "title": "Yangshao culture – Britannica",
+      "url": "https://www.britannica.com/topic/Yangshao-culture",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-longshan-culture",
+      "title": "Longshan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Longshan-culture",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-hongshan-culture",
+      "title": "Hongshan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Hongshan-culture",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-erlitou-culture",
+      "title": "Erlitou culture – Britannica",
+      "url": "https://www.britannica.com/topic/Erlitou-culture",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-history-of-china-shang",
+      "title": "History of China: the first historical dynasty, the Shang – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-first-historical-dynasty-the-Shang",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -1412,10 +1460,11 @@
       "id": "person-wu-ding",
       "type": "Person",
       "label": "Wu Ding",
-      "summary": "A king of the late Shang, known from the oracle bones; the pages read give no years for his reign.",
+      "summary": "A king of the late Shang, known from the oracle bones, the first of the last nine kings who ruled from Yinxu; by the short chronology he reigned about 1250 to 1192 BCE.",
       "sourceIds": [
         "src-hawaii-early-china",
-        "src-uw-fu-hao"
+        "src-uw-fu-hao",
+        "src-britannica-history-of-china-shang"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -7862,6 +7911,359 @@
           }
         }
       ]
+    },
+    {
+      "id": "period-first-pottery-china",
+      "type": "Period",
+      "label": "The first pottery of southern China",
+      "summary": "At Xianrendong in Jiangxi and Zengpiyan in Guangxi, from the tenth to the seventh millennium BCE, people left low-fired cord-marked shards and mostly chipped stone tools.",
+      "sourceIds": [
+        "src-britannica-history-of-china-prehistory"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 10000
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 9001
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 7000
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 6001
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-yangshao",
+      "type": "Period",
+      "label": "The Yangshao culture",
+      "summary": "The prehistoric culture of the Yellow River basin, from 5000 to 3000 BCE, known by its painted pottery; its people grew millet, kept animals, made silk and fired pottery in kilns.",
+      "sourceIds": [
+        "src-britannica-yangshao-culture"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 5000
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 3000
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-hongshan",
+      "type": "Period",
+      "label": "The Hongshan culture",
+      "summary": "A prehistoric culture of far northern China, about 4000 to 3000 BCE, centred in western Liaoning and eastern Inner Mongolia, with a three-tiered elite buried in complex tombs and fine jades.",
+      "sourceIds": [
+        "src-britannica-hongshan-culture",
+        "src-britannica-history-of-china-prehistory"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 4000,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 3000,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-liangzhu",
+      "type": "Period",
+      "label": "The Liangzhu culture",
+      "summary": "A jade-working culture of the eastern coast, about 3300 to 2200 BCE.",
+      "sourceIds": [
+        "src-britannica-hongshan-culture",
+        "src-britannica-history-of-china-prehistory"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 3300,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2200,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-longshan",
+      "type": "Period",
+      "label": "The Longshan culture",
+      "summary": "The Neolithic culture of central China, about 2600 to 2000 BCE, named for its site in Shandong, with black burnished wheel-turned pottery, walls of rammed earth and divination by heating cattle bones.",
+      "sourceIds": [
+        "src-britannica-longshan-culture"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Black Pottery culture",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2600,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2000,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-erlitou",
+      "type": "Period",
+      "label": "The Erlitou culture",
+      "summary": "The culture of the central plains of northern China, from 1900 to 1350 BCE, the first state-level society in China, with palaces, royal tombs, paved roads and bronze; its remains are taken to correspond to the Xia of tradition.",
+      "sourceIds": [
+        "src-britannica-erlitou-culture"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1900
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1350
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shang-tang",
+      "type": "Person",
+      "label": "Tang of Shang",
+      "summary": "The founder of the Shang dynasty, worshipped under the sacrificial name Dayi; his capital Bo is now usually identified with Zhengzhou.",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Dayi",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Cheng Tang",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Shang."
+        }
+      ]
+    },
+    {
+      "id": "person-pangeng",
+      "type": "Person",
+      "label": "Pangeng",
+      "summary": "The Shang king with whom, by the traditional long chronology, the last twelve Shang kings ruled from Yinxu.",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "First of the kings at Yinxu in tradition."
+        }
+      ]
+    },
+    {
+      "id": "person-diyi",
+      "type": "Person",
+      "label": "Diyi",
+      "summary": "The second-to-last Shang king, reigning with his successor Dixin about 1101 to 1046 BCE.",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Next-to-last Shang king."
+        }
+      ]
+    },
+    {
+      "id": "person-dixin",
+      "type": "Person",
+      "label": "Dixin",
+      "summary": "The last Shang king; with Diyi he reigned about 1101 to 1046 BCE, when the Zhou overthrew the Shang.",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Last Shang king."
+        }
+      ]
     }
   ],
   "relations": [
@@ -7873,13 +8275,36 @@
       "directionality": "directed",
       "label": "Held the office of",
       "sourceIds": [
-        "src-hawaii-early-china"
+        "src-hawaii-early-china",
+        "src-britannica-history-of-china-shang"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
       "scope": {
         "kind": "outside_the_story",
         "eventIds": []
+      },
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1250,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1192,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
       }
     },
     {
@@ -15229,6 +15654,169 @@
       "label": "Took part in",
       "sourceIds": [
         "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shang-tang-founder-of-shang",
+      "from": "person-shang-tang",
+      "to": "dynasty-shang",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shang-tang-holder-of-shang-king",
+      "from": "person-shang-tang",
+      "to": "office-shang-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zhengzhou-capital-of-shang-2",
+      "from": "place-zhengzhou",
+      "to": "dynasty-shang",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Taken to be Bo, capital of",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-pangeng-holder-of-shang-king",
+      "from": "person-pangeng",
+      "to": "office-shang-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-diyi-holder-of-shang-king",
+      "from": "person-diyi",
+      "to": "office-shang-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King (with Dixin)",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1101,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1046,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-dixin-holder-of-shang-king",
+      "from": "person-dixin",
+      "to": "office-shang-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King (with Diyi)",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1101,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1046,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-dixin-successor-of-diyi",
+      "from": "person-dixin",
+      "to": "person-diyi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-shang"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
