@@ -463,19 +463,44 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-history-of-china-tang",
+      "title": "History of China: the Tang dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Sui-dynasty",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-history-of-china-five-dynasties",
+      "title": "History of China: the Five Dynasties and the Ten Kingdoms, the Song dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Five-Dynasties-and-the-Ten-Kingdoms",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-taizu-emperor-of-song-dynasty",
+      "title": "Taizu, emperor of the Song dynasty – Britannica",
+      "url": "https://www.britannica.com/biography/Taizu-emperor-of-Song-dynasty",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
     {
       "id": "subject-ancient-china",
       "type": "Region",
-      "label": "Ancient China",
-      "summary": "China from the Xia, which tradition places first, and the Shang to the Tang about 700 CE: the Zhou and its states, the unification under the Qin, the Western Han, the Xin of Wang Mang, the restored Han, the Three Kingdoms and the long division, and the reunification under the Sui and the Tang.",
+      "label": "China",
+      "summary": "China from the Xia, which tradition places first, and the Shang to the Northern Song about 1025 CE: the Zhou and its states, the unification under the Qin, the Western Han, the Xin of Wang Mang, the restored Han, the Three Kingdoms and the long division, the reunification under the Sui and the Tang, the Five Dynasties and the Song.",
       "sourceIds": [
         "src-afe-timeline",
         "src-afe-keypoints",
         "src-britannica-history-of-china-six-dynasties",
-        "src-britannica-tang-dynasty"
+        "src-britannica-tang-dynasty",
+        "src-britannica-history-of-china-five-dynasties"
       ],
       "spoilerLevel": 0
     },
@@ -4683,10 +4708,11 @@
       "id": "period-tang",
       "type": "Period",
       "label": "The Tang",
-      "summary": "The rule of the Tang, from 618 to 907; this collection follows it to 705.",
+      "summary": "The rule of the Tang, from 618 to 907; its high point came under Xuanzong, and after the rebellion of An Lushan in 755 the generals and provinces grew strong until the dynasty ended in 907.",
       "sourceIds": [
         "src-britannica-tang-dynasty",
-        "src-si-tang"
+        "src-si-tang",
+        "src-britannica-history-of-china-tang"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -6318,6 +6344,1426 @@
         {
           "fact": "participant",
           "entityId": "person-wang-xizhi"
+        }
+      ]
+    },
+    {
+      "id": "period-late-tang",
+      "type": "Period",
+      "label": "The late Tang",
+      "summary": "From the rebellion of An Lushan in 755 to the end of the dynasty in 907, an age of provincial governors, eunuch power at court and great uprisings.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-five-dynasties",
+      "type": "Period",
+      "label": "The Five Dynasties and Ten Kingdoms",
+      "summary": "The half century of disunity between the Tang and the Song, from 907 to 960: five short-lived dynasties followed one another in the north while ten kingdoms held the south.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Wudai",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 960
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-later-liang",
+      "type": "Dynasty",
+      "label": "The Later Liang",
+      "summary": "The dynasty founded by Zhu Wen in 907 when he deposed the last Tang emperor, the first of the Five Dynasties, superseded in 923.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 923
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-later-tang",
+      "type": "Dynasty",
+      "label": "The Later Tang",
+      "summary": "The second of the Five Dynasties, from 923 to 936.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 923
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 936
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-later-jin",
+      "type": "Dynasty",
+      "label": "The Later Jin",
+      "summary": "The third of the Five Dynasties, from 936 to 947.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 936
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 947
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-later-han",
+      "type": "Dynasty",
+      "label": "The Later Han",
+      "summary": "The fourth of the Five Dynasties, from 947 to 951.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 947
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 951
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-later-zhou",
+      "type": "Dynasty",
+      "label": "The Later Zhou",
+      "summary": "The last of the Five Dynasties, from 951 until the rise of the Song in 960.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 951
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 960
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-liao",
+      "type": "Dynasty",
+      "label": "The Liao",
+      "summary": "The dynasty of the Khitan, from 907 to 1125, which expanded from the border of Mongolia into southern Manchuria and the sixteen prefectures south of the Great Wall; the Song made a sworn peace with it in 1004.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1125
+            }
+          }
+        }
+      ],
+      "names": [
+        {
+          "name": "Khitan empire",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-song",
+      "type": "Dynasty",
+      "label": "The Song",
+      "summary": "The dynasty founded by Taizu in 960, ruling until 1279, which reunified most of the former Tang empire and governed through a civil service, keeping its generals weak.",
+      "sourceIds": [
+        "src-britannica-taizu-emperor-of-song-dynasty",
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 960
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1279
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "office-song-emperor",
+      "type": "Office",
+      "label": "Emperor of the Song",
+      "summary": "The throne of the Song.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-song"
+        }
+      ]
+    },
+    {
+      "id": "period-northern-song",
+      "type": "Period",
+      "label": "The Northern Song",
+      "summary": "The first part of the Song, from 960 to 1127, when the dynasty ruled the north as well as the south.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Bei Song",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 960
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1127
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-ruizong",
+      "type": "Person",
+      "label": "Ruizong of Tang",
+      "summary": "Son of Wuhou and brother of Zhongzong, a puppet emperor under his mother; restored by his son Li Longji after Zhongzong’s death in 710, he ceded the throne to him in 712 and retired in 713.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-xuanzong",
+      "type": "Person",
+      "label": "Xuanzong of Tang",
+      "summary": "Li Longji, son of Ruizong, emperor from 712 to 756, whose reign was the high point of the Tang; late in life he fell under the influence of Yang Guifei, and the rebellion of An Lushan drove him from the throne.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Li Longji",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The high point of the Tang."
+        }
+      ]
+    },
+    {
+      "id": "person-tang-suzong",
+      "type": "Person",
+      "label": "Suzong of Tang",
+      "summary": "Emperor from 756 to 762, who faced a desperate military situation in the rebellion of An Lushan.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-daizong",
+      "type": "Person",
+      "label": "Daizong of Tang",
+      "summary": "Emperor from 762 to 779, a weak ruler under whom the eunuchs began to play a growing role.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-dezong",
+      "type": "Person",
+      "label": "Dezong of Tang",
+      "summary": "An activist emperor from 779 to 805, who in 780 introduced a new tax system of provincial quotas.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 805
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-shunzong",
+      "type": "Person",
+      "label": "Shunzong of Tang",
+      "summary": "An invalid emperor whose brief reign followed Dezong’s death in 805.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-xianzong",
+      "type": "Person",
+      "label": "Xianzong of Tang",
+      "summary": "Emperor from 805 to 820, under whom the Tang regained much of its power over the provinces.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-wenzong",
+      "type": "Person",
+      "label": "Wenzong of Tang",
+      "summary": "Emperor from 827 to 840, whose attempts to break the eunuchs failed in the Sweet Dew coup of 835.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-wuzong",
+      "type": "Person",
+      "label": "Wuzong of Tang",
+      "summary": "Emperor from 840, a fanatical Daoist who suppressed Buddhism in 843–845.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-yizong",
+      "type": "Person",
+      "label": "Yizong of Tang",
+      "summary": "Emperor from 859 to 873, in whose reign the eunuchs’ power revived and uprisings spread.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tang-xizong",
+      "type": "Person",
+      "label": "Xizong of Tang",
+      "summary": "Emperor from 873 to 888, chosen as a boy of eleven by the palace eunuchs; in his reign Huang Chao took Chang’an.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-yang-guifei",
+      "type": "Person",
+      "label": "Yang Guifei",
+      "summary": "The imperial concubine under whose influence Xuanzong fell from 745; her relative Yang Guozhong rose through her to dominate the court.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Favourite of Xuanzong."
+        }
+      ]
+    },
+    {
+      "id": "person-an-lushan",
+      "type": "Person",
+      "label": "An Lushan",
+      "summary": "The general whose rebellion of 755 swept through Hebei, took Luoyang and Chang’an and began the late Tang; he was murdered by a subordinate early in 757.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 757
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Led the great rebellion of 755."
+        }
+      ]
+    },
+    {
+      "id": "person-huang-chao",
+      "type": "Person",
+      "label": "Huang Chao",
+      "summary": "Leader of the most formidable of the uprisings that began in 874, who sacked Guangzhou, took Luoyang and Chang’an and died in Shandong in 884.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 884
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Took Chang’an in 881."
+        }
+      ]
+    },
+    {
+      "id": "person-bai-juyi",
+      "type": "Person",
+      "label": "Bai Juyi",
+      "summary": "Poet who wrote verse in clear and simple language.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 772
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 846
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Poet of clear and simple verse."
+        }
+      ]
+    },
+    {
+      "id": "person-zhu-wen",
+      "type": "Person",
+      "label": "Zhu Wen",
+      "summary": "The warlord who deposed the last Tang emperor in 907, bringing the dynasty to its formal end, and founded the Later Liang.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Ended the Tang in 907."
+        }
+      ]
+    },
+    {
+      "id": "person-song-taizu",
+      "type": "Person",
+      "label": "Taizu of Song",
+      "summary": "Zhao Kuangyin, born at Luoyang in 927, who founded the Song in 960 and reigned until his death at Kaifeng in 976; he took the generals’ commands in exchange for honours and began the reunification of China.",
+      "sourceIds": [
+        "src-britannica-taizu-emperor-of-song-dynasty",
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Zhao Kuangyin",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 927
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 976
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Song."
+        }
+      ]
+    },
+    {
+      "id": "person-song-taizong",
+      "type": "Person",
+      "label": "Taizong of Song",
+      "summary": "Younger brother and successor of Taizu, emperor from 976 to 997, who completed the reunification by conquering the Northern Han in 979 but suffered a disastrous defeat by the Khitan in 986.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties",
+        "src-britannica-taizu-emperor-of-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-song-zhenzong",
+      "type": "Person",
+      "label": "Zhenzong of Song",
+      "summary": "The third Song emperor, from 997 to 1022, under whom the dynasty was consolidated and peace was sworn with the Khitan in 1004.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1022
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-song-renzong",
+      "type": "Person",
+      "label": "Renzong of Song",
+      "summary": "Son of Zhenzong by a palace lady, emperor from 1022 to 1063, at first under the regency of the empress dowager.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-xuanzong-takes-power",
+      "type": "Event",
+      "label": "Xuanzong takes full power",
+      "summary": "After Ruizong ceded the throne in 712, a second coup in 713 put Xuanzong completely in charge; Ruizong retired and the princess Taiping took her life.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 713
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-tang-xuanzong"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-tang-ruizong"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-talas",
+      "type": "Event",
+      "label": "The battle of the Talas River",
+      "summary": "In 751 the overextended Tang armies in the far west were defeated by the Arabs on the Talas River.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 751
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-an-lushan-rebellion",
+      "type": "Event",
+      "label": "The rebellion of An Lushan",
+      "summary": "The rebellion of An Lushan broke out in 755, took Luoyang and Chang’an in 756 and, carried on after his murder by his son and by Shi Siming, was not suppressed until 763.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 763
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-an-lushan"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-tang-xuanzong"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-tang-suzong"
+        }
+      ]
+    },
+    {
+      "id": "event-rebels-take-changan",
+      "type": "Event",
+      "label": "The rebels take Chang’an",
+      "summary": "Early in 756 An Lushan’s rebels captured the eastern capital Luoyang, and in July of the same year the main capital Chang’an.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 756
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-changan"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-an-lushan"
+        }
+      ]
+    },
+    {
+      "id": "event-tibetans-loot-changan",
+      "type": "Event",
+      "label": "The Tibetans loot Chang’an",
+      "summary": "In 763 the Tibetans, allied with Nanzhao, occupied present-day Gansu and late in the year took and looted the capital.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 763
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-changan"
+        }
+      ]
+    },
+    {
+      "id": "event-dezong-tax-reform",
+      "type": "Event",
+      "label": "The tax reform of 780",
+      "summary": "In 780 Dezong promulgated a new system of taxation in which each province was assessed a quota to be collected by its own government.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 780
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-tang-dezong"
+        }
+      ]
+    },
+    {
+      "id": "event-sweet-dew-incident",
+      "type": "Event",
+      "label": "The Sweet Dew coup",
+      "summary": "In 835 Wenzong’s scheme against the eunuchs misfired in the Sweet Dew (Ganlu) coup and led to the deaths of several ministers and officials.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 835
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-tang-wenzong"
+        }
+      ]
+    },
+    {
+      "id": "event-suppression-of-buddhism",
+      "type": "Event",
+      "label": "The suppression of Buddhism",
+      "summary": "In 843–845 the emperor Wuzong, a fanatical Daoist, suppressed Buddhism and dissolved the monasteries.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 843
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 845
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-tang-wuzong"
+        }
+      ]
+    },
+    {
+      "id": "event-huang-chao-takes-changan",
+      "type": "Event",
+      "label": "Huang Chao takes Chang’an",
+      "summary": "Huang Chao, leader of the greatest uprising, took Luoyang late in 880 and Chang’an in 881; in 883 he was forced to abandon the capital.",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 881
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-changan"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-huang-chao"
+        }
+      ]
+    },
+    {
+      "id": "event-end-of-the-tang",
+      "type": "Event",
+      "label": "The end of the Tang",
+      "summary": "In 907 Zhu Wen deposed the last Tang emperor, bringing the dynasty to its formal end and beginning the Five Dynasties.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-zhu-wen"
+        }
+      ]
+    },
+    {
+      "id": "event-founding-of-the-liao",
+      "type": "Event",
+      "label": "The Khitan found the Liao",
+      "summary": "In 907 the Khitan founded the Liao dynasty, expanding from the border of Mongolia into southern Manchuria and the sixteen prefectures south of the Great Wall.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-founding-of-the-song",
+      "type": "Event",
+      "label": "The founding of the Song",
+      "summary": "In 960 Zhao Kuangyin, Taizu, founded the Song, ending the rapid succession of the Five Dynasties.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties",
+        "src-britannica-taizu-emperor-of-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 960
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-song-taizu"
+        }
+      ]
+    },
+    {
+      "id": "event-song-conquers-sichuan",
+      "type": "Event",
+      "label": "The Song take Sichuan",
+      "summary": "Taizu’s strategy of reunification first took Sichuan in 965, then the far south in 971.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 965
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-song-taizu"
+        }
+      ]
+    },
+    {
+      "id": "event-wuyue-surrenders",
+      "type": "Event",
+      "label": "The Wu-Yue surrender",
+      "summary": "In 978 the Wu-Yue, the last of the Ten Kingdoms in the south, surrendered to the Song without a war.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 978
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-song-conquers-northern-han",
+      "type": "Event",
+      "label": "The Song conquer the Northern Han",
+      "summary": "In 979 Taizong conquered the Northern Han, the last of the Ten Kingdoms, completing the reunification.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 979
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-song-taizong"
+        }
+      ]
+    },
+    {
+      "id": "event-song-defeated-by-khitan",
+      "type": "Event",
+      "label": "The Song defeated by the Khitan",
+      "summary": "Fighting on against the Khitan in the north, Taizong suffered a disastrous defeat in 986.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 986
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-song-taizong"
+        }
+      ]
+    },
+    {
+      "id": "event-song-liao-peace",
+      "type": "Event",
+      "label": "The sworn peace of the Song and the Liao",
+      "summary": "After a Khitan offensive met by Zhenzong himself, the two empires pledged peaceful coexistence in 1004 through an exchange of sworn documents.",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1004
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-song-zhenzong"
         }
       ]
     }
@@ -11957,6 +13403,1651 @@
       "label": "During",
       "sourceIds": [
         "src-britannica-wang-xizhi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-tang-successor-of-later-liang",
+      "from": "dynasty-later-tang",
+      "to": "dynasty-later-liang",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-jin-successor-of-later-tang",
+      "from": "dynasty-later-jin",
+      "to": "dynasty-later-tang",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-han-successor-of-later-jin",
+      "from": "dynasty-later-han",
+      "to": "dynasty-later-jin",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-zhou-successor-of-later-han",
+      "from": "dynasty-later-zhou",
+      "to": "dynasty-later-han",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-liang-successor-of-tang",
+      "from": "dynasty-later-liang",
+      "to": "dynasty-tang",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-ruizong-holder-of-tang-emperor",
+      "from": "person-tang-ruizong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 710
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 712
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-ruizong-successor-of-tang-zhongzong",
+      "from": "person-tang-ruizong",
+      "to": "person-tang-zhongzong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wuhou-parent-of-tang-ruizong",
+      "from": "person-wuhou",
+      "to": "person-tang-ruizong",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-ruizong-sibling-of-tang-zhongzong",
+      "from": "person-tang-ruizong",
+      "to": "person-tang-zhongzong",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xuanzong-holder-of-tang-emperor",
+      "from": "person-tang-xuanzong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 712
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 756
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xuanzong-successor-of-tang-ruizong",
+      "from": "person-tang-xuanzong",
+      "to": "person-tang-ruizong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-ruizong-parent-of-tang-xuanzong",
+      "from": "person-tang-ruizong",
+      "to": "person-tang-xuanzong",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-suzong-holder-of-tang-emperor",
+      "from": "person-tang-suzong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 756
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 762
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-suzong-successor-of-tang-xuanzong",
+      "from": "person-tang-suzong",
+      "to": "person-tang-xuanzong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-daizong-holder-of-tang-emperor",
+      "from": "person-tang-daizong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 762
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 779
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-daizong-successor-of-tang-suzong",
+      "from": "person-tang-daizong",
+      "to": "person-tang-suzong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-dezong-holder-of-tang-emperor",
+      "from": "person-tang-dezong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 779
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 805
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-dezong-successor-of-tang-daizong",
+      "from": "person-tang-dezong",
+      "to": "person-tang-daizong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-shunzong-holder-of-tang-emperor",
+      "from": "person-tang-shunzong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "occurrence",
+        "at": {
+          "frame": "calendar",
+          "era": "commonEra",
+          "year": 805
+        }
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-shunzong-successor-of-tang-dezong",
+      "from": "person-tang-shunzong",
+      "to": "person-tang-dezong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xianzong-holder-of-tang-emperor",
+      "from": "person-tang-xianzong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 805
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 820
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xianzong-successor-of-tang-shunzong",
+      "from": "person-tang-xianzong",
+      "to": "person-tang-shunzong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-wenzong-holder-of-tang-emperor",
+      "from": "person-tang-wenzong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 827
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 840
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-wuzong-holder-of-tang-emperor",
+      "from": "person-tang-wuzong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 840
+          }
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-wuzong-successor-of-tang-wenzong",
+      "from": "person-tang-wuzong",
+      "to": "person-tang-wenzong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-yizong-holder-of-tang-emperor",
+      "from": "person-tang-yizong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 859
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 873
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xizong-holder-of-tang-emperor",
+      "from": "person-tang-xizong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 873
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 888
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xizong-successor-of-tang-yizong",
+      "from": "person-tang-xizong",
+      "to": "person-tang-yizong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yang-guifei-spouse-of-tang-xuanzong",
+      "from": "person-yang-guifei",
+      "to": "person-tang-xuanzong",
+      "type": "spouseOf",
+      "directionality": "symmetric",
+      "label": "Concubine of",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zhu-wen-founder-of-later-liang",
+      "from": "person-zhu-wen",
+      "to": "dynasty-later-liang",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizu-holder-of-song-emperor",
+      "from": "person-song-taizu",
+      "to": "office-song-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-taizu-emperor-of-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 960
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 976
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizu-founder-of-song",
+      "from": "person-song-taizu",
+      "to": "dynasty-song",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-taizu-emperor-of-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-successor-of-later-zhou",
+      "from": "dynasty-song",
+      "to": "dynasty-later-zhou",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizong-holder-of-song-emperor",
+      "from": "person-song-taizong",
+      "to": "office-song-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 976
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 997
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizong-successor-of-song-taizu",
+      "from": "person-song-taizong",
+      "to": "person-song-taizu",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizong-sibling-of-song-taizu",
+      "from": "person-song-taizong",
+      "to": "person-song-taizu",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-britannica-taizu-emperor-of-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-zhenzong-holder-of-song-emperor",
+      "from": "person-song-zhenzong",
+      "to": "office-song-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 997
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 1022
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-zhenzong-successor-of-song-taizong",
+      "from": "person-song-zhenzong",
+      "to": "person-song-taizong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-renzong-holder-of-song-emperor",
+      "from": "person-song-renzong",
+      "to": "office-song-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 1022
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 1063
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-renzong-successor-of-song-zhenzong",
+      "from": "person-song-renzong",
+      "to": "person-song-zhenzong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-zhenzong-parent-of-song-renzong",
+      "from": "person-song-zhenzong",
+      "to": "person-song-renzong",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xuanzong-participant-in-xuanzong-takes-power",
+      "from": "person-tang-xuanzong",
+      "to": "event-xuanzong-takes-power",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-ruizong-participant-in-xuanzong-takes-power",
+      "from": "person-tang-ruizong",
+      "to": "event-xuanzong-takes-power",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-xuanzong-takes-power-during-tang",
+      "from": "event-xuanzong-takes-power",
+      "to": "period-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-talas-during-tang",
+      "from": "event-battle-of-talas",
+      "to": "period-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-an-lushan-participant-in-an-lushan-rebellion",
+      "from": "person-an-lushan",
+      "to": "event-an-lushan-rebellion",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-xuanzong-participant-in-an-lushan-rebellion",
+      "from": "person-tang-xuanzong",
+      "to": "event-an-lushan-rebellion",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-suzong-participant-in-an-lushan-rebellion",
+      "from": "person-tang-suzong",
+      "to": "event-an-lushan-rebellion",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-an-lushan-rebellion-during-late-tang",
+      "from": "event-an-lushan-rebellion",
+      "to": "period-late-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-an-lushan-participant-in-rebels-take-changan",
+      "from": "person-an-lushan",
+      "to": "event-rebels-take-changan",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rebels-take-changan-took-place-in-changan",
+      "from": "event-rebels-take-changan",
+      "to": "place-changan",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rebels-take-changan-during-late-tang",
+      "from": "event-rebels-take-changan",
+      "to": "period-late-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tibetans-loot-changan-took-place-in-changan",
+      "from": "event-tibetans-loot-changan",
+      "to": "place-changan",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tibetans-loot-changan-during-late-tang",
+      "from": "event-tibetans-loot-changan",
+      "to": "period-late-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-dezong-participant-in-dezong-tax-reform",
+      "from": "person-tang-dezong",
+      "to": "event-dezong-tax-reform",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-dezong-tax-reform-during-late-tang",
+      "from": "event-dezong-tax-reform",
+      "to": "period-late-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-wenzong-participant-in-sweet-dew-incident",
+      "from": "person-tang-wenzong",
+      "to": "event-sweet-dew-incident",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sweet-dew-incident-during-late-tang",
+      "from": "event-sweet-dew-incident",
+      "to": "period-late-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-wuzong-participant-in-suppression-of-buddhism",
+      "from": "person-tang-wuzong",
+      "to": "event-suppression-of-buddhism",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-suppression-of-buddhism-during-late-tang",
+      "from": "event-suppression-of-buddhism",
+      "to": "period-late-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-huang-chao-participant-in-huang-chao-takes-changan",
+      "from": "person-huang-chao",
+      "to": "event-huang-chao-takes-changan",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-huang-chao-takes-changan-took-place-in-changan",
+      "from": "event-huang-chao-takes-changan",
+      "to": "place-changan",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-huang-chao-takes-changan-during-late-tang",
+      "from": "event-huang-chao-takes-changan",
+      "to": "period-late-tang",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zhu-wen-participant-in-end-of-the-tang",
+      "from": "person-zhu-wen",
+      "to": "event-end-of-the-tang",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-end-of-the-tang-during-five-dynasties",
+      "from": "event-end-of-the-tang",
+      "to": "period-five-dynasties",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-founding-of-the-liao-during-five-dynasties",
+      "from": "event-founding-of-the-liao",
+      "to": "period-five-dynasties",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liao-participant-in-founding-of-the-liao",
+      "from": "dynasty-liao",
+      "to": "event-founding-of-the-liao",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizu-participant-in-founding-of-the-song",
+      "from": "person-song-taizu",
+      "to": "event-founding-of-the-song",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties",
+        "src-britannica-taizu-emperor-of-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-founding-of-the-song-during-northern-song",
+      "from": "event-founding-of-the-song",
+      "to": "period-northern-song",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties",
+        "src-britannica-taizu-emperor-of-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizu-participant-in-song-conquers-sichuan",
+      "from": "person-song-taizu",
+      "to": "event-song-conquers-sichuan",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-conquers-sichuan-during-northern-song",
+      "from": "event-song-conquers-sichuan",
+      "to": "period-northern-song",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wuyue-surrenders-during-northern-song",
+      "from": "event-wuyue-surrenders",
+      "to": "period-northern-song",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizong-participant-in-song-conquers-northern-han",
+      "from": "person-song-taizong",
+      "to": "event-song-conquers-northern-han",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-conquers-northern-han-during-northern-song",
+      "from": "event-song-conquers-northern-han",
+      "to": "period-northern-song",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-taizong-participant-in-song-defeated-by-khitan",
+      "from": "person-song-taizong",
+      "to": "event-song-defeated-by-khitan",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-defeated-by-khitan-during-northern-song",
+      "from": "event-song-defeated-by-khitan",
+      "to": "period-northern-song",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liao-participant-in-song-defeated-by-khitan",
+      "from": "dynasty-liao",
+      "to": "event-song-defeated-by-khitan",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-zhenzong-participant-in-song-liao-peace",
+      "from": "person-song-zhenzong",
+      "to": "event-song-liao-peace",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-song-liao-peace-during-northern-song",
+      "from": "event-song-liao-peace",
+      "to": "period-northern-song",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liao-participant-in-song-liao-peace",
+      "from": "dynasty-liao",
+      "to": "event-song-liao-peace",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-history-of-china-five-dynasties"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

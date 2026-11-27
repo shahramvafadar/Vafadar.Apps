@@ -8,8 +8,8 @@
   },
   "entities": {
     "subject-ancient-china": {
-      "label": "چین باستان",
-      "summary": "چین از شیا، که روایت آن را نخست می‌گذارد، و شانگ تا تانگ در حدود ۷۰۰ میلادی: جو و کشورهایش، یکپارچگی زیر فرمان چین، هان باختری، شین وانگ مانگ، هان بازگشته، سه پادشاهی و گسستگی دراز، و یکپارچگی دوباره زیر فرمان سویی و تانگ."
+      "label": "چین",
+      "summary": "چین از شیا، که روایت آن را نخست می‌گذارد، و شانگ تا سونگ شمالی در حدود ۱۰۲۵ میلادی: جو و کشورهایش، یکپارچگی زیر فرمان چین، هان باختری، شین وانگ مانگ، هان بازگشته، سه پادشاهی و گسستگی دراز، یکپارچگی دوباره زیر فرمان سویی و تانگ، پنج دودمان و سونگ."
     },
     "region-qin": {
       "label": "چین (Qin)",
@@ -710,7 +710,7 @@
     },
     "period-tang": {
       "label": "تانگ",
-      "summary": "فرمانروایی تانگ، از ۶۱۸ تا ۹۰۷؛ این مجموعه آن را تا ۷۰۵ دنبال می‌کند."
+      "summary": "فرمانروایی تانگ، از ۶۱۸ تا ۹۰۷؛ اوجش در زمان شوان‌زونگ بود و پس از شورش آن لوشان در ۷۵۵ سرداران و استان‌ها نیرومند شدند تا آنکه دودمان در ۹۰۷ پایان یافت."
     },
     "person-sui-wendi": {
       "label": "ون‌دی سویی (یانگ جیان)",
@@ -946,6 +946,219 @@
     "event-orchid-pavilion-gathering": {
       "label": "گردهمایی کوشک ارکیده",
       "summary": "حدود ۴۲ تن از اهل ادب در جشن پاک‌سازی بهار ۳۵۳ در کوشک ارکیده گرد آمدند تا شعر بسرایند؛ وانگ شی‌جی پیشگفتار شعرهایشان را نوشت."
+    },
+    "period-late-tang": {
+      "label": "تانگ پسین",
+      "summary": "از شورش آن لوشان در ۷۵۵ تا پایان دودمان در ۹۰۷، روزگار فرمانداران استان‌ها، قدرت خواجگان در دربار و شورش‌های بزرگ."
+    },
+    "period-five-dynasties": {
+      "label": "پنج دودمان و ده پادشاهی",
+      "summary": "نیم سده گسستگی میان تانگ و سونگ، از ۹۰۷ تا ۹۶۰: پنج دودمان کوتاه‌زی در شمال یکی پس از دیگری آمدند و ده پادشاهی جنوب را در دست داشتند."
+    },
+    "dynasty-later-liang": {
+      "label": "لیانگ پسین",
+      "summary": "دودمانی که جو ون در ۹۰۷ با برکنار کردن واپسین امپراتور تانگ بنیاد نهاد، نخستین پنج دودمان، که در ۹۲۳ جایش را به دیگری داد."
+    },
+    "dynasty-later-tang": {
+      "label": "تانگ پسین (دودمان)",
+      "summary": "دومین پنج دودمان، از ۹۲۳ تا ۹۳۶."
+    },
+    "dynasty-later-jin": {
+      "label": "جین پسین",
+      "summary": "سومین پنج دودمان، از ۹۳۶ تا ۹۴۷."
+    },
+    "dynasty-later-han": {
+      "label": "هان پسین",
+      "summary": "چهارمین پنج دودمان، از ۹۴۷ تا ۹۵۱."
+    },
+    "dynasty-later-zhou": {
+      "label": "جو پسین",
+      "summary": "واپسین پنج دودمان، از ۹۵۱ تا برآمدن سونگ در ۹۶۰."
+    },
+    "dynasty-liao": {
+      "label": "لیائو",
+      "summary": "دودمان خیتان‌ها، از ۹۰۷ تا ۱۱۲۵، که از مرز مغولستان تا جنوب منچوری و شانزده بخش جنوب دیوار بزرگ گسترش یافت؛ سونگ در ۱۰۰۴ با آن پیمان آشتی بست."
+    },
+    "dynasty-song": {
+      "label": "سونگ",
+      "summary": "دودمانی که تای‌زو در ۹۶۰ بنیاد نهاد و تا ۱۲۷۹ فرمان راند؛ بیشتر سرزمین‌های تانگ را دوباره یکپارچه کرد و با دیوانیان فرمان راند و سردارانش را ناتوان نگه داشت."
+    },
+    "office-song-emperor": {
+      "label": "امپراتور سونگ",
+      "summary": "تخت سونگ."
+    },
+    "period-northern-song": {
+      "label": "سونگ شمالی",
+      "summary": "بخش نخست سونگ، از ۹۶۰ تا ۱۱۲۷، که دودمان هم بر شمال و هم بر جنوب فرمان می‌راند."
+    },
+    "person-tang-ruizong": {
+      "label": "رویزونگ تانگ",
+      "summary": "پسر ووهو و برادر جونگ‌زونگ، امپراتوری دست‌نشانده زیر فرمان مادرش؛ پس از مرگ جونگ‌زونگ در ۷۱۰ پسرش لی لونگ‌جی او را دوباره بر تخت نشاند و او در ۷۱۲ تخت را به وی سپرد و در ۷۱۳ کنار رفت."
+    },
+    "person-tang-xuanzong": {
+      "label": "شوان‌زونگ تانگ (لی لونگ‌جی)",
+      "summary": "لی لونگ‌جی، پسر رویزونگ، امپراتور از ۷۱۲ تا ۷۵۶، که روزگارش اوج تانگ بود؛ در پیری زیر نفوذ یانگ گوی‌فی رفت و شورش آن لوشان او را از تخت راند.",
+      "facts": {
+        "knownFor": "اوج تانگ."
+      }
+    },
+    "person-tang-suzong": {
+      "label": "سوزونگ تانگ",
+      "summary": "امپراتور از ۷۵۶ تا ۷۶۲، که در شورش آن لوشان با وضع جنگی سختی روبه‌رو بود."
+    },
+    "person-tang-daizong": {
+      "label": "دای‌زونگ تانگ",
+      "summary": "امپراتور از ۷۶۲ تا ۷۷۹، فرمانروایی ناتوان که در زمان او خواجگان نقشی رو به افزایش یافتند."
+    },
+    "person-tang-dezong": {
+      "label": "دِزونگ تانگ",
+      "summary": "امپراتوری کوشا از ۷۷۹ تا ۸۰۵، که در ۷۸۰ نظام تازهٔ مالیاتی بر پایهٔ سهمیهٔ استان‌ها را برقرار کرد."
+    },
+    "person-tang-shunzong": {
+      "label": "شون‌زونگ تانگ",
+      "summary": "امپراتوری بیمار که فرمانروایی کوتاهش پس از مرگ دزونگ در ۸۰۵ آمد."
+    },
+    "person-tang-xianzong": {
+      "label": "شیان‌زونگ تانگ",
+      "summary": "امپراتور از ۸۰۵ تا ۸۲۰، که در زمان او تانگ بخش بزرگی از قدرتش را بر استان‌ها بازیافت."
+    },
+    "person-tang-wenzong": {
+      "label": "ون‌زونگ تانگ",
+      "summary": "امپراتور از ۸۲۷ تا ۸۴۰، که کوشش‌هایش برای شکستن قدرت خواجگان در کودتای شبنم شیرین در ۸۳۵ ناکام ماند."
+    },
+    "person-tang-wuzong": {
+      "label": "ووزونگ تانگ",
+      "summary": "امپراتور از ۸۴۰، دائوباوری سرسخت که در ۸۴۳–۸۴۵ آیین بودا را سرکوب کرد."
+    },
+    "person-tang-yizong": {
+      "label": "یی‌زونگ تانگ",
+      "summary": "امپراتور از ۸۵۹ تا ۸۷۳، که در زمان او قدرت خواجگان بازگشت و شورش‌ها گسترش یافت."
+    },
+    "person-tang-xizong": {
+      "label": "شی‌زونگ تانگ",
+      "summary": "امپراتور از ۸۷۳ تا ۸۸۸، که در یازده‌سالگی به خواست خواجگان کاخ برگزیده شد؛ در زمان او هوانگ چائو چانگ‌آن را گرفت."
+    },
+    "person-yang-guifei": {
+      "label": "یانگ گوی‌فی",
+      "summary": "همسر کنیز امپراتور که شوان‌زونگ از ۷۴۵ زیر نفوذ او رفت؛ خویشاوندش یانگ گوئو‌جونگ به یاری او بر دربار چیره شد.",
+      "facts": {
+        "knownFor": "محبوب شوان‌زونگ."
+      }
+    },
+    "person-an-lushan": {
+      "label": "آن لوشان",
+      "summary": "سرداری که شورشش در ۷۵۵ هبی را فرا گرفت، لوئویانگ و چانگ‌آن را گرفت و تانگ پسین را آغاز کرد؛ در آغاز ۷۵۷ به دست زیردستی کشته شد.",
+      "facts": {
+        "knownFor": "رهبر شورش بزرگ ۷۵۵."
+      }
+    },
+    "person-huang-chao": {
+      "label": "هوانگ چائو",
+      "summary": "رهبر سهمگین‌ترین شورش‌هایی که از ۸۷۴ آغاز شد، که گوانگ‌جو را تاراج کرد، لوئویانگ و چانگ‌آن را گرفت و در ۸۸۴ در شاندونگ درگذشت.",
+      "facts": {
+        "knownFor": "در ۸۸۱ چانگ‌آن را گرفت."
+      }
+    },
+    "person-bai-juyi": {
+      "label": "بای جوی‌یی",
+      "summary": "شاعری که شعرش را به زبانی روشن و ساده سرود.",
+      "facts": {
+        "knownFor": "شاعر شعرهای روشن و ساده."
+      }
+    },
+    "person-zhu-wen": {
+      "label": "جو ون",
+      "summary": "سرداری که در ۹۰۷ واپسین امپراتور تانگ را برکنار کرد و دودمان را به پایان رسمی رساند و لیانگ پسین را بنیاد نهاد.",
+      "facts": {
+        "knownFor": "در ۹۰۷ به تانگ پایان داد."
+      }
+    },
+    "person-song-taizu": {
+      "label": "تای‌زو سونگ (جائو کوانگ‌یین)",
+      "summary": "جائو کوانگ‌یین، زادهٔ ۹۲۷ در لوئویانگ، که در ۹۶۰ سونگ را بنیاد نهاد و تا مرگش در کای‌فنگ در ۹۷۶ فرمان راند؛ فرماندهی سرداران را در برابر لقب و پاداش از آنان گرفت و یکپارچه‌سازی چین را آغاز کرد.",
+      "facts": {
+        "knownFor": "بنیادگذار سونگ."
+      }
+    },
+    "person-song-taizong": {
+      "label": "تای‌زونگ سونگ",
+      "summary": "برادر کوچک‌تر و جانشین تای‌زو، امپراتور از ۹۷۶ تا ۹۹۷، که با گشودن هان شمالی در ۹۷۹ یکپارچه‌سازی را به پایان رساند اما در ۹۸۶ از خیتان‌ها شکستی سخت خورد."
+    },
+    "person-song-zhenzong": {
+      "label": "جن‌زونگ سونگ",
+      "summary": "سومین امپراتور سونگ، از ۹۹۷ تا ۱۰۲۲، که در زمان او دودمان استوار شد و در ۱۰۰۴ با خیتان‌ها پیمان آشتی بسته شد."
+    },
+    "person-song-renzong": {
+      "label": "رن‌زونگ سونگ",
+      "summary": "پسر جن‌زونگ از بانویی از کاخ، امپراتور از ۱۰۲۲ تا ۱۰۶۳، نخست زیر نیابت ملکهٔ مادر."
+    },
+    "event-xuanzong-takes-power": {
+      "label": "به دست گرفتن همهٔ قدرت به دست شوان‌زونگ",
+      "summary": "پس از آنکه رویزونگ در ۷۱۲ تخت را سپرد، کودتای دوم در ۷۱۳ همهٔ قدرت را به شوان‌زونگ داد؛ رویزونگ کنار رفت و شاهزاده‌خانم تای‌پینگ خودکشی کرد."
+    },
+    "event-battle-of-talas": {
+      "label": "نبرد رود تالاس",
+      "summary": "در ۷۵۱ سپاهیان تانگ که در باختر دور بیش از اندازه پیش رفته بودند، در کنار رود تالاس از عرب‌ها شکست خوردند."
+    },
+    "event-an-lushan-rebellion": {
+      "label": "شورش آن لوشان",
+      "summary": "شورش آن لوشان در ۷۵۵ آغاز شد، در ۷۵۶ لوئویانگ و چانگ‌آن را گرفت و پس از کشته شدن او به دست پسرش و شی سی‌مینگ ادامه یافت و تا ۷۶۳ سرکوب نشد."
+    },
+    "event-rebels-take-changan": {
+      "label": "گرفتن چانگ‌آن به دست شورشیان",
+      "summary": "در آغاز ۷۵۶ شورشیان آن لوشان پایتخت خاوری لوئویانگ را گرفتند و در ژوئیهٔ همان سال پایتخت اصلی چانگ‌آن را."
+    },
+    "event-tibetans-loot-changan": {
+      "label": "تاراج چانگ‌آن به دست تبتی‌ها",
+      "summary": "در ۷۶۳ تبتی‌ها که با نان‌جائو هم‌پیمان بودند، گانسو امروز را گرفتند و در پایان سال پایتخت را گرفتند و تاراج کردند."
+    },
+    "event-dezong-tax-reform": {
+      "label": "سامان‌دهی مالیاتی ۷۸۰",
+      "summary": "در ۷۸۰ دزونگ نظام تازه‌ای از مالیات برقرار کرد که در آن برای هر استان سهمیه‌ای تعیین می‌شد که دولت استان خود گرد می‌آورد."
+    },
+    "event-sweet-dew-incident": {
+      "label": "کودتای شبنم شیرین",
+      "summary": "در ۸۳۵ نقشهٔ ون‌زونگ بر ضد خواجگان در کودتای شبنم شیرین (گان‌لو) نافرجام ماند و به کشته شدن چند وزیر و دیوانی انجامید."
+    },
+    "event-suppression-of-buddhism": {
+      "label": "سرکوب آیین بودا",
+      "summary": "در ۸۴۳–۸۴۵ امپراتور ووزونگ، دائوباوری سرسخت، آیین بودا را سرکوب کرد و دیرها را برچید."
+    },
+    "event-huang-chao-takes-changan": {
+      "label": "گرفتن چانگ‌آن به دست هوانگ چائو",
+      "summary": "هوانگ چائو، رهبر بزرگ‌ترین شورش، در پایان ۸۸۰ لوئویانگ و در ۸۸۱ چانگ‌آن را گرفت؛ در ۸۸۳ ناچار پایتخت را رها کرد."
+    },
+    "event-end-of-the-tang": {
+      "label": "پایان تانگ",
+      "summary": "در ۹۰۷ جو ون واپسین امپراتور تانگ را برکنار کرد و دودمان را به پایان رسمی رساند و دوران پنج دودمان را آغاز کرد."
+    },
+    "event-founding-of-the-liao": {
+      "label": "بنیاد لیائو به دست خیتان‌ها",
+      "summary": "در ۹۰۷ خیتان‌ها دودمان لیائو را بنیاد نهادند و از مرز مغولستان تا جنوب منچوری و شانزده بخش جنوب دیوار بزرگ گسترش یافتند."
+    },
+    "event-founding-of-the-song": {
+      "label": "بنیاد سونگ",
+      "summary": "در ۹۶۰ جائو کوانگ‌یین، تای‌زو، سونگ را بنیاد نهاد و جانشینی شتابان پنج دودمان را پایان داد."
+    },
+    "event-song-conquers-sichuan": {
+      "label": "گرفتن سیچوان به دست سونگ",
+      "summary": "راهبرد یکپارچه‌سازی تای‌زو نخست در ۹۶۵ سیچوان و سپس در ۹۷۱ جنوب دور را گرفت."
+    },
+    "event-wuyue-surrenders": {
+      "label": "تسلیم وو-یوئه",
+      "summary": "در ۹۷۸ وو-یوئه، واپسین ده پادشاهی در جنوب، بی‌جنگ به سونگ تسلیم شد."
+    },
+    "event-song-conquers-northern-han": {
+      "label": "گشودن هان شمالی به دست سونگ",
+      "summary": "در ۹۷۹ تای‌زونگ هان شمالی، واپسین ده پادشاهی، را گشود و یکپارچه‌سازی را کامل کرد."
+    },
+    "event-song-defeated-by-khitan": {
+      "label": "شکست سونگ از خیتان‌ها",
+      "summary": "تای‌زونگ که در شمال با خیتان‌ها می‌جنگید، در ۹۸۶ شکستی سخت خورد."
+    },
+    "event-song-liao-peace": {
+      "label": "پیمان آشتی سونگ و لیائو",
+      "summary": "پس از یورشی از سوی خیتان‌ها که جن‌زونگ خود به رویارویی‌اش رفت، دو امپراتوری در ۱۰۰۴ با داد و ستد نامه‌های سوگندخورده پیمان هم‌زیستی آشتی‌آمیز بستند."
     }
   },
   "relations": {
@@ -1742,6 +1955,246 @@
     },
     "relation-orchid-pavilion-gathering-during-eastern-jin": {
       "label": "در دورهٔ"
+    },
+    "relation-later-tang-successor-of-later-liang": {
+      "label": "جانشینِ"
+    },
+    "relation-later-jin-successor-of-later-tang": {
+      "label": "جانشینِ"
+    },
+    "relation-later-han-successor-of-later-jin": {
+      "label": "جانشینِ"
+    },
+    "relation-later-zhou-successor-of-later-han": {
+      "label": "جانشینِ"
+    },
+    "relation-later-liang-successor-of-tang": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-ruizong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-ruizong-successor-of-tang-zhongzong": {
+      "label": "جانشینِ"
+    },
+    "relation-wuhou-parent-of-tang-ruizong": {
+      "label": "مادرِ"
+    },
+    "relation-tang-ruizong-sibling-of-tang-zhongzong": {
+      "label": "برادرِ"
+    },
+    "relation-tang-xuanzong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-xuanzong-successor-of-tang-ruizong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-ruizong-parent-of-tang-xuanzong": {
+      "label": "پدرِ"
+    },
+    "relation-tang-suzong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-suzong-successor-of-tang-xuanzong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-daizong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-daizong-successor-of-tang-suzong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-dezong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-dezong-successor-of-tang-daizong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-shunzong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-shunzong-successor-of-tang-dezong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-xianzong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-xianzong-successor-of-tang-shunzong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-wenzong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-wuzong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-wuzong-successor-of-tang-wenzong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-yizong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-xizong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-xizong-successor-of-tang-yizong": {
+      "label": "جانشینِ"
+    },
+    "relation-yang-guifei-spouse-of-tang-xuanzong": {
+      "label": "همسر کنیزِ"
+    },
+    "relation-zhu-wen-founder-of-later-liang": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-song-taizu-holder-of-song-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-song-taizu-founder-of-song": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-song-successor-of-later-zhou": {
+      "label": "جانشینِ"
+    },
+    "relation-song-taizong-holder-of-song-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-song-taizong-successor-of-song-taizu": {
+      "label": "جانشینِ"
+    },
+    "relation-song-taizong-sibling-of-song-taizu": {
+      "label": "برادرِ"
+    },
+    "relation-song-zhenzong-holder-of-song-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-song-zhenzong-successor-of-song-taizong": {
+      "label": "جانشینِ"
+    },
+    "relation-song-renzong-holder-of-song-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-song-renzong-successor-of-song-zhenzong": {
+      "label": "جانشینِ"
+    },
+    "relation-song-zhenzong-parent-of-song-renzong": {
+      "label": "پدرِ"
+    },
+    "relation-tang-xuanzong-participant-in-xuanzong-takes-power": {
+      "label": "شرکت در"
+    },
+    "relation-tang-ruizong-participant-in-xuanzong-takes-power": {
+      "label": "شرکت در"
+    },
+    "relation-xuanzong-takes-power-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-battle-of-talas-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-an-lushan-participant-in-an-lushan-rebellion": {
+      "label": "شرکت در"
+    },
+    "relation-tang-xuanzong-participant-in-an-lushan-rebellion": {
+      "label": "شرکت در"
+    },
+    "relation-tang-suzong-participant-in-an-lushan-rebellion": {
+      "label": "شرکت در"
+    },
+    "relation-an-lushan-rebellion-during-late-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-an-lushan-participant-in-rebels-take-changan": {
+      "label": "شرکت در"
+    },
+    "relation-rebels-take-changan-took-place-in-changan": {
+      "label": "رخ داد در"
+    },
+    "relation-rebels-take-changan-during-late-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-tibetans-loot-changan-took-place-in-changan": {
+      "label": "رخ داد در"
+    },
+    "relation-tibetans-loot-changan-during-late-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-tang-dezong-participant-in-dezong-tax-reform": {
+      "label": "شرکت در"
+    },
+    "relation-dezong-tax-reform-during-late-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-tang-wenzong-participant-in-sweet-dew-incident": {
+      "label": "شرکت در"
+    },
+    "relation-sweet-dew-incident-during-late-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-tang-wuzong-participant-in-suppression-of-buddhism": {
+      "label": "شرکت در"
+    },
+    "relation-suppression-of-buddhism-during-late-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-huang-chao-participant-in-huang-chao-takes-changan": {
+      "label": "شرکت در"
+    },
+    "relation-huang-chao-takes-changan-took-place-in-changan": {
+      "label": "رخ داد در"
+    },
+    "relation-huang-chao-takes-changan-during-late-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-zhu-wen-participant-in-end-of-the-tang": {
+      "label": "شرکت در"
+    },
+    "relation-end-of-the-tang-during-five-dynasties": {
+      "label": "در دورهٔ"
+    },
+    "relation-founding-of-the-liao-during-five-dynasties": {
+      "label": "در دورهٔ"
+    },
+    "relation-liao-participant-in-founding-of-the-liao": {
+      "label": "شرکت در"
+    },
+    "relation-song-taizu-participant-in-founding-of-the-song": {
+      "label": "شرکت در"
+    },
+    "relation-founding-of-the-song-during-northern-song": {
+      "label": "در دورهٔ"
+    },
+    "relation-song-taizu-participant-in-song-conquers-sichuan": {
+      "label": "شرکت در"
+    },
+    "relation-song-conquers-sichuan-during-northern-song": {
+      "label": "در دورهٔ"
+    },
+    "relation-wuyue-surrenders-during-northern-song": {
+      "label": "در دورهٔ"
+    },
+    "relation-song-taizong-participant-in-song-conquers-northern-han": {
+      "label": "شرکت در"
+    },
+    "relation-song-conquers-northern-han-during-northern-song": {
+      "label": "در دورهٔ"
+    },
+    "relation-song-taizong-participant-in-song-defeated-by-khitan": {
+      "label": "شرکت در"
+    },
+    "relation-song-defeated-by-khitan-during-northern-song": {
+      "label": "در دورهٔ"
+    },
+    "relation-liao-participant-in-song-defeated-by-khitan": {
+      "label": "شرکت در"
+    },
+    "relation-song-zhenzong-participant-in-song-liao-peace": {
+      "label": "شرکت در"
+    },
+    "relation-song-liao-peace-during-northern-song": {
+      "label": "در دورهٔ"
+    },
+    "relation-liao-participant-in-song-liao-peace": {
+      "label": "شرکت در"
     }
   }
 }
