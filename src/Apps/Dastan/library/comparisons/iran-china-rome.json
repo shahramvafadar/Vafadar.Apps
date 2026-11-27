@@ -5,7 +5,7 @@
   "note": "Built from the three collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year (Awan and Šimaški), a period that begins and ends in the same year, and a dynasty whose years are those of a period already here.",
   "frame": "commonEraYears",
   "title": "Iran, China and Rome side by side",
-  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran to the end of the Sasanians in 651, Rome to Heraclius in 641, China to the Tang in 705 – and every dated event of the three collections, side by side.",
+  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran through the Sasanians and the caliphate to the Ghaznavids in 1030, Rome to Heraclius in 641, China to the Tang in 705 – and every dated event of the three collections, side by side.",
   "show": {
     "from": {
       "frame": "calendar",
@@ -15,7 +15,7 @@
     "to": {
       "frame": "calendar",
       "era": "commonEra",
-      "year": 705
+      "year": 1030
     }
   },
   "publication": {
@@ -1338,6 +1338,83 @@
       "url": "https://www.iranicaonline.org/articles/hephthalites/",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-umayyad-dynasty",
+      "title": "Umayyad dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Umayyad-dynasty-Islamic-history",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-abbasid-caliphate",
+      "title": "ʿAbbasid caliphate – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/abbasid-caliphate/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-abu-muslim",
+      "title": "Abu Muslim – Britannica",
+      "url": "https://www.britannica.com/biography/Abu-Muslim",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-baghdad",
+      "title": "Baghdad – Britannica",
+      "url": "https://www.britannica.com/place/Baghdad",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-saffarids",
+      "title": "Saffarids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/saffarids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-samanid-dynasty",
+      "title": "Samanid dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Samanid-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-ziyarids",
+      "title": "Ziyarids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ziyarids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-buyids",
+      "title": "Buyids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/buyids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-ghaznavids",
+      "title": "Ghaznavids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ghaznavids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-biruni-i",
+      "title": "Biruni, Abu Rayhan i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/biruni-abu-rayhan-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
     }
   ],
   "lanes": [
@@ -1538,6 +1615,64 @@
             "src-livius-sasanians-sasanian-kings",
             "src-livius-dynasty-sasanians",
             "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "umayyad-caliphate",
+          "label": "The Umayyad caliphate",
+          "summary": "The first great Muslim dynasty to rule the empire of the caliphate, from 661 to 750; Iran was governed as provinces of this Arab empire.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 661
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 750
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-umayyad-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "abbasid-caliphate",
+          "label": "The Abbasid caliphate before the Seljuks",
+          "summary": "From the establishment of the Abbasids in 750 until Toghril Beg’s Seljuks entered Baghdad in 1055; within it the Iranian dynasties rose in the east and the Buyids held the caliphs in tutelage.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 750
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1055
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-abbasid-caliphate"
           ],
           "reviewStatus": "proposed"
         }
@@ -2689,6 +2824,289 @@
           "sourceIds": [
             "src-livius-dynasty-sasanians",
             "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "abbasid-revolution",
+          "label": "The Abbasid revolution",
+          "summary": "On 15 June 747 Abu Muslim raised the banner of revolt in Khorasan; it triumphed in 750 when the last Umayyad caliph Marwan II was defeated and killed, and the Abbasids took the caliphate.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 747
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 750
+            }
+          },
+          "sourceIds": [
+            "src-britannica-abu-muslim",
+            "src-iranica-abbasid-caliphate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-abu-muslim",
+          "label": "The death of Abu Muslim",
+          "summary": "Suspicious of a vassal with so much power, the caliph al-Mansur took Khorasan from Abu Muslim and had him put to death at court in February 755; his unavenged death inspired many later revolts.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            }
+          },
+          "sourceIds": [
+            "src-britannica-abu-muslim"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "founding-of-baghdad",
+          "label": "The founding of Baghdad",
+          "summary": "In 762 Baghdad was founded on the Tigris as the capital of the Abbasid caliphs.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 762
+            }
+          },
+          "sourceIds": [
+            "src-britannica-baghdad"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "mamun-defeats-amin",
+          "label": "al-Maʾmun defeats his brother Amin",
+          "summary": "From his governorate in Marv, with the men and resources of Persia, al-Maʾmun defeated his brother Amin in 813, whose cause was that of the Arabs of Iraq and Syria.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 813
+            }
+          },
+          "sourceIds": [
+            "src-iranica-abbasid-caliphate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "yaqub-hailed-amir",
+          "label": "Yaʿqub hailed as amir in Sistan",
+          "summary": "Out of the power struggles of the ʿayyar leaders of Sistan, Yaʿqub emerged the victor and was hailed as amir by the army of Sistan in 861.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 861
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "yaqub-at-nishapur",
+          "label": "Yaʿqub at Nishapur",
+          "summary": "In 873 Yaʿqub intervened at Nishapur and ended the rule of the Tahirid governors in Khorasan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 873
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids",
+            "src-iranica-abbasid-caliphate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-dayr-al-aqul",
+          "label": "The battle of Dayr al-ʿAqul",
+          "summary": "Marching on Baghdad, Yaʿqub was decisively defeated by the regent al-Muwaffaq at Dayr al-ʿAqul southeast of Baghdad in 876; he kept Fars and Ahvaz.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 876
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-balkh",
+          "label": "ʿAmr b. Layth defeated outside Balkh",
+          "summary": "In 900 Ismaʿil the Samanid crossed the Oxus and defeated ʿAmr b. Layth outside Balkh, capturing him and overturning Saffarid power in a single day; Khorasan passed to the Samanids for almost a century.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 900
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids",
+            "src-britannica-samanid-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-mardavij",
+          "label": "The murder of Mardavij",
+          "summary": "In 935 Mardavij was killed by his Turkish slaves; his empire fell apart and most of its lands south of the Caspian mountains went to the Buyid brothers.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 935
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ziyarids",
+            "src-iranica-buyids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "buyids-enter-baghdad",
+          "label": "The Buyids enter Baghdad",
+          "summary": "On 19 December 945 Ahmad b. Buya entered Baghdad without a fight and the Buyids took the caliphs into their tutelage.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 945
+            }
+          },
+          "sourceIds": [
+            "src-iranica-buyids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "adud-al-dawla-shahanshah",
+          "label": "ʿAdud al-Dawla as shahanshah",
+          "summary": "A coin struck in Fars in 970 shows ʿAdud al-Dawla as a crowned king with the inscription shahanshah.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 970
+            }
+          },
+          "sourceIds": [
+            "src-iranica-buyids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "ferdowsi-begins-the-shahnameh",
+          "label": "Ferdowsi begins the Shahnameh",
+          "summary": "About 977, after the death of Daqiqi, Ferdowsi began writing the Shahnameh; a first version was complete by 994.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 977,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ferdowsi-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "mahmud-throws-off-samanid-authority",
+          "label": "Mahmud throws off Samanid authority",
+          "summary": "In 999 Mahmud of Ghazni threw off Samanid authority; with the Qarakhanids north of the Oxus he divided up the former Samanid lands, and the Samanid dynasty came to its end.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 999
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ghaznavids",
+            "src-britannica-samanid-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "completion-of-the-shahnameh",
+          "label": "The completion of the Shahnameh",
+          "summary": "In his seventy-first year, on 8 March 1010, Ferdowsi finished the Shahnameh.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1010
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ferdowsi-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "mahmud-takes-ray",
+          "label": "Mahmud takes Ray",
+          "summary": "In 1029 Mahmud of Ghazni conquered Ray, until then the capital of the northern Buyid emirate.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1029
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ziyarids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "biruni-completes-india",
+          "label": "Biruni completes his India",
+          "summary": "In 1030, just after the death of Mahmud, Biruni completed his great work on India, the Tahqiq ma li’l-Hind.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1030
+            }
+          },
+          "sourceIds": [
+            "src-iranica-biruni-i"
           ],
           "reviewStatus": "proposed"
         }

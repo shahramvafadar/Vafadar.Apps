@@ -8,8 +8,8 @@
   },
   "entities": {
     "subject-ancient-iran": {
-      "label": "ایران باستان",
-      "summary": "سرزمین‌های فلات ایران و همسایگانش از نخستین پادشاهی‌های ایلام تا پایان ساسانیان در ۶۵۱ میلادی: ایلام، مادها، شاهنشاهی هخامنشی، اسکندر و سلوکیان، اشکانیان پارت و ساسانیان."
+      "label": "ایران",
+      "summary": "سرزمین‌های فلات ایران و همسایگانش از نخستین پادشاهی‌های ایلام تا غزنویان در حدود ۱۰۳۰ میلادی: ایلام، مادها، شاهنشاهی هخامنشی، اسکندر و سلوکیان، اشکانیان پارت، ساسانیان، و پس از گشودن ایران به دست عرب‌ها، خلیفه‌ها و دودمان‌های ایرانی صفاریان، سامانیان، زیاریان، آل‌بویه و غزنویان."
     },
     "region-elam": {
       "label": "ایلام",
@@ -1423,6 +1423,300 @@
     "event-defeat-of-the-hephthalites": {
       "label": "درهم شکستن هپتالیان نزدیک بخارا",
       "summary": "میان ۵۵۸ و ۵۶۱ خسرو یکم همراه ترکانِ تازه‌رسیده هپتالیان را در نبردی بزرگ نزدیک بخارا درهم شکست و دو قدرت سرزمینشان را در امتداد جیحون بخش کردند."
+    },
+    "place-baghdad": {
+      "label": "بغداد",
+      "summary": "شهری بر کرانهٔ دجله که در ۷۶۲ همچون پایتخت خلیفه‌های عباسی بنیاد شد و تا پنج سده برترین کانون فرهنگی جهان اسلام بود."
+    },
+    "place-bukhara": {
+      "label": "بخارا",
+      "summary": "شهری در فرارود که اسماعیل یکم آن را پایتخت سامانیان کرد؛ همراه سمرقند کانون ادب و دانش پارسی."
+    },
+    "place-ghazni": {
+      "label": "غزنین",
+      "summary": "شهری در خاور افغانستان که سبکتگین و محمود قدرت غزنویان را از آنجا ساختند."
+    },
+    "place-ray": {
+      "label": "ری",
+      "summary": "شهر کهن ماد در جنوب تهران امروز، در دست مرداویج و برادرش وشمگیر و سپس پایتخت امیرنشین شمالی آل‌بویه تا آنکه محمود غزنوی در ۱۰۲۹ آن را گرفت."
+    },
+    "place-nishapur": {
+      "label": "نیشابور",
+      "summary": "شهر بزرگ خراسان، جایگاه فرمانداران طاهری تا آنکه یعقوب لیث صفاری در ۸۷۳ به آنجا آمد."
+    },
+    "period-umayyad-caliphate": {
+      "label": "خلافت امویان",
+      "summary": "نخستین دودمان بزرگ مسلمان که از ۶۶۱ تا ۷۵۰ بر امپراتوری خلافت فرمان راند؛ ایران همچون استان‌های این امپراتوری عرب اداره می‌شد."
+    },
+    "dynasty-abbasid": {
+      "label": "عباسیان",
+      "summary": "دودمان خلیفه‌هایی که در ۷۵۰ با یاری شورشی در خراسان برآمد و پیوندی نزدیک با ایران داشت؛ از ۷۶۲ از بغداد فرمان می‌راندند."
+    },
+    "office-abbasid-caliph": {
+      "label": "خلیفهٔ عباسی",
+      "summary": "خلافتی که در دست خاندان عباسی بود."
+    },
+    "period-abbasid-caliphate": {
+      "label": "خلافت عباسی پیش از سلجوقیان",
+      "summary": "از برآمدن عباسیان در ۷۵۰ تا ورود سلجوقیان طغرل‌بیگ به بغداد در ۱۰۵۵؛ در این دوره دودمان‌های ایرانی در خاور برخاستند و آل‌بویه خلیفه‌ها را زیر سرپرستی خود داشتند."
+    },
+    "person-abu-muslim": {
+      "label": "ابومسلم خراسانی",
+      "summary": "رهبر جنبش انقلابی خراسان که به نمایندگی خاندان عباسی در ۷۴۷ درفش شورش را برافراشت و امویان را برانداخت؛ فرماندار خراسان شد، در ۷۵۵ به فرمان منصور کشته شد و قهرمانی افسانه‌ای گشت.",
+      "facts": {
+        "knownFor": "عباسیان را به تخت رساند."
+      }
+    },
+    "person-al-mansur": {
+      "label": "منصور",
+      "summary": "دومین خلیفهٔ عباسی، از ۷۵۴ تا ۷۷۵، که وابستگان خود را در کارها بر عرب‌ها برتری داد و ابومسلم را کشت.",
+      "facts": {
+        "knownFor": "دومین خلیفهٔ عباسی."
+      }
+    },
+    "person-al-mamun": {
+      "label": "مأمون",
+      "summary": "خلیفهٔ عباسی که از فرمانداری خود در مرو نیروی ایران را در دست داشت و در ۸۱۳ برادرش امین را شکست داد؛ برادران سامانی برای خدمت به او استان‌هایی پاداش گرفتند.",
+      "facts": {
+        "knownFor": "با نیروی ایران برادرش امین را شکست داد."
+      }
+    },
+    "event-abbasid-revolution": {
+      "label": "انقلاب عباسی",
+      "summary": "در ۱۵ ژوئن ۷۴۷ ابومسلم در خراسان درفش شورش برافراشت؛ شورش در ۷۵۰ با شکست و کشته شدن مروان دوم، واپسین خلیفهٔ اموی، پیروز شد و عباسیان خلافت را به دست گرفتند."
+    },
+    "event-death-of-abu-muslim": {
+      "label": "کشته شدن ابومسلم",
+      "summary": "منصور خلیفه که از فرمانبری چنین نیرومند بدگمان بود، خراسان را از ابومسلم گرفت و در فوریهٔ ۷۵۵ او را در دربار کشت؛ مرگ بی‌کین‌خواهی او انگیزهٔ شورش‌های بسیاری شد."
+    },
+    "event-founding-of-baghdad": {
+      "label": "بنیاد بغداد",
+      "summary": "در ۷۶۲ بغداد بر کرانهٔ دجله همچون پایتخت خلیفه‌های عباسی بنیاد شد."
+    },
+    "event-mamun-defeats-amin": {
+      "label": "پیروزی مأمون بر برادرش امین",
+      "summary": "مأمون از فرمانداری خود در مرو و با مردان و نیروی ایران، در ۸۱۳ برادرش امین را که هوادار عرب‌های عراق و شام بود شکست داد."
+    },
+    "dynasty-saffarid": {
+      "label": "صفاریان",
+      "summary": "دودمانی از سیستان در خاور ایران که از ۸۶۱ تا ۱۰۰۳ فرمان راند؛ نخستین امیرانش با شمشیر امپراتوری بزرگی ساختند و نخستین شکاف بزرگ را در خلافت عباسی انداختند."
+    },
+    "office-saffarid-amir": {
+      "label": "امیر صفاری",
+      "summary": "امیری صفاریان از سیستان."
+    },
+    "person-yaqub-ibn-layth": {
+      "label": "یعقوب لیث صفاری",
+      "summary": "سرکردهٔ عیاران سیستان که در ۸۶۱ امیر خوانده شد و از افغانستان تا فارس را گرفت و بغداد را تهدید کرد تا آنکه در ۸۷۶ در دیرالعاقول شکست خورد؛ سه سال بعد در جندی‌شاپور درگذشت.",
+      "facts": {
+        "knownFor": "بنیادگذار امپراتوری صفاری."
+      }
+    },
+    "person-amr-ibn-layth": {
+      "label": "عمرو لیث",
+      "summary": "برادر یعقوب و دومین امیر صفاری، که آرزویش برای گرفتن فرارود از سامانیان در ۹۰۰ با شکست و اسیری‌اش بیرون بلخ پایان یافت.",
+      "facts": {
+        "knownFor": "دومین امیر صفاری."
+      }
+    },
+    "event-yaqub-hailed-amir": {
+      "label": "امیری یعقوب لیث در سیستان",
+      "summary": "از کشمکش سرکردگان عیار سیستان، یعقوب پیروز بیرون آمد و در ۸۶۱ سپاه سیستان او را امیر خواند."
+    },
+    "event-yaqub-at-nishapur": {
+      "label": "یعقوب لیث در نیشابور",
+      "summary": "در ۸۷۳ یعقوب در نیشابور دست به کار شد و فرمانروایی فرمانداران طاهری را در خراسان پایان داد."
+    },
+    "event-battle-of-dayr-al-aqul": {
+      "label": "نبرد دیرالعاقول",
+      "summary": "یعقوب که به سوی بغداد می‌رفت، در ۸۷۶ در دیرالعاقول در جنوب خاوری بغداد از الموفق، نایب خلیفه، شکستی سخت خورد؛ فارس و اهواز در دستش ماند."
+    },
+    "dynasty-samanid": {
+      "label": "سامانیان",
+      "summary": "دودمانی ایرانی در فرارود و خراسان، از ۸۱۹ تا ۹۹۹، با پایتخت بخارا، نامدار برای جانی که به احساس ملی ایرانی و ادب پارسی داد."
+    },
+    "office-samanid-amir": {
+      "label": "امیر سامانی",
+      "summary": "امیری سامانیان در بخارا."
+    },
+    "person-ismail-samani": {
+      "label": "اسماعیل سامانی",
+      "summary": "امیر سامانی از ۸۹۲ تا ۹۰۷ که در ۹۰۰ صفاریان را در خراسان برانداخت و فرمانروایی سامانی را از بخارا بر فرارود و خراسان استوار کرد.",
+      "facts": {
+        "knownFor": "صفاریان را در خراسان برانداخت."
+      }
+    },
+    "person-nasr-ii": {
+      "label": "نصر دوم",
+      "summary": "امیر سامانی از ۹۱۴ تا ۹۴۳، که رودکی در دربار او در بخارا شاعر بود.",
+      "facts": {
+        "knownFor": "پشتیبان رودکی."
+      }
+    },
+    "event-battle-of-balkh": {
+      "label": "شکست عمرو لیث در بلخ",
+      "summary": "در ۹۰۰ اسماعیل سامانی از جیحون گذشت و عمرو لیث را بیرون بلخ شکست داد و اسیر کرد و قدرت صفاری را در یک روز واژگون کرد؛ خراسان نزدیک یک سده از آن سامانیان شد."
+    },
+    "person-rudaki": {
+      "label": "رودکی",
+      "summary": "شاعر، خواننده و نوازنده‌ای که حدود ۸۵۹ زاده شد، نخستین شاعر نامدار پارسی نو و پدر شعر پارسی؛ تا ۹۳۷ در خدمت نصر دوم در بخارا بود و کلیله و دمنه را به پارسی برگرداند.",
+      "facts": {
+        "knownFor": "پدر شعر پارسی."
+      }
+    },
+    "dynasty-ziyarid": {
+      "label": "زیاریان",
+      "summary": "دودمانی گیلی در کرانه‌های دریای کاسپین، از ۹۳۱ تا حدود ۱۰۹۰، که نخست از ری بر شمال ایران و سپس تنها بر تبرستان و گرگان فرمان راند."
+    },
+    "office-ziyarid-amir": {
+      "label": "امیر زیاری",
+      "summary": "امیری زیاریان."
+    },
+    "person-mardavij": {
+      "label": "مرداویج زیاری",
+      "summary": "بنیادگذار زیاریان، که خود را از خاندان کهن شاهی گیلان می‌دانست، از ری تا اصفهان را گرفت و آرزوی بازگرداندن شاهنشاهی و آیین ایرانی را داشت؛ غلامان ترکش در ۹۳۵ او را کشتند.",
+      "facts": {
+        "knownFor": "آرزوی بازگرداندن شاهنشاهی ایرانی را داشت."
+      }
+    },
+    "person-vushmgir": {
+      "label": "وشمگیر",
+      "summary": "برادر و جانشین مرداویج در ری از ۹۳۵ تا ۹۶۷، که پس از ۹۴۰ تنها سرزمین‌های کاسپین را نگه داشت و در پایان ۹۶۷ به دست گرازی کشته شد.",
+      "facts": {
+        "knownFor": "به دست گراز کشته شد."
+      }
+    },
+    "person-qabus": {
+      "label": "قابوس وشمگیر",
+      "summary": "پسر وشمگیر و امیر زیاری از ۹۷۸ تا ۹۸۱ و دوباره از ۹۹۷ تا ۱۰۱۲، با لقب شمس‌المعالی، که بیرونی نخستین کتاب بزرگش را در دربار او نوشت.",
+      "facts": {
+        "knownFor": "پشتیبان بیرونی."
+      }
+    },
+    "event-death-of-mardavij": {
+      "label": "کشته شدن مرداویج",
+      "summary": "در ۹۳۵ مرداویج به دست غلامان ترکش کشته شد؛ قلمروش از هم پاشید و بیشتر سرزمین‌هایش در جنوب کوه‌های کاسپین به برادران بویه رسید."
+    },
+    "dynasty-buyid": {
+      "label": "آل‌بویه",
+      "summary": "دودمانی دیلمی، پسران بویهٔ ماهیگیر، که از میانهٔ سدهٔ دهم تا میانهٔ سدهٔ یازدهم بر باختر و جنوب ایران و عراق فرمان راندند، همچون سه امیرنشین از یک خاندان، و خلیفه‌های بغداد را زیر سرپرستی خود داشتند."
+    },
+    "office-buyid-amir": {
+      "label": "امیر بویهی",
+      "summary": "امیری آل‌بویه بر امیرنشین‌هایشان."
+    },
+    "person-imad-al-dawla": {
+      "label": "عمادالدوله علی بویه",
+      "summary": "بزرگ‌ترین برادر آل‌بویه، که در خدمت مرداویج بود، فارس و شیراز را گرفت و بر برادرانش برتری‌ای داشت.",
+      "facts": {
+        "knownFor": "فرمانروای فارس."
+      }
+    },
+    "person-rukn-al-dawla": {
+      "label": "رکن‌الدوله حسن بویه",
+      "summary": "دومین برادر آل‌بویه، که نزدیک همهٔ ماد را گرفت و از ۹۴۷ تا ۹۷۷ فرمان راند.",
+      "facts": {
+        "knownFor": "فرمانروای ماد."
+      }
+    },
+    "person-muizz-al-dawla": {
+      "label": "معزالدوله احمد بویه",
+      "summary": "کوچک‌ترین برادر آل‌بویه، که کرمان و خوزستان را گرفت و در ۱۹ دسامبر ۹۴۵ بی‌جنگ وارد بغداد شد.",
+      "facts": {
+        "knownFor": "در ۹۴۵ بغداد را گرفت."
+      }
+    },
+    "person-adud-al-dawla": {
+      "label": "عضدالدوله فناخسرو",
+      "summary": "پسر رکن‌الدوله و بزرگ‌ترین امیر بویهی، از ۹۴۹ تا ۹۸۳، که در فارس سکه‌هایی زد که او را شاهی تاجدار با عنوان شاهنشاه نشان می‌داد.",
+      "facts": {
+        "knownFor": "عنوان شاهنشاه گرفت."
+      }
+    },
+    "event-buyids-enter-baghdad": {
+      "label": "ورود آل‌بویه به بغداد",
+      "summary": "در ۱۹ دسامبر ۹۴۵ احمد بویه بی‌جنگ وارد بغداد شد و آل‌بویه خلیفه‌ها را زیر سرپرستی خود گرفتند."
+    },
+    "event-adud-al-dawla-shahanshah": {
+      "label": "عضدالدوله شاهنشاه",
+      "summary": "سکه‌ای که در ۹۷۰ در فارس زده شد عضدالدوله را شاهی تاجدار با نبشتهٔ شاهنشاه نشان می‌دهد."
+    },
+    "dynasty-ghaznavid": {
+      "label": "غزنویان",
+      "summary": "دودمانی از تبار غلامان ترک، از ۹۷۷ تا ۱۱۸۶، که در اوج خود از غزنین بر سرزمین‌های خاوری ایران، کوتاه‌زمانی تا ری در باختر، و بر شمال باختری هند فرمان راند."
+    },
+    "office-ghaznavid-sultan": {
+      "label": "فرمانروای غزنوی",
+      "summary": "فرمانروایی خاندان غزنوی در غزنین."
+    },
+    "person-sebuktigin": {
+      "label": "سبکتگین",
+      "summary": "سردار غلام ترکی که بیست سال تا ۹۹۷ به نام سامانیان بر غزنین فرمان راند و پایه‌های قدرت غزنوی را گذاشت.",
+      "facts": {
+        "knownFor": "پایه‌های قدرت غزنوی را گذاشت."
+      }
+    },
+    "person-mahmud-of-ghazni": {
+      "label": "محمود غزنوی",
+      "summary": "پسر سبکتگین، فرمانروا از ۹۹۸ تا ۱۰۳۰، که در ۹۹۹ از فرمان سامانیان سر برتافت و با لشکرکشی‌های پیاپی، در هند و تا ری در باختر، امپراتوری بزرگ نظامی‌ای ساخت.",
+      "facts": {
+        "knownFor": "امپراتوری بزرگی از هند تا ری ساخت."
+      }
+    },
+    "person-masud-i": {
+      "label": "مسعود یکم",
+      "summary": "پسر محمود، که برادرش محمد را کنار زد و در ۱۰۳۰ امپراتوری و سپاهش را به دست گرفت.",
+      "facts": {
+        "knownFor": "در ۱۰۳۰ جانشین محمود شد."
+      }
+    },
+    "event-mahmud-throws-off-samanid-authority": {
+      "label": "سر برتافتن محمود از سامانیان",
+      "summary": "در ۹۹۹ محمود غزنوی از فرمان سامانیان سر برتافت؛ او و قراخانیان شمال جیحون سرزمین‌های سامانی را بخش کردند و دودمان سامانی به پایان رسید."
+    },
+    "event-mahmud-takes-ray": {
+      "label": "گرفتن ری به دست محمود",
+      "summary": "در ۱۰۲۹ محمود غزنوی ری را که تا آن زمان پایتخت امیرنشین شمالی آل‌بویه بود گشود."
+    },
+    "person-daqiqi": {
+      "label": "دقیقی",
+      "summary": "ابومنصور دقیقی، شاعری که سرودن حماسهٔ ملی ایران را آغاز کرد؛ فردوسی پس از مرگ او این کار را دنبال کرد.",
+      "facts": {
+        "knownFor": "حماسه‌ای را آغاز کرد که فردوسی به پایان رساند."
+      }
+    },
+    "person-ferdowsi": {
+      "label": "فردوسی",
+      "summary": "ابوالقاسم فردوسی توسی، که حدود ۹۷۷ پس از مرگ دقیقی شاهنامه را آغاز کرد، تا ۹۹۴ نخستین نگارش را به پایان رساند و در ۸ مارس ۱۰۱۰ سرودن آن را تمام کرد؛ در ۱۰۲۰ یا ۱۰۲۵ درگذشت.",
+      "facts": {
+        "knownFor": "سرایندهٔ شاهنامه."
+      }
+    },
+    "event-ferdowsi-begins-the-shahnameh": {
+      "label": "آغاز شاهنامه",
+      "summary": "حدود ۹۷۷، پس از مرگ دقیقی، فردوسی سرودن شاهنامه را آغاز کرد؛ نخستین نگارش آن تا ۹۹۴ آماده بود."
+    },
+    "event-completion-of-the-shahnameh": {
+      "label": "پایان سرودن شاهنامه",
+      "summary": "فردوسی در هفتاد و یکمین سال زندگی، در ۸ مارس ۱۰۱۰، سرودن شاهنامه را به پایان رساند."
+    },
+    "person-avicenna": {
+      "label": "ابن‌سینا",
+      "summary": "پزشک و فیلسوفی که در ۹۸۰ نزدیک بخارا زاده شد و در ۱۰۳۷ در همدان درگذشت، نامدارترین فیلسوف‑دانشمند جهان اسلامی سده‌های میانه، نویسندهٔ شفا و قانون.",
+      "facts": {
+        "knownFor": "نویسندهٔ قانون در پزشکی."
+      }
+    },
+    "person-biruni": {
+      "label": "ابوریحان بیرونی",
+      "summary": "ستاره‌شناس، ریاضی‌دان، تاریخ‌نگار و جغرافی‌دانی که در ۹۷۳ در خوارزم زاده شد، در خدمت قابوس و سپس بیش از سه دهه در خدمت غزنویان بود، کتابش دربارهٔ هند را در ۱۰۳۰ به پایان رساند و پس از ۱۰۵۰ درگذشت.",
+      "facts": {
+        "knownFor": "کتاب تحقیق ماللهند را نوشت."
+      }
+    },
+    "event-biruni-completes-india": {
+      "label": "پایان کتاب هند بیرونی",
+      "summary": "در ۱۰۳۰، اندکی پس از مرگ محمود، بیرونی کتاب بزرگش دربارهٔ هند، تحقیق ماللهند، را به پایان رساند."
     }
   },
   "relations": {
@@ -3139,6 +3433,246 @@
     },
     "relation-kavad-i-employed-by-hephthalites": {
       "label": "با یاری اینان به تخت بازگشت"
+    },
+    "relation-baghdad-capital-of-abbasid": {
+      "label": "پایتختِ"
+    },
+    "relation-abu-muslim-employed-by-abbasid": {
+      "label": "نمایندهٔ"
+    },
+    "relation-al-mansur-holder-of-abbasid-caliph": {
+      "label": "خلیفه"
+    },
+    "relation-al-mamun-holder-of-abbasid-caliph": {
+      "label": "خلیفه"
+    },
+    "relation-abu-muslim-participant-in-abbasid-revolution": {
+      "label": "شرکت در"
+    },
+    "relation-abbasid-revolution-during-umayyad-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-abbasid-participant-in-abbasid-revolution": {
+      "label": "شرکت در"
+    },
+    "relation-al-mansur-participant-in-death-of-abu-muslim": {
+      "label": "شرکت در"
+    },
+    "relation-abu-muslim-participant-in-death-of-abu-muslim": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-abu-muslim-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-founding-of-baghdad-took-place-in-baghdad": {
+      "label": "رخ داد در"
+    },
+    "relation-founding-of-baghdad-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-al-mamun-participant-in-mamun-defeats-amin": {
+      "label": "شرکت در"
+    },
+    "relation-mamun-defeats-amin-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-yaqub-ibn-layth-holder-of-saffarid-amir": {
+      "label": "امیر"
+    },
+    "relation-yaqub-ibn-layth-founder-of-saffarid": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-amr-ibn-layth-sibling-of-yaqub-ibn-layth": {
+      "label": "برادرِ"
+    },
+    "relation-amr-ibn-layth-holder-of-saffarid-amir": {
+      "label": "امیر"
+    },
+    "relation-amr-ibn-layth-successor-of-yaqub-ibn-layth": {
+      "label": "جانشینِ"
+    },
+    "relation-yaqub-ibn-layth-participant-in-yaqub-hailed-amir": {
+      "label": "شرکت در"
+    },
+    "relation-yaqub-hailed-amir-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-yaqub-ibn-layth-participant-in-yaqub-at-nishapur": {
+      "label": "شرکت در"
+    },
+    "relation-yaqub-at-nishapur-took-place-in-nishapur": {
+      "label": "رخ داد در"
+    },
+    "relation-yaqub-at-nishapur-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-yaqub-ibn-layth-participant-in-battle-of-dayr-al-aqul": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-dayr-al-aqul-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-bukhara-capital-of-samanid": {
+      "label": "پایتختِ"
+    },
+    "relation-ismail-samani-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-nasr-ii-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-ismail-samani-participant-in-battle-of-balkh": {
+      "label": "شرکت در"
+    },
+    "relation-amr-ibn-layth-participant-in-battle-of-balkh": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-balkh-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-rudaki-employed-by-samanid": {
+      "label": "شاعر دربارِ"
+    },
+    "relation-mardavij-holder-of-ziyarid-amir": {
+      "label": "امیر"
+    },
+    "relation-mardavij-founder-of-ziyarid": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-vushmgir-sibling-of-mardavij": {
+      "label": "برادرِ"
+    },
+    "relation-vushmgir-holder-of-ziyarid-amir": {
+      "label": "امیر"
+    },
+    "relation-vushmgir-successor-of-mardavij": {
+      "label": "جانشینِ"
+    },
+    "relation-vushmgir-parent-of-qabus": {
+      "label": "پدرِ"
+    },
+    "relation-qabus-holder-of-ziyarid-amir": {
+      "label": "امیر"
+    },
+    "relation-qabus-holder-of-ziyarid-amir-2": {
+      "label": "دوباره امیر"
+    },
+    "relation-mardavij-participant-in-death-of-mardavij": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-mardavij-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-ray-capital-of-buyid": {
+      "label": "پایتخت امیرنشین شمالی آل‌بویه"
+    },
+    "relation-rukn-al-dawla-holder-of-buyid-amir": {
+      "label": "امیر"
+    },
+    "relation-rukn-al-dawla-sibling-of-imad-al-dawla": {
+      "label": "برادرِ"
+    },
+    "relation-muizz-al-dawla-sibling-of-imad-al-dawla": {
+      "label": "برادرِ"
+    },
+    "relation-muizz-al-dawla-sibling-of-rukn-al-dawla": {
+      "label": "برادرِ"
+    },
+    "relation-imad-al-dawla-employed-by-ziyarid": {
+      "label": "در خدمت مرداویج"
+    },
+    "relation-rukn-al-dawla-parent-of-adud-al-dawla": {
+      "label": "پدرِ"
+    },
+    "relation-adud-al-dawla-holder-of-buyid-amir": {
+      "label": "امیر"
+    },
+    "relation-muizz-al-dawla-participant-in-buyids-enter-baghdad": {
+      "label": "شرکت در"
+    },
+    "relation-buyids-enter-baghdad-took-place-in-baghdad": {
+      "label": "رخ داد در"
+    },
+    "relation-buyids-enter-baghdad-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-adud-al-dawla-participant-in-adud-al-dawla-shahanshah": {
+      "label": "شرکت در"
+    },
+    "relation-adud-al-dawla-shahanshah-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-ghazni-capital-of-ghaznavid": {
+      "label": "پایتختِ"
+    },
+    "relation-sebuktigin-holder-of-ghaznavid-sultan": {
+      "label": "فرماندار غزنین"
+    },
+    "relation-sebuktigin-employed-by-samanid": {
+      "label": "فرمانبر به نامِ"
+    },
+    "relation-sebuktigin-founder-of-ghaznavid": {
+      "label": "پایه‌گذارِ"
+    },
+    "relation-sebuktigin-parent-of-mahmud-of-ghazni": {
+      "label": "پدرِ"
+    },
+    "relation-mahmud-of-ghazni-holder-of-ghaznavid-sultan": {
+      "label": "سلطان"
+    },
+    "relation-mahmud-of-ghazni-successor-of-sebuktigin": {
+      "label": "جانشینِ"
+    },
+    "relation-mahmud-of-ghazni-parent-of-masud-i": {
+      "label": "پدرِ"
+    },
+    "relation-masud-i-successor-of-mahmud-of-ghazni": {
+      "label": "جانشینِ"
+    },
+    "relation-mahmud-of-ghazni-participant-in-mahmud-throws-off-samanid-authority": {
+      "label": "شرکت در"
+    },
+    "relation-mahmud-throws-off-samanid-authority-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-samanid-participant-in-mahmud-throws-off-samanid-authority": {
+      "label": "شرکت در"
+    },
+    "relation-mahmud-of-ghazni-participant-in-mahmud-takes-ray": {
+      "label": "شرکت در"
+    },
+    "relation-mahmud-takes-ray-took-place-in-ray": {
+      "label": "رخ داد در"
+    },
+    "relation-mahmud-takes-ray-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-buyid-participant-in-mahmud-takes-ray": {
+      "label": "شرکت در"
+    },
+    "relation-ferdowsi-successor-of-daqiqi": {
+      "label": "دنبالهٔ حماسه را گرفت پس از"
+    },
+    "relation-ferdowsi-participant-in-ferdowsi-begins-the-shahnameh": {
+      "label": "شرکت در"
+    },
+    "relation-ferdowsi-begins-the-shahnameh-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-ferdowsi-participant-in-completion-of-the-shahnameh": {
+      "label": "شرکت در"
+    },
+    "relation-completion-of-the-shahnameh-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
+    },
+    "relation-biruni-employed-by-ghaznavid": {
+      "label": "در خدمتِ"
+    },
+    "relation-biruni-participant-in-biruni-completes-india": {
+      "label": "شرکت در"
+    },
+    "relation-biruni-completes-india-during-abbasid-caliphate": {
+      "label": "در دورهٔ"
     }
   }
 }
