@@ -1310,6 +1310,20 @@
       "url": "https://www.britannica.com/biography/Belisarius",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-jin-dynasty",
+      "title": "Jin dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Jin-dynasty-China-AD-265-316-317-317-420",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-wang-xizhi",
+      "title": "Wang Xizhi – Britannica",
+      "url": "https://www.britannica.com/biography/Wang-Xizhi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
     }
   ],
   "lanes": [
@@ -3490,6 +3504,23 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "jin-legal-code",
+          "label": "The Jin legal code",
+          "summary": "The court of Wudi of Jin established one of China’s earliest legal codes in 268.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 268
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "jin-reunifies-china",
           "label": "The Jin reunite China",
           "summary": "In 280 the Jin armies of Sima Yan overran Wu, the last of the Three Kingdoms, and China was nominally reunited.",
@@ -3544,6 +3575,23 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "jin-surrender-316",
+          "label": "The last Western Jin emperor surrenders",
+          "summary": "In 316 the Jin emperor, a grandson of Wudi, surrendered to a chief of the Xiongnu, abdicated and was later put to death.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 316
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "eastern-jin-at-jiankang",
           "label": "A Jin court at Jiankang",
           "summary": "In 317 a member of the Jin imperial family set up a refugee court at Jiankang, the start of the Eastern Jin.",
@@ -3557,6 +3605,101 @@
           },
           "sourceIds": [
             "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "jin-reconquers-sichuan",
+          "label": "The Eastern Jin reconquer Sichuan",
+          "summary": "In 347 the general Huan Wen reconquered Sichuan for the Eastern Jin; he later deposed the reigning emperor.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 347
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "orchid-pavilion-gathering",
+          "label": "The gathering at the Orchid Pavilion",
+          "summary": "Some 42 literary figures met at the Orchid Pavilion during the Spring Purification Festival of 353 to compose poems; Wang Xizhi wrote the preface to their poems.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 353
+            }
+          },
+          "sourceIds": [
+            "src-britannica-wang-xizhi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-fei-river",
+          "label": "The battle of the Fei River",
+          "summary": "In 383 the Eastern Jin turned back the invading armies of the northern nomads at the Fei River.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 383
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "landowner-uprising-400",
+          "label": "The uprising of the landowners",
+          "summary": "An uprising led by disaffected landowners began in 400 and was crushed in 402, giving army leaders more power.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 400
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 402
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "jin-northwest-campaign",
+          "label": "The Eastern Jin push northwest",
+          "summary": "Between 415 and 417 the Eastern Jin pushed northwestward and regained access to the trade routes of Central Asia.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 415
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 417
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
           ],
           "reviewStatus": "proposed"
         },

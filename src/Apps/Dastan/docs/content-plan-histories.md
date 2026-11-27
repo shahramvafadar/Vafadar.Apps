@@ -151,3 +151,4 @@ was left out, and – if E5 allows – the chart looked at.
 | Batch | Done | Note |
 |---|---|---|
 | A1 | 2026-11-28 | Zeno, Basiliscus, the kingdom of Italy (Odoacer, Theodoric), Attila, Aetius, Stilicho, Belisarius, 2 events, 11 quotes found. Left out: Libius Severus (no page could be read: Britannica began a browser check, which is not to be passed; De Imperatoribus Romanis the same). |
+| A2 | 2026-11-28 | 3 southern dynasties, the Northern Zhou, Gongdi, Liu Yu, 3 artists, 7 events, 10 quotes found. Left out: the emperors of the Jin after Wudi, of the Northern Wei but Xiaowendi, of the southern dynasties but Wudi of Liang – Britannica has no articles for them, and its search shows a browser check, which is not to be passed. |

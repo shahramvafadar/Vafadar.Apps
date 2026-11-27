@@ -431,6 +431,38 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-27",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-jin-dynasty",
+      "title": "Jin dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Jin-dynasty-China-AD-265-316-317-317-420",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-southern-dynasties",
+      "title": "Southern dynasties – Britannica",
+      "url": "https://www.britannica.com/event/Southern-Dynasties",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-gu-kaizhi",
+      "title": "Gu Kaizhi – Britannica",
+      "url": "https://www.britannica.com/biography/Gu-Kaizhi",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-wang-xizhi",
+      "title": "Wang Xizhi – Britannica",
+      "url": "https://www.britannica.com/biography/Wang-Xizhi",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -5769,6 +5801,525 @@
           "entityId": "person-tang-zhongzong"
         }
       ]
+    },
+    {
+      "id": "dynasty-liu-song",
+      "type": "Dynasty",
+      "label": "The Liu-Song",
+      "summary": "The first of the Southern Dynasties at Jiankang, founded by the general Liu Yu when he took the throne of the Eastern Jin.",
+      "sourceIds": [
+        "src-britannica-southern-dynasties",
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 420
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 479
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-jiankang"
+        },
+        {
+          "fact": "founder",
+          "entityId": "person-liu-yu"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-southern-qi",
+      "type": "Dynasty",
+      "label": "The Southern Qi",
+      "summary": "The second of the Southern Dynasties at Jiankang.",
+      "sourceIds": [
+        "src-britannica-southern-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 479
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 502
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-jiankang"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-chen",
+      "type": "Dynasty",
+      "label": "The Southern Chen",
+      "summary": "The last of the Southern Dynasties at Jiankang, overthrown when the Sui reunified China in 589.",
+      "sourceIds": [
+        "src-britannica-southern-dynasties",
+        "src-britannica-history-of-china-six-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 557
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 589
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-jiankang"
+        }
+      ]
+    },
+    {
+      "id": "person-liu-yu",
+      "type": "Person",
+      "label": "Liu Yu",
+      "summary": "A general popular for his victories over the northern kingdoms, who overthrew the usurper Huan Xuan, had two Eastern Jin emperors killed and took the throne himself, founding the Liu-Song dynasty.",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Liu-Song."
+        }
+      ]
+    },
+    {
+      "id": "dynasty-northern-zhou",
+      "type": "Dynasty",
+      "label": "The Northern Zhou",
+      "summary": "A northern state of the Yuwen house, from 557 to 581, which reunified the north in 577; its high official Yang Jian seized the throne and founded the Sui.",
+      "sourceIds": [
+        "src-britannica-history-of-china-six-dynasties",
+        "src-britannica-wendi-emperor-of-sui-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 557
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 581
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-sui-gongdi",
+      "type": "Person",
+      "label": "Gongdi of Sui",
+      "summary": "The successor of Yangdi after his murder in 618, who reigned less than a year.",
+      "sourceIds": [
+        "src-britannica-sui-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The last Sui emperor."
+        }
+      ]
+    },
+    {
+      "id": "person-gu-kaizhi",
+      "type": "Person",
+      "label": "Gu Kaizhi",
+      "summary": "A courtier of the Eastern Jin at Jiankang, a painter of portraits and figures and a poet, regarded as China’s first great genius in painting; the Nymph of the Luo River is recorded as his. Britannica gives his years as about 344 to about 406 in one article and about 348 to about 409 in another.",
+      "sourceIds": [
+        "src-britannica-gu-kaizhi",
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 344
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 348
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 406
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 409
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Painter of the Nymph of the Luo River."
+        }
+      ]
+    },
+    {
+      "id": "person-wang-xizhi",
+      "type": "Person",
+      "label": "Wang Xizhi",
+      "summary": "The most celebrated of Chinese calligraphers, at the Eastern Jin court; his Preface to the Poems Composed at the Orchid Pavilion records a gathering of 353.",
+      "sourceIds": [
+        "src-britannica-wang-xizhi",
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 303,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 361,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The most celebrated of Chinese calligraphers."
+        }
+      ]
+    },
+    {
+      "id": "person-wang-xianzhi",
+      "type": "Person",
+      "label": "Wang Xianzhi",
+      "summary": "The youngest son of Wang Xizhi, the most famous calligrapher of his family after his father.",
+      "sourceIds": [
+        "src-britannica-wang-xizhi",
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 344
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 386
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Calligrapher, son of Wang Xizhi."
+        }
+      ]
+    },
+    {
+      "id": "event-jin-legal-code",
+      "type": "Event",
+      "label": "The Jin legal code",
+      "summary": "The court of Wudi of Jin established one of China’s earliest legal codes in 268.",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 268
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-jin-wudi"
+        }
+      ]
+    },
+    {
+      "id": "event-jin-surrender-316",
+      "type": "Event",
+      "label": "The last Western Jin emperor surrenders",
+      "summary": "In 316 the Jin emperor, a grandson of Wudi, surrendered to a chief of the Xiongnu, abdicated and was later put to death.",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 316
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-jin-reconquers-sichuan",
+      "type": "Event",
+      "label": "The Eastern Jin reconquer Sichuan",
+      "summary": "In 347 the general Huan Wen reconquered Sichuan for the Eastern Jin; he later deposed the reigning emperor.",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 347
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-fei-river",
+      "type": "Event",
+      "label": "The battle of the Fei River",
+      "summary": "In 383 the Eastern Jin turned back the invading armies of the northern nomads at the Fei River.",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 383
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-landowner-uprising-400",
+      "type": "Event",
+      "label": "The uprising of the landowners",
+      "summary": "An uprising led by disaffected landowners began in 400 and was crushed in 402, giving army leaders more power.",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 400
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 402
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-jin-northwest-campaign",
+      "type": "Event",
+      "label": "The Eastern Jin push northwest",
+      "summary": "Between 415 and 417 the Eastern Jin pushed northwestward and regained access to the trade routes of Central Asia.",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 415
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 417
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-orchid-pavilion-gathering",
+      "type": "Event",
+      "label": "The gathering at the Orchid Pavilion",
+      "summary": "Some 42 literary figures met at the Orchid Pavilion during the Spring Purification Festival of 353 to compose poems; Wang Xizhi wrote the preface to their poems.",
+      "sourceIds": [
+        "src-britannica-wang-xizhi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 353
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-wang-xizhi"
+        }
+      ]
     }
   ],
   "relations": [
@@ -11050,6 +11601,362 @@
       "label": "During",
       "sourceIds": [
         "src-britannica-wuhou"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-southern-qi-successor-of-liu-song",
+      "from": "dynasty-southern-qi",
+      "to": "dynasty-liu-song",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-southern-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liang-successor-of-southern-qi",
+      "from": "dynasty-liang",
+      "to": "dynasty-southern-qi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-southern-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chen-successor-of-liang",
+      "from": "dynasty-chen",
+      "to": "dynasty-liang",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-southern-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sui-successor-of-chen",
+      "from": "dynasty-sui",
+      "to": "dynasty-chen",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Overthrew",
+      "sourceIds": [
+        "src-britannica-history-of-china-six-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-liu-yu-founder-of-liu-song",
+      "from": "person-liu-yu",
+      "to": "dynasty-liu-song",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sui-successor-of-northern-zhou",
+      "from": "dynasty-sui",
+      "to": "dynasty-northern-zhou",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-history-of-china-six-dynasties",
+        "src-britannica-wendi-emperor-of-sui-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sui-wendi-employed-by-northern-zhou",
+      "from": "person-sui-wendi",
+      "to": "dynasty-northern-zhou",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Official of",
+      "sourceIds": [
+        "src-britannica-wendi-emperor-of-sui-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sui-gongdi-successor-of-sui-yangdi",
+      "from": "person-sui-gongdi",
+      "to": "person-sui-yangdi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-sui-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sui-gongdi-holder-of-sui-emperor",
+      "from": "person-sui-gongdi",
+      "to": "office-sui-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-sui-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 618
+          }
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sui-gongdi-member-of-sui",
+      "from": "person-sui-gongdi",
+      "to": "dynasty-sui",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-sui-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wang-xizhi-parent-of-wang-xianzhi",
+      "from": "person-wang-xizhi",
+      "to": "person-wang-xianzhi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-wang-xizhi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-jin-wudi-participant-in-jin-legal-code",
+      "from": "person-jin-wudi",
+      "to": "event-jin-legal-code",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-jin-legal-code-during-western-jin",
+      "from": "event-jin-legal-code",
+      "to": "period-western-jin",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-jin-surrender-316-during-western-jin",
+      "from": "event-jin-surrender-316",
+      "to": "period-western-jin",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-jin-reconquers-sichuan-during-eastern-jin",
+      "from": "event-jin-reconquers-sichuan",
+      "to": "period-eastern-jin",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-fei-river-during-eastern-jin",
+      "from": "event-battle-of-fei-river",
+      "to": "period-eastern-jin",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-landowner-uprising-400-during-eastern-jin",
+      "from": "event-landowner-uprising-400",
+      "to": "period-eastern-jin",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-jin-northwest-campaign-during-eastern-jin",
+      "from": "event-jin-northwest-campaign",
+      "to": "period-eastern-jin",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-jin-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-wang-xizhi-participant-in-orchid-pavilion-gathering",
+      "from": "person-wang-xizhi",
+      "to": "event-orchid-pavilion-gathering",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-wang-xizhi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-orchid-pavilion-gathering-during-eastern-jin",
+      "from": "event-orchid-pavilion-gathering",
+      "to": "period-eastern-jin",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-wang-xizhi"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- China fills gaps to 705: the Liu-Song, Southern Qi and Southern Chen at Jiankang, the Northern Zhou, the last
+  Sui emperor Gongdi, Liu Yu, Gu Kaizhi, Wang Xizhi and Wang Xianzhi, and seven events of the Jin from the legal
+  code of 268 to the gathering at the Orchid Pavilion, from Britannica, with their Persian.
 - Rome fills its gaps to 641: Zeno and Basiliscus in the east, Odoacer and Theodoric as kings of Italy, Attila,
   Aetius, Stilicho and Belisarius, the conquest of Italy by Theodoric and Belisarius’ victory over the Persians
   in 530 – from Livius and Britannica, with their Persian.

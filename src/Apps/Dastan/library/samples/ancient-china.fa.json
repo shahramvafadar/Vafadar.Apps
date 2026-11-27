@@ -867,6 +867,85 @@
     "event-wuhou-abdicates": {
       "label": "کناره‌گیری ووهو",
       "summary": "در ۷۰۵ وزیران و سرداران ووهو کاخ را گرفتند و او را به کناره‌گیری به سود پسرش جونگ‌زونگ واداشتند."
+    },
+    "dynasty-liu-song": {
+      "label": "لیو-سونگ",
+      "summary": "نخستین دودمان جنوبی در جیان‌کانگ، که سردار لیو یو با گرفتن تخت جین خاوری بنیاد نهاد."
+    },
+    "dynasty-southern-qi": {
+      "label": "چی جنوبی",
+      "summary": "دومین دودمان جنوبی در جیان‌کانگ."
+    },
+    "dynasty-chen": {
+      "label": "چن جنوبی",
+      "summary": "واپسین دودمان جنوبی در جیان‌کانگ، که با یکپارچگی چین به دست سویی در ۵۸۹ برافتاد."
+    },
+    "person-liu-yu": {
+      "label": "لیو یو",
+      "summary": "سرداری که پیروزی‌هایش بر پادشاهی‌های شمالی او را محبوب کرده بود؛ غاصب هوان شوان را برانداخت، دو امپراتور جین خاوری را کشت و خود بر تخت نشست و دودمان لیو-سونگ را بنیاد نهاد.",
+      "facts": {
+        "knownFor": "بنیادگذار لیو-سونگ."
+      }
+    },
+    "dynasty-northern-zhou": {
+      "label": "جوی شمالی",
+      "summary": "کشوری شمالی از خاندان یووِن، از ۵۵۷ تا ۵۸۱، که در ۵۷۷ شمال را دوباره یکپارچه کرد؛ دیوان‌سالار بلندپایه‌اش یانگ جیان تخت را گرفت و سویی را بنیاد نهاد."
+    },
+    "person-sui-gongdi": {
+      "label": "گونگ‌دی سویی",
+      "summary": "جانشین یانگ‌دی پس از کشته شدنش در ۶۱۸، که کمتر از یک سال فرمان راند.",
+      "facts": {
+        "knownFor": "واپسین امپراتور سویی."
+      }
+    },
+    "person-gu-kaizhi": {
+      "label": "گو کای‌جی",
+      "summary": "درباری جین خاوری در جیان‌کانگ، نگارگر چهره‌ها و پیکره‌ها و شاعر، که نخستین نابغهٔ بزرگ نگارگری چین شمرده می‌شود؛ «پری رود لوئو» از او ثبت شده است. بریتانیکا سال‌هایش را در مقاله‌ای حدود ۳۴۴ تا حدود ۴۰۶ و در مقاله‌ای دیگر حدود ۳۴۸ تا حدود ۴۰۹ می‌گذارد.",
+      "facts": {
+        "knownFor": "نگارگر «پری رود لوئو»."
+      }
+    },
+    "person-wang-xizhi": {
+      "label": "وانگ شی‌جی",
+      "summary": "نامدارترین خوشنویس چین، در دربار جین خاوری؛ «پیشگفتار شعرهای سروده در کوشک ارکیده» او گردهمایی‌ای در ۳۵۳ را ثبت می‌کند.",
+      "facts": {
+        "knownFor": "نامدارترین خوشنویس چین."
+      }
+    },
+    "person-wang-xianzhi": {
+      "label": "وانگ شیان‌جی",
+      "summary": "کوچک‌ترین پسر وانگ شی‌جی و نامدارترین خوشنویس خاندان پس از پدرش.",
+      "facts": {
+        "knownFor": "خوشنویس، پسر وانگ شی‌جی."
+      }
+    },
+    "event-jin-legal-code": {
+      "label": "قانون‌نامهٔ جین",
+      "summary": "دربار ووـدی جین در ۲۶۸ یکی از نخستین قانون‌نامه‌های چین را برقرار کرد."
+    },
+    "event-jin-surrender-316": {
+      "label": "تسلیم واپسین امپراتور جین باختری",
+      "summary": "در ۳۱۶ امپراتور جین، نوهٔ ووـدی، به سرکرده‌ای از سیونگ‌نو تسلیم شد، کناره گرفت و بعدها کشته شد."
+    },
+    "event-jin-reconquers-sichuan": {
+      "label": "جین خاوری سیچوان را بازمی‌گیرد",
+      "summary": "در ۳۴۷ سردار هوان ون سیچوان را برای جین خاوری بازگرفت؛ بعدها امپراتور را برکنار کرد."
+    },
+    "event-battle-of-fei-river": {
+      "label": "نبرد رود فِی",
+      "summary": "در ۳۸۳ جین خاوری سپاهیان مهاجم کوچ‌نشینان شمالی را کنار رود فی پس راند."
+    },
+    "event-landowner-uprising-400": {
+      "label": "شورش زمین‌داران",
+      "summary": "شورشی به رهبری زمین‌داران ناخرسند در ۴۰۰ آغاز شد و در ۴۰۲ سرکوب شد و قدرت فرماندهان سپاه را افزود."
+    },
+    "event-jin-northwest-campaign": {
+      "label": "پیشروی جین خاوری به شمال باختری",
+      "summary": "میان ۴۱۵ و ۴۱۷ جین خاوری به شمال باختری پیش رفت و دوباره به راه‌های بازرگانی آسیای میانه دست یافت."
+    },
+    "event-orchid-pavilion-gathering": {
+      "label": "گردهمایی کوشک ارکیده",
+      "summary": "حدود ۴۲ تن از اهل ادب در جشن پاک‌سازی بهار ۳۵۳ در کوشک ارکیده گرد آمدند تا شعر بسرایند؛ وانگ شی‌جی پیشگفتار شعرهایشان را نوشت."
     }
   },
   "relations": {
@@ -1602,6 +1681,66 @@
       "label": "رخ داد در"
     },
     "relation-wuhou-abdicates-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-southern-qi-successor-of-liu-song": {
+      "label": "جانشینِ"
+    },
+    "relation-liang-successor-of-southern-qi": {
+      "label": "جانشینِ"
+    },
+    "relation-chen-successor-of-liang": {
+      "label": "جانشینِ"
+    },
+    "relation-sui-successor-of-chen": {
+      "label": "برانداخت"
+    },
+    "relation-liu-yu-founder-of-liu-song": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-sui-successor-of-northern-zhou": {
+      "label": "جانشینِ"
+    },
+    "relation-sui-wendi-employed-by-northern-zhou": {
+      "label": "دیوان‌سالارِ"
+    },
+    "relation-sui-gongdi-successor-of-sui-yangdi": {
+      "label": "جانشینِ"
+    },
+    "relation-sui-gongdi-holder-of-sui-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-sui-gongdi-member-of-sui": {
+      "label": "از خاندانِ"
+    },
+    "relation-wang-xizhi-parent-of-wang-xianzhi": {
+      "label": "پدرِ"
+    },
+    "relation-jin-wudi-participant-in-jin-legal-code": {
+      "label": "شرکت در"
+    },
+    "relation-jin-legal-code-during-western-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-jin-surrender-316-during-western-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-jin-reconquers-sichuan-during-eastern-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-battle-of-fei-river-during-eastern-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-landowner-uprising-400-during-eastern-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-jin-northwest-campaign-during-eastern-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-wang-xizhi-participant-in-orchid-pavilion-gathering": {
+      "label": "شرکت در"
+    },
+    "relation-orchid-pavilion-gathering-during-eastern-jin": {
       "label": "در دورهٔ"
     }
   }
