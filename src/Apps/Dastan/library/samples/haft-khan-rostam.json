@@ -1,0 +1,2186 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "haft-khan-rostam",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-haft-khan-rostam",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-27",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-haft-khan-rostam-2026-11-27",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the reign of Kay Kavus, sections 1 to 17.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/kkavoos",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "The war of Kay Kavus in Mazandaran: from the song that draws him there, through Rostam’s seven labours, to the defeat of the king of Mazandaran and the return to Iran; the war of Hamavaran that follows is not part of it.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "A song of Mazandaran"
+      },
+      {
+        "level": 1,
+        "label": "The king in chains"
+      },
+      {
+        "level": 2,
+        "label": "Lion, thirst and dragon"
+      },
+      {
+        "level": 3,
+        "label": "The witch and Olad"
+      },
+      {
+        "level": 4,
+        "label": "The White Demon"
+      },
+      {
+        "level": 5,
+        "label": "The king of Mazandaran"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-kkavoos-index",
+      "title": "Ganjoor: the reign of Kay Kavus, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s01",
+      "title": "Ganjoor: بخش ۱ - وسوسهٔ دیو رامشگر و تصمیم کاووس برای لشکرکشی به مازندران و فراخواندن زال",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱ - وسوسهٔ دیو رامشگر و تصمیم کاووس برای لشکرکشی به مازندران و فراخواندن زال"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s02",
+      "title": "Ganjoor: بخش ۲ - پند زال به کاووس دربارهٔ پرهیز از لشکرکشی به مازندران و رد شدن آن توسط شاه",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲ - پند زال به کاووس دربارهٔ پرهیز از لشکرکشی به مازندران و رد شدن آن توسط شاه"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s03",
+      "title": "Ganjoor: بخش ۳ - لشکرکشی کاووس به مازندران، غارت شهر و اسارت او به دست دیو سپید",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۳ - لشکرکشی کاووس به مازندران، غارت شهر و اسارت او به دست دیو سپید"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s04",
+      "title": "Ganjoor: بخش ۴ - نامهٔ پریشان کاووس به زال، برانگیختن رستم برای نجات شاه و وداع با خانواده",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۴ - نامهٔ پریشان کاووس به زال، برانگیختن رستم برای نجات شاه و وداع با خانواده"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s05",
+      "title": "Ganjoor: بخش ۵ - خان اول رستم: شکار گور و کشتن شیر توسط رخش",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۵ - خان اول رستم: شکار گور و کشتن شیر توسط رخش"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s06",
+      "title": "Ganjoor: بخش ۶ - خان دوم رستم: تشنگی در بیابان، هدایت توسط میش و یافتن چشمه",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۶ - خان دوم رستم: تشنگی در بیابان، هدایت توسط میش و یافتن چشمه"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s07",
+      "title": "Ganjoor: بخش ۷ - خان سوم رستم: نبرد با اژدها و کشتن آن به یاری رخش",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۷ - خان سوم رستم: نبرد با اژدها و کشتن آن به یاری رخش"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s08",
+      "title": "Ganjoor: بخش ۸ - خان چهارم رستم: رویارویی با زن جادو و کشتن او",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۸ - خان چهارم رستم: رویارویی با زن جادو و کشتن او"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s09",
+      "title": "Ganjoor: بخش ۹ - خان پنجم و ششم رستم: تاریکی و دشت سبز، برخورد با دشتبان و اسیر کردن اولاد",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۹ - خان پنجم و ششم رستم: تاریکی و دشت سبز، برخورد با دشتبان و اسیر کردن اولاد"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s10",
+      "title": "Ganjoor: بخش ۱۰ - خان ششم رستم: کشتن ارژنگ دیو و رسیدن به کاووس و آگاهی از درمان چشم‌ها",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۰ - خان ششم رستم: کشتن ارژنگ دیو و رسیدن به کاووس و آگاهی از درمان چشم‌ها"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s11",
+      "title": "Ganjoor: بخش ۱۱ - خان هفتم رستم: کشتن دیو سپید، درمان چشم کاووس و گشودن مازندران",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۱ - خان هفتم رستم: کشتن دیو سپید، درمان چشم کاووس و گشودن مازندران"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s12",
+      "title": "Ganjoor: بخش ۱۲ - نامهٔ تهدیدآمیز کاووس به شاه مازندران و فرستادن فرهاد",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۲ - نامهٔ تهدیدآمیز کاووس به شاه مازندران و فرستادن فرهاد"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s13",
+      "title": "Ganjoor: بخش ۱۳ - پاسخ گستاخانهٔ شاه مازندران و تصمیم رستم برای بردن پیام تهدیدآمیز",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh13",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۳ - پاسخ گستاخانهٔ شاه مازندران و تصمیم رستم برای بردن پیام تهدیدآمیز"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s14",
+      "title": "Ganjoor: بخش ۱۴ - رفتن رستم به عنوان فرستاده به مازندران، نمایش قدرت و بازگشت با خبر",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۴ - رفتن رستم به عنوان فرستاده به مازندران، نمایش قدرت و بازگشت با خبر"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s15",
+      "title": "Ganjoor: بخش ۱۵ - آماده‌سازی سپاه کاووس برای جنگ با مازندران پس از بازگشت رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh15",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۵ - آماده‌سازی سپاه کاووس برای جنگ با مازندران پس از بازگشت رستم"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s16",
+      "title": "Ganjoor: بخش ۱۶ - نبرد نهایی با مازندران، کشتن جویان و شاه جادو و سپردن تاج به اولاد",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh16",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۶ - نبرد نهایی با مازندران، کشتن جویان و شاه جادو و سپردن تاج به اولاد"
+    },
+    {
+      "id": "src-ganjoor-kkavoos-s17",
+      "title": "Ganjoor: بخش ۱۷ - بازگشت پیروزمندانهٔ کاووس به ایران، بخشش به رستم و برقراری داد و آبادی",
+      "url": "https://ganjoor.net/ferdousi/shahname/kkavoos/sh17",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۷ - بازگشت پیروزمندانهٔ کاووس به ایران، بخشش به رستم و برقراری داد و آبادی"
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "Shahnameh",
+      "summary": "The literary work in which the seven labours of Rostam are told.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-haft-khan-rostam",
+      "type": "NarrativeArc",
+      "label": "The seven labours of Rostam",
+      "summary": "The war of Kay Kavus in Mazandaran and Rostam’s journey there through seven trials.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-kay-kavus",
+      "type": "Character",
+      "label": "Kay Kavus",
+      "summary": "The king of Iran, proud of his fortune and eager for conquest.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-demon-minstrel",
+      "type": "Character",
+      "label": "The demon minstrel",
+      "summary": "A demon who comes to the court disguised as a singer from Mazandaran.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Singer from Mazandaran"
+        }
+      ]
+    },
+    {
+      "id": "character-tus",
+      "type": "Character",
+      "label": "Tus",
+      "summary": "A noble of Iran, son of Nowzar.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Noble of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-gudarz",
+      "type": "Character",
+      "label": "Gudarz",
+      "summary": "A noble of Iran, son of Keshvad.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Noble of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-giv",
+      "type": "Character",
+      "label": "Giv",
+      "summary": "A warrior of Iran.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-zal",
+      "type": "Character",
+      "label": "Zal",
+      "summary": "The son of Sam, lord of Nimruz, whose counsel the nobles seek.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Lord of Nimruz, father of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "The son of Zal, a hero of Iran.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Hero, son of Zal"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "The kingdom of Kay Kavus.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-mazandaran",
+      "type": "NarrativeRegion",
+      "label": "Mazandaran",
+      "summary": "A land of demons and sorcerers, praised in song as forever in spring.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-sistan",
+      "type": "NarrativeRegion",
+      "label": "Nimruz",
+      "summary": "The land of Zal and Rostam, also called Sistan.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Sistan",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
+    },
+    {
+      "id": "character-milad",
+      "type": "Character",
+      "label": "Milad",
+      "summary": "A noble to whom Kavus entrusts Iran while he is away.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Keeper of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-king-of-mazandaran",
+      "type": "Character",
+      "label": "The king of Mazandaran",
+      "summary": "The ruler of Mazandaran, a sorcerer.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Mazandaran"
+        }
+      ]
+    },
+    {
+      "id": "character-sanjeh",
+      "type": "Character",
+      "label": "Sanjeh",
+      "summary": "A demon whom the king of Mazandaran sends with a message.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Messenger of the king of Mazandaran"
+        }
+      ]
+    },
+    {
+      "id": "character-white-demon",
+      "type": "Character",
+      "label": "The White Demon",
+      "summary": "The mightiest of the demons of Mazandaran, who lives in a cave.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Lord of the demons"
+        }
+      ]
+    },
+    {
+      "id": "character-arzhang",
+      "type": "Character",
+      "label": "Arzhang",
+      "summary": "A demon commander of Mazandaran.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Demon commander"
+        }
+      ]
+    },
+    {
+      "id": "character-rudabeh",
+      "type": "Character",
+      "label": "Rudabeh",
+      "summary": "The mother of Rostam.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "place-asparuz",
+      "type": "NarrativePlace",
+      "label": "Mount Asparuz",
+      "summary": "The mountain at the edge of Mazandaran where Kavus makes camp.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "place-zabulistan",
+      "type": "NarrativeRegion",
+      "label": "Zabulistan",
+      "summary": "The land of Zal and Rostam.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s04"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "character-rakhsh",
+      "type": "AnimalCharacter",
+      "label": "Rakhsh",
+      "summary": "The horse of Rostam, fierce and watchful.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s05"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Horse of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-ram",
+      "type": "AnimalCharacter",
+      "label": "The ram",
+      "summary": "A wild sheep that appears in the desert.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s06"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Guide to water"
+        }
+      ]
+    },
+    {
+      "id": "character-dragon",
+      "type": "AnimalCharacter",
+      "label": "The dragon",
+      "summary": "A fearsome dragon whose lair lies in the desert.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s07"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Dragon of the desert"
+        }
+      ]
+    },
+    {
+      "id": "character-witch",
+      "type": "Character",
+      "label": "The witch",
+      "summary": "A sorceress who appears to travellers as a beautiful woman.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s08"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Sorceress"
+        }
+      ]
+    },
+    {
+      "id": "character-field-keeper",
+      "type": "Character",
+      "label": "The field-keeper",
+      "summary": "The keeper of a green field in Mazandaran.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s09"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Keeper of the field"
+        }
+      ]
+    },
+    {
+      "id": "character-olad",
+      "type": "Character",
+      "label": "Olad",
+      "summary": "A young lord of the borderland of Mazandaran.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s09"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Lord of a borderland"
+        }
+      ]
+    },
+    {
+      "id": "character-farhad",
+      "type": "Character",
+      "label": "Farhad",
+      "summary": "A noble of Iran who carries a letter for Kavus.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s12"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Envoy of Kavus"
+        }
+      ]
+    },
+    {
+      "id": "character-kalahur",
+      "type": "Character",
+      "label": "Kalahur",
+      "summary": "A warrior of Mazandaran known for his fierceness.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s14"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Mazandaran"
+        }
+      ]
+    },
+    {
+      "id": "character-juyan",
+      "type": "Character",
+      "label": "Juyan",
+      "summary": "A champion of Mazandaran who challenges the army of Iran.",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion of Mazandaran"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-haft-khan-rostam",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-kay-kavus",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-zal",
+      "to": "place-sistan",
+      "type": "leaderOf",
+      "label": "Lord of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-03"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-king-of-mazandaran",
+      "to": "place-mazandaran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-06"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-white-demon",
+      "to": "character-king-of-mazandaran",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-06"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-white-demon",
+      "to": "character-kay-kavus",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-06"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-zal",
+      "to": "character-rostam",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-rudabeh",
+      "to": "character-rostam",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-rostam",
+      "to": "character-dragon",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s07"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-11",
+      "from": "character-rostam",
+      "to": "character-witch",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s08"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-olad",
+      "to": "character-rostam",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s09"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-rostam",
+      "to": "character-arzhang",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s10"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-15"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-rostam",
+      "to": "character-white-demon",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s11"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-17"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-15",
+      "from": "character-rostam",
+      "to": "character-juyan",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s15",
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-16",
+      "from": "character-rostam",
+      "to": "character-king-of-mazandaran",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-25"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-17",
+      "from": "character-olad",
+      "to": "place-mazandaran",
+      "type": "leaderOf",
+      "label": "Ruler of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-26"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-18",
+      "from": "character-rostam",
+      "to": "place-sistan",
+      "type": "leaderOf",
+      "label": "Lord of",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s17"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-haft-khan-rostam",
+        "eventIds": [
+          "event-27"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "The song of Mazandaran",
+      "summary": "Kay Kavus sits on his golden throne among his nobles. A demon, disguised as a minstrel, asks to be let in and sings of Mazandaran: a land of endless spring, flowers, game, brocade and gold.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who listens",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-demon-minstrel",
+          "role": "singer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land in the song",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "Kavus resolves on war",
+      "summary": "Kavus declares that he surpasses Jamshid, Zahhak and Kay Qobad and must lead his army to Mazandaran. The nobles turn pale but dare not object; among themselves Tus, Gudarz and Giv agree to send for Zal, who may turn the king from his plan.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king set on war",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "noble who proposes a remedy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "troubled noble",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "troubled noble",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "lord sent for",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "endangered land",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "Zal comes to court",
+      "summary": "A rider reaches Zal in Nimruz with the nobles' message. Zal grieves at the king's recklessness but resolves to go, leaving Rostam behind with the army, and the nobles ride out to meet him.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "lord who comes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "son left behind",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "noble who welcomes him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-sistan",
+          "role": "Zal's land",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "Zal's counsel refused",
+      "summary": "Zal warns Kavus that no earlier king dared Mazandaran, a land of demons and spells that neither sword nor treasure can win. Kavus answers that he is greater than those kings and that Zal and Rostam should guard Iran while he goes; Zal bids him farewell, wishing him no regret.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "adviser",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who refuses",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "named as guardian of Iran",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "noble who escorts Zal",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land of the warning",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "The march and the sack",
+      "summary": "Kavus leaves Milad in charge of Iran and leads the army to Mount Asparuz. He sends Giv with two thousand men, who fall on the city of Mazandaran, kill and plunder and find it as rich as paradise.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who marches",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-milad",
+          "role": "keeper of Iran",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "leader of the raid",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-asparuz",
+          "role": "royal camp",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land plundered",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "Darkness falls",
+      "summary": "The king of Mazandaran sends the demon Sanjeh to the White Demon for help. At night the White Demon brings a cloud of pitch and smoke; at daybreak Kavus and most of his army are blind. The demons bind them and give the king's treasure to Arzhang, and the White Demon leaves them to suffer.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-king-of-mazandaran",
+          "role": "king who calls for help",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sanjeh",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-white-demon",
+          "role": "demon who blinds the army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "blinded king",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-arzhang",
+          "role": "keeper of the spoil",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land of the captivity",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "Rostam is sent",
+      "summary": "Kavus sends a rider to Zal, confessing that he ignored his counsel. Zal tells Rostam to saddle Rakhsh: of the two roads, he should take the short one of seven stages, full of demons and lions. Rostam swears to free the king, and Rudabeh weeps as he leaves.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "captive king who writes",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "father who sends him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero who sets out",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "weeping mother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-zabulistan",
+          "role": "home he leaves",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "First labour: the lion",
+      "summary": "Riding day and night, Rostam lassos and roasts an onager and lies down to sleep in a reed bed. A lion comes upon them in the night; Rakhsh strikes it down and tears it apart. Rostam wakes and scolds Rakhsh for fighting alone instead of waking him.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s05"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "sleeping hero",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "horse who kills the lion",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "Second labour: thirst",
+      "summary": "In a burning desert Rostam and Rakhsh are near death from thirst. Rostam prays and falls to the ground; a wild ram passes, and following it he finds a spring. He blesses the ram, bathes, hunts and eats, and before sleeping tells Rakhsh to fight no one but to wake him.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s06"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "thirsting hero",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "horse",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-ram",
+          "role": "guide to the spring",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "Third labour: the dragon",
+      "summary": "A dragon comes out in the night. Twice Rakhsh wakes Rostam, and twice the dragon vanishes into the dark, so Rostam threatens to kill his horse. The third time God lets him see it; Rostam names himself, and with Rakhsh biting the dragon's shoulder he cuts off its head.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s07"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hero who fights the dragon",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "horse who warns and helps",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-dragon",
+          "role": "dragon slain",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "Fourth labour: the witch",
+      "summary": "Rostam finds by a spring a feast laid out with wine and a lute, and sings of his own hard life. A witch, adorned as a beautiful woman, comes to sit with him; when he names God as he hands her wine, her face darkens. He catches her with his lasso, she turns into a wrinkled hag, and he cuts her in two.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s08"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "traveller who sees through the spell",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-witch",
+          "role": "witch who is killed",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "The field-keeper's ears",
+      "summary": "Rostam rides through a land of total darkness into green fields, lets Rakhsh graze in a crop and sleeps. The field-keeper strikes his foot and scolds him; Rostam tears off both his ears without a word, and the man runs to his lord Olad.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "sleeping traveller",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-field-keeper",
+          "role": "keeper who is maimed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "horse in the crop",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-olad",
+          "role": "lord he runs to",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "Fifth labour: Olad",
+      "summary": "Olad rides out with his men; Rostam scatters them and lassos Olad. He promises to make him king of Mazandaran if he shows him truly where the White Demon lives and where Kavus is held. Olad describes the long and terrible road and the armies of the demons, and Rostam laughs.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "captor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-olad",
+          "role": "captive guide",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-white-demon",
+          "role": "demon whose lair is sought",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "captive king",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land promised to Olad",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "The fires of Mazandaran",
+      "summary": "Riding day and night they reach Mount Asparuz, where Kavus was struck down. At midnight they see fires burning: Olad says it is the city of Mazandaran, where Arzhang the demon keeps watch. At dawn Rostam ties Olad to a tree and rides on.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s09"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hero who rides on",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-olad",
+          "role": "guide tied to a tree",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-arzhang",
+          "role": "demon on watch",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-asparuz",
+          "role": "mountain reached",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "Sixth labour: Arzhang",
+      "summary": "Rostam rides into the camp of Arzhang and roars; when the demon comes out, Rostam seizes him by the head and ears, tears off his head and throws it among the demons, who flee in terror.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s10"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hero who kills Arzhang",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-arzhang",
+          "role": "demon who is killed",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "Rostam reaches the king",
+      "summary": "Guided by Olad, Rostam enters the city where Kavus is held. The blind king recognises the neigh of Rakhsh and rejoices. He embraces Rostam and tells him to hurry to the cave of the White Demon beyond seven mountains: only three drops of the demon's blood can restore the sight of the king and his men.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s10"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "rescuer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "blind king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-olad",
+          "role": "guide",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "horse whose neigh is known",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-white-demon",
+          "role": "demon whose blood is needed",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "Seventh labour: the White Demon",
+      "summary": "Olad advises waiting until the heat of noon, when the demons sleep. Rostam then cuts through the guards and enters the dark cave, where the White Demon rises like a black mountain. Rostam cuts off a leg; they wrestle until the ground is mud with blood, and at last Rostam lifts him, dashes him down, stabs him and tears out his liver.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s11"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hero who kills the White Demon",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-white-demon",
+          "role": "demon who is killed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-olad",
+          "role": "adviser",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "Olad's reward promised",
+      "summary": "Olad reminds Rostam of his promise. Rostam answers that he will give him all Mazandaran, but first the king of Mazandaran must be thrown from his throne.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s11"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-olad",
+          "role": "guide who asks his reward",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero who renews his promise",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-of-mazandaran",
+          "role": "king still on his throne",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "Sight restored",
+      "summary": "The demon's blood is dropped into the king's eyes and he sees again. Kavus sits on the throne of Mazandaran with Rostam and his nobles and feasts for a week; then his army burns the city, until he commands the killing to stop and sends a messenger to the king of Mazandaran.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s11"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king whose sight returns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero at the king's side",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "noble at the feast",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "noble at the feast",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "noble at the feast",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land of the victory",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "Farhad's letter",
+      "summary": "Kavus writes to the king of Mazandaran to come and submit, or share the fate of Arzhang and the White Demon. Farhad carries the letter; the king's men try to crush his hand, but he does not flinch. Reading of the White Demon's death, the king weeps with rage.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s12"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who writes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farhad",
+          "role": "envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-of-mazandaran",
+          "role": "king who receives the letter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-white-demon",
+          "role": "slain demon",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-arzhang",
+          "role": "slain demon",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "A defiant answer",
+      "summary": "The king of Mazandaran answers that his army and his elephants are greater than Iran's and that he will bring war upon it. Kavus is ashamed, and Rostam offers to carry the next message himself.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s13"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-king-of-mazandaran",
+          "role": "defiant king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farhad",
+          "role": "returning envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "shamed king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero who offers to go",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "Rostam as envoy",
+      "summary": "On the road Rostam uproots a tree and hurls it at the riders sent to meet him. A warrior crushes his hand in greeting, and Rostam laughs and crushes back; the fierce Kalahur tries the same and his nails fall out, and he urges his king to make peace. The king scorns Kavus's letter; Rostam refuses his gifts and returns with the news.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s14"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kalahur",
+          "role": "warrior who is humbled",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-of-mazandaran",
+          "role": "scornful king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "sender of the letter",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "The armies meet",
+      "summary": "Both kings march out. Kavus sets Tus on the right, Gudarz on the left, himself in the centre and Rostam at the front. Juyan, a champion of Mazandaran, rides out and challenges Iran; no one answers until Rostam asks leave, runs him through, lifts him from the saddle like a bird on a spit and throws him down.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s15",
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king at the centre",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "right wing",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "left wing",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "champion of Iran",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-juyan",
+          "role": "champion who is killed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-of-mazandaran",
+          "role": "king of the other army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "battlefield",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "A week of battle",
+      "summary": "The two armies fight for a week. On the eighth day Kavus takes off his crown, weeps before God and prays for victory; then the whole army attacks, with Rostam in the centre and Giv, Gudarz, Tus and the other heroes around him, until blood runs in streams.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "praying king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero at the centre",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "warrior",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "warrior",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "warrior",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farhad",
+          "role": "warrior",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-25",
+      "label": "The king turned to stone",
+      "summary": "Rostam charges the king of Mazandaran and strikes his belt with a spear, but the king turns by sorcery into a rock. No one else can move it; Rostam lifts it alone and carries it to Kavus's tent, threatening to break it apart. The king emerges, and Kavus, finding him unworthy of the throne, has him put to death.",
+      "order": 25,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hero who carries the rock",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-of-mazandaran",
+          "role": "king who becomes a rock",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who judges",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-26",
+      "label": "Olad made king",
+      "summary": "Kavus divides the spoils, prays for a week and gives to the needy. Rostam tells him that his victory owes much to Olad, who showed him every road, and asks for him to be made ruler of Mazandaran; Kavus grants it and leaves for Iran.",
+      "order": 26,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s16"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "king who grants",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero who keeps his promise",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-olad",
+          "role": "new ruler of Mazandaran",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land given to Olad",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-27",
+      "label": "Home to Iran",
+      "summary": "Iran welcomes Kavus with music and joy. He gives Rostam a throne, a crown, servants, horses and gold, and a charter over all of Nimruz. Rostam returns home; Kavus makes Tus commander of the army and gives Isfahan to Gudarz, and rules in justice and plenty.",
+      "order": 27,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-kkavoos-s17"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-kavus",
+          "role": "returning king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "rewarded hero",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "new commander",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "lord of Isfahan",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "kingdom",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-sistan",
+          "role": "land granted to Rostam",
+          "presence": "setting"
+        }
+      ]
+    }
+  ],
+  "media": []
+}
