@@ -1159,6 +1159,18 @@
     "event-song-liao-peace": {
       "label": "پیمان آشتی سونگ و لیائو",
       "summary": "پس از یورشی از سوی خیتان‌ها که جن‌زونگ خود به رویارویی‌اش رفت، دو امپراتوری در ۱۰۰۴ با داد و ستد نامه‌های سوگندخورده پیمان هم‌زیستی آشتی‌آمیز بستند."
+    },
+    "event-sui-embassy-to-khusrau-ii": {
+      "label": "تبادل سفیران سویی و خسرو دوم",
+      "summary": "یانگ‌دی سویی، امپراتور از ۶۰۵ تا ۶۱۷، سفیرانی نزد خسرو دوم فرستاد و در پاسخ سفیرانی از ایران به چین آمدند."
+    },
+    "event-yazdgard-iii-embassy-to-china": {
+      "label": "فرستادن سفیر از سوی یزدگرد سوم به چین",
+      "summary": "یزدگرد سوم که نخست از ترکان باختری و سپس از عرب‌ها در تنگنا بود، در ۶۳۸ سفیرانی به دربار تانگ فرستاد."
+    },
+    "event-peroz-iii-at-the-tang-court": {
+      "label": "پیروز، پسر یزدگرد سوم، در دربار تانگ",
+      "summary": "پیروز، پسر واپسین شاه ساسانی، از تانگ در برابر عرب‌ها یاری خواست، پس از ۶۵۹ همچون فرماندار پارس در زرنگ شناخته شد و چون نتوانست ایستادگی کند، میان ۶۷۰ و ۶۷۳ به دربار تانگ پناه برد."
     }
   },
   "relations": {
@@ -2194,6 +2206,21 @@
       "label": "در دورهٔ"
     },
     "relation-liao-participant-in-song-liao-peace": {
+      "label": "شرکت در"
+    },
+    "relation-sui-yangdi-participant-in-sui-embassy-to-khusrau-ii": {
+      "label": "شرکت در"
+    },
+    "relation-sui-embassy-to-khusrau-ii-during-sui": {
+      "label": "در دورهٔ"
+    },
+    "relation-yazdgard-iii-embassy-to-china-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-peroz-iii-at-the-tang-court-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-tang-participant-in-battle-of-talas": {
       "label": "شرکت در"
     }
   }

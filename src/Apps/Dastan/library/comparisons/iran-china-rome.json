@@ -1478,6 +1478,13 @@
       "url": "https://www.britannica.com/biography/Taizu-emperor-of-Song-dynasty",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-chinese-iranian-i",
+      "title": "Chinese-Iranian relations i. In pre-Islamic times – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/chinese-iranian-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
     }
   ],
   "lanes": [
@@ -2682,6 +2689,28 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "sui-embassy-to-khusrau-ii",
+          "label": "The Sui and Khusrau II exchange embassies",
+          "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 605
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 617
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "persians-take-jerusalem",
           "label": "The Persians take Jerusalem",
           "summary": "The armies of Khusrau II under Shahrbaraz took Antioch in 612 and Damascus in 613, and sacked Jerusalem in 614, carrying off the relic of the True Cross.",
@@ -2832,6 +2861,23 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "yazdgard-iii-embassy-to-china",
+          "label": "Yazdgard III sends an embassy to China",
+          "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 638
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "battle-of-nehavand",
           "label": "The battle of Nehavand",
           "summary": "The Arabs invaded Iran and defeated Yazdgard III at Nehavand, after which he retreated to the northeast; Livius dates it to 641 on one page and 642 on another.",
@@ -2891,6 +2937,28 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "peroz-iii-at-the-tang-court",
+          "label": "Peroz, son of Yazdgard III, at the Tang court",
+          "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 670
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 673
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "abbasid-revolution",
           "label": "The Abbasid revolution",
           "summary": "On 15 June 747 Abu Muslim raised the banner of revolt in Khorasan; it triumphed in 750 when the last Umayyad caliph Marwan II was defeated and killed, and the Abbasids took the caliphate.",
@@ -2910,6 +2978,24 @@
           "sourceIds": [
             "src-britannica-abu-muslim",
             "src-iranica-abbasid-caliphate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-battle-of-talas",
+          "label": "The battle of the Talas River",
+          "summary": "In 751 the Arabs defeated the Tang armies on the Talas River, establishing Arab dominance in Transoxania.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 751
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i",
+            "src-britannica-history-of-china-tang"
           ],
           "reviewStatus": "proposed"
         },
@@ -4448,6 +4534,28 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "china-sui-embassy-to-khusrau-ii",
+          "label": "The Sui and Khusrau II exchange embassies",
+          "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 605
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 617
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "grand-canal",
           "label": "The Grand Canal begun",
           "summary": "In 608 Yangdi built a great canal between the rice-growing south and the Beijing area, and in 610 extended it, beginning the Grand Canal network.",
@@ -4546,6 +4654,23 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "china-yazdgard-iii-embassy-to-china",
+          "label": "Yazdgard III sends an embassy to China",
+          "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 638
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "korea-vassal-668",
           "label": "Korea made a vassal",
           "summary": "Continuing his father’s campaigns, Gaozong conquered the Korean peninsula and made Korea a vassal state in 668.",
@@ -4559,6 +4684,28 @@
           },
           "sourceIds": [
             "src-britannica-gaozong-emperor-of-tang-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-peroz-iii-at-the-tang-court",
+          "label": "Peroz, son of Yazdgard III, at the Tang court",
+          "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 670
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 673
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
           ],
           "reviewStatus": "proposed"
         },
@@ -6130,6 +6277,23 @@
           "reviewStatus": "proposed"
         },
         {
+          "key": "rome-roman-envoys-166",
+          "label": "Envoys from Rome at the Han court",
+          "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of the Han emperor Huan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 166
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
           "key": "year-of-five-emperors",
           "label": "The year of the five emperors",
           "summary": "After the murder of Pertinax in 193, Didius Julianus, Pescennius Niger, Clodius Albinus and Septimius Severus were all proclaimed emperor; Severus won the civil wars that followed.",
@@ -6604,6 +6768,23 @@
           },
           "sourceIds": [
             "src-livius-person-justin-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-siege-of-constantinople-626",
+          "label": "The Persians before Constantinople",
+          "summary": "In 626 the Avars attacked Constantinople while a Persian army under Shahrbaraz stood across the Bosphorus; the walls held, the Avars retreated and Heraclius kept to his campaign in the east.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 626
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius"
           ],
           "reviewStatus": "proposed"
         },

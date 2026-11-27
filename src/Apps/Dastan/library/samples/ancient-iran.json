@@ -1623,6 +1623,22 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-chinese-iranian-i",
+      "title": "Chinese-Iranian relations i. In pre-Islamic times – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/chinese-iranian-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-history-of-china-tang",
+      "title": "History of China: the Tang dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Sui-dynasty",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -11381,6 +11397,156 @@
         {
           "fact": "participant",
           "entityId": "person-biruni"
+        }
+      ]
+    },
+    {
+      "id": "person-peroz-iii",
+      "type": "Person",
+      "label": "Peroz, son of Yazdgard III",
+      "summary": "Son of the last Sasanian king, who after his father’s death in 651 sought Chinese help from Tokharistan, was recognised by the Tang as governor of Persia at Zarang and took refuge at the Tang court between 670 and 673.",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Peroz III",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Sought Tang help against the Arabs."
+        }
+      ]
+    },
+    {
+      "id": "event-sui-embassy-to-khusrau-ii",
+      "type": "Event",
+      "label": "The Sui and Khusrau II exchange embassies",
+      "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 605
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 617
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-khusrau-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-yazdgard-iii-embassy-to-china",
+      "type": "Event",
+      "label": "Yazdgard III sends an embassy to China",
+      "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 638
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-yazdgard-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-peroz-iii-at-the-tang-court",
+      "type": "Event",
+      "label": "Peroz, son of Yazdgard III, at the Tang court",
+      "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 670
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 673
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-peroz-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-talas",
+      "type": "Event",
+      "label": "The battle of the Talas River",
+      "summary": "In 751 the Arabs defeated the Tang armies on the Talas River, establishing Arab dominance in Transoxania.",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i",
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 751
+            }
+          }
         }
       ]
     }
@@ -24481,7 +24647,7 @@
       "to": "dynasty-buyid",
       "type": "capitalOf",
       "directionality": "directed",
-      "label": "Capital of the northern Buyid emirate",
+      "label": "Capital of the northern emirate of",
       "sourceIds": [
         "src-iranica-ziyarids"
       ],
@@ -25178,6 +25344,160 @@
       "label": "During",
       "sourceIds": [
         "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yazdgard-iii-parent-of-peroz-iii",
+      "from": "person-yazdgard-iii",
+      "to": "person-peroz-iii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-khusrau-ii-participant-in-sui-embassy-to-khusrau-ii",
+      "from": "person-khusrau-ii",
+      "to": "event-sui-embassy-to-khusrau-ii",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sui-embassy-to-khusrau-ii-during-sasanian",
+      "from": "event-sui-embassy-to-khusrau-ii",
+      "to": "period-sasanian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yazdgard-iii-participant-in-yazdgard-iii-embassy-to-china",
+      "from": "person-yazdgard-iii",
+      "to": "event-yazdgard-iii-embassy-to-china",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yazdgard-iii-embassy-to-china-during-sasanian",
+      "from": "event-yazdgard-iii-embassy-to-china",
+      "to": "period-sasanian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-peroz-iii-participant-in-peroz-iii-at-the-tang-court",
+      "from": "person-peroz-iii",
+      "to": "event-peroz-iii-at-the-tang-court",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-peroz-iii-at-the-tang-court-during-umayyad-caliphate",
+      "from": "event-peroz-iii-at-the-tang-court",
+      "to": "period-umayyad-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-talas-during-abbasid-caliphate",
+      "from": "event-battle-of-talas",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i",
+        "src-britannica-history-of-china-tang"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abbasid-participant-in-battle-of-talas",
+      "from": "dynasty-abbasid",
+      "to": "event-battle-of-talas",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-chinese-iranian-i"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
