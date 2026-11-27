@@ -1,0 +1,2769 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "salm-tur-iraj",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-salm-tur-iraj",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-27",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-salm-tur-iraj-2026-11-27",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the reign of Fereydun, sections 2 to 20.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/fereydoon",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "From the birth of Fereydun’s three sons to the death of Fereydun after Manuchehr is crowned; Fereydun’s own rise and the reign of Manuchehr that follows are not part of it.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Three brides from Yemen"
+      },
+      {
+        "level": 1,
+        "label": "The division of the world"
+      },
+      {
+        "level": 2,
+        "label": "Iraj among his brothers"
+      },
+      {
+        "level": 3,
+        "label": "A child of Iraj's line"
+      },
+      {
+        "level": 4,
+        "label": "The war of vengeance"
+      },
+      {
+        "level": 5,
+        "label": "The end of Salm and of Fereydun"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-fereydoon-index",
+      "title": "Ganjoor: the reign of Fereydun, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s02",
+      "title": "Ganjoor: بخش ۲ - خواستگاری فریدون دختران شاه یمن را برای پسرانش",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲ - خواستگاری فریدون دختران شاه یمن را برای پسرانش"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s03",
+      "title": "Ganjoor: بخش ۳ - خواسته‌های شاه یمن",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳ - خواسته‌های شاه یمن"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s04",
+      "title": "Ganjoor: بخش ۴ - رسیدن فرزندان فریدون به یمن و ازدواج آنها با دختران شاه یمن",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴ - رسیدن فرزندان فریدون به یمن و ازدواج آنها با دختران شاه یمن"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s05",
+      "title": "Ganjoor: بخش ۵ - بخشیدن روم سلم را و تور توران را و ایرج ایران را",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۵ - بخشیدن روم سلم را و تور توران را و ایرج ایران را"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s06",
+      "title": "Ganjoor: بخش ۶ - کینهٔ سلم و تور ایرج را",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۶ - کینهٔ سلم و تور ایرج را"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s07",
+      "title": "Ganjoor: بخش ۷ - رای زدن فریدون با ایرج",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۷ - رای زدن فریدون با ایرج"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s08",
+      "title": "Ganjoor: بخش ۸ - نامهٔ فریدون به سلم و تور",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۸ - نامهٔ فریدون به سلم و تور"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s09",
+      "title": "Ganjoor: بخش ۹ - رفتن ایرج به نزد سلم و تور",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۹ - رفتن ایرج به نزد سلم و تور"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s10",
+      "title": "Ganjoor: بخش ۱۰ - کشته شدن ایرج",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۰ - کشته شدن ایرج"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s11",
+      "title": "Ganjoor: بخش ۱۱ - نابینا شدن فریدون از داغ ایرج",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۱ - نابینا شدن فریدون از داغ ایرج"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s12",
+      "title": "Ganjoor: بخش ۱۲ - زاده شدن منوچهر",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۲ - زاده شدن منوچهر"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s13",
+      "title": "Ganjoor: بخش ۱۳ - آگاهی سلم و تور از منوچهر",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh13",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۳ - آگاهی سلم و تور از منوچهر"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s14",
+      "title": "Ganjoor: بخش ۱۴ - لشکرکشی سلم و تور به ایران",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۴ - لشکرکشی سلم و تور به ایران"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s15",
+      "title": "Ganjoor: بخش ۱۵ - پیمان بستن سپاه ایران",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh15",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۵ - پیمان بستن سپاه ایران"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s16",
+      "title": "Ganjoor: بخش ۱۶ - جنگ نخستین سلم و تور با سپاه ایران",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh16",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۶ - جنگ نخستین سلم و تور با سپاه ایران"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s17",
+      "title": "Ganjoor: بخش ۱۷ - شبیخون بر سپاه منوچهر و کشته شدن تور",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh17",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۷ - شبیخون بر سپاه منوچهر و کشته شدن تور"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s18",
+      "title": "Ganjoor: بخش ۱۸ - فرستادن منوچهر سر تور فریدون را",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh18",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۸ - فرستادن منوچهر سر تور فریدون را"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s19",
+      "title": "Ganjoor: بخش ۱۹ - ادامهٔ جنگ سپاه ایران",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh19",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۹ - ادامهٔ جنگ سپاه ایران"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s20",
+      "title": "Ganjoor: بخش ۲۰ - کشته شدن سلم و مرگ فریدون",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh20",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۰ - کشته شدن سلم و مرگ فریدون"
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "Shahnameh",
+      "summary": "The literary work in which the story of Fereydun’s sons is told.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-salm-tur-iraj",
+      "type": "NarrativeArc",
+      "label": "Salm, Tur and Iraj",
+      "summary": "The story of the three sons of Fereydun, from their marriages onward.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-fereydun",
+      "type": "Character",
+      "label": "Fereydun",
+      "summary": "King of the world in the poem, father of three sons.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King, father of three sons"
+        }
+      ]
+    },
+    {
+      "id": "character-shahrnaz",
+      "type": "Character",
+      "label": "Shahrnaz",
+      "summary": "A wife of Fereydun, mother of his two elder sons.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of two sons of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-arnavaz",
+      "type": "Character",
+      "label": "Arnavaz",
+      "summary": "A wife of Fereydun, mother of his youngest son.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of the youngest son of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-salm",
+      "type": "Character",
+      "label": "Salm",
+      "summary": "The eldest son of Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Eldest son of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-tur",
+      "type": "Character",
+      "label": "Tur",
+      "summary": "A son of Fereydun, born of Shahrnaz.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-iraj",
+      "type": "Character",
+      "label": "Iraj",
+      "summary": "The youngest son of Fereydun, born of Arnavaz.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Youngest son of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-jandal",
+      "type": "Character",
+      "label": "Jandal",
+      "summary": "A trusted and eloquent noble whom Fereydun sends to find brides for his sons.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Envoy of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-sarv",
+      "type": "Character",
+      "label": "Sarv",
+      "summary": "The king of Yemen, father of three daughters.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Yemen"
+        }
+      ]
+    },
+    {
+      "id": "character-daughters-of-sarv",
+      "type": "Character",
+      "label": "The daughters of Sarv",
+      "summary": "Three sisters of one father and one mother, the daughters of the king of Yemen.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Daughters of the king of Yemen"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "The land of Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-yemen",
+      "type": "NarrativeRegion",
+      "label": "Yemen",
+      "summary": "The kingdom of Sarv.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-rum",
+      "type": "NarrativeRegion",
+      "label": "Rum and the West",
+      "summary": "The lands Fereydun gives to Salm.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s05"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "place-turan",
+      "type": "NarrativeRegion",
+      "label": "Turan",
+      "summary": "The land of the Turks and Chin, which Fereydun gives to Tur.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s05"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "character-envoy-of-salm",
+      "type": "Character",
+      "label": "The mobad sent by Salm and Tur",
+      "summary": "A shrewd and eloquent mobad whom the two brothers send to their father.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s06"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Envoy of Salm and Tur"
+        }
+      ]
+    },
+    {
+      "id": "character-mah-afarid",
+      "type": "Character",
+      "label": "Mah-Afarid",
+      "summary": "A handmaiden in the household of Iraj, whom Iraj loved.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Beloved of Iraj"
+        }
+      ]
+    },
+    {
+      "id": "character-daughter-of-iraj",
+      "type": "Character",
+      "label": "The daughter of Iraj",
+      "summary": "The daughter of Iraj and Mah-Afarid, raised by Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Daughter of Iraj"
+        }
+      ]
+    },
+    {
+      "id": "character-pashang-of-iran",
+      "type": "Character",
+      "label": "Pashang",
+      "summary": "The husband Fereydun chooses for the daughter of Iraj; not the king of Turan of the same name.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Husband of the daughter of Iraj"
+        }
+      ]
+    },
+    {
+      "id": "character-manuchehr",
+      "type": "Character",
+      "label": "Manuchehr",
+      "summary": "The grandson of Iraj, raised and taught by Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Grandson of Iraj"
+        }
+      ]
+    },
+    {
+      "id": "character-qaren",
+      "type": "Character",
+      "label": "Qaren",
+      "summary": "A commander of the army, named in the poem as Qaren of the house of Kaveh.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Commander of the army"
+        }
+      ]
+    },
+    {
+      "id": "character-shiruy-hero",
+      "type": "Character",
+      "label": "Shiruy",
+      "summary": "A warrior and leader of the army, called a lion-slayer.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of the army"
+        }
+      ]
+    },
+    {
+      "id": "character-sam",
+      "type": "Character",
+      "label": "Sam",
+      "summary": "A hero, son of Nariman, among the leaders of the army.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s13"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Hero, son of Nariman"
+        }
+      ]
+    },
+    {
+      "id": "character-shapur-hero",
+      "type": "Character",
+      "label": "Shapur",
+      "summary": "A warrior of the court of Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s13"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of the court"
+        }
+      ]
+    },
+    {
+      "id": "character-envoy-of-pardon",
+      "type": "Character",
+      "label": "The envoy seeking pardon",
+      "summary": "An eloquent man whom Salm and Tur send to Fereydun with gifts.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s13"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Envoy of Salm and Tur"
+        }
+      ]
+    },
+    {
+      "id": "object-kaviani-banner",
+      "type": "NarrativeObject",
+      "label": "The Kaviani banner",
+      "summary": "The banner of the kings of Iran.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s13"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-tamisha",
+      "type": "NarrativePlace",
+      "label": "Tamisha",
+      "summary": "The seat of Fereydun, from which the army marches out.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "place-alanan-fortress",
+      "type": "NarrativePlace",
+      "label": "The fortress of Alanan",
+      "summary": "A fortress behind the army of Salm and Tur, rising from the water.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "character-qobad-hero",
+      "type": "Character",
+      "label": "Qobad",
+      "summary": "A warrior who leads the vanguard of Manuchehr.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Leader of the vanguard"
+        }
+      ]
+    },
+    {
+      "id": "character-garshasp-hero",
+      "type": "Character",
+      "label": "Garshasp",
+      "summary": "A warrior who commands the left wing of the army; not the later king of that name.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Commander of the left wing"
+        }
+      ]
+    },
+    {
+      "id": "character-castellan",
+      "type": "Character",
+      "label": "The keeper of the fortress",
+      "summary": "The keeper of the fortress of Alanan.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s19"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Keeper of the fortress"
+        }
+      ]
+    },
+    {
+      "id": "object-ring-of-tur",
+      "type": "NarrativeObject",
+      "label": "The ring of Tur",
+      "summary": "The seal ring of Tur.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s19"
+      ],
+      "spoilerLevel": 5
+    },
+    {
+      "id": "place-sari",
+      "type": "NarrativePlace",
+      "label": "Sari",
+      "summary": "A town the victorious army reaches on its way back.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s20"
+      ],
+      "spoilerLevel": 5
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-salm-tur-iraj",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-fereydun",
+      "to": "character-salm",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-fereydun",
+      "to": "character-tur",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-fereydun",
+      "to": "character-iraj",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-shahrnaz",
+      "to": "character-salm",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-shahrnaz",
+      "to": "character-tur",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-arnavaz",
+      "to": "character-iraj",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-salm",
+      "to": "character-tur",
+      "type": "siblingOf",
+      "label": "Brothers",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-salm",
+      "to": "character-iraj",
+      "type": "siblingOf",
+      "label": "Brothers",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-11",
+      "from": "character-tur",
+      "to": "character-iraj",
+      "type": "siblingOf",
+      "label": "Brothers",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-fereydun",
+      "to": "character-shahrnaz",
+      "type": "spouseOf",
+      "label": "Spouses",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-fereydun",
+      "to": "character-arnavaz",
+      "type": "spouseOf",
+      "label": "Spouses",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-sarv",
+      "to": "character-daughters-of-sarv",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-15",
+      "from": "character-sarv",
+      "to": "place-yemen",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-16",
+      "from": "character-salm",
+      "to": "place-rum",
+      "type": "leaderOf",
+      "label": "Ruler of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-17",
+      "from": "character-tur",
+      "to": "place-turan",
+      "type": "leaderOf",
+      "label": "Ruler of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-18",
+      "from": "character-iraj",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-19",
+      "from": "character-salm",
+      "to": "character-tur",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s06"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-08"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-20",
+      "from": "character-tur",
+      "to": "character-iraj",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s10"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-21",
+      "from": "character-salm",
+      "to": "character-iraj",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s10"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-22",
+      "from": "character-iraj",
+      "to": "character-mah-afarid",
+      "type": "spouseOf",
+      "label": "Partners",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-23",
+      "from": "character-iraj",
+      "to": "character-daughter-of-iraj",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-24",
+      "from": "character-mah-afarid",
+      "to": "character-daughter-of-iraj",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-25",
+      "from": "character-daughter-of-iraj",
+      "to": "character-pashang-of-iran",
+      "type": "spouseOf",
+      "label": "Spouses",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-26",
+      "from": "character-daughter-of-iraj",
+      "to": "character-manuchehr",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-27",
+      "from": "character-pashang-of-iran",
+      "to": "character-manuchehr",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-28",
+      "from": "character-fereydun",
+      "to": "character-manuchehr",
+      "type": "teacherOf",
+      "label": "Teacher of",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-17"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-29",
+      "from": "character-manuchehr",
+      "to": "character-tur",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-21"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-30",
+      "from": "character-manuchehr",
+      "to": "character-salm",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-21"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-31",
+      "from": "character-qaren",
+      "to": "character-manuchehr",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-21"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-32",
+      "from": "character-manuchehr",
+      "to": "character-fereydun",
+      "type": "successorOf",
+      "label": "King after",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s20"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-salm-tur-iraj",
+        "eventIds": [
+          "event-30"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "Three sons",
+      "summary": "When Fereydun is fifty, three sons are born to him, tall as cypresses and like their father in all things; the two elder are of Shahrnaz, the youngest of Arnavaz. Their father has not yet given them names.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shahrnaz",
+          "role": "mother of the two elder",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-arnavaz",
+          "role": "mother of the youngest",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "eldest son",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "son",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "youngest son",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "Jandal's search",
+      "summary": "Fereydun sends Jandal to find three sisters of one father and one mother, worthy of his sons. Jandal searches every land and finds them only with Sarv, the king of Yemen, to whom he delivers Fereydun's proposal.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "king who sends him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jandal",
+          "role": "envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sarv",
+          "role": "king of Yemen",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-daughters-of-sarv",
+          "role": "sought brides",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "place-yemen",
+          "role": "kingdom of Sarv",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "Sarv takes counsel",
+      "summary": "Sarv is grieved at the thought of losing his daughters but fears to refuse a king who brought down Zahhak. His chiefs tell him that they are no one's slaves and that, if he fears Fereydun, he should ask for things that cannot be done.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sarv",
+          "role": "king in doubt",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "feared king",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "Sarv's answer",
+      "summary": "Sarv tells Jandal that he will obey, but that the three princes must come to him so that he can see them himself before he gives them his daughters. Jandal brings the answer back.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sarv",
+          "role": "king who answers",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jandal",
+          "role": "envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "king who receives the answer",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "A father's counsel",
+      "summary": "Fereydun tells his sons of the king of Yemen and his daughters and urges them to answer wisely and truthfully, for the king of Yemen is a deep thinker. The three set out, full of knowledge.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "father who counsels",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "son",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "son",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "son",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sarv",
+          "role": "king they are to meet",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "The brides",
+      "summary": "The three princes reach Yemen with priests and an army and are welcomed with jewels and musk. Sarv gives them his three daughters, saying bitterly to himself that ill has come to him from Fereydun, and the princes set out for home.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s04"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-salm",
+          "role": "groom",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "groom",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "groom",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sarv",
+          "role": "king who gives his daughters",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-daughters-of-sarv",
+          "role": "brides",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-yemen",
+          "role": "kingdom of Sarv",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "The world divided",
+      "summary": "Fereydun divides the world in three. Salm receives Rum and the West, Tur the land of the Turks and Chin, called Turan, and Iraj Iran and the plains of the spear-bearers, with the royal throne and crown. Each takes his throne in peace.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s05"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "king who divides the world",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "receives Rum and the West",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "receives Turan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "receives Iran",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-rum",
+          "role": "share of Salm",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "share of Tur",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "share of Iraj",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "Salm's envy",
+      "summary": "As Fereydun grows old, greed stirs in Salm: he cannot bear that the youngest brother has the golden throne. He sends word to Tur that their father has wronged them both, and Tur, angered, agrees that they must act without delay.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-salm",
+          "role": "envious brother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "brother who agrees",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "aging father",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "envied brother",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "A harsh message",
+      "summary": "The two brothers meet and send a mobad to their father: he has favoured one son over the others; let him take the crown from Iraj and give him a corner of the world, or they will bring the armies of Turan, Chin and Rum against Iran.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-salm",
+          "role": "sender",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "sender",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-envoy-of-salm",
+          "role": "mobad who carries the message",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "brother they want removed",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "Fereydun's reply",
+      "summary": "At Fereydun's court, the mobad delivers the message. Fereydun answers that he divided the world with the counsel of the wise and in fear of God, and warns his sons that whoever sends a brother to the dust is no true son of his line.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "king who answers",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-envoy-of-salm",
+          "role": "envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "son rebuked",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "son rebuked",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "Iraj chooses peace",
+      "summary": "Fereydun warns Iraj of his brothers' hostility and urges him to prepare. Iraj replies that he wants no throne at the cost of hatred: he will go to his brothers without an army and win them back with kindness. Fereydun praises his wisdom but fears for him, and promises to write to them.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s07"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iraj",
+          "role": "son who seeks peace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "anxious father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "hostile brother",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "hostile brother",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "A letter and a journey",
+      "summary": "Fereydun writes to Salm and Tur that their brother, who longed to see them, has left his throne and comes to them as a servant, and asks them to honour him and send him back. Iraj sets out with a few companions.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s08"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "writer of the letter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "traveller",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "addressee",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "addressee",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "The army looks at Iraj",
+      "summary": "The brothers receive Iraj with false warmth. Their soldiers cannot take their eyes off him and whisper that he alone is worthy to be king. Salm sees it and tells Tur that unless Iraj is uprooted he will throw them from their thrones; they spend the night plotting.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s09"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iraj",
+          "role": "guest admired by the army",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "brother who plots",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "brother who plots",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "The death of Iraj",
+      "summary": "In the tent Tur asks why the youngest should wear the crown. Iraj answers that he wants neither Iran nor any kingdom and gives up the crown to them. Unmoved, Tur strikes him with a golden chair; Iraj begs for his life, but Tur kills him with a dagger, cuts off his head, fills it with musk and sends it to their father.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s10"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iraj",
+          "role": "brother who is killed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "killer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "brother present",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "father to whom the head is sent",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "The golden coffin",
+      "summary": "While Fereydun prepares a triumphant welcome for Iraj, a mourner arrives with a golden coffin holding the severed head. Fereydun falls from his horse; the army tears its garments and returns in black. In Iraj's garden he burns the trees and prays to live until an avenger of Iraj's seed arises, weeping until grass grows around him and his eyes grow dark.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s11"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "grieving father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "mourned son",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "Mah-Afarid's child",
+      "summary": "Fereydun finds that Mah-Afarid, whom Iraj loved, is carrying his child, and takes hope. A daughter is born who looks like Iraj; when she is grown, Fereydun gives her in marriage to Pashang, and she bears a son.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "grandfather",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mah-afarid",
+          "role": "mother",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "father of the child",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-daughter-of-iraj",
+          "role": "daughter who is born",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-pashang-of-iran",
+          "role": "husband",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "son who is born",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "Manuchehr",
+      "summary": "The boy is brought to Fereydun, who rejoices as if Iraj lived again; his sight returns and he names the child Manuchehr. He raises him with every care, teaches him the arts of kings, and gives him his golden throne, his mace, his crown and his treasures; the nobles hail him, with Qaren and Shiruy among the leaders of the army.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s12"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "grandson",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "grandfather who raises him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-pashang-of-iran",
+          "role": "father",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-qaren",
+          "role": "commander",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-shiruy-hero",
+          "role": "warrior",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "remembered forebear",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "An offer of atonement",
+      "summary": "Alarmed by the news, Salm and Tur send an eloquent envoy with elephants and treasure. He says the brothers repent, blame fate and the demon, and ask that Manuchehr come to them so that they may serve him and pay the blood-price of his grandfather.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s13"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-salm",
+          "role": "sender",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "sender",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-envoy-of-pardon",
+          "role": "envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "king who hears the offer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "prince they ask for",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shapur-hero",
+          "role": "leads in the envoy",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "Fereydun refuses",
+      "summary": "Fereydun sees through the offer: if they love Manuchehr, where is Iraj? They will see him only at the head of an army, with the Kaviani banner and heroes such as Qaren, Shapur, Shiruy and Sam.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s13"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "king who refuses",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-envoy-of-pardon",
+          "role": "envoy",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "avenger to come",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "murdered son",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-qaren",
+          "role": "named hero",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-shapur-hero",
+          "role": "named hero",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-shiruy-hero",
+          "role": "named hero",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "named hero",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "object-kaviani-banner",
+          "role": "banner of the army",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "The brothers march",
+      "summary": "The envoy returns and describes the splendour of Fereydun's court and the strength of Manuchehr. Tur tells Salm that the lion's cub must not be allowed to grow, and the two lead their armies from the West towards Iran.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s13"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-envoy-of-pardon",
+          "role": "envoy who reports",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "brother who marches",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "brother who urges war",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "feared prince",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "land they march on",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "Manuchehr leads the army",
+      "summary": "Fereydun sends Manuchehr out with the army. From Tamisha it marches under the Kaviani banner: Garshasp on the left, Sam and Qobad on the right, Manuchehr in the centre, with Qaren leading. Salm and Tur draw up their forces with the fortress of Alanan behind them.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "leader of the army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "king who sends him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-qaren",
+          "role": "leader of the army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garshasp-hero",
+          "role": "left wing",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "right wing",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-qobad-hero",
+          "role": "right wing and vanguard",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "enemy leader",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "enemy leader",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-kaviani-banner",
+          "role": "banner",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "place-tamisha",
+          "role": "where the army sets out",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-alanan-fortress",
+          "role": "behind the enemy",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "Tur's taunt",
+      "summary": "Tur tells Qobad to ask the new king, who has no father, who gave him sword and armour, since he descends from Iraj only through a daughter. Qobad warns him he will regret his words; Manuchehr laughs and says that God and Fereydun know Iraj is his forefather, and the battle will show his lineage.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s14"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tur",
+          "role": "brother who taunts",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-qobad-hero",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who laughs",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "forefather named",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "The night proclamation",
+      "summary": "At nightfall a herald cries through the army of Qaren that this is a war against evil: whoever dies in it will be pure for paradise, and whoever wins will have fame, land and reward. The chiefs swear to obey.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s15"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-qaren",
+          "role": "commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sarv",
+          "role": "counsellor at his side",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "The first battle",
+      "summary": "At dawn Manuchehr leads out the army and the two hosts clash until the plain is a sea of blood. The day is with Manuchehr; at nightfall Salm and Tur think of a night attack.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s16"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "victorious leader",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "enemy leader",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "enemy leader",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-25",
+      "label": "The night raid",
+      "summary": "Spies tell Manuchehr of the planned raid. He leaves the army with Qaren and waits in ambush with thirty thousand men. When Tur comes by night, he finds the army ready and turns to flee; Manuchehr overtakes him, throws him from his saddle with a spear and cuts off his head.",
+      "order": 25,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s17"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "avenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "brother who is killed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-qaren",
+          "role": "commander left with the army",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-26",
+      "label": "A head for Fereydun",
+      "summary": "Manuchehr writes to Fereydun of the three battles and the death of Tur, and sends him Tur's head, as Tur once sent Iraj's. Fereydun weeps, and blesses Manuchehr.",
+      "order": 26,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s18"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "writer of the letter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "grieving and blessing grandfather",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "slain son",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "remembered son",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-27",
+      "label": "The fortress taken by a ring",
+      "summary": "Qaren guesses that Salm will retreat to the fortress of Alanan. Taking Tur's ring, he goes alone to the keeper of the fortress as Tur's messenger and is let in; at dawn he raises a banner as a sign, Shiruy storms the gate, and the fortress burns.",
+      "order": 27,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s19"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-qaren",
+          "role": "commander who deceives the keeper",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-castellan",
+          "role": "deceived keeper",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shiruy-hero",
+          "role": "warrior who storms the gate",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garshasp-hero",
+          "role": "companion in the plan",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "brother whose refuge is lost",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "object-ring-of-tur",
+          "role": "token of trust",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "place-alanan-fortress",
+          "role": "fortress",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-28",
+      "label": "The death of Salm",
+      "summary": "Salm flees towards the fortress but finds no ship at the shore. Manuchehr overtakes him, reproaches him for killing his brother for a crown, and cuts him in two with his sword; Salm's head is raised on a spear.",
+      "order": 28,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s20"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-salm",
+          "role": "brother who is killed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "avenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "brother avenged",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-29",
+      "label": "Mercy for the defeated",
+      "summary": "Salm's army sends a wise man to say that they are herdsmen and farmers who came at their lords' command and now submit. Manuchehr forbids further bloodshed, takes their arms and honours them, and sends Shiruy to bring the treasure of the fortress.",
+      "order": 29,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s20"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "merciful victor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shiruy-hero",
+          "role": "sent for the treasure",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-alanan-fortress",
+          "role": "source of the treasure",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-30",
+      "label": "Manuchehr crowned",
+      "summary": "The victorious army returns by way of Sari to Tamisha. Fereydun comes out to meet it; Manuchehr dismounts and kisses the ground, and Fereydun, thanking God for justice done, has him sit on the golden throne with the crown.",
+      "order": 30,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s20"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "new king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "grandfather who crowns him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shiruy-hero",
+          "role": "bringer of the treasure",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-sari",
+          "role": "on the way back",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-tamisha",
+          "role": "seat of Fereydun",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-31",
+      "label": "The death of Fereydun",
+      "summary": "His work done, Fereydun withdraws from the throne with the heads of his three sons before him and weeps until his life ends. Manuchehr puts on the crown, girds himself in mourning and builds him a royal tomb of gold and lapis.",
+      "order": 31,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s20"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "king who dies",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "heir who mourns him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-salm",
+          "role": "mourned son",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-tur",
+          "role": "mourned son",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-iraj",
+          "role": "mourned son",
+          "presence": "deceased_subject"
+        }
+      ]
+    }
+  ],
+  "media": []
+}

@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A further story of the Shahnameh: Salm, Tur and Iraj – the three sons of Fereydun, from their brides
+  from Yemen to the death of Iraj, the vengeance of Manuchehr and the death of Fereydun, in 31 steps and six
+  reading stages, read from the text on Ganjoor, with its Persian.
 - A new story of the Shahnameh: Jamshid, Zahhak and Kaveh, Fereydun – from Jamshid taking the throne to
   Zahhak bound in Damavand and Fereydun crowned, in 35 steps and six reading stages, read section by section
   from the text on Ganjoor, with its Persian.

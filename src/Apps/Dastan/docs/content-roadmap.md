@@ -54,7 +54,7 @@ characters with the identifiers the work and the other stories give them.
 | 1.9 | Rostam and Shaghad | shqad | |
 | 1.10 | Bahram Gur; Khosrow and Shirin; Bozorgmehr and chess | bahgoor, parviz, anooshirvan | the historical part, where it meets pass 2 |
 
-Done: 1.1 on 2026-11-27 (`library/samples/jamshid-zahhak-fereydun.json`, 35 steps in six reading stages, from Jamshid taking the throne to the crowning of Fereydun, with its Persian; not yet looked at in a browser).
+Done: 1.1 on 2026-11-27 (`library/samples/jamshid-zahhak-fereydun.json`, 35 steps in six reading stages, from Jamshid taking the throne to the crowning of Fereydun, with its Persian; not yet looked at in a browser). Done: 1.2 on 2026-11-27 (`library/samples/salm-tur-iraj.json`, 31 steps in six reading stages, from the birth of the three sons to the death of Fereydun, with its Persian; not yet looked at in a browser).
 
 Alongside each: `spoilerPolicy.correspondences` between stories where a reader of one has certainly read a stage
 of another (Siavash before Forud; Rostam and Sohrab before Rostam and Esfandiar), and the same Persian review as
