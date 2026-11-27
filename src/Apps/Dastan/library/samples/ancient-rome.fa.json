@@ -9,7 +9,7 @@
   "entities": {
     "subject-ancient-rome": {
       "label": "روم باستان",
-      "summary": "شهر رم و کشوری که بر آن فرمان راند، از بنیاد سنتی‌اش در ۷۵۳ پیش از میلاد، از راه شاهان، جمهوری و نخستین امپراتوران تا تراژان، حدود ۱۰۰ میلادی."
+      "summary": "شهر رم و کشوری که بر آن فرمان راند، از بنیاد سنتی‌اش در ۷۵۳ پیش از میلاد، از راه شاهان، جمهوری و امپراتوران تا پایان امپراتوری در باختر در ۴۷۶، و امپراتوری در خاور تا هراکلیوس که در ۶۴۱ درگذشت."
     },
     "place-rome": {
       "label": "رم",
@@ -148,7 +148,7 @@
     },
     "period-nerva-trajan": {
       "label": "نروا و تراژان",
-      "summary": "از بر تخت نشستن نروا در ۹۶ میلادی تا مرگ تراژان در ۱۱۷ میلادی؛ این مجموعه آن را تا حدود ۱۰۰ میلادی دنبال می‌کند."
+      "summary": "از بر تخت نشستن نروا در ۹۶ میلادی تا مرگ تراژان در ۱۱۷ میلادی."
     },
     "dynasty-julio-claudian": {
       "label": "ژولیو-کلودیان",
@@ -598,6 +598,711 @@
     "event-accession-of-trajan": {
       "label": "بر تخت نشستن تراژان",
       "summary": "با مرگ نروا در ژانویهٔ ۹۸ میلادی، تراژان، پسرخوانده‌اش، امپراتور شد."
+    },
+    "office-west-roman-emperor": {
+      "label": "امپراتور باختر",
+      "summary": "امپراتور نیمهٔ باختری امپراتوری پس از مرگ تئودوسیوس یکم در ۳۹۵، تا آنکه واپسینشان، رومولوس آگوستولوس، در ۴۷۶ برکنار شد."
+    },
+    "office-east-roman-emperor": {
+      "label": "امپراتور خاور",
+      "summary": "امپراتور نیمهٔ خاوری امپراتوری که پس از ۳۹۵ از قسطنطنیه فرمان می‌راند؛ Livius آن را امپراتوری روم خاوری یا بیزانس می‌خواند."
+    },
+    "person-hadrian": {
+      "label": "هادریان",
+      "summary": "زادهٔ ۷۶ در ایتالیکا، امپراتور از ۱۱۷ تا ۱۳۸. در استان‌ها سفر کرد، اورشلیم را با نام آیلیا کاپیتولینا از نو بنیاد نهاد و شورش بارکوخبا را فرو نشاند؛ دیوار هادریان در بریتانیا و پانتئون در رم از کارهای اوست.",
+      "facts": {
+        "knownFor": "دیوار هادریان را ساخت."
+      }
+    },
+    "person-antoninus-pius": {
+      "label": "آنتونینوس پیوس",
+      "summary": "فرزندخواندهٔ هادریان و امپراتور از ۱۳۸ تا ۱۶۱، نخستین آنتونین، که سال‌هایشان را اغلب روزگار زرین امپراتوری می‌خوانند؛ به مرگ طبیعی درگذشت.",
+      "facts": {
+        "knownFor": "نخستین آنتونین."
+      }
+    },
+    "person-marcus-aurelius": {
+      "label": "مارکوس اورلیوس",
+      "summary": "امپراتور از ۱۶۱ تا ۱۸۰، نخست با لوکیوس وروس. در پادشاهی او جنگ با بلاش چهارم اشکانی، طاعون از ۱۶۵ و جنگ‌های دراز کنار دانوب روی داد؛ «تأملات» را نوشت.",
+      "facts": {
+        "knownFor": "«تأملات» را نوشت."
+      }
+    },
+    "person-lucius-verus": {
+      "label": "لوکیوس وروس",
+      "summary": "هم‌فرمانروای مارکوس اورلیوس از ۱۶۱ تا مرگش در ۱۶۹؛ برای جنگ با پارت‌ها به خاور رفت و ارمنستان را بازگرفت.",
+      "facts": {
+        "knownFor": "هم‌فرمانروای مارکوس اورلیوس."
+      }
+    },
+    "person-commodus": {
+      "label": "کومودوس",
+      "summary": "پسر مارکوس اورلیوس، امپراتور از ۱۸۰ تا ۱۹۲؛ روزبه‌روز خودکامه‌تر شد و کشته شد، و با او خاندان آنتونین پایان یافت.",
+      "facts": {
+        "knownFor": "واپسین آنتونین."
+      }
+    },
+    "person-pertinax": {
+      "label": "پرتیناکس",
+      "summary": "سرداری، پسر برده‌ای آزادشده، که پادشاهی کوتاهش در ۱۹۳ «سال پنج امپراتور» را آغاز کرد.",
+      "facts": {
+        "knownFor": "پادشاهی‌اش سال پنج امپراتور را آغاز کرد."
+      }
+    },
+    "person-didius-julianus": {
+      "label": "دیدیوس یولیانوس",
+      "summary": "امپراتور روم برای شصت‌وشش روز در ۱۹۳؛ Livius سال زادنش را با پرسش ۱۳۳ می‌گذارد.",
+      "facts": {
+        "knownFor": "شصت‌وشش روز فرمان راند."
+      }
+    },
+    "person-septimius-severus": {
+      "label": "سپتیمیوس سوروس",
+      "summary": "زادهٔ ۱۴۵ در لپتیس ماگنا، بنیادگذار خاندان سوروسی و امپراتور از ۱۹۳ تا ۲۱۱. در جنگ‌های داخلی پیروز شد، تیسفون را از پارت‌ها گرفت و میان‌رودان را به امپراتوری افزود.",
+      "facts": {
+        "knownFor": "بنیادگذار خاندان سوروسی."
+      }
+    },
+    "person-caracalla": {
+      "label": "کاراکالا",
+      "summary": "پسر سپتیمیوس سوروس، امپراتور از ۲۱۱ تا ۲۱۷. برادرش گتا را کشت، در ۲۱۲ شهروندی روم را به همهٔ مردان آزادزاده داد و در جنگش با پارت‌ها نزدیک حران کشته شد.",
+      "facts": {
+        "knownFor": "شهروندی را به همهٔ مردان آزادزاده داد."
+      }
+    },
+    "person-geta": {
+      "label": "گتا",
+      "summary": "پسر سپتیمیوس سوروس و امپراتور همراه برادرش کاراکالا در ۲۱۱، که در دسامبر همان سال او را کشت.",
+      "facts": {
+        "knownFor": "به دست برادرش کاراکالا کشته شد."
+      }
+    },
+    "person-macrinus": {
+      "label": "ماکرینوس",
+      "summary": "فرماندهٔ گارد پراتوری که جانشین کاراکالا شد و چهارده ماه در ۲۱۷ تا ۲۱۸ فرمان راند، میان‌پرده‌ای در خاندان سوروسی؛ منابع زادنش را ۱۶۴ یا ۱۶۶ می‌دانند.",
+      "facts": {
+        "knownFor": "میان دو سوروسی فرمان راند."
+      }
+    },
+    "person-heliogabalus": {
+      "label": "هلیوگابالوس",
+      "summary": "امپراتور سوروسی از ۲۱۸ تا ۲۲۲، شناخته به اصلاحات دینی‌اش و آیین خدای خورشید سوری الاگابال.",
+      "facts": {
+        "knownFor": "آیین الاگابال را به رم آورد."
+      }
+    },
+    "person-severus-alexander": {
+      "label": "سوروس الکساندر",
+      "summary": "واپسین امپراتور سوروسی، از ۲۲۲ تا ۲۳۵، زادهٔ فنیقیه؛ سربازانش او را کشتند.",
+      "facts": {
+        "knownFor": "واپسین سوروسی."
+      }
+    },
+    "person-maximinus-thrax": {
+      "label": "ماکسیمینوس تراکس",
+      "summary": "سربازی زادهٔ تراکیه یا موئسیا، امپراتور از ۲۳۵ تا ۲۳۸، که سربازانش او را کشتند.",
+      "facts": {
+        "knownFor": "ملقب به تراکیایی."
+      }
+    },
+    "person-pupienus": {
+      "label": "پوپینوس",
+      "summary": "امپراتور همراه بالبینوس در ۲۳۸، که در ماه مه همان سال سربازان او را کشتند.",
+      "facts": {
+        "knownFor": "هم‌امپراتور بالبینوس."
+      }
+    },
+    "person-balbinus": {
+      "label": "بالبینوس",
+      "summary": "سناتوری از خاندانی بزرگ که در ۲۳۸ همراه پوپینوس امپراتور بود.",
+      "facts": {
+        "knownFor": "هم‌امپراتور پوپینوس."
+      }
+    },
+    "person-gordian-iii": {
+      "label": "گوردیان سوم",
+      "summary": "امپراتور از ۲۳۸ تا ۲۴۴، که با شاپور یکم ساسانی جنگید و در ۲۴۴ درگذشت.",
+      "facts": {
+        "knownFor": "در جنگ با شاپور یکم درگذشت."
+      }
+    },
+    "person-philip-the-arab": {
+      "label": "فیلیپ عرب",
+      "summary": "امپراتور از ۲۴۴ تا ۲۴۹، که بر نگاره‌های پیروزی شاپور یکم ساسانی دیده می‌شود؛ در ۲۴۹ در نبرد کشته شد.",
+      "facts": {
+        "knownFor": "بر نگاره‌های شاپور یکم دیده می‌شود."
+      }
+    },
+    "person-decius": {
+      "label": "دکیوس",
+      "summary": "امپراتور از ۲۴۹ تا ۲۵۱، که آزار بزرگ مسیحیان را آغاز کرد و همراه پسرش در نبردی کنار دانوب کشته شد.",
+      "facts": {
+        "knownFor": "مسیحیان را آزرد."
+      }
+    },
+    "person-trebonianus-gallus": {
+      "label": "تربونیانوس گالوس",
+      "summary": "امپراتور از ۲۵۱ تا ۲۵۳، که سربازانش او را کشتند.",
+      "facts": {
+        "knownFor": "پس از دکیوس سپاه او را امپراتور خواند."
+      }
+    },
+    "person-aemilianus": {
+      "label": "امیلیانوس",
+      "summary": "در ۲۵۳ سربازانش در موئسیا او را امپراتور خواندند و چند ماه بعد کشتند.",
+      "facts": {
+        "knownFor": "چند ماه در ۲۵۳ فرمان راند."
+      }
+    },
+    "person-valerian": {
+      "label": "والرین",
+      "summary": "امپراتور از ۲۵۳ تا ۲۶۰، که در ۲۶۰ از شاپور یکم شکست خورد و اسیر شد و در ۲۶۲ در اسارت درگذشت.",
+      "facts": {
+        "knownFor": "به دست شاپور یکم اسیر شد."
+      }
+    },
+    "person-gallienus": {
+      "label": "گالینوس",
+      "summary": "پسر والرین، هم‌فرمانروا از ۲۵۳ و تنها امپراتور از ۲۶۰ تا ۲۶۸، سال‌های غاصبان بسیار، امپراتوری گل و امپراتوری پالمیرا؛ آزار مسیحیان را پایان داد و سربازان او را کشتند.",
+      "facts": {
+        "knownFor": "آزار مسیحیان را پایان داد."
+      }
+    },
+    "person-claudius-ii": {
+      "label": "کلادیوس دوم گوتیکوس",
+      "summary": "امپراتور از ۲۶۸ تا ۲۷۰، که به مرگ طبیعی درگذشت.",
+      "facts": {
+        "knownFor": "از ۲۶۸ تا ۲۷۰ فرمان راند."
+      }
+    },
+    "person-quintillus": {
+      "label": "کوینتیلوس",
+      "summary": "جانشین کلادیوس دوم، که چند هفته در سپتامبر ۲۷۰ امپراتور بود تا سربازان او را کشتند.",
+      "facts": {
+        "knownFor": "چند هفته فرمان راند."
+      }
+    },
+    "person-aurelian": {
+      "label": "اورلیان",
+      "summary": "امپراتور از ۲۷۰ تا ۲۷۵، که در ۲۷۲ زنوبیا را شکست داد و پالمیرا را گرفت، در ۲۷۴ تتریکوس امپراتور گل را شکست داد، فرمان ساختن دیواری نو برای رم را داد و کشته شد.",
+      "facts": {
+        "knownFor": "امپراتوری را دوباره یکپارچه کرد."
+      }
+    },
+    "person-tacitus": {
+      "label": "تاسیتوس",
+      "summary": "امپراتور از دسامبر ۲۷۵؛ در ژوئیهٔ ۲۷۶ به علتی ناروشن درگذشت.",
+      "facts": {
+        "knownFor": "حدود هفت ماه فرمان راند."
+      }
+    },
+    "person-florian": {
+      "label": "فلوریان",
+      "summary": "برادر تاسیتوس، که چند ماه در ۲۷۶ امپراتور بود تا سربازان او را کشتند.",
+      "facts": {
+        "knownFor": "چند ماه فرمان راند."
+      }
+    },
+    "person-probus": {
+      "label": "پروبوس",
+      "summary": "امپراتور از ۲۷۶ تا ۲۸۲، که سربازانش او را کشتند.",
+      "facts": {
+        "knownFor": "امپراتوری سرباز."
+      }
+    },
+    "person-carus": {
+      "label": "کاروس",
+      "summary": "امپراتور از ۲۸۲ تا ۲۸۳، پدر نومریان و کارینوس؛ در ۲۸۳، شاید از آذرخش، درگذشت.",
+      "facts": {
+        "knownFor": "پدر نومریان و کارینوس."
+      }
+    },
+    "person-carinus": {
+      "label": "کارینوس",
+      "summary": "پسر کاروس، امپراتور از ۲۸۳ تا ۲۸۵، که افسری او را کشت.",
+      "facts": {
+        "knownFor": "پسر کاروس."
+      }
+    },
+    "person-numerian": {
+      "label": "نومریان",
+      "summary": "پسر کاروس، امپراتور از ۲۸۳ تا آنکه در ۲۸۴ کشته شد.",
+      "facts": {
+        "knownFor": "پسر کاروس."
+      }
+    },
+    "person-diocletian": {
+      "label": "دیوکلسین",
+      "summary": "زادهٔ دالماسی، امپراتور از ۲۸۴ تا ۳۰۵. ماکسیمیان را هم‌فرمانروا کرد، در ۲۹۳ چهارفرمانروایی دو آگوستوس و دو قیصر را بنیاد نهاد و در ۳۰۵ کناره گرفت و قدرت بی‌خونریزی دست‌به‌دست شد؛ در ۳۱۳ درگذشت.",
+      "facts": {
+        "knownFor": "چهارفرمانروایی را بنیاد نهاد."
+      }
+    },
+    "person-maximian": {
+      "label": "ماکسیمیان",
+      "summary": "هم‌فرمانروای دیوکلسین در باختر از ۲۸۵، که در ۳۰۵ همراه او کناره گرفت، از ۳۰۶ تا ۳۰۸ دوباره فرمان راند و پس از شورشی نو در ۳۱۰ خود را کشت.",
+      "facts": {
+        "knownFor": "آگوستوس نخستین چهارفرمانروایی."
+      }
+    },
+    "person-constantius-i": {
+      "label": "کنستانتیوس یکم کلروس",
+      "summary": "قیصر ماکسیمیان از ۲۹۳ و امپراتور در باختر از ۳۰۵ تا مرگش در ۳۰۶؛ پدر کنستانتین بزرگ.",
+      "facts": {
+        "knownFor": "پدر کنستانتین بزرگ."
+      }
+    },
+    "person-galerius": {
+      "label": "گالریوس",
+      "summary": "قیصر دیوکلسین از ۲۹۳، که در ۲۹۸ نرسه شاه ساسانی را شکست داد، و امپراتور در خاور از ۳۰۵ تا ۳۱۱؛ اندکی پیش از مرگش آزار مسیحیان را پایان داد.",
+      "facts": {
+        "knownFor": "در ۲۹۸ نرسه را شکست داد."
+      }
+    },
+    "person-severus-ii": {
+      "label": "سوروس دوم",
+      "summary": "قیصر دومین چهارفرمانروایی، امپراتور در ۳۰۶ تا ۳۰۷؛ کناره گرفت و در ۳۰۷ کشته شد.",
+      "facts": {
+        "knownFor": "قیصر دومین چهارفرمانروایی."
+      }
+    },
+    "person-maxentius": {
+      "label": "ماکسنتیوس",
+      "summary": "پسر ماکسیمیان، که از ۳۰۶ بر ایتالیا و آفریقا فرمان راند تا کنستانتین در ۳۱۲ او را کنار پل میلویوس شکست داد و او در آنجا کشته شد.",
+      "facts": {
+        "knownFor": "کنار پل میلویوس شکست خورد."
+      }
+    },
+    "person-maximinus-daia": {
+      "label": "ماکسیمینوس دایا",
+      "summary": "قیصر از ۳۰۵ و امپراتور از ۳۱۰ تا مرگش در ۳۱۳.",
+      "facts": {
+        "knownFor": "ملقب به دایا."
+      }
+    },
+    "person-licinius": {
+      "label": "لیکینیوس",
+      "summary": "امپراتور از ۳۰۸ تا ۳۲۴، همسر کنستانتیا، خواهر کنستانتین بزرگ؛ در ۳۲۴ کناره گرفت و در ۳۲۵ کشته شد.",
+      "facts": {
+        "knownFor": "شوهرخواهر کنستانتین."
+      }
+    },
+    "person-constantine-i": {
+      "label": "کنستانتین بزرگ",
+      "summary": "پسر کنستانتیوس یکم، که در ۳۰۶ سربازان او را امپراتور خواندند. در ۳۱۲ ماکسنتیوس را کنار پل میلویوس شکست داد، پس از شکست لیکینیوس در ۳۲۴ تنها فرمانروا شد، قسطنطنیه را بنیاد نهاد و در ۳۲۵ شورای نیقیه را گرد آورد؛ در ۳۳۷ درگذشت.",
+      "facts": {
+        "knownFor": "قسطنطنیه را بنیاد نهاد."
+      }
+    },
+    "person-constantine-ii": {
+      "label": "کنستانتین دوم",
+      "summary": "پسر کنستانتین بزرگ، امپراتور از ۳۳۷ تا آنکه در ۳۴۰ در نبرد کشته شد.",
+      "facts": {
+        "knownFor": "پسر کنستانتین."
+      }
+    },
+    "person-constans": {
+      "label": "کنستانس",
+      "summary": "پسر کنستانتین بزرگ، امپراتور از ۳۳۷ تا آنکه در ۳۵۰ کشته شد؛ در ۳۲۰ یا ۳۲۳ زاده شد.",
+      "facts": {
+        "knownFor": "پسر کنستانتین."
+      }
+    },
+    "person-constantius-ii": {
+      "label": "کنستانتیوس دوم",
+      "summary": "پسر کنستانتین بزرگ، امپراتور از ۳۳۷ تا مرگش در ۳۶۱.",
+      "facts": {
+        "knownFor": "پسر کنستانتین."
+      }
+    },
+    "person-julian": {
+      "label": "یولیانوس مرتد",
+      "summary": "امپراتور از ۳۶۰ تا ۳۶۳، ملقب به مرتد، که به شاهنشاهی ساسانی تاخت و در نبرد با شاپور دوم کشته شد.",
+      "facts": {
+        "knownFor": "در نبرد با شاپور دوم کشته شد."
+      }
+    },
+    "person-jovian": {
+      "label": "ژوویان",
+      "summary": "امپراتور پس از یولیانوس از ۳۶۳ تا ۳۶۴، که با شاپور دوم آشتی کرد و نصیبین را واگذاشت.",
+      "facts": {
+        "knownFor": "نصیبین را به شاپور دوم واگذاشت."
+      }
+    },
+    "person-valentinian-i": {
+      "label": "والنتینیان یکم",
+      "summary": "بنیادگذار خاندان والنتینیان، امپراتور در باختر از ۳۶۴ تا ۳۷۵، با والنس در جایگاه هم‌امپراتور در خاور.",
+      "facts": {
+        "knownFor": "بنیادگذار خاندان والنتینیان."
+      }
+    },
+    "person-valens": {
+      "label": "والنس",
+      "summary": "هم‌امپراتور والنتینیان یکم در خاور از ۳۶۴ تا آنکه در ۳۷۸ در نبرد کشته شد.",
+      "facts": {
+        "knownFor": "در ۳۷۸ در نبرد کشته شد."
+      }
+    },
+    "person-gratian": {
+      "label": "گراتیان",
+      "summary": "پسر والنتینیان یکم، امپراتور از ۳۶۷ تا آنکه در ۳۸۳ کشته شد.",
+      "facts": {
+        "knownFor": "در ۳۸۳ کشته شد."
+      }
+    },
+    "person-valentinian-ii": {
+      "label": "والنتینیان دوم",
+      "summary": "پسر والنتینیان یکم، امپراتور از ۳۷۵ تا آنکه سردارش آربوگاست در ۳۹۲ او را کشت.",
+      "facts": {
+        "knownFor": "سردارش آربوگاست او را کشت."
+      }
+    },
+    "person-theodosius-i": {
+      "label": "تئودوسیوس یکم",
+      "summary": "بنیادگذار خاندان تئودوسی، امپراتور از ۳۷۸ یا ۳۷۹ تا ۳۹۵. در ۳۸۰ کیش نیقیه را راست‌کیشی اعلام کرد و ویزیگوت‌ها را در امپراتوری نشاند؛ با مرگش پسرانش امپراتوری را بخش کردند.",
+      "facts": {
+        "knownFor": "کیش نیقیه را راست‌کیشی کرد."
+      }
+    },
+    "person-arcadius": {
+      "label": "آرکادیوس",
+      "summary": "پسر تئودوسیوس یکم، امپراتور در خاور از ۳۹۵ تا ۴۰۸.",
+      "facts": {
+        "knownFor": "نخستین امپراتور خاور به‌تنهایی."
+      }
+    },
+    "person-honorius": {
+      "label": "هونوریوس",
+      "summary": "پسر تئودوسیوس یکم، امپراتور در باختر از ۳۹۵ تا ۴۲۳. در ۴۰۲ دربار را از رم به راونا برد؛ در پادشاهی او ویزیگوت‌ها در ۴۱۰ رم را گرفتند و بریتانیا تهی شد.",
+      "facts": {
+        "knownFor": "دربار را به راونا برد."
+      }
+    },
+    "person-theodosius-ii": {
+      "label": "تئودوسیوس دوم",
+      "summary": "پسر آرکادیوس، امپراتور در خاور از ۴۰۸ تا ۴۵۰، بیشتر این زمان در کنار عمویش هونوریوس و پسرعمویش والنتینیان سوم در باختر.",
+      "facts": {
+        "knownFor": "چهل‌ودو سال بر خاور فرمان راند."
+      }
+    },
+    "person-valentinian-iii": {
+      "label": "والنتینیان سوم",
+      "summary": "نوهٔ تئودوسیوس یکم، امپراتور در باختر از ۴۲۵ تا ۴۵۵، سال‌هایی که وندال‌ها آفریقا را گرفتند و هون‌ها به گل و ایتالیا تاختند؛ پترونیوس ماکسیموس او را کشت.",
+      "facts": {
+        "knownFor": "آفریقا را به وندال‌ها باخت."
+      }
+    },
+    "person-marcian": {
+      "label": "مارکیان",
+      "summary": "امپراتور در خاور از ۴۵۰ تا ۴۵۷، همسر پولخریا.",
+      "facts": {
+        "knownFor": "همسر پولخریا."
+      }
+    },
+    "person-petronius-maximus": {
+      "label": "پترونیوس ماکسیموس",
+      "summary": "امپراتور در باختر برای چند هفته در ۴۵۵، پس از کشتن والنتینیان سوم؛ سربازان او را کشتند.",
+      "facts": {
+        "knownFor": "چند هفته در ۴۵۵ فرمان راند."
+      }
+    },
+    "person-avitus": {
+      "label": "آویتوس",
+      "summary": "پس از تاراج رم به دست وندال‌ها، در ۴۵۵ ویزیگوت‌ها او را امپراتور باختر خواندند؛ در ۴۵۶ کناره گرفت و در ۴۵۷ درگذشت.",
+      "facts": {
+        "knownFor": "ویزیگوت‌ها از او پشتیبانی کردند."
+      }
+    },
+    "person-majorian": {
+      "label": "ماژوریان",
+      "summary": "امپراتور در باختر از ۴۵۷ تا ۴۶۱، که ریکیمر او را به کناره‌گیری واداشت و کشت.",
+      "facts": {
+        "knownFor": "ریکیمر او را کشت."
+      }
+    },
+    "person-leo-i": {
+      "label": "لئون یکم",
+      "summary": "امپراتور در خاور از ۴۵۷ تا ۴۷۴، ملقب به «تراکیایی بزرگ».",
+      "facts": {
+        "knownFor": "ملقب به تراکیایی بزرگ."
+      }
+    },
+    "person-anthemius": {
+      "label": "آنتمیوس",
+      "summary": "امپراتور در باختر از ۴۶۷، فرستاده از خاور، تا آنکه ریکیمر در ۴۷۲ او را کشت.",
+      "facts": {
+        "knownFor": "از خاور فرستاده شد."
+      }
+    },
+    "person-olybrius": {
+      "label": "اولیبریوس",
+      "summary": "ریکیمر او را در ۴۷۲ امپراتور باختر کرد؛ همان سال به مرگ طبیعی درگذشت.",
+      "facts": {
+        "knownFor": "ریکیمر او را برگماشت."
+      }
+    },
+    "person-glycerius": {
+      "label": "گلیکریوس",
+      "summary": "در ۴۷۳ امپراتور باختر شد و در ۴۷۴ به دست یولیوس نپوس اسیر شد.",
+      "facts": {
+        "knownFor": "یولیوس نپوس او را برکنار کرد."
+      }
+    },
+    "person-leo-ii": {
+      "label": "لئون دوم",
+      "summary": "پسر زنون و آریادنه، دختر لئون یکم، امپراتور در خاور در بیشتر سال ۴۷۴.",
+      "facts": {
+        "knownFor": "امپراتوری کودک."
+      }
+    },
+    "person-julius-nepos": {
+      "label": "یولیوس نپوس",
+      "summary": "امپراتور در باختر از ۴۷۴ تا آنکه اورستس در ۴۷۵ او را به کناره‌گیری واداشت و او اسقف شد.",
+      "facts": {
+        "knownFor": "اورستس او را برکنار کرد."
+      }
+    },
+    "person-romulus-augustulus": {
+      "label": "رومولوس آگوستولوس",
+      "summary": "واپسین امپراتور باختر، که پدرش اورستس او را در ۴۷۵ امپراتور کرد و ادواکر در ۴۷۶ برکنار کرد؛ در ۵۱۰ هنوز زنده بود.",
+      "facts": {
+        "knownFor": "واپسین امپراتور باختر."
+      }
+    },
+    "person-anastasius-i": {
+      "label": "آناستاسیوس یکم",
+      "summary": "امپراتور در خاور از ۴۹۱ تا ۵۱۸، که آریادنه، بیوهٔ زنون، او را برگزید.",
+      "facts": {
+        "knownFor": "آریادنه او را برگزید."
+      }
+    },
+    "person-justin-i": {
+      "label": "ژوستین یکم",
+      "summary": "امپراتور در خاور از ۵۱۸ تا ۵۲۷، که خویشاوندش ژوستینین جانشینش شد.",
+      "facts": {
+        "knownFor": "خویشاوند ژوستینین."
+      }
+    },
+    "person-justinian": {
+      "label": "ژوستینین",
+      "summary": "امپراتور در خاور از ۵۲۷ تا ۵۶۵. سردارش بلیزاریوس آفریقا و ایتالیا را گرفت، قانون روم گردآوری شد، ایاصوفیه پس از آشوب نیکا ساخته شد و با ساسانیان جنگید.",
+      "facts": {
+        "knownFor": "قانون روم را گرد آورد."
+      }
+    },
+    "person-justin-ii": {
+      "label": "ژوستین دوم",
+      "summary": "خواهرزادهٔ ژوستینین، امپراتور در خاور از ۵۶۵ تا ۵۷۸؛ در پادشاهی او لانگوباردها به ایتالیا تاختند و جنگ با ساسانیان دوباره درگرفت.",
+      "facts": {
+        "knownFor": "خواهرزادهٔ ژوستینین."
+      }
+    },
+    "person-tiberius-ii": {
+      "label": "تیبریوس دوم",
+      "summary": "فرزندخواندهٔ ژوستین دوم، امپراتور در خاور از ۵۷۸ تا ۵۸۲.",
+      "facts": {
+        "knownFor": "فرزندخواندهٔ ژوستین دوم."
+      }
+    },
+    "person-maurice": {
+      "label": "موریس",
+      "summary": "فرمانده در جنگ با ایران و امپراتور در خاور از ۵۸۲ تا ۶۰۲؛ فوکاس او را برکنار کرد و در ۶۰۲ درگذشت.",
+      "facts": {
+        "knownFor": "فوکاس او را برکنار کرد."
+      }
+    },
+    "person-phocas": {
+      "label": "فوکاس",
+      "summary": "سنچوریونی که در ۶۰۲ قدرت را گرفت و تا ۶۱۰ در خاور فرمان راند؛ در پادشاهی او خسرو دوم ساسانی به امپراتوری تاخت.",
+      "facts": {
+        "knownFor": "در ۶۰۲ قدرت را گرفت."
+      }
+    },
+    "person-heraclius": {
+      "label": "هراکلیوس",
+      "summary": "امپراتور در خاور از ۶۱۰ تا ۶۴۱، که به شاهنشاهی ساسانی تاخت، در ۶۲۷ سپاهی ایرانی را نزدیک نینوا شکست داد و در ۶۳۰ صلیب راستین را به اورشلیم بازگرداند.",
+      "facts": {
+        "knownFor": "خسرو دوم را شکست داد."
+      }
+    },
+    "person-zenobia": {
+      "label": "زنوبیا",
+      "summary": "همسر اذینه و فرمانروای امپراتوری پالمیرا از ۲۶۷ تا ۲۷۲، که اورلیان او را اسیر گرفت؛ چگونگی مرگش دانسته نیست.",
+      "facts": {
+        "knownFor": "شهبانوی پالمیرا."
+      }
+    },
+    "dynasty-antonine": {
+      "label": "آنتونین‌ها",
+      "summary": "خاندان آنتونینوس پیوس، مارکوس اورلیوس، لوکیوس وروس و کومودوس، که از حدود ۱۳۸ تا ۱۹۲ فرمان راندند؛ سال‌هایشان را اغلب روزگار زرین امپراتوری می‌خوانند."
+    },
+    "period-antonine": {
+      "label": "آنتونین‌ها",
+      "summary": "خاندان آنتونینوس پیوس، مارکوس اورلیوس، لوکیوس وروس و کومودوس، که از حدود ۱۳۸ تا ۱۹۲ فرمان راندند؛ سال‌هایشان را اغلب روزگار زرین امپراتوری می‌خوانند."
+    },
+    "dynasty-severan": {
+      "label": "سوروسیان",
+      "summary": "خاندان سپتیمیوس سوروس، که از ۱۹۳ تا ۲۳۵، با وقفه‌ای در ۲۱۷ تا ۲۱۸، فرمان راند."
+    },
+    "period-severan": {
+      "label": "سوروسیان",
+      "summary": "خاندان سپتیمیوس سوروس، که از ۱۹۳ تا ۲۳۵، با وقفه‌ای در ۲۱۷ تا ۲۱۸، فرمان راند."
+    },
+    "dynasty-constantinian": {
+      "label": "خاندان کنستانتین",
+      "summary": "خاندان کنستانتین بزرگ، که از ۳۰۵ تا ۳۶۳ بر امپراتوری یا بخش‌هایی از آن فرمان راند؛ در روزگار آن دیگر مسیحیان آزرده نشدند و قسطنطنیه بنیاد نهاده شد."
+    },
+    "period-constantinian": {
+      "label": "خاندان کنستانتین",
+      "summary": "خاندان کنستانتین بزرگ، که از ۳۰۵ تا ۳۶۳ بر امپراتوری یا بخش‌هایی از آن فرمان راند؛ در روزگار آن دیگر مسیحیان آزرده نشدند و قسطنطنیه بنیاد نهاده شد."
+    },
+    "dynasty-valentinian": {
+      "label": "خاندان والنتینیان",
+      "summary": "خاندان والنتینیان یکم، که از ۳۶۳ تا ۳۹۲ در دو شاخهٔ باختری و خاوری بر امپراتوری یا بخش‌هایی از آن فرمان راند."
+    },
+    "period-valentinian": {
+      "label": "خاندان والنتینیان",
+      "summary": "خاندان والنتینیان یکم، که از ۳۶۳ تا ۳۹۲ در دو شاخهٔ باختری و خاوری بر امپراتوری یا بخش‌هایی از آن فرمان راند."
+    },
+    "dynasty-theodosian": {
+      "label": "خاندان تئودوسی",
+      "summary": "خاندان تئودوسیوس یکم، که از ۳۷۸ تا ۴۵۷ فرمان راند؛ پسرانش شاخه‌ای خاوری و شاخه‌ای باختری بنیاد نهادند، و در روزگار آن بریتانیا و گل از دست رفتند و قسطنطنیه مهم‌ترین شهر امپراتوری شد."
+    },
+    "period-theodosian": {
+      "label": "خاندان تئودوسی",
+      "summary": "خاندان تئودوسیوس یکم، که از ۳۷۸ تا ۴۵۷ فرمان راند؛ پسرانش شاخه‌ای خاوری و شاخه‌ای باختری بنیاد نهادند، و در روزگار آن بریتانیا و گل از دست رفتند و قسطنطنیه مهم‌ترین شهر امپراتوری شد."
+    },
+    "period-tetrarchy": {
+      "label": "نخستین چهارفرمانروایی",
+      "summary": "فرمانروایی دو آگوستوس، دیوکلسین و ماکسیمیان، با دو قیصر، گالریوس و کنستانتیوس، از ۲۹۳ تا کناره‌گیری آگوستوس‌ها در ۳۰۵."
+    },
+    "period-west-roman-empire": {
+      "label": "امپراتوری بخش‌شده، باختر",
+      "summary": "نیمهٔ باختری امپراتوری با امپراتوران خودش، از مرگ تئودوسیوس یکم در ۳۹۵ تا برکناری رومولوس آگوستولوس در ۴۷۶."
+    },
+    "place-constantinople": {
+      "label": "قسطنطنیه",
+      "summary": "شهر یونانی بیزانتیوم کنار بسفر، که کنستانتین در ۳۲۴ اقامتگاهی نو در آن بنیاد نهاد؛ پایتخت امپراتوری روم خاوری شد، استانبول امروز."
+    },
+    "place-palmyra": {
+      "label": "پالمیرا",
+      "summary": "شهری کاروانی در بیابان سوریه، نشستگاه اذینه و زنوبیا، که اورلیان در ۲۷۲ گرفت."
+    },
+    "place-milvian-bridge": {
+      "label": "پل میلویوس",
+      "summary": "پلی بر تیبر در شمال رم، که کنستانتین در ۳۱۲ ماکسنتیوس را کنار آن شکست داد."
+    },
+    "event-bar-kochba-revolt": {
+      "label": "شورش بارکوخبا",
+      "summary": "شورشی یهودی که در ۱۳۲ در زمان هادریان آغاز شد؛ هادریان در ۱۳۵/۱۳۶ بِتار را گرفت و واپسین نبردها در جلیل در ۱۳۶ بود."
+    },
+    "event-antonine-plague": {
+      "label": "طاعون در زمان مارکوس اورلیوس",
+      "summary": "طاعونی در ۱۶۵، در میانهٔ جنگ با پارت‌ها، درگرفت و در ۱۶۷ به رم رسید."
+    },
+    "event-year-of-five-emperors": {
+      "label": "سال پنج امپراتور",
+      "summary": "پس از کشته شدن پرتیناکس در ۱۹۳، دیدیوس یولیانوس، پسکنیوس نیگر، کلودیوس آلبینوس و سپتیمیوس سوروس همه امپراتور خوانده شدند؛ سوروس در جنگ‌های داخلی پس از آن پیروز شد."
+    },
+    "event-constitutio-antoniniana": {
+      "label": "شهروندی برای همهٔ مردان آزاد",
+      "summary": "در ۲۱۲ کاراکالا شهروندی روم را به همهٔ مردان آزادزادهٔ امپراتوری داد."
+    },
+    "event-capture-of-valerian": {
+      "label": "شاپور والرین را اسیر می‌گیرد",
+      "summary": "در ۲۶۰ امپراتور والرین از شاپور یکم ساسانی شکست خورد و اسیر شد؛ در ۲۶۲ در اسارت درگذشت و در سال‌های پس از آن غاصبان بسیاری در امپراتوری برخاستند."
+    },
+    "event-aurelian-takes-palmyra": {
+      "label": "اورلیان پالمیرا را می‌گیرد",
+      "summary": "در ۲۷۲ اورلیان زنوبیا و پسرش وهب‌اللات را شکست داد و پالمیرا را گرفت؛ در ۲۷۴ تتریکوس امپراتور گل را شکست داد."
+    },
+    "event-aurelian-wall": {
+      "label": "دیواری نو برای رم",
+      "summary": "در ۲۷۱ اورلیان فرمان ساختن دیواری نو گرد رم را داد."
+    },
+    "event-tetrarchy-founded": {
+      "label": "نخستین چهارفرمانروایی",
+      "summary": "در ۲۹۳ دیوکلسین و ماکسیمیان هر یک قیصری برگماشتند، گالریوس و کنستانتیوس، که می‌بایست جانشینشان شوند."
+    },
+    "event-abdication-of-diocletian": {
+      "label": "کناره‌گیری دیوکلسین و ماکسیمیان",
+      "summary": "در ماه مه ۳۰۵ دو آگوستوس قدرت را واگذاشتند و قیصرها گالریوس و کنستانتیوس آگوستوس شدند – نخستین بار در روزگاری دراز که قدرت بی‌خونریزی دست‌به‌دست شد."
+    },
+    "event-milvian-bridge": {
+      "label": "نبرد پل میلویوس",
+      "summary": "در ۳۱۲ کنستانتین از آلپ گذشت و ماکسنتیوس را کنار پل میلویوس شکست داد و ماکسنتیوس در آنجا کشته شد."
+    },
+    "event-edict-of-milan": {
+      "label": "دیدار میلان",
+      "summary": "در ۳۱۳ کنستانتین و لیکینیوس در میلان دیدار کردند؛ این توافق با نام فرمان میلان شناخته می‌شود."
+    },
+    "event-founding-of-constantinople": {
+      "label": "بنیاد قسطنطنیه",
+      "summary": "پس از شکست لیکینیوس در ۳۲۴، کنستانتین تنها فرمانروا شد و در بیزانتیوم اقامتگاهی نو، قسطنطنیه، بنیاد نهاد."
+    },
+    "event-council-of-nicaea": {
+      "label": "شورای نیقیه",
+      "summary": "نخستین شورای جهانی کلیسا از ۲۰ مه تا ۱۹ ژوئن ۳۲۵ در نیقیه گرد آمد."
+    },
+    "event-death-of-julian": {
+      "label": "مرگ یولیانوس و آشتی ۳۶۳",
+      "summary": "یولیانوس به شاهنشاهی ساسانی تاخت و در ۲۶ ژوئن ۳۶۳ در نبرد کشته شد؛ آنگاه ژوویان با شاپور دوم آشتی‌ای کرد که نصیبین را واگذاشت."
+    },
+    "event-battle-of-adrianople": {
+      "label": "نبرد آدریانوپل",
+      "summary": "در ۳۷۸ گوت‌ها امپراتور والنس را در آدریانوپل شکست دادند و کشتند، و تئودوسیوس امپراتور خاور شد."
+    },
+    "event-division-of-the-empire": {
+      "label": "بخش شدن امپراتوری میان دو پسر",
+      "summary": "با مرگ تئودوسیوس یکم در ۳۹۵، پسرانش آرکادیوس و هونوریوس در خاور و باختر جانشین او شدند."
+    },
+    "event-sack-of-rome-410": {
+      "label": "ویزیگوت‌ها رم را می‌گیرند",
+      "summary": "در ۴۱۰ ویزیگوت‌ها رم را گرفتند؛ آلاریک همان سال درگذشت و بریتانیا تهی شد."
+    },
+    "event-vandals-take-carthage": {
+      "label": "وندال‌ها کارتاژ را می‌گیرند",
+      "summary": "وندال‌ها در ۴۲۹ به آفریقا تاختند و در ۴۳۹ کارتاژ را گرفتند."
+    },
+    "event-attila-in-gaul": {
+      "label": "شکست آتیلا در گل",
+      "summary": "در ۴۵۱ هون‌ها از راین گذشتند و به گل تاختند؛ آئتیوس آتیلا را نزدیک تروا شکست داد. در ۴۵۲ هون‌ها به ایتالیا تاختند."
+    },
+    "event-vandal-sack-of-rome": {
+      "label": "وندال‌ها رم را تاراج می‌کنند",
+      "summary": "در ۴۵۵، پس از کشته شدن والنتینیان سوم و مرگ پترونیوس ماکسیموس، وندال‌ها رم را تاراج کردند."
+    },
+    "event-end-of-the-west": {
+      "label": "پایان امپراتوری در باختر",
+      "summary": "در ۴۷۶ سربازان در ایتالیا شوریدند و سرکردهٔ آنان ادواکر رومولوس آگوستولوس، واپسین امپراتور باختر، را برکنار کرد."
+    },
+    "event-nika-riots": {
+      "label": "آشوب نیکا",
+      "summary": "در ژانویهٔ ۵۳۲ آشوب نیکا در قسطنطنیه در زمان ژوستینین درگرفت."
+    },
+    "event-codification-of-roman-law": {
+      "label": "گردآوری قانون روم",
+      "summary": "در ۵۳۳ گردآوری قانون روم، «نهادها» و «گزیده‌ها»، در زمان ژوستینین به پایان رسید."
+    },
+    "event-belisarius-takes-carthage": {
+      "label": "بلیزاریوس آفریقا را می‌گشاید",
+      "summary": "سردار ژوستینین، بلیزاریوس، آفریقا را گشود و در ۱۵ سپتامبر ۵۳۴ به کارتاژ درآمد؛ سپس به سیسیل رفت و در ۵۳۶ رم را گرفت."
+    },
+    "event-hagia-sophia": {
+      "label": "گشایش ایاصوفیه",
+      "summary": "ایاصوفیه در قسطنطنیه در ۲۶ دسامبر ۵۳۷ گشوده شد."
+    },
+    "event-narses-conquers-italy": {
+      "label": "نرسس ایتالیا را می‌گشاید",
+      "summary": "سردار ژوستینین، نرسس، در ۵۵۲ گشودن ایتالیا را به پایان رساند."
+    },
+    "event-langobards-invade-italy": {
+      "label": "لانگوبارد‌ها به ایتالیا می‌تازند",
+      "summary": "در ۵۶۸، در زمان ژوستین دوم، لانگوباردها به ایتالیا تاختند."
+    },
+    "event-battle-of-nineveh-627": {
+      "label": "هراکلیوس ایرانیان را نزدیک نینوا شکست می‌دهد",
+      "summary": "در دسامبر ۶۲۷ هراکلیوس سپاهی بزرگ از ایرانیان را نزدیک ویرانه‌های نینوا شکست داد؛ خسرو دوم اندکی بعد برافتاد و هراکلیوس در ۶۳۰ صلیب راستین را به اورشلیم بازگرداند."
     }
   },
   "relations": {
@@ -1199,6 +1904,750 @@
     },
     "relation-accession-of-trajan-during-nerva-trajan": {
       "label": "در دورهٔ"
+    },
+    "relation-hadrian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-antoninus-pius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-marcus-aurelius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-lucius-verus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-commodus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-pertinax-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-didius-julianus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-septimius-severus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-caracalla-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-geta-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-macrinus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-heliogabalus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-severus-alexander-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-maximinus-thrax-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-pupienus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-balbinus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-gordian-iii-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-philip-the-arab-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-decius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-trebonianus-gallus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-aemilianus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-valerian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-gallienus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-claudius-ii-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-quintillus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-aurelian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-tacitus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-florian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-probus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-carus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-carinus-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-numerian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-diocletian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-maximian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-maximian-holder-of-princeps-2": {
+      "label": "امپراتور"
+    },
+    "relation-constantius-i-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-galerius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-severus-ii-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-maxentius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-maximinus-daia-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-licinius-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-constantine-i-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-constantine-ii-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-constans-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-constantius-ii-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-julian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-jovian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-valentinian-i-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-valens-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-gratian-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-valentinian-ii-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-theodosius-i-holder-of-princeps": {
+      "label": "امپراتور"
+    },
+    "relation-arcadius-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-honorius-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-theodosius-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-valentinian-iii-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-marcian-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-petronius-maximus-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-avitus-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-majorian-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-leo-i-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-anthemius-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-olybrius-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-glycerius-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-leo-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-julius-nepos-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-romulus-augustulus-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-anastasius-i-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-justin-i-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-justinian-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-justin-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tiberius-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-maurice-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-phocas-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-heraclius-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-antoninus-pius-founder-of-antonine": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-antoninus-pius-member-of-antonine": {
+      "label": "از خاندانِ"
+    },
+    "relation-marcus-aurelius-member-of-antonine": {
+      "label": "از خاندانِ"
+    },
+    "relation-lucius-verus-member-of-antonine": {
+      "label": "از خاندانِ"
+    },
+    "relation-commodus-member-of-antonine": {
+      "label": "از خاندانِ"
+    },
+    "relation-septimius-severus-founder-of-severan": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-septimius-severus-member-of-severan": {
+      "label": "از خاندانِ"
+    },
+    "relation-caracalla-member-of-severan": {
+      "label": "از خاندانِ"
+    },
+    "relation-geta-member-of-severan": {
+      "label": "از خاندانِ"
+    },
+    "relation-heliogabalus-member-of-severan": {
+      "label": "از خاندانِ"
+    },
+    "relation-severus-alexander-member-of-severan": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantius-i-founder-of-constantinian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-constantius-i-member-of-constantinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-i-member-of-constantinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-ii-member-of-constantinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constans-member-of-constantinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantius-ii-member-of-constantinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-julian-member-of-constantinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-valentinian-i-founder-of-valentinian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-valentinian-i-member-of-valentinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-valens-member-of-valentinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-gratian-member-of-valentinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-valentinian-ii-member-of-valentinian": {
+      "label": "از خاندانِ"
+    },
+    "relation-theodosius-i-founder-of-theodosian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-theodosius-i-member-of-theodosian": {
+      "label": "از خاندانِ"
+    },
+    "relation-arcadius-member-of-theodosian": {
+      "label": "از خاندانِ"
+    },
+    "relation-honorius-member-of-theodosian": {
+      "label": "از خاندانِ"
+    },
+    "relation-theodosius-ii-member-of-theodosian": {
+      "label": "از خاندانِ"
+    },
+    "relation-valentinian-iii-member-of-theodosian": {
+      "label": "از خاندانِ"
+    },
+    "relation-marcian-member-of-theodosian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-i-founder-of-constantinople": {
+      "label": "بنیاد نهاد"
+    },
+    "relation-marcus-aurelius-parent-of-commodus": {
+      "label": "پدرِ"
+    },
+    "relation-septimius-severus-parent-of-caracalla": {
+      "label": "پدرِ"
+    },
+    "relation-septimius-severus-parent-of-geta": {
+      "label": "پدرِ"
+    },
+    "relation-valerian-parent-of-gallienus": {
+      "label": "پدرِ"
+    },
+    "relation-carus-parent-of-carinus": {
+      "label": "پدرِ"
+    },
+    "relation-carus-parent-of-numerian": {
+      "label": "پدرِ"
+    },
+    "relation-maximian-parent-of-maxentius": {
+      "label": "پدرِ"
+    },
+    "relation-constantius-i-parent-of-constantine-i": {
+      "label": "پدرِ"
+    },
+    "relation-constantine-i-parent-of-constantine-ii": {
+      "label": "پدرِ"
+    },
+    "relation-constantine-i-parent-of-constans": {
+      "label": "پدرِ"
+    },
+    "relation-constantine-i-parent-of-constantius-ii": {
+      "label": "پدرِ"
+    },
+    "relation-valentinian-i-parent-of-gratian": {
+      "label": "پدرِ"
+    },
+    "relation-valentinian-i-parent-of-valentinian-ii": {
+      "label": "پدرِ"
+    },
+    "relation-theodosius-i-parent-of-arcadius": {
+      "label": "پدرِ"
+    },
+    "relation-theodosius-i-parent-of-honorius": {
+      "label": "پدرِ"
+    },
+    "relation-arcadius-parent-of-theodosius-ii": {
+      "label": "پدرِ"
+    },
+    "relation-caracalla-sibling-of-geta": {
+      "label": "برادرِ"
+    },
+    "relation-claudius-ii-sibling-of-quintillus": {
+      "label": "برادرِ"
+    },
+    "relation-tacitus-sibling-of-florian": {
+      "label": "برادرِ"
+    },
+    "relation-valentinian-i-sibling-of-valens": {
+      "label": "برادرِ"
+    },
+    "relation-hadrian-successor-of-trajan": {
+      "label": "جانشینِ"
+    },
+    "relation-antoninus-pius-successor-of-hadrian": {
+      "label": "جانشینِ"
+    },
+    "relation-marcus-aurelius-successor-of-antoninus-pius": {
+      "label": "جانشینِ"
+    },
+    "relation-commodus-successor-of-marcus-aurelius": {
+      "label": "جانشینِ"
+    },
+    "relation-pertinax-successor-of-commodus": {
+      "label": "جانشینِ"
+    },
+    "relation-septimius-severus-successor-of-pertinax": {
+      "label": "جانشینِ"
+    },
+    "relation-caracalla-successor-of-septimius-severus": {
+      "label": "جانشینِ"
+    },
+    "relation-macrinus-successor-of-caracalla": {
+      "label": "جانشینِ"
+    },
+    "relation-severus-alexander-successor-of-heliogabalus": {
+      "label": "جانشینِ"
+    },
+    "relation-maximinus-thrax-successor-of-severus-alexander": {
+      "label": "جانشینِ"
+    },
+    "relation-pupienus-successor-of-maximinus-thrax": {
+      "label": "جانشینِ"
+    },
+    "relation-gordian-iii-successor-of-pupienus": {
+      "label": "جانشینِ"
+    },
+    "relation-philip-the-arab-successor-of-gordian-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-decius-successor-of-philip-the-arab": {
+      "label": "جانشینِ"
+    },
+    "relation-trebonianus-gallus-successor-of-decius": {
+      "label": "جانشینِ"
+    },
+    "relation-aemilianus-successor-of-trebonianus-gallus": {
+      "label": "جانشینِ"
+    },
+    "relation-valerian-successor-of-aemilianus": {
+      "label": "جانشینِ"
+    },
+    "relation-gallienus-successor-of-valerian": {
+      "label": "جانشینِ"
+    },
+    "relation-claudius-ii-successor-of-gallienus": {
+      "label": "جانشینِ"
+    },
+    "relation-quintillus-successor-of-claudius-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-aurelian-successor-of-quintillus": {
+      "label": "جانشینِ"
+    },
+    "relation-tacitus-successor-of-aurelian": {
+      "label": "جانشینِ"
+    },
+    "relation-florian-successor-of-tacitus": {
+      "label": "جانشینِ"
+    },
+    "relation-probus-successor-of-florian": {
+      "label": "جانشینِ"
+    },
+    "relation-carus-successor-of-probus": {
+      "label": "جانشینِ"
+    },
+    "relation-numerian-successor-of-carus": {
+      "label": "جانشینِ"
+    },
+    "relation-carinus-successor-of-carus": {
+      "label": "جانشینِ"
+    },
+    "relation-diocletian-successor-of-numerian": {
+      "label": "جانشینِ"
+    },
+    "relation-galerius-successor-of-diocletian": {
+      "label": "جانشینِ"
+    },
+    "relation-constantius-i-successor-of-maximian": {
+      "label": "جانشینِ"
+    },
+    "relation-constantine-i-successor-of-constantius-i": {
+      "label": "جانشینِ"
+    },
+    "relation-constantius-ii-successor-of-constantine-i": {
+      "label": "جانشینِ"
+    },
+    "relation-julian-successor-of-constantius-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-jovian-successor-of-julian": {
+      "label": "جانشینِ"
+    },
+    "relation-valentinian-i-successor-of-jovian": {
+      "label": "جانشینِ"
+    },
+    "relation-valens-successor-of-jovian": {
+      "label": "جانشینِ"
+    },
+    "relation-gratian-successor-of-valentinian-i": {
+      "label": "جانشینِ"
+    },
+    "relation-theodosius-i-successor-of-valens": {
+      "label": "جانشینِ"
+    },
+    "relation-arcadius-successor-of-theodosius-i": {
+      "label": "جانشینِ"
+    },
+    "relation-honorius-successor-of-theodosius-i": {
+      "label": "جانشینِ"
+    },
+    "relation-theodosius-ii-successor-of-arcadius": {
+      "label": "جانشینِ"
+    },
+    "relation-valentinian-iii-successor-of-honorius": {
+      "label": "جانشینِ"
+    },
+    "relation-marcian-successor-of-theodosius-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-petronius-maximus-successor-of-valentinian-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-avitus-successor-of-petronius-maximus": {
+      "label": "جانشینِ"
+    },
+    "relation-majorian-successor-of-avitus": {
+      "label": "جانشینِ"
+    },
+    "relation-leo-i-successor-of-marcian": {
+      "label": "جانشینِ"
+    },
+    "relation-olybrius-successor-of-anthemius": {
+      "label": "جانشینِ"
+    },
+    "relation-glycerius-successor-of-olybrius": {
+      "label": "جانشینِ"
+    },
+    "relation-julius-nepos-successor-of-glycerius": {
+      "label": "جانشینِ"
+    },
+    "relation-romulus-augustulus-successor-of-julius-nepos": {
+      "label": "جانشینِ"
+    },
+    "relation-leo-ii-successor-of-leo-i": {
+      "label": "جانشینِ"
+    },
+    "relation-justin-i-successor-of-anastasius-i": {
+      "label": "جانشینِ"
+    },
+    "relation-justinian-successor-of-justin-i": {
+      "label": "جانشینِ"
+    },
+    "relation-justin-ii-successor-of-justinian": {
+      "label": "جانشینِ"
+    },
+    "relation-tiberius-ii-successor-of-justin-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-maurice-successor-of-tiberius-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-phocas-successor-of-maurice": {
+      "label": "جانشینِ"
+    },
+    "relation-heraclius-successor-of-phocas": {
+      "label": "جانشینِ"
+    },
+    "relation-hadrian-participant-in-bar-kochba-revolt": {
+      "label": "شرکت در"
+    },
+    "relation-marcus-aurelius-participant-in-antonine-plague": {
+      "label": "شرکت در"
+    },
+    "relation-antonine-plague-during-antonine": {
+      "label": "در دورهٔ"
+    },
+    "relation-pertinax-participant-in-year-of-five-emperors": {
+      "label": "شرکت در"
+    },
+    "relation-didius-julianus-participant-in-year-of-five-emperors": {
+      "label": "شرکت در"
+    },
+    "relation-septimius-severus-participant-in-year-of-five-emperors": {
+      "label": "شرکت در"
+    },
+    "relation-caracalla-participant-in-constitutio-antoniniana": {
+      "label": "شرکت در"
+    },
+    "relation-constitutio-antoniniana-during-severan": {
+      "label": "در دورهٔ"
+    },
+    "relation-valerian-participant-in-capture-of-valerian": {
+      "label": "شرکت در"
+    },
+    "relation-aurelian-participant-in-aurelian-takes-palmyra": {
+      "label": "شرکت در"
+    },
+    "relation-zenobia-participant-in-aurelian-takes-palmyra": {
+      "label": "شرکت در"
+    },
+    "relation-aurelian-takes-palmyra-took-place-in-palmyra": {
+      "label": "رخ داد در"
+    },
+    "relation-aurelian-participant-in-aurelian-wall": {
+      "label": "شرکت در"
+    },
+    "relation-aurelian-wall-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-diocletian-participant-in-tetrarchy-founded": {
+      "label": "شرکت در"
+    },
+    "relation-maximian-participant-in-tetrarchy-founded": {
+      "label": "شرکت در"
+    },
+    "relation-galerius-participant-in-tetrarchy-founded": {
+      "label": "شرکت در"
+    },
+    "relation-constantius-i-participant-in-tetrarchy-founded": {
+      "label": "شرکت در"
+    },
+    "relation-tetrarchy-founded-during-tetrarchy": {
+      "label": "در دورهٔ"
+    },
+    "relation-diocletian-participant-in-abdication-of-diocletian": {
+      "label": "شرکت در"
+    },
+    "relation-maximian-participant-in-abdication-of-diocletian": {
+      "label": "شرکت در"
+    },
+    "relation-constantine-i-participant-in-milvian-bridge": {
+      "label": "شرکت در"
+    },
+    "relation-maxentius-participant-in-milvian-bridge": {
+      "label": "شرکت در"
+    },
+    "relation-milvian-bridge-took-place-in-milvian-bridge": {
+      "label": "رخ داد در"
+    },
+    "relation-milvian-bridge-during-constantinian": {
+      "label": "در دورهٔ"
+    },
+    "relation-constantine-i-participant-in-edict-of-milan": {
+      "label": "شرکت در"
+    },
+    "relation-licinius-participant-in-edict-of-milan": {
+      "label": "شرکت در"
+    },
+    "relation-edict-of-milan-during-constantinian": {
+      "label": "در دورهٔ"
+    },
+    "relation-constantine-i-participant-in-founding-of-constantinople": {
+      "label": "شرکت در"
+    },
+    "relation-founding-of-constantinople-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-founding-of-constantinople-during-constantinian": {
+      "label": "در دورهٔ"
+    },
+    "relation-constantine-i-participant-in-council-of-nicaea": {
+      "label": "شرکت در"
+    },
+    "relation-council-of-nicaea-during-constantinian": {
+      "label": "در دورهٔ"
+    },
+    "relation-julian-participant-in-death-of-julian": {
+      "label": "شرکت در"
+    },
+    "relation-jovian-participant-in-death-of-julian": {
+      "label": "شرکت در"
+    },
+    "relation-valens-participant-in-battle-of-adrianople": {
+      "label": "شرکت در"
+    },
+    "relation-theodosius-i-participant-in-battle-of-adrianople": {
+      "label": "شرکت در"
+    },
+    "relation-arcadius-participant-in-division-of-the-empire": {
+      "label": "شرکت در"
+    },
+    "relation-honorius-participant-in-division-of-the-empire": {
+      "label": "شرکت در"
+    },
+    "relation-division-of-the-empire-during-theodosian": {
+      "label": "در دورهٔ"
+    },
+    "relation-honorius-participant-in-sack-of-rome-410": {
+      "label": "شرکت در"
+    },
+    "relation-sack-of-rome-410-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-sack-of-rome-410-during-theodosian": {
+      "label": "در دورهٔ"
+    },
+    "relation-valentinian-iii-participant-in-vandals-take-carthage": {
+      "label": "شرکت در"
+    },
+    "relation-vandals-take-carthage-took-place-in-carthage": {
+      "label": "رخ داد در"
+    },
+    "relation-vandals-take-carthage-during-theodosian": {
+      "label": "در دورهٔ"
+    },
+    "relation-valentinian-iii-participant-in-attila-in-gaul": {
+      "label": "شرکت در"
+    },
+    "relation-attila-in-gaul-during-theodosian": {
+      "label": "در دورهٔ"
+    },
+    "relation-petronius-maximus-participant-in-vandal-sack-of-rome": {
+      "label": "شرکت در"
+    },
+    "relation-vandal-sack-of-rome-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-vandal-sack-of-rome-during-west-roman-empire": {
+      "label": "در دورهٔ"
+    },
+    "relation-romulus-augustulus-participant-in-end-of-the-west": {
+      "label": "شرکت در"
+    },
+    "relation-end-of-the-west-during-west-roman-empire": {
+      "label": "در دورهٔ"
+    },
+    "relation-justinian-participant-in-nika-riots": {
+      "label": "شرکت در"
+    },
+    "relation-nika-riots-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-justinian-participant-in-codification-of-roman-law": {
+      "label": "شرکت در"
+    },
+    "relation-justinian-participant-in-belisarius-takes-carthage": {
+      "label": "شرکت در"
+    },
+    "relation-belisarius-takes-carthage-took-place-in-carthage": {
+      "label": "رخ داد در"
+    },
+    "relation-justinian-participant-in-hagia-sophia": {
+      "label": "شرکت در"
+    },
+    "relation-hagia-sophia-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-justinian-participant-in-narses-conquers-italy": {
+      "label": "شرکت در"
+    },
+    "relation-justin-ii-participant-in-langobards-invade-italy": {
+      "label": "شرکت در"
+    },
+    "relation-heraclius-participant-in-battle-of-nineveh-627": {
+      "label": "شرکت در"
     }
   }
 }
