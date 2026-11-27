@@ -4,6 +4,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Iran, China and Rome side by side now hold every dated event and period of the three histories: 66 events
+  instead of 9 and 21 periods instead of 17 – among them the Persian wars, the Punic wars, the fall of the
+  Western Zhou and the Xia of tradition – each with its years, its uncertainty and the sources of its collection,
+  and its Persian; the chart begins at 2100 BCE.
 - A fifth new story of the Shahnameh: Forud – the son of Siavash at Kalat, killed when Tus takes the road the
   king forbade, and the snow, the night attack and the defeat that follow, in 32 steps and six reading stages,
   read from the text on Ganjoor, with its Persian.
