@@ -8,8 +8,8 @@
   },
   "entities": {
     "subject-ancient-rome": {
-      "label": "روم باستان",
-      "summary": "شهر رم و کشوری که بر آن فرمان راند، از بنیاد سنتی‌اش در ۷۵۳ پیش از میلاد، از راه شاهان، جمهوری و امپراتوران تا پایان امپراتوری در باختر در ۴۷۶، و امپراتوری در خاور تا هراکلیوس که در ۶۴۱ درگذشت."
+      "label": "روم",
+      "summary": "شهر رم و کشوری که بر آن فرمان راند، از بنیاد سنتی‌اش در ۷۵۳ پیش از میلاد، از راه شاهان، جمهوری و امپراتوران تا پایان امپراتوری در باختر در ۴۷۶، و امپراتوری در خاور، از قسطنطنیه، تا مرگ باسیل دوم در ۱۰۲۵."
     },
     "place-rome": {
       "label": "رم",
@@ -1375,6 +1375,288 @@
     "event-battle-of-dara": {
       "label": "بلیزاریوس ایرانیان را شکست می‌دهد",
       "summary": "بلیزاریوس نخستین پیروزی‌اش را در جایگاه فرمانده در ۵۳۰ بر ایران ساسانی در جبههٔ میان‌رودان به دست آورد."
+    },
+    "dynasty-heraclian": {
+      "label": "خاندان هراکلیوس",
+      "summary": "خاندان هراکلیوس که از ۶۱۰ تا ۷۱۱ فرمان راند؛ در زمان جانشینانش مصر، شام و آفریقا به دست عرب‌ها افتاد، قسطنطنیه چهار سال محاصره را تاب آورد و بلغارها در جنوب دانوب جا گرفتند."
+    },
+    "period-heraclian": {
+      "label": "خاندان هراکلیوس",
+      "summary": "خاندان هراکلیوس که از ۶۱۰ تا ۷۱۱ فرمان راند؛ در زمان جانشینانش مصر، شام و آفریقا به دست عرب‌ها افتاد، قسطنطنیه چهار سال محاصره را تاب آورد و بلغارها در جنوب دانوب جا گرفتند."
+    },
+    "dynasty-isaurian": {
+      "label": "خاندان ایسوری",
+      "summary": "خاندان لئون سوم که از ۷۱۷ تا ۸۰۲ فرمان راند؛ عرب‌ها را از قسطنطنیه بازگرداند و پیکار با شمایل‌پرستی را آغاز کرد و با برکناری ایرنه پایان یافت."
+    },
+    "period-isaurian": {
+      "label": "خاندان ایسوری",
+      "summary": "خاندان لئون سوم که از ۷۱۷ تا ۸۰۲ فرمان راند؛ عرب‌ها را از قسطنطنیه بازگرداند و پیکار با شمایل‌پرستی را آغاز کرد و با برکناری ایرنه پایان یافت."
+    },
+    "dynasty-amorian": {
+      "label": "خاندان آموریایی",
+      "summary": "خاندان میخائیل دوم، که فریگیایی هم خوانده می‌شود و از ۸۲۰ تا ۸۶۷ از راه پسرش تئوفیلوس و نوه‌اش میخائیل سوم فرمان راند؛ در زمان آن شمایل‌ها سرانجام در ۸۴۳ بازگردانده شدند."
+    },
+    "period-amorian": {
+      "label": "خاندان آموریایی",
+      "summary": "خاندان میخائیل دوم، که فریگیایی هم خوانده می‌شود و از ۸۲۰ تا ۸۶۷ از راه پسرش تئوفیلوس و نوه‌اش میخائیل سوم فرمان راند؛ در زمان آن شمایل‌ها سرانجام در ۸۴۳ بازگردانده شدند."
+    },
+    "dynasty-macedonian": {
+      "label": "خاندان مقدونی",
+      "summary": "خاندان باسیل یکم که در ۸۶۷ با کشتن راه خود را به تخت گشود؛ تا مرگ باسیل دوم در ۱۰۲۵ امپراتوری دوران زرینی داشت و کرت، انطاکیه و بلغارستان را بازپس گرفت."
+    },
+    "period-macedonian": {
+      "label": "خاندان مقدونی",
+      "summary": "خاندان باسیل یکم که در ۸۶۷ با کشتن راه خود را به تخت گشود؛ تا مرگ باسیل دوم در ۱۰۲۵ امپراتوری دوران زرینی داشت و کرت، انطاکیه و بلغارستان را بازپس گرفت."
+    },
+    "period-iconoclasm": {
+      "label": "دوران شمایل‌شکنی",
+      "summary": "از برتخت‌نشستن لئون سوم در ۷۱۷ تا ۸۶۷ امپراتوران، اغلب با پشتیبانی گسترده، کوشیدند به پرستش شمایل‌ها پایان دهند؛ ایرنه در شورای نیقیه در ۷۸۷ آن را بازگرداند، لئون پنجم در ۸۱۵ شمایل‌شکنی را از سر گرفت و شمایل‌ها سرانجام در ۸۴۳ بازگردانده شدند."
+    },
+    "person-constantine-iii": {
+      "label": "کنستانتین سوم",
+      "summary": "جانشین هراکلیوس، امپراتور از فوریه تا مه ۶۴۱."
+    },
+    "person-heraclonas": {
+      "label": "هراکلوناس",
+      "summary": "امپراتور برای چند ماه در ۶۴۱، پس از کنستانتین سوم."
+    },
+    "person-constans-ii": {
+      "label": "کنستانس دوم",
+      "summary": "امپراتور از ۶۴۱ تا ۶۶۸، که در زمان او عرب‌ها گشودن مصر را به پایان رساندند؛ در ۶۵۸ لشکری به مقدونیه برد."
+    },
+    "person-constantine-iv": {
+      "label": "کنستانتین چهارم",
+      "summary": "بزرگ‌ترین پسر کنستانس دوم، امپراتور از ۶۶۸ تا ۶۸۵، که محاصرهٔ چهارسالهٔ قسطنطنیه به دست عرب‌ها را تاب آورد، پادشاهی بلغار را به رسمیت شناخت و ششمین شورای جهانی کلیسا را گرد آورد.",
+      "facts": {
+        "knownFor": "محاصرهٔ قسطنطنیه به دست عرب‌ها را تاب آورد."
+      }
+    },
+    "person-justinian-ii": {
+      "label": "یوستینیان دوم",
+      "summary": "پسر کنستانتین چهارم و واپسین امپراتور خاندان هراکلیوس، امپراتور از ۶۸۵ تا ۶۹۵ که برکنار و مثله شد، و دوباره از ۷۰۵ با یاری بلغارها تا مرگش در ۷۱۱.",
+      "facts": {
+        "knownFor": "دو بار فرمان راند."
+      }
+    },
+    "person-leontius": {
+      "label": "لئونتیوس",
+      "summary": "امپراتور از ۶۹۵ تا ۶۹۸، پس از برکناری یوستینیان دوم."
+    },
+    "person-tiberius-iii": {
+      "label": "تیبریوس سوم",
+      "summary": "امپراتور از ۶۹۸ تا ۷۰۵، تا بازگشت یوستینیان دوم."
+    },
+    "person-philippicus": {
+      "label": "فیلیپیکوس",
+      "summary": "امپراتور از ۷۱۱ تا ۷۱۳، پس از دومین برافتادن یوستینیان دوم."
+    },
+    "person-anastasius-ii": {
+      "label": "آناستاسیوس دوم",
+      "summary": "امپراتور از ۷۱۳ تا ۷۱۵."
+    },
+    "person-theodosius-iii": {
+      "label": "تئودوسیوس سوم",
+      "summary": "امپراتور از ۷۱۵ تا ۷۱۷، واپسین فرمانروای کوتاه پیش از لئون سوم."
+    },
+    "person-leo-iii": {
+      "label": "لئون سوم",
+      "summary": "بنیادگذار خاندان ایسوری، امپراتور از ۷۱۷ تا ۷۴۱، که در ۷۱۸ یورش عرب‌ها بر قسطنطنیه را بازگرداند، در ۷۴۰ در آکروئینون پیروز شد و پیکار با شمایل‌پرستی را آغاز کرد.",
+      "facts": {
+        "knownFor": "شمایل‌شکنی را آغاز کرد."
+      }
+    },
+    "person-constantine-v": {
+      "label": "کنستانتین پنجم",
+      "summary": "پسر لئون سوم، امپراتور از ۷۴۱ تا ۷۷۵، که در زمان او شمایل‌شکنی به آزار راهبان کشید؛ از کامیاب‌ترین سرداران بیزانس، از ۷۵۶ تا ۷۷۵ با بلغارها جنگید."
+    },
+    "person-leo-iv": {
+      "label": "لئون چهارم",
+      "summary": "پسر کنستانتین پنجم، امپراتور از ۷۷۵ تا مرگ زودرسش در ۷۸۰."
+    },
+    "person-constantine-vi": {
+      "label": "کنستانتین ششم",
+      "summary": "پسر لئون چهارم، که در ۷۸۰ ده‌ساله زیر نیابت مادرش ایرنه امپراتور شد و ایرنه در ۷۹۷ او را برکنار و کور کرد."
+    },
+    "person-irene": {
+      "label": "ایرنه",
+      "summary": "ملکه، نایب پسرش کنستانتین ششم و پس از برکناری و کور کردن او، فرمانروای یگانه از ۷۹۷ تا ۸۰۲؛ شمایل‌ها را در شورای نیقیه در ۷۸۷ بازگرداند و در تبعید در لسبوس درگذشت.",
+      "facts": {
+        "knownFor": "در ۷۸۷ شمایل‌ها را بازگرداند."
+      }
+    },
+    "person-nicephorus-i": {
+      "label": "نیکفوروس یکم",
+      "summary": "وزیر دارایی که جانشین ایرنه شد، امپراتور از ۸۰۲ تا ۸۱۱، که مالیات‌ها را سامان داد و در نبرد با کروم، خان بلغار، کشته شد."
+    },
+    "person-stauracius": {
+      "label": "استاوراکیوس",
+      "summary": "جانشین نیکفوروس یکم، امپراتور برای زمانی کوتاه در ۸۱۱."
+    },
+    "person-michael-i": {
+      "label": "میخائیل یکم رانگابه",
+      "summary": "امپراتور از ۸۱۱ تا ۸۱۳، که پس از پراکنده شدن سپاهش در برابر کروم نزدیک آدریانوپل تخت را از دست داد."
+    },
+    "person-leo-v": {
+      "label": "لئون پنجم ارمنی",
+      "summary": "امپراتور از ۸۱۳ تا ۸۲۰، که در ۸۱۵ شمایل‌شکنی را از سر گرفت."
+    },
+    "person-michael-ii": {
+      "label": "میخائیل دوم",
+      "summary": "بنیادگذار خاندان آموریایی، امپراتور از ۸۲۰ تا ۸۲۹؛ در زمان او عرب‌ها کرت را گرفتند و گشودن سیسیل را آغاز کردند."
+    },
+    "person-theophilus": {
+      "label": "تئوفیلوس",
+      "summary": "پسر میخائیل دوم، امپراتور از ۸۲۹ تا ۸۴۲، که در ۸۳۸ پیش از افتادن آموریوم از سپاهی مسلمان شکست خورد."
+    },
+    "person-michael-iii": {
+      "label": "میخائیل سوم",
+      "summary": "پسر تئوفیلوس، امپراتور از ۸۴۲ تا ۸۶۷، که در زمان او شمایل‌ها در ۸۴۳ بازگردانده شدند."
+    },
+    "person-basil-i": {
+      "label": "باسیل یکم",
+      "summary": "بنیادگذار خاندان مقدونی، که در ۸۶۷ با کشتن راه خود را به تخت گشود و تا ۸۸۶ فرمان راند."
+    },
+    "person-leo-vi": {
+      "label": "لئون ششم فرزانه",
+      "summary": "جانشین دانشور باسیل یکم، امپراتور از ۸۸۶ تا ۹۱۲."
+    },
+    "person-alexander-byzantine": {
+      "label": "الکساندر",
+      "summary": "امپراتور از ۹۱۲ تا ۹۱۳، میان لئون ششم و کنستانتین هفتم."
+    },
+    "person-constantine-vii": {
+      "label": "کنستانتین هفتم پورفیروگنتوس",
+      "summary": "امپراتور از ۹۱۳ تا ۹۵۹، نخست در کنار رومانوس یکم؛ در زمان او اولگای کی‌یف غسل تعمید یافت و به قسطنطنیه آمد."
+    },
+    "person-romanus-i": {
+      "label": "رومانوس یکم لکاپنوس",
+      "summary": "هم‌امپراتور در کنار کنستانتین هفتم از ۹۲۰ تا ۹۴۴، که در ۹۲۲ و ۹۳۴ قانون‌هایی برای پشتیبانی از زمین‌داران خرد در برابر توانگران گذراند."
+    },
+    "person-romanus-ii": {
+      "label": "رومانوس دوم",
+      "summary": "پسر کنستانتین هفتم، امپراتور از ۹۵۹ تا ۹۶۳."
+    },
+    "person-nicephorus-ii": {
+      "label": "نیکفوروس دوم فوکاس",
+      "summary": "سرداری که در ۹۶۱ کرت را بازپس گرفت و در ۹۶۳ امپراتور خوانده شد و تا ۹۶۹ فرمان راند؛ سپاهیانش قبرس و انطاکیه را بازپس گرفتند.",
+      "facts": {
+        "knownFor": "کرت را بازپس گرفت."
+      }
+    },
+    "person-john-i-tzimisces": {
+      "label": "یوحنای یکم تزیمیسکس",
+      "summary": "سردار ارمنی که در ۹۶۹ تخت را غصب کرد، در ۹۷۱ روس‌ها را خوار و بلغارستان را دست‌نشانده کرد و فرمان بیزانس را بر شام گستراند؛ در ۹۷۶ درگذشت."
+    },
+    "person-basil-ii": {
+      "label": "باسیل دوم",
+      "summary": "وارث مشروع خاندان مقدونی، امپراتور از ۹۷۶ تا ۱۰۲۵، که پس از نزدیک بیست سال جنگ تا ۱۰۱۸ پایداری بلغارها را درهم شکست، خواهرش را به همسری ولادیمیر کی‌یف داد و در ۱۰۲۵ در پایان دوران زرین امپراتوری درگذشت.",
+      "facts": {
+        "knownFor": "بلغارستان را زیر فرمان آورد."
+      }
+    },
+    "event-arabs-take-alexandria": {
+      "label": "تسلیم اسکندریه به عرب‌ها",
+      "summary": "اسکندریه در ۶۴۲ تسلیم شد و مصر برای همیشه از فرمان بیزانس بیرون رفت."
+    },
+    "event-arab-siege-of-constantinople-674": {
+      "label": "محاصرهٔ قسطنطنیه به دست عرب‌ها",
+      "summary": "عرب‌ها پس از یورش‌هایشان بر ارمنستان و آسیای کوچک چهار سال، از ۶۷۴ تا ۶۷۸، قسطنطنیه را در محاصره گرفتند؛ کنستانتین چهارم پایداری کرد و این نقطهٔ عطفی در تاریخ اروپا بود."
+    },
+    "event-sixth-ecumenical-council": {
+      "label": "ششمین شورای جهانی کلیسا",
+      "summary": "ششمین شورای عمومی کلیسا که کنستانتین چهارم در ۶۸۰–۶۸۱ در قسطنطنیه گرد آورد، باور به یک‌ارادگی مسیح را محکوم کرد."
+    },
+    "event-bulgar-kingdom-recognised": {
+      "label": "به رسمیت شناختن پادشاهی بلغار",
+      "summary": "کنستانتین چهارم در ۶۸۱ نتوانست بلغارها را شکست دهد و با پیمانی آنان را همچون پادشاهی‌ای مستقل در جنوب دانوب به رسمیت شناخت."
+    },
+    "event-justinian-ii-deposed": {
+      "label": "برکناری یوستینیان دوم",
+      "summary": "یوستینیان دوم در ۶۹۵ برکنار و مثله شد؛ با یاری بلغارها در ۷۰۵ به تخت بازگشت."
+    },
+    "event-fall-of-septem": {
+      "label": "از دست رفتن آفریقا",
+      "summary": "تا پایان سدهٔ هفتم آفریقا بیشتر به دست مسلمانان افتاده بود و آنان در ۷۱۱ واپسین پایگاه را در سپتم گرفتند."
+    },
+    "event-arab-siege-of-constantinople-717": {
+      "label": "دومین محاصرهٔ قسطنطنیه به دست عرب‌ها",
+      "summary": "در ۷۱۷ عرب‌ها دوباره از خشکی و دریا قسطنطنیه را محاصره کردند؛ لئون سوم با یاری بلغارها در ۷۱۸ یورش را بازگرداند."
+    },
+    "event-battle-of-akroinon": {
+      "label": "نبرد آکروئینون",
+      "summary": "با یاری خزرها، فرمانروایی لئون سوم با پیروزی بزرگی بر عرب‌ها در آکروئینون در ۷۴۰ پایان یافت."
+    },
+    "event-second-council-of-nicaea": {
+      "label": "بازگرداندن شمایل‌ها در شورای نیقیه",
+      "summary": "به خواست ملکه ایرنه، شورای نیقیه در ۷۸۷ پرستش شمایل‌ها را بازگرداند."
+    },
+    "event-irene-sole-ruler": {
+      "label": "فرمانروایی یگانهٔ ایرنه",
+      "summary": "ایرنه پسرش کنستانتین ششم را برکنار و کور کرد و از ۷۹۷ تنها فرمان راند تا آنکه شورش بلندپایگان دربار در ۸۰۲ او را برکنار کرد."
+    },
+    "event-coronation-of-charlemagne": {
+      "label": "تاج‌گذاری شارلمانی",
+      "summary": "در روز کریسمس ۸۰۰ پاپ لئون سوم شارلمانی، شاه فرانک‌ها و لومباردها، را امپراتور رومیان تاج گذاشت، که چالشی برای امپراتور قسطنطنیه بود."
+    },
+    "event-death-of-nicephorus-i": {
+      "label": "کشته شدن نیکفوروس یکم در نبرد با کروم",
+      "summary": "نیکفوروس یکم در ۸۱۱ سپاهش را به جنگ کروم، خان بلغار، برد و شکست خورد و کشته شد."
+    },
+    "event-iconoclasm-renewed": {
+      "label": "از سرگیری شمایل‌شکنی به دست لئون پنجم",
+      "summary": "لئون پنجم پس از شکست‌های جنگی، در ۸۱۵ سیاست‌های شمایل‌شکنانهٔ کنستانتین پنجم را از سر گرفت."
+    },
+    "event-arabs-take-crete": {
+      "label": "گرفتن کرت به دست عرب‌ها",
+      "summary": "در ۸۲۶ یا ۸۲۷ عرب‌ها کرت را گرفتند، نشانه‌ای از کاهش نیروی بیزانس در دریای مدیترانه."
+    },
+    "event-fall-of-amorium": {
+      "label": "شکست تئوفیلوس و افتادن آموریوم",
+      "summary": "در ۸۳۸ سپاهی مسلمان خود تئوفیلوس را شکست داد و سپس دژ آموریوم را در آسیای کوچک گرفت."
+    },
+    "event-restoration-of-the-icons": {
+      "label": "بازگرداندن شمایل‌ها",
+      "summary": "در ۸۴۳، در زمان میخائیل سوم، شمایل‌ها برای همیشه بازگردانده شدند و پرستش آن‌ها باور راست‌کیشی اعلام شد."
+    },
+    "event-rus-attack-constantinople": {
+      "label": "یورش روس‌ها بر قسطنطنیه",
+      "summary": "کشتی‌های جنگی روس‌ها که از کی‌یف از راه دنیپر به دریای سیاه آمدند، نخستین بار در ۸۶۰ بر قسطنطنیه یورش بردند."
+    },
+    "event-basil-i-takes-throne": {
+      "label": "به تخت نشستن باسیل یکم",
+      "summary": "در ۸۶۷ باسیل یکم با کشتن راه خود را به تخت گشود و خاندان مقدونی را بنیاد نهاد."
+    },
+    "event-arabs-complete-sicily": {
+      "label": "پایان گشودن سیسیل به دست عرب‌ها",
+      "summary": "در ۹۰۲ عرب‌ها گشودن سیسیل را به پایان رساندند، هرچند از جنوب ایتالیای بیزانسی دور نگه داشته شدند."
+    },
+    "event-simeon-at-constantinople": {
+      "label": "شمعون بلغار در برابر قسطنطنیه",
+      "summary": "در ۹۱۳ شمعون یکم بلغار سپاهش را تا دیوارهای قسطنطنیه آورد و عنوان امپراتوری خواست."
+    },
+    "event-reconquest-of-crete": {
+      "label": "بازپس‌گیری کرت",
+      "summary": "در ۹۶۱ نیکفوروس فوکاس کرت را بازپس گرفت و ناوگان عربی را که ۱۵۰ سال دریای اژه را به هراس انداخته بود نابود کرد."
+    },
+    "event-recapture-of-antioch": {
+      "label": "بازپس‌گیری انطاکیه",
+      "summary": "در ۹۶۹ سپاهیان بیزانس انطاکیه، جایگاه یکی از پاتریارک‌ها، را بازپس گرفتند."
+    },
+    "event-tzimisces-subdues-bulgaria": {
+      "label": "چیرگی تزیمیسکس بر روس‌ها و بلغارستان",
+      "summary": "در ۹۷۱ یوحنای تزیمیسکس روس‌ها را خوار کرد و بلغارستان را به پادشاهی دست‌نشانده فروکاست."
+    },
+    "event-baptism-of-vladimir": {
+      "label": "غسل تعمید ولادیمیر کی‌یف",
+      "summary": "ولادیمیر کی‌یف که باسیل دوم را در نگه داشتن تخت یاری کرده بود، خواهر امپراتور را به همسری گرفت و در ۹۸۹ غسل تعمید یافت."
+    },
+    "event-bulgaria-subdued": {
+      "label": "زیر فرمان آمدن بلغارستان",
+      "summary": "باسیل دوم پس از لشکرکشی بی‌رحمانه‌ای نزدیک بیست‌ساله، تا ۱۰۱۸ واپسین پایداری بلغارها را درهم شکست."
+    },
+    "event-death-of-basil-ii": {
+      "label": "مرگ باسیل دوم",
+      "summary": "باسیل دوم در ۱۰۲۵ هنگامی که لشکرکشی‌ای بر عرب‌های سیسیل را آماده می‌کرد درگذشت؛ با او دوران زرین عصر مقدونی پایان یافت."
     }
   },
   "relations": {
@@ -2786,6 +3068,450 @@
     },
     "relation-belisarius-participant-in-belisarius-takes-carthage": {
       "label": "شرکت در"
+    },
+    "relation-constantine-iii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-constantine-iii-member-of-heraclian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-iii-successor-of-heraclius": {
+      "label": "جانشینِ"
+    },
+    "relation-heraclius-member-of-heraclian": {
+      "label": "از خاندانِ"
+    },
+    "relation-heraclonas-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-heraclonas-member-of-heraclian": {
+      "label": "از خاندانِ"
+    },
+    "relation-heraclonas-successor-of-constantine-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-constans-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-constans-ii-member-of-heraclian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constans-ii-successor-of-heraclonas": {
+      "label": "جانشینِ"
+    },
+    "relation-constantine-iv-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-constantine-iv-member-of-heraclian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-iv-successor-of-constans-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-constans-ii-parent-of-constantine-iv": {
+      "label": "پدرِ"
+    },
+    "relation-justinian-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-justinian-ii-member-of-heraclian": {
+      "label": "از خاندانِ"
+    },
+    "relation-justinian-ii-successor-of-constantine-iv": {
+      "label": "جانشینِ"
+    },
+    "relation-constantine-iv-parent-of-justinian-ii": {
+      "label": "پدرِ"
+    },
+    "relation-leontius-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-leontius-successor-of-justinian-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-tiberius-iii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tiberius-iii-successor-of-leontius": {
+      "label": "جانشینِ"
+    },
+    "relation-justinian-ii-holder-of-east-roman-emperor-2": {
+      "label": "دوباره امپراتور"
+    },
+    "relation-justinian-ii-successor-of-tiberius-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-philippicus-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-philippicus-successor-of-justinian-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-anastasius-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-anastasius-ii-successor-of-philippicus": {
+      "label": "جانشینِ"
+    },
+    "relation-theodosius-iii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-theodosius-iii-successor-of-anastasius-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-leo-iii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-leo-iii-member-of-isaurian": {
+      "label": "از خاندانِ"
+    },
+    "relation-leo-iii-successor-of-theodosius-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-leo-iii-founder-of-isaurian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-constantine-v-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-constantine-v-member-of-isaurian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-v-successor-of-leo-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-leo-iii-parent-of-constantine-v": {
+      "label": "پدرِ"
+    },
+    "relation-leo-iv-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-leo-iv-member-of-isaurian": {
+      "label": "از خاندانِ"
+    },
+    "relation-leo-iv-successor-of-constantine-v": {
+      "label": "جانشینِ"
+    },
+    "relation-constantine-v-parent-of-leo-iv": {
+      "label": "پدرِ"
+    },
+    "relation-constantine-vi-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-constantine-vi-member-of-isaurian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-vi-successor-of-leo-iv": {
+      "label": "جانشینِ"
+    },
+    "relation-leo-iv-parent-of-constantine-vi": {
+      "label": "پدرِ"
+    },
+    "relation-irene-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-irene-member-of-isaurian": {
+      "label": "از خاندانِ"
+    },
+    "relation-irene-successor-of-constantine-vi": {
+      "label": "جانشینِ"
+    },
+    "relation-irene-parent-of-constantine-vi": {
+      "label": "مادرِ"
+    },
+    "relation-nicephorus-i-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-nicephorus-i-successor-of-irene": {
+      "label": "جانشینِ"
+    },
+    "relation-stauracius-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-stauracius-successor-of-nicephorus-i": {
+      "label": "جانشینِ"
+    },
+    "relation-michael-i-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-michael-i-successor-of-stauracius": {
+      "label": "جانشینِ"
+    },
+    "relation-leo-v-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-leo-v-successor-of-michael-i": {
+      "label": "جانشینِ"
+    },
+    "relation-michael-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-michael-ii-member-of-amorian": {
+      "label": "از خاندانِ"
+    },
+    "relation-michael-ii-successor-of-leo-v": {
+      "label": "جانشینِ"
+    },
+    "relation-michael-ii-founder-of-amorian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-theophilus-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-theophilus-member-of-amorian": {
+      "label": "از خاندانِ"
+    },
+    "relation-theophilus-successor-of-michael-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-michael-ii-parent-of-theophilus": {
+      "label": "پدرِ"
+    },
+    "relation-michael-iii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-michael-iii-member-of-amorian": {
+      "label": "از خاندانِ"
+    },
+    "relation-michael-iii-successor-of-theophilus": {
+      "label": "جانشینِ"
+    },
+    "relation-theophilus-parent-of-michael-iii": {
+      "label": "پدرِ"
+    },
+    "relation-basil-i-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-basil-i-member-of-macedonian": {
+      "label": "از خاندانِ"
+    },
+    "relation-basil-i-successor-of-michael-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-basil-i-founder-of-macedonian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-leo-vi-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-leo-vi-member-of-macedonian": {
+      "label": "از خاندانِ"
+    },
+    "relation-leo-vi-successor-of-basil-i": {
+      "label": "جانشینِ"
+    },
+    "relation-alexander-byzantine-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-alexander-byzantine-member-of-macedonian": {
+      "label": "از خاندانِ"
+    },
+    "relation-alexander-byzantine-successor-of-leo-vi": {
+      "label": "جانشینِ"
+    },
+    "relation-constantine-vii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-constantine-vii-member-of-macedonian": {
+      "label": "از خاندانِ"
+    },
+    "relation-constantine-vii-successor-of-alexander-byzantine": {
+      "label": "جانشینِ"
+    },
+    "relation-romanus-i-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-romanus-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-romanus-ii-member-of-macedonian": {
+      "label": "از خاندانِ"
+    },
+    "relation-romanus-ii-successor-of-constantine-vii": {
+      "label": "جانشینِ"
+    },
+    "relation-constantine-vii-parent-of-romanus-ii": {
+      "label": "پدرِ"
+    },
+    "relation-nicephorus-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-nicephorus-ii-successor-of-romanus-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-john-i-tzimisces-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-john-i-tzimisces-successor-of-nicephorus-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-basil-ii-holder-of-east-roman-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-basil-ii-member-of-macedonian": {
+      "label": "از خاندانِ"
+    },
+    "relation-basil-ii-successor-of-john-i-tzimisces": {
+      "label": "جانشینِ"
+    },
+    "relation-arabs-take-alexandria-took-place-in-alexandria": {
+      "label": "رخ داد در"
+    },
+    "relation-arabs-take-alexandria-during-heraclian": {
+      "label": "در دورهٔ"
+    },
+    "relation-constantine-iv-participant-in-arab-siege-of-constantinople-674": {
+      "label": "شرکت در"
+    },
+    "relation-arab-siege-of-constantinople-674-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-arab-siege-of-constantinople-674-during-heraclian": {
+      "label": "در دورهٔ"
+    },
+    "relation-constantine-iv-participant-in-sixth-ecumenical-council": {
+      "label": "شرکت در"
+    },
+    "relation-sixth-ecumenical-council-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-sixth-ecumenical-council-during-heraclian": {
+      "label": "در دورهٔ"
+    },
+    "relation-constantine-iv-participant-in-bulgar-kingdom-recognised": {
+      "label": "شرکت در"
+    },
+    "relation-bulgar-kingdom-recognised-during-heraclian": {
+      "label": "در دورهٔ"
+    },
+    "relation-justinian-ii-participant-in-justinian-ii-deposed": {
+      "label": "شرکت در"
+    },
+    "relation-justinian-ii-deposed-during-heraclian": {
+      "label": "در دورهٔ"
+    },
+    "relation-fall-of-septem-during-heraclian": {
+      "label": "در دورهٔ"
+    },
+    "relation-leo-iii-participant-in-arab-siege-of-constantinople-717": {
+      "label": "شرکت در"
+    },
+    "relation-arab-siege-of-constantinople-717-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-arab-siege-of-constantinople-717-during-isaurian": {
+      "label": "در دورهٔ"
+    },
+    "relation-leo-iii-participant-in-battle-of-akroinon": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-akroinon-during-isaurian": {
+      "label": "در دورهٔ"
+    },
+    "relation-irene-participant-in-second-council-of-nicaea": {
+      "label": "شرکت در"
+    },
+    "relation-second-council-of-nicaea-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-irene-participant-in-irene-sole-ruler": {
+      "label": "شرکت در"
+    },
+    "relation-constantine-vi-participant-in-irene-sole-ruler": {
+      "label": "شرکت در"
+    },
+    "relation-irene-sole-ruler-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-coronation-of-charlemagne-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-nicephorus-i-participant-in-death-of-nicephorus-i": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-nicephorus-i-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-leo-v-participant-in-iconoclasm-renewed": {
+      "label": "شرکت در"
+    },
+    "relation-iconoclasm-renewed-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-arabs-take-crete-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-theophilus-participant-in-fall-of-amorium": {
+      "label": "شرکت در"
+    },
+    "relation-fall-of-amorium-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-michael-iii-participant-in-restoration-of-the-icons": {
+      "label": "شرکت در"
+    },
+    "relation-restoration-of-the-icons-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-rus-attack-constantinople-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-rus-attack-constantinople-during-iconoclasm": {
+      "label": "در دورهٔ"
+    },
+    "relation-basil-i-participant-in-basil-i-takes-throne": {
+      "label": "شرکت در"
+    },
+    "relation-basil-i-takes-throne-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-arabs-complete-sicily-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-simeon-at-constantinople-took-place-in-constantinople": {
+      "label": "رخ داد در"
+    },
+    "relation-simeon-at-constantinople-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nicephorus-ii-participant-in-reconquest-of-crete": {
+      "label": "شرکت در"
+    },
+    "relation-reconquest-of-crete-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nicephorus-ii-participant-in-recapture-of-antioch": {
+      "label": "شرکت در"
+    },
+    "relation-recapture-of-antioch-took-place-in-antioch": {
+      "label": "رخ داد در"
+    },
+    "relation-recapture-of-antioch-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-john-i-tzimisces-participant-in-tzimisces-subdues-bulgaria": {
+      "label": "شرکت در"
+    },
+    "relation-tzimisces-subdues-bulgaria-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-basil-ii-participant-in-baptism-of-vladimir": {
+      "label": "شرکت در"
+    },
+    "relation-baptism-of-vladimir-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-basil-ii-participant-in-bulgaria-subdued": {
+      "label": "شرکت در"
+    },
+    "relation-bulgaria-subdued-during-macedonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-basil-ii-participant-in-death-of-basil-ii": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-basil-ii-during-macedonian": {
+      "label": "در دورهٔ"
     }
   }
 }

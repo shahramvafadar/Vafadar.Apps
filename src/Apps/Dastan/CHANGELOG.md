@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Rome goes on to 1025: the East-Roman emperors from Constantine III to Basil II with their houses, the age of
+  Iconoclasm, and 26 events from the fall of Alexandria to the death of Basil II; the collection is now called
+  "Rome".
 - Iran goes on to 1030: the Umayyad and Abbasid caliphates, the Saffarids, Samanids, Ziyarids, Buyids and
   Ghaznavids with their rulers and capitals, Abu Muslim, Rudaki, Daqiqi, Ferdowsi, Avicenna and Biruni, and
   sixteen events from the Abbasid revolution to the completion of the Shahnameh; the collection is now called
