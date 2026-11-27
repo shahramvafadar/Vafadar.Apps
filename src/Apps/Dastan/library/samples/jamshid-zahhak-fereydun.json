@@ -1,0 +1,2760 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "jamshid-zahhak-fereydun",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-jamshid-zahhak-fereydun",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-27",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-jamshid-zahhak-fereydun-2026-11-27",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the reign of Jamshid, sections 1 to 4; the reign of Zahhak, sections 1 to 12; the reign of Fereydun, section 1.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/jamshid",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "From the accession of Jamshid to the binding of Zahhak in Damavand and the crowning of Fereydun; the story of Fereydun’s sons, from his seeking brides for them onward, is not part of it.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "The glory of Jamshid"
+      },
+      {
+        "level": 1,
+        "label": "Iblis and the son of Mardas"
+      },
+      {
+        "level": 2,
+        "label": "The fall of Jamshid"
+      },
+      {
+        "level": 3,
+        "label": "The dream and the child"
+      },
+      {
+        "level": 4,
+        "label": "Kaveh and the banner"
+      },
+      {
+        "level": 5,
+        "label": "Fereydun against Zahhak"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-jamshid-index",
+      "title": "Ganjoor: the reign of Jamshid, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/jamshid",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-jamshid-s01",
+      "title": "Ganjoor: بخش ۱ - پادشاهی جمشید هفتصد سال بود",
+      "url": "https://ganjoor.net/ferdousi/shahname/jamshid/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱ - پادشاهی جمشید هفتصد سال بود"
+    },
+    {
+      "id": "src-ganjoor-jamshid-s02",
+      "title": "Ganjoor: بخش ۲ - مرداس تازی و فرزند ناخلفش ضحاک",
+      "url": "https://ganjoor.net/ferdousi/shahname/jamshid/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۲ - مرداس تازی و فرزند ناخلفش ضحاک"
+    },
+    {
+      "id": "src-ganjoor-jamshid-s03",
+      "title": "Ganjoor: بخش ۳ - داستان رویش مار بر شانه‌های ضحاک",
+      "url": "https://ganjoor.net/ferdousi/shahname/jamshid/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۳ - داستان رویش مار بر شانه‌های ضحاک"
+    },
+    {
+      "id": "src-ganjoor-jamshid-s04",
+      "title": "Ganjoor: بخش ۴ - سقوط جمشید",
+      "url": "https://ganjoor.net/ferdousi/shahname/jamshid/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۴ - سقوط جمشید"
+    },
+    {
+      "id": "src-ganjoor-zahak-s01",
+      "title": "Ganjoor: بخش ۱ - پادشاهی ضحاک تازی هزار سال بود",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱ - پادشاهی ضحاک تازی هزار سال بود"
+    },
+    {
+      "id": "src-ganjoor-zahak-s02",
+      "title": "Ganjoor: بخش ۲ - ارمایل و گرمایل و رهانیدن قربانیان مارهای مغزخوار روییده بر دوش ضحاک",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۲ - ارمایل و گرمایل و رهانیدن قربانیان مارهای مغزخوار روییده بر دوش ضحاک"
+    },
+    {
+      "id": "src-ganjoor-zahak-s03",
+      "title": "Ganjoor: بخش ۳ - کابوس ضحاک و پیشبینی موبدان برآمدن فریدون را",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۳ - کابوس ضحاک و پیشبینی موبدان برآمدن فریدون را"
+    },
+    {
+      "id": "src-ganjoor-zahak-s04",
+      "title": "Ganjoor: بخش ۴ - زاده شدن فریدون، کشته شدن پدرش و پرورش او با شیر گاو برمایه",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۴ - زاده شدن فریدون، کشته شدن پدرش و پرورش او با شیر گاو برمایه"
+    },
+    {
+      "id": "src-ganjoor-zahak-s05",
+      "title": "Ganjoor: بخش ۵ - کشته شدن گاو برمایه",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۵ - کشته شدن گاو برمایه"
+    },
+    {
+      "id": "src-ganjoor-zahak-s06",
+      "title": "Ganjoor: بخش ۶ - شانزده‌سالگی فریدون و آگاهی او از گذشته و سرنوشت پدرش",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۶ - شانزده‌سالگی فریدون و آگاهی او از گذشته و سرنوشت پدرش"
+    },
+    {
+      "id": "src-ganjoor-zahak-s07",
+      "title": "Ganjoor: بخش ۷ - کاوهٔ آهنگر و درفش کاویانی و ساخته شدن گرز گاوسر",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۷ - کاوهٔ آهنگر و درفش کاویانی و ساخته شدن گرز گاوسر"
+    },
+    {
+      "id": "src-ganjoor-zahak-s08",
+      "title": "Ganjoor: بخش ۸ - به پا خاستن فریدون در برابر ضحاک",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۸ - به پا خاستن فریدون در برابر ضحاک"
+    },
+    {
+      "id": "src-ganjoor-zahak-s09",
+      "title": "Ganjoor: بخش ۹ - سفر فریدون و سپاهش از اروندرود تا بیت‌المقدس پایتخت ضحاک",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۹ - سفر فریدون و سپاهش از اروندرود تا بیت‌المقدس پایتخت ضحاک"
+    },
+    {
+      "id": "src-ganjoor-zahak-s10",
+      "title": "Ganjoor: بخش ۱۰ - آزاد شدن دختران جمشید از بند ضحاک به دست فریدون",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۰ - آزاد شدن دختران جمشید از بند ضحاک به دست فریدون"
+    },
+    {
+      "id": "src-ganjoor-zahak-s11",
+      "title": "Ganjoor: بخش ۱۱ - خبر بردن کندرو ضحاک را از بساط فریدون",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۱ - خبر بردن کندرو ضحاک را از بساط فریدون"
+    },
+    {
+      "id": "src-ganjoor-zahak-s12",
+      "title": "Ganjoor: بخش ۱۲ - بند کردن فریدون، ضحاک را",
+      "url": "https://ganjoor.net/ferdousi/shahname/zahak/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱۲ - بند کردن فریدون، ضحاک را"
+    },
+    {
+      "id": "src-ganjoor-fereydoon-s01",
+      "title": "Ganjoor: بخش ۱ - پادشاهی فریدون پانصد سال بود",
+      "url": "https://ganjoor.net/ferdousi/shahname/fereydoon/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۱ - پادشاهی فریدون پانصد سال بود"
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "Shahnameh",
+      "summary": "The literary work in which the stories of Jamshid, Zahhak and Fereydun are told.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-jamshid-zahhak-fereydun",
+      "type": "NarrativeArc",
+      "label": "Jamshid, Zahhak and Kaveh, Fereydun",
+      "summary": "The kings of the poem who follow Tahmuras – Jamshid, Zahhak and Fereydun – and the blacksmith Kaveh.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-jamshid",
+      "type": "Character",
+      "label": "Jamshid",
+      "summary": "King of Iran after his father, who rules with the divine glory and teaches people the crafts.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran, holder of the divine glory"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "The land Jamshid rules.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s01"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "character-mardas",
+      "type": "Character",
+      "label": "Mardas",
+      "summary": "A just and generous ruler of the riders of the plains, rich in herds.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Ruler of the Arabs, father of Zahhak"
+        }
+      ]
+    },
+    {
+      "id": "character-zahhak",
+      "type": "Character",
+      "label": "Zahhak",
+      "summary": "Son of Mardas, bold and light-minded, to whom Iblis comes as a friend.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "names": [
+        {
+          "name": "Bivarasp",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Mardas"
+        }
+      ]
+    },
+    {
+      "id": "character-iblis",
+      "type": "Character",
+      "label": "Iblis",
+      "summary": "The tempter, who comes to Zahhak in one guise after another.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "The tempter of Zahhak"
+        }
+      ]
+    },
+    {
+      "id": "place-land-of-the-arabs",
+      "type": "NarrativeRegion",
+      "label": "The land of the Arabs",
+      "summary": "The plains of the spear-bearing riders, where Mardas rules.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "character-shahrnaz",
+      "type": "Character",
+      "label": "Shahrnaz",
+      "summary": "A daughter of Jamshid, taken to the palace of Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s01"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Daughter of Jamshid"
+        }
+      ]
+    },
+    {
+      "id": "character-arnavaz",
+      "type": "Character",
+      "label": "Arnavaz",
+      "summary": "A daughter of Jamshid, taken to the palace of Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s01"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Daughter of Jamshid"
+        }
+      ]
+    },
+    {
+      "id": "character-armayel",
+      "type": "Character",
+      "label": "Armayel",
+      "summary": "A pious man of royal descent who becomes a cook in Zahhak's kitchen.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s02"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Cook in the kitchen of Zahhak"
+        }
+      ]
+    },
+    {
+      "id": "character-garmayel",
+      "type": "Character",
+      "label": "Garmayel",
+      "summary": "A far-sighted man of royal descent who becomes a cook in Zahhak's kitchen.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s02"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Cook in the kitchen of Zahhak"
+        }
+      ]
+    },
+    {
+      "id": "place-sea-of-chin",
+      "type": "NarrativePlace",
+      "label": "The sea of Chin",
+      "summary": "The sea by which Jamshid is found after his years in hiding.",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s04"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "character-zirak",
+      "type": "Character",
+      "label": "Zirak",
+      "summary": "A wise and outspoken mobad among those Zahhak summons to read his dream.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s03"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mobad who reads the dream of Zahhak"
+        }
+      ]
+    },
+    {
+      "id": "character-fereydun",
+      "type": "Character",
+      "label": "Fereydun",
+      "summary": "A prince of the line of Tahmuras, whose coming a mobad foretells to Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s03"
+      ],
+      "spoilerLevel": 3,
+      "names": [
+        {
+          "name": "Afaridun",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Abtin and Faranak"
+        }
+      ]
+    },
+    {
+      "id": "character-abtin",
+      "type": "Character",
+      "label": "Abtin",
+      "summary": "A wise and gentle man of Iran, of the line of Tahmuras, hunted by the men of Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Father of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-faranak",
+      "type": "Character",
+      "label": "Faranak",
+      "summary": "The wise mother of Fereydun, who hides her son from Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-barmayeh",
+      "type": "AnimalCharacter",
+      "label": "Barmayeh",
+      "summary": "A cow of wondrous colours, born when Fereydun is born, whose milk nourishes him.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "The cow that nurses Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-meadow-keeper",
+      "type": "Character",
+      "label": "The keeper of the meadow",
+      "summary": "The keeper of the meadow where Barmayeh lives, who takes the infant Fereydun into his care.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Guardian of the infant Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-man-of-alborz",
+      "type": "Character",
+      "label": "The holy man of Alborz",
+      "summary": "A man of faith living on Mount Alborz, free of the cares of the world.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s05"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Guardian of the young Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-tahmuras",
+      "type": "Character",
+      "label": "Tahmuras",
+      "summary": "An earlier king, named by Faranak as the forefather of Abtin.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s06"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Forefather of Abtin"
+        }
+      ]
+    },
+    {
+      "id": "place-alborz",
+      "type": "NarrativePlace",
+      "label": "Mount Alborz",
+      "summary": "The mountain where Faranak hides her son.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s05"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-damavand",
+      "type": "NarrativePlace",
+      "label": "Mount Damavand",
+      "summary": "The mountain that appears in the dream of Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s03"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "object-ox-headed-mace",
+      "type": "NarrativeObject",
+      "label": "The ox-headed mace",
+      "summary": "A mace with a head in the shape of an ox, first seen in the dream of Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s03"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "character-kaveh",
+      "type": "Character",
+      "label": "Kaveh",
+      "summary": "A blacksmith who comes to the court of Zahhak to cry for justice.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Blacksmith who cries for justice"
+        }
+      ]
+    },
+    {
+      "id": "character-kaveh-son",
+      "type": "Character",
+      "label": "The son of Kaveh",
+      "summary": "A son of Kaveh, taken to be killed for the serpents of Zahhak.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Kaveh"
+        }
+      ]
+    },
+    {
+      "id": "character-kianush",
+      "type": "Character",
+      "label": "Kianush",
+      "summary": "One of the two elder brothers of Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Elder brother of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "character-purmayeh",
+      "type": "Character",
+      "label": "Purmayeh",
+      "summary": "One of the two elder brothers of Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Elder brother of Fereydun"
+        }
+      ]
+    },
+    {
+      "id": "object-testimony",
+      "type": "NarrativeObject",
+      "label": "The testimony of Zahhak",
+      "summary": "A written testimony that Zahhak has the nobles sign, declaring him a just king.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "object-kaviani-banner",
+      "type": "NarrativeObject",
+      "label": "The Kaviani banner",
+      "summary": "The leather apron of a blacksmith raised on a spear, later adorned with brocade and jewels.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "place-arvand-rud",
+      "type": "NarrativePlace",
+      "label": "The Arvand Rud",
+      "summary": "A river on the road of Fereydun; the poem says that in Arabic it is called the Dejleh.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s08"
+      ],
+      "spoilerLevel": 4,
+      "names": [
+        {
+          "name": "Tigris",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
+    },
+    {
+      "id": "place-baghdad",
+      "type": "NarrativePlace",
+      "label": "Baghdad",
+      "summary": "A city on the bank of the Dejleh where the army of Fereydun halts.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s08"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "place-kang-dezh-hukht",
+      "type": "NarrativePlace",
+      "label": "Kang-dezh-hukht",
+      "summary": "The city of Zahhak's palace; the poem says that in Arabic it is called Bayt al-Moqaddas.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s09"
+      ],
+      "spoilerLevel": 5,
+      "names": [
+        {
+          "name": "Bayt al-Moqaddas",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
+    },
+    {
+      "id": "place-hindustan",
+      "type": "NarrativeRegion",
+      "label": "Hindustan",
+      "summary": "The land to which Zahhak has gone when Fereydun reaches his palace.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s10"
+      ],
+      "spoilerLevel": 5
+    },
+    {
+      "id": "character-kondrow",
+      "type": "Character",
+      "label": "Kondrow",
+      "summary": "The steward who keeps the treasury, throne and palace of Zahhak while he is away.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s11"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Steward of Zahhak"
+        }
+      ]
+    },
+    {
+      "id": "character-sorush",
+      "type": "Character",
+      "label": "Sorush",
+      "summary": "A blessed messenger from heaven who speaks to Fereydun.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s12"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Heavenly messenger"
+        }
+      ]
+    },
+    {
+      "id": "place-shirkhan",
+      "type": "NarrativePlace",
+      "label": "Shirkhan",
+      "summary": "A place on the road by which Fereydun first leads his captive.",
+      "sourceIds": [
+        "src-ganjoor-zahak-s12"
+      ],
+      "spoilerLevel": 5
+    },
+    {
+      "id": "place-amol",
+      "type": "NarrativePlace",
+      "label": "Amol",
+      "summary": "A town from which Fereydun goes on to Tamisha.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s01"
+      ],
+      "spoilerLevel": 5
+    },
+    {
+      "id": "place-tamisha",
+      "type": "NarrativePlace",
+      "label": "Tamisha",
+      "summary": "A renowned forest land where Fereydun settles; the poem says it is called Gush.",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s01"
+      ],
+      "spoilerLevel": 5
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-jamshid-zahhak-fereydun",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-jamshid-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-jamshid-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-mardas",
+      "to": "character-zahhak",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-05"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-zahhak",
+      "to": "place-land-of-the-arabs",
+      "type": "nativeOf",
+      "label": "Comes from",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-05"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-zahhak",
+      "to": "place-land-of-the-arabs",
+      "type": "leaderOf",
+      "label": "Ruler of",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-zahhak",
+      "to": "character-mardas",
+      "type": "successorOf",
+      "label": "Takes the place of",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-jamshid",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s01"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-zahhak",
+      "to": "character-jamshid",
+      "type": "successorOf",
+      "label": "King after",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s04"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-12"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-zahhak",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "Hailed as king of",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s04"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-zahhak",
+      "to": "character-jamshid",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s04"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-11",
+      "from": "character-jamshid",
+      "to": "character-shahrnaz",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s01"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-jamshid",
+      "to": "character-arnavaz",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s01"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-shahrnaz",
+      "to": "character-arnavaz",
+      "type": "siblingOf",
+      "label": "Sister of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s01"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-armayel",
+      "to": "character-garmayel",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-zahak-s02"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-15"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-15",
+      "from": "character-abtin",
+      "to": "character-fereydun",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-18"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-16",
+      "from": "character-faranak",
+      "to": "character-fereydun",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-19"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-17",
+      "from": "character-abtin",
+      "to": "character-faranak",
+      "type": "spouseOf",
+      "label": "Spouses",
+      "sourceIds": [
+        "src-ganjoor-zahak-s06"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-21"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-18",
+      "from": "character-meadow-keeper",
+      "to": "character-fereydun",
+      "type": "adoptiveParentOf",
+      "label": "Raises",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-19"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-19",
+      "from": "character-man-of-alborz",
+      "to": "character-fereydun",
+      "type": "adoptiveParentOf",
+      "label": "Raises",
+      "sourceIds": [
+        "src-ganjoor-zahak-s05"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-20"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-20",
+      "from": "character-abtin",
+      "to": "place-iran",
+      "type": "nativeOf",
+      "label": "Comes from",
+      "sourceIds": [
+        "src-ganjoor-zahak-s06"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-21"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-21",
+      "from": "character-faranak",
+      "to": "place-iran",
+      "type": "nativeOf",
+      "label": "Comes from",
+      "sourceIds": [
+        "src-ganjoor-zahak-s05"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-20"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-22",
+      "from": "character-fereydun",
+      "to": "character-zahhak",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-zahak-s06"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-21"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-23",
+      "from": "character-kaveh",
+      "to": "character-kaveh-son",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-24",
+      "from": "character-kaveh",
+      "to": "character-zahhak",
+      "type": "opponentOf",
+      "label": "Opponents",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-25",
+      "from": "character-kaveh",
+      "to": "character-fereydun",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-24"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-26",
+      "from": "character-kianush",
+      "to": "character-fereydun",
+      "type": "siblingOf",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-25"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-27",
+      "from": "character-purmayeh",
+      "to": "character-fereydun",
+      "type": "siblingOf",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-25"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-28",
+      "from": "character-kianush",
+      "to": "character-purmayeh",
+      "type": "siblingOf",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-25"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-29",
+      "from": "character-fereydun",
+      "to": "character-zahhak",
+      "type": "successorOf",
+      "label": "King after",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s01"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-jamshid-zahhak-fereydun",
+        "eventIds": [
+          "event-35"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "Jamshid takes the throne",
+      "summary": "Jamshid takes his father's throne and crown. With the divine glory he declares himself both king and priest, and demons, birds and peris obey him.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jamshid",
+          "role": "king who takes the throne",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "kingdom",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "The crafts and the four groups",
+      "summary": "Over fifty years at a time Jamshid makes weapons and armour, then teaches spinning, weaving and sewing, then sets people into four groups – priests, warriors, farmers and craftsmen – each in its own place. The demons build for him with brick, stone and plaster, and he finds gems, perfumes and medicine and crosses the waters by ship.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jamshid",
+          "role": "king who teaches the crafts",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "The new day",
+      "summary": "Jamshid has a jewelled throne made that the demons lift into the air, and he sits on it like the sun. People gather around him and call that day the new day, the first of Farvardin; for three hundred years nobody knows death or pain.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jamshid",
+          "role": "king on the flying throne",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "Jamshid's pride",
+      "summary": "Seeing no one but himself in the world, Jamshid tells his nobles that every good thing comes from him alone, and none dares to answer. The divine glory leaves him and his days begin to darken.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jamshid",
+          "role": "king who grows proud",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "kingdom",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "Mardas and his son",
+      "summary": "Among the riders of the plains lives Mardas, a just and generous ruler who gives the milk of his herds to all in need. His son Zahhak is bold but light-minded, and is called Bivarasp, the owner of ten thousand horses.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-mardas",
+          "role": "generous ruler",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "his son",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-land-of-the-arabs",
+          "role": "land of Mardas",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "Iblis binds Zahhak by an oath",
+      "summary": "Iblis comes to Zahhak as a well-wisher, makes him swear to keep his secret, and urges him to take his old father's place. Zahhak refuses at first, but bound by his oath he agrees to let Iblis find the way.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iblis",
+          "role": "tempter in the guise of a friend",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "young man who swears",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mardas",
+          "role": "father whose place is sought",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "The pit in the garden",
+      "summary": "Iblis digs a deep pit on the garden path Mardas walks before dawn to pray, and covers it. Mardas falls into it and dies, and Zahhak puts on the crown of the Arabs.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s02"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iblis",
+          "role": "digger of the pit",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mardas",
+          "role": "father who falls",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "son who takes his place",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-land-of-the-arabs",
+          "role": "land he now rules",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "The new cook",
+      "summary": "Iblis returns as an eloquent young man offering himself as a cook, and Zahhak gives him the keys of the royal kitchen. In a time when people ate little meat, he feeds the king day after day on egg yolk, partridge, lamb and veal, and wins his heart.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iblis",
+          "role": "cook",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who is fed",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "Two serpents",
+      "summary": "Asked what he wishes, the cook asks only to kiss the king's shoulders. He kisses them and vanishes, and two black serpents grow from them; cut off, they grow back like branches, and no physician finds a cure.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iblis",
+          "role": "cook who kisses the shoulders",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king afflicted",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "The physician's counsel",
+      "summary": "Iblis comes again, now as a physician, and tells Zahhak to feed the serpents nothing but human brains, so that they might calm and perhaps die. The poet says his aim was to empty the world of people.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s03"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-iblis",
+          "role": "physician",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who is counselled",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "Iran turns to Zahhak",
+      "summary": "Iran falls into turmoil; the glory grows dark on Jamshid and chieftains rise everywhere. Hearing of a fearsome king with a dragon's form among the Arabs, the riders of Iran go to Zahhak and hail him as king of Iran.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s04"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jamshid",
+          "role": "king who loses his people",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king hailed by Iran",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "land in turmoil",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-land-of-the-arabs",
+          "role": "land of Zahhak",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "Jamshid gives up the throne",
+      "summary": "Zahhak comes with an army of Iran and the Arabs and moves on the throne of Jamshid. Jamshid gives up throne, crown and treasure and disappears; for a hundred years no one sees him.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s04"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zahhak",
+          "role": "new king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jamshid",
+          "role": "king who flees",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "The end of Jamshid",
+      "summary": "In the hundredth year Jamshid appears by the sea of Chin; Zahhak seizes him and has him sawn in two. The poet closes the reign of seven hundred years with a lament on how the world first nurtures and then betrays.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-jamshid-s04"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jamshid",
+          "role": "king who is killed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who kills him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-sea-of-chin",
+          "role": "where Jamshid is found",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "The daughters of Jamshid",
+      "summary": "Zahhak rules for a thousand years: wisdom is hidden and sorcery honoured. The two daughters of Jamshid, Shahrnaz and Arnavaz, are brought trembling from their house to his palace, and he teaches them crooked ways.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s01"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zahhak",
+          "role": "king of a thousand years",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shahrnaz",
+          "role": "daughter taken to the palace",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-arnavaz",
+          "role": "daughter taken to the palace",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jamshid",
+          "role": "their father",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "Armayel and Garmayel",
+      "summary": "Every night two young men are killed so that their brains can feed the serpents. Two pious men, Armayel and Garmayel, become cooks in the king's kitchen; each night they save one of the two by mixing a sheep's brain with the other's, and send the saved one to the mountains and plains. The poem says the Kurds descend from those who were saved.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s02"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-armayel",
+          "role": "cook who saves lives",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garmayel",
+          "role": "cook who saves lives",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who demands the sacrifices",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "The dream of Zahhak",
+      "summary": "When forty years of his reign remain, Zahhak dreams of three warriors coming from the royal palace; the youngest strikes him with an ox-headed mace, binds him and drags him to Mount Damavand. He wakes screaming, and Arnavaz urges him to summon the wise and seek the truth.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s03"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zahhak",
+          "role": "dreamer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-arnavaz",
+          "role": "adviser",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-ox-headed-mace",
+          "role": "weapon in the dream",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "place-damavand",
+          "role": "mountain in the dream",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "The prophecy of Zirak",
+      "summary": "The mobads keep silent for three days for fear of their lives. On the fourth, threatened by the king, Zirak speaks: one named Afaridun, not yet born, will take his throne and strike him with an ox-headed mace; Zahhak will kill his father, and a cow named Barmayeh will nurse him. Zahhak faints, then searches the world for any sign of Fereydun.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s03"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zirak",
+          "role": "mobad who speaks out",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who hears the prophecy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "foretold one",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "object-ox-headed-mace",
+          "role": "foretold weapon",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "Birth of Fereydun and death of Abtin",
+      "summary": "Fereydun is born and grows like a cypress with the glory of kings; a cow of wondrous colours, Barmayeh, is born in the same time. His father Abtin, fleeing the search, is caught by Zahhak's guards, and Zahhak ends his life.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "newborn",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-barmayeh",
+          "role": "wondrous cow",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-abtin",
+          "role": "father who is caught",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who has him killed",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "Faranak and the meadow",
+      "summary": "Faranak, grieving, brings her infant to the keeper of the meadow where Barmayeh lives and begs him to raise the child on the cow's milk. He promises to serve the child, and nourishes him so for three years.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s04"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-faranak",
+          "role": "mother who hides her son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "infant",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-meadow-keeper",
+          "role": "guardian",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-barmayeh",
+          "role": "nurse",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "To Mount Alborz",
+      "summary": "As word of the cow spreads, Faranak takes her son to Mount Alborz and gives him to a holy man living there. Zahhak learns of the meadow, kills Barmayeh and all the beasts there, and burns the house of Fereydun.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s05"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-faranak",
+          "role": "mother who flees",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "child",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-man-of-alborz",
+          "role": "new guardian",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who destroys the meadow",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-barmayeh",
+          "role": "cow that is killed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-alborz",
+          "role": "refuge",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "land Faranak names as hers",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "Fereydun learns of his father",
+      "summary": "At sixteen Fereydun comes down from Alborz and asks his mother who his father was. She tells him of Abtin, of the line of Tahmuras, of his death and of the cow that nursed him. Fereydun vows to take vengeance, but his mother warns him that Zahhak can raise armies from every land.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s06"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "son who learns his past",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-faranak",
+          "role": "mother who tells",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-abtin",
+          "role": "father remembered",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-tahmuras",
+          "role": "forefather named",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-barmayeh",
+          "role": "nurse remembered",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "enemy named",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "homeland of Abtin",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-alborz",
+          "role": "where he grew up",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "The testimony",
+      "summary": "Troubled by fear of Fereydun, Zahhak gathers the great men of every land and has them write and sign a testimony that he has sown nothing but good and speaks nothing but truth. Out of fear, young and old sign it.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zahhak",
+          "role": "king who demands the testimony",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-testimony",
+          "role": "testimony",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "feared enemy",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "Kaveh at the court",
+      "summary": "A blacksmith named Kaveh cries out for justice at the court: his sons have been taken one after another for the serpents. Zahhak returns his son to him and asks him to sign the testimony; Kaveh reads it, tears it up, tramples it and leaves with his son. Zahhak admits that when Kaveh stood before him it was as if a mountain of iron rose between them.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kaveh",
+          "role": "blacksmith who cries for justice",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kaveh-son",
+          "role": "son who is returned",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who is defied",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-testimony",
+          "role": "testimony torn apart",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "The banner of Kaveh",
+      "summary": "In the bazaar Kaveh raises the leather apron of the smiths on a spear and calls everyone who longs for Fereydun to follow him; a great crowd gathers. Knowing where Fereydun is, he leads them to him. Fereydun adorns the leather with Roman brocade and jewels and names it the Kaviani banner, and every later king hangs new jewels on it.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kaveh",
+          "role": "leader of the crowd",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "prince who receives the banner",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-kaviani-banner",
+          "role": "banner",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-25",
+      "label": "The forging of the mace",
+      "summary": "Fereydun takes leave of his mother, who prays for him. He tells his two elder brothers, Kianush and Purmayeh, to bring smiths, draws for them a mace with the head of a buffalo, and when the ox-headed mace is made he rewards them and promises them more.",
+      "order": 25,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s07"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "prince who designs the mace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-faranak",
+          "role": "mother who prays",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kianush",
+          "role": "elder brother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-purmayeh",
+          "role": "elder brother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-ox-headed-mace",
+          "role": "mace that is forged",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-26",
+      "label": "Setting out",
+      "summary": "On the day of Khordad Fereydun sets out to avenge his father, with an army, elephants and buffaloes bearing provisions and his brothers beside him. He marches stage by stage to the Arvand Rud and camps on the bank of the Dejleh by the city of Baghdad.",
+      "order": 26,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s08"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "leader of the army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kianush",
+          "role": "brother at his side",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-purmayeh",
+          "role": "brother at his side",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-arvand-rud",
+          "role": "river reached",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-baghdad",
+          "role": "city by the camp",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-27",
+      "label": "Crossing the river",
+      "summary": "The keepers of the river refuse him boats without a sealed pass from the king. Angered, Fereydun rides his horse into the water and his companions follow; they reach the far bank and turn towards Kang-dezh-hukht, the city the poem says is called Bayt al-Moqaddas in Arabic.",
+      "order": 27,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s09"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "leader who crosses the river",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-arvand-rud",
+          "role": "river crossed",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-kang-dezh-hukht",
+          "role": "destination",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-28",
+      "label": "Into the palace",
+      "summary": "Seeing from afar the palace that seems to touch the stars, Fereydun knows it is the dragon's house and urges haste. He strikes down the guards with his mace, rides into the palace, brings down the talisman Zahhak had raised, kills the demons within and sits on the throne.",
+      "order": 28,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s09",
+        "src-ganjoor-zahak-s10"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "conqueror of the palace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-ox-headed-mace",
+          "role": "weapon",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kang-dezh-hukht",
+          "role": "city of the palace",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-29",
+      "label": "The daughters of Jamshid freed",
+      "summary": "Fereydun brings the women out of Zahhak's chambers and has them washed clean of their darkness. The daughters of Jamshid ask who he is; he names himself the son of Abtin come for vengeance, and Arnavaz recognises the one foretold. They tell him Zahhak has gone to Hindustan, killing in the hope of washing in blood and overturning the stars' verdict.",
+      "order": 29,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s10"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "deliverer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shahrnaz",
+          "role": "freed daughter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-arnavaz",
+          "role": "freed daughter who recognises him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-abtin",
+          "role": "father named",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "absent king",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-hindustan",
+          "role": "where Zahhak has gone",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-30",
+      "label": "Kondrow's report",
+      "summary": "Kondrow, the steward of Zahhak, finds a new king on the throne, bows to him and at his command prepares a feast. Then he rides to Zahhak and tells him everything. Zahhak calls the stranger a guest, but Kondrow answers that no guest comes with an ox-headed mace and sits with the king's women; Zahhak dismisses him in fury.",
+      "order": 30,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s11"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kondrow",
+          "role": "steward who reports",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "new king on the throne",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "king who hears the news",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shahrnaz",
+          "role": "named at the new king's side",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-arnavaz",
+          "role": "named at the new king's side",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-hindustan",
+          "role": "where Zahhak is",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-31",
+      "label": "The city rises",
+      "summary": "Zahhak returns by night with an army of demons and takes the roofs and doors of the palace. The people of the city fight for Fereydun, hurling bricks and stones from walls and roofs; the young and the old join his army, and a cry rises from the fire temple that they will obey no one but him.",
+      "order": 31,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s12"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zahhak",
+          "role": "king who returns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "king defended by the city",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kang-dezh-hukht",
+          "role": "city at war",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-32",
+      "label": "Zahhak is struck down",
+      "summary": "Clad in iron so as not to be known, Zahhak climbs to the palace roof with a lasso and sees Shahrnaz with Fereydun. Burning with jealousy he comes down with a dagger, but Fereydun strikes him with the ox-headed mace and breaks his helmet. Sorush comes and tells him not to kill Zahhak but to bind him and take him to the mountains; Fereydun binds him with a lasso of lion's hide.",
+      "order": 32,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s12"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zahhak",
+          "role": "king who is struck",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fereydun",
+          "role": "victor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shahrnaz",
+          "role": "seen from the roof",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sorush",
+          "role": "messenger who stays his hand",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-ox-headed-mace",
+          "role": "weapon that strikes",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-33",
+      "label": "The new order",
+      "summary": "Fereydun sits on the golden throne and has it proclaimed that soldiers and craftsmen should each keep to their own work, since the wicked one is now in chains. The nobles come with gifts, and he tells them God raised him from Mount Alborz to free the world from the dragon.",
+      "order": 33,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s12"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "new king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-alborz",
+          "role": "mountain he came from",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-34",
+      "label": "Bound in Damavand",
+      "summary": "Fereydun carries Zahhak bound on a camel towards Shirkhan, meaning to put him to death in the mountains. Sorush comes again and tells him to take the captive to Mount Damavand; there Fereydun chains him with heavy nails in a narrow cave, where he is left hanging, cut off from all his kin.",
+      "order": 34,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-zahak-s12"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "captor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "captive",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sorush",
+          "role": "messenger who guides him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-shirkhan",
+          "role": "on the road",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-damavand",
+          "role": "place of the chains",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-35",
+      "label": "Fereydun crowned",
+      "summary": "On the first day of the month of Mehr Fereydun puts on the crown of the Kayanian kings and holds a feast, and the poem says the festival of Mehregan is his legacy. Faranak, learning that her son is king, gives in secret to the needy for a week, holds a feast for the nobles and sends him her treasures. Fereydun then travels the world setting wrongs right, and settles in Tamisha beyond Amol.",
+      "order": 35,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-fereydoon-s01"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fereydun",
+          "role": "crowned king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-faranak",
+          "role": "mother who gives thanks",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "fallen king",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-amol",
+          "role": "town on his way",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-tamisha",
+          "role": "his seat",
+          "presence": "setting"
+        }
+      ]
+    }
+  ],
+  "media": []
+}

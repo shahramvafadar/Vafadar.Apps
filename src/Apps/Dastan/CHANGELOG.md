@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A new story of the Shahnameh: Jamshid, Zahhak and Kaveh, Fereydun – from Jamshid taking the throne to
+  Zahhak bound in Damavand and Fereydun crowned, in 35 steps and six reading stages, read section by section
+  from the text on Ganjoor, with its Persian.
 - Twelve more people have years and can be laid side by side: Ashurbanipal, Surena, Camillus, Spartacus,
   Julia, Ban Chao, Shang Yang, King Wu of Zhou, Daqiqi, Abu Mansur, Mahmud of Ghazni and Bertels. Each year
   comes from a source that states it (Britannica or Encyclopaedia Iranica), which the person now cites.
