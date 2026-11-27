@@ -5,7 +5,7 @@
   "note": "Built from the three collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year (Awan and Šimaški), a period that begins and ends in the same year, and a dynasty whose years are those of a period already here.",
   "frame": "commonEraYears",
   "title": "Iran, China and Rome side by side",
-  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran to the end of the Sasanians in 651, Rome to Heraclius in 641, China to about 100 CE – and every dated event of the three collections, side by side.",
+  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran to the end of the Sasanians in 651, Rome to Heraclius in 641, China to the Tang in 705 – and every dated event of the three collections, side by side.",
   "show": {
     "from": {
       "frame": "calendar",
@@ -15,7 +15,7 @@
     "to": {
       "frame": "calendar",
       "era": "commonEra",
-      "year": 651
+      "year": 705
     }
   },
   "publication": {
@@ -1196,6 +1196,104 @@
       "id": "src-livius-person-justin-ii",
       "title": "Justin Ii – Livius",
       "url": "https://www.livius.org/articles/person/justin-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-history-of-china-six-dynasties",
+      "title": "History of China: The Six Dynasties – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Six-Dynasties",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-si-period-of-division",
+      "title": "Period of Division (220–589) – Smithsonian, Teaching China",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/period-of-division/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-wudi-emperor-of-jin-dynasty",
+      "title": "Wudi (emperor of Jin dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Wudi-emperor-of-Jin-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-sui-dynasty",
+      "title": "Sui dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Sui-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-tang-dynasty",
+      "title": "Tang dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-si-tang",
+      "title": "Tang dynasty (618–907) – Smithsonian, Teaching China",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/tang-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-cao-pi",
+      "title": "Cao Pi – Britannica",
+      "url": "https://www.britannica.com/biography/Cao-Pi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-xiaowendi",
+      "title": "Xiaowendi – Britannica",
+      "url": "https://www.britannica.com/biography/Xiaowendi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-yangdi",
+      "title": "Yangdi – Britannica",
+      "url": "https://www.britannica.com/biography/Yangdi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-gaozu-emperor-of-tang-dynasty",
+      "title": "Gaozu (emperor of Tang dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Gaozu-emperor-of-Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-taizong-emperor-of-tang-dynasty",
+      "title": "Taizong (emperor of Tang dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Taizong-emperor-of-Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-xuanzang",
+      "title": "Xuanzang – Britannica",
+      "url": "https://www.britannica.com/biography/Xuanzang",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-gaozong-emperor-of-tang-dynasty",
+      "title": "Gaozong (emperor of Tang dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Gaozong-emperor-of-Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-wuhou",
+      "title": "Wuhou – Britannica",
+      "url": "https://www.britannica.com/biography/Wuhou",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-27"
     }
@@ -2789,7 +2887,6 @@
         {
           "key": "eastern-han",
           "label": "The Eastern Han",
-          "summary": "Followed here to about 100 CE.",
           "time": {
             "kind": "period",
             "start": {
@@ -2813,6 +2910,262 @@
           "sourceIds": [
             "src-afe-timeline",
             "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "three-kingdoms",
+          "label": "The Three Kingdoms",
+          "summary": "Wei, Shu-Han and Wu, which divided China after the fall of the Han; Britannica dates the period 220–280, to the fall of Wu, and Asia for Educators 220–265.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 220
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 265
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 280
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-afe-timeline",
+            "src-afe-keypoints"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "western-jin",
+          "label": "The Western Jin",
+          "summary": "A short time of relative order after the Three Kingdoms, which ended with the fall of Luoyang in 311 and Chang’an in 316.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 265
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 316
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 317
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-si-period-of-division",
+            "src-britannica-wudi-emperor-of-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sixteen-kingdoms",
+          "label": "The Sixteen Kingdoms",
+          "summary": "The short-lived non-Chinese states that ruled northern China from 303 until the Northern Wei unified it in 439.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 303
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 439
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "eastern-jin",
+          "label": "The Eastern Jin",
+          "summary": "The Jin court set up at Jiankang in 317 by a member of the imperial family, ruled by the great southern families until 420.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 317
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 420
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "northern-wei",
+          "label": "The Northern Wei",
+          "summary": "The Tuoba state in the north; Britannica dates it 386–534/535 and Asia for Educators 386–535, and the Smithsonian says it brought all of north China under its rule in 439.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 386
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 534
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 535
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-afe-keypoints",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "southern-dynasties",
+          "label": "The Southern Dynasties",
+          "summary": "The Liu-Song, Southern Qi, Southern Liang and Southern Chen, which ruled the south from Jiankang from 420 until the Sui overthrew the last of them in 589.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 420
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 589
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sui",
+          "label": "The Sui",
+          "summary": "The reunification of China under the Sui, from 581 to 618.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 581
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 618
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-sui-dynasty",
+            "src-afe-timeline"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tang",
+          "label": "The Tang",
+          "summary": "The rule of the Tang, from 618 to 907; this collection follows it to 705.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 618
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 907
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-tang-dynasty",
+            "src-si-tang"
           ],
           "reviewStatus": "proposed"
         }
@@ -2969,6 +3322,447 @@
           "sourceIds": [
             "src-hill-hou-hanshu",
             "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "qiang-rebellion",
+          "label": "The great Qiang rebellion",
+          "summary": "A mutiny of auxiliaries in the northwest grew in 107 into a full-scale rebellion of the Qiang within China, which lasted until 118.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 107
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 118
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "roman-envoys-166",
+          "label": "Envoys from Rome at the Han court",
+          "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of Emperor Huan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 166
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "yellow-turbans",
+          "label": "The Yellow Turban rebellion",
+          "summary": "In the spring of 184 the Yellow Turbans, a popular sect led by Zhang Jue, rose and ravaged the north and east; the warlordism that followed ended the Han.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 184
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han",
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "dong-zhuo-takes-power",
+          "label": "Dong Zhuo takes power",
+          "summary": "In 189 eunuchs and the general He Jin destroyed each other at Luoyang; the general Dong Zhuo took power, deposed Liu Bian and in 190 moved the capital to Chang’an.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 189
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-guandu",
+          "label": "The battle of Guandu",
+          "summary": "In 200 Yuan Shao attacked Cao Cao and was defeated at Guandu.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 200
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "red-cliffs",
+          "label": "The battle of the Red Cliffs",
+          "summary": "In 208 Cao Cao, who had taken over north China, was defeated at the Red Cliffs on the Yangtze by the forces of Sun Quan and Liu Bei.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 208
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "end-of-han",
+          "label": "The end of the Han",
+          "summary": "In the winter of 220 Emperor Xian abdicated to Cao Pi, who proclaimed himself emperor of the Wei dynasty.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 220
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han",
+            "src-britannica-cao-pi",
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "wei-conquers-shu",
+          "label": "Wei conquers Shu-Han",
+          "summary": "Wei conquered the Shu-Han kingdom in 263/264.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 263
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 264
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-britannica-wudi-emperor-of-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "jin-reunifies-china",
+          "label": "The Jin reunite China",
+          "summary": "In 280 the Jin armies of Sima Yan overran Wu, the last of the Three Kingdoms, and China was nominally reunited.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 280
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-britannica-wudi-emperor-of-jin-dynasty",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-luoyang-311",
+          "label": "The fall of Luoyang",
+          "summary": "In 311 the Xiongnu armies that Liu Yuan had led into northern China took and destroyed Luoyang.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 311
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-changan-316",
+          "label": "The fall of Chang’an",
+          "summary": "The fall of Chang’an in 316 ended Chinese dynastic rule in the north for centuries.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 316
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "eastern-jin-at-jiankang",
+          "label": "A Jin court at Jiankang",
+          "summary": "In 317 a member of the Jin imperial family set up a refugee court at Jiankang, the start of the Eastern Jin.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 317
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "northern-wei-unifies-north",
+          "label": "The Northern Wei unify the north",
+          "summary": "In 439 the Northern Wei brought the whole of north China under its rule, ending the Sixteen Kingdoms.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 439
+            }
+          },
+          "sourceIds": [
+            "src-si-period-of-division",
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "equal-field-system",
+          "label": "The equal-field system",
+          "summary": "In 485 Xiaowendi of the Northern Wei introduced the equal-field system, which assigned land to every peasant family.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 485
+            }
+          },
+          "sourceIds": [
+            "src-britannica-xiaowendi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "northern-zhou-reunifies-north",
+          "label": "The Northern Zhou reunify the north",
+          "summary": "After the Wei broke apart soon after 520, the Northern Zhou reunified northern China in 577.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 577
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sui-reunifies-china",
+          "label": "The Sui reunite China",
+          "summary": "In 589 Yang Jian crossed the Yangtze and overthrew the last southern dynasty at Jiankang, uniting China under one government after almost four centuries.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 589
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-britannica-sui-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "grand-canal",
+          "label": "The Grand Canal begun",
+          "summary": "In 608 Yangdi built a great canal between the rice-growing south and the Beijing area, and in 610 extended it, beginning the Grand Canal network.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 608
+            }
+          },
+          "sourceIds": [
+            "src-britannica-yangdi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sui-korean-wars",
+          "label": "The Sui expeditions against Korea",
+          "summary": "Yangdi’s three expeditions against the Koreans between 612 and 614 ended in disaster and led to revolts.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 612
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 614
+            }
+          },
+          "sourceIds": [
+            "src-britannica-yangdi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tang-founded",
+          "label": "The Tang proclaimed",
+          "summary": "Li Yuan rose in rebellion in 617, took Chang’an and in 618 proclaimed the Tang dynasty.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 618
+            }
+          },
+          "sourceIds": [
+            "src-britannica-gaozu-emperor-of-tang-dynasty",
+            "src-britannica-tang-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "xuanwu-gate",
+          "label": "The Xuanwu gate incident",
+          "summary": "In 626 Li Shimin ambushed and killed his two brothers at the Xuanwu gate of the palace; two months later his father abdicated in his favour.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 626
+            }
+          },
+          "sourceIds": [
+            "src-britannica-taizong-emperor-of-tang-dynasty",
+            "src-britannica-tang-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "xuanzang-journey",
+          "label": "Xuanzang’s journey to India",
+          "summary": "The monk Xuanzang left for India in 629 and came back to China in 645 with the scriptures he had gathered.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 629
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 645
+            }
+          },
+          "sourceIds": [
+            "src-britannica-xuanzang",
+            "src-afe-keypoints"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "korea-vassal-668",
+          "label": "Korea made a vassal",
+          "summary": "Continuing his father’s campaigns, Gaozong conquered the Korean peninsula and made Korea a vassal state in 668.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 668
+            }
+          },
+          "sourceIds": [
+            "src-britannica-gaozong-emperor-of-tang-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "wuhou-takes-throne",
+          "label": "Wuhou takes the throne",
+          "summary": "After ruling through puppets since Gaozong’s death in 683, Wu Zhao usurped the throne herself in 690.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 690
+            }
+          },
+          "sourceIds": [
+            "src-britannica-gaozong-emperor-of-tang-dynasty",
+            "src-britannica-wuhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "wuhou-abdicates",
+          "label": "Wuhou forced to abdicate",
+          "summary": "In 705 Wuhou’s ministers and generals seized the palace and forced her to abdicate in favour of her son Zhongzong.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 705
+            }
+          },
+          "sourceIds": [
+            "src-britannica-wuhou"
           ],
           "reviewStatus": "proposed"
         }
@@ -3133,7 +3927,6 @@
         {
           "key": "nerva-trajan",
           "label": "Nerva and Trajan",
-          "summary": "Followed here to about 100 CE.",
           "time": {
             "kind": "period",
             "start": {

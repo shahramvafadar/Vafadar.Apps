@@ -4,6 +4,13 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Ancient China goes on from Emperor He to the Tang: the last ten Han emperors to the abdication of 220, the
+  Three Kingdoms and their founders, the Jin, the Sixteen Kingdoms, the Northern Wei and the southern
+  dynasties at Jiankang, the Sui and the Tang to the abdication of Wuhou in 705 – 25 people, 8 periods, 8
+  houses and 24 events, among them the envoys from Rome in 166, the Red Cliffs, the reunifications of 280
+  and 589, the Grand Canal and Xuanzang’s journey –, read from de Crespigny’s chronology of Later Han,
+  Britannica, Asia for Educators and the Smithsonian, with their Persian. Iran, China and Rome side by side
+  now hold 150 events and 37 periods, all three lanes running into the seventh century.
 - Ancient Rome goes on from Trajan to Heraclius: 74 emperors from Hadrian to Heraclius, each with the years
   of the reign, the house and the line of succession – the Antonines, the Severans, the soldier emperors, the
   tetrarchy, the houses of Constantine, Valentinian and Theodosius, the last emperors in the west to 476 and

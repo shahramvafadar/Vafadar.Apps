@@ -9,7 +9,7 @@
   "entities": {
     "subject-ancient-china": {
       "label": "چین باستان",
-      "summary": "چین از شیا، که روایت نخستین می‌داند، و شانگ تا هان شرقی در حدود ۱۰۰ میلادی: ژو و دولت‌هایش، یکپارچگی زیر فرمان چین (Qin)، هان غربی، شین وانگ مانگ و هان بازسازی‌شده."
+      "summary": "چین از شیا، که روایت آن را نخست می‌گذارد، و شانگ تا تانگ در حدود ۷۰۰ میلادی: جو و کشورهایش، یکپارچگی زیر فرمان چین، هان باختری، شین وانگ مانگ، هان بازگشته، سه پادشاهی و گسستگی دراز، و یکپارچگی دوباره زیر فرمان سویی و تانگ."
     },
     "region-qin": {
       "label": "چین (Qin)",
@@ -496,6 +496,377 @@
     "event-expedition-against-xiongnu": {
       "label": "لشکرکشی به جنگ شیونگ‌نو",
       "summary": "در ۷۳ میلادی امپراتور مینگ سپاهی به جنگ شیونگ‌نو فرستاد؛ در زمستان همان سال بان چائو دو تی را گرفتار کرد."
+    },
+    "person-han-shangdi": {
+      "label": "امپراتور شانگ",
+      "summary": "لیو لونگ، کودکی که در ۱۰۶ زیر نیابت ملکهٔ مادر دنگ بر تخت نشست و همان سال درگذشت.",
+      "facts": {
+        "knownFor": "امپراتور خردسال."
+      }
+    },
+    "person-han-andi": {
+      "label": "امپراتور آن",
+      "summary": "لیو یو، امپراتور از ۱۰۶ تا ۱۲۵؛ ملکهٔ مادر دنگ تا مرگش در ۱۲۱ فرمان راند و شورش بزرگ چیانگ از ۱۰۷ تا ۱۱۸ ادامه یافت.",
+      "facts": {
+        "knownFor": "زیر نیابت ملکهٔ مادر دنگ فرمان راند."
+      }
+    },
+    "person-han-shaodi-liu-yi": {
+      "label": "امپراتور کوچک، لیو یی",
+      "summary": "کودکی که ملکهٔ مادر نایب‌السلطنه یان در ۱۲۵ بر تخت نشاند و همان زمستان درگذشت.",
+      "facts": {
+        "knownFor": "کمتر از یک سال فرمان راند."
+      }
+    },
+    "person-han-shundi": {
+      "label": "امپراتور شون",
+      "summary": "لیو بائو، تنها پسر امپراتور آن، که در ۱۲۵ خواجگان بر تخت نشاندندش و تا ۱۴۴ امپراتور بود.",
+      "facts": {
+        "knownFor": "خواجگان او را بر تخت نشاندند."
+      }
+    },
+    "person-han-chongdi": {
+      "label": "امپراتور چونگ",
+      "summary": "لیو بینگ، پسر خردسال امپراتور شون، امپراتور از ۱۴۴ تا مرگش در ۱۴۵.",
+      "facts": {
+        "knownFor": "امپراتوری کودک."
+      }
+    },
+    "person-han-zhidi": {
+      "label": "امپراتور جی",
+      "summary": "لیو زوان، که لیانگ نا و لیانگ جی در ۱۴۵ بر تخت نشاندندش؛ در ۱۴۶ درگذشت.",
+      "facts": {
+        "knownFor": "زیر چیرگی خاندان لیانگ فرمان راند."
+      }
+    },
+    "person-han-huandi": {
+      "label": "امپراتور هوان",
+      "summary": "لیو جی، امپراتور از ۱۴۶ تا ۱۶۸، که در ۱۵۹ لیانگ جی را برانداخت و از راه خواجگان نزدیکش فرمان راند؛ در ۱۶۶ کسانی که خود را فرستادگان امپراتوری روم می‌خواندند به دربارش آمدند.",
+      "facts": {
+        "knownFor": "فرستادگانی را پذیرفت که خود را از روم می‌خواندند."
+      }
+    },
+    "person-han-lingdi": {
+      "label": "امپراتور لینگ",
+      "summary": "لیو هونگ، امپراتور از ۱۶۸ تا ۱۸۹؛ خواجگان بر دربارش چیره بودند و دستاربندان زرد در ۱۸۴ شوریدند.",
+      "facts": {
+        "knownFor": "در زمان شورش دستاربندان زرد فرمان راند."
+      }
+    },
+    "person-han-shaodi-liu-bian": {
+      "label": "امپراتور کوچک، لیو بیان",
+      "summary": "پسر ملکهٔ مادر هه، که در ۱۸۹ بر تخت نشست و همان سال سردار دونگ جوئو او را به سود برادر ناتنی‌اش لیو شیه برکنار کرد؛ در ۱۹۰ درگذشت.",
+      "facts": {
+        "knownFor": "دونگ جوئو او را برکنار کرد."
+      }
+    },
+    "person-han-xiandi": {
+      "label": "امپراتور شیان",
+      "summary": "لیو شیه، واپسین امپراتور هان، از ۱۸۹ تا ۲۲۰: نخست بازیچهٔ دونگ جوئو و سپس کائو کائو، در ۲۲۰ به سود کائو پی کناره گرفت و تا ۲۳۴ با لقب دوک شانیانگ زیست.",
+      "facts": {
+        "knownFor": "واپسین امپراتور هان."
+      }
+    },
+    "person-cao-cao": {
+      "label": "کائو کائو",
+      "summary": "سرداری در پایان هان که با سرکوب دستاربندان زرد برآمد، امپراتور را در دست گرفت و شمال را با نام پادشاهی وی فرمان راند؛ «داستان سه پادشاهی» او را نمونهٔ تبهکار ساخت.",
+      "facts": {
+        "knownFor": "به نام واپسین امپراتور هان بر شمال فرمان راند."
+      }
+    },
+    "person-cao-pi": {
+      "label": "کائو پی",
+      "summary": "پسر کائو کائو، که در ۲۲۰ کناره‌گیری واپسین امپراتور هان را پذیرفت و نخستین امپراتور دودمان وی شد، دودمانی که هرگز بیش از شمال را نداشت.",
+      "facts": {
+        "knownFor": "نخستین امپراتور وی."
+      }
+    },
+    "person-liu-bei": {
+      "label": "لیو بی",
+      "summary": "سرداری که خود را از تبار امپراتوران هان می‌دانست و پس از ۲۲۰ دودمان شو-هان را در سیچوان بنیاد نهاد؛ از قهرمانان «داستان سه پادشاهی».",
+      "facts": {
+        "knownFor": "بنیادگذار شو-هان."
+      }
+    },
+    "person-sun-quan": {
+      "label": "سون چوان",
+      "summary": "بنیادگذار و نخستین امپراتور وو، امپراتور از ۲۲۲ تا ۲۵۱، که پایتختش جیان‌یه نانجینگ شد.",
+      "facts": {
+        "knownFor": "نخستین امپراتور وو."
+      }
+    },
+    "person-jin-wudi": {
+      "label": "ووـدی جین (سیما یان)",
+      "summary": "نیرومندترین سردار وی، که در ۲۶۵ تخت آن را گرفت و نخستین امپراتور جین باختری شد و در ۲۸۰ وو را گشود و چین را دوباره یکپارچه کرد؛ پس از مرگش دودمانش در جنگ هشت شاه از هم پاشید.",
+      "facts": {
+        "knownFor": "چین را در ۲۸۰ یکپارچه کرد."
+      }
+    },
+    "person-wei-xiaowendi": {
+      "label": "شیائو‌ون‌دی وی شمالی",
+      "summary": "هفتمین امپراتور وی شمالی، از ۴۷۱ (نخست زیر فرمان مادربزرگش) تا ۴۹۹؛ پایتخت را به لوئویانگ برد، چینی را زبان دربار کرد و در ۴۸۵ نظام زمین‌های برابر را برقرار ساخت.",
+      "facts": {
+        "knownFor": "نظام زمین‌های برابر را برقرار کرد."
+      }
+    },
+    "person-liang-wudi": {
+      "label": "ووـدی لیانگ",
+      "summary": "نخستین امپراتور لیانگ جنوبی، که از ۵۰۲ تا ۵۴۹ فرمان راند؛ پشتیبان بزرگ بوداگری، که در پادشاهی درازش دودمان‌های جنوبی به اوج شکوفایی فرهنگی رسیدند.",
+      "facts": {
+        "knownFor": "پشتیبان بوداگری."
+      }
+    },
+    "dynasty-wei": {
+      "label": "وی",
+      "summary": "شمالی‌ترین سه پادشاهی، که کائو پی در ۲۲۰ با کناره‌گیری واپسین امپراتور هان اعلام کرد؛ در ۲۶۳/۲۶۴ شو-هان را گشود و در ۲۶۵/۲۶۶ خاندان سیما آن را برانداخت."
+    },
+    "office-wei-emperor": {
+      "label": "امپراتور وی",
+      "summary": "تخت وی."
+    },
+    "dynasty-shu-han": {
+      "label": "شو-هان",
+      "summary": "پادشاهی لیو بی در سیچوان، یکی از سه پادشاهی، که نام هان را نگه داشت؛ وی آن را در ۲۶۳/۲۶۴ گشود."
+    },
+    "office-shu-han-emperor": {
+      "label": "امپراتور شو-هان",
+      "summary": "تخت شو-هان."
+    },
+    "dynasty-wu": {
+      "label": "وو",
+      "summary": "پادشاهی سون چوان در جنوب یانگ‌تسه با پایتخت جیان‌یه، یکی از سه پادشاهی؛ تا آنکه جین در ۲۸۰ آن را گرفت پایید."
+    },
+    "office-wu-emperor": {
+      "label": "امپراتور وو",
+      "summary": "تخت وو."
+    },
+    "dynasty-jin": {
+      "label": "جین",
+      "summary": "دودمان خاندان سیما: جین باختری از ۲۶۵ تا ۳۱۶/۳۱۷، که در ۲۸۰ چین را یکپارچه کرد، و جین خاوری در جیان‌کانگ از ۳۱۷ تا ۴۲۰."
+    },
+    "office-jin-emperor": {
+      "label": "امپراتور جین",
+      "summary": "تخت جین."
+    },
+    "dynasty-northern-wei": {
+      "label": "وی شمالی",
+      "summary": "کشور توبا، از سیانبی، که شمال چین را یکپارچه کرد و در کمتر از یک سده بیشتر چینی شد؛ بریتانیکا آن را ۳۸۶ تا ۵۳۴/۵۳۵ می‌داند."
+    },
+    "office-northern-wei-emperor": {
+      "label": "امپراتور وی شمالی",
+      "summary": "تخت وی شمالی."
+    },
+    "dynasty-sui": {
+      "label": "سویی",
+      "summary": "دودمانی کوتاه‌عمر، از ۵۸۱ تا ۶۱۸، که چین را پس از چهار سده گسستگی یکپارچه کرد؛ پایتختش داشینگ بود که بعدها چانگ‌آن خوانده شد."
+    },
+    "office-sui-emperor": {
+      "label": "امپراتور سویی",
+      "summary": "تخت سویی."
+    },
+    "dynasty-tang": {
+      "label": "تانگ",
+      "summary": "دودمانی که پس از سویی آمد، از ۶۱۸ تا ۹۰۷، که اغلب روزگار زرینش می‌خوانند، با پایتخت‌های چانگ‌آن و لوئویانگ؛ قلمروش از کره تا افغانستان امروز می‌رسید."
+    },
+    "office-tang-emperor": {
+      "label": "امپراتور تانگ",
+      "summary": "تخت تانگ."
+    },
+    "dynasty-liang": {
+      "label": "لیانگ جنوبی",
+      "summary": "یکی از دودمان‌های جنوبی در جیان‌کانگ، از ۵۰۲ تا ۵۵۷."
+    },
+    "office-liang-emperor": {
+      "label": "امپراتور لیانگ جنوبی",
+      "summary": "تخت لیانگ جنوبی."
+    },
+    "period-three-kingdoms": {
+      "label": "سه پادشاهی",
+      "summary": "وی، شو-هان و وو، که پس از فروپاشی هان چین را میان خود بخش کردند؛ بریتانیکا این دوره را ۲۲۰ تا ۲۸۰، تا سقوط وو، و Asia for Educators ۲۲۰ تا ۲۶۵ می‌داند."
+    },
+    "period-western-jin": {
+      "label": "جین باختری",
+      "summary": "روزگاری کوتاه از آرامش نسبی پس از سه پادشاهی، که با سقوط لوئویانگ در ۳۱۱ و چانگ‌آن در ۳۱۶ پایان یافت."
+    },
+    "period-sixteen-kingdoms": {
+      "label": "شانزده پادشاهی",
+      "summary": "کشورهای کوتاه‌عمر غیرچینی که از ۳۰۳ تا یکپارچگی شمال به دست وی شمالی در ۴۳۹ بر شمال چین فرمان راندند."
+    },
+    "period-eastern-jin": {
+      "label": "جین خاوری",
+      "summary": "دربار جین که یکی از خاندان امپراتوری در ۳۱۷ در جیان‌کانگ برپا کرد، و تا ۴۲۰ خاندان‌های بزرگ جنوب بر آن چیره بودند."
+    },
+    "period-southern-dynasties": {
+      "label": "دودمان‌های جنوبی",
+      "summary": "لیو-سونگ، چی جنوبی، لیانگ جنوبی و چن جنوبی، که از ۴۲۰ تا برانداختن واپسینشان به دست سویی در ۵۸۹ از جیان‌کانگ بر جنوب فرمان راندند."
+    },
+    "period-northern-wei": {
+      "label": "وی شمالی",
+      "summary": "کشور توبا در شمال؛ بریتانیکا آن را ۳۸۶ تا ۵۳۴/۵۳۵ و Asia for Educators ۳۸۶ تا ۵۳۵ می‌داند، و اسمیتسونین می‌گوید در ۴۳۹ همهٔ شمال چین را زیر فرمان آورد."
+    },
+    "period-sui": {
+      "label": "سویی",
+      "summary": "یکپارچگی چین زیر فرمان سویی، از ۵۸۱ تا ۶۱۸."
+    },
+    "period-tang": {
+      "label": "تانگ",
+      "summary": "فرمانروایی تانگ، از ۶۱۸ تا ۹۰۷؛ این مجموعه آن را تا ۷۰۵ دنبال می‌کند."
+    },
+    "person-sui-wendi": {
+      "label": "ون‌دی سویی (یانگ جیان)",
+      "summary": "دیوان‌سالار بلندپایهٔ جوی شمالی که در ۵۸۱ تخت را گرفت، سویی را بنیاد نهاد و تا ۵۸۹ بر چینی یکپارچه فرمان راند؛ نهادهای یکسان، قانونی نو و سرشماری به کشور داد.",
+      "facts": {
+        "knownFor": "چین را یکپارچه کرد."
+      }
+    },
+    "person-sui-yangdi": {
+      "label": "یانگ‌دی سویی",
+      "summary": "پسر ون‌دی و دومین امپراتور سویی، از ۶۰۴ تا ۶۱۷/۶۱۸؛ پایتخت دومی در لوئویانگ ساخت و آبراه بزرگ را آغاز کرد، و پس از سه لشکرکشی شکست‌خورده به کره در ۶۱۸ کشته شد.",
+      "facts": {
+        "knownFor": "آبراه بزرگ را آغاز کرد."
+      }
+    },
+    "person-tang-gaozu": {
+      "label": "گائوزو تانگ (لی یوان)",
+      "summary": "دیوان‌سالار سویی که در ۶۱۷ شورید، چانگ‌آن را گرفت و در ۶۱۸ تانگ را اعلام کرد؛ در ۶۲۶ به سود پسرش لی شی‌مین کناره گرفت.",
+      "facts": {
+        "knownFor": "بنیادگذار تانگ."
+      }
+    },
+    "person-tang-taizong": {
+      "label": "تای‌زونگ تانگ (لی شی‌مین)",
+      "summary": "پسر دوم گائوزو، که در ۶۲۶ دو برادرش را کنار دروازهٔ شوان‌وو کشت و تخت را گرفت؛ تا ۶۴۹ امپراتور بود و آزمون‌ها و دامنهٔ چین را به باختر گسترش داد.",
+      "facts": {
+        "knownFor": "از بزرگ‌ترین امپراتوران چین."
+      }
+    },
+    "person-tang-gaozong": {
+      "label": "گائوزونگ تانگ",
+      "summary": "پسر تای‌زونگ و امپراتور از ۶۴۹ تا ۶۸۳، که در ۶۶۸ کره را دست‌نشانده کرد؛ در سال‌های پایانی‌اش همسرش وو جائو بر او چیره بود.",
+      "facts": {
+        "knownFor": "کره را دست‌نشانده کرد."
+      }
+    },
+    "person-wuhou": {
+      "label": "ووهو (وو جائو)",
+      "summary": "همسری که در ۶۵۵ ملکهٔ گائوزونگ شد، پس از مرگش از راه بازیچه‌ها فرمان راند و از ۶۹۰ به نام خود، تا آنکه وزیرانش در ۷۰۵ او را به کناره‌گیری واداشتند.",
+      "facts": {
+        "knownFor": "به نام خود بر چین فرمان راند."
+      }
+    },
+    "person-tang-zhongzong": {
+      "label": "جونگ‌زونگ تانگ",
+      "summary": "پسر ووهو، که او را در ۶۸۳ یک ماه پس از بر تخت نشستنش برکنار کرد و در ۷۰۵، با کناره‌گیری ووهو، دوباره بر تخت نشست؛ تا ۷۱۰ فرمان راند.",
+      "facts": {
+        "knownFor": "مادرش او را برکنار کرد."
+      }
+    },
+    "person-xuanzang": {
+      "label": "شوان‌زانگ",
+      "summary": "راهبی بودایی که در ۶۲۹ به هند رفت، در نالاندا درس خواند و در ۶۴۵ بازگشت تا نوشته‌های مقدسی را که آورده بود برگرداند؛ گزارش سفرش سرچشمه‌ای برای آسیای میانه و هند است.",
+      "facts": {
+        "knownFor": "زائر هند."
+      }
+    },
+    "place-jiankang": {
+      "label": "جیان‌کانگ (نانجینگ)",
+      "summary": "پایتخت وو با نام جیان‌یه، که در زمان جین جیان‌کانگ نام گرفت؛ از ۳۱۷ بیش از ۲۵۰ سال پایتخت جین خاوری و دودمان‌های جنوبی، نانجینگ امروز."
+    },
+    "event-qiang-rebellion": {
+      "label": "شورش بزرگ چیانگ",
+      "summary": "شورش سپاهیان کمکی در شمال باختری در ۱۰۷ به شورش همه‌جانبهٔ چیانگ‌ها در درون چین بدل شد که تا ۱۱۸ پایید."
+    },
+    "event-roman-envoys-166": {
+      "label": "فرستادگان روم در دربار هان",
+      "summary": "در ۱۶۶ کسانی که خود را فرستادگان امپراتوری روم می‌خواندند به دربار امپراتور هوان آمدند."
+    },
+    "event-yellow-turbans": {
+      "label": "شورش دستاربندان زرد",
+      "summary": "در بهار ۱۸۴ دستاربندان زرد، فرقه‌ای مردمی به رهبری جانگ جوئه، شوریدند و شمال و خاور را ویران کردند؛ جنگ‌سالاری پس از آن هان را به پایان برد."
+    },
+    "event-dong-zhuo-takes-power": {
+      "label": "دونگ جوئو قدرت را می‌گیرد",
+      "summary": "در ۱۸۹ خواجگان و سردار هه جین یکدیگر را در لوئویانگ نابود کردند؛ سردار دونگ جوئو قدرت را گرفت، لیو بیان را برکنار کرد و در ۱۹۰ پایتخت را به چانگ‌آن برد."
+    },
+    "event-battle-of-guandu": {
+      "label": "نبرد گوان‌دو",
+      "summary": "در ۲۰۰ یوان شائو به کائو کائو تاخت و در گوان‌دو شکست خورد."
+    },
+    "event-red-cliffs": {
+      "label": "نبرد صخره‌های سرخ",
+      "summary": "در ۲۰۸ کائو کائو که شمال چین را گرفته بود، در صخره‌های سرخ کنار یانگ‌تسه از سپاهیان سون چوان و لیو بی شکست خورد."
+    },
+    "event-end-of-han": {
+      "label": "پایان هان",
+      "summary": "در زمستان ۲۲۰ امپراتور شیان به سود کائو پی کناره گرفت و او خود را امپراتور دودمان وی اعلام کرد."
+    },
+    "event-wei-conquers-shu": {
+      "label": "وی شو-هان را می‌گشاید",
+      "summary": "وی پادشاهی شو-هان را در ۲۶۳/۲۶۴ گشود."
+    },
+    "event-jin-reunifies-china": {
+      "label": "جین چین را یکپارچه می‌کند",
+      "summary": "در ۲۸۰ سپاهیان جین سیما یان وو، واپسین سه پادشاهی، را گرفتند و چین به نام یکپارچه شد."
+    },
+    "event-fall-of-luoyang-311": {
+      "label": "سقوط لوئویانگ",
+      "summary": "در ۳۱۱ سپاهیان سیونگ‌نو که لیو یوان به شمال چین آورده بود لوئویانگ را گرفتند و ویران کردند."
+    },
+    "event-fall-of-changan-316": {
+      "label": "سقوط چانگ‌آن",
+      "summary": "سقوط چانگ‌آن در ۳۱۶ فرمانروایی دودمان‌های چینی را در شمال برای سده‌ها پایان داد."
+    },
+    "event-eastern-jin-at-jiankang": {
+      "label": "دربار جین در جیان‌کانگ",
+      "summary": "در ۳۱۷ یکی از خاندان امپراتوری جین درباری از پناهندگان در جیان‌کانگ برپا کرد، و این آغاز جین خاوری بود."
+    },
+    "event-northern-wei-unifies-north": {
+      "label": "وی شمالی شمال را یکپارچه می‌کند",
+      "summary": "در ۴۳۹ وی شمالی همهٔ شمال چین را زیر فرمان آورد و دورهٔ شانزده پادشاهی را پایان داد."
+    },
+    "event-equal-field-system": {
+      "label": "نظام زمین‌های برابر",
+      "summary": "در ۴۸۵ شیائو‌ون‌دی وی شمالی نظام زمین‌های برابر را برقرار کرد که به هر خانوادهٔ کشاورز زمینی می‌داد."
+    },
+    "event-northern-zhou-reunifies-north": {
+      "label": "جوی شمالی شمال را یکپارچه می‌کند",
+      "summary": "پس از آنکه وی اندکی پس از ۵۲۰ از هم پاشید، جوی شمالی در ۵۷۷ شمال چین را دوباره یکپارچه کرد."
+    },
+    "event-sui-reunifies-china": {
+      "label": "سویی چین را یکپارچه می‌کند",
+      "summary": "در ۵۸۹ یانگ جیان از یانگ‌تسه گذشت و واپسین دودمان جنوبی را در جیان‌کانگ برانداخت و چین را پس از نزدیک به چهار سده زیر یک دولت یکپارچه کرد."
+    },
+    "event-grand-canal": {
+      "label": "آغاز آبراه بزرگ",
+      "summary": "در ۶۰۸ یانگ‌دی آبراهی بزرگ میان جنوبِ برنج‌خیز و پیرامون پکن ساخت و در ۶۱۰ آن را گسترش داد و شبکهٔ آبراه بزرگ را آغاز کرد."
+    },
+    "event-sui-korean-wars": {
+      "label": "لشکرکشی‌های سویی به کره",
+      "summary": "سه لشکرکشی یانگ‌دی به کره میان ۶۱۲ و ۶۱۴ با شکست پایان یافت و به شورش‌ها انجامید."
+    },
+    "event-tang-founded": {
+      "label": "اعلام تانگ",
+      "summary": "لی یوان در ۶۱۷ شورید، چانگ‌آن را گرفت و در ۶۱۸ دودمان تانگ را اعلام کرد."
+    },
+    "event-xuanwu-gate": {
+      "label": "رویداد دروازهٔ شوان‌وو",
+      "summary": "در ۶۲۶ لی شی‌مین دو برادرش را کنار دروازهٔ شوان‌وو کاخ در کمین کشت؛ دو ماه بعد پدرش به سود او کناره گرفت."
+    },
+    "event-xuanzang-journey": {
+      "label": "سفر شوان‌زانگ به هند",
+      "summary": "راهب شوان‌زانگ در ۶۲۹ به هند رفت و در ۶۴۵ با نوشته‌های مقدسی که گرد آورده بود به چین بازگشت."
+    },
+    "event-korea-vassal-668": {
+      "label": "دست‌نشانده شدن کره",
+      "summary": "گائوزونگ با پی گرفتن لشکرکشی‌های پدرش شبه‌جزیرهٔ کره را گشود و در ۶۶۸ کره را دست‌نشانده کرد."
+    },
+    "event-wuhou-takes-throne": {
+      "label": "ووهو بر تخت می‌نشیند",
+      "summary": "وو جائو که از مرگ گائوزونگ در ۶۸۳ از راه بازیچه‌ها فرمان رانده بود، در ۶۹۰ خود تخت را گرفت."
+    },
+    "event-wuhou-abdicates": {
+      "label": "کناره‌گیری ووهو",
+      "summary": "در ۷۰۵ وزیران و سرداران ووهو کاخ را گرفتند و او را به کناره‌گیری به سود پسرش جونگ‌زونگ واداشتند."
     }
   },
   "relations": {
@@ -848,6 +1219,390 @@
     },
     "relation-ban-chao-participant-in-expedition-against-xiongnu": {
       "label": "شرکت در"
+    },
+    "relation-han-shangdi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-shangdi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-shangdi-successor-of-han-hedi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-andi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-andi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-andi-successor-of-han-shangdi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-shaodi-liu-yi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-shaodi-liu-yi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-shaodi-liu-yi-successor-of-han-andi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-shundi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-shundi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-shundi-successor-of-han-shaodi-liu-yi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-chongdi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-chongdi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-chongdi-successor-of-han-shundi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-zhidi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-zhidi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-zhidi-successor-of-han-chongdi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-huandi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-huandi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-huandi-successor-of-han-zhidi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-lingdi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-lingdi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-lingdi-successor-of-han-huandi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-shaodi-liu-bian-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-shaodi-liu-bian-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-shaodi-liu-bian-successor-of-han-lingdi": {
+      "label": "جانشینِ"
+    },
+    "relation-han-xiandi-holder-of-eastern-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-han-xiandi-member-of-eastern-han": {
+      "label": "از خاندانِ"
+    },
+    "relation-han-xiandi-successor-of-han-shaodi-liu-bian": {
+      "label": "جانشینِ"
+    },
+    "relation-han-andi-parent-of-han-shundi": {
+      "label": "پدرِ"
+    },
+    "relation-han-shundi-parent-of-han-chongdi": {
+      "label": "پدرِ"
+    },
+    "relation-han-shaodi-liu-bian-sibling-of-han-xiandi": {
+      "label": "برادر ناتنیِ"
+    },
+    "relation-cao-pi-founder-of-wei": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-liu-bei-founder-of-shu-han": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-sun-quan-founder-of-wu": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-jin-wudi-founder-of-jin": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-sui-wendi-founder-of-sui": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-tang-gaozu-founder-of-tang": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-cao-pi-holder-of-wei-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-liu-bei-holder-of-shu-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-sun-quan-holder-of-wu-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-jin-wudi-holder-of-jin-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-wei-xiaowendi-holder-of-northern-wei-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-cao-cao-parent-of-cao-pi": {
+      "label": "پدرِ"
+    },
+    "relation-cao-pi-successor-of-han-xiandi": {
+      "label": "تخت را گرفت از"
+    },
+    "relation-jin-wudi-member-of-jin": {
+      "label": "از خاندانِ"
+    },
+    "relation-wei-xiaowendi-member-of-northern-wei": {
+      "label": "از خاندانِ"
+    },
+    "relation-liang-wudi-holder-of-liang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-liang-wudi-founder-of-liang": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-sui-wendi-holder-of-sui-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-sui-yangdi-holder-of-sui-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-gaozu-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-taizong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-gaozong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-wuhou-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-zhongzong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-zhongzong-holder-of-tang-emperor-2": {
+      "label": "امپراتور"
+    },
+    "relation-sui-wendi-member-of-sui": {
+      "label": "از خاندانِ"
+    },
+    "relation-sui-yangdi-member-of-sui": {
+      "label": "از خاندانِ"
+    },
+    "relation-tang-gaozu-member-of-tang": {
+      "label": "از خاندانِ"
+    },
+    "relation-tang-taizong-member-of-tang": {
+      "label": "از خاندانِ"
+    },
+    "relation-tang-gaozong-member-of-tang": {
+      "label": "از خاندانِ"
+    },
+    "relation-wuhou-member-of-tang": {
+      "label": "از خاندانِ"
+    },
+    "relation-sui-wendi-parent-of-sui-yangdi": {
+      "label": "پدرِ"
+    },
+    "relation-tang-gaozu-parent-of-tang-taizong": {
+      "label": "پدرِ"
+    },
+    "relation-tang-taizong-parent-of-tang-gaozong": {
+      "label": "پدرِ"
+    },
+    "relation-tang-gaozong-spouse-of-wuhou": {
+      "label": "همسر"
+    },
+    "relation-wuhou-parent-of-tang-zhongzong": {
+      "label": "مادرِ"
+    },
+    "relation-sui-yangdi-successor-of-sui-wendi": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-gaozu-successor-of-sui-yangdi": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-taizong-successor-of-tang-gaozu": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-gaozong-successor-of-tang-taizong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-successor-of-sui": {
+      "label": "جانشینِ"
+    },
+    "relation-wei-successor-of-eastern-han": {
+      "label": "جانشینِ"
+    },
+    "relation-jin-successor-of-wei": {
+      "label": "جانشینِ"
+    },
+    "relation-jiankang-capital-of-wu": {
+      "label": "پایتختِ"
+    },
+    "relation-changan-capital-of-tang": {
+      "label": "پایتختِ"
+    },
+    "relation-luoyang-capital-of-tang": {
+      "label": "پایتخت دومِ"
+    },
+    "relation-han-andi-participant-in-qiang-rebellion": {
+      "label": "شرکت در"
+    },
+    "relation-han-huandi-participant-in-roman-envoys-166": {
+      "label": "شرکت در"
+    },
+    "relation-roman-envoys-166-took-place-in-luoyang": {
+      "label": "رخ داد در"
+    },
+    "relation-han-lingdi-participant-in-yellow-turbans": {
+      "label": "شرکت در"
+    },
+    "relation-han-shaodi-liu-bian-participant-in-dong-zhuo-takes-power": {
+      "label": "شرکت در"
+    },
+    "relation-han-xiandi-participant-in-dong-zhuo-takes-power": {
+      "label": "شرکت در"
+    },
+    "relation-dong-zhuo-takes-power-took-place-in-luoyang": {
+      "label": "رخ داد در"
+    },
+    "relation-cao-cao-participant-in-battle-of-guandu": {
+      "label": "شرکت در"
+    },
+    "relation-cao-cao-participant-in-red-cliffs": {
+      "label": "شرکت در"
+    },
+    "relation-sun-quan-participant-in-red-cliffs": {
+      "label": "شرکت در"
+    },
+    "relation-liu-bei-participant-in-red-cliffs": {
+      "label": "شرکت در"
+    },
+    "relation-han-xiandi-participant-in-end-of-han": {
+      "label": "شرکت در"
+    },
+    "relation-cao-pi-participant-in-end-of-han": {
+      "label": "شرکت در"
+    },
+    "relation-wei-conquers-shu-during-three-kingdoms": {
+      "label": "در دورهٔ"
+    },
+    "relation-jin-wudi-participant-in-jin-reunifies-china": {
+      "label": "شرکت در"
+    },
+    "relation-jin-reunifies-china-during-western-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-fall-of-luoyang-311-took-place-in-luoyang": {
+      "label": "رخ داد در"
+    },
+    "relation-fall-of-luoyang-311-during-western-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-fall-of-changan-316-took-place-in-changan": {
+      "label": "رخ داد در"
+    },
+    "relation-fall-of-changan-316-during-western-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-eastern-jin-at-jiankang-took-place-in-jiankang": {
+      "label": "رخ داد در"
+    },
+    "relation-eastern-jin-at-jiankang-during-eastern-jin": {
+      "label": "در دورهٔ"
+    },
+    "relation-northern-wei-unifies-north-during-northern-wei": {
+      "label": "در دورهٔ"
+    },
+    "relation-wei-xiaowendi-participant-in-equal-field-system": {
+      "label": "شرکت در"
+    },
+    "relation-equal-field-system-during-northern-wei": {
+      "label": "در دورهٔ"
+    },
+    "relation-sui-wendi-participant-in-sui-reunifies-china": {
+      "label": "شرکت در"
+    },
+    "relation-sui-reunifies-china-took-place-in-jiankang": {
+      "label": "رخ داد در"
+    },
+    "relation-sui-reunifies-china-during-sui": {
+      "label": "در دورهٔ"
+    },
+    "relation-sui-yangdi-participant-in-grand-canal": {
+      "label": "شرکت در"
+    },
+    "relation-grand-canal-during-sui": {
+      "label": "در دورهٔ"
+    },
+    "relation-sui-yangdi-participant-in-sui-korean-wars": {
+      "label": "شرکت در"
+    },
+    "relation-sui-korean-wars-during-sui": {
+      "label": "در دورهٔ"
+    },
+    "relation-tang-gaozu-participant-in-tang-founded": {
+      "label": "شرکت در"
+    },
+    "relation-tang-founded-took-place-in-changan": {
+      "label": "رخ داد در"
+    },
+    "relation-tang-founded-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-tang-taizong-participant-in-xuanwu-gate": {
+      "label": "شرکت در"
+    },
+    "relation-tang-gaozu-participant-in-xuanwu-gate": {
+      "label": "شرکت در"
+    },
+    "relation-xuanwu-gate-took-place-in-changan": {
+      "label": "رخ داد در"
+    },
+    "relation-xuanwu-gate-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-xuanzang-participant-in-xuanzang-journey": {
+      "label": "شرکت در"
+    },
+    "relation-xuanzang-journey-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-tang-gaozong-participant-in-korea-vassal-668": {
+      "label": "شرکت در"
+    },
+    "relation-korea-vassal-668-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-wuhou-participant-in-wuhou-takes-throne": {
+      "label": "شرکت در"
+    },
+    "relation-wuhou-takes-throne-during-tang": {
+      "label": "در دورهٔ"
+    },
+    "relation-wuhou-participant-in-wuhou-abdicates": {
+      "label": "شرکت در"
+    },
+    "relation-tang-zhongzong-participant-in-wuhou-abdicates": {
+      "label": "شرکت در"
+    },
+    "relation-wuhou-abdicates-took-place-in-luoyang": {
+      "label": "رخ داد در"
+    },
+    "relation-wuhou-abdicates-during-tang": {
+      "label": "در دورهٔ"
     }
   }
 }
