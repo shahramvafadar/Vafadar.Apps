@@ -1,0 +1,2483 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "zal-and-rudabeh",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-zal-rudabeh",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-27",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-zal-and-rudabeh-2026-11-27",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the reign of Manuchehr, sections 2 to 27.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/manoochehr",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "From the birth of Zal to Sam’s visit to the young Rostam and his departure; Manuchehr’s accession and death are not part of it.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "The white-haired child"
+      },
+      {
+        "level": 1,
+        "label": "Love in Kabul"
+      },
+      {
+        "level": 2,
+        "label": "The secret is out"
+      },
+      {
+        "level": 3,
+        "label": "The king's command"
+      },
+      {
+        "level": 4,
+        "label": "Riddles and a wedding"
+      },
+      {
+        "level": 5,
+        "label": "The birth of Rostam"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-manoochehr-index",
+      "title": "Ganjoor: the reign of Manuchehr, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s02",
+      "title": "Ganjoor: بخش ۲ - داستان زاده شدن زال نوزاد سپیدموی سام",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲ - داستان زاده شدن زال نوزاد سپیدموی سام"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s03",
+      "title": "Ganjoor: بخش ۳ - بازگشت زال از پیش سیمرغ و بزرگداشت او",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳ - بازگشت زال از پیش سیمرغ و بزرگداشت او"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s04",
+      "title": "Ganjoor: بخش ۴ - سفر سام و زال به کابل و عاشق شدن زال بر دختر مهراب",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۴ - سفر سام و زال به کابل و عاشق شدن زال بر دختر مهراب"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s05",
+      "title": "Ganjoor: بخش ۵ - گفتگوی مهراب و سیندخت دربارهٔ سام و زال و عاشق شدن رودابه ندیده زال را",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۵ - گفتگوی مهراب و سیندخت دربارهٔ سام و زال و عاشق شدن رودابه ندیده زال را"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s06",
+      "title": "Ganjoor: بخش ۶ - راز عاشقی گفتن رودابه با ندیمه‌هایش",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۶ - راز عاشقی گفتن رودابه با ندیمه‌هایش"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s07",
+      "title": "Ganjoor: بخش ۷ - رفتن پنج ندیمهٔ رودابه به باغ سام و وصف کردن زیبایی رودابه سام را",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۷ - رفتن پنج ندیمهٔ رودابه به باغ سام و وصف کردن زیبایی رودابه سام را"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s08",
+      "title": "Ganjoor: بخش ۸ - بازگشت ندیمه‌ها و شرح ماجرا برای رودابه",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۸ - بازگشت ندیمه‌ها و شرح ماجرا برای رودابه"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s09",
+      "title": "Ganjoor: بخش ۹ - رفتن زال به دیدار رودابه و انداختن رودابه کمند گیسو زال را",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۹ - رفتن زال به دیدار رودابه و انداختن رودابه کمند گیسو زال را"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s10",
+      "title": "Ganjoor: بخش ۱۰ - نامهٔ زال به پدرش و درخواست اجازه برای وصلت با رودابه",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۰ - نامهٔ زال به پدرش و درخواست اجازه برای وصلت با رودابه"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s11",
+      "title": "Ganjoor: بخش ۱۱ - انجمن کردن سام با موبدان پیرامون نامهٔ زال و پیش‌بینی موبدان مبنی بر زاده شدن پهلوانی بی‌مانند از رودابه برای زال",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۱ - انجمن کردن سام با موبدان پیرامون نامهٔ زال و پیش‌بینی موبدان مبنی بر زاده شدن پهلوانی بی‌مانند از رودابه برای زال"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s12",
+      "title": "Ganjoor: بخش ۱۲ - آگاه شدن سیندخت از ماجرا و خشم گرفتن بر فرستاده و پرس و جوی چند و چون و کیستی خواستگار از رودابه",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۲ - آگاه شدن سیندخت از ماجرا و خشم گرفتن بر فرستاده و پرس و جوی چند و چون و کیستی خواستگار از رودابه"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s13",
+      "title": "Ganjoor: بخش ۱۳ - آگاه شدن مهراب از داستان و خشم گرفتن او بر سیندخت و رودابه",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh13",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۳ - آگاه شدن مهراب از داستان و خشم گرفتن او بر سیندخت و رودابه"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s14",
+      "title": "Ganjoor: بخش ۱۴ - حاضر شدن سام به درگاه منوچهر شاه و شرح نبردهایش در هندوستان و فرمان یافتن سوزاندن هندوستان و کابل را",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۴ - حاضر شدن سام به درگاه منوچهر شاه و شرح نبردهایش در هندوستان و فرمان یافتن سوزاندن هندوستان و کابل را"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s15",
+      "title": "Ganjoor: بخش ۱۵ - رفتن زال نزد سام، شکایت از پدر و نوشتن نامهٔ شفاعت به شاه",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh15",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۵ - رفتن زال نزد سام، شکایت از پدر و نوشتن نامهٔ شفاعت به شاه"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s16",
+      "title": "Ganjoor: بخش ۱۶ - خشم مهراب بر سیندخت و رودابه و چاره‌اندیشی سیندخت برای رفتن نزد سام با گنج",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh16",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۶ - خشم مهراب بر سیندخت و رودابه و چاره‌اندیشی سیندخت برای رفتن نزد سام با گنج"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s17",
+      "title": "Ganjoor: بخش ۱۷ - آمدن سیندخت نزد سام با هدایا و شفاعت برای کابل و پذیرش وصلت زال و رودابه",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh17",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۷ - آمدن سیندخت نزد سام با هدایا و شفاعت برای کابل و پذیرش وصلت زال و رودابه"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s18",
+      "title": "Ganjoor: بخش ۱۸ - آمدن زال نزد منوچهر با نامهٔ سام و پذیرش خواستهٔ او",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh18",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۸ - آمدن زال نزد منوچهر با نامهٔ سام و پذیرش خواستهٔ او"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s19",
+      "title": "Ganjoor: بخش ۱۹ - انجمن کردن منوچهر با موبدان و ستاره‌شناسان و پیش‌بینی زاده شدن پهلوان از زال و رودابه",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh19",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۹ - انجمن کردن منوچهر با موبدان و ستاره‌شناسان و پیش‌بینی زاده شدن پهلوان از زال و رودابه"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s20",
+      "title": "Ganjoor: بخش ۲۰ - آزمون خرد زال با معماهای موبدان در دربار منوچهر",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh20",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۲۰ - آزمون خرد زال با معماهای موبدان در دربار منوچهر"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s21",
+      "title": "Ganjoor: بخش ۲۱ - پاسخ زال به معماهای موبدان، هنرنمایی در میدان و دریافت خلعت از منوچهر",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh21",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۲۱ - پاسخ زال به معماهای موبدان، هنرنمایی در میدان و دریافت خلعت از منوچهر"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s22",
+      "title": "Ganjoor: بخش ۲۲ - پاسخ نامهٔ منوچهر به سام، بازگشت زال با خلعت و آراستن کابل برای جشن وصلت",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh22",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۲۲ - پاسخ نامهٔ منوچهر به سام، بازگشت زال با خلعت و آراستن کابل برای جشن وصلت"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s23",
+      "title": "Ganjoor: بخش ۲۳ - بازگشت زال نزد سام، گفتگو دربارهٔ پیمان سیندخت و حرکت به سوی کابل",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh23",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۲۳ - بازگشت زال نزد سام، گفتگو دربارهٔ پیمان سیندخت و حرکت به سوی کابل"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s24",
+      "title": "Ganjoor: بخش ۲۴ - ورود سام و زال به کابل، جشن عروسی زال و رودابه و سپردن پادشاهی به زال",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh24",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۲۴ - ورود سام و زال به کابل، جشن عروسی زال و رودابه و سپردن پادشاهی به زال"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s25",
+      "title": "Ganjoor: بخش ۲۵ - دشوار شدن زایمان رودابه، فراخواندن سیمرغ و زادن رستم از پهلوی مادر",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh25",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۵ - دشوار شدن زایمان رودابه، فراخواندن سیمرغ و زادن رستم از پهلوی مادر"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s26",
+      "title": "Ganjoor: بخش ۲۶ - زادن رستم، نام‌گذاری او، فرستادن پیکرش نزد سام و رشد شگفت‌انگیز کودک",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh26",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۶ - زادن رستم، نام‌گذاری او، فرستادن پیکرش نزد سام و رشد شگفت‌انگیز کودک"
+    },
+    {
+      "id": "src-ganjoor-manoochehr-s27",
+      "title": "Ganjoor: بخش ۲۷ - آمدن سام برای دیدار رستم، جشن و پندهای پدرانه و بازگشت او به باختر",
+      "url": "https://ganjoor.net/ferdousi/shahname/manoochehr/sh27",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۷ - آمدن سام برای دیدار رستم، جشن و پندهای پدرانه و بازگشت او به باختر"
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "Shahnameh",
+      "summary": "The literary work in which the story of Zal and Rudabeh is told.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-zal-rudabeh",
+      "type": "NarrativeArc",
+      "label": "Zal and Rudabeh",
+      "summary": "The story of Zal, the white-haired son of Sam, from his birth onward, in the reign of Manuchehr.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-sam",
+      "type": "Character",
+      "label": "Sam",
+      "summary": "A great hero of Iran, son of Nariman, who long has no child.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Hero of Iran, father of Zal"
+        }
+      ]
+    },
+    {
+      "id": "character-zal-mother",
+      "type": "Character",
+      "label": "The mother of Zal",
+      "summary": "A beloved of Sam in his household, who bears him a son.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of Zal"
+        }
+      ]
+    },
+    {
+      "id": "character-zal",
+      "type": "Character",
+      "label": "Zal",
+      "summary": "The son of Sam, born with white hair; also called Dastan.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Dastan",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Sam"
+        }
+      ]
+    },
+    {
+      "id": "character-nurse-of-zal",
+      "type": "Character",
+      "label": "The nurse",
+      "summary": "A bold nurse of Sam's household who brings him the news of his son.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Nurse in Sam's household"
+        }
+      ]
+    },
+    {
+      "id": "character-simorgh",
+      "type": "AnimalCharacter",
+      "label": "Simorgh",
+      "summary": "A great bird that nests on Mount Alborz.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Bird of Alborz who raises Zal"
+        }
+      ]
+    },
+    {
+      "id": "object-simorgh-feather",
+      "type": "NarrativeObject",
+      "label": "The feather of the Simorgh",
+      "summary": "A feather the Simorgh gives Zal, to be burned in fire if he is ever in need.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-alborz",
+      "type": "NarrativePlace",
+      "label": "Mount Alborz",
+      "summary": "The mountain where the Simorgh has her nest.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "character-manuchehr",
+      "type": "Character",
+      "label": "Manuchehr",
+      "summary": "The king of Iran.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-nowzar",
+      "type": "Character",
+      "label": "Nowzar",
+      "summary": "A prince of the court of Manuchehr whom the king sends to Sam.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Manuchehr"
+        }
+      ]
+    },
+    {
+      "id": "character-qaren",
+      "type": "Character",
+      "label": "Qaren",
+      "summary": "A great man of Manuchehr's court who sits at the king's side.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Noble at the king's side"
+        }
+      ]
+    },
+    {
+      "id": "place-zabulistan",
+      "type": "NarrativeRegion",
+      "label": "Zabulistan",
+      "summary": "The land of Sam, which he entrusts to Zal.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-gorgsaran",
+      "type": "NarrativeRegion",
+      "label": "Gorgsaran",
+      "summary": "A land of enemies against which Sam leads his army.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-mazandaran",
+      "type": "NarrativeRegion",
+      "label": "Mazandaran",
+      "summary": "A land of enemies against which Sam leads his army.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "character-mehrab",
+      "type": "Character",
+      "label": "Mehrab",
+      "summary": "The king of Kabul, of the line of Zahhak, who pays tribute to Sam.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Kabul"
+        }
+      ]
+    },
+    {
+      "id": "character-rudabeh",
+      "type": "Character",
+      "label": "Rudabeh",
+      "summary": "The daughter of Mehrab, renowned for her beauty.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Daughter of Mehrab"
+        }
+      ]
+    },
+    {
+      "id": "character-sindokht",
+      "type": "Character",
+      "label": "Sindokht",
+      "summary": "The wise wife of Mehrab.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s05"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Wife of Mehrab"
+        }
+      ]
+    },
+    {
+      "id": "character-zahhak",
+      "type": "Character",
+      "label": "Zahhak",
+      "summary": "A king of old from whom Mehrab descends.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Forefather of Mehrab"
+        }
+      ]
+    },
+    {
+      "id": "character-maids-of-rudabeh",
+      "type": "Character",
+      "label": "The maids of Rudabeh",
+      "summary": "Five Turkish maids who serve Rudabeh and keep her secret.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s06"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Five maids of Rudabeh"
+        }
+      ]
+    },
+    {
+      "id": "place-kabul",
+      "type": "NarrativeRegion",
+      "label": "Kabul",
+      "summary": "The kingdom of Mehrab.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s04"
+      ],
+      "spoilerLevel": 1
+    },
+    {
+      "id": "character-go-between",
+      "type": "Character",
+      "label": "The go-between",
+      "summary": "A woman who carries messages between Zal and Rudabeh.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s12"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Messenger of the lovers"
+        }
+      ]
+    },
+    {
+      "id": "character-kakuy",
+      "type": "Character",
+      "label": "Kakuy",
+      "summary": "A warrior who leads the enemy army against Sam.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s14"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Enemy warrior"
+        }
+      ]
+    },
+    {
+      "id": "place-kashaf-river",
+      "type": "NarrativePlace",
+      "label": "The Kashaf river",
+      "summary": "A river from which a dragon once came out, as Sam recalls.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s15"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-sistan",
+      "type": "NarrativeRegion",
+      "label": "Sistan",
+      "summary": "The land of Sam's house, also called Nimruz.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s24"
+      ],
+      "spoilerLevel": 4,
+      "names": [
+        {
+          "name": "Nimruz",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "The son of Zal and Rudabeh, a child of wondrous size and strength.",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s26"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Zal and Rudabeh"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-zal-rudabeh",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-sam",
+      "to": "character-zal",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-zal-mother",
+      "to": "character-zal",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-simorgh",
+      "to": "character-zal",
+      "type": "adoptiveParentOf",
+      "label": "Raises",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-03"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-zal",
+      "to": "place-zabulistan",
+      "type": "leaderOf",
+      "label": "Ruler of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-mehrab",
+      "to": "place-kabul",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-08"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-mehrab",
+      "to": "character-sindokht",
+      "type": "spouseOf",
+      "label": "Spouses",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-mehrab",
+      "to": "character-rudabeh",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-sindokht",
+      "to": "character-rudabeh",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-11",
+      "from": "character-rudabeh",
+      "to": "character-maids-of-rudabeh",
+      "type": "alliedWith",
+      "label": "Confidantes",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s06"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-manuchehr",
+      "to": "character-nowzar",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s14"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-20"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-sam",
+      "to": "character-kakuy",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s14"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-21"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-zal",
+      "to": "character-rudabeh",
+      "type": "spouseOf",
+      "label": "Spouses",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s24"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-31"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-15",
+      "from": "character-zal",
+      "to": "place-sistan",
+      "type": "leaderOf",
+      "label": "Ruler of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s24"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-31"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-16",
+      "from": "character-zal",
+      "to": "character-rostam",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s26"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-33"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-17",
+      "from": "character-rudabeh",
+      "to": "character-rostam",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s26"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-zal-rudabeh",
+        "eventIds": [
+          "event-33"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "A son with white hair",
+      "summary": "Sam has long had no child. A beloved of his household bears him a son as bright as the sun but with hair all white; for a week no one dares tell him, until a bold nurse brings him the news.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "father",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal-mother",
+          "role": "mother",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "newborn",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-nurse-of-zal",
+          "role": "bearer of the news",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "The child abandoned",
+      "summary": "Seeing the white hair, Sam despairs and asks God what sin he has committed; fearing what the nobles will say of a demon's child, he has the infant carried away and left on a mountain where the Simorgh has her home.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "father who rejects his son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "abandoned infant",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "In the nest of the Simorgh",
+      "summary": "The Simorgh, seeking food for her young, finds the crying child on the hot rock and carries him to her nest on Alborz. God moves her to mercy; she and her young feed him, and he grows there into a tall young man whose fame spreads through the world.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-simorgh",
+          "role": "bird who raises the child",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "child in the nest",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-alborz",
+          "role": "the nest",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "Sam's dreams",
+      "summary": "Sam dreams that a rider from India brings news of his son, and the mobads tell him that every creature raises its young and that he must seek God's pardon. In a second dream a youth with a banner appears and a man rebukes him for leaving his son to be nursed by a bird.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "dreamer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son seen in the dream",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "The Simorgh returns the son",
+      "summary": "Sam comes to the mountain and prays for forgiveness. The Simorgh tells the young man, whom she calls Dastan, that his father has come; she gives him one of her feathers, to burn in fire if he is ever in trouble, and carries him down to Sam, who promises never again to harden his heart against him.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "repentant father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-simorgh",
+          "role": "bird who returns him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son returned",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-simorgh-feather",
+          "role": "gift of the Simorgh",
+          "presence": "object_in_selected_scenes"
+        },
+        {
+          "entityId": "place-alborz",
+          "role": "the mountain",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "At the court of Manuchehr",
+      "summary": "Manuchehr sends Nowzar to welcome Sam and receives him with Qaren beside him. Struck by Zal, he has the star-readers consult the stars, and they foretell that Zal will be a renowned hero; the king grants Sam rich gifts and a charter over Kabul, Zabul and the lands to India.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who welcomes them",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-nowzar",
+          "role": "prince sent to welcome Sam",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-qaren",
+          "role": "noble at the king's side",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "hero who recounts his story",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "youth admired",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "Zal left in Zabulistan",
+      "summary": "Back in Sistan, Sam goes to war against the Gorgsaran and Mazandaran and leaves Zal in charge of Zabulistan. Zal protests at being parted from his father again, but Sam tells him the stars have set his seat there; Zal gathers the wise and learns until none in the world equals him.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "father who leaves for war",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son left in charge",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-zabulistan",
+          "role": "land entrusted to Zal",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-gorgsaran",
+          "role": "land of the war",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land of the war",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "A feast at Kabul",
+      "summary": "Zal travels through his lands to Kabul, whose king, Mehrab, is of the line of Zahhak and pays tribute to Sam. Mehrab comes with gifts and they feast together; afterwards a noble tells Zal that Mehrab has a daughter brighter than the sun, and Zal is lost in thought.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "young lord on his travels",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "king of Kabul",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "daughter described",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "forefather of Mehrab",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "lord to whom tribute is paid",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "kingdom of Mehrab",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "An invitation refused",
+      "summary": "Mehrab asks Zal to honour his house with a visit. Zal declines, saying Sam and the king would not approve his drinking in the house of idol-worshippers, yet he praises Mehrab after he leaves, and his longing for the unseen daughter grows.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-mehrab",
+          "role": "host who invites",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "guest who declines",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "father whose approval matters",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "king whose approval matters",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "Rudabeh hears of Zal",
+      "summary": "At home Sindokht asks Mehrab about the son of Sam. Mehrab praises Zal's strength, generosity and bearing, saying only his white hair is spoken against. Hearing this, Rudabeh falls in love with Zal without having seen him.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s05"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sindokht",
+          "role": "mother who asks",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "father who praises Zal",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "daughter who falls in love",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "praised hero",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "Rudabeh's confidantes",
+      "summary": "Rudabeh tells her five maids of her love. They protest that the son of Sam was cast out by his father and raised by a bird; she rebukes them angrily, saying she wants neither Caesar nor the emperor of Chin but Zal alone, and they promise to find a way.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rudabeh",
+          "role": "lover who confides",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-maids-of-rudabeh",
+          "role": "confidantes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "beloved",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "Roses by the river",
+      "summary": "The maids go gathering roses by the river where Zal is camped. Zal shoots a waterbird and sends his page across for it; the maids praise their mistress to the page, and Zal, delighted, sends them gold and jewels, questions them himself and agrees to their plan to bring him to Rudabeh's palace.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s07"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-maids-of-rudabeh",
+          "role": "maids by the river",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "hero who sends gifts",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "mistress praised",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "The maids report",
+      "summary": "The gatekeeper scolds the maids for going out, but they slip past. They tell Rudabeh of Zal's beauty and his promise, she teases them for changing their minds, and they prepare a chamber decked with brocade, gold and flowers.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s08"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-maids-of-rudabeh",
+          "role": "maids who report",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "mistress who listens",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "praised hero",
+          "presence": "subject_of_report"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "The tresses and the lasso",
+      "summary": "At nightfall Zal comes to the palace and Rudabeh greets him from the roof, letting down her long black tresses for him to climb. He refuses to hurt her, throws his lasso to the battlements and climbs up. They spend the night together and each swears to take no other, though Zal fears Manuchehr and Sam will not consent.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s09"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "lover who climbs",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "lover on the roof",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "king whose consent is feared",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "father whose consent is feared",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "city of the palace",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "Zal writes to his father",
+      "summary": "Zal tells his counsellors of his love; they hesitate, since Mehrab is of Zahhak's line, but advise a letter to Sam. Zal writes recalling his abandonment and Sam's promise to grant his wishes, and asks leave to marry the daughter of Mehrab.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s10"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "son who writes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "father addressed",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "father of the bride",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "forefather of Mehrab",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "beloved",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "Sam reads the letter",
+      "summary": "A rider reaches Sam while he is hunting near the Gorgsaran. Sam is troubled: refusing would break his promise, but what lineage could come of a bird-raised son and the daughter of a demon's line?",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s10"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "troubled father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son who asks",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-gorgsaran",
+          "role": "where Sam hunts",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "The stars favour the match",
+      "summary": "Sam's star-readers search the heavens and tell him with smiles that a mighty hero will be born of Zal and the daughter of Mehrab, who will bring the world under his sword and be Iran's hope. Sam consents and promises to go to the king.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s11"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "father who consents",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "bride foretold",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "Sindokht discovers the secret",
+      "summary": "A go-between carries the good news and Rudabeh's gifts for Zal. Sindokht catches her, finds royal jewels on her and confronts her daughter; Rudabeh weeps and confesses that she and Zal have pledged themselves and that Sam has already answered.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s12"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-go-between",
+          "role": "messenger who is caught",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "mother who discovers",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "daughter who confesses",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "beloved",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "Mehrab's fury",
+      "summary": "Sindokht tells Mehrab, who draws his sword to kill Rudabeh, fearing the wrath of Sam and the king will burn Kabul. Sindokht holds him back, reminds him that Fereydun too married into Yemen, and makes him swear not to harm their daughter; Rudabeh stands before her father, unashamed of her choice.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s13"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-mehrab",
+          "role": "enraged father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "wife who calms him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "daughter who stands firm",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "feared lord",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "feared king",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "threatened city",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "The king's fear",
+      "summary": "Manuchehr hears of the bond between Zal and Mehrab and fears that a child of Zahhak's line could bring turmoil to Iran. He sends Nowzar, his son, to summon Sam from his wars.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s14"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "anxious king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-nowzar",
+          "role": "son sent to Sam",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "hero summoned",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "feared lineage",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son in love",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "king of Kabul",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "Sam's victory over Kakuy",
+      "summary": "At court Sam tells the king of his war: the fierce warriors of the Gorgsaran and Mazandaran, and their champion Kakuy, whom he pulled from the saddle by his belt and dashed to the ground, after which the enemy fled.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s14"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "victorious hero",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who listens",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kakuy",
+          "role": "defeated champion",
+          "presence": "subject_of_report"
+        },
+        {
+          "entityId": "place-gorgsaran",
+          "role": "land of the war",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-mazandaran",
+          "role": "land of the war",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "A command against Kabul",
+      "summary": "Manuchehr commands Sam to go to Hindustan, burn the palace of Mehrab and Kabul, and leave none of the kin of Zahhak alive. Sam promises to obey and sets out for home.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s14"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who commands",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "hero who obeys",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "king condemned",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "city to be burned",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "Zal faces his father",
+      "summary": "Zal rides to meet Sam and reproaches him: abandoned as a baby, raised by a bird, he has kept his father's every word, and now his father comes to destroy his home; let him saw him in two instead. Sam admits his injustice and writes to Manuchehr, recounting his long service – among it the slaying of the dragon of the Kashaf river with his ox-headed mace – and asking the king to grant Zal's wish.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s15"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "son who reproaches",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "father who relents",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "king addressed",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kashaf-river",
+          "role": "where Sam slew a dragon",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "Sindokht's plan",
+      "summary": "When the news reaches Kabul, Mehrab threatens to kill Sindokht and Rudabeh to appease the king. Sindokht asks instead to go to Sam herself with treasure, makes Mehrab promise to keep Rudabeh safe, and sets out with gold, horses, servants, elephants and a jewelled throne.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s16"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-mehrab",
+          "role": "frightened king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "wife with a plan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "daughter to be protected",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "threatened city",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-25",
+      "label": "Sindokht before Sam",
+      "summary": "Sindokht comes to Sam as an envoy of Mehrab and lays the treasures before him; he accepts them for Zal. Pleading for the innocent people of Kabul, she obtains his pledge of safety and only then reveals that she is Mehrab's wife and Rudabeh's mother. Sam promises safety to all of Kabul and consents to the marriage.",
+      "order": 25,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s17"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sindokht",
+          "role": "wise envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "hero who pledges",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "husband",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "daughter",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "forefather she names",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-26",
+      "label": "Zal at court",
+      "summary": "Zal reaches Manuchehr's court and kisses the ground. The king reads Sam's letter, smiles and, though still uneasy, promises to grant Zal's wish, and keeps him at his side.",
+      "order": 26,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s18"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "suitor at court",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who reads the letter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "writer of the letter",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-27",
+      "label": "The king's star-readers",
+      "summary": "Manuchehr's mobads and astrologers study the heavens for three days and declare that a hero of long life, strength and glory will be born of Zal and Mehrab's daughter, the refuge of the riders of Iran.",
+      "order": 27,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s19"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who consults",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "father foretold",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "mother foretold",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-28",
+      "label": "The riddles",
+      "summary": "The mobads test Zal with riddles: twelve trees of thirty branches, two racing horses, thirty riders one of whom vanishes, a reaper in a meadow, a bird on two cypresses, and a city on a mountain. Zal answers each – the months of the year, day and night, the waning moon, time that reaps all, the halves of the year, and this passing world and the lasting one – and then outshines every rider in feats of arms. The king gives him rich gifts.",
+      "order": 28,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s20",
+        "src-ganjoor-manoochehr-s21"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "youth who answers",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who rewards him",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-29",
+      "label": "Good news to Kabul",
+      "summary": "Manuchehr writes to Sam that Zal's wish is granted. Zal sends word ahead, and Sam sends a rider to Mehrab; Mehrab praises Sindokht's wisdom, and she tells Rudabeh, who thanks her mother, while Kabul is decked out for the celebration.",
+      "order": 29,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s22"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-manuchehr",
+          "role": "king who writes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "father who sends word",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "joyful king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "wife praised",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "joyful bride",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "city adorned",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-30",
+      "label": "Father and son together",
+      "summary": "Zal returns to Sam, who tells him smiling of Sindokht's visit and her pledge. Seeing his son's joy, Sam orders the march to Kabul and sends word ahead to Mehrab.",
+      "order": 30,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s23"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "joyful son",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "father who leads them to Kabul",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "envoy recalled",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "host who awaits them",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-31",
+      "label": "The wedding",
+      "summary": "Mehrab rides out with music and elephants to meet Sam and Zal, and Sindokht welcomes Sam with three hundred maids. Sam is amazed at Rudabeh; the marriage is made by rite, and weeks of feasting follow. All then go to Sistan, where Sam gives the rule to Zal and leaves to make war in the Gorgsaran.",
+      "order": 31,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s24"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "groom",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "bride",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "father of the groom",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "father of the bride",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "mother of the bride",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "city of the wedding",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-sistan",
+          "role": "Sam's land",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-gorgsaran",
+          "role": "land of Sam's next war",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-32",
+      "label": "The Simorgh's counsel",
+      "summary": "Rudabeh grows heavy with child and suffers until she faints. Zal remembers the Simorgh's feather and burns part of it; the bird appears, foretells a lion-hearted son, and tells him how a skilled man is to open her side after making her drunk with wine, then sew and heal the wound with herbs, milk and musk and a stroke of her feather.",
+      "order": 32,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s25"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rudabeh",
+          "role": "mother in labour",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "anxious husband",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "grieving mother",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-simorgh",
+          "role": "bird who counsels",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-simorgh-feather",
+          "role": "feather burned",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-33",
+      "label": "The birth of Rostam",
+      "summary": "A skilled mobad opens Rudabeh's side and brings out a child of wondrous size, then sews the wound. When she wakes she says she is delivered – «rastam» – and the boy is named Rostam. A silk figure of the child, armed and on horseback, is sent to Sam, who rejoices; Rostam drinks the milk of ten nurses and at eight is as tall as a cypress.",
+      "order": 33,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s26"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "newborn",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "mother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sindokht",
+          "role": "grandmother",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sam",
+          "role": "grandfather who receives the figure",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-zabulistan",
+          "role": "land in celebration",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-kabul",
+          "role": "land in celebration",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-34",
+      "label": "Sam meets his grandson",
+      "summary": "Sam comes to see the boy, who rides out on an elephant with mace and shield and greets his grandfather as a servant eager for armour and war. They feast for a month; Mehrab, drunk, boasts that he will revive the ways of Zahhak, and Zal and Sam laugh. At the month's end Sam counsels Zal to justice, says he feels his time is near, and returns to his wars in the West.",
+      "order": 34,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-manoochehr-s27"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-sam",
+          "role": "grandfather",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "boy on the elephant",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "son who is counselled",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrab",
+          "role": "boastful grandfather",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zahhak",
+          "role": "forefather named in the boast",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-sistan",
+          "role": "Zal's land",
+          "presence": "setting"
+        }
+      ]
+    }
+  ],
+  "media": []
+}

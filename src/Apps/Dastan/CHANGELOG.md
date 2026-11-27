@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A third new story of the Shahnameh: Zal and Rudabeh – from the white-haired child left on Alborz and
+  raised by the Simorgh, through his love for the daughter of Mehrab, to the birth of Rostam and Sam's visit to
+  him, in 34 steps and six reading stages, read from the text on Ganjoor, with its Persian.
 - A further story of the Shahnameh: Salm, Tur and Iraj – the three sons of Fereydun, from their brides
   from Yemen to the death of Iraj, the vengeance of Manuchehr and the death of Fereydun, in 31 steps and six
   reading stages, read from the text on Ganjoor, with its Persian.
