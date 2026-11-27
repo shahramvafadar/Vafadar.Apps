@@ -1471,19 +1471,173 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-umayyad-dynasty",
+      "title": "Umayyad dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Umayyad-dynasty-Islamic-history",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-abbasid-caliphate",
+      "title": "ʿAbbasid caliphate – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/abbasid-caliphate/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-abu-muslim",
+      "title": "Abu Muslim – Britannica",
+      "url": "https://www.britannica.com/biography/Abu-Muslim",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-baghdad",
+      "title": "Baghdad – Britannica",
+      "url": "https://www.britannica.com/place/Baghdad",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-saffarids",
+      "title": "Saffarids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/saffarids/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-samanid-dynasty",
+      "title": "Samanid dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Samanid-dynasty",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-ziyarids",
+      "title": "Ziyarids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ziyarids/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-buyids",
+      "title": "Buyids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/buyids/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-ghaznavids",
+      "title": "Ghaznavids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ghaznavids/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-rudaki",
+      "title": "Rudaki – Britannica",
+      "url": "https://www.britannica.com/biography/Rudaki",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-avicenna",
+      "title": "Avicenna – Britannica",
+      "url": "https://www.britannica.com/biography/Avicenna",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-al-biruni",
+      "title": "al-Biruni – Britannica",
+      "url": "https://www.britannica.com/biography/al-Biruni",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-biruni-i",
+      "title": "Biruni, Abu Rayhan i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/biruni-abu-rayhan-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-98182",
+      "title": "GeoNames: Baghdad",
+      "url": "https://www.geonames.org/98182/baghdad.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1217662",
+      "title": "GeoNames: Bukhara",
+      "url": "https://www.geonames.org/1217662/bukhara.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1141269",
+      "title": "GeoNames: Ghazni",
+      "url": "https://www.geonames.org/1141269/ghazni.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-9533872",
+      "title": "GeoNames: Rey",
+      "url": "https://www.geonames.org/9533872/rey.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-122285",
+      "title": "GeoNames: Neyshābūr",
+      "url": "https://www.geonames.org/122285/neyshabur.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
     {
       "id": "subject-ancient-iran",
       "type": "Region",
-      "label": "Ancient Iran",
-      "summary": "The lands of the Iranian plateau and its neighbours from the first kingdoms of Elam to the end of the Sasanians in 651 CE: Elam, the Medes, the Achaemenid empire, Alexander and the Seleucids, the Arsacids of Parthia and the Sasanians.",
+      "label": "Iran",
+      "summary": "The lands of the Iranian plateau and its neighbours from the first kingdoms of Elam to the Ghaznavids about 1030 CE: Elam, the Medes, the Achaemenid empire, Alexander and the Seleucids, the Arsacids of Parthia, the Sasanians, and after the Arab conquest the caliphs and the Iranian dynasties of the Saffarids, Samanids, Ziyarids, Buyids and Ghaznavids.",
       "sourceIds": [
         "src-livius-place-elam",
         "src-livius-dynasty-achaemenids",
         "src-livius-place-parthia",
-        "src-livius-dynasty-sasanians"
+        "src-livius-dynasty-sasanians",
+        "src-iranica-abbasid-caliphate",
+        "src-iranica-ghaznavids"
       ],
       "spoilerLevel": 0
     },
@@ -9440,6 +9594,1793 @@
         {
           "fact": "participant",
           "entityId": "person-khusrau-i"
+        }
+      ]
+    },
+    {
+      "id": "place-baghdad",
+      "type": "Place",
+      "label": "Baghdad",
+      "summary": "The city on the Tigris founded in 762 as the capital of the Abbasid caliphs, for the next five centuries the foremost cultural centre of the Islamic world.",
+      "sourceIds": [
+        "src-britannica-baghdad",
+        "src-geonames-98182"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "region-babylonia"
+        }
+      ],
+      "position": {
+        "latitude": 33.34056,
+        "longitude": 44.40083,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-bukhara",
+      "type": "Place",
+      "label": "Bukhara",
+      "summary": "The city of Transoxania that Ismaʿil I made the Samanid capital; with Samarkand a centre of Persian letters and learning.",
+      "sourceIds": [
+        "src-britannica-samanid-dynasty",
+        "src-geonames-1217662"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Bokhara",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [],
+      "position": {
+        "latitude": 39.77028,
+        "longitude": 64.43056,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-ghazni",
+      "type": "Place",
+      "label": "Ghazni",
+      "summary": "The town in eastern Afghanistan from which Sebüktigin and Mahmud built the Ghaznavid power.",
+      "sourceIds": [
+        "src-iranica-ghaznavids",
+        "src-geonames-1141269"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ghazna",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [],
+      "position": {
+        "latitude": 33.55389,
+        "longitude": 68.42083,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-ray",
+      "type": "Place",
+      "label": "Ray",
+      "summary": "The old city of Media south of modern Tehran, held by Mardavij and his brother Vushmgir and then the capital of the northern Buyid emirate until Mahmud of Ghazni took it in 1029.",
+      "sourceIds": [
+        "src-iranica-ziyarids",
+        "src-geonames-9533872"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Rey",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Rhagae",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "region-media"
+        }
+      ],
+      "position": {
+        "latitude": 35.59361,
+        "longitude": 51.44,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-nishapur",
+      "type": "Place",
+      "label": "Nishapur",
+      "summary": "The chief city of Khorasan, seat of the Tahirid governors until Yaʿqub the Saffarid came there in 873.",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-geonames-122285"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Neyshabur",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [],
+      "position": {
+        "latitude": 36.21333,
+        "longitude": 58.79583,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "period-umayyad-caliphate",
+      "type": "Period",
+      "label": "The Umayyad caliphate",
+      "summary": "The first great Muslim dynasty to rule the empire of the caliphate, from 661 to 750; Iran was governed as provinces of this Arab empire.",
+      "sourceIds": [
+        "src-britannica-umayyad-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 661
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 750
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-abbasid",
+      "type": "Dynasty",
+      "label": "The Abbasids",
+      "summary": "The dynasty of caliphs established in 750 with the help of a revolt in Khorasan, closely linked with Persia; from 762 they ruled from Baghdad.",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate",
+        "src-britannica-baghdad"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 750
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-baghdad"
+        }
+      ]
+    },
+    {
+      "id": "office-abbasid-caliph",
+      "type": "Office",
+      "label": "Abbasid caliph",
+      "summary": "The caliphate held by the Abbasid house.",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-abbasid"
+        }
+      ]
+    },
+    {
+      "id": "period-abbasid-caliphate",
+      "type": "Period",
+      "label": "The Abbasid caliphate before the Seljuks",
+      "summary": "From the establishment of the Abbasids in 750 until Toghril Beg’s Seljuks entered Baghdad in 1055; within it the Iranian dynasties rose in the east and the Buyids held the caliphs in tutelage.",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 750
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1055
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-abu-muslim",
+      "type": "Person",
+      "label": "Abu Muslim",
+      "summary": "Leader of the revolutionary movement in Khorasan who, as agent of the Abbasid family, raised the banner of revolt in 747 and brought down the Umayyads; governor of Khorasan, he was put to death by al-Mansur in 755 and became a legendary hero.",
+      "sourceIds": [
+        "src-britannica-abu-muslim"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Abu Muslim Khorasani",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Brought the Abbasids to the throne."
+        }
+      ]
+    },
+    {
+      "id": "person-al-mansur",
+      "type": "Person",
+      "label": "al-Mansur",
+      "summary": "The second Abbasid caliph, from 754 to 775, who preferred his freedmen over the Arabs in office and had Abu Muslim put to death.",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate",
+        "src-britannica-abu-muslim"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Abu Jaʿfar al-Mansur",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 775
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Second Abbasid caliph."
+        }
+      ]
+    },
+    {
+      "id": "person-al-mamun",
+      "type": "Person",
+      "label": "al-Maʾmun",
+      "summary": "Abbasid caliph who from his governorate in Marv commanded the resources of Persia and defeated his brother Amin in 813; the Samanid brothers were rewarded with provinces for their service to him.",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Maʾmun",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Defeated his brother Amin with the resources of Persia."
+        }
+      ]
+    },
+    {
+      "id": "event-abbasid-revolution",
+      "type": "Event",
+      "label": "The Abbasid revolution",
+      "summary": "On 15 June 747 Abu Muslim raised the banner of revolt in Khorasan; it triumphed in 750 when the last Umayyad caliph Marwan II was defeated and killed, and the Abbasids took the caliphate.",
+      "sourceIds": [
+        "src-britannica-abu-muslim",
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 747
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 750
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-abu-muslim"
+        }
+      ]
+    },
+    {
+      "id": "event-death-of-abu-muslim",
+      "type": "Event",
+      "label": "The death of Abu Muslim",
+      "summary": "Suspicious of a vassal with so much power, the caliph al-Mansur took Khorasan from Abu Muslim and had him put to death at court in February 755; his unavenged death inspired many later revolts.",
+      "sourceIds": [
+        "src-britannica-abu-muslim"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-al-mansur"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-abu-muslim"
+        }
+      ]
+    },
+    {
+      "id": "event-founding-of-baghdad",
+      "type": "Event",
+      "label": "The founding of Baghdad",
+      "summary": "In 762 Baghdad was founded on the Tigris as the capital of the Abbasid caliphs.",
+      "sourceIds": [
+        "src-britannica-baghdad"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 762
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-baghdad"
+        }
+      ]
+    },
+    {
+      "id": "event-mamun-defeats-amin",
+      "type": "Event",
+      "label": "al-Maʾmun defeats his brother Amin",
+      "summary": "From his governorate in Marv, with the men and resources of Persia, al-Maʾmun defeated his brother Amin in 813, whose cause was that of the Arabs of Iraq and Syria.",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 813
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-al-mamun"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-saffarid",
+      "type": "Dynasty",
+      "label": "The Saffarids",
+      "summary": "A dynasty of eastern Iran from Sistan, ruling from 861 to 1003, whose first amirs built a vast military empire by the sword and made the first great breach in the Abbasid caliphate.",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 861
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1003
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "office-saffarid-amir",
+      "type": "Office",
+      "label": "Saffarid amir",
+      "summary": "The rule of the Saffarid amirs from Sistan.",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-saffarid"
+        }
+      ]
+    },
+    {
+      "id": "person-yaqub-ibn-layth",
+      "type": "Person",
+      "label": "Yaʿqub b. Layth",
+      "summary": "Leader of the ʿayyar bands of Sistan, hailed as amir in 861, who conquered from Afghanistan to Fars and threatened Baghdad until his defeat at Dayr al-ʿAqul in 876; he died at Jundishapur three years later.",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Yaʿqub the Coppersmith",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 879
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Saffarid empire."
+        }
+      ]
+    },
+    {
+      "id": "person-amr-ibn-layth",
+      "type": "Person",
+      "label": "ʿAmr b. Layth",
+      "summary": "Brother of Yaʿqub and second Saffarid amir, whose ambition to take Transoxania from the Samanids ended in 900 with his defeat and capture outside Balkh.",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Second Saffarid amir."
+        }
+      ]
+    },
+    {
+      "id": "event-yaqub-hailed-amir",
+      "type": "Event",
+      "label": "Yaʿqub hailed as amir in Sistan",
+      "summary": "Out of the power struggles of the ʿayyar leaders of Sistan, Yaʿqub emerged the victor and was hailed as amir by the army of Sistan in 861.",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 861
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-yaqub-ibn-layth"
+        }
+      ]
+    },
+    {
+      "id": "event-yaqub-at-nishapur",
+      "type": "Event",
+      "label": "Yaʿqub at Nishapur",
+      "summary": "In 873 Yaʿqub intervened at Nishapur and ended the rule of the Tahirid governors in Khorasan.",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 873
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-nishapur"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-yaqub-ibn-layth"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-dayr-al-aqul",
+      "type": "Event",
+      "label": "The battle of Dayr al-ʿAqul",
+      "summary": "Marching on Baghdad, Yaʿqub was decisively defeated by the regent al-Muwaffaq at Dayr al-ʿAqul southeast of Baghdad in 876; he kept Fars and Ahvaz.",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 876
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-yaqub-ibn-layth"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-samanid",
+      "type": "Dynasty",
+      "label": "The Samanids",
+      "summary": "An Iranian dynasty of Transoxania and Khorasan, from 819 to 999, with its capital at Bukhara, renowned for the impulse it gave to Iranian national sentiment and Persian letters.",
+      "sourceIds": [
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 819
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 999
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-bukhara"
+        }
+      ]
+    },
+    {
+      "id": "office-samanid-amir",
+      "type": "Office",
+      "label": "Samanid amir",
+      "summary": "The rule of the Samanid amirs at Bukhara.",
+      "sourceIds": [
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-samanid"
+        }
+      ]
+    },
+    {
+      "id": "person-ismail-samani",
+      "type": "Person",
+      "label": "Ismaʿil I",
+      "summary": "Samanid amir from 892 to 907 who overthrew the Saffarids in Khorasan in 900 and established Samanid rule over Transoxania and Khorasan from Bukhara.",
+      "sourceIds": [
+        "src-britannica-samanid-dynasty",
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ismaʿil b. Ahmad",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Overthrew the Saffarids in Khorasan."
+        }
+      ]
+    },
+    {
+      "id": "person-nasr-ii",
+      "type": "Person",
+      "label": "Nasr II",
+      "summary": "Samanid amir from 914 to 943, at whose court in Bukhara Rudaki served as poet.",
+      "sourceIds": [
+        "src-britannica-rudaki"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Nasr b. Ahmad",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 943
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Patron of Rudaki."
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-balkh",
+      "type": "Event",
+      "label": "ʿAmr b. Layth defeated outside Balkh",
+      "summary": "In 900 Ismaʿil the Samanid crossed the Oxus and defeated ʿAmr b. Layth outside Balkh, capturing him and overturning Saffarid power in a single day; Khorasan passed to the Samanids for almost a century.",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 900
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ismail-samani"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-amr-ibn-layth"
+        }
+      ]
+    },
+    {
+      "id": "person-rudaki",
+      "type": "Person",
+      "label": "Rudaki",
+      "summary": "Poet, singer and musician born about 859, the first poet of note in New Persian and widely called the father of Persian poetry; he served Nasr II at Bukhara until 937 and translated Kalila wa Dimna into Persian.",
+      "sourceIds": [
+        "src-britannica-rudaki",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Abu ʿAbdallah Rudaki",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 859,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 941
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Father of Persian poetry."
+        }
+      ]
+    },
+    {
+      "id": "dynasty-ziyarid",
+      "type": "Dynasty",
+      "label": "The Ziyarids",
+      "summary": "A Gilite dynasty of the Caspian coastlands, from 931 to about 1090, which first ruled northern Iran from Ray and then only Tabarestan and Gorgan.",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 931
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1090,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "office-ziyarid-amir",
+      "type": "Office",
+      "label": "Ziyarid amir",
+      "summary": "The rule of the Ziyarid amirs.",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-ziyarid"
+        }
+      ]
+    },
+    {
+      "id": "person-mardavij",
+      "type": "Person",
+      "label": "Mardavij b. Ziyar",
+      "summary": "Founder of the Ziyarids, who claimed descent from the old royal house of Gilan, won a dominion from Ray to Isfahan and dreamed of restoring the Persian empire and faith; his Turkish slaves killed him in 935.",
+      "sourceIds": [
+        "src-iranica-ziyarids",
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 935
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Dreamed of restoring the Persian empire."
+        }
+      ]
+    },
+    {
+      "id": "person-vushmgir",
+      "type": "Person",
+      "label": "Vushmgir",
+      "summary": "Brother and successor of Mardavij at Ray from 935 to 967, who after 940 held only the Caspian lands and was killed by a wild boar at the end of 967.",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Zahir al-Dawla Vushmgir",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 967
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Killed by a wild boar."
+        }
+      ]
+    },
+    {
+      "id": "person-qabus",
+      "type": "Person",
+      "label": "Qabus b. Vushmgir",
+      "summary": "Son of Vushmgir and Ziyarid amir from 978 to 981 and again from 997 to 1012, titled Shams al-Maʿali, at whose court Biruni wrote his first major work.",
+      "sourceIds": [
+        "src-iranica-ziyarids",
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shams al-Maʿali Qabus",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Patron of Biruni."
+        }
+      ]
+    },
+    {
+      "id": "event-death-of-mardavij",
+      "type": "Event",
+      "label": "The murder of Mardavij",
+      "summary": "In 935 Mardavij was killed by his Turkish slaves; his empire fell apart and most of its lands south of the Caspian mountains went to the Buyid brothers.",
+      "sourceIds": [
+        "src-iranica-ziyarids",
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 935
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-mardavij"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-buyid",
+      "type": "Dynasty",
+      "label": "The Buyids",
+      "summary": "A dynasty of Daylamite origin, sons of the fisherman Buya, which ruled western and southern Iran and Iraq from the middle of the tenth to the middle of the eleventh century as three principalities of one family, and held the caliphs of Baghdad in tutelage.",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 932
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 941
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-ray"
+        }
+      ]
+    },
+    {
+      "id": "office-buyid-amir",
+      "type": "Office",
+      "label": "Buyid amir",
+      "summary": "The rule of the Buyid amirs over their principalities.",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-buyid"
+        }
+      ]
+    },
+    {
+      "id": "person-imad-al-dawla",
+      "type": "Person",
+      "label": "ʿAli b. Buya ʿImad al-Dawla",
+      "summary": "The eldest of the Buyid brothers, who served Mardavij, took Fars and Shiraz and exerted some supremacy over his brothers.",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Master of Fars."
+        }
+      ]
+    },
+    {
+      "id": "person-rukn-al-dawla",
+      "type": "Person",
+      "label": "Hasan b. Buya Rukn al-Dawla",
+      "summary": "The second Buyid brother, who took almost the whole of Media and ruled from 947 to 977.",
+      "sourceIds": [
+        "src-iranica-buyids",
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Ruler of Media."
+        }
+      ]
+    },
+    {
+      "id": "person-muizz-al-dawla",
+      "type": "Person",
+      "label": "Ahmad b. Buya Muʿizz al-Dawla",
+      "summary": "The youngest Buyid brother, who gained Kerman and Khuzestan and entered Baghdad without a fight on 19 December 945.",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Took Baghdad in 945."
+        }
+      ]
+    },
+    {
+      "id": "person-adud-al-dawla",
+      "type": "Person",
+      "label": "Fana-Khusraw ʿAdud al-Dawla",
+      "summary": "Son of Rukn al-Dawla and the greatest Buyid amir, from 949 to 983, who struck coins in Fars showing himself as a crowned king with the title shahanshah.",
+      "sourceIds": [
+        "src-iranica-ziyarids",
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Took the title shahanshah."
+        }
+      ]
+    },
+    {
+      "id": "event-buyids-enter-baghdad",
+      "type": "Event",
+      "label": "The Buyids enter Baghdad",
+      "summary": "On 19 December 945 Ahmad b. Buya entered Baghdad without a fight and the Buyids took the caliphs into their tutelage.",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 945
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-baghdad"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-muizz-al-dawla"
+        }
+      ]
+    },
+    {
+      "id": "event-adud-al-dawla-shahanshah",
+      "type": "Event",
+      "label": "ʿAdud al-Dawla as shahanshah",
+      "summary": "A coin struck in Fars in 970 shows ʿAdud al-Dawla as a crowned king with the inscription shahanshah.",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 970
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-adud-al-dawla"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-ghaznavid",
+      "type": "Dynasty",
+      "label": "The Ghaznavids",
+      "summary": "A dynasty of Turkish slave origin, from 977 to 1186, which at its height ruled the eastern Iranian lands, briefly as far west as Ray, and northwestern India from Ghazni.",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 977
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1186
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-ghazni"
+        }
+      ]
+    },
+    {
+      "id": "office-ghaznavid-sultan",
+      "type": "Office",
+      "label": "Ghaznavid ruler",
+      "summary": "The rule of the Ghaznavid house at Ghazni.",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-ghaznavid"
+        }
+      ]
+    },
+    {
+      "id": "person-sebuktigin",
+      "type": "Person",
+      "label": "Sebüktigin",
+      "summary": "Turkish slave commander who governed Ghazni for twenty years until 997, nominally for the Samanids, and laid the foundations of the Ghaznavid power.",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 997
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Laid the foundations of Ghaznavid power."
+        }
+      ]
+    },
+    {
+      "id": "person-mahmud-of-ghazni",
+      "type": "Person",
+      "label": "Mahmud of Ghazni",
+      "summary": "Son of Sebüktigin, ruler from 998 to 1030, who threw off Samanid authority in 999 and by ceaseless campaigning, in India and as far west as Ray, built a vast military empire.",
+      "sourceIds": [
+        "src-iranica-ghaznavids",
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Yamin al-Dawla Mahmud",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1030
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Built a vast empire from India to Ray."
+        }
+      ]
+    },
+    {
+      "id": "person-masud-i",
+      "type": "Person",
+      "label": "Masʿud I",
+      "summary": "Son of Mahmud, who set aside his brother Muhammad and took over the empire and its army in 1030.",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Masʿud of Ghazni",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Succeeded Mahmud in 1030."
+        }
+      ]
+    },
+    {
+      "id": "event-mahmud-throws-off-samanid-authority",
+      "type": "Event",
+      "label": "Mahmud throws off Samanid authority",
+      "summary": "In 999 Mahmud of Ghazni threw off Samanid authority; with the Qarakhanids north of the Oxus he divided up the former Samanid lands, and the Samanid dynasty came to its end.",
+      "sourceIds": [
+        "src-iranica-ghaznavids",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 999
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-mahmud-of-ghazni"
+        }
+      ]
+    },
+    {
+      "id": "event-mahmud-takes-ray",
+      "type": "Event",
+      "label": "Mahmud takes Ray",
+      "summary": "In 1029 Mahmud of Ghazni conquered Ray, until then the capital of the northern Buyid emirate.",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1029
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-ray"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-mahmud-of-ghazni"
+        }
+      ]
+    },
+    {
+      "id": "person-daqiqi",
+      "type": "Person",
+      "label": "Daqiqi",
+      "summary": "Abu Mansur Daqiqi, the poet who began versifying the Iranian national epic; Ferdowsi took up the task after his death.",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Abu Mansur Daqiqi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Began the epic Ferdowsi completed."
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "Abu’l-Qasem Ferdowsi of Tus, who began the Shahnameh about 977 after the death of Daqiqi, completed a first version by 994 and finished the poem on 8 March 1010; he died in 1020 or 1025.",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Abu’l-Qasem Ferdowsi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 939
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1020
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "event-ferdowsi-begins-the-shahnameh",
+      "type": "Event",
+      "label": "Ferdowsi begins the Shahnameh",
+      "summary": "About 977, after the death of Daqiqi, Ferdowsi began writing the Shahnameh; a first version was complete by 994.",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 977,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ferdowsi"
+        }
+      ]
+    },
+    {
+      "id": "event-completion-of-the-shahnameh",
+      "type": "Event",
+      "label": "The completion of the Shahnameh",
+      "summary": "In his seventy-first year, on 8 March 1010, Ferdowsi finished the Shahnameh.",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1010
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ferdowsi"
+        }
+      ]
+    },
+    {
+      "id": "person-avicenna",
+      "type": "Person",
+      "label": "Avicenna",
+      "summary": "Physician and philosopher born near Bukhara in 980 and died at Hamadan in 1037, the most famous philosopher-scientist of the medieval Islamic world, author of the Book of the Cure and the Canon of Medicine.",
+      "sourceIds": [
+        "src-britannica-avicenna"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ibn Sina",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 980
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1037
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Author of the Canon of Medicine."
+        }
+      ]
+    },
+    {
+      "id": "person-biruni",
+      "type": "Person",
+      "label": "al-Biruni",
+      "summary": "Astronomer, mathematician, historian and geographer born in Khwarezm in 973, who served Qabus and then for over three decades the Ghaznavids, completed his book on India in 1030 and died after 1050.",
+      "sourceIds": [
+        "src-britannica-al-biruni",
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Abu Rayhan al-Biruni",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 973
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Wrote the book on India."
+        }
+      ]
+    },
+    {
+      "id": "event-biruni-completes-india",
+      "type": "Event",
+      "label": "Biruni completes his India",
+      "summary": "In 1030, just after the death of Mahmud, Biruni completed his great work on India, the Tahqiq ma li’l-Hind.",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1030
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-biruni"
         }
       ]
     }
@@ -21605,6 +23546,1638 @@
       "label": "Restored to the throne with the help of",
       "sourceIds": [
         "src-iranica-hephthalites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-baghdad-capital-of-abbasid",
+      "from": "place-baghdad",
+      "to": "dynasty-abbasid",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-baghdad"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abu-muslim-employed-by-abbasid",
+      "from": "person-abu-muslim",
+      "to": "dynasty-abbasid",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Agent of",
+      "sourceIds": [
+        "src-britannica-abu-muslim"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-al-mansur-holder-of-abbasid-caliph",
+      "from": "person-al-mansur",
+      "to": "office-abbasid-caliph",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Caliph",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 754
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 775
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-al-mamun-holder-of-abbasid-caliph",
+      "from": "person-al-mamun",
+      "to": "office-abbasid-caliph",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Caliph",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abu-muslim-participant-in-abbasid-revolution",
+      "from": "person-abu-muslim",
+      "to": "event-abbasid-revolution",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-abu-muslim",
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abbasid-revolution-during-umayyad-caliphate",
+      "from": "event-abbasid-revolution",
+      "to": "period-umayyad-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-abu-muslim",
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abbasid-participant-in-abbasid-revolution",
+      "from": "dynasty-abbasid",
+      "to": "event-abbasid-revolution",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-al-mansur-participant-in-death-of-abu-muslim",
+      "from": "person-al-mansur",
+      "to": "event-death-of-abu-muslim",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-abu-muslim"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abu-muslim-participant-in-death-of-abu-muslim",
+      "from": "person-abu-muslim",
+      "to": "event-death-of-abu-muslim",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-abu-muslim"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-death-of-abu-muslim-during-abbasid-caliphate",
+      "from": "event-death-of-abu-muslim",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-abu-muslim"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-founding-of-baghdad-took-place-in-baghdad",
+      "from": "event-founding-of-baghdad",
+      "to": "place-baghdad",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-baghdad"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-founding-of-baghdad-during-abbasid-caliphate",
+      "from": "event-founding-of-baghdad",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-baghdad"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-al-mamun-participant-in-mamun-defeats-amin",
+      "from": "person-al-mamun",
+      "to": "event-mamun-defeats-amin",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mamun-defeats-amin-during-abbasid-caliphate",
+      "from": "event-mamun-defeats-amin",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-ibn-layth-holder-of-saffarid-amir",
+      "from": "person-yaqub-ibn-layth",
+      "to": "office-saffarid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 861
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 879
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-ibn-layth-founder-of-saffarid",
+      "from": "person-yaqub-ibn-layth",
+      "to": "dynasty-saffarid",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amr-ibn-layth-sibling-of-yaqub-ibn-layth",
+      "from": "person-amr-ibn-layth",
+      "to": "person-yaqub-ibn-layth",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amr-ibn-layth-holder-of-saffarid-amir",
+      "from": "person-amr-ibn-layth",
+      "to": "office-saffarid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 879
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 900
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amr-ibn-layth-successor-of-yaqub-ibn-layth",
+      "from": "person-amr-ibn-layth",
+      "to": "person-yaqub-ibn-layth",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-ibn-layth-participant-in-yaqub-hailed-amir",
+      "from": "person-yaqub-ibn-layth",
+      "to": "event-yaqub-hailed-amir",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-hailed-amir-during-abbasid-caliphate",
+      "from": "event-yaqub-hailed-amir",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-ibn-layth-participant-in-yaqub-at-nishapur",
+      "from": "person-yaqub-ibn-layth",
+      "to": "event-yaqub-at-nishapur",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-at-nishapur-took-place-in-nishapur",
+      "from": "event-yaqub-at-nishapur",
+      "to": "place-nishapur",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-at-nishapur-during-abbasid-caliphate",
+      "from": "event-yaqub-at-nishapur",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-iranica-abbasid-caliphate"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-yaqub-ibn-layth-participant-in-battle-of-dayr-al-aqul",
+      "from": "person-yaqub-ibn-layth",
+      "to": "event-battle-of-dayr-al-aqul",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-dayr-al-aqul-during-abbasid-caliphate",
+      "from": "event-battle-of-dayr-al-aqul",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bukhara-capital-of-samanid",
+      "from": "place-bukhara",
+      "to": "dynasty-samanid",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ismail-samani-holder-of-samanid-amir",
+      "from": "person-ismail-samani",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 892
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 907
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nasr-ii-holder-of-samanid-amir",
+      "from": "person-nasr-ii",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-britannica-rudaki"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 914
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 943
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ismail-samani-participant-in-battle-of-balkh",
+      "from": "person-ismail-samani",
+      "to": "event-battle-of-balkh",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amr-ibn-layth-participant-in-battle-of-balkh",
+      "from": "person-amr-ibn-layth",
+      "to": "event-battle-of-balkh",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-balkh-during-abbasid-caliphate",
+      "from": "event-battle-of-balkh",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-saffarids",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rudaki-employed-by-samanid",
+      "from": "person-rudaki",
+      "to": "dynasty-samanid",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Court poet of",
+      "sourceIds": [
+        "src-britannica-rudaki"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mardavij-holder-of-ziyarid-amir",
+      "from": "person-mardavij",
+      "to": "office-ziyarid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 931
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 935
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mardavij-founder-of-ziyarid",
+      "from": "person-mardavij",
+      "to": "dynasty-ziyarid",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vushmgir-sibling-of-mardavij",
+      "from": "person-vushmgir",
+      "to": "person-mardavij",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vushmgir-holder-of-ziyarid-amir",
+      "from": "person-vushmgir",
+      "to": "office-ziyarid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 935
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 967
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vushmgir-successor-of-mardavij",
+      "from": "person-vushmgir",
+      "to": "person-mardavij",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vushmgir-parent-of-qabus",
+      "from": "person-vushmgir",
+      "to": "person-qabus",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qabus-holder-of-ziyarid-amir",
+      "from": "person-qabus",
+      "to": "office-ziyarid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 978
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 981
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qabus-holder-of-ziyarid-amir-2",
+      "from": "person-qabus",
+      "to": "office-ziyarid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir again",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 997
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 1012
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mardavij-participant-in-death-of-mardavij",
+      "from": "person-mardavij",
+      "to": "event-death-of-mardavij",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-ziyarids",
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-death-of-mardavij-during-abbasid-caliphate",
+      "from": "event-death-of-mardavij",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-ziyarids",
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ray-capital-of-buyid",
+      "from": "place-ray",
+      "to": "dynasty-buyid",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of the northern Buyid emirate",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rukn-al-dawla-holder-of-buyid-amir",
+      "from": "person-rukn-al-dawla",
+      "to": "office-buyid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 947
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 977
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rukn-al-dawla-sibling-of-imad-al-dawla",
+      "from": "person-rukn-al-dawla",
+      "to": "person-imad-al-dawla",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muizz-al-dawla-sibling-of-imad-al-dawla",
+      "from": "person-muizz-al-dawla",
+      "to": "person-imad-al-dawla",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muizz-al-dawla-sibling-of-rukn-al-dawla",
+      "from": "person-muizz-al-dawla",
+      "to": "person-rukn-al-dawla",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-imad-al-dawla-employed-by-ziyarid",
+      "from": "person-imad-al-dawla",
+      "to": "dynasty-ziyarid",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "In the service of Mardavij",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rukn-al-dawla-parent-of-adud-al-dawla",
+      "from": "person-rukn-al-dawla",
+      "to": "person-adud-al-dawla",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-adud-al-dawla-holder-of-buyid-amir",
+      "from": "person-adud-al-dawla",
+      "to": "office-buyid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 949
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 983
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muizz-al-dawla-participant-in-buyids-enter-baghdad",
+      "from": "person-muizz-al-dawla",
+      "to": "event-buyids-enter-baghdad",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-buyids-enter-baghdad-took-place-in-baghdad",
+      "from": "event-buyids-enter-baghdad",
+      "to": "place-baghdad",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-buyids-enter-baghdad-during-abbasid-caliphate",
+      "from": "event-buyids-enter-baghdad",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-adud-al-dawla-participant-in-adud-al-dawla-shahanshah",
+      "from": "person-adud-al-dawla",
+      "to": "event-adud-al-dawla-shahanshah",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-adud-al-dawla-shahanshah-during-abbasid-caliphate",
+      "from": "event-adud-al-dawla-shahanshah",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-buyids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ghazni-capital-of-ghaznavid",
+      "from": "place-ghazni",
+      "to": "dynasty-ghaznavid",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sebuktigin-holder-of-ghaznavid-sultan",
+      "from": "person-sebuktigin",
+      "to": "office-ghaznavid-sultan",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Governor of Ghazni",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 977
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 997
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sebuktigin-employed-by-samanid",
+      "from": "person-sebuktigin",
+      "to": "dynasty-samanid",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Nominal vassal of",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sebuktigin-founder-of-ghaznavid",
+      "from": "person-sebuktigin",
+      "to": "dynasty-ghaznavid",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Laid the foundations of",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sebuktigin-parent-of-mahmud-of-ghazni",
+      "from": "person-sebuktigin",
+      "to": "person-mahmud-of-ghazni",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-of-ghazni-holder-of-ghaznavid-sultan",
+      "from": "person-mahmud-of-ghazni",
+      "to": "office-ghaznavid-sultan",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Sultan",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 998
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 1030
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-of-ghazni-successor-of-sebuktigin",
+      "from": "person-mahmud-of-ghazni",
+      "to": "person-sebuktigin",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-of-ghazni-parent-of-masud-i",
+      "from": "person-mahmud-of-ghazni",
+      "to": "person-masud-i",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-masud-i-successor-of-mahmud-of-ghazni",
+      "from": "person-masud-i",
+      "to": "person-mahmud-of-ghazni",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-ghaznavids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-of-ghazni-participant-in-mahmud-throws-off-samanid-authority",
+      "from": "person-mahmud-of-ghazni",
+      "to": "event-mahmud-throws-off-samanid-authority",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-ghaznavids",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-throws-off-samanid-authority-during-abbasid-caliphate",
+      "from": "event-mahmud-throws-off-samanid-authority",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-ghaznavids",
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-samanid-participant-in-mahmud-throws-off-samanid-authority",
+      "from": "dynasty-samanid",
+      "to": "event-mahmud-throws-off-samanid-authority",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-samanid-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-of-ghazni-participant-in-mahmud-takes-ray",
+      "from": "person-mahmud-of-ghazni",
+      "to": "event-mahmud-takes-ray",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-takes-ray-took-place-in-ray",
+      "from": "event-mahmud-takes-ray",
+      "to": "place-ray",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mahmud-takes-ray-during-abbasid-caliphate",
+      "from": "event-mahmud-takes-ray",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-buyid-participant-in-mahmud-takes-ray",
+      "from": "dynasty-buyid",
+      "to": "event-mahmud-takes-ray",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ferdowsi-successor-of-daqiqi",
+      "from": "person-ferdowsi",
+      "to": "person-daqiqi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Took up the epic after",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ferdowsi-participant-in-ferdowsi-begins-the-shahnameh",
+      "from": "person-ferdowsi",
+      "to": "event-ferdowsi-begins-the-shahnameh",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ferdowsi-begins-the-shahnameh-during-abbasid-caliphate",
+      "from": "event-ferdowsi-begins-the-shahnameh",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ferdowsi-participant-in-completion-of-the-shahnameh",
+      "from": "person-ferdowsi",
+      "to": "event-completion-of-the-shahnameh",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-completion-of-the-shahnameh-during-abbasid-caliphate",
+      "from": "event-completion-of-the-shahnameh",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-biruni-employed-by-ghaznavid",
+      "from": "person-biruni",
+      "to": "dynasty-ghaznavid",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "In the service of",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-biruni-participant-in-biruni-completes-india",
+      "from": "person-biruni",
+      "to": "event-biruni-completes-india",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-biruni-completes-india-during-abbasid-caliphate",
+      "from": "event-biruni-completes-india",
+      "to": "period-abbasid-caliphate",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-iranica-biruni-i"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

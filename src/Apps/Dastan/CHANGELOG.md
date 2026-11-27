@@ -4,6 +4,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Iran goes on to 1030: the Umayyad and Abbasid caliphates, the Saffarids, Samanids, Ziyarids, Buyids and
+  Ghaznavids with their rulers and capitals, Abu Muslim, Rudaki, Daqiqi, Ferdowsi, Avicenna and Biruni, and
+  sixteen events from the Abbasid revolution to the completion of the Shahnameh; the collection is now called
+  "Iran".
 - Iran fills gaps before 651: the Lakhmid kings of Hira as allies of the Sasanians, from ʿAmr b. ʿAdi to Noʿmān
   III, Bahram V taken to the throne with their help, their end in 602 and the battle of Ḏu Qār; the
   Hephthalites, the defeats of Peroz I and their fall near Bukhara under Khusrau I – from the Encyclopaedia
