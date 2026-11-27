@@ -1709,6 +1709,55 @@
     "event-battle-of-cumae": {
       "label": "نبرد دریایی کومه",
       "summary": "حدود ۴۷۴ پیش از میلاد کومه‌ای‌ها و سیراکوزی‌ها در نبردی دریایی نزدیک کومه اتروسک‌ها را شکست دادند."
+    },
+    "person-virgil": {
+      "label": "ویرژیل",
+      "summary": "پوبلیوس ورگیلیوس مارو، شاعر رومی زادهٔ مانتوا، از حلقهٔ مایکناس و اکتاویان، سرایندهٔ اکلوگ‌ها و انه‌اید، حماسهٔ ملی رومیان.",
+      "facts": {
+        "knownFor": "سرایندهٔ انه‌اید."
+      }
+    },
+    "work-aeneid": {
+      "label": "انه‌اید",
+      "summary": "حماسهٔ ویرژیل دربارهٔ آئنئاس، حماسهٔ ملی رومیان."
+    },
+    "work-eclogues": {
+      "label": "اکلوگ‌ها",
+      "summary": "سرودهای شبانی ویرژیل، با الهام از تئوکریتوس، که میان ۴۲ و ۳۹ پیش از میلاد منتشر شد."
+    },
+    "person-livy": {
+      "label": "تیتوس لیویوس",
+      "summary": "تیتوس لیویوس، تاریخ‌نگار رومی، نویسندهٔ تاریخ رم از بنیادش، روایت پذیرفتهٔ تاریخ جمهوری؛ جروم زندگی او را از ۵۹ پیش از میلاد تا ۱۷ میلادی می‌گذارد.",
+      "facts": {
+        "knownFor": "تاریخ‌نگار رم از بنیادش."
+      }
+    },
+    "work-ab-urbe-condita": {
+      "label": "تاریخ رم از بنیادش",
+      "summary": "تاریخ گستردهٔ لیویوس از رم از بنیادش؛ پنج کتاب نخست میان ۲۷ و ۲۵ پیش از میلاد منتشر شد."
+    },
+    "person-procopius": {
+      "label": "پروکوپیوس",
+      "summary": "پروکوپیوس قیصریه‌ای، زادهٔ حدود ۴۹۵، دبیر و رایزن حقوقی بلیزاریوس از ۵۲۷ در لشکرکشی‌هایش، نویسندهٔ تاریخ جنگ‌ها، بناها و تاریخ نهانی؛ در ۵۶۲ فرماندار شهر.",
+      "facts": {
+        "knownFor": "تاریخ‌نگار جنگ‌های یوستینیان."
+      }
+    },
+    "work-history-of-the-wars": {
+      "label": "تاریخ جنگ‌ها",
+      "summary": "گزارش پروکوپیوس از جنگ‌های بلیزاریوس با ایرانیان، وندال‌ها و استروگوت‌ها، که در ۵۵۰ یا ۵۵۱ منتشر شد."
+    },
+    "work-buildings-of-procopius": {
+      "label": "بناها",
+      "summary": "نگاهی از پروکوپیوس به بناهایی که یوستینیان ساخت یا بازسازی کرد، که در ۵۵۴ منتشر شد."
+    },
+    "work-secret-history": {
+      "label": "تاریخ نهانی",
+      "summary": "گزارش خصمانهٔ پروکوپیوس از یوستینیان، تئودورا، بلیزاریوس و آنتونینا، که پس از مرگش منتشر شد."
+    },
+    "work-pantheon": {
+      "label": "پانتئون",
+      "summary": "پرستشگاهی در رم که هادریان میان ۱۱۸ و ۱۲۵ به نام سازندهٔ نخستینش بازسازی کرد و آنگاه گنبد نامدارش را یافت؛ از بزرگ‌ترین شگفتی‌های رم شمرده می‌شد."
     }
   },
   "relations": {
@@ -3591,6 +3640,33 @@
     },
     "relation-battle-of-cumae-during-republic": {
       "label": "در دورهٔ"
+    },
+    "relation-virgil-author-of-work-aeneid": {
+      "label": "سراینده"
+    },
+    "relation-virgil-author-of-work-eclogues": {
+      "label": "سراینده"
+    },
+    "relation-virgil-employed-by-roman-republic": {
+      "label": "از حلقهٔ مایکناس و اکتاویان در روزگارِ"
+    },
+    "relation-livy-author-of-work-ab-urbe-condita": {
+      "label": "نویسنده"
+    },
+    "relation-procopius-employed-by-roman-empire": {
+      "label": "دبیر بلیزاریوس در خدمتِ"
+    },
+    "relation-procopius-author-of-work-history-of-the-wars": {
+      "label": "نویسنده"
+    },
+    "relation-procopius-author-of-work-buildings-of-procopius": {
+      "label": "نویسنده"
+    },
+    "relation-procopius-author-of-work-secret-history": {
+      "label": "نویسنده"
+    },
+    "relation-hadrian-commissioner-of-work-pantheon": {
+      "label": "بازسازی کرد"
     }
   }
 }

@@ -4,6 +4,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Rome gains its writers and monuments: Virgil, Livy and Procopius with their works, and the Pantheon rebuilt by
+  Hadrian.
+- The Sasanian kings of the Shahnameh are linked to the kings of history where the Encyclopaedia Iranica says
+  the poem portrays them; the works of Ferdowsi, Avicenna, Biruni and Rudaki are added to the history of Iran.
 - The comparison carries the earlier periods of Iran, China and Rome; the shown stretch stays and a visitor
   moves back.
 - Rome reaches back to Italy before the city: the Villanovan culture, the Etruscans, the Greek colonies of the

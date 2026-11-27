@@ -1819,6 +1819,30 @@
     "event-elamites-conquer-ur": {
       "label": "گشودن اور به دست ایلامیان",
       "summary": "در ۲۰۰۴ پیش از میلاد ایلامیان، هم‌پیمان با مردم شوشان به رهبری کیندتو شاه شیماشکی، اور را گشودند، امپراتوری‌اش را پایان دادند و شاهش ایبی-سین را به اسیری بردند."
+    },
+    "work-shahnameh": {
+      "label": "شاهنامه",
+      "summary": "حماسهٔ فردوسی دربارهٔ شاهان ایران از نخستین شاه تا گشودن ایران به دست عرب‌ها، که حدود ۹۷۷ پس از مرگ دقیقی آغاز شد، نخستین نگارشش تا ۹۹۴ آماده بود و در ۸ مارس ۱۰۱۰ به پایان رسید."
+    },
+    "work-canon-of-medicine": {
+      "label": "قانون در پزشکی",
+      "summary": "القانون فی الطب ابن‌سینا، از نامدارترین کتاب‌های تاریخ پزشکی."
+    },
+    "work-book-of-the-cure": {
+      "label": "کتاب شفا",
+      "summary": "کتاب الشفاء ابن‌سینا، دانشنامه‌ای گسترده در فلسفه و دانش."
+    },
+    "work-athar-al-baqiya": {
+      "label": "آثار الباقیه",
+      "summary": "نخستین کتاب بزرگ بیرونی، الآثار الباقیه، دربارهٔ گاه‌شماری تاریخی و دانشی، که احتمالاً حدود ۱۰۰۰ در دربار قابوس نوشته شد و بعدها اصلاح شد."
+    },
+    "work-india-of-biruni": {
+      "label": "تحقیق ماللهند",
+      "summary": "کتاب بزرگ بیرونی دربارهٔ هند، تحقیق ماللهند، که در ۱۰۳۰ اندکی پس از مرگ محمود به پایان رسید."
+    },
+    "work-rudaki-kalila-wa-dimna": {
+      "label": "کلیله و دمنهٔ رودکی",
+      "summary": "برگردان رودکی از کلیله و دمنه، داستان‌هایی هندی‌تبار، به پارسی نو؛ از میان رفته است اما بازگویی‌های پسین وام بسیاری به آن دارند."
     }
   },
   "relations": {
@@ -3820,6 +3844,30 @@
     },
     "relation-elamites-conquer-ur-during-simashki-dynasty": {
       "label": "در دورهٔ"
+    },
+    "relation-ferdowsi-author-of-work-shahnameh": {
+      "label": "نویسنده"
+    },
+    "relation-daqiqi-author-of-work-shahnameh": {
+      "label": "حماسه‌ای را آغاز کرد که این دنبال می‌کند"
+    },
+    "relation-avicenna-author-of-work-canon-of-medicine": {
+      "label": "نویسنده"
+    },
+    "relation-avicenna-author-of-work-book-of-the-cure": {
+      "label": "نویسنده"
+    },
+    "relation-biruni-author-of-work-athar-al-baqiya": {
+      "label": "نویسنده"
+    },
+    "relation-biruni-employed-by-ziyarid": {
+      "label": "در دربار قابوس"
+    },
+    "relation-biruni-author-of-work-india-of-biruni": {
+      "label": "نویسنده"
+    },
+    "relation-rudaki-author-of-work-rudaki-kalila-wa-dimna": {
+      "label": "برگرداننده"
     }
   }
 }

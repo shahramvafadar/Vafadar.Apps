@@ -12078,6 +12078,163 @@
           "entityId": "person-kindattu"
         }
       ]
+    },
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "The Shahnameh",
+      "summary": "Ferdowsi’s epic of the kings of Iran from the first king to the Arab conquest, begun about 977 after the death of Daqiqi, a first version complete by 994, finished on 8 March 1010.",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "work-canon-of-medicine",
+      "type": "Work",
+      "label": "The Canon of Medicine",
+      "summary": "Avicenna’s al-Qanun fi al-tibb, among the most famous books in the history of medicine.",
+      "sourceIds": [
+        "src-britannica-avicenna"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "al-Qanun fi al-tibb",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-avicenna"
+        }
+      ]
+    },
+    {
+      "id": "work-book-of-the-cure",
+      "type": "Work",
+      "label": "The Book of the Cure",
+      "summary": "Avicenna’s Kitab al-shifaʾ, a vast philosophical and scientific encyclopaedia.",
+      "sourceIds": [
+        "src-britannica-avicenna"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Kitab al-shifaʾ",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-avicenna"
+        }
+      ]
+    },
+    {
+      "id": "work-athar-al-baqiya",
+      "type": "Work",
+      "label": "The Chronology of Ancient Nations",
+      "summary": "Biruni’s first major work, al-Athar al-baqiya, on historical and scientific chronology, written at the court of Qabus probably about 1000 and emended later.",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-biruni"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1000,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "work-india-of-biruni",
+      "type": "Work",
+      "label": "Biruni’s India",
+      "summary": "Biruni’s great work on India, the Tahqiq ma li’l-Hind, completed in 1030 just after the death of Mahmud.",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-biruni"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1030
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "work-rudaki-kalila-wa-dimna",
+      "type": "Work",
+      "label": "Rudaki’s Kalila wa Dimna",
+      "summary": "Rudaki’s translation into New Persian of Kalila wa Dimna, fables of Indian origin; it is lost, but later retellings owe much to it.",
+      "sourceIds": [
+        "src-britannica-rudaki"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-rudaki"
+        }
+      ]
     }
   ],
   "relations": [
@@ -26147,6 +26304,142 @@
       "label": "During",
       "sourceIds": [
         "src-iranica-elam-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ferdowsi-author-of-work-shahnameh",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-daqiqi-author-of-work-shahnameh",
+      "from": "person-daqiqi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Began the epic it takes up",
+      "sourceIds": [
+        "src-iranica-ferdowsi-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-avicenna-author-of-work-canon-of-medicine",
+      "from": "person-avicenna",
+      "to": "work-canon-of-medicine",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-avicenna"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-avicenna-author-of-work-book-of-the-cure",
+      "from": "person-avicenna",
+      "to": "work-book-of-the-cure",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-avicenna"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-biruni-author-of-work-athar-al-baqiya",
+      "from": "person-biruni",
+      "to": "work-athar-al-baqiya",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-biruni-employed-by-ziyarid",
+      "from": "person-biruni",
+      "to": "dynasty-ziyarid",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "At the court of Qabus",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-biruni-author-of-work-india-of-biruni",
+      "from": "person-biruni",
+      "to": "work-india-of-biruni",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-iranica-biruni-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rudaki-author-of-work-rudaki-kalila-wa-dimna",
+      "from": "person-rudaki",
+      "to": "work-rudaki-kalila-wa-dimna",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Translator",
+      "sourceIds": [
+        "src-britannica-rudaki"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

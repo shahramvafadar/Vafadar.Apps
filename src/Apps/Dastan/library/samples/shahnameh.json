@@ -1104,6 +1104,134 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-26",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-ardasir-i",
+      "title": "Ardašīr I i. History – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ardasir-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-shapur-ii",
+      "title": "Šāpur II – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/shapur-ii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-bahram-v",
+      "title": "Bahrām V Gōr – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/bahram-05/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-khosrow-ii",
+      "title": "Ḵosrow II – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/khosrow-ii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-ardasir-i",
+      "title": "Ardašir I – Livius",
+      "url": "https://www.livius.org/articles/person/ardasir-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-sasanians-sasanian-kings",
+      "title": "Sasanian Kings – Livius",
+      "url": "https://www.livius.org/articles/dynasty/sasanians/sasanian-kings/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-dynasty-sasanians",
+      "title": "Sasanians – Livius",
+      "url": "https://www.livius.org/articles/dynasty/sasanians/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-shapur-ii",
+      "title": "Shapur II – Livius",
+      "url": "https://www.livius.org/articles/person/shapur-ii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-jovian",
+      "title": "Jovian – Livius",
+      "url": "https://www.livius.org/articles/person/jovian/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-julian-the-apostate",
+      "title": "Julian the Apostate – Livius",
+      "url": "https://www.livius.org/articles/person/julian-the-apostate/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-bahram-v",
+      "title": "Bahram V – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-v/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-sarvestan",
+      "title": "Sarvestan – Livius",
+      "url": "https://www.livius.org/articles/place/sarvestan/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-ctesiphon",
+      "title": "Ctesiphon – Livius",
+      "url": "https://www.livius.org/articles/place/ctesiphon/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-kavad-i",
+      "title": "Kavad I – Livius",
+      "url": "https://www.livius.org/articles/person/kavad-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-bahram-vi",
+      "title": "Bahram VI – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-vi/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-kavad-ii",
+      "title": "Kavad II – Livius",
+      "url": "https://www.livius.org/articles/person/kavad-ii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -4331,6 +4459,183 @@
               }
             },
             "continuity": "notAsserted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ardashir-i",
+      "type": "Person",
+      "label": "Ardašir I",
+      "summary": "Son of Pâpak and founder of the Sasanian empire. He revolted against Artabanus IV in 224, took Ctesiphon in 226 and took the title king of kings; his siege of Nisibis in 230 began a long war with Rome. He died a natural death in 241.",
+      "sourceIds": [
+        "src-iranica-ardasir-i",
+        "src-livius-person-ardasir-i",
+        "src-livius-sasanians-sasanian-kings",
+        "src-livius-dynasty-sasanians"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ardashir I",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 241
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shapur-ii",
+      "type": "Person",
+      "label": "Shapur II",
+      "summary": "Son of Hormizd II, reportedly crowned as a baby; king from 309 to 379. He fought the Arabs and the Kushans, took Amida in 359 and in 363 defeated Julian, after which Jovian gave up Nisibis and other lands.",
+      "sourceIds": [
+        "src-iranica-shapur-ii",
+        "src-livius-person-shapur-ii",
+        "src-livius-sasanians-sasanian-kings",
+        "src-livius-dynasty-sasanians",
+        "src-livius-person-jovian",
+        "src-livius-person-julian-the-apostate"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-bahram-v",
+      "type": "Person",
+      "label": "Bahram V",
+      "summary": "Younger son of Yazdgard I, raised among the Lakhmid Arabs, king from 420 to 438; he fought a short war with Rome in 421–422, recovered Margiana and Bactria and built the palace at Sarvestan. Sometimes called Gor.",
+      "sourceIds": [
+        "src-iranica-bahram-v",
+        "src-livius-person-bahram-v",
+        "src-livius-sasanians-sasanian-kings",
+        "src-livius-place-sarvestan"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Bahram Gor",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-khusrau-i",
+      "type": "Person",
+      "label": "Khusrau I",
+      "summary": "Successor of Kavad I, king from 531 to 579, called \"deathless soul\". He suppressed the Mazdakites in the 530s and took Antioch in 540, settling its people near Ctesiphon.",
+      "sourceIds": [
+        "src-iranica-khosrow-ii",
+        "src-livius-sasanians-sasanian-kings",
+        "src-livius-dynasty-sasanians",
+        "src-livius-place-ctesiphon",
+        "src-livius-person-kavad-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Khosrow I Anushirvan",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-khusrau-ii",
+      "type": "Person",
+      "label": "Khusrau II",
+      "summary": "Son of Hormizd IV, king from 590 to 628, called \"the victorious\". Restored by a Byzantine army in 591, he later attacked the Byzantines, took Jerusalem in 614 and Alexandria in 619; after Heraclius defeated him he was deposed by his son and died in 628.",
+      "sourceIds": [
+        "src-iranica-khosrow-ii",
+        "src-livius-sasanians-sasanian-kings",
+        "src-livius-dynasty-sasanians",
+        "src-livius-person-bahram-vi",
+        "src-livius-person-kavad-ii"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Khosrow II Parviz",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 628
+            }
           }
         }
       ]
@@ -10145,6 +10450,91 @@
       "label": "An edition of",
       "sourceIds": [
         "src-mazda-shahnameh"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-character-ardashir-i-portrayal-of-ardashir-i",
+      "from": "character-ardashir-i",
+      "to": "person-ardashir-i",
+      "type": "portrayalOf",
+      "directionality": "directed",
+      "label": "Portrays the king of history",
+      "sourceIds": [
+        "src-iranica-ardasir-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-character-shapur-ii-portrayal-of-shapur-ii",
+      "from": "character-shapur-ii",
+      "to": "person-shapur-ii",
+      "type": "portrayalOf",
+      "directionality": "directed",
+      "label": "Portrays the king of history",
+      "sourceIds": [
+        "src-iranica-shapur-ii"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-character-bahram-v-portrayal-of-bahram-v",
+      "from": "character-bahram-v",
+      "to": "person-bahram-v",
+      "type": "portrayalOf",
+      "directionality": "directed",
+      "label": "Portrays the king of history",
+      "sourceIds": [
+        "src-iranica-bahram-v"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-character-kesra-anushirvan-portrayal-of-khusrau-i",
+      "from": "character-kesra-anushirvan",
+      "to": "person-khusrau-i",
+      "type": "portrayalOf",
+      "directionality": "directed",
+      "label": "Portrays the king of history",
+      "sourceIds": [
+        "src-iranica-khosrow-ii"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-character-khosrow-parviz-portrayal-of-khusrau-ii",
+      "from": "character-khosrow-parviz",
+      "to": "person-khusrau-ii",
+      "type": "portrayalOf",
+      "directionality": "directed",
+      "label": "Portrays the king of history",
+      "sourceIds": [
+        "src-iranica-khosrow-ii"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
