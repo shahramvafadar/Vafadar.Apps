@@ -1,0 +1,3065 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "forud",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-forud",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-27",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-forud-2026-11-27",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the story of Forud, sections 1 to 25.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/forood",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "The story of Forud as the poem tells it: from the army Kay Khosrow sends against Turan under Tus, through the death of Forud at Kalat, to the defeat of the Iranians and the return of Piran; the war of Kamus that follows is not part of it.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "The road to Kalat"
+      },
+      {
+        "level": 1,
+        "label": "The son of Siavash"
+      },
+      {
+        "level": 2,
+        "label": "Arrows from the mountain"
+      },
+      {
+        "level": 3,
+        "label": "The fall of Kalat"
+      },
+      {
+        "level": 4,
+        "label": "Snow and the night attack"
+      },
+      {
+        "level": 5,
+        "label": "Fariborz in command"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-forood-index",
+      "title": "Ganjoor: the story of Forud, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-forood-s01",
+      "title": "Ganjoor: بخش ۱ - تأمل در سرمایهٔ بدخویی: رشک، سپردن سپاه به دشمن و نبود خرد",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱ - تأمل در سرمایهٔ بدخویی: رشک، سپردن سپاه به دشمن و نبود خرد"
+    },
+    {
+      "id": "src-ganjoor-forood-s02",
+      "title": "Ganjoor: بخش ۲ - سپردن سپاه به طوس با مهر شاهی، هشدار از راه کلات و فرود سیاوش",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲ - سپردن سپاه به طوس با مهر شاهی، هشدار از راه کلات و فرود سیاوش"
+    },
+    {
+      "id": "src-ganjoor-forood-s03",
+      "title": "Ganjoor: بخش ۳ - مجلس کیخسرو با رستم، دوراهی بیابان و کلات، و برگزیدن راه چرم به رای طوس",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳ - مجلس کیخسرو با رستم، دوراهی بیابان و کلات، و برگزیدن راه چرم به رای طوس"
+    },
+    {
+      "id": "src-ganjoor-forood-s04",
+      "title": "Ganjoor: بخش ۴ - آگاهی فرود از آمدن سپاه طوس، پند جریره به کین‌خواهی و شناسایی سران با تخوار",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۴ - آگاهی فرود از آمدن سپاه طوس، پند جریره به کین‌خواهی و شناسایی سران با تخوار"
+    },
+    {
+      "id": "src-ganjoor-forood-s05",
+      "title": "Ganjoor: بخش ۵ - رسیدن سپاه زرین ایران بر تیغ کوه، شناساندن درفش پهلوانان به فرود و شادمانی او",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۵ - رسیدن سپاه زرین ایران بر تیغ کوه، شناساندن درفش پهلوانان به فرود و شادمانی او"
+    },
+    {
+      "id": "src-ganjoor-forood-s06",
+      "title": "Ganjoor: بخش ۶ - دیدار بهرام و فرود بر تیغ کوه، شناختن نشان سیاوش و هشدار از طوس",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۶ - دیدار بهرام و فرود بر تیغ کوه، شناختن نشان سیاوش و هشدار از طوس"
+    },
+    {
+      "id": "src-ganjoor-forood-s07",
+      "title": "Ganjoor: بخش ۷ - بازگشت بهرام نزد طوس، شناساندن فرود و نافرمانی ستمکارانهٔ او از اندرز کیخسرو",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 1,
+      "passageLocator": "بخش ۷ - بازگشت بهرام نزد طوس، شناساندن فرود و نافرمانی ستمکارانهٔ او از اندرز کیخسرو"
+    },
+    {
+      "id": "src-ganjoor-forood-s08",
+      "title": "Ganjoor: بخش ۸ - پند نافرجام بهرام و بازگشت گردان، تاختن ریونیز و کشته شدنش به تیر فرود",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۸ - پند نافرجام بهرام و بازگشت گردان، تاختن ریونیز و کشته شدنش به تیر فرود"
+    },
+    {
+      "id": "src-ganjoor-forood-s09",
+      "title": "Ganjoor: بخش ۹ - تاختن زرسپ پسر طوس، کشته شدنش به تیر فرود و خیزش طوس به کین",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۹ - تاختن زرسپ پسر طوس، کشته شدنش به تیر فرود و خیزش طوس به کین"
+    },
+    {
+      "id": "src-ganjoor-forood-s10",
+      "title": "Ganjoor: بخش ۱۰ - هشدار تخوار به فرود از آمدن طوس، خشم شاهزاده و پند بازگشت به دژ",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۰ - هشدار تخوار به فرود از آمدن طوس، خشم شاهزاده و پند بازگشت به دژ"
+    },
+    {
+      "id": "src-ganjoor-forood-s11",
+      "title": "Ganjoor: بخش ۱۱ - تیر فرود بر اسب طوس، بازگشت پیادهٔ سپهبد و خشم و سوگ ایرانیان",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۱ - تیر فرود بر اسب طوس، بازگشت پیادهٔ سپهبد و خشم و سوگ ایرانیان"
+    },
+    {
+      "id": "src-ganjoor-forood-s12",
+      "title": "Ganjoor: بخش ۱۲ - تیر فرود بر سینهٔ اسپ گیو، تازیانهٔ پدر بر بیژن و رهسپار شدنش به سپیدکوه",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۲ - تیر فرود بر سینهٔ اسپ گیو، تازیانهٔ پدر بر بیژن و رهسپار شدنش به سپیدکوه"
+    },
+    {
+      "id": "src-ganjoor-forood-s13",
+      "title": "Ganjoor: بخش ۱۳ - شناساندن بیژن پسر گیو، کشتن اسپ او، رزم پیاده، گریختن فرود به دژ و سوگند طوس",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh13",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 2,
+      "passageLocator": "بخش ۱۳ - شناساندن بیژن پسر گیو، کشتن اسپ او، رزم پیاده، گریختن فرود به دژ و سوگند طوس"
+    },
+    {
+      "id": "src-ganjoor-forood-s14",
+      "title": "Ganjoor: بخش ۱۴ - شب بستن دژ کلات، خواب آتش جریره و آمادگی فرود برای نبرد",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۴ - شب بستن دژ کلات، خواب آتش جریره و آمادگی فرود برای نبرد"
+    },
+    {
+      "id": "src-ganjoor-forood-s15",
+      "title": "Ganjoor: بخش ۱۵ - کشته شدن فرود در کمین رهام و بیژن، خودکشی جریره و سوگ و دفن شاهوار ایرانیان",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh15",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 3,
+      "passageLocator": "بخش ۱۵ - کشته شدن فرود در کمین رهام و بیژن، خودکشی جریره و سوگ و دفن شاهوار ایرانیان"
+    },
+    {
+      "id": "src-ganjoor-forood-s16",
+      "title": "Ganjoor: بخش ۱۶ - رسیدن سپاه ایران به کاسه‌رود، نبرد بیژن با پلاشان و آوردن سر او پیش سپهبد",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh16",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۶ - رسیدن سپاه ایران به کاسه‌رود، نبرد بیژن با پلاشان و آوردن سر او پیش سپهبد"
+    },
+    {
+      "id": "src-ganjoor-forood-s17",
+      "title": "Ganjoor: بخش ۱۷ - گرفتاری سپاه در برف کاسه‌رود، سوزاندن کوه هیزم به دست گیو و کشتن کبوده به تیر بهرام",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh17",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۷ - گرفتاری سپاه در برف کاسه‌رود، سوزاندن کوه هیزم به دست گیو و کشتن کبوده به تیر بهرام"
+    },
+    {
+      "id": "src-ganjoor-forood-s18",
+      "title": "Ganjoor: بخش ۱۸ - شکست تژاو از بیژن، ربودن تاج و اسپنوی و لشکرکشی پیران به کین",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh18",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۸ - شکست تژاو از بیژن، ربودن تاج و اسپنوی و لشکرکشی پیران به کین"
+    },
+    {
+      "id": "src-ganjoor-forood-s19",
+      "title": "Ganjoor: بخش ۱۹ - شبیخون پیران بر سپاه مست ایرانیان، کشتار لشکر و نفرین کیخسرو بر طوس",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh19",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 4,
+      "passageLocator": "بخش ۱۹ - شبیخون پیران بر سپاه مست ایرانیان، کشتار لشکر و نفرین کیخسرو بر طوس"
+    },
+    {
+      "id": "src-ganjoor-forood-s20",
+      "title": "Ganjoor: بخش ۲۰ - نامهٔ سوگ و خشم کیخسرو بر کشته شدن فرود، سپردن سپاه به فریبرز و بند کردن طوس",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh20",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۰ - نامهٔ سوگ و خشم کیخسرو بر کشته شدن فرود، سپردن سپاه به فریبرز و بند کردن طوس"
+    },
+    {
+      "id": "src-ganjoor-forood-s21",
+      "title": "Ganjoor: بخش ۲۱ - فرستادن رهام نزد پیران، پیام جنگ یا درنگ، مهلت یک ماه و آراستن لشکر فریبرز",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh21",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۱ - فرستادن رهام نزد پیران، پیام جنگ یا درنگ، مهلت یک ماه و آراستن لشکر فریبرز"
+    },
+    {
+      "id": "src-ganjoor-forood-s22",
+      "title": "Ganjoor: بخش ۲۲ - شکستن پیمان و رزم سخت، گریز فریبرز، نیم‌کردن اختر کاویان و کشته شدن ریونیز",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh22",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۲ - شکستن پیمان و رزم سخت، گریز فریبرز، نیم‌کردن اختر کاویان و کشته شدن ریونیز"
+    },
+    {
+      "id": "src-ganjoor-forood-s23",
+      "title": "Ganjoor: بخش ۲۳ - بازگشت بهرام از پی تازیانهٔ گم‌شده، نبرد پیاده و قطع دست به تیغ تژاو",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh23",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۳ - بازگشت بهرام از پی تازیانهٔ گم‌شده، نبرد پیاده و قطع دست به تیغ تژاو"
+    },
+    {
+      "id": "src-ganjoor-forood-s24",
+      "title": "Ganjoor: بخش ۲۴ - یافتن بهرام خسته، گرفتن تژاو، کشتن او به دست بیژن و مرگ و دخمهٔ بهرام",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh24",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۴ - یافتن بهرام خسته، گرفتن تژاو، کشتن او به دست بیژن و مرگ و دخمهٔ بهرام"
+    },
+    {
+      "id": "src-ganjoor-forood-s25",
+      "title": "Ganjoor: بخش ۲۵ - فرجام داستان فرود: آگهی پیروزی به افراسیاب، جشن و خلعت و پند پیران",
+      "url": "https://ganjoor.net/ferdousi/shahname/forood/sh25",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-27",
+      "spoilerLevel": 5,
+      "passageLocator": "بخش ۲۵ - فرجام داستان فرود: آگهی پیروزی به افراسیاب، جشن و خلعت و پند پیران"
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "Shahnameh",
+      "summary": "The literary work in which the story of Forud is told.",
+      "sourceIds": [
+        "src-ganjoor-forood-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-forood-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-forud",
+      "type": "NarrativeArc",
+      "label": "Forud",
+      "summary": "The army Kay Khosrow sends against Turan under Tus, and its road past Kalat, where Forud, a son of Siavash, lives with his mother.",
+      "sourceIds": [
+        "src-ganjoor-forood-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-kay-khosrow",
+      "type": "Character",
+      "label": "Kay Khosrow",
+      "summary": "The young king of Iran, son of Siavash, who seeks vengeance for his father.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-tus",
+      "type": "Character",
+      "label": "Tus",
+      "summary": "A noble of Iran of the line of Nowzar, made commander of the army.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Commander of the army"
+        }
+      ]
+    },
+    {
+      "id": "character-forud",
+      "type": "Character",
+      "label": "Forud",
+      "summary": "A son of Siavash by the daughter of Piran, who lives in the castle of Kalat with his mother.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Farud",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Siavash"
+        }
+      ]
+    },
+    {
+      "id": "character-siavash",
+      "type": "Character",
+      "label": "Siavash",
+      "summary": "The father of Kay Khosrow and Forud, killed in Turan before this story.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Father of Kay Khosrow and Forud"
+        }
+      ]
+    },
+    {
+      "id": "character-piran",
+      "type": "Character",
+      "label": "Piran",
+      "summary": "The commander and counsellor of Afrasiab, grandfather of Forud.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Commander of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "The hero of Iran, who stays at court with the king.",
+      "sourceIds": [
+        "src-ganjoor-forood-s03"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Hero of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-afrasiab",
+      "type": "Character",
+      "label": "Afrasiab",
+      "summary": "The king of Turan, grandfather of Kay Khosrow and the killer of Siavash.",
+      "sourceIds": [
+        "src-ganjoor-forood-s03"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-gudarz",
+      "type": "Character",
+      "label": "Gudarz",
+      "summary": "An old noble of Iran, son of Keshvad.",
+      "sourceIds": [
+        "src-ganjoor-forood-s03"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Noble of Iran"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "The kingdom of Kay Khosrow.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-turan",
+      "type": "NarrativeRegion",
+      "label": "Turan",
+      "summary": "The kingdom of Afrasiab, where the army is sent.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-kalat",
+      "type": "NarrativePlace",
+      "label": "Kalat",
+      "summary": "A castle on a high mountain beside a narrow road, the home of Forud; the mountain is called Sepid Kuh.",
+      "sourceIds": [
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Sepid Kuh",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
+    },
+    {
+      "id": "place-charam",
+      "type": "NarrativePlace",
+      "label": "Charam",
+      "summary": "A well-watered land on the road to Kalat, where the army halts.",
+      "sourceIds": [
+        "src-ganjoor-forood-s03"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "character-jarira",
+      "type": "Character",
+      "label": "Jarira",
+      "summary": "The mother of Forud, a daughter of Piran and wife of Siavash.",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of Forud"
+        }
+      ]
+    },
+    {
+      "id": "character-tokhar",
+      "type": "Character",
+      "label": "Tokhar",
+      "summary": "A counsellor of Forud who knows the lords of Iran by name.",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Counsellor of Forud"
+        }
+      ]
+    },
+    {
+      "id": "character-bahram",
+      "type": "Character",
+      "label": "Bahram",
+      "summary": "A warrior of Iran, son of Gudarz, once a companion of Siavash.",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Iran, son of Gudarz"
+        }
+      ]
+    },
+    {
+      "id": "character-zangeh",
+      "type": "Character",
+      "label": "Zangeh-ye Shavaran",
+      "summary": "A warrior of Iran, once a companion of Siavash.",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-fariborz",
+      "type": "Character",
+      "label": "Fariborz",
+      "summary": "A son of Kay Kavus, brother of Siavash and so uncle of Forud.",
+      "sourceIds": [
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Prince of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-gostaham",
+      "type": "Character",
+      "label": "Gostaham",
+      "summary": "A warrior of Iran, son of Gazhdaham.",
+      "sourceIds": [
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-bizhan",
+      "type": "Character",
+      "label": "Bizhan",
+      "summary": "A young warrior of Iran, the only son of Giv.",
+      "sourceIds": [
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Iran, son of Giv"
+        }
+      ]
+    },
+    {
+      "id": "character-giv",
+      "type": "Character",
+      "label": "Giv",
+      "summary": "A warrior of Iran, son of Gudarz, who brought Kay Khosrow from Turan.",
+      "sourceIds": [
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-rivniz",
+      "type": "Character",
+      "label": "Rivniz",
+      "summary": "A young warrior of Iran, son-in-law of Tus.",
+      "sourceIds": [
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son-in-law of Tus"
+        }
+      ]
+    },
+    {
+      "id": "character-zarasp",
+      "type": "Character",
+      "label": "Zarasp",
+      "summary": "A son of Tus, married to a sister of Rivniz.",
+      "sourceIds": [
+        "src-ganjoor-forood-s09"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Tus"
+        }
+      ]
+    },
+    {
+      "id": "character-rohham",
+      "type": "Character",
+      "label": "Rohham",
+      "summary": "A warrior of Iran, son of Gudarz.",
+      "sourceIds": [
+        "src-ganjoor-forood-s15"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-palashan",
+      "type": "Character",
+      "label": "Palashan",
+      "summary": "A young Turanian warrior sent to count the Iranian banners.",
+      "sourceIds": [
+        "src-ganjoor-forood-s16"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-tazhav",
+      "type": "Character",
+      "label": "Tazhav",
+      "summary": "A Turanian lord of Gorogerd, son-in-law of Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-forood-s17"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Lord of Gorogerd"
+        }
+      ]
+    },
+    {
+      "id": "character-kabudeh",
+      "type": "Character",
+      "label": "Kabudeh",
+      "summary": "A herdsman of Afrasiab whom Tazhav sends to spy on the Iranians.",
+      "sourceIds": [
+        "src-ganjoor-forood-s17"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Scout of Tazhav"
+        }
+      ]
+    },
+    {
+      "id": "character-espanuy",
+      "type": "Character",
+      "label": "Espanuy",
+      "summary": "A woman of the household of Tazhav, called his companion.",
+      "sourceIds": [
+        "src-ganjoor-forood-s18"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Companion of Tazhav"
+        }
+      ]
+    },
+    {
+      "id": "place-kaseh-rud",
+      "type": "NarrativePlace",
+      "label": "Kaseh Rud",
+      "summary": "A river in Turan where the Iranian army makes camp.",
+      "sourceIds": [
+        "src-ganjoor-forood-s16"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "place-gorogerd",
+      "type": "NarrativePlace",
+      "label": "Gorogerd",
+      "summary": "The seat of Tazhav, where the herds of Afrasiab graze.",
+      "sourceIds": [
+        "src-ganjoor-forood-s17"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "character-human",
+      "type": "Character",
+      "label": "Human",
+      "summary": "A Turanian hero, brother of Piran.",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-lahhak",
+      "type": "Character",
+      "label": "Lahhak",
+      "summary": "A Turanian warrior.",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-farshidvard",
+      "type": "Character",
+      "label": "Farshidvard",
+      "summary": "A Turanian warrior.",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-rivniz-prince",
+      "type": "Character",
+      "label": "Rivniz, prince of the house of Kavus",
+      "summary": "A young crowned prince dear to Kay Kavus; the poem calls him the youngest son of the king. Not the Rivniz who was son-in-law of Tus.",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Prince of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-ruyin",
+      "type": "Character",
+      "label": "Ruyin",
+      "summary": "A son of Piran.",
+      "sourceIds": [
+        "src-ganjoor-forood-s23"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Warrior of Turan, son of Piran"
+        }
+      ]
+    },
+    {
+      "id": "place-khotan",
+      "type": "NarrativeRegion",
+      "label": "Khotan",
+      "summary": "The land of Piran, to which he returns.",
+      "sourceIds": [
+        "src-ganjoor-forood-s25"
+      ],
+      "spoilerLevel": 5
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-forud",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-forood-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-forud",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-forood-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-kay-khosrow",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-forood-s03"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-kay-khosrow",
+      "to": "character-forud",
+      "type": "siblingOf",
+      "label": "Brothers",
+      "sourceIds": [
+        "src-ganjoor-forood-s01",
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-01"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-siavash",
+      "to": "character-forud",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-jarira",
+      "to": "character-forud",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-piran",
+      "to": "character-jarira",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-tokhar",
+      "to": "character-forud",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-forood-s04",
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-05"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-gudarz",
+      "to": "character-bahram",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-forood-s04",
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-05"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-forud",
+      "to": "character-rivniz",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s08"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-09"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-11",
+      "from": "character-tus",
+      "to": "character-zarasp",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-forood-s09"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-forud",
+      "to": "character-zarasp",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s09"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-10"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-tus",
+      "to": "character-forud",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s10",
+        "src-ganjoor-forood-s11"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-11"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-giv",
+      "to": "character-bizhan",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-forood-s12"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-15",
+      "from": "character-bizhan",
+      "to": "character-forud",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s13"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-16",
+      "from": "character-rohham",
+      "to": "character-forud",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s15"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-17",
+      "from": "character-bizhan",
+      "to": "character-palashan",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s16"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-19"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-18",
+      "from": "character-afrasiab",
+      "to": "place-turan",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-forood-s18"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-24"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-19",
+      "from": "character-bahram",
+      "to": "character-kabudeh",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s17"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-22"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-20",
+      "from": "character-bizhan",
+      "to": "character-tazhav",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s18"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-23"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-21",
+      "from": "character-piran",
+      "to": "character-afrasiab",
+      "type": "alliedWith",
+      "label": "Allies",
+      "sourceIds": [
+        "src-ganjoor-forood-s18"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-24"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-22",
+      "from": "character-gudarz",
+      "to": "character-giv",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-28"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-23",
+      "from": "character-human",
+      "to": "character-fariborz",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-28"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-24",
+      "from": "character-piran",
+      "to": "character-ruyin",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-forood-s23"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-30"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-25",
+      "from": "character-tazhav",
+      "to": "character-bahram",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s23"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-30"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-26",
+      "from": "character-giv",
+      "to": "character-bahram",
+      "type": "siblingOf",
+      "label": "Brothers",
+      "sourceIds": [
+        "src-ganjoor-forood-s24"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-31"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-27",
+      "from": "character-giv",
+      "to": "character-tazhav",
+      "type": "opponentOf",
+      "label": "Enemies",
+      "sourceIds": [
+        "src-ganjoor-forood-s24"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-forud",
+        "eventIds": [
+          "event-31"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "Tus is given the army",
+      "summary": "Kay Khosrow gives Tus the banner of Kaveh and his seal and makes him commander. He bids him harm no one on the way and not to take the road of Kalat: there lives his brother Forud, a son of Siavash by the daughter of Piran, who knows no one from Iran by name. Tus promises to obey.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s01",
+        "src-ganjoor-forood-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king who gives the command",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "new commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "brother who must be avoided",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "father remembered",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "grandfather of Forud",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "forbidden road",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "land of the campaign",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "The king and Rostam at court",
+      "summary": "Kay Khosrow returns to his palace and holds a feast with Rostam. He speaks of Afrasiab, of his father’s death and of how he was given to shepherds; Rostam tells him that the world will yet turn to his will.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king who remembers",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "counsellor at the feast",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "enemy spoken of",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "father mourned",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "court",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "Tus chooses the road of Kalat",
+      "summary": "The army reaches a fork: a waterless desert on one side, the road of Kalat and Charam on the other. Tus prefers the green road he once rode. Gudarz reminds him of the king’s order, but Tus dismisses his fear and leads the army towards Kalat.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tus",
+          "role": "commander who decides",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "noble who warns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king whose order is set aside",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "chosen road",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-charam",
+          "role": "halting place",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "Jarira counsels her son",
+      "summary": "Forud hears that the army of Iran is near and drives his herds up the mountain. His mother Jarira tells him that the new king of Iran is his brother: he should put on armour, go before the army and be the first to seek vengeance for Siavash. To know the lords of Iran he should take Tokhar, and ask for Bahram and Zangeh, who were Siavash’s companions.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s04"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-forud",
+          "role": "son who asks counsel",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jarira",
+          "role": "mother who counsels",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "brother on the throne",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "father to be avenged",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "father of Jarira",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tokhar",
+          "role": "guide to be taken",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "friend to ask for",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-zangeh",
+          "role": "friend to ask for",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "home",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "Tokhar names the banners",
+      "summary": "Forud and Tokhar ride to a peak above the road and watch thirty thousand riders pass in gold. Tokhar names the lords by their banners: Tus with the elephant, Fariborz the uncle of Forud with the sun, Gostaham with the moon, Zangeh with the wolf, Bizhan son of Giv, Giv, Gudarz with the lion, Rivniz and Bahram son of Gudarz. Forud rejoices at the sight.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s04",
+        "src-ganjoor-forood-s05"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-forud",
+          "role": "prince who watches",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tokhar",
+          "role": "counsellor who names",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fariborz",
+          "role": "uncle passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gostaham",
+          "role": "lord passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zangeh",
+          "role": "lord passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "lord passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "lord passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "lord passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rivniz",
+          "role": "lord passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "lord passing by",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "mountain road",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "Bahram climbs the mountain",
+      "summary": "Tus sees two riders on the peak and grows angry. He orders a man to find out who they are: an Iranian is to be whipped, a Turk bound or killed, a spy cut in two. Bahram son of Gudarz takes the task and rides up.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tus",
+          "role": "angry commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "rider sent up",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "stranger on the peak",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "mountain",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "Bahram knows the son of Siavash",
+      "summary": "Bahram calls out roughly, and Forud answers that he should speak gently. Forud asks for Bahram by name; Bahram asks to see the mark of Siavash, and Forud shows a mole on his arm. Bahram bows. Forud offers a week of feasting and to lead the army against Turan, and gives Bahram a mace; Bahram promises to speak to Tus but warns that Tus is headstrong and that any other rider who comes will mean harm.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bahram",
+          "role": "warrior who recognizes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "prince who reveals himself",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "father whose mark is shown",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander to be persuaded",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-fariborz",
+          "role": "prince Tus would have had as king",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "peak",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "Tus will not listen",
+      "summary": "Bahram tells Tus that the rider is Forud, whom the king told them not to approach. Tus answers that he commands the army: if the boy is a king, what is he? He calls Forud a Turk’s son blocking the road and mocks Bahram for turning back from a single rider.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s07"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tus",
+          "role": "commander who refuses",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "warrior who reports",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "prince spoken of",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king whose counsel is ignored",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "Rivniz falls",
+      "summary": "Tus asks for a man to bring him the head of the Turk. Bahram turns back the first riders by telling them who stands on the mountain, but Rivniz, son-in-law of Tus, rides up alone. Tokhar names him, and Forud’s arrow pins his helmet to his head; he falls dead.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s08"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rivniz",
+          "role": "rider who attacks",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "archer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tokhar",
+          "role": "counsellor who names him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander who sends him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "warrior who warns",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "mountain",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "Zarasp falls",
+      "summary": "Tus sends his own son Zarasp to avenge Rivniz. Tokhar tells Forud who he is, and Forud’s arrow pins him to his saddle. His horse runs back to the army, and Tus puts on his armour and rides against Forud himself.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s09"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zarasp",
+          "role": "son who seeks vengeance",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "archer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tokhar",
+          "role": "counsellor who names him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "grieving father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rivniz",
+          "role": "fallen warrior",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "mountain",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "Tus returns on foot",
+      "summary": "Tokhar urges Forud to shut himself in the castle, and when he will not, to spare Tus and shoot his horse, since harm to Tus would grieve the king. Forud’s arrow kills the horse; Tus walks back to the camp with his shield on his neck while the women on the walls laugh.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s10",
+        "src-ganjoor-forood-s11"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tokhar",
+          "role": "counsellor who restrains",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "archer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander unhorsed",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "castle walls",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "Giv loses his horse",
+      "summary": "Giv, angered by the shame, puts on armour and rides up. Tokhar tells Forud that Giv brought his brother from Turan and wears the armour of Siavash, which arrows cannot pierce; Forud shoots his horse instead, and Giv too turns back.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s11",
+        "src-ganjoor-forood-s12"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-giv",
+          "role": "warrior who attacks",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "archer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tokhar",
+          "role": "counsellor who names him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zarasp",
+          "role": "fallen warrior",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "mountain",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "Bizhan swears to go",
+      "summary": "Bizhan reproaches his father for turning back from one rider, and Giv strikes him with his whip. Stung, Bizhan swears not to turn back until he has avenged Zarasp. Gostaham gives him a horse, and Giv, relenting, sends him the armour of Siavash.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s12"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bizhan",
+          "role": "son who swears",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "angry father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gostaham",
+          "role": "friend who gives a horse",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zarasp",
+          "role": "fallen warrior to avenge",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "Bizhan fights on foot",
+      "summary": "Tokhar warns that arrows will not pass the armour Bizhan wears. Forud kills his horse, but Bizhan climbs on foot with his sword; another arrow pierces only his shield. Forud turns back to the castle, Bizhan slashes his horse at the gate, and stones from the walls drive him off. Back in camp Tus swears to raze the castle.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s13"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bizhan",
+          "role": "warrior on foot",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "prince who withdraws",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tokhar",
+          "role": "counsellor who warns",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander who swears",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "castle",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "Jarira’s dream",
+      "summary": "At night a thousand men come from Kalat into the castle. Jarira dreams that a fire rises and burns the castle and its people; she wakes, sees the mountain full of armour and spears, and wakes her son. Forud answers that his time has come as his father’s did; he will not ask the Iranians for mercy, and arms his men.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s14"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jarira",
+          "role": "mother who dreams",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "prince who prepares",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-siavash",
+          "role": "father whose fate he recalls",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "foe he expects",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "castle",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "Forud is struck down",
+      "summary": "Forud rides out with his Turks and fights until noon, until none of them is left. Riding back alone, he is ambushed by Rohham and Bizhan: Rohham strikes his shoulder from behind and Bizhan cuts down his horse. He reaches the castle on foot, the gate is shut, and he dies among the women, his mother at his side.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s15"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-forud",
+          "role": "prince who falls",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rohham",
+          "role": "warrior in ambush",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "warrior in ambush",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jarira",
+          "role": "mother at his side",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "castle",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "Jarira’s end",
+      "summary": "Forud tells the women to throw themselves from the walls rather than be taken by Bizhan, and they do. Jarira burns the treasure, kills the horses in their stable, lays her face on her son’s and takes her own life with a dagger.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s15"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jarira",
+          "role": "mother who dies",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "dead son",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "feared captor",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "castle",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "The burial of Forud",
+      "summary": "The Iranians break into the castle. Bahram weeps, saying Forud died more wretchedly than his father, and warns of the king’s anger. Tus comes with Gudarz and Giv and weeps over Forud and his own son; Gudarz rebukes him for his rashness. Tus has a royal tomb built on the mountain, and Forud is laid in it with Zarasp and Rivniz beside him.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s15"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bahram",
+          "role": "warrior who mourns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander who mourns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "noble who rebukes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "warrior who weeps",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zangeh",
+          "role": "warrior at the bier",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "dead prince",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-zarasp",
+          "role": "buried beside him",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-rivniz",
+          "role": "buried beside him",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king whose anger is feared",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-kalat",
+          "role": "mountain of the tomb",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "Bizhan and Palashan",
+      "summary": "After three days the army moves on, killing every Turanian it meets, and camps at Kaseh Rud. Palashan comes to count the banners; Bizhan begs Giv to let him go, takes the armour of Siavash, and after a long fight breaks Palashan’s back with his mace and brings his head, horse and armour to Tus.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s16"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bizhan",
+          "role": "warrior who fights",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-palashan",
+          "role": "Turanian scout",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "father who lets him go",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander who rejoices",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-kaseh-rud",
+          "role": "camp",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "ravaged land",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "Snow at Kaseh Rud",
+      "summary": "Afrasiab orders Piran to gather an army. A cold wind and snow fall on the Iranian camp for a week; tents freeze, men and beasts die and the warriors eat their horses. When the sun returns, Bahram tells Tus that this is the fruit of his war against the son of Siavash; Tus answers that what was written has come to pass.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s17"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who orders",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "commander summoned",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "warrior who reproaches",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander who answers",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "prince remembered",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-kaseh-rud",
+          "role": "frozen camp",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "Giv burns the mountain of wood",
+      "summary": "Kay Khosrow had charged Giv with burning a mountain of firewood that blocked the road. Bizhan offers to go in his place, but Giv goes himself and sets it alight with an arrow. The fire burns for three weeks; then the army crosses and camps at Gorogerd.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s17"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-giv",
+          "role": "warrior who burns the way",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "son who offers to go",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king who gave the charge",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-gorogerd",
+          "role": "new camp",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "Bahram and Kabudeh",
+      "summary": "Tazhav, lord of Gorogerd, sends the herdsman Kabudeh by night to spy on the army. Bahram, on watch, hears his horse, shoots him at the belt and, after Kabudeh names Tazhav as his master, cuts off his head.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s17"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bahram",
+          "role": "warrior on watch",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kabudeh",
+          "role": "scout caught",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tazhav",
+          "role": "lord who sent him",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-gorogerd",
+          "role": "camp",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "Bizhan and Tazhav",
+      "summary": "Tazhav attacks with a small force. Giv offers him gifts if he will come over to Iran, but Tazhav boasts of his crown and herds. Bizhan scorns the offer and charges; the Turanians are cut down, Bizhan snatches Tazhav’s crown from his head and chases him. Tazhav takes Espanuy up behind him, then, his horse failing, sets her down and flees; Bizhan carries her back to Tus.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s18"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tazhav",
+          "role": "lord who attacks",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "warrior who offers terms",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "warrior who pursues",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-espanuy",
+          "role": "woman left behind",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander who receives her",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "place-gorogerd",
+          "role": "battlefield",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "Piran gathers the army",
+      "summary": "Tazhav comes weeping to Afrasiab and tells him that Palashan is dead and the land burned. Afrasiab rebukes Piran for his delay; Piran gathers a hundred thousand men and takes a short road to fall on the Iranians unawares. His spies report that the Iranians are drinking day and night with no watch.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s18"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tazhav",
+          "role": "lord who brings the news",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who rebukes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "commander who gathers the army",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-palashan",
+          "role": "fallen warrior",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "land roused to war",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-25",
+      "label": "The night attack",
+      "summary": "Piran falls on the camp at midnight with thirty thousand riders. Giv and Gudarz are awake and rouse whom they can, but the drunken army is cut down; at dawn the plain is full of the dead. The survivors flee to a mountain near Kaseh Rud. A rider takes the news to Kay Khosrow, already grieving for his brother, who curses Tus all night.",
+      "order": 25,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s19"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-piran",
+          "role": "commander who attacks",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "warrior awake",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "noble awake",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "warrior roused",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "beaten commander",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king who curses",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "brother mourned",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-kaseh-rud",
+          "role": "place of flight",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-26",
+      "label": "Tus in chains",
+      "summary": "Kay Khosrow writes in grief and anger: Tus took the road he forbade and killed his brother. He gives the banner of Kaveh to Fariborz, with Gudarz as counsellor and Giv in the vanguard, and orders Tus home. When Tus kisses the ground before him, the king curses him; only his descent from Manuchehr and his white beard save his head, and he is put in chains.",
+      "order": 26,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s20"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king who judges",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fariborz",
+          "role": "new commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander in disgrace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "counsellor appointed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "vanguard appointed",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "brother mourned",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "court",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-27",
+      "label": "A month’s truce",
+      "summary": "Fariborz sends Rohham to Piran: a night attack is not the work of warriors; he may choose war or delay. Piran replies that Tus brought this on himself by killing young and old; he grants a month, after which the Iranians must leave Turan or fight. Fariborz uses the month to equip his army.",
+      "order": 27,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s21"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fariborz",
+          "role": "commander who sends word",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rohham",
+          "role": "envoy",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "commander who grants time",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "commander blamed",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "land to be left",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-28",
+      "label": "Fariborz flees",
+      "summary": "When the month ends both sides break faith and battle is joined. Gudarz kills nine hundred of Piran’s kin, and Lahhak and Farshidvard charge Giv. Human strikes the centre, Fariborz flees to the mountain and the army breaks. Gudarz turns to flee too, but Giv shames him into standing, and the house of Gudarz swears not to yield.",
+      "order": 28,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-fariborz",
+          "role": "commander who flees",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "Turanian who breaks the centre",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "old noble who stands",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "son who shames him",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-lahhak",
+          "role": "Turanian who charges",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-farshidvard",
+          "role": "Turanian who charges",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gostaham",
+          "role": "warrior who swears",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "commander of Turan",
+          "presence": "involved_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-29",
+      "label": "The banner cut in two",
+      "summary": "Gudarz sends Bizhan to bring the banner of Kaveh from Fariborz. When Fariborz refuses, Bizhan cuts the banner in two and carries half back, holding off the Turks with arrows. The prince Rivniz is killed, and Bahram lifts his crown from the field on his spear. At nightfall the Iranians withdraw, leaving their wounded; Bizhan takes the unhorsed Gostaham up behind him.",
+      "order": 29,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s22"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bizhan",
+          "role": "warrior who cuts the banner",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fariborz",
+          "role": "commander who refuses",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "noble who sends him",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-human",
+          "role": "Turanian who seeks the banner",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rivniz-prince",
+          "role": "prince who falls",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "warrior who saves the crown",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "warrior who laments",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gostaham",
+          "role": "unhorsed warrior",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-forud",
+          "role": "prince mourned with Rivniz",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-30",
+      "label": "Bahram goes back for his whip",
+      "summary": "Bahram has lost his whip, with his name on it, while taking the crown. Against the counsel of Gudarz and Giv he rides back by moonlight, finds it among the dead and loses his horse. On foot he holds off a hundred riders and wounds Ruyin son of Piran with his arrows. Piran offers him friendship but no horse; then Tazhav comes with men, and when Bahram is spent, cuts off his arm from behind.",
+      "order": 30,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s23"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bahram",
+          "role": "warrior alone on foot",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "father who forbids",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "brother who forbids",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-ruyin",
+          "role": "son of Piran wounded",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "commander who offers peace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tazhav",
+          "role": "warrior who strikes",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rivniz-prince",
+          "role": "fallen prince",
+          "presence": "deceased_subject"
+        }
+      ]
+    },
+    {
+      "id": "event-31",
+      "label": "Giv avenges Bahram",
+      "summary": "Giv and Bizhan find Bahram dying and he names Tazhav. Giv swears revenge, lassos Tazhav from his saddle and drags him back. Bahram asks that Tazhav be spared, but Giv cuts off his head. Bahram dies; Giv builds him a royal tomb, and the army mourns.",
+      "order": 31,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s24"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-giv",
+          "role": "brother who avenges",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "companion",
+          "presence": "involved_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahram",
+          "role": "dying warrior",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tazhav",
+          "role": "captive killed",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-piran",
+          "role": "commander named by Bahram",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-32",
+      "label": "Piran’s triumph",
+      "summary": "The surviving Iranians agree to return to the king and withdraw. Piran finds their camp empty, shares the spoils and sends news to Afrasiab, who meets him with his army and feasts for two weeks. Afrasiab sends him rich gifts and warns him to keep watch: Kay Khosrow is strong, and wherever Rostam leads, no one should sleep easy. Piran returns to Khotan.",
+      "order": 32,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-forood-s25"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-piran",
+          "role": "victorious commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king who rewards and warns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king to be watched",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "hero to be feared",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-khotan",
+          "role": "home of Piran",
+          "presence": "setting"
+        }
+      ]
+    }
+  ],
+  "media": []
+}
