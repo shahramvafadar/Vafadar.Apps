@@ -1503,6 +1503,62 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-27",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-zeno-i",
+      "title": "Zeno I – Livius",
+      "url": "https://www.livius.org/articles/person/zeno-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-odoacer",
+      "title": "Odoacer – Britannica",
+      "url": "https://www.britannica.com/biography/Odoacer",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-theodoric-king-of-italy",
+      "title": "Theodoric – Britannica",
+      "url": "https://www.britannica.com/biography/Theodoric-king-of-Italy",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-attila-king-of-the-huns",
+      "title": "Attila – Britannica",
+      "url": "https://www.britannica.com/biography/Attila-king-of-the-Huns",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-flavius-aetius",
+      "title": "Flavius Aetius – Britannica",
+      "url": "https://www.britannica.com/biography/Flavius-Aetius",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-belisarius",
+      "title": "Belisarius – Britannica",
+      "url": "https://www.britannica.com/biography/Belisarius",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-flavius-stilicho",
+      "title": "Flavius Stilicho – Britannica",
+      "url": "https://www.britannica.com/biography/Flavius-Stilicho",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -9173,7 +9229,9 @@
       "label": "Attila defeated in Gaul",
       "summary": "In 451 the Huns crossed the Rhine and invaded Gaul; Aetius defeated Attila near Troyes. In 452 the Huns invaded Italy.",
       "sourceIds": [
-        "src-livius-person-valentinian-iii"
+        "src-livius-person-valentinian-iii",
+        "src-britannica-attila-king-of-the-huns",
+        "src-britannica-flavius-aetius"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -9191,6 +9249,14 @@
         {
           "fact": "participant",
           "entityId": "person-valentinian-iii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-attila"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-aetius"
         }
       ]
     },
@@ -9232,7 +9298,8 @@
       "label": "The end of the empire in the west",
       "summary": "In 476 the soldiers in Italy revolted and their leader Odoacer deposed Romulus Augustulus, the last emperor in the west.",
       "sourceIds": [
-        "src-livius-person-romulus-augustulus"
+        "src-livius-person-romulus-augustulus",
+        "src-britannica-odoacer"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -9250,6 +9317,10 @@
         {
           "fact": "participant",
           "entityId": "person-romulus-augustulus"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-odoacer"
         }
       ]
     },
@@ -9259,7 +9330,8 @@
       "label": "The Nika riots",
       "summary": "In January 532 the Nika riots broke out in Constantinople under Justinian.",
       "sourceIds": [
-        "src-livius-person-justinian"
+        "src-livius-person-justinian",
+        "src-britannica-belisarius"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -9281,6 +9353,10 @@
         {
           "fact": "participant",
           "entityId": "person-justinian"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-belisarius"
         }
       ]
     },
@@ -9317,7 +9393,8 @@
       "label": "Belisarius conquers Africa",
       "summary": "Justinian’s general Belisarius conquered Africa and entered Carthage on 15 September 534; he went on to Sicily and took Rome in 536.",
       "sourceIds": [
-        "src-livius-person-justinian"
+        "src-livius-person-justinian",
+        "src-britannica-belisarius"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -9339,6 +9416,10 @@
         {
           "fact": "participant",
           "entityId": "person-justinian"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-belisarius"
         }
       ]
     },
@@ -9451,6 +9532,412 @@
         {
           "fact": "participant",
           "entityId": "person-heraclius"
+        }
+      ]
+    },
+    {
+      "id": "person-zeno",
+      "type": "Person",
+      "label": "Zeno",
+      "summary": "An Isaurian who made his career under Leo I and married his daughter Ariadne; emperor in the east from 474, he was briefly dethroned by Basiliscus in 475, came back in 476 with the help of the Ostrogothic king Theodoric and ruled until his natural death in 491.",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Zeno I",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 440,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 491
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor when the empire in the west ended."
+        }
+      ]
+    },
+    {
+      "id": "person-basiliscus",
+      "type": "Person",
+      "label": "Basiliscus",
+      "summary": "The brother of Verina, widow of Leo I, who with her support dethroned Zeno in 475 and held the throne until Zeno returned in 476.",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Dethroned Zeno for a year."
+        }
+      ]
+    },
+    {
+      "id": "government-kingdom-of-italy",
+      "type": "Government",
+      "label": "The kingdom of Italy",
+      "summary": "The rule of Odoacer and then of the Ostrogothic king Theodoric over Italy after the last emperor in the west was deposed in 476; Theodoric’s capital was Ravenna.",
+      "sourceIds": [
+        "src-britannica-odoacer",
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 476
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-italy",
+      "type": "Office",
+      "label": "King of Italy",
+      "summary": "The title Odoacer took in Italy while recognizing the eastern emperor as overlord; Theodoric held it after him.",
+      "sourceIds": [
+        "src-britannica-odoacer",
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "government-kingdom-of-italy"
+        }
+      ]
+    },
+    {
+      "id": "person-odoacer",
+      "type": "Person",
+      "label": "Odoacer",
+      "summary": "A Germanic warrior, probably of the Sciri, who rose to command in the Roman army; proclaimed king by his troops in 476, he deposed Romulus Augustulus and ruled Italy as king until Theodoric’s conquest; he died in 493.",
+      "sourceIds": [
+        "src-britannica-odoacer"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Odovacar",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 433,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 493
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The first barbarian king of Italy."
+        }
+      ]
+    },
+    {
+      "id": "person-theodoric",
+      "type": "Person",
+      "label": "Theodoric the Great",
+      "summary": "King of the Ostrogoths from 471, who had lived as a boy as a hostage in Constantinople; he invaded Italy in 488, conquered it with Sicily by 493 and ruled as king of Italy from Ravenna until his death in 526.",
+      "sourceIds": [
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 454
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 526
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "King of Italy from Ravenna."
+        }
+      ]
+    },
+    {
+      "id": "event-theodoric-conquers-italy",
+      "type": "Event",
+      "label": "Theodoric conquers Italy",
+      "summary": "The Ostrogoths under Theodoric invaded Italy in 488 and by 493 had conquered almost the whole peninsula and Sicily, ending the rule of Odoacer.",
+      "sourceIds": [
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 488
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 493
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-theodoric"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-odoacer"
+        }
+      ]
+    },
+    {
+      "id": "person-attila",
+      "type": "Person",
+      "label": "Attila",
+      "summary": "King of the Huns from 434 to 453, first with his brother Bleda, whom he murdered in 445; he took a yearly tribute in gold from the eastern empire and invaded Gaul and Italy.",
+      "sourceIds": [
+        "src-britannica-attila-king-of-the-huns"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 453
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Called the Scourge of God."
+        }
+      ]
+    },
+    {
+      "id": "person-aetius",
+      "type": "Person",
+      "label": "Flavius Aetius",
+      "summary": "A Roman general who dominated the western empire under Valentinian III: master of both services from 430, patrician from 435 and three times consul; he defeated Attila in Gaul and was murdered in 454.",
+      "sourceIds": [
+        "src-britannica-flavius-aetius",
+        "src-livius-person-valentinian-iii"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 454
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Defeated Attila in Gaul."
+        }
+      ]
+    },
+    {
+      "id": "person-stilicho",
+      "type": "Person",
+      "label": "Flavius Stilicho",
+      "summary": "Half-Roman and half-Vandal, commander in chief of the army and regent for Honorius from 394 to 408; he fought Alaric’s Visigoths and repelled an invasion of Italy in 406, and was beheaded on Honorius’ orders in 408.",
+      "sourceIds": [
+        "src-britannica-flavius-stilicho"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 365
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 408
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Regent for Honorius."
+        }
+      ]
+    },
+    {
+      "id": "person-belisarius",
+      "type": "Person",
+      "label": "Belisarius",
+      "summary": "A general of Justinian who won his first victory against the Sasanians in 530, put down the Nika insurrection in 532 and led the reconquest of Africa and Italy; he died in 565.",
+      "sourceIds": [
+        "src-britannica-belisarius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 505,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 565
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Reconquered Africa and Italy for Justinian."
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-dara",
+      "type": "Event",
+      "label": "Belisarius defeats the Persians",
+      "summary": "Belisarius won his first victory as a commander against Sasanian Persia on the Mesopotamian front in 530.",
+      "sourceIds": [
+        "src-britannica-belisarius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 530
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-belisarius"
         }
       ]
     }
@@ -19112,6 +19599,500 @@
       "label": "Took part in",
       "sourceIds": [
         "src-livius-person-heraclius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zeno-holder-of-east-roman-emperor",
+      "from": "person-zeno",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 474
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 475
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zeno-holder-of-east-roman-emperor-2",
+      "from": "person-zeno",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 476
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 491
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zeno-parent-of-leo-ii",
+      "from": "person-zeno",
+      "to": "person-leo-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zeno-successor-of-leo-ii",
+      "from": "person-zeno",
+      "to": "person-leo-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-anastasius-i-successor-of-zeno",
+      "from": "person-anastasius-i",
+      "to": "person-zeno",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basiliscus-holder-of-east-roman-emperor",
+      "from": "person-basiliscus",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-livius-person-zeno-i"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 475
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 476
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-odoacer-holder-of-king-of-italy",
+      "from": "person-odoacer",
+      "to": "office-king-of-italy",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-britannica-odoacer"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 476
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 493
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-odoacer-founder-of-kingdom-of-italy",
+      "from": "person-odoacer",
+      "to": "government-kingdom-of-italy",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-odoacer"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theodoric-holder-of-king-of-italy",
+      "from": "person-theodoric",
+      "to": "office-king-of-italy",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 493
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 526
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theodoric-successor-of-odoacer",
+      "from": "person-theodoric",
+      "to": "person-odoacer",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theodoric-participant-in-theodoric-conquers-italy",
+      "from": "person-theodoric",
+      "to": "event-theodoric-conquers-italy",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-odoacer-participant-in-theodoric-conquers-italy",
+      "from": "person-odoacer",
+      "to": "event-theodoric-conquers-italy",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theodoric-conquers-italy-during-west-roman-empire",
+      "from": "event-theodoric-conquers-italy",
+      "to": "period-west-roman-empire",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-theodoric-king-of-italy"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-odoacer-participant-in-end-of-the-west",
+      "from": "person-odoacer",
+      "to": "event-end-of-the-west",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-odoacer"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-aetius-employed-by-roman-empire",
+      "from": "person-aetius",
+      "to": "government-roman-empire",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "General of the western empire under Valentinian III",
+      "sourceIds": [
+        "src-britannica-flavius-aetius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-attila-participant-in-attila-in-gaul",
+      "from": "person-attila",
+      "to": "event-attila-in-gaul",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-attila-king-of-the-huns"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-aetius-participant-in-attila-in-gaul",
+      "from": "person-aetius",
+      "to": "event-attila-in-gaul",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-flavius-aetius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-stilicho-employed-by-roman-empire",
+      "from": "person-stilicho",
+      "to": "government-roman-empire",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "Regent for Honorius",
+      "sourceIds": [
+        "src-britannica-flavius-stilicho"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 394
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 408
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-belisarius-employed-by-roman-empire",
+      "from": "person-belisarius",
+      "to": "government-roman-empire",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "General of Justinian",
+      "sourceIds": [
+        "src-britannica-belisarius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-belisarius-participant-in-battle-of-dara",
+      "from": "person-belisarius",
+      "to": "event-battle-of-dara",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-belisarius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-belisarius-participant-in-nika-riots",
+      "from": "person-belisarius",
+      "to": "event-nika-riots",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-belisarius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-belisarius-participant-in-belisarius-takes-carthage",
+      "from": "person-belisarius",
+      "to": "event-belisarius-takes-carthage",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-belisarius"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

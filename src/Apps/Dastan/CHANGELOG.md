@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Rome fills its gaps to 641: Zeno and Basiliscus in the east, Odoacer and Theodoric as kings of Italy, Attila,
+  Aetius, Stilicho and Belisarius, the conquest of Italy by Theodoric and Belisarius’ victory over the Persians
+  in 530 – from Livius and Britannica, with their Persian.
 - Ancient China goes on from Emperor He to the Tang: the last ten Han emperors to the abdication of 220, the
   Three Kingdoms and their founders, the Jin, the Sixteen Kingdoms, the Northern Wei and the southern
   dynasties at Jiankang, the Sui and the Tang to the abdication of Wuhou in 705 – 25 people, 8 periods, 8

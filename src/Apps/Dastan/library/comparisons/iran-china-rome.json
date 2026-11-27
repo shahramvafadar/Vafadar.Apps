@@ -1296,6 +1296,20 @@
       "url": "https://www.britannica.com/biography/Wuhou",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-theodoric-king-of-italy",
+      "title": "Theodoric – Britannica",
+      "url": "https://www.britannica.com/biography/Theodoric-king-of-Italy",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-belisarius",
+      "title": "Belisarius – Britannica",
+      "url": "https://www.britannica.com/biography/Belisarius",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
     }
   ],
   "lanes": [
@@ -5182,6 +5196,45 @@
           },
           "sourceIds": [
             "src-livius-person-romulus-augustulus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "theodoric-conquers-italy",
+          "label": "Theodoric conquers Italy",
+          "summary": "The Ostrogoths under Theodoric invaded Italy in 488 and by 493 had conquered almost the whole peninsula and Sicily, ending the rule of Odoacer.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 488
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 493
+            }
+          },
+          "sourceIds": [
+            "src-britannica-theodoric-king-of-italy"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-dara",
+          "label": "Belisarius defeats the Persians",
+          "summary": "Belisarius won his first victory as a commander against Sasanian Persia on the Mesopotamian front in 530.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 530
+            }
+          },
+          "sourceIds": [
+            "src-britannica-belisarius"
           ],
           "reviewStatus": "proposed"
         },
