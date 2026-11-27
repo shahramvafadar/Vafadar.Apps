@@ -4,6 +4,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A fourth new story of the Shahnameh: the seven labours of Rostam – Kay Kavus drawn to Mazandaran by a
+  demon's song and blinded there, Rostam's journey past the lion, the desert, the dragon, the witch, Olad,
+  Arzhang and the White Demon, and the defeat of the king of Mazandaran, in 27 steps and six reading stages,
+  read from the text on Ganjoor, with its Persian.
 - A third new story of the Shahnameh: Zal and Rudabeh – from the white-haired child left on Alborz and
   raised by the Simorgh, through his love for the daughter of Mehrab, to the birth of Rostam and Sam's visit to
   him, in 34 steps and six reading stages, read from the text on Ganjoor, with its Persian.
