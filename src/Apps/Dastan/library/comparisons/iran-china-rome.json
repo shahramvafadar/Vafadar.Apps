@@ -5,7 +5,7 @@
   "note": "Built from the three collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year (Awan and Šimaški), a period that begins and ends in the same year, and a dynasty whose years are those of a period already here.",
   "frame": "commonEraYears",
   "title": "Iran, China and Rome side by side",
-  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran through the Sasanians and the caliphate to the Ghaznavids in 1030, Rome to Heraclius in 641, China to the Tang in 705 – and every dated event of the three collections, side by side.",
+  "summary": "What ruled in Iran, in China and in Rome from the end of the third millennium BCE – Iran through the Sasanians and the caliphate to the Ghaznavids in 1030, Rome to the death of Basil II in 1025, China to the Tang in 705 – and every dated event of the three collections, side by side.",
   "show": {
     "from": {
       "frame": "calendar",
@@ -1413,6 +1413,48 @@
       "id": "src-iranica-biruni-i",
       "title": "Biruni, Abu Rayhan i. Life – Encyclopaedia Iranica",
       "url": "https://www.iranicaonline.org/articles/biruni-abu-rayhan-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-empire-heraclians",
+      "title": "Byzantine Empire: the Heraclians and the challenge of Islam – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/The-successors-of-Justinian-565-610",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-emperors",
+      "title": "Byzantine Empire: Byzantine emperors – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/Manuel-II-and-respite-from-the-Turks",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-justinian-ii",
+      "title": "Justinian II – Britannica",
+      "url": "https://www.britannica.com/biography/Justinian-II",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-empire-iconoclasm",
+      "title": "Byzantine Empire: the age of Iconoclasm, 717–867 – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/The-age-of-Iconoclasm-717-867",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-empire-macedonian-era",
+      "title": "Byzantine Empire: the Macedonian era, 867–1025 – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/From-867-to-the-Ottoman-conquest",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-constantine-iv",
+      "title": "Constantine IV – Britannica",
+      "url": "https://www.britannica.com/biography/Constantine-IV",
       "kind": "scholarlyReference",
       "accessedAt": "2026-11-28"
     }
@@ -4838,6 +4880,156 @@
             "src-livius-person-romulus-augustulus"
           ],
           "reviewStatus": "proposed"
+        },
+        {
+          "key": "heraclian",
+          "label": "The Heraclian dynasty",
+          "summary": "The house of Heraclius, which ruled from 610 to 711; under his successors Egypt, Syria and Africa were lost to the Arabs, Constantinople withstood a four-year siege and the Bulgars settled south of the Danube.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 610
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 711
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-byzantine-emperors",
+            "src-britannica-justinian-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "isaurian",
+          "label": "The Isaurian dynasty",
+          "summary": "The house of Leo III, which ruled from 717 to 802; it turned back the Arabs from Constantinople and began the attack on the veneration of icons, and ended with the deposition of Irene.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 717
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 802
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm",
+            "src-britannica-byzantine-emperors"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iconoclasm",
+          "label": "The age of Iconoclasm",
+          "summary": "From the accession of Leo III in 717 to 867 the emperors tried, often with wide support, to end the veneration of icons; Irene restored it at the Council of Nicaea in 787, Leo V renewed iconoclasm in 815, and the icons were finally restored in 843.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 717
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 867
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "amorian",
+          "label": "The Amorian dynasty",
+          "summary": "The house of Michael II, also called Phrygian, which ruled from 820 to 867 through his son Theophilus and grandson Michael III; under it the icons were finally restored in 843.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 820
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 867
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm",
+            "src-britannica-byzantine-emperors"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "macedonian",
+          "label": "The Macedonian dynasty",
+          "summary": "The house of Basil I, who murdered his way to the throne in 867; until the death of Basil II in 1025 the empire enjoyed a golden age, recovering Crete, Antioch and Bulgaria.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 867
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1025
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era",
+            "src-britannica-byzantine-emperors"
+          ],
+          "reviewStatus": "proposed"
         }
       ],
       "events": [
@@ -6020,6 +6212,472 @@
           },
           "sourceIds": [
             "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arabs-take-alexandria",
+          "label": "Alexandria capitulates to the Arabs",
+          "summary": "Alexandria capitulated in 642, removing Egypt forever from Byzantine authority.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arab-siege-of-constantinople-674",
+          "label": "The Arab siege of Constantinople",
+          "summary": "After their assaults on Armenia and Asia Minor the Arabs besieged Constantinople for four years, from 674 to 678; Constantine IV withstood them, a turning point in European history.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 674
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 678
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-constantine-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sixth-ecumenical-council",
+          "label": "The sixth ecumenical council",
+          "summary": "The sixth general council, summoned by Constantine IV in 680–681 at Constantinople, condemned Monothelitism.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 680
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 681
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-constantine-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "bulgar-kingdom-recognised",
+          "label": "The Bulgar kingdom recognised",
+          "summary": "Constantine IV failed to defeat the Bulgars in 681 and by treaty recognised them as an independent kingdom south of the Danube.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 681
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-constantine-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "justinian-ii-deposed",
+          "label": "Justinian II deposed",
+          "summary": "Justinian II was deposed and mutilated in 695; with Bulgar help he returned to the throne in 705.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 695
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-septem",
+          "label": "The loss of Africa",
+          "summary": "By the end of the seventh century Africa was largely lost to the Muslims, who in 711 seized the last outpost at Septem.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 711
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arab-siege-of-constantinople-717",
+          "label": "The second Arab siege of Constantinople",
+          "summary": "In 717 the Arabs again besieged Constantinople by land and sea; with Bulgar help Leo III turned back the assault in 718.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 717
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 718
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "battle-of-akroinon",
+          "label": "The battle of Akroinon",
+          "summary": "With the help of the Khazars, Leo III’s reign ended with a major victory over the Arabs at Akroinon in 740.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 740
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "second-council-of-nicaea",
+          "label": "The Council of Nicaea restores the icons",
+          "summary": "At the instigation of the empress Irene, the Council of Nicaea in 787 restored the veneration of icons.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 787
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "irene-sole-ruler",
+          "label": "Irene rules alone",
+          "summary": "Irene had her son Constantine VI deposed and blinded and ruled alone from 797 until a revolt of palace officials deposed her in 802.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 797
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "coronation-of-charlemagne",
+          "label": "The coronation of Charlemagne",
+          "summary": "On Christmas Day 800 Pope Leo III crowned Charlemagne, king of the Franks and Lombards, emperor of the Romans, a challenge to the emperor at Constantinople.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 800
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-nicephorus-i",
+          "label": "Nikephoros I falls against Krum",
+          "summary": "Nikephoros I led his army against the Bulgar khan Krum in 811 and met defeat and death.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 811
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iconoclasm-renewed",
+          "label": "Leo V renews iconoclasm",
+          "summary": "After military reverses, Leo V revived the iconoclast policies of Constantine V in 815.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 815
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arabs-take-crete",
+          "label": "The Arabs take Crete",
+          "summary": "In 826 or 827 the Arabs captured Crete, a sign of the decline of Byzantine strength in the Mediterranean.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 826
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 827
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "fall-of-amorium",
+          "label": "Theophilus defeated and Amorium lost",
+          "summary": "In 838 a Muslim army defeated Theophilus himself and went on to capture the fortress of Amorium in Asia Minor.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 838
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "restoration-of-the-icons",
+          "label": "The icons restored",
+          "summary": "In 843, under Michael III, the icons were definitively restored and their veneration proclaimed as Orthodox belief.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 843
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rus-attack-constantinople",
+          "label": "The Rus attack Constantinople",
+          "summary": "Sailing down the Dnieper from Kiev to the Black Sea, the warships of the Rus first attacked Constantinople in 860.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 860
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "basil-i-takes-throne",
+          "label": "Basil I seizes the throne",
+          "summary": "In 867 Basil I murdered his way to the throne and founded the Macedonian dynasty.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "arabs-complete-sicily",
+          "label": "The Arabs complete the conquest of Sicily",
+          "summary": "In 902 the Arabs completed the conquest of Sicily, though they were kept out of Byzantine South Italy.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 902
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "simeon-at-constantinople",
+          "label": "Simeon of Bulgaria before Constantinople",
+          "summary": "In 913 Simeon I of Bulgaria brought his army to the walls of Constantinople, demanding the imperial title.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 913
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "reconquest-of-crete",
+          "label": "Crete reconquered",
+          "summary": "In 961 Nikephoros Phokas reconquered Crete and destroyed the Arab fleet that had terrorised the Aegean for 150 years.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 961
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "recapture-of-antioch",
+          "label": "Antioch recaptured",
+          "summary": "In 969 the Byzantine armies recaptured Antioch, seat of one of the patriarchs.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 969
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tzimisces-subdues-bulgaria",
+          "label": "John Tzimiskes humbles the Rus and Bulgaria",
+          "summary": "In 971 John Tzimiskes humiliated the Rus and reduced Bulgaria to a client kingdom.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 971
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "baptism-of-vladimir",
+          "label": "The baptism of Vladimir of Kiev",
+          "summary": "Vladimir of Kiev, who had helped Basil II to keep his throne, received the emperor’s sister in marriage and was baptised in 989.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 989
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "bulgaria-subdued",
+          "label": "Bulgaria subdued",
+          "summary": "After a ruthless campaign of some twenty years Basil II crushed the last Bulgarian resistance by 1018.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1018
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "death-of-basil-ii",
+          "label": "The death of Basil II",
+          "summary": "Basil II died in 1025 while preparing a campaign against the Arabs in Sicily; with him ended the golden age of the Macedonian era.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
           ],
           "reviewStatus": "proposed"
         }

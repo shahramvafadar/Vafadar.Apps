@@ -1559,19 +1559,69 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-byzantine-emperors",
+      "title": "Byzantine Empire: Byzantine emperors – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/Manuel-II-and-respite-from-the-Turks",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-byzantine-empire-heraclians",
+      "title": "Byzantine Empire: the Heraclians and the challenge of Islam – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/The-successors-of-Justinian-565-610",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-byzantine-empire-iconoclasm",
+      "title": "Byzantine Empire: the age of Iconoclasm, 717–867 – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/The-age-of-Iconoclasm-717-867",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-byzantine-empire-macedonian-era",
+      "title": "Byzantine Empire: the Macedonian era, 867–1025 – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/From-867-to-the-Ottoman-conquest",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-constantine-iv",
+      "title": "Constantine IV – Britannica",
+      "url": "https://www.britannica.com/biography/Constantine-IV",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-justinian-ii",
+      "title": "Justinian II – Britannica",
+      "url": "https://www.britannica.com/biography/Justinian-II",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
     {
       "id": "subject-ancient-rome",
       "type": "Region",
-      "label": "Ancient Rome",
-      "summary": "The city of Rome and the state it ruled, from its traditional founding in 753 BCE through the kings, the Republic and the emperors to the end of the empire in the west in 476, and the empire in the east to Heraclius, who died in 641.",
+      "label": "Rome",
+      "summary": "The city of Rome and the state it ruled, from its traditional founding in 753 BCE through the kings, the Republic and the emperors to the end of the empire in the west in 476, and the empire in the east, from Constantinople, to the death of Basil II in 1025.",
       "sourceIds": [
         "src-livius-rome-rome-photos",
         "src-livius-eutropius-short-history-eutropius-short-history-1",
         "src-livius-person-romulus-augustulus",
-        "src-livius-person-heraclius"
+        "src-livius-person-heraclius",
+        "src-britannica-byzantine-emperors",
+        "src-britannica-byzantine-empire-macedonian-era"
       ],
       "spoilerLevel": 0
     },
@@ -9938,6 +9988,1947 @@
         {
           "fact": "participant",
           "entityId": "person-belisarius"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-heraclian",
+      "type": "Dynasty",
+      "label": "The Heraclian dynasty",
+      "summary": "The house of Heraclius, which ruled from 610 to 711; under his successors Egypt, Syria and Africa were lost to the Arabs, Constantinople withstood a four-year siege and the Bulgars settled south of the Danube.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors",
+        "src-britannica-justinian-ii"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 610
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 711
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-constantinople"
+        }
+      ]
+    },
+    {
+      "id": "period-heraclian",
+      "type": "Period",
+      "label": "The Heraclian dynasty",
+      "summary": "The house of Heraclius, which ruled from 610 to 711; under his successors Egypt, Syria and Africa were lost to the Arabs, Constantinople withstood a four-year siege and the Bulgars settled south of the Danube.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors",
+        "src-britannica-justinian-ii"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 610
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 711
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-isaurian",
+      "type": "Dynasty",
+      "label": "The Isaurian dynasty",
+      "summary": "The house of Leo III, which ruled from 717 to 802; it turned back the Arabs from Constantinople and began the attack on the veneration of icons, and ended with the deposition of Irene.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 717
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 802
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-constantinople"
+        }
+      ]
+    },
+    {
+      "id": "period-isaurian",
+      "type": "Period",
+      "label": "The Isaurian dynasty",
+      "summary": "The house of Leo III, which ruled from 717 to 802; it turned back the Arabs from Constantinople and began the attack on the veneration of icons, and ended with the deposition of Irene.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 717
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 802
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-amorian",
+      "type": "Dynasty",
+      "label": "The Amorian dynasty",
+      "summary": "The house of Michael II, also called Phrygian, which ruled from 820 to 867 through his son Theophilus and grandson Michael III; under it the icons were finally restored in 843.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 820
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-constantinople"
+        }
+      ]
+    },
+    {
+      "id": "period-amorian",
+      "type": "Period",
+      "label": "The Amorian dynasty",
+      "summary": "The house of Michael II, also called Phrygian, which ruled from 820 to 867 through his son Theophilus and grandson Michael III; under it the icons were finally restored in 843.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 820
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-macedonian",
+      "type": "Dynasty",
+      "label": "The Macedonian dynasty",
+      "summary": "The house of Basil I, who murdered his way to the throne in 867; until the death of Basil II in 1025 the empire enjoyed a golden age, recovering Crete, Antioch and Bulgaria.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-constantinople"
+        }
+      ]
+    },
+    {
+      "id": "period-macedonian",
+      "type": "Period",
+      "label": "The Macedonian dynasty",
+      "summary": "The house of Basil I, who murdered his way to the throne in 867; until the death of Basil II in 1025 the empire enjoyed a golden age, recovering Crete, Antioch and Bulgaria.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-iconoclasm",
+      "type": "Period",
+      "label": "The age of Iconoclasm",
+      "summary": "From the accession of Leo III in 717 to 867 the emperors tried, often with wide support, to end the veneration of icons; Irene restored it at the Council of Nicaea in 787, Leo V renewed iconoclasm in 815, and the icons were finally restored in 843.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 717
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-constantine-iii",
+      "type": "Person",
+      "label": "Constantine III",
+      "summary": "Successor of Heraclius, emperor from February to May 641.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-heraclonas",
+      "type": "Person",
+      "label": "Heraclonas",
+      "summary": "Emperor for a few months in 641, after Constantine III.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-constans-ii",
+      "type": "Person",
+      "label": "Constans II",
+      "summary": "Emperor from 641 to 668, in whose reign the Arabs completed the conquest of Egypt; he led an expedition into Macedonia in 658.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-constantine-iv",
+      "type": "Person",
+      "label": "Constantine IV",
+      "summary": "Eldest son of Constans II, emperor from 668 to 685, who withstood the four-year Arab siege of Constantinople, recognised the Bulgar kingdom and summoned the sixth ecumenical council.",
+      "sourceIds": [
+        "src-britannica-constantine-iv",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 650,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 685
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Withstood the Arab siege of Constantinople."
+        }
+      ]
+    },
+    {
+      "id": "person-justinian-ii",
+      "type": "Person",
+      "label": "Justinian II",
+      "summary": "Son of Constantine IV and last emperor of the Heraclian dynasty, emperor from 685 to 695, when he was deposed and mutilated, and again from 705 with Bulgar help until his death in 711.",
+      "sourceIds": [
+        "src-britannica-justinian-ii",
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 669,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 711
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Ruled twice."
+        }
+      ]
+    },
+    {
+      "id": "person-leontius",
+      "type": "Person",
+      "label": "Leontius",
+      "summary": "Emperor from 695 to 698, after the deposition of Justinian II.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tiberius-iii",
+      "type": "Person",
+      "label": "Tiberius III",
+      "summary": "Emperor from 698 to 705, until Justinian II returned.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-philippicus",
+      "type": "Person",
+      "label": "Philippikos Vardan",
+      "summary": "Emperor from 711 to 713, after the second fall of Justinian II.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Philippicus",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-anastasius-ii",
+      "type": "Person",
+      "label": "Anastasios II",
+      "summary": "Emperor from 713 to 715.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-theodosius-iii",
+      "type": "Person",
+      "label": "Theodosios III",
+      "summary": "Emperor from 715 to 717, the last of the short reigns before Leo III.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-leo-iii",
+      "type": "Person",
+      "label": "Leo III",
+      "summary": "Founder of the Isaurian dynasty, emperor from 717 to 741, who turned back the Arab assault on Constantinople in 718, won at Akroinon in 740 and began the attack on the veneration of icons.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Leo the Isaurian",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Began iconoclasm."
+        }
+      ]
+    },
+    {
+      "id": "person-constantine-v",
+      "type": "Person",
+      "label": "Constantine V",
+      "summary": "Son of Leo III, emperor from 741 to 775, under whom iconoclasm intensified into persecution of the monks; one of the most successful Byzantine generals, he fought the Bulgars from 756 to 775.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Constantine Copronymus",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-leo-iv",
+      "type": "Person",
+      "label": "Leo IV",
+      "summary": "Son of Constantine V, emperor from 775 until his early death in 780.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 780
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-constantine-vi",
+      "type": "Person",
+      "label": "Constantine VI",
+      "summary": "Son of Leo IV, emperor at ten in 780 under the regency of his mother Irene, who had him deposed and blinded in 797.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-irene",
+      "type": "Person",
+      "label": "Irene",
+      "summary": "Empress, regent for her son Constantine VI and, after having him deposed and blinded, sole ruler from 797 to 802; she restored the icons at the Council of Nicaea in 787 and died in exile on Lesbos.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Restored the icons in 787."
+        }
+      ]
+    },
+    {
+      "id": "person-nicephorus-i",
+      "type": "Person",
+      "label": "Nikephoros I",
+      "summary": "The finance minister who succeeded Irene, emperor from 802 to 811, who reformed the taxes and fell in battle against the Bulgar khan Krum.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Nicephorus I",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 811
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-stauracius",
+      "type": "Person",
+      "label": "Stauracius",
+      "summary": "Successor of Nikephoros I, emperor for a short time in 811.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-michael-i",
+      "type": "Person",
+      "label": "Michael I Rhangabe",
+      "summary": "Emperor from 811 to 813, who lost his throne after his army broke up before Krum near Adrianople.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-leo-v",
+      "type": "Person",
+      "label": "Leo V the Armenian",
+      "summary": "Emperor from 813 to 820, who renewed iconoclasm in 815.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-michael-ii",
+      "type": "Person",
+      "label": "Michael II",
+      "summary": "Founder of the Amorian dynasty, emperor from 820 to 829; in his reign the Arabs took Crete and began the conquest of Sicily.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-theophilus",
+      "type": "Person",
+      "label": "Theophilus",
+      "summary": "Son of Michael II, emperor from 829 to 842, defeated by a Muslim army in 838 before the fall of Amorium.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-michael-iii",
+      "type": "Person",
+      "label": "Michael III",
+      "summary": "Son of Theophilus, emperor from 842 to 867, in whose reign the icons were restored in 843.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-basil-i",
+      "type": "Person",
+      "label": "Basil I",
+      "summary": "Founder of the Macedonian dynasty, who murdered his way to the throne in 867 and ruled until 886.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-leo-vi",
+      "type": "Person",
+      "label": "Leo VI the Wise",
+      "summary": "The scholarly successor of Basil I, emperor from 886 to 912.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-alexander-byzantine",
+      "type": "Person",
+      "label": "Alexander",
+      "summary": "Emperor from 912 to 913, between Leo VI and Constantine VII.",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-constantine-vii",
+      "type": "Person",
+      "label": "Constantine VII Porphyrogenitus",
+      "summary": "Emperor from 913 to 959, at first beside Romanos I; in his reign Olga of Kiev was baptised and visited Constantinople.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-romanus-i",
+      "type": "Person",
+      "label": "Romanos I Lekapenos",
+      "summary": "Co-emperor beside Constantine VII from 920 to 944, who passed laws in 922 and 934 to protect small landowners against the powerful.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Romanus I Lecapenus",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-romanus-ii",
+      "type": "Person",
+      "label": "Romanos II",
+      "summary": "Son of Constantine VII, emperor from 959 to 963.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Romanus II",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nicephorus-ii",
+      "type": "Person",
+      "label": "Nikephoros II Phokas",
+      "summary": "General who reconquered Crete in 961 and was proclaimed emperor in 963, ruling until 969; his armies retook Cyprus and Antioch.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Nicephorus II Phocas",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Reconquered Crete."
+        }
+      ]
+    },
+    {
+      "id": "person-john-i-tzimisces",
+      "type": "Person",
+      "label": "John I Tzimiskes",
+      "summary": "Armenian general who usurped the throne in 969, humbled the Russians and made Bulgaria a client kingdom in 971, and extended Byzantine rule over Syria; he died in 976.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "John I Tzimisces",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 976
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-basil-ii",
+      "type": "Person",
+      "label": "Basil II",
+      "summary": "The legitimate heir of the Macedonian house, emperor from 976 to 1025, who after some twenty years of war crushed Bulgarian resistance by 1018, married his sister to Vladimir of Kiev and died in 1025 at the end of the empire’s golden age.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Subdued Bulgaria."
+        }
+      ]
+    },
+    {
+      "id": "event-arabs-take-alexandria",
+      "type": "Event",
+      "label": "Alexandria capitulates to the Arabs",
+      "summary": "Alexandria capitulated in 642, removing Egypt forever from Byzantine authority.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-alexandria"
+        }
+      ]
+    },
+    {
+      "id": "event-arab-siege-of-constantinople-674",
+      "type": "Event",
+      "label": "The Arab siege of Constantinople",
+      "summary": "After their assaults on Armenia and Asia Minor the Arabs besieged Constantinople for four years, from 674 to 678; Constantine IV withstood them, a turning point in European history.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 674
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 678
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-constantinople"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-constantine-iv"
+        }
+      ]
+    },
+    {
+      "id": "event-sixth-ecumenical-council",
+      "type": "Event",
+      "label": "The sixth ecumenical council",
+      "summary": "The sixth general council, summoned by Constantine IV in 680–681 at Constantinople, condemned Monothelitism.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 680
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 681
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-constantinople"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-constantine-iv"
+        }
+      ]
+    },
+    {
+      "id": "event-bulgar-kingdom-recognised",
+      "type": "Event",
+      "label": "The Bulgar kingdom recognised",
+      "summary": "Constantine IV failed to defeat the Bulgars in 681 and by treaty recognised them as an independent kingdom south of the Danube.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 681
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-constantine-iv"
+        }
+      ]
+    },
+    {
+      "id": "event-justinian-ii-deposed",
+      "type": "Event",
+      "label": "Justinian II deposed",
+      "summary": "Justinian II was deposed and mutilated in 695; with Bulgar help he returned to the throne in 705.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 695
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-justinian-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-fall-of-septem",
+      "type": "Event",
+      "label": "The loss of Africa",
+      "summary": "By the end of the seventh century Africa was largely lost to the Muslims, who in 711 seized the last outpost at Septem.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 711
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-arab-siege-of-constantinople-717",
+      "type": "Event",
+      "label": "The second Arab siege of Constantinople",
+      "summary": "In 717 the Arabs again besieged Constantinople by land and sea; with Bulgar help Leo III turned back the assault in 718.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 717
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 718
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-constantinople"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-leo-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-akroinon",
+      "type": "Event",
+      "label": "The battle of Akroinon",
+      "summary": "With the help of the Khazars, Leo III’s reign ended with a major victory over the Arabs at Akroinon in 740.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 740
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-leo-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-second-council-of-nicaea",
+      "type": "Event",
+      "label": "The Council of Nicaea restores the icons",
+      "summary": "At the instigation of the empress Irene, the Council of Nicaea in 787 restored the veneration of icons.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 787
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-irene"
+        }
+      ]
+    },
+    {
+      "id": "event-irene-sole-ruler",
+      "type": "Event",
+      "label": "Irene rules alone",
+      "summary": "Irene had her son Constantine VI deposed and blinded and ruled alone from 797 until a revolt of palace officials deposed her in 802.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 797
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-irene"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-constantine-vi"
+        }
+      ]
+    },
+    {
+      "id": "event-coronation-of-charlemagne",
+      "type": "Event",
+      "label": "The coronation of Charlemagne",
+      "summary": "On Christmas Day 800 Pope Leo III crowned Charlemagne, king of the Franks and Lombards, emperor of the Romans, a challenge to the emperor at Constantinople.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 800
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-death-of-nicephorus-i",
+      "type": "Event",
+      "label": "Nikephoros I falls against Krum",
+      "summary": "Nikephoros I led his army against the Bulgar khan Krum in 811 and met defeat and death.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 811
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nicephorus-i"
+        }
+      ]
+    },
+    {
+      "id": "event-iconoclasm-renewed",
+      "type": "Event",
+      "label": "Leo V renews iconoclasm",
+      "summary": "After military reverses, Leo V revived the iconoclast policies of Constantine V in 815.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 815
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-leo-v"
+        }
+      ]
+    },
+    {
+      "id": "event-arabs-take-crete",
+      "type": "Event",
+      "label": "The Arabs take Crete",
+      "summary": "In 826 or 827 the Arabs captured Crete, a sign of the decline of Byzantine strength in the Mediterranean.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 826
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 827
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-fall-of-amorium",
+      "type": "Event",
+      "label": "Theophilus defeated and Amorium lost",
+      "summary": "In 838 a Muslim army defeated Theophilus himself and went on to capture the fortress of Amorium in Asia Minor.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 838
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-theophilus"
+        }
+      ]
+    },
+    {
+      "id": "event-restoration-of-the-icons",
+      "type": "Event",
+      "label": "The icons restored",
+      "summary": "In 843, under Michael III, the icons were definitively restored and their veneration proclaimed as Orthodox belief.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 843
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-michael-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-rus-attack-constantinople",
+      "type": "Event",
+      "label": "The Rus attack Constantinople",
+      "summary": "Sailing down the Dnieper from Kiev to the Black Sea, the warships of the Rus first attacked Constantinople in 860.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 860
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-constantinople"
+        }
+      ]
+    },
+    {
+      "id": "event-basil-i-takes-throne",
+      "type": "Event",
+      "label": "Basil I seizes the throne",
+      "summary": "In 867 Basil I murdered his way to the throne and founded the Macedonian dynasty.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-basil-i"
+        }
+      ]
+    },
+    {
+      "id": "event-arabs-complete-sicily",
+      "type": "Event",
+      "label": "The Arabs complete the conquest of Sicily",
+      "summary": "In 902 the Arabs completed the conquest of Sicily, though they were kept out of Byzantine South Italy.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 902
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-simeon-at-constantinople",
+      "type": "Event",
+      "label": "Simeon of Bulgaria before Constantinople",
+      "summary": "In 913 Simeon I of Bulgaria brought his army to the walls of Constantinople, demanding the imperial title.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 913
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-constantinople"
+        }
+      ]
+    },
+    {
+      "id": "event-reconquest-of-crete",
+      "type": "Event",
+      "label": "Crete reconquered",
+      "summary": "In 961 Nikephoros Phokas reconquered Crete and destroyed the Arab fleet that had terrorised the Aegean for 150 years.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 961
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nicephorus-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-recapture-of-antioch",
+      "type": "Event",
+      "label": "Antioch recaptured",
+      "summary": "In 969 the Byzantine armies recaptured Antioch, seat of one of the patriarchs.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 969
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-antioch"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nicephorus-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-tzimisces-subdues-bulgaria",
+      "type": "Event",
+      "label": "John Tzimiskes humbles the Rus and Bulgaria",
+      "summary": "In 971 John Tzimiskes humiliated the Rus and reduced Bulgaria to a client kingdom.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 971
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-john-i-tzimisces"
+        }
+      ]
+    },
+    {
+      "id": "event-baptism-of-vladimir",
+      "type": "Event",
+      "label": "The baptism of Vladimir of Kiev",
+      "summary": "Vladimir of Kiev, who had helped Basil II to keep his throne, received the emperor’s sister in marriage and was baptised in 989.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 989
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-basil-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-bulgaria-subdued",
+      "type": "Event",
+      "label": "Bulgaria subdued",
+      "summary": "After a ruthless campaign of some twenty years Basil II crushed the last Bulgarian resistance by 1018.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1018
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-basil-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-death-of-basil-ii",
+      "type": "Event",
+      "label": "The death of Basil II",
+      "summary": "Basil II died in 1025 while preparing a campaign against the Arabs in Sicily; with him ended the golden age of the Macedonian era.",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-basil-ii"
         }
       ]
     }
@@ -20093,6 +22084,3155 @@
       "label": "Took part in",
       "sourceIds": [
         "src-britannica-belisarius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iii-holder-of-east-roman-emperor",
+      "from": "person-constantine-iii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "occurrence",
+        "at": {
+          "frame": "calendar",
+          "era": "commonEra",
+          "year": 641
+        }
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iii-member-of-heraclian",
+      "from": "person-constantine-iii",
+      "to": "dynasty-heraclian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iii-successor-of-heraclius",
+      "from": "person-constantine-iii",
+      "to": "person-heraclius",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-heraclius-member-of-heraclian",
+      "from": "person-heraclius",
+      "to": "dynasty-heraclian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-heraclonas-holder-of-east-roman-emperor",
+      "from": "person-heraclonas",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "occurrence",
+        "at": {
+          "frame": "calendar",
+          "era": "commonEra",
+          "year": 641
+        }
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-heraclonas-member-of-heraclian",
+      "from": "person-heraclonas",
+      "to": "dynasty-heraclian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-heraclonas-successor-of-constantine-iii",
+      "from": "person-heraclonas",
+      "to": "person-constantine-iii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constans-ii-holder-of-east-roman-emperor",
+      "from": "person-constans-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 641
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 668
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constans-ii-member-of-heraclian",
+      "from": "person-constans-ii",
+      "to": "dynasty-heraclian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constans-ii-successor-of-heraclonas",
+      "from": "person-constans-ii",
+      "to": "person-heraclonas",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iv-holder-of-east-roman-emperor",
+      "from": "person-constantine-iv",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 668
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 685
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iv-member-of-heraclian",
+      "from": "person-constantine-iv",
+      "to": "dynasty-heraclian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-constantine-iv",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iv-successor-of-constans-ii",
+      "from": "person-constantine-iv",
+      "to": "person-constans-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constans-ii-parent-of-constantine-iv",
+      "from": "person-constans-ii",
+      "to": "person-constantine-iv",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-justinian-ii-holder-of-east-roman-emperor",
+      "from": "person-justinian-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 685
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 695
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-justinian-ii-member-of-heraclian",
+      "from": "person-justinian-ii",
+      "to": "dynasty-heraclian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-justinian-ii",
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-justinian-ii-successor-of-constantine-iv",
+      "from": "person-justinian-ii",
+      "to": "person-constantine-iv",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iv-parent-of-justinian-ii",
+      "from": "person-constantine-iv",
+      "to": "person-justinian-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-justinian-ii"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leontius-holder-of-east-roman-emperor",
+      "from": "person-leontius",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 695
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 698
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leontius-successor-of-justinian-ii",
+      "from": "person-leontius",
+      "to": "person-justinian-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tiberius-iii-holder-of-east-roman-emperor",
+      "from": "person-tiberius-iii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 698
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 705
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tiberius-iii-successor-of-leontius",
+      "from": "person-tiberius-iii",
+      "to": "person-leontius",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-justinian-ii-holder-of-east-roman-emperor-2",
+      "from": "person-justinian-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor again",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 705
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 711
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-justinian-ii-successor-of-tiberius-iii",
+      "from": "person-justinian-ii",
+      "to": "person-tiberius-iii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-philippicus-holder-of-east-roman-emperor",
+      "from": "person-philippicus",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 711
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 713
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-philippicus-successor-of-justinian-ii",
+      "from": "person-philippicus",
+      "to": "person-justinian-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-anastasius-ii-holder-of-east-roman-emperor",
+      "from": "person-anastasius-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 713
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 715
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-anastasius-ii-successor-of-philippicus",
+      "from": "person-anastasius-ii",
+      "to": "person-philippicus",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theodosius-iii-holder-of-east-roman-emperor",
+      "from": "person-theodosius-iii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 715
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 717
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theodosius-iii-successor-of-anastasius-ii",
+      "from": "person-theodosius-iii",
+      "to": "person-anastasius-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iii-holder-of-east-roman-emperor",
+      "from": "person-leo-iii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 717
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 741
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iii-member-of-isaurian",
+      "from": "person-leo-iii",
+      "to": "dynasty-isaurian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iii-successor-of-theodosius-iii",
+      "from": "person-leo-iii",
+      "to": "person-theodosius-iii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iii-founder-of-isaurian",
+      "from": "person-leo-iii",
+      "to": "dynasty-isaurian",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-v-holder-of-east-roman-emperor",
+      "from": "person-constantine-v",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 741
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 775
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-v-member-of-isaurian",
+      "from": "person-constantine-v",
+      "to": "dynasty-isaurian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-v-successor-of-leo-iii",
+      "from": "person-constantine-v",
+      "to": "person-leo-iii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iii-parent-of-constantine-v",
+      "from": "person-leo-iii",
+      "to": "person-constantine-v",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iv-holder-of-east-roman-emperor",
+      "from": "person-leo-iv",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 775
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 780
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iv-member-of-isaurian",
+      "from": "person-leo-iv",
+      "to": "dynasty-isaurian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iv-successor-of-constantine-v",
+      "from": "person-leo-iv",
+      "to": "person-constantine-v",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-v-parent-of-leo-iv",
+      "from": "person-constantine-v",
+      "to": "person-leo-iv",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vi-holder-of-east-roman-emperor",
+      "from": "person-constantine-vi",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 780
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 797
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vi-member-of-isaurian",
+      "from": "person-constantine-vi",
+      "to": "dynasty-isaurian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vi-successor-of-leo-iv",
+      "from": "person-constantine-vi",
+      "to": "person-leo-iv",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iv-parent-of-constantine-vi",
+      "from": "person-leo-iv",
+      "to": "person-constantine-vi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-irene-holder-of-east-roman-emperor",
+      "from": "person-irene",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 797
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 802
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-irene-member-of-isaurian",
+      "from": "person-irene",
+      "to": "dynasty-isaurian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-irene-successor-of-constantine-vi",
+      "from": "person-irene",
+      "to": "person-constantine-vi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-irene-parent-of-constantine-vi",
+      "from": "person-irene",
+      "to": "person-constantine-vi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nicephorus-i-holder-of-east-roman-emperor",
+      "from": "person-nicephorus-i",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 802
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 811
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nicephorus-i-successor-of-irene",
+      "from": "person-nicephorus-i",
+      "to": "person-irene",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-stauracius-holder-of-east-roman-emperor",
+      "from": "person-stauracius",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "occurrence",
+        "at": {
+          "frame": "calendar",
+          "era": "commonEra",
+          "year": 811
+        }
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-stauracius-successor-of-nicephorus-i",
+      "from": "person-stauracius",
+      "to": "person-nicephorus-i",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-i-holder-of-east-roman-emperor",
+      "from": "person-michael-i",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 811
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 813
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-i-successor-of-stauracius",
+      "from": "person-michael-i",
+      "to": "person-stauracius",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-v-holder-of-east-roman-emperor",
+      "from": "person-leo-v",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 813
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 820
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-v-successor-of-michael-i",
+      "from": "person-leo-v",
+      "to": "person-michael-i",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-ii-holder-of-east-roman-emperor",
+      "from": "person-michael-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 820
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 829
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-ii-member-of-amorian",
+      "from": "person-michael-ii",
+      "to": "dynasty-amorian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-ii-successor-of-leo-v",
+      "from": "person-michael-ii",
+      "to": "person-leo-v",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-ii-founder-of-amorian",
+      "from": "person-michael-ii",
+      "to": "dynasty-amorian",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theophilus-holder-of-east-roman-emperor",
+      "from": "person-theophilus",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 829
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 842
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theophilus-member-of-amorian",
+      "from": "person-theophilus",
+      "to": "dynasty-amorian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theophilus-successor-of-michael-ii",
+      "from": "person-theophilus",
+      "to": "person-michael-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-ii-parent-of-theophilus",
+      "from": "person-michael-ii",
+      "to": "person-theophilus",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-iii-holder-of-east-roman-emperor",
+      "from": "person-michael-iii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 842
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 867
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-iii-member-of-amorian",
+      "from": "person-michael-iii",
+      "to": "dynasty-amorian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-iii-successor-of-theophilus",
+      "from": "person-michael-iii",
+      "to": "person-theophilus",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theophilus-parent-of-michael-iii",
+      "from": "person-theophilus",
+      "to": "person-michael-iii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-i-holder-of-east-roman-emperor",
+      "from": "person-basil-i",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 867
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 886
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-i-member-of-macedonian",
+      "from": "person-basil-i",
+      "to": "dynasty-macedonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-i-successor-of-michael-iii",
+      "from": "person-basil-i",
+      "to": "person-michael-iii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-i-founder-of-macedonian",
+      "from": "person-basil-i",
+      "to": "dynasty-macedonian",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-vi-holder-of-east-roman-emperor",
+      "from": "person-leo-vi",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 886
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 912
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-vi-member-of-macedonian",
+      "from": "person-leo-vi",
+      "to": "dynasty-macedonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-vi-successor-of-basil-i",
+      "from": "person-leo-vi",
+      "to": "person-basil-i",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-byzantine-holder-of-east-roman-emperor",
+      "from": "person-alexander-byzantine",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 912
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 913
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-byzantine-member-of-macedonian",
+      "from": "person-alexander-byzantine",
+      "to": "dynasty-macedonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-byzantine-successor-of-leo-vi",
+      "from": "person-alexander-byzantine",
+      "to": "person-leo-vi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vii-holder-of-east-roman-emperor",
+      "from": "person-constantine-vii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 913
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 959
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vii-member-of-macedonian",
+      "from": "person-constantine-vii",
+      "to": "dynasty-macedonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vii-successor-of-alexander-byzantine",
+      "from": "person-constantine-vii",
+      "to": "person-alexander-byzantine",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-romanus-i-holder-of-east-roman-emperor",
+      "from": "person-romanus-i",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 920
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 944
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-romanus-ii-holder-of-east-roman-emperor",
+      "from": "person-romanus-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 959
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 963
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-romanus-ii-member-of-macedonian",
+      "from": "person-romanus-ii",
+      "to": "dynasty-macedonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-romanus-ii-successor-of-constantine-vii",
+      "from": "person-romanus-ii",
+      "to": "person-constantine-vii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vii-parent-of-romanus-ii",
+      "from": "person-constantine-vii",
+      "to": "person-romanus-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nicephorus-ii-holder-of-east-roman-emperor",
+      "from": "person-nicephorus-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 963
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 969
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nicephorus-ii-successor-of-romanus-ii",
+      "from": "person-nicephorus-ii",
+      "to": "person-romanus-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-john-i-tzimisces-holder-of-east-roman-emperor",
+      "from": "person-john-i-tzimisces",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 969
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 976
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-john-i-tzimisces-successor-of-nicephorus-ii",
+      "from": "person-john-i-tzimisces",
+      "to": "person-nicephorus-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-ii-holder-of-east-roman-emperor",
+      "from": "person-basil-ii",
+      "to": "office-east-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 976
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 1025
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-ii-member-of-macedonian",
+      "from": "person-basil-ii",
+      "to": "dynasty-macedonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era",
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-ii-successor-of-john-i-tzimisces",
+      "from": "person-basil-ii",
+      "to": "person-john-i-tzimisces",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-byzantine-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arabs-take-alexandria-took-place-in-alexandria",
+      "from": "event-arabs-take-alexandria",
+      "to": "place-alexandria",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arabs-take-alexandria-during-heraclian",
+      "from": "event-arabs-take-alexandria",
+      "to": "period-heraclian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iv-participant-in-arab-siege-of-constantinople-674",
+      "from": "person-constantine-iv",
+      "to": "event-arab-siege-of-constantinople-674",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arab-siege-of-constantinople-674-took-place-in-constantinople",
+      "from": "event-arab-siege-of-constantinople-674",
+      "to": "place-constantinople",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arab-siege-of-constantinople-674-during-heraclian",
+      "from": "event-arab-siege-of-constantinople-674",
+      "to": "period-heraclian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iv-participant-in-sixth-ecumenical-council",
+      "from": "person-constantine-iv",
+      "to": "event-sixth-ecumenical-council",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sixth-ecumenical-council-took-place-in-constantinople",
+      "from": "event-sixth-ecumenical-council",
+      "to": "place-constantinople",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sixth-ecumenical-council-during-heraclian",
+      "from": "event-sixth-ecumenical-council",
+      "to": "period-heraclian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-iv-participant-in-bulgar-kingdom-recognised",
+      "from": "person-constantine-iv",
+      "to": "event-bulgar-kingdom-recognised",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bulgar-kingdom-recognised-during-heraclian",
+      "from": "event-bulgar-kingdom-recognised",
+      "to": "period-heraclian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-constantine-iv"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-justinian-ii-participant-in-justinian-ii-deposed",
+      "from": "person-justinian-ii",
+      "to": "event-justinian-ii-deposed",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-justinian-ii-deposed-during-heraclian",
+      "from": "event-justinian-ii-deposed",
+      "to": "period-heraclian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fall-of-septem-during-heraclian",
+      "from": "event-fall-of-septem",
+      "to": "period-heraclian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iii-participant-in-arab-siege-of-constantinople-717",
+      "from": "person-leo-iii",
+      "to": "event-arab-siege-of-constantinople-717",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arab-siege-of-constantinople-717-took-place-in-constantinople",
+      "from": "event-arab-siege-of-constantinople-717",
+      "to": "place-constantinople",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arab-siege-of-constantinople-717-during-isaurian",
+      "from": "event-arab-siege-of-constantinople-717",
+      "to": "period-isaurian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-heraclians",
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-iii-participant-in-battle-of-akroinon",
+      "from": "person-leo-iii",
+      "to": "event-battle-of-akroinon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-akroinon-during-isaurian",
+      "from": "event-battle-of-akroinon",
+      "to": "period-isaurian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-irene-participant-in-second-council-of-nicaea",
+      "from": "person-irene",
+      "to": "event-second-council-of-nicaea",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-second-council-of-nicaea-during-iconoclasm",
+      "from": "event-second-council-of-nicaea",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-irene-participant-in-irene-sole-ruler",
+      "from": "person-irene",
+      "to": "event-irene-sole-ruler",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-constantine-vi-participant-in-irene-sole-ruler",
+      "from": "person-constantine-vi",
+      "to": "event-irene-sole-ruler",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-irene-sole-ruler-during-iconoclasm",
+      "from": "event-irene-sole-ruler",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-coronation-of-charlemagne-during-iconoclasm",
+      "from": "event-coronation-of-charlemagne",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nicephorus-i-participant-in-death-of-nicephorus-i",
+      "from": "person-nicephorus-i",
+      "to": "event-death-of-nicephorus-i",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-death-of-nicephorus-i-during-iconoclasm",
+      "from": "event-death-of-nicephorus-i",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leo-v-participant-in-iconoclasm-renewed",
+      "from": "person-leo-v",
+      "to": "event-iconoclasm-renewed",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-iconoclasm-renewed-during-iconoclasm",
+      "from": "event-iconoclasm-renewed",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arabs-take-crete-during-iconoclasm",
+      "from": "event-arabs-take-crete",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-theophilus-participant-in-fall-of-amorium",
+      "from": "person-theophilus",
+      "to": "event-fall-of-amorium",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fall-of-amorium-during-iconoclasm",
+      "from": "event-fall-of-amorium",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-michael-iii-participant-in-restoration-of-the-icons",
+      "from": "person-michael-iii",
+      "to": "event-restoration-of-the-icons",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-restoration-of-the-icons-during-iconoclasm",
+      "from": "event-restoration-of-the-icons",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-iconoclasm"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rus-attack-constantinople-took-place-in-constantinople",
+      "from": "event-rus-attack-constantinople",
+      "to": "place-constantinople",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-rus-attack-constantinople-during-iconoclasm",
+      "from": "event-rus-attack-constantinople",
+      "to": "period-iconoclasm",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-i-participant-in-basil-i-takes-throne",
+      "from": "person-basil-i",
+      "to": "event-basil-i-takes-throne",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-i-takes-throne-during-macedonian",
+      "from": "event-basil-i-takes-throne",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arabs-complete-sicily-during-macedonian",
+      "from": "event-arabs-complete-sicily",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-simeon-at-constantinople-took-place-in-constantinople",
+      "from": "event-simeon-at-constantinople",
+      "to": "place-constantinople",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-simeon-at-constantinople-during-macedonian",
+      "from": "event-simeon-at-constantinople",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nicephorus-ii-participant-in-reconquest-of-crete",
+      "from": "person-nicephorus-ii",
+      "to": "event-reconquest-of-crete",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-reconquest-of-crete-during-macedonian",
+      "from": "event-reconquest-of-crete",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nicephorus-ii-participant-in-recapture-of-antioch",
+      "from": "person-nicephorus-ii",
+      "to": "event-recapture-of-antioch",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-recapture-of-antioch-took-place-in-antioch",
+      "from": "event-recapture-of-antioch",
+      "to": "place-antioch",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-recapture-of-antioch-during-macedonian",
+      "from": "event-recapture-of-antioch",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-john-i-tzimisces-participant-in-tzimisces-subdues-bulgaria",
+      "from": "person-john-i-tzimisces",
+      "to": "event-tzimisces-subdues-bulgaria",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tzimisces-subdues-bulgaria-during-macedonian",
+      "from": "event-tzimisces-subdues-bulgaria",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-ii-participant-in-baptism-of-vladimir",
+      "from": "person-basil-ii",
+      "to": "event-baptism-of-vladimir",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-baptism-of-vladimir-during-macedonian",
+      "from": "event-baptism-of-vladimir",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-ii-participant-in-bulgaria-subdued",
+      "from": "person-basil-ii",
+      "to": "event-bulgaria-subdued",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bulgaria-subdued-during-macedonian",
+      "from": "event-bulgaria-subdued",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-basil-ii-participant-in-death-of-basil-ii",
+      "from": "person-basil-ii",
+      "to": "event-death-of-basil-ii",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-death-of-basil-ii-during-macedonian",
+      "from": "event-death-of-basil-ii",
+      "to": "period-macedonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-empire-macedonian-era"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
