@@ -1,0 +1,2628 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "ancient-anatolia",
+  "worldId": "world-ancient-anatolia",
+  "subjectId": "subject-ancient-anatolia",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "entities": [
+    {
+      "id": "subject-ancient-anatolia",
+      "type": "Region",
+      "label": "Anatolia",
+      "summary": "Ancient Anatolia from the Hittite kingdom of Hattusa, its Old and New Kingdoms and its collapse about 1190 BCE, through the Neo-Hittite states, Urartu and the Phrygian kingdom of Gordium, to Lydia of Gyges and Croesus, which Cyrus conquered.",
+      "sourceIds": [
+        "src-livius-people-hittites",
+        "src-livius-place-lydia",
+        "src-livius-people-phrygians"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "office-hittite-king",
+      "type": "Office",
+      "label": "Hittite king",
+      "summary": "The kingship of the Hittites at Hattusa.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-anatolia"
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-phrygia",
+      "type": "Office",
+      "label": "King of Phrygia",
+      "summary": "The kingship of the Phrygians at Gordium.",
+      "sourceIds": [
+        "src-livius-people-phrygians"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-anatolia"
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-lydia",
+      "type": "Office",
+      "label": "King of Lydia",
+      "summary": "The kingship of Lydia at Sardis.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-anatolia"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-mermnad",
+      "type": "Dynasty",
+      "label": "The Mermnads",
+      "summary": "The Lydian dynasty founded by Gyges, about 680 BCE, which ended with Croesus when Cyrus took Sardis.",
+      "sourceIds": [
+        "src-livius-place-lydia",
+        "src-livius-person-croesus"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 680,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-hittite-old-kingdom",
+      "type": "Period",
+      "label": "The Hittite Old Kingdom",
+      "summary": "From Labarna and Hattusili, about 1650 BCE, through the sack of Babylon by Mursili I to the crisis after him and the restoration under Telepinu, about 1500.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1650,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1500,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-hittite-new-kingdom",
+      "type": "Period",
+      "label": "The Hittite New Kingdom",
+      "summary": "From Šuppiluliuma I, king from about 1355 BCE, who made the Hittites a great power reaching into Syria, to the collapse of the empire after about 1190.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1355,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1190,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-labarna",
+      "type": "Person",
+      "label": "Labarna",
+      "summary": "The founder of the Hittite kingdom according to the edict of Telepinu; he and his successor Hattusili may have been the same person.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-hattusili-i",
+      "type": "Person",
+      "label": "Hattusili I",
+      "summary": "Successor of Labarna, king from about 1650 to 1620 BCE, who fought wars that made his kingdom “neighbour to the sea” and added Kizzuwatna in Cilicia.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-mursili-i",
+      "type": "Person",
+      "label": "Mursilis I",
+      "summary": "Hittite king who in the first years of the 16th century BCE – 1587 by the low middle chronology – reached and sacked Babylon.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Mursili I",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-hantili-i",
+      "type": "Person",
+      "label": "Hantili I",
+      "summary": "Hittite king from about 1585 to 1560 BCE, in whose reign a crisis of the dynasty led to the collapse of Hittite power.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-telepinu",
+      "type": "Person",
+      "label": "Telepinu",
+      "summary": "Hittite king from about 1525 to 1500 BCE who restored order and laid down the principles of good government in his edict, the source for the earliest kings.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tudhaliya-i",
+      "type": "Person",
+      "label": "Tudhaliya I",
+      "summary": "Hittite king from about 1420 to 1400 BCE, from a new dynasty, eighth successor of Telepinu.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-suppiluliuma-i",
+      "type": "Person",
+      "label": "Šuppiluliuma I",
+      "summary": "Hittite king from about 1355 BCE for thirty-five years, founder of the New Kingdom, who defeated Mitanni and took northern Syria from Egypt; about 1320 he left the kingdom to his eldest son.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Suppiluliuma I",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-arnuwanda-ii",
+      "type": "Person",
+      "label": "Arnuwanda II",
+      "summary": "Eldest son of Šuppiluliuma I, who succeeded him about 1320 BCE for a brief reign.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-mursili-ii",
+      "type": "Person",
+      "label": "Mursili II",
+      "summary": "Another son of Šuppiluliuma I, king from about 1318 to 1290 BCE, who overcame Arzawa in western Anatolia.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-muwatalli-ii",
+      "type": "Person",
+      "label": "Muwatalli II",
+      "summary": "Son of Mursili II, king from about 1290 to 1272 BCE, who met Ramesses II of Egypt in the great chariot battle on the Orontes in 1274.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-mursili-iii",
+      "type": "Person",
+      "label": "Mursili III",
+      "summary": "First son of Muwatalli II, king from about 1272 to 1265 BCE, dethroned by Hattusili III.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-hattusili-iii",
+      "type": "Person",
+      "label": "Hattusili III",
+      "summary": "Hittite king from about 1265 to 1240 BCE, who dethroned Mursili III, created the vice-kingdom of Tarhuntassa and wrote to the king of Ahhiyawa about the rebel Piyamaradu.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tudhaliya-iv",
+      "type": "Person",
+      "label": "Tudhaliya IV",
+      "summary": "Son of Hattusili III, king from about 1240 to 1215 BCE, who still resided at Hattusa and ordered the reliefs of nearby Yazılıkaya.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-midas",
+      "type": "Person",
+      "label": "Midas",
+      "summary": "The most famous king of Phrygia, known from Greek legend and perhaps as Mit-ta-a of the Assyrian records, who asked Sargon II for help against the Cimmerians in 710/709 BCE and took his own life after a lost battle in 696/695.",
+      "sourceIds": [
+        "src-livius-people-phrygians",
+        "src-livius-person-midas",
+        "src-livius-place-gordium"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Mit-ta-a",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-gyges",
+      "type": "Person",
+      "label": "Gyges",
+      "summary": "Founder of the Mermnad dynasty of Lydia, tentatively dated 680 to 644 BCE, who overthrew Sadyattes, defeated the Cimmerians in 679 and was killed when they returned in 644.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ardys",
+      "type": "Person",
+      "label": "Ardys",
+      "summary": "Son and successor of Gyges, who buried his father at Bin Tepe and was succeeded by his son Sadyattes about 625 BCE.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-sadyattes",
+      "type": "Person",
+      "label": "Sadyattes",
+      "summary": "Son of Ardys, king of Lydia from about 625 BCE, hardly more than a name.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-alyattes",
+      "type": "Person",
+      "label": "Alyattes",
+      "summary": "Son and successor of Sadyattes, king of Lydia from about 600 to 560 BCE, who took Smyrna and Gordium, defeated the Cimmerians and fought the Medes of Cyaxares at the Halys until the eclipse of 585.",
+      "sourceIds": [
+        "src-livius-person-alyattes",
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-croesus",
+      "type": "Person",
+      "label": "Croesus",
+      "summary": "Son of Alyattes, born about 595 BCE, fifth and last king of the Mermnad dynasty from 560, whose reign ended when Cyrus took Sardis – traditionally in 547, a date now doubted.",
+      "sourceIds": [
+        "src-livius-person-croesus"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Kroisos",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ramses-ii",
+      "type": "Person",
+      "label": "Ramses II",
+      "summary": "King of Egypt of the 19th dynasty, who set out to reconquer northern Syria and fought Muwatalli II on the Orontes in 1274 BCE; a treaty with the Hittites followed in 1259.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ramesses II",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-cyaxares",
+      "type": "Person",
+      "label": "Cyaxares",
+      "summary": "The Median leader who invaded Cappadocia and fought Alyattes of Lydia at the Halys in 585 BCE.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-cyrus-ii",
+      "type": "Person",
+      "label": "Cyrus II the Great",
+      "summary": "The Persian king who defeated Croesus, besieged him in Sardis and took the city.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-sargon-ii",
+      "type": "Person",
+      "label": "Sargon II",
+      "summary": "The Assyrian king whom Midas asked for help against the Cimmerians in 710/709 BCE, and who defeated Rusa of Urartu in 714.",
+      "sourceIds": [
+        "src-livius-people-phrygians",
+        "src-livius-place-urartu"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "place-hattusa",
+      "type": "Place",
+      "label": "Hattusa",
+      "summary": "The capital of the Hittites, where Tudhaliya IV still resided; it was later evacuated, dangerously exposed to Kashka attacks.",
+      "sourceIds": [
+        "src-livius-people-hittites",
+        "src-pleiades-614962220"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-anatolia"
+        }
+      ],
+      "position": {
+        "latitude": 40.0164,
+        "longitude": 34.6211,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-gordium",
+      "type": "Place",
+      "label": "Gordium",
+      "summary": "The capital of the Phrygians, founded in the 9th century BCE; sacked by the Cimmerians, held by Lydians and Persians, and taken by Parmenion for Alexander in 334.",
+      "sourceIds": [
+        "src-livius-people-phrygians",
+        "src-livius-place-gordium",
+        "src-pleiades-609393"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Gordion",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-anatolia"
+        }
+      ],
+      "position": {
+        "latitude": 39.6503,
+        "longitude": 31.9785,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-carchemish",
+      "type": "Place",
+      "label": "Carchemish",
+      "summary": "A city on the Euphrates where Šuppiluliuma I set a son as vice-king; after the Hittite collapse it became one of the Neo-Hittite states.",
+      "sourceIds": [
+        "src-livius-people-hittites",
+        "src-pleiades-658465"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Karchemish",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-anatolia"
+        }
+      ],
+      "position": {
+        "latitude": 36.8294,
+        "longitude": 38.0149,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-sardis",
+      "type": "Place",
+      "label": "Sardis",
+      "summary": "The capital of Lydia on the river Pactolus, which became an impressive city under Gyges and was taken by Cyrus.",
+      "sourceIds": [
+        "src-livius-place-lydia",
+        "src-pleiades-550867"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Sardes",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-anatolia"
+        }
+      ],
+      "position": {
+        "latitude": 38.4883,
+        "longitude": 28.0403,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "event-hittites-sack-babylon",
+      "type": "Event",
+      "label": "The Hittites sack Babylon",
+      "summary": "Mursili I reached and sacked Babylon in the first years of the 16th century BCE – 1587 by the low middle chronology – which threw Mesopotamia into chaos but brought the Hittites little.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1587,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-mursili-i"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-on-the-orontes",
+      "type": "Event",
+      "label": "The battle on the Orontes (Kadesh)",
+      "summary": "In 1274 BCE Muwatalli II caught Ramesses II by surprise on the plain of the Orontes, where two chariot armies fought a great battle; both sides claimed victory.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1274
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-muwatalli-ii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ramses-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-hittite-egyptian-treaty",
+      "type": "Event",
+      "label": "The treaty of the Hittites and Egypt",
+      "summary": "In 1259 BCE the Hittites and Egypt concluded a treaty dividing Syria between the two great powers.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1259
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-ramses-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-collapse-of-hittite-empire",
+      "type": "Event",
+      "label": "The collapse of the Hittite empire",
+      "summary": "After about 1190 BCE power passed to the vice-kings of Tarhuntassa and Carchemish, whose lands split into the Neo-Hittite states, while the Phrygians and the Sea Peoples moved in.",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1190,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-sargon-defeats-rusa",
+      "type": "Event",
+      "label": "Sargon II defeats Urartu",
+      "summary": "In 714 BCE Sargon II defeated Rusa of Urartu, marched almost unopposed through the country and took the statue of the god Haldi; Rusa took his own life.",
+      "sourceIds": [
+        "src-livius-place-urartu"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 714
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-sargon-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-cimmerians-sack-sardis",
+      "type": "Event",
+      "label": "The Cimmerians sack Sardis",
+      "summary": "In 644 BCE the Cimmerians invaded Lydia again; Gyges was defeated and killed and Sardis was sacked.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 644
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-sardis"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-gyges"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-the-eclipse",
+      "type": "Event",
+      "label": "The battle of the eclipse",
+      "summary": "On 28 May 585 BCE Alyattes of Lydia and Cyaxares of Media fought at the Halys; the sun was eclipsed, the kings made peace, and the Halys became the border.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 585
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-alyattes"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-cyaxares"
+        }
+      ]
+    },
+    {
+      "id": "event-conquest-of-lydia",
+      "type": "Event",
+      "label": "Cyrus conquers Lydia",
+      "summary": "Cyrus defeated Croesus east of Ankara, besieged him in Sardis and took the city; the war is usually dated to 547 BCE on a very uncertain reading of a Babylonian chronicle.",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 547,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-sardis"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-cyrus-ii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-croesus"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-labarna-holder-of-hittite-king",
+      "from": "person-labarna",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hattusili-i-holder-of-hittite-king",
+      "from": "person-hattusili-i",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1650,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1620,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hattusili-i-successor-of-labarna",
+      "from": "person-hattusili-i",
+      "to": "person-labarna",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-i-holder-of-hittite-king",
+      "from": "person-mursili-i",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hantili-i-holder-of-hittite-king",
+      "from": "person-hantili-i",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1585,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1560,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-telepinu-holder-of-hittite-king",
+      "from": "person-telepinu",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1525,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1500,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tudhaliya-i-holder-of-hittite-king",
+      "from": "person-tudhaliya-i",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1420,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1400,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-suppiluliuma-i-holder-of-hittite-king",
+      "from": "person-suppiluliuma-i",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1355,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1320,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arnuwanda-ii-holder-of-hittite-king",
+      "from": "person-arnuwanda-ii",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1320,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-suppiluliuma-i-parent-of-arnuwanda-ii",
+      "from": "person-suppiluliuma-i",
+      "to": "person-arnuwanda-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arnuwanda-ii-successor-of-suppiluliuma-i",
+      "from": "person-arnuwanda-ii",
+      "to": "person-suppiluliuma-i",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-ii-holder-of-hittite-king",
+      "from": "person-mursili-ii",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1318,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1290,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-suppiluliuma-i-parent-of-mursili-ii",
+      "from": "person-suppiluliuma-i",
+      "to": "person-mursili-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-ii-successor-of-arnuwanda-ii",
+      "from": "person-mursili-ii",
+      "to": "person-arnuwanda-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-ii-sibling-of-arnuwanda-ii",
+      "from": "person-mursili-ii",
+      "to": "person-arnuwanda-ii",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muwatalli-ii-holder-of-hittite-king",
+      "from": "person-muwatalli-ii",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1290,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1272,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-ii-parent-of-muwatalli-ii",
+      "from": "person-mursili-ii",
+      "to": "person-muwatalli-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-iii-holder-of-hittite-king",
+      "from": "person-mursili-iii",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1272,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1265,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muwatalli-ii-parent-of-mursili-iii",
+      "from": "person-muwatalli-ii",
+      "to": "person-mursili-iii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hattusili-iii-holder-of-hittite-king",
+      "from": "person-hattusili-iii",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1265,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1240,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hattusili-iii-successor-of-mursili-iii",
+      "from": "person-hattusili-iii",
+      "to": "person-mursili-iii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tudhaliya-iv-holder-of-hittite-king",
+      "from": "person-tudhaliya-iv",
+      "to": "office-hittite-king",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1240,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1215,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hattusili-iii-parent-of-tudhaliya-iv",
+      "from": "person-hattusili-iii",
+      "to": "person-tudhaliya-iv",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-midas-holder-of-king-of-phrygia",
+      "from": "person-midas",
+      "to": "office-king-of-phrygia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-people-phrygians",
+        "src-livius-person-midas",
+        "src-livius-place-gordium"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 695,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gyges-holder-of-king-of-lydia",
+      "from": "person-gyges",
+      "to": "office-king-of-lydia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 680,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 644,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gyges-member-of-mermnad",
+      "from": "person-gyges",
+      "to": "dynasty-mermnad",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gyges-founder-of-mermnad",
+      "from": "person-gyges",
+      "to": "dynasty-mermnad",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ardys-holder-of-king-of-lydia",
+      "from": "person-ardys",
+      "to": "office-king-of-lydia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 644,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 625,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ardys-member-of-mermnad",
+      "from": "person-ardys",
+      "to": "dynasty-mermnad",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gyges-parent-of-ardys",
+      "from": "person-gyges",
+      "to": "person-ardys",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ardys-successor-of-gyges",
+      "from": "person-ardys",
+      "to": "person-gyges",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sadyattes-holder-of-king-of-lydia",
+      "from": "person-sadyattes",
+      "to": "office-king-of-lydia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 625,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 600,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sadyattes-member-of-mermnad",
+      "from": "person-sadyattes",
+      "to": "dynasty-mermnad",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ardys-parent-of-sadyattes",
+      "from": "person-ardys",
+      "to": "person-sadyattes",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sadyattes-successor-of-ardys",
+      "from": "person-sadyattes",
+      "to": "person-ardys",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alyattes-holder-of-king-of-lydia",
+      "from": "person-alyattes",
+      "to": "office-king-of-lydia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-alyattes",
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 600,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 560
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alyattes-member-of-mermnad",
+      "from": "person-alyattes",
+      "to": "dynasty-mermnad",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-person-alyattes",
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sadyattes-parent-of-alyattes",
+      "from": "person-sadyattes",
+      "to": "person-alyattes",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alyattes-successor-of-sadyattes",
+      "from": "person-alyattes",
+      "to": "person-sadyattes",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-croesus-holder-of-king-of-lydia",
+      "from": "person-croesus",
+      "to": "office-king-of-lydia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-croesus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 560
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 547,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-croesus-member-of-mermnad",
+      "from": "person-croesus",
+      "to": "dynasty-mermnad",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-person-croesus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alyattes-parent-of-croesus",
+      "from": "person-alyattes",
+      "to": "person-croesus",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-person-croesus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-croesus-successor-of-alyattes",
+      "from": "person-croesus",
+      "to": "person-alyattes",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-person-croesus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sardis-capital-of-mermnad",
+      "from": "place-sardis",
+      "to": "dynasty-mermnad",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-i-participant-in-hittites-sack-babylon",
+      "from": "person-mursili-i",
+      "to": "event-hittites-sack-babylon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hittites-sack-babylon-during-hittite-old-kingdom",
+      "from": "event-hittites-sack-babylon",
+      "to": "period-hittite-old-kingdom",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muwatalli-ii-participant-in-battle-on-the-orontes",
+      "from": "person-muwatalli-ii",
+      "to": "event-battle-on-the-orontes",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ramses-ii-participant-in-battle-on-the-orontes",
+      "from": "person-ramses-ii",
+      "to": "event-battle-on-the-orontes",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-on-the-orontes-during-hittite-new-kingdom",
+      "from": "event-battle-on-the-orontes",
+      "to": "period-hittite-new-kingdom",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ramses-ii-participant-in-hittite-egyptian-treaty",
+      "from": "person-ramses-ii",
+      "to": "event-hittite-egyptian-treaty",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hittite-egyptian-treaty-during-hittite-new-kingdom",
+      "from": "event-hittite-egyptian-treaty",
+      "to": "period-hittite-new-kingdom",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-collapse-of-hittite-empire-during-hittite-new-kingdom",
+      "from": "event-collapse-of-hittite-empire",
+      "to": "period-hittite-new-kingdom",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-people-hittites"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sargon-ii-participant-in-sargon-defeats-rusa",
+      "from": "person-sargon-ii",
+      "to": "event-sargon-defeats-rusa",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-urartu"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gyges-participant-in-cimmerians-sack-sardis",
+      "from": "person-gyges",
+      "to": "event-cimmerians-sack-sardis",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-cimmerians-sack-sardis-took-place-in-sardis",
+      "from": "event-cimmerians-sack-sardis",
+      "to": "place-sardis",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alyattes-participant-in-battle-of-the-eclipse",
+      "from": "person-alyattes",
+      "to": "event-battle-of-the-eclipse",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-cyaxares-participant-in-battle-of-the-eclipse",
+      "from": "person-cyaxares",
+      "to": "event-battle-of-the-eclipse",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-cyrus-ii-participant-in-conquest-of-lydia",
+      "from": "person-cyrus-ii",
+      "to": "event-conquest-of-lydia",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-croesus-participant-in-conquest-of-lydia",
+      "from": "person-croesus",
+      "to": "event-conquest-of-lydia",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-conquest-of-lydia-took-place-in-sardis",
+      "from": "event-conquest-of-lydia",
+      "to": "place-sardis",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-lydia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-livius-people-hittites",
+      "title": "Hittites – Livius",
+      "url": "https://www.livius.org/articles/people/hittites/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-lydia",
+      "title": "Lydia – Livius",
+      "url": "https://www.livius.org/articles/place/lydia/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-croesus",
+      "title": "Croesus – Livius",
+      "url": "https://www.livius.org/articles/person/croesus/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-midas",
+      "title": "Midas – Livius",
+      "url": "https://www.livius.org/articles/person/midas/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-people-phrygians",
+      "title": "Phrygians – Livius",
+      "url": "https://www.livius.org/articles/people/phrygians/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-gordium",
+      "title": "Gordium – Livius",
+      "url": "https://www.livius.org/articles/place/gordium/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-alyattes",
+      "title": "Alyattes – Livius",
+      "url": "https://www.livius.org/articles/person/alyattes/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-urartu",
+      "title": "Urartu – Livius",
+      "url": "https://www.livius.org/articles/place/urartu/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-614962220",
+      "title": "Pleiades: Büyükkale (Hattusa)",
+      "url": "https://pleiades.stoa.org/places/614962220",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-609393",
+      "title": "Pleiades: Gordion/Vindia?",
+      "url": "https://pleiades.stoa.org/places/609393",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-658465",
+      "title": "Pleiades: Carchemish",
+      "url": "https://pleiades.stoa.org/places/658465",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-550867",
+      "title": "Pleiades: Sardis/Hyde?",
+      "url": "https://pleiades.stoa.org/places/550867",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    }
+  ],
+  "events": [],
+  "media": []
+}
