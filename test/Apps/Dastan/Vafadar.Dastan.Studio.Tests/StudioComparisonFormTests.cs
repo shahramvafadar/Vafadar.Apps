@@ -186,14 +186,15 @@ public sealed class StudioComparisonFormTests : IDisposable
     [Fact]
     public async Task An_entity_without_other_names_identifiers_or_statements_gets_its_first_of_each_with_the_form()
     {
-        const string Zal = $"/en/{Collection}/record/entities/character-zal";
-        var inputs = Inputs(await _desk.Get(Zal), "fields");
-        var same = await _desk.Fill(Zal, "fields", Filled);
+        // A work, not a character: a character of a story has no date of history (ADR 0028).
+        const string Work = $"/en/{Collection}/record/entities/work-shahnameh";
+        var inputs = Inputs(await _desk.Get(Work), "fields");
+        var same = await _desk.Fill(Work, "fields", Filled);
 
-        var page = await _desk.Fill(Zal, "fields",
-            [("f.names[0].name", "Dastan"), ("f.names[0].language", "en"), ("f.names[0].kind", "title"),
+        var page = await _desk.Fill(Work, "fields",
+            [("f.names[0].name", "Book of Kings"), ("f.names[0].language", "en"), ("f.names[0].kind", "title"),
              ("f.identifiers[0].issuer", "A catalogue of the tests"), ("f.identifiers[0].value", "Z-1"),
-             ("f.dated[0].key", "zal-told"), ("f.dated[0].label", "First told"), ("f.dated[0].sourceIds", "src-ganjoor-index"),
+             ("f.dated[0].key", "work-told"), ("f.dated[0].label", "First told"), ("f.dated[0].sourceIds", "src-ganjoor-index"),
              ("f.dated[0].time.kind", "occurrence"), ("f.dated[0].time.at.year", "1010"), .. Filled]);
 
         Assert.Equal((string.Empty, string.Empty, "alternative"), (inputs["f.names[0].name"], inputs["f.names[0].language"], inputs["f.names[0].kind"]));
@@ -202,10 +203,10 @@ public sealed class StudioComparisonFormTests : IDisposable
         Assert.EndsWith("?done=unchanged", same.Arrived, StringComparison.Ordinal);
         Assert.EndsWith("?done=changed", page.Arrived, StringComparison.Ordinal);
         using var store = _studio.Store();
-        var zal = store.Record(Collection, "entities", "character-zal")!.Body;
-        Assert.Equal(("Dastan", "en", "title"), ((string?)zal["names"]![0]!["name"], (string?)zal["names"]![0]!["language"], (string?)zal["names"]![0]!["kind"]));
-        Assert.Equal(("A catalogue of the tests", "Z-1", "exact"), ((string?)zal["identifiers"]![0]!["issuer"], (string?)zal["identifiers"]![0]!["value"], (string?)zal["identifiers"]![0]!["match"]));
-        Assert.Equal(1010, (int)zal["dated"]![0]!["time"]!["at"]!["year"]!);
-        Assert.Contains(store.Statements(Collection), statement => statement.Statement == "zal-told");
+        var work = store.Record(Collection, "entities", "work-shahnameh")!.Body;
+        Assert.Equal(("Book of Kings", "en", "title"), ((string?)work["names"]![0]!["name"], (string?)work["names"]![0]!["language"], (string?)work["names"]![0]!["kind"]));
+        Assert.Equal(("A catalogue of the tests", "Z-1", "exact"), ((string?)work["identifiers"]![0]!["issuer"], (string?)work["identifiers"]![0]!["value"], (string?)work["identifiers"]![0]!["match"]));
+        Assert.Equal(1010, (int)work["dated"]![0]!["time"]!["at"]!["year"]!);
+        Assert.Contains(store.Statements(Collection), statement => statement.Statement == "work-told");
     }
 }
