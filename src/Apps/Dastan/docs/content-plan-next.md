@@ -85,3 +85,4 @@ working session; a civilization is about four batches.
 | N9 | 2026-11-28 | Report: reviews/2026-11-28-new-histories-review.md. 736 quotes stand; Demetrius II of Macedon separated from the Seleucid; the Hittite sack of Babylon given both years. Nothing marked reviewed; G5, G7 and the look in a browser wait for the owner. |
 | G5 | 2026-11-28 | In part, on the recommendation of F6 as a working default: Rostam and Esfandiar (24 scenes, 22 records, 28 verse quotes). Left: Bizhan and Manizheh, the great war of Kay Khosrow and Akvan the demon, and portrayalOf links for further Sasanian kings. |
 | G5 | 2026-11-28 | Continued: Bizhan and Manizheh (15 scenes, 19 records, 20 verse quotes). |
+| G5 | 2026-11-28 | Continued: Akvan the demon (9 scenes, 10 records, 9 verse quotes). Left of F6: the great war of Kay Khosrow, the longest story of the poem. |
