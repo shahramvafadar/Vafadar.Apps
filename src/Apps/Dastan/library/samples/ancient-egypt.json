@@ -27,6 +27,9 @@
     {
       "id": "subject-ancient-egypt",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Egypt",
       "summary": "Ancient Egypt from the kings before the unification, through the thirty dynasties of Manetho with their Old, Middle and New Kingdoms and the Intermediate periods between them, the Persian kings and Alexander, the Ptolemies, and Roman and Byzantine Egypt to the Arab conquest of 642 CE.",
       "sourceIds": [
@@ -40,6 +43,9 @@
     {
       "id": "office-king-of-egypt",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Egypt",
       "summary": "The kingship of Egypt; its holders are now called pharaohs, a term used for the king only from the New Kingdom on and taken from the Hebrew Bible.",
       "sourceIds": [
@@ -63,6 +69,9 @@
     {
       "id": "period-egypt-predynastic",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Predynastic period",
       "summary": "The time of the regional kings who ruled parts of Egypt before its unification under the 1st dynasty, known mainly from archaeology and called Dynasty 0, ending about 2900 BCE.",
       "sourceIds": [
@@ -93,6 +102,9 @@
     {
       "id": "period-egypt-early-dynastic",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Early Dynastic period",
       "summary": "The 1st to the 3rd dynasty, from about 2900 to about 2544 BCE: Memphis became the capital and Djoser’s step pyramid was built.",
       "sourceIds": [
@@ -129,6 +141,9 @@
     {
       "id": "period-egypt-old-kingdom",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Old Kingdom",
       "summary": "The 4th to the 8th dynasty, from about 2543 to about 2118 BCE, the age of the pyramids of Giza.",
       "sourceIds": [
@@ -165,6 +180,9 @@
     {
       "id": "period-egypt-first-intermediate",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The First Intermediate period",
       "summary": "The time of the kings of Heracleopolis, the 9th and 10th dynasties, from about 2118 to about 1980 BCE.",
       "sourceIds": [
@@ -201,6 +219,9 @@
     {
       "id": "period-egypt-middle-kingdom",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Middle Kingdom",
       "summary": "The 11th and 12th dynasties, from about 2080 to about 1760 BCE; Mentuhotep II of Thebes united much of Egypt and began it.",
       "sourceIds": [
@@ -237,6 +258,9 @@
     {
       "id": "period-egypt-second-intermediate",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Second Intermediate period",
       "summary": "The 13th to the 17th dynasty, from about 1759 to about 1530 BCE, when the Hyksos from Southwest Asia ruled in the north.",
       "sourceIds": [
@@ -273,6 +297,9 @@
     {
       "id": "period-egypt-new-kingdom",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The New Kingdom",
       "summary": "The 18th to the 20th dynasty, from about 1539 to about 1077 BCE: Ahmose I drove out the Hyksos and Egypt reached into western Asia.",
       "sourceIds": [
@@ -309,6 +336,9 @@
     {
       "id": "period-egypt-third-intermediate",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Third Intermediate period",
       "summary": "The 21st to the 25th dynasty, from about 1076 to about 655 BCE, with kings at Tanis, Libyan lines and finally kings from Kush.",
       "sourceIds": [
@@ -345,6 +375,9 @@
     {
       "id": "period-egypt-late",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Late period",
       "summary": "The 26th to the 30th dynasty and the second Persian period, from 664 to 332 BCE; the kings of Sais, then the Persian kings, then Egyptian kings again until the Persians returned in 343.",
       "sourceIds": [
@@ -379,6 +412,9 @@
     {
       "id": "period-egypt-macedonian-ptolemaic",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Macedonian and Ptolemaic periods",
       "summary": "Egypt in the empire of Alexander from 332 BCE, and under the Ptolemies from 305 until it became Roman in 30 BCE.",
       "sourceIds": [
@@ -413,6 +449,9 @@
     {
       "id": "dynasty-egypt-0",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "Dynasty 0",
       "summary": "The regional kings who ruled parts of Egypt before the 1st dynasty, known from early hieroglyphs; their years and order are unknown.",
       "sourceIds": [
@@ -450,6 +489,9 @@
     {
       "id": "dynasty-egypt-1",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 1st dynasty",
       "summary": "The 1st dynasty of Egypt in Manetho’s count, from about 2900 to about 2730 BCE.",
       "sourceIds": [
@@ -487,6 +529,9 @@
     {
       "id": "person-narmer",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Narmer",
       "summary": "A king of Egypt of the 1st dynasty, reigning from about 2900 BCE.",
       "sourceIds": [
@@ -511,6 +556,9 @@
     {
       "id": "person-aha",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aha",
       "summary": "A king of Egypt of the 1st dynasty, reigning until about 2870 BCE.",
       "sourceIds": [
@@ -535,6 +583,9 @@
     {
       "id": "person-djer",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Djer",
       "summary": "A king of Egypt of the 1st dynasty, reigning from about 2870 to about 2823 BCE.",
       "sourceIds": [
@@ -559,6 +610,9 @@
     {
       "id": "person-serpent",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Serpent",
       "summary": "A king of Egypt of the 1st dynasty, reigning from about 2822 to about 2815 BCE.",
       "sourceIds": [
@@ -583,6 +637,9 @@
     {
       "id": "person-den",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Den",
       "summary": "A king of Egypt of the 1st dynasty, reigning from about 2814 to about 2772 BCE.",
       "sourceIds": [
@@ -607,6 +664,9 @@
     {
       "id": "person-adjib",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "ʿAdjib",
       "summary": "A king of Egypt of the 1st dynasty, reigning from about 2771 to about 2764 BCE.",
       "sourceIds": [
@@ -638,6 +698,9 @@
     {
       "id": "person-semerkhet",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Semerkhet",
       "summary": "A king of Egypt of the 1st dynasty, reigning from about 2763 to about 2756 BCE.",
       "sourceIds": [
@@ -662,6 +725,9 @@
     {
       "id": "person-qaa",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Qaʿa",
       "summary": "A king of Egypt of the 1st dynasty, reigning from about 2755 to about 2732 BCE.",
       "sourceIds": [
@@ -686,6 +752,9 @@
     {
       "id": "dynasty-egypt-2",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 2nd dynasty",
       "summary": "The 2nd dynasty of Egypt in Manetho’s count, from about 2730 to about 2590 BCE.",
       "sourceIds": [
@@ -723,6 +792,9 @@
     {
       "id": "person-hetepsekhemwy",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hetepsekhemwy",
       "summary": "A king of Egypt of the 2nd dynasty, reigning from about 2730 BCE.",
       "sourceIds": [
@@ -747,6 +819,9 @@
     {
       "id": "person-reneb",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Reʿneb",
       "summary": "A king of Egypt of the 2nd dynasty, reigning until about 2700 BCE.",
       "sourceIds": [
@@ -771,6 +846,9 @@
     {
       "id": "person-nynetjer",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nynetjer",
       "summary": "A king of Egypt of the 2nd dynasty, reigning from about 2700 to about 2660 BCE.",
       "sourceIds": [
@@ -795,6 +873,9 @@
     {
       "id": "person-peribsen",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Peribsen",
       "summary": "A king of Egypt of the 2nd dynasty, reigning from about 2660 to about 2650 BCE.",
       "sourceIds": [
@@ -819,6 +900,9 @@
     {
       "id": "person-sekhemib",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sekhemib",
       "summary": "A king of Egypt of the 2nd dynasty, reigning from about 2650 BCE.",
       "sourceIds": [
@@ -843,6 +927,9 @@
     {
       "id": "person-sened",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sened",
       "summary": "A king of Egypt of the 2nd dynasty, reigning until about 2610 BCE.",
       "sourceIds": [
@@ -867,6 +954,9 @@
     {
       "id": "person-khasekhemwy",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khasekhemwy",
       "summary": "A king of Egypt of the 2nd dynasty, reigning from about 2610 to about 2593 BCE.",
       "sourceIds": [
@@ -891,6 +981,9 @@
     {
       "id": "dynasty-egypt-3",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 3rd dynasty",
       "summary": "The 3rd dynasty of Egypt in Manetho’s count, from about 2592 to about 2544 BCE.",
       "sourceIds": [
@@ -928,6 +1021,9 @@
     {
       "id": "person-djoser",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Djoser",
       "summary": "A king of Egypt of the 3rd dynasty, reigning from about 2592 to about 2566 BCE.",
       "sourceIds": [
@@ -952,6 +1048,9 @@
     {
       "id": "person-sekhemkhet",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sekhemkhet",
       "summary": "A king of Egypt of the 3rd dynasty, reigning from about 2565 to about 2559 BCE.",
       "sourceIds": [
@@ -976,6 +1075,9 @@
     {
       "id": "person-khaba",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khaʿba",
       "summary": "A king of Egypt of the 3rd dynasty, reigning from about 2559 BCE.",
       "sourceIds": [
@@ -1000,6 +1102,9 @@
     {
       "id": "person-nebka",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nebka",
       "summary": "A king of Egypt of the 3rd dynasty, reigning in years not known.",
       "sourceIds": [
@@ -1024,6 +1129,9 @@
     {
       "id": "person-huni",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Huni",
       "summary": "A king of Egypt of the 3rd dynasty, reigning until about 2544 BCE.",
       "sourceIds": [
@@ -1048,6 +1156,9 @@
     {
       "id": "dynasty-egypt-4",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 4th dynasty",
       "summary": "The 4th dynasty of Egypt in Manetho’s count, from about 2543 to about 2436 BCE.",
       "sourceIds": [
@@ -1085,6 +1196,9 @@
     {
       "id": "person-snefru",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Snefru",
       "summary": "A king of Egypt of the 4th dynasty, reigning from about 2543 to about 2510 BCE.",
       "sourceIds": [
@@ -1109,6 +1223,9 @@
     {
       "id": "person-khufu",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khufu",
       "summary": "A king of Egypt of the 4th dynasty, reigning from about 2509 to about 2483 BCE.",
       "sourceIds": [
@@ -1133,6 +1250,9 @@
     {
       "id": "person-redjedef",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Redjedef",
       "summary": "A king of Egypt of the 4th dynasty, reigning from about 2482 to about 2475 BCE.",
       "sourceIds": [
@@ -1157,6 +1277,9 @@
     {
       "id": "person-bikheris",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bikheris",
       "summary": "A king of Egypt of the 4th dynasty, reigning from about 2474 to about 2473 BCE.",
       "sourceIds": [
@@ -1181,6 +1304,9 @@
     {
       "id": "person-khafre",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khafre",
       "summary": "A king of Egypt of the 4th dynasty, reigning from about 2472 to about 2448 BCE.",
       "sourceIds": [
@@ -1205,6 +1331,9 @@
     {
       "id": "person-menkaure",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Menkaure",
       "summary": "A king of Egypt of the 4th dynasty, reigning from about 2447 to about 2442 BCE.",
       "sourceIds": [
@@ -1229,6 +1358,9 @@
     {
       "id": "person-shepseskaf",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shepseskaf",
       "summary": "A king of Egypt of the 4th dynasty, reigning from about 2441 to about 2436 BCE.",
       "sourceIds": [
@@ -1253,6 +1385,9 @@
     {
       "id": "dynasty-egypt-5",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 5th dynasty",
       "summary": "The 5th dynasty of Egypt in Manetho’s count, from about 2435 to about 2306 BCE.",
       "sourceIds": [
@@ -1290,6 +1425,9 @@
     {
       "id": "person-userkaf",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Userkaf",
       "summary": "A king of Egypt of the 5th dynasty, reigning from about 2435 to about 2429 BCE.",
       "sourceIds": [
@@ -1314,6 +1452,9 @@
     {
       "id": "person-sahure",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sahure",
       "summary": "A king of Egypt of the 5th dynasty, reigning from about 2428 to about 2416 BCE.",
       "sourceIds": [
@@ -1338,6 +1479,9 @@
     {
       "id": "person-neferirkare-kakai",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neferirkare Kakai",
       "summary": "A king of Egypt of the 5th dynasty, reigning from about 2415 to about 2405 BCE.",
       "sourceIds": [
@@ -1362,6 +1506,9 @@
     {
       "id": "person-reneferef",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Reneferef",
       "summary": "A king of Egypt of the 5th dynasty, reigning in about 2404 BCE.",
       "sourceIds": [
@@ -1393,6 +1540,9 @@
     {
       "id": "person-shepseskare-izi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shepseskare Izi",
       "summary": "A king of Egypt of the 5th dynasty, reigning in about 2403 BCE.",
       "sourceIds": [
@@ -1417,6 +1567,9 @@
     {
       "id": "person-neuserre-ini",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neuserre Ini",
       "summary": "A king of Egypt of the 5th dynasty, reigning from about 2402 to about 2374 BCE.",
       "sourceIds": [
@@ -1441,6 +1594,9 @@
     {
       "id": "person-menkauhor",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Menkauhor",
       "summary": "A king of Egypt of the 5th dynasty, reigning from about 2373 to about 2366 BCE.",
       "sourceIds": [
@@ -1465,6 +1621,9 @@
     {
       "id": "person-djedkare-izezi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Djedkare Izezi",
       "summary": "A king of Egypt of the 5th dynasty, reigning from about 2365 to about 2322 BCE.",
       "sourceIds": [
@@ -1489,6 +1648,9 @@
     {
       "id": "person-unas",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Unas",
       "summary": "A king of Egypt of the 5th dynasty, reigning from about 2321 to about 2306 BCE.",
       "sourceIds": [
@@ -1513,6 +1675,9 @@
     {
       "id": "dynasty-egypt-6",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 6th dynasty",
       "summary": "The 6th dynasty of Egypt in Manetho’s count, from about 2305 to about 2118 BCE.",
       "sourceIds": [
@@ -1550,6 +1715,9 @@
     {
       "id": "person-teti",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Teti",
       "summary": "A king of Egypt of the 6th dynasty, reigning from about 2305 to about 2279 BCE.",
       "sourceIds": [
@@ -1574,6 +1742,9 @@
     {
       "id": "person-userkare",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Userkare",
       "summary": "A king of Egypt of the 6th dynasty, reigning from about 2279 to about 2276 BCE.",
       "sourceIds": [
@@ -1598,6 +1769,9 @@
     {
       "id": "person-pepi-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pepi I",
       "summary": "A king of Egypt of the 6th dynasty, reigning from about 2276 to about 2228 BCE.",
       "sourceIds": [
@@ -1622,6 +1796,9 @@
     {
       "id": "person-nemtyemzaef-merenre",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nemtyemzaef Merenre",
       "summary": "A king of Egypt of the 6th dynasty, reigning from about 2227 to about 2217 BCE.",
       "sourceIds": [
@@ -1646,6 +1823,9 @@
     {
       "id": "person-pepi-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pepi II",
       "summary": "A king of Egypt of the 6th dynasty, reigning from about 2216 to about 2153 BCE.",
       "sourceIds": [
@@ -1670,6 +1850,9 @@
     {
       "id": "person-nemtyemzaef-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nemtyemzaef II",
       "summary": "A king of Egypt of the 6th dynasty, reigning in about 2152 BCE.",
       "sourceIds": [
@@ -1694,6 +1877,9 @@
     {
       "id": "dynasty-egypt-7",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 7th dynasty",
       "summary": "The 7th dynasty of Egypt in Manetho’s count; its years are not known. Manetho names it, but it may not be historical.",
       "sourceIds": [
@@ -1706,6 +1892,9 @@
     {
       "id": "dynasty-egypt-8",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 8th dynasty",
       "summary": "The 8th dynasty of Egypt in Manetho’s count, from about 2150 to about 2118 BCE.",
       "sourceIds": [
@@ -1743,6 +1932,9 @@
     {
       "id": "person-neferkaure",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neferkaure",
       "summary": "A king of Egypt of the 8th dynasty, reigning from about 2126 to about 2123 BCE.",
       "sourceIds": [
@@ -1767,6 +1959,9 @@
     {
       "id": "person-neferkauhor",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neferkauhor",
       "summary": "A king of Egypt of the 8th dynasty, reigning from about 2122 to about 2120 BCE.",
       "sourceIds": [
@@ -1791,6 +1986,9 @@
     {
       "id": "person-neferirkare",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neferirkare",
       "summary": "A king of Egypt of the 8th dynasty, reigning from about 2119 to about 2118 BCE.",
       "sourceIds": [
@@ -1815,6 +2013,9 @@
     {
       "id": "dynasty-egypt-9",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 9th and 10th dynasties",
       "summary": "The kings who ruled from Heracleopolis, about 2118 to 1980 BCE; Manetho counted them as two dynasties, but they were probably one line.",
       "sourceIds": [
@@ -1852,6 +2053,9 @@
     {
       "id": "dynasty-egypt-11",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 11th dynasty",
       "summary": "The 11th dynasty of Egypt in Manetho’s count, from about 2080 to about 1940 BCE. Its kings ruled from Thebes.",
       "sourceIds": [
@@ -1889,6 +2093,9 @@
     {
       "id": "person-mentuhotep-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mentuhotep I",
       "summary": "A king of Egypt of the 11th dynasty, reigning from about 2080 BCE.",
       "sourceIds": [
@@ -1913,6 +2120,9 @@
     {
       "id": "person-inyotef-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Inyotef I",
       "summary": "A king of Egypt of the 11th dynasty, reigning until about 2067 BCE.",
       "sourceIds": [
@@ -1937,6 +2147,9 @@
     {
       "id": "person-inyotef-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Inyotef II",
       "summary": "A king of Egypt of the 11th dynasty, reigning from about 2066 to about 2017 BCE.",
       "sourceIds": [
@@ -1961,6 +2174,9 @@
     {
       "id": "person-inyotef-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Inyotef III",
       "summary": "A king of Egypt of the 11th dynasty, reigning from about 2016 to about 2009 BCE.",
       "sourceIds": [
@@ -1985,6 +2201,9 @@
     {
       "id": "person-mentuhotep-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mentuhotep II",
       "summary": "A king of Egypt of the 11th dynasty, reigning from about 2009 to about 1959 BCE.",
       "sourceIds": [
@@ -2009,6 +2228,9 @@
     {
       "id": "person-mentuhotep-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mentuhotep III",
       "summary": "A king of Egypt of the 11th dynasty, reigning from about 1958 to about 1947 BCE.",
       "sourceIds": [
@@ -2033,6 +2255,9 @@
     {
       "id": "person-mentuhotep-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mentuhotep IV",
       "summary": "A king of Egypt of the 11th dynasty, reigning from about 1947 to about 1940 BCE.",
       "sourceIds": [
@@ -2057,6 +2282,9 @@
     {
       "id": "dynasty-egypt-12",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 12th dynasty",
       "summary": "The 12th dynasty of Egypt in Manetho’s count, from about 1939 to about 1760 BCE.",
       "sourceIds": [
@@ -2094,6 +2322,9 @@
     {
       "id": "person-amenemhet-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenemhet I",
       "summary": "A king of Egypt of the 12th dynasty, reigning from about 1939 to about 1910 BCE.",
       "sourceIds": [
@@ -2118,6 +2349,9 @@
     {
       "id": "person-sesostris-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sesostris I",
       "summary": "A king of Egypt of the 12th dynasty, reigning from about 1920 to about 1875 BCE.",
       "sourceIds": [
@@ -2149,6 +2383,9 @@
     {
       "id": "person-amenemhet-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenemhet II",
       "summary": "A king of Egypt of the 12th dynasty, reigning from about 1878 to about 1843 BCE.",
       "sourceIds": [
@@ -2173,6 +2410,9 @@
     {
       "id": "person-sesostris-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sesostris II",
       "summary": "A king of Egypt of the 12th dynasty, reigning from about 1845 to about 1837 BCE.",
       "sourceIds": [
@@ -2204,6 +2444,9 @@
     {
       "id": "person-sesostris-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sesostris III",
       "summary": "A king of Egypt of the 12th dynasty, reigning from about 1837 to about 1819 BCE.",
       "sourceIds": [
@@ -2235,6 +2478,9 @@
     {
       "id": "person-amenemhet-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenemhet III",
       "summary": "A king of Egypt of the 12th dynasty, reigning from about 1818 to about 1773 BCE.",
       "sourceIds": [
@@ -2259,6 +2505,9 @@
     {
       "id": "person-amenemhet-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenemhet IV",
       "summary": "A king of Egypt of the 12th dynasty, reigning from about 1772 to about 1764 BCE.",
       "sourceIds": [
@@ -2283,6 +2532,9 @@
     {
       "id": "person-sebeknefru",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sebeknefru",
       "summary": "A woman who ruled Egypt as king of the 12th dynasty, from about 1763 to about 1760 BCE.",
       "sourceIds": [
@@ -2307,6 +2559,9 @@
     {
       "id": "dynasty-egypt-13",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 13th dynasty",
       "summary": "The 13th dynasty of Egypt in Manetho’s count, from about 1759 to about 1630 BCE.",
       "sourceIds": [
@@ -2344,6 +2599,9 @@
     {
       "id": "person-wegaf",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Wegaf",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1759 to about 1757 BCE.",
       "sourceIds": [
@@ -2368,6 +2626,9 @@
     {
       "id": "person-amenemhet-vii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenemhet VII",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1753 to about 1748 BCE.",
       "sourceIds": [
@@ -2392,6 +2653,9 @@
     {
       "id": "person-sobekhotep-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sobekhotep II",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1737 to about 1733 BCE.",
       "sourceIds": [
@@ -2416,6 +2680,9 @@
     {
       "id": "person-khendjer",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khendjer",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1732 to about 1728 BCE.",
       "sourceIds": [
@@ -2440,6 +2707,9 @@
     {
       "id": "person-sobekhotep-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sobekhotep III",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1725 to about 1722 BCE.",
       "sourceIds": [
@@ -2464,6 +2734,9 @@
     {
       "id": "person-neferhotep-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neferhotep I",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1721 to about 1710 BCE.",
       "sourceIds": [
@@ -2488,6 +2761,9 @@
     {
       "id": "person-sobekhotep-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sobekhotep IV",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1709 to about 1701 BCE.",
       "sourceIds": [
@@ -2512,6 +2788,9 @@
     {
       "id": "person-sobekhotep-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sobekhotep V",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1700 to about 1695 BCE.",
       "sourceIds": [
@@ -2536,6 +2815,9 @@
     {
       "id": "person-ibiau",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ibiau",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1695 to about 1685 BCE.",
       "sourceIds": [
@@ -2560,6 +2842,9 @@
     {
       "id": "person-aya",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aya",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1684 to about 1661 BCE.",
       "sourceIds": [
@@ -2584,6 +2869,9 @@
     {
       "id": "person-ini",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ini",
       "summary": "A king of Egypt of the 13th dynasty, reigning from about 1660 to about 1659 BCE.",
       "sourceIds": [
@@ -2608,6 +2896,9 @@
     {
       "id": "dynasty-egypt-14",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 14th dynasty",
       "summary": "The 14th dynasty of Egypt in Manetho’s count, from about 1759 to about 1530 BCE. Lesser kings beside the 13th and 15th.",
       "sourceIds": [
@@ -2645,6 +2936,9 @@
     {
       "id": "dynasty-egypt-15",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 15th dynasty",
       "summary": "The 15th dynasty of Egypt in Manetho’s count, from about 1630 to about 1530 BCE. The Hyksos kings from Southwest Asia.",
       "sourceIds": [
@@ -2682,6 +2976,9 @@
     {
       "id": "person-khian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khian",
       "summary": "A king of Egypt of the 15th dynasty, reigning in years not known.",
       "sourceIds": [
@@ -2706,6 +3003,9 @@
     {
       "id": "person-apopis",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Apopis",
       "summary": "A king of Egypt of the 15th dynasty, reigning from about 1575 to about 1540 BCE.",
       "sourceIds": [
@@ -2730,6 +3030,9 @@
     {
       "id": "person-khamudi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khamudi",
       "summary": "A king of Egypt of the 15th dynasty, reigning in years not known.",
       "sourceIds": [
@@ -2754,6 +3057,9 @@
     {
       "id": "dynasty-egypt-16",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 16th dynasty",
       "summary": "The 16th dynasty of Egypt in Manetho’s count, from about 1630 to about 1540 BCE. Lesser kings, vassals of the Hyksos.",
       "sourceIds": [
@@ -2791,6 +3097,9 @@
     {
       "id": "dynasty-egypt-17",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 17th dynasty",
       "summary": "The 17th dynasty of Egypt in Manetho’s count, from about 1630 to about 1540 BCE.",
       "sourceIds": [
@@ -2828,6 +3137,9 @@
     {
       "id": "person-inyotef-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Inyotef V",
       "summary": "A king of Egypt of the 17th dynasty, reigning in years not known.",
       "sourceIds": [
@@ -2852,6 +3164,9 @@
     {
       "id": "person-tao-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Taʿo I",
       "summary": "A king of Egypt of the 17th dynasty, reigning in years not known.",
       "sourceIds": [
@@ -2876,6 +3191,9 @@
     {
       "id": "person-tao-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Taʿo II",
       "summary": "A king of Egypt of the 17th dynasty, reigning in years not known.",
       "sourceIds": [
@@ -2900,6 +3218,9 @@
     {
       "id": "person-kamose",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Kamose",
       "summary": "A king of Egypt of the 17th dynasty, reigning until about 1540 BCE.",
       "sourceIds": [
@@ -2924,6 +3245,9 @@
     {
       "id": "dynasty-egypt-18",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 18th dynasty",
       "summary": "The 18th dynasty of Egypt in Manetho’s count, from about 1539 to about 1292 BCE.",
       "sourceIds": [
@@ -2961,6 +3285,9 @@
     {
       "id": "person-ahmose-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ahmose I",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1539 to 1515 BCE.",
       "sourceIds": [
@@ -2985,6 +3312,9 @@
     {
       "id": "person-amenhotep-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenhotep I",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1514 to about 1494 BCE.",
       "sourceIds": [
@@ -3009,6 +3339,9 @@
     {
       "id": "person-thutmose-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Thutmose I",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1493 to about 1483 BCE.",
       "sourceIds": [
@@ -3033,6 +3366,9 @@
     {
       "id": "person-thutmose-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Thutmose II",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1482 to about 1480 BCE.",
       "sourceIds": [
@@ -3057,6 +3393,9 @@
     {
       "id": "person-thutmose-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Thutmose III",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1479 to about 1425 BCE.",
       "sourceIds": [
@@ -3081,6 +3420,9 @@
     {
       "id": "person-hatshepsut",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hatshepsut",
       "summary": "A woman who ruled Egypt as king of the 18th dynasty, from about 1479 to about 1458 BCE.",
       "sourceIds": [
@@ -3105,6 +3447,9 @@
     {
       "id": "person-amenhotep-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenhotep II",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1425 to about 1400 BCE.",
       "sourceIds": [
@@ -3129,6 +3474,9 @@
     {
       "id": "person-thutmose-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Thutmose IV",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1400 to about 1390 BCE.",
       "sourceIds": [
@@ -3153,6 +3501,9 @@
     {
       "id": "person-amenhotep-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenhotep III",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1390 to about 1353 BCE.",
       "sourceIds": [
@@ -3177,6 +3528,9 @@
     {
       "id": "person-amenhotep-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenhotep IV",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1353 to about 1336 BCE.",
       "sourceIds": [
@@ -3208,6 +3562,9 @@
     {
       "id": "person-smenkhkare",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Smenkhkare",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1336 to about 1334 BCE.",
       "sourceIds": [
@@ -3232,6 +3589,9 @@
     {
       "id": "person-neferneferuaten",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neferneferuaten",
       "summary": "A woman who ruled Egypt as king of the 18th dynasty, from about 1334 to about 1333 BCE.",
       "sourceIds": [
@@ -3256,6 +3616,9 @@
     {
       "id": "person-tutankhamun",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tutankhamun",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1333 to about 1324 BCE.",
       "sourceIds": [
@@ -3280,6 +3643,9 @@
     {
       "id": "person-itnetjer-ay",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Itnetjer Ay",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1323 to about 1320 BCE.",
       "sourceIds": [
@@ -3304,6 +3670,9 @@
     {
       "id": "person-horemheb",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Horemheb",
       "summary": "A king of Egypt of the 18th dynasty, reigning from about 1319 to about 1292 BCE.",
       "sourceIds": [
@@ -3328,6 +3697,9 @@
     {
       "id": "dynasty-egypt-19",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 19th dynasty",
       "summary": "The 19th dynasty of Egypt in Manetho’s count, from about 1292 to about 1191 BCE.",
       "sourceIds": [
@@ -3365,6 +3737,9 @@
     {
       "id": "person-ramses-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses I",
       "summary": "A king of Egypt of the 19th dynasty, reigning from about 1292 to about 1291 BCE.",
       "sourceIds": [
@@ -3389,6 +3764,9 @@
     {
       "id": "person-seti-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Seti I",
       "summary": "A king of Egypt of the 19th dynasty, reigning from about 1290 to about 1279 BCE.",
       "sourceIds": [
@@ -3413,6 +3791,9 @@
     {
       "id": "person-ramses-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses II",
       "summary": "A king of Egypt of the 19th dynasty, reigning from about 1279 to about 1213 BCE.",
       "sourceIds": [
@@ -3437,6 +3818,9 @@
     {
       "id": "person-merneptah",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Merneptah",
       "summary": "A king of Egypt of the 19th dynasty, reigning from about 1213 to about 1203 BCE.",
       "sourceIds": [
@@ -3461,6 +3845,9 @@
     {
       "id": "person-seti-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Seti II",
       "summary": "A king of Egypt of the 19th dynasty, reigning from about 1202 to about 1198 BCE.",
       "sourceIds": [
@@ -3485,6 +3872,9 @@
     {
       "id": "person-amenmesses",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenmesses",
       "summary": "A king of Egypt of the 19th dynasty, reigning from about 1202 to about 1200 BCE.",
       "sourceIds": [
@@ -3509,6 +3899,9 @@
     {
       "id": "person-siptah",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Siptah",
       "summary": "A king of Egypt of the 19th dynasty, reigning from about 1197 to about 1193 BCE.",
       "sourceIds": [
@@ -3533,6 +3926,9 @@
     {
       "id": "person-tausert",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tausert",
       "summary": "A woman who ruled Egypt as king of the 19th dynasty, from about 1192 to about 1191 BCE.",
       "sourceIds": [
@@ -3557,6 +3953,9 @@
     {
       "id": "dynasty-egypt-20",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 20th dynasty",
       "summary": "The 20th dynasty of Egypt in Manetho’s count, from about 1190 to about 1077 BCE.",
       "sourceIds": [
@@ -3594,6 +3993,9 @@
     {
       "id": "person-sethnakht",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sethnakht",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1190 to about 1188 BCE.",
       "sourceIds": [
@@ -3618,6 +4020,9 @@
     {
       "id": "person-ramses-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses III",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1187 to about 1157 BCE.",
       "sourceIds": [
@@ -3642,6 +4047,9 @@
     {
       "id": "person-ramses-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses IV",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1156 to about 1150 BCE.",
       "sourceIds": [
@@ -3666,6 +4074,9 @@
     {
       "id": "person-ramses-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses V",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1149 to about 1146 BCE.",
       "sourceIds": [
@@ -3690,6 +4101,9 @@
     {
       "id": "person-ramses-vi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses VI",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1145 to about 1139 BCE.",
       "sourceIds": [
@@ -3714,6 +4128,9 @@
     {
       "id": "person-ramses-vii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses VII",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1138 to about 1131 BCE.",
       "sourceIds": [
@@ -3738,6 +4155,9 @@
     {
       "id": "person-ramses-viii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses VIII",
       "summary": "A king of Egypt of the 20th dynasty, reigning in about 1130 BCE.",
       "sourceIds": [
@@ -3762,6 +4182,9 @@
     {
       "id": "person-ramses-ix",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses IX",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1129 to about 1111 BCE.",
       "sourceIds": [
@@ -3786,6 +4209,9 @@
     {
       "id": "person-ramses-x",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses X",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1110 to about 1107 BCE.",
       "sourceIds": [
@@ -3810,6 +4236,9 @@
     {
       "id": "person-ramses-xi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses XI",
       "summary": "A king of Egypt of the 20th dynasty, reigning from about 1106 to about 1077 BCE.",
       "sourceIds": [
@@ -3834,6 +4263,9 @@
     {
       "id": "dynasty-egypt-21",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 21st dynasty",
       "summary": "The 21st dynasty of Egypt in Manetho’s count, from about 1076 to about 944 BCE. Its kings ruled from Tanis.",
       "sourceIds": [
@@ -3871,6 +4303,9 @@
     {
       "id": "person-smendes",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Smendes",
       "summary": "A king of Egypt of the 21st dynasty, reigning from about 1076 to about 1052 BCE.",
       "sourceIds": [
@@ -3895,6 +4330,9 @@
     {
       "id": "person-psusennes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Psusennes I",
       "summary": "A king of Egypt of the 21st dynasty, reigning from about 1051 to about 1006 BCE.",
       "sourceIds": [
@@ -3919,6 +4357,9 @@
     {
       "id": "person-amenemnisut",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenemnisut",
       "summary": "A king of Egypt of the 21st dynasty, reigning from about 1005 to about 1002 BCE.",
       "sourceIds": [
@@ -3943,6 +4384,9 @@
     {
       "id": "person-amenemope",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amenemope",
       "summary": "A king of Egypt of the 21st dynasty, reigning from about 1002 to about 993 BCE.",
       "sourceIds": [
@@ -3967,6 +4411,9 @@
     {
       "id": "person-osorkon",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Osorkon",
       "summary": "A king of Egypt of the 21st dynasty, reigning from about 992 to about 987 BCE.",
       "sourceIds": [
@@ -3991,6 +4438,9 @@
     {
       "id": "person-siamun",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Siamun",
       "summary": "A king of Egypt of the 21st dynasty, reigning from about 986 to about 968 BCE.",
       "sourceIds": [
@@ -4015,6 +4465,9 @@
     {
       "id": "person-psusennes-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Psusennes II",
       "summary": "A king of Egypt of the 21st dynasty, reigning from about 967 to about 944 BCE.",
       "sourceIds": [
@@ -4039,6 +4492,9 @@
     {
       "id": "dynasty-egypt-22",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 22nd dynasty",
       "summary": "The 22nd dynasty of Egypt in Manetho’s count, from about 943 to about 746 BCE. A line of kings from Libya.",
       "sourceIds": [
@@ -4076,6 +4532,9 @@
     {
       "id": "person-sheshonk-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sheshonk I",
       "summary": "A king of Egypt of the 22nd dynasty, reigning from about 943 to about 923 BCE.",
       "sourceIds": [
@@ -4100,6 +4559,9 @@
     {
       "id": "person-osorkon-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Osorkon I",
       "summary": "A king of Egypt of the 22nd dynasty, reigning from about 922 to about 888 BCE.",
       "sourceIds": [
@@ -4124,6 +4586,9 @@
     {
       "id": "person-takelot-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Takelot I",
       "summary": "A king of Egypt of the 22nd dynasty, reigning from about 887 to about 874 BCE.",
       "sourceIds": [
@@ -4148,6 +4613,9 @@
     {
       "id": "person-sheshonk-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sheshonk II",
       "summary": "A king of Egypt of the 22nd dynasty, reigning in about 873 BCE.",
       "sourceIds": [
@@ -4172,6 +4640,9 @@
     {
       "id": "person-osorkon-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Osorkon II",
       "summary": "A king of Egypt of the 22nd dynasty, reigning from about 872 to about 842 BCE.",
       "sourceIds": [
@@ -4196,6 +4667,9 @@
     {
       "id": "person-sheshonk-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sheshonk III",
       "summary": "A king of Egypt of the 22nd dynasty, reigning from about 841 to about 803 BCE.",
       "sourceIds": [
@@ -4220,6 +4694,9 @@
     {
       "id": "person-sheshonk-iiia",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sheshonk IIIa",
       "summary": "A king of Egypt of the 22nd dynasty, reigning until about 790 BCE.",
       "sourceIds": [
@@ -4244,6 +4721,9 @@
     {
       "id": "person-pami",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pami",
       "summary": "A king of Egypt of the 22nd dynasty, reigning from about 789 to about 784 BCE.",
       "sourceIds": [
@@ -4268,6 +4748,9 @@
     {
       "id": "person-sheshonk-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sheshonk V",
       "summary": "A king of Egypt of the 22nd dynasty, reigning from about 783 to about 746 BCE.",
       "sourceIds": [
@@ -4292,6 +4775,9 @@
     {
       "id": "dynasty-egypt-23",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 23rd dynasty",
       "summary": "The 23rd dynasty of Egypt in Manetho’s count, from about 845 to about 730 BCE. Libyan kings who ruled Upper and Lower Egypt largely apart.",
       "sourceIds": [
@@ -4329,6 +4815,9 @@
     {
       "id": "person-takelot-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Takelot II",
       "summary": "A king of Egypt of the 23rd dynasty, reigning from about 845 to about 821 BCE.",
       "sourceIds": [
@@ -4353,6 +4842,9 @@
     {
       "id": "person-iuput-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Iuput I",
       "summary": "A king of Egypt of the 23rd dynasty, reigning from about 820 to about 809 BCE.",
       "sourceIds": [
@@ -4377,6 +4869,9 @@
     {
       "id": "person-osorkon-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Osorkon III",
       "summary": "A king of Egypt of the 23rd dynasty, reigning in years not known.",
       "sourceIds": [
@@ -4401,6 +4896,9 @@
     {
       "id": "person-takelot-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Takelot III",
       "summary": "A king of Egypt of the 23rd dynasty, reigning in years not known.",
       "sourceIds": [
@@ -4425,6 +4923,9 @@
     {
       "id": "person-petubaste-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Petubaste II",
       "summary": "A king of Egypt of the 23rd dynasty, reigning in years not known.",
       "sourceIds": [
@@ -4449,6 +4950,9 @@
     {
       "id": "person-osorkon-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Osorkon IV",
       "summary": "A king of Egypt of the 23rd dynasty, reigning in about 730 BCE.",
       "sourceIds": [
@@ -4473,6 +4977,9 @@
     {
       "id": "dynasty-egypt-24",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 24th dynasty",
       "summary": "The 24th dynasty of Egypt in Manetho’s count, from about 736 to about 723 BCE. Libyan kings.",
       "sourceIds": [
@@ -4510,6 +5017,9 @@
     {
       "id": "person-tefnakhte",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tefnakhte",
       "summary": "A king of Egypt of the 24th dynasty, reigning from about 736 to about 729 BCE.",
       "sourceIds": [
@@ -4534,6 +5044,9 @@
     {
       "id": "person-bocchoris",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bocchoris",
       "summary": "A king of Egypt of the 24th dynasty, reigning from about 728 to about 723 BCE.",
       "sourceIds": [
@@ -4558,6 +5071,9 @@
     {
       "id": "dynasty-egypt-25",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 25th dynasty",
       "summary": "The 25th dynasty of Egypt in Manetho’s count, from about 722 to about 655 BCE. Kings from Kush in southern Nubia.",
       "sourceIds": [
@@ -4595,6 +5111,9 @@
     {
       "id": "person-piye",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Piye",
       "summary": "A king of Egypt of the 25th dynasty, reigning from about 753 to about 723 BCE.",
       "sourceIds": [
@@ -4619,6 +5138,9 @@
     {
       "id": "person-shabaka",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shabaka",
       "summary": "A king of Egypt of the 25th dynasty, reigning from about 722 to about 707 BCE.",
       "sourceIds": [
@@ -4643,6 +5165,9 @@
     {
       "id": "person-shebitku",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shebitku",
       "summary": "A king of Egypt of the 25th dynasty, reigning from about 706 to 690 BCE.",
       "sourceIds": [
@@ -4667,6 +5192,9 @@
     {
       "id": "person-taharqa",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Taharqa",
       "summary": "A king of Egypt of the 25th dynasty, reigning from 690 to 664 BCE.",
       "sourceIds": [
@@ -4691,6 +5219,9 @@
     {
       "id": "person-tantamani",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tantamani",
       "summary": "A king of Egypt of the 25th dynasty, reigning from 664 to about 655 BCE.",
       "sourceIds": [
@@ -4715,6 +5246,9 @@
     {
       "id": "dynasty-egypt-26",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 26th dynasty",
       "summary": "The 26th dynasty of Egypt in Manetho’s count, from 664 to 525 BCE. Its kings ruled from Sais.",
       "sourceIds": [
@@ -4750,6 +5284,9 @@
     {
       "id": "person-psamtik-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Psamtik I",
       "summary": "A king of Egypt of the 26th dynasty, reigning from 664 to 610 BCE.",
       "sourceIds": [
@@ -4774,6 +5311,9 @@
     {
       "id": "person-necho-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Necho II",
       "summary": "A king of Egypt of the 26th dynasty, reigning from 610 to 595 BCE.",
       "sourceIds": [
@@ -4798,6 +5338,9 @@
     {
       "id": "person-psamtik-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Psamtik II",
       "summary": "A king of Egypt of the 26th dynasty, reigning from 595 to 589 BCE.",
       "sourceIds": [
@@ -4822,6 +5365,9 @@
     {
       "id": "person-apries",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Apries",
       "summary": "A king of Egypt of the 26th dynasty, reigning from 589 to 570 BCE.",
       "sourceIds": [
@@ -4846,6 +5392,9 @@
     {
       "id": "person-amasis",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amasis",
       "summary": "A king of Egypt of the 26th dynasty, reigning from 570 to 526 BCE.",
       "sourceIds": [
@@ -4870,6 +5419,9 @@
     {
       "id": "person-psamtik-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Psamtik III",
       "summary": "A king of Egypt of the 26th dynasty, reigning from 526 to 525 BCE.",
       "sourceIds": [
@@ -4894,6 +5446,9 @@
     {
       "id": "dynasty-egypt-27",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 27th dynasty (the Persian kings)",
       "summary": "The 27th dynasty of Egypt in Manetho’s count, from 525 to 404 BCE. The Persian kings, who held Egypt only intermittently.",
       "sourceIds": [
@@ -4929,6 +5484,9 @@
     {
       "id": "person-cambyses-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cambyses II",
       "summary": "Cambyses II, counted among the kings of Egypt of the 27th dynasty, from 525 to 522 BCE.",
       "sourceIds": [
@@ -4953,6 +5511,9 @@
     {
       "id": "person-darius-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius I the Great",
       "summary": "Darius I, counted among the kings of Egypt of the 27th dynasty, from 521 to 486 BCE.",
       "sourceIds": [
@@ -4977,6 +5538,9 @@
     {
       "id": "person-xerxes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xerxes I",
       "summary": "Xerxes I, counted among the kings of Egypt of the 27th dynasty, from 486 to 466 BCE.",
       "sourceIds": [
@@ -5001,6 +5565,9 @@
     {
       "id": "person-artaxerxes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artaxerxes I",
       "summary": "Artaxerxes I, counted among the kings of Egypt of the 27th dynasty, from 465 to 424 BCE.",
       "sourceIds": [
@@ -5025,6 +5592,9 @@
     {
       "id": "person-darius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius II",
       "summary": "Darius II, counted among the kings of Egypt of the 27th dynasty, from 424 to 404 BCE.",
       "sourceIds": [
@@ -5049,6 +5619,9 @@
     {
       "id": "dynasty-egypt-28",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 28th dynasty",
       "summary": "The 28th dynasty of Egypt in Manetho’s count, from 404 to 399 BCE.",
       "sourceIds": [
@@ -5084,6 +5657,9 @@
     {
       "id": "person-amyrtaeus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amyrtaeus",
       "summary": "A king of Egypt of the 28th dynasty, reigning from 404 to 399 BCE.",
       "sourceIds": [
@@ -5108,6 +5684,9 @@
     {
       "id": "dynasty-egypt-29",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 29th dynasty",
       "summary": "The 29th dynasty of Egypt in Manetho’s count, from 399 to 380 BCE.",
       "sourceIds": [
@@ -5143,6 +5722,9 @@
     {
       "id": "person-nepherites",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nepherites",
       "summary": "A king of Egypt of the 29th dynasty, reigning from 399 to 393 BCE.",
       "sourceIds": [
@@ -5167,6 +5749,9 @@
     {
       "id": "person-psammuthis",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Psammuthis",
       "summary": "A king of Egypt of the 29th dynasty, reigning in 393 BCE.",
       "sourceIds": [
@@ -5191,6 +5776,9 @@
     {
       "id": "person-achoris",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Achoris",
       "summary": "A king of Egypt of the 29th dynasty, reigning from 393 to 380 BCE.",
       "sourceIds": [
@@ -5215,6 +5803,9 @@
     {
       "id": "person-nepherites-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nepherites II",
       "summary": "A king of Egypt of the 29th dynasty, reigning in 380 BCE.",
       "sourceIds": [
@@ -5239,6 +5830,9 @@
     {
       "id": "dynasty-egypt-30",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The 30th dynasty",
       "summary": "The 30th dynasty of Egypt in Manetho’s count, from 380 to 343 BCE.",
       "sourceIds": [
@@ -5274,6 +5868,9 @@
     {
       "id": "person-nectanebo-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nectanebo I",
       "summary": "A king of Egypt of the 30th dynasty, reigning from 380 to 362 BCE.",
       "sourceIds": [
@@ -5298,6 +5895,9 @@
     {
       "id": "person-tachos",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tachos",
       "summary": "A king of Egypt of the 30th dynasty, reigning from 365 to 360 BCE.",
       "sourceIds": [
@@ -5322,6 +5922,9 @@
     {
       "id": "person-nectanebo-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nectanebo II",
       "summary": "A king of Egypt of the 30th dynasty, reigning from 360 to 343 BCE.",
       "sourceIds": [
@@ -5346,6 +5949,9 @@
     {
       "id": "dynasty-egypt-second-persian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The second Persian period",
       "summary": "Egypt under the Persian kings again, from Artaxerxes III’s reconquest in 343 BCE until Alexander came in 332.",
       "sourceIds": [
@@ -5381,6 +5987,9 @@
     {
       "id": "person-artaxerxes-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artaxerxes III",
       "summary": "Artaxerxes III Ochus, counted among the kings of Egypt in the second Persian period, from 343 to 338 BCE.",
       "sourceIds": [
@@ -5412,6 +6021,9 @@
     {
       "id": "person-artaxerxes-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artaxerxes IV",
       "summary": "Arses, counted among the kings of Egypt in the second Persian period, from 338 to 336 BCE.",
       "sourceIds": [
@@ -5443,6 +6055,9 @@
     {
       "id": "person-darius-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius III",
       "summary": "Darius III Codoman, counted among the kings of Egypt in the second Persian period, from 335 to 332 BCE.",
       "sourceIds": [
@@ -5474,6 +6089,9 @@
     {
       "id": "dynasty-egypt-macedonian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Macedonian kings",
       "summary": "Alexander the Great and his two successors as kings of Egypt, from 332 to 305 BCE.",
       "sourceIds": [
@@ -5509,6 +6127,9 @@
     {
       "id": "person-alexander-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alexander III of Macedon",
       "summary": "Alexander the Great, counted among the kings of Egypt of the Macedonian period, from 332 to 323 BCE.",
       "sourceIds": [
@@ -5533,6 +6154,9 @@
     {
       "id": "person-philip-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Philip III",
       "summary": "A king of Egypt of the Macedonian period, reigning from 323 to 316 BCE.",
       "sourceIds": [
@@ -5557,6 +6181,9 @@
     {
       "id": "person-alexander-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alexander IV",
       "summary": "A king of Egypt of the Macedonian period, reigning from 316 to 305 BCE.",
       "sourceIds": [
@@ -5581,6 +6208,9 @@
     {
       "id": "dynasty-ptolemaic",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Ptolemies",
       "summary": "The dynasty founded by Ptolemy I in 305 BCE, which ruled Egypt until Cleopatra VII and her son Ptolemy XV died in 30 BCE.",
       "sourceIds": [
@@ -5616,6 +6246,9 @@
     {
       "id": "person-ptolemy-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy I Soter I",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 305 to 282 BCE.",
       "sourceIds": [
@@ -5640,6 +6273,9 @@
     {
       "id": "person-ptolemy-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy II Philadelphus",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 285 to 246 BCE.",
       "sourceIds": [
@@ -5664,6 +6300,9 @@
     {
       "id": "person-ptolemy-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy III Euergetes I",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 246 to 221 BCE.",
       "sourceIds": [
@@ -5688,6 +6327,9 @@
     {
       "id": "person-ptolemy-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy IV Philopator",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 221 to 205 BCE.",
       "sourceIds": [
@@ -5712,6 +6354,9 @@
     {
       "id": "person-ptolemy-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy V Epiphanes",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 205 to 180 BCE.",
       "sourceIds": [
@@ -5736,6 +6381,9 @@
     {
       "id": "person-ptolemy-vi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy VI Philometor",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 180 to 164 BCE and again from 163 to 145 BCE.",
       "sourceIds": [
@@ -5760,6 +6408,9 @@
     {
       "id": "person-ptolemy-viii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy VIII Euergetes II Physcon",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 170 to 163 BCE and again from 145 to 116 BCE.",
       "sourceIds": [
@@ -5784,6 +6435,9 @@
     {
       "id": "person-cleopatra-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cleopatra III",
       "summary": "A woman who ruled Egypt as king of the Ptolemaic dynasty, with Ptolemy IX from 116 to 107 BCE and with Ptolemy X from 107 to 88 BCE.",
       "sourceIds": [
@@ -5808,6 +6462,9 @@
     {
       "id": "person-ptolemy-ix",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy IX Soter II Lathyros",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning with Cleopatra III from 116 to 107 BCE and alone from 88 to 81 BCE.",
       "sourceIds": [
@@ -5832,6 +6489,9 @@
     {
       "id": "person-ptolemy-x",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy X Alexander I",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning with Cleopatra III from 107 to 88 BCE.",
       "sourceIds": [
@@ -5856,6 +6516,9 @@
     {
       "id": "person-berenice-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Berenice III",
       "summary": "A woman who ruled Egypt as king of the Ptolemaic dynasty, from 81 to 80 BCE.",
       "sourceIds": [
@@ -5880,6 +6543,9 @@
     {
       "id": "person-ptolemy-xi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy XI Alexander II",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning in 80 BCE.",
       "sourceIds": [
@@ -5904,6 +6570,9 @@
     {
       "id": "person-ptolemy-xii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy XII Auletes",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 80 to 58 BCE and again from 55 to 51 BCE.",
       "sourceIds": [
@@ -5928,6 +6597,9 @@
     {
       "id": "person-berenice-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Berenice IV",
       "summary": "A woman who ruled Egypt as king of the Ptolemaic dynasty, from 58 to 55 BCE.",
       "sourceIds": [
@@ -5952,6 +6624,9 @@
     {
       "id": "person-cleopatra-vii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cleopatra VII",
       "summary": "Cleopatra VII Thea Philopator, counted among the kings of Egypt of the Ptolemaic dynasty, from 51 to 30 BCE.",
       "sourceIds": [
@@ -5983,6 +6658,9 @@
     {
       "id": "person-ptolemy-xiii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy XIII Theos Philopator",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 51 to 47 BCE.",
       "sourceIds": [
@@ -6007,6 +6685,9 @@
     {
       "id": "person-ptolemy-xiv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy XIV Theos Philopator II",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 47 to 44 BCE.",
       "sourceIds": [
@@ -6031,6 +6712,9 @@
     {
       "id": "person-ptolemy-xv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ptolemy XV Caesar",
       "summary": "A king of Egypt of the Ptolemaic dynasty, reigning from 44 to 30 BCE.",
       "sourceIds": [
@@ -6055,6 +6739,9 @@
     {
       "id": "event-conquest-of-egypt",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Cambyses conquers Egypt",
       "summary": "Cambyses II made Egypt part of the Persian empire in 525 BCE; the Persian kings counted as Egypt’s 27th dynasty held it until 404.",
       "sourceIds": [
@@ -6083,6 +6770,9 @@
     {
       "id": "event-reconquest-of-egypt",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The reconquest of Egypt",
       "summary": "In 343 BCE Artaxerxes III brought Egypt back under Persian rule, ending the last native dynasty; his successors held it until Alexander came.",
       "sourceIds": [
@@ -6110,6 +6800,9 @@
     {
       "id": "event-alexander-takes-egypt",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Alexander takes Egypt",
       "summary": "In 332 BCE Egypt passed from the last Persian king to Alexander the Great and became part of his empire.",
       "sourceIds": [
@@ -6137,6 +6830,9 @@
     {
       "id": "event-ptolemy-i-king-of-egypt",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Ptolemy I becomes king of Egypt",
       "summary": "In 305 BCE Ptolemy, satrap of Egypt since 323 under Alexander and his successors, declared himself king and founded the Ptolemaic dynasty.",
       "sourceIds": [
@@ -6164,6 +6860,9 @@
     {
       "id": "event-egypt-becomes-roman",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Egypt becomes Roman",
       "summary": "At the deaths of Cleopatra VII and her son Ptolemy XV in 30 BCE, Egypt became part of the Roman Empire.",
       "sourceIds": [
@@ -6191,6 +6890,9 @@
     {
       "id": "period-egypt-roman-byzantine",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "Roman and Byzantine Egypt",
       "summary": "Egypt as a province of Rome from 30 BCE, governed from Constantinople after its founding, lost to the Persians from 619 to 628 and to the Arabs, who entered Alexandria in 642 CE.",
       "sourceIds": [
@@ -6226,6 +6928,9 @@
     {
       "id": "place-alexandria",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Alexandria",
       "summary": "The city founded by Alexander the Great in 332 BCE, capital of Egypt until it surrendered to the Arabs in 642 CE; famed for its lighthouse on the island of Pharos and its Museum with the great Library.",
       "sourceIds": [
@@ -6248,6 +6953,9 @@
     {
       "id": "place-memphis",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Memphis",
       "summary": "The capital of ancient Egypt at the head of the Nile delta, which the kings of the 1st dynasty probably founded; its priests composed the decree on the Rosetta Stone.",
       "sourceIds": [
@@ -6271,6 +6979,9 @@
     {
       "id": "place-thebes-egypt",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Thebes",
       "summary": "The city of Upper Egypt, Waset to the Egyptians, from which the kings of the 11th dynasty ruled; Karnak is the northern half of its ruins.",
       "sourceIds": [
@@ -6306,6 +7017,9 @@
     {
       "id": "place-tanis",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Tanis",
       "summary": "A city in the eastern Nile delta from which the kings of the 21st dynasty ruled.",
       "sourceIds": [
@@ -6328,6 +7042,9 @@
     {
       "id": "place-sais",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Sais",
       "summary": "A town in the western Nile delta from which the kings of the 26th dynasty ruled.",
       "sourceIds": [
@@ -6350,6 +7067,9 @@
     {
       "id": "place-heracleopolis",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Heracleopolis",
       "summary": "The city of Middle Egypt from which the kings of the 9th and 10th dynasties ruled.",
       "sourceIds": [
@@ -6379,6 +7099,9 @@
     {
       "id": "place-giza",
       "type": "Place",
+      "kinds": [
+        "monument"
+      ],
       "label": "Giza",
       "summary": "The plateau on the west bank of the Nile where the three pyramids of the 4th dynasty and the Great Sphinx stand.",
       "sourceIds": [
@@ -6401,6 +7124,9 @@
     {
       "id": "place-karnak",
       "type": "Place",
+      "kinds": [
+        "sanctuary"
+      ],
       "label": "Karnak",
       "summary": "The northern half of the ruins of Thebes, with the Great Temple of Amon; in ancient times called Ipet-Isut, “Chosen of Places”.",
       "sourceIds": [
@@ -6423,6 +7149,9 @@
     {
       "id": "work-great-pyramid",
       "type": "Work",
+      "kinds": [
+        "monument"
+      ],
       "label": "The Great Pyramid of Giza",
       "summary": "The northernmost, oldest and largest of the three pyramids of Giza, built for Khufu of the 4th dynasty; it was originally 147 metres high and counted among the Seven Wonders of the World.",
       "sourceIds": [
@@ -6434,6 +7163,9 @@
     {
       "id": "work-pyramid-of-khafre",
       "type": "Work",
+      "kinds": [
+        "monument"
+      ],
       "label": "The pyramid of Khafre",
       "summary": "The middle pyramid of Giza, built for Khafre of the 4th dynasty; the Great Sphinx lies near its valley temple.",
       "sourceIds": [
@@ -6445,6 +7177,9 @@
     {
       "id": "work-pyramid-of-menkaure",
       "type": "Work",
+      "kinds": [
+        "monument"
+      ],
       "label": "The pyramid of Menkaure",
       "summary": "The southernmost and last of the three pyramids of Giza, built for Menkaure of the 4th dynasty.",
       "sourceIds": [
@@ -6456,6 +7191,9 @@
     {
       "id": "work-step-pyramid-of-djoser",
       "type": "Work",
+      "kinds": [
+        "monument"
+      ],
       "label": "The Step Pyramid of Djoser",
       "summary": "The pyramid at Saqqara designed by Imhotep in the reign of Djoser of the 3rd dynasty.",
       "sourceIds": [
@@ -6468,6 +7206,9 @@
     {
       "id": "work-rosetta-stone",
       "type": "Work",
+      "kinds": [
+        "inscription"
+      ],
       "label": "The Rosetta Stone",
       "summary": "A basalt slab with a decree of Ptolemy V of 196 BCE in Greek, hieroglyphic and demotic Egyptian, composed by the priests of Memphis; found in August 1799, it served to decipher the Egyptian scripts, largely through Thomas Young and Jean-François Champollion.",
       "sourceIds": [
@@ -6491,6 +7232,9 @@
     {
       "id": "person-vespasian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vespasian",
       "summary": "Roman emperor, first proclaimed at Alexandria on 1 July 69 CE in a move contrived by the prefect of Egypt.",
       "sourceIds": [
@@ -6515,6 +7259,9 @@
     {
       "id": "person-caracalla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Caracalla",
       "summary": "Roman emperor whose edict of 212 CE gave Roman citizenship to practically all subjects of the empire, Egyptians among them.",
       "sourceIds": [
@@ -6539,6 +7286,9 @@
     {
       "id": "person-diocletian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Diocletian",
       "summary": "Roman emperor, the last reigning emperor to visit Egypt, in 302 CE.",
       "sourceIds": [
@@ -6563,6 +7313,9 @@
     {
       "id": "person-amr-ibn-al-as",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "ʿAmr ibn al-ʿĀṣ",
       "summary": "The Arab general who conquered Egypt and marched into Alexandria by September 642.",
       "sourceIds": [
@@ -6588,6 +7341,9 @@
     {
       "id": "event-vespasian-proclaimed-at-alexandria",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Vespasian proclaimed at Alexandria",
       "summary": "In the Year of the Four Emperors Vespasian was first proclaimed emperor at Alexandria on 1 July 69 CE, in a move contrived by Tiberius Julius Alexander, prefect of Egypt.",
       "sourceIds": [
@@ -6619,6 +7375,9 @@
     {
       "id": "event-edict-of-caracalla",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "The edict of Caracalla",
       "summary": "In 212 CE an edict of Caracalla gave Roman citizenship to practically all subjects of the empire, ending the distinction between citizens and noncitizens in Egypt.",
       "sourceIds": [
@@ -6646,6 +7405,9 @@
     {
       "id": "event-palmyrene-egypt",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Palmyra holds Egypt",
       "summary": "From 270 to 272 Egypt fell into the hands of the ruling dynasty of Palmyra, the only long time in the 3rd century when it was lost to the emperors.",
       "sourceIds": [
@@ -6674,6 +7436,9 @@
     {
       "id": "event-diocletian-visits-egypt",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Diocletian visits Egypt",
       "summary": "In 302 CE Diocletian came to Egypt, the last reigning Roman emperor to visit it.",
       "sourceIds": [
@@ -6701,6 +7466,9 @@
     {
       "id": "event-ban-of-polytheist-cults",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The old cults forbidden",
       "summary": "In 391 the practice of the local polytheistic religions of Egypt was officially made illegal.",
       "sourceIds": [
@@ -6724,6 +7492,9 @@
     {
       "id": "event-persians-take-alexandria",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Persians take Alexandria",
       "summary": "The Persians advanced to the Nile delta and captured Alexandria; their occupation of Egypt was complete early in 619 and lasted until the peace of 628, when they withdrew.",
       "sourceIds": [
@@ -6751,6 +7522,9 @@
     {
       "id": "event-battle-of-heliopolis-640",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Heliopolis",
       "summary": "In July 640, during the Arab conquest of Egypt, 15,000 Arabs met 20,000 Egyptian defenders at Heliopolis.",
       "sourceIds": [
@@ -6774,6 +7548,10 @@
     {
       "id": "event-capture-of-babylon-fortress",
       "type": "Event",
+      "kinds": [
+        "siege",
+        "conquest"
+      ],
       "label": "The fortress of Babylon taken",
       "summary": "The Arabs stormed and took Trajan’s old fortress of Babylon, where Old Cairo now stands, on 6 April 641 – the decisive step of the conquest.",
       "sourceIds": [
@@ -6797,6 +7575,9 @@
     {
       "id": "event-treaty-of-alexandria-641",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "Byzantium signs Egypt away",
       "summary": "On 8 November 641 Byzantium signed Egypt away, with an armistice of eleven months for the emperor and the caliph to ratify the surrender.",
       "sourceIds": [
@@ -6820,6 +7601,9 @@
     {
       "id": "event-arabs-enter-alexandria",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "ʿAmr enters Alexandria",
       "summary": "By 29 September 642 the Arab general ʿAmr ibn al-ʿĀṣ marched into Alexandria, and the conquest of Egypt, begun three years before, ended in a peaceful capitulation.",
       "sourceIds": [

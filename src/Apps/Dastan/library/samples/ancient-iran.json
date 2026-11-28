@@ -1749,6 +1749,9 @@
     {
       "id": "subject-ancient-iran",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Iran",
       "summary": "The lands of the Iranian plateau and its neighbours from the first settlement at Susa in 5000 BCE, the Proto-Elamite age and the kingdoms of Elam to the Ghaznavids about 1030 CE: the Medes, the Achaemenid empire, Alexander and the Seleucids, the Arsacids of Parthia, the Sasanians, and after the Arab conquest the caliphs and the Iranian dynasties of the Saffarids, Samanids, Ziyarids, Buyids and Ghaznavids.",
       "sourceIds": [
@@ -1764,6 +1767,9 @@
     {
       "id": "region-elam",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Elam",
       "summary": "An ancient land whose capital was Susa; its kings called themselves kings of Anšan and Susa.",
       "sourceIds": [
@@ -1788,6 +1794,9 @@
     {
       "id": "region-media",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Media",
       "summary": "The land of the Medes, with Ecbatana, modern Hamadan, as its capital.",
       "sourceIds": [
@@ -1804,6 +1813,9 @@
     {
       "id": "region-parthia",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Parthia",
       "summary": "The land from which the Arsacids built their empire.",
       "sourceIds": [
@@ -1820,6 +1832,9 @@
     {
       "id": "region-babylonia",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Babylonia",
       "summary": "The land of the city of Babylon; it was ruled by the Achaemenids, the Seleucids and the Arsacids in turn.",
       "sourceIds": [
@@ -1830,6 +1845,10 @@
     {
       "id": "region-lydia",
       "type": "Region",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Lydia",
       "summary": "A kingdom with Sardis as its capital, conquered by Cyrus the Great.",
       "sourceIds": [
@@ -1841,6 +1860,9 @@
     {
       "id": "place-susa",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Susa",
       "summary": "The capital of Elam, later a favourite residence of Darius I and one of the capitals of the Achaemenid empire.",
       "sourceIds": [
@@ -1864,6 +1886,9 @@
     {
       "id": "place-anshan",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Anšan",
       "summary": "A Bronze Age city north-west of modern Shiraz, founded about 5000 BCE; the Elamite kings, and later Cyrus and his ancestors, were called kings of Anšan.",
       "sourceIds": [
@@ -1893,6 +1918,10 @@
     {
       "id": "place-chogha-zanbil",
       "type": "Place",
+      "kinds": [
+        "sanctuary",
+        "city"
+      ],
       "label": "Dur-Untaš (Choga Zanbil)",
       "summary": "The sanctuary town built by king Untaš-Napiriša, with a ziggurat that is among the best preserved; one of the main sanctuaries of Elam.",
       "sourceIds": [
@@ -1923,6 +1952,9 @@
     {
       "id": "place-ecbatana",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Ecbatana",
       "summary": "The capital of the Medes, modern Hamadan; later the summer residence of the Achaemenid kings and a royal residence of the Arsacids.",
       "sourceIds": [
@@ -1953,6 +1985,9 @@
     {
       "id": "place-pasargadae",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Pasargadae",
       "summary": "The residence of Cyrus the Great, built where he defeated Astyages, with his tomb; probably the place where the Achaemenid kings were inaugurated.",
       "sourceIds": [
@@ -1976,6 +2011,9 @@
     {
       "id": "place-persepolis",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Persepolis",
       "summary": "One of the capitals of the Achaemenid empire, founded by Darius I and mostly the work of Xerxes; burnt by Alexander in 330 BCE.",
       "sourceIds": [
@@ -2006,6 +2044,9 @@
     {
       "id": "place-naqsh-e-rustam",
       "type": "Place",
+      "kinds": [
+        "monument"
+      ],
       "label": "Naqš-e Rustam",
       "summary": "A cliff near Persepolis with the tombs of Darius I and, probably, of later Achaemenid kings.",
       "sourceIds": [
@@ -2028,6 +2069,9 @@
     {
       "id": "place-behistun",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Behistun",
       "summary": "A town in western Iran on one of the main roads of the empire, where Darius I had his inscription carved into the rock.",
       "sourceIds": [
@@ -2057,6 +2101,9 @@
     {
       "id": "place-babylon",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Babylon",
       "summary": "The great city of Mesopotamia, taken by Cyrus in 539 BCE; Alexander made it his capital and died there.",
       "sourceIds": [
@@ -2079,6 +2126,9 @@
     {
       "id": "place-sardis",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Sardis",
       "summary": "The capital of Lydia and later of one of the main satrapies of the Achaemenid empire.",
       "sourceIds": [
@@ -2108,6 +2158,9 @@
     {
       "id": "place-seleucia-tigris",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Seleucia on the Tigris",
       "summary": "A city founded by Seleucus I about 300 BCE, a capital of the Seleucids; the Parthians took it in 141 BCE.",
       "sourceIds": [
@@ -2131,6 +2184,9 @@
     {
       "id": "place-ctesiphon",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Ctesiphon",
       "summary": "A city on the Tigris near the confluence of the Diyala, the western residence of the Arsacid kings; when it became their chief city is not clear.",
       "sourceIds": [
@@ -2153,6 +2209,9 @@
     {
       "id": "place-nisa",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Nisa",
       "summary": "The eastern residence of the Arsacid kings, in Parthia.",
       "sourceIds": [
@@ -2175,6 +2234,9 @@
     {
       "id": "place-hecatompylos",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Hecatompylos",
       "summary": "A city in Parthia where the early Arsacid kings appear to have lived; its identification with Šahr-e Qumis is probable but not certain.",
       "sourceIds": [
@@ -2205,6 +2267,9 @@
     {
       "id": "place-choara",
       "type": "Place",
+      "kinds": [
+        "landscape"
+      ],
       "label": "Choara",
       "summary": "A place near modern Damghan where Darius III was murdered in July 330 BCE.",
       "sourceIds": [
@@ -2227,6 +2292,9 @@
     {
       "id": "place-nineveh",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Nineveh",
       "summary": "The capital of Assyria, captured by the Medes under Cyaxares and the Babylonians in 612 BCE.",
       "sourceIds": [
@@ -2243,6 +2311,10 @@
     {
       "id": "place-gaugamela",
       "type": "Place",
+      "kinds": [
+        "landscape",
+        "battlefield"
+      ],
       "label": "Gaugamela",
       "summary": "A place in northern Iraq where Alexander defeated Darius III in 331 BCE.",
       "sourceIds": [
@@ -2259,6 +2331,10 @@
     {
       "id": "place-issus",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Issus",
       "summary": "A town near which Alexander defeated Darius III in 333 BCE.",
       "sourceIds": [
@@ -2275,6 +2351,10 @@
     {
       "id": "place-carrhae",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Carrhae",
       "summary": "A town, modern Harran, on the plain east of which the Parthians defeated the Roman army of Crassus in 53 BCE.",
       "sourceIds": [
@@ -2298,6 +2378,10 @@
     {
       "id": "place-thermopylae",
       "type": "Place",
+      "kinds": [
+        "mountain",
+        "battlefield"
+      ],
       "label": "Thermopylae",
       "summary": "A pass in Greece where the army of Xerxes defeated the Greeks under Leonidas in 480 BCE.",
       "sourceIds": [
@@ -2314,6 +2398,10 @@
     {
       "id": "place-plataea",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Plataea",
       "summary": "A town in Greece near which the Greeks defeated the Persian army of Mardonius in 479 BCE.",
       "sourceIds": [
@@ -2330,6 +2418,9 @@
     {
       "id": "period-awan-shimashki",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "Awan and Šimaški",
       "summary": "The kings of Awan and Šimaški, who ruled Elam from about 2400 to 1970 BCE, the first two dynasties of the Old Elamite period; a king list from Susa names them without the years of their reigns.",
       "sourceIds": [
@@ -2368,6 +2459,9 @@
     {
       "id": "period-middle-elamite",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "Middle Elamite period",
       "summary": "The age of the Kidinuids, the Igehalkids and the Šutrukids, about 1500 to 1100 BCE.",
       "sourceIds": [
@@ -2405,6 +2499,9 @@
     {
       "id": "period-median-kingdom",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Median kingdom",
       "summary": "The time of the Median kings as Herodotus counts them, from Deioces to the fall of Astyages; the years are computed from his figures, which scholars regard as suspect.",
       "sourceIds": [
@@ -2450,6 +2547,9 @@
     {
       "id": "period-achaemenid",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Achaemenid period",
       "summary": "From the victory of Cyrus over Astyages in 550 BCE to the death of Darius III in 330 BCE.",
       "sourceIds": [
@@ -2484,6 +2584,9 @@
     {
       "id": "period-seleucid-iran",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "Alexander and the Seleucids in Iran",
       "summary": "From Alexander’s rule over the former Achaemenid empire to the loss of Media, Babylonia and Elam to the Parthians between about 143 and 139 BCE and finally in 129 BCE.",
       "sourceIds": [
@@ -2520,6 +2623,9 @@
     {
       "id": "period-arsacid",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Arsacid period",
       "summary": "The rule of the Arsacid kings of Parthia, from Arsaces I to 224 CE. The dates follow the chronology of G.R.F. Assar that Livius uses.",
       "sourceIds": [
@@ -2555,6 +2661,9 @@
     {
       "id": "office-king-of-anshan-and-susa",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Anšan and Susa",
       "summary": "The title of the kings of Elam.",
       "sourceIds": [
@@ -2565,6 +2674,9 @@
     {
       "id": "dynasty-shutrukids",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Šutrukids",
       "summary": "A royal house of the Middle Elamite period whose armies took Babylon; objects such as the Code of Hammurabi were brought to Susa in their time.",
       "sourceIds": [
@@ -2588,6 +2700,9 @@
     {
       "id": "person-shutur-nahhunte",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šutur-Nahhunte",
       "summary": "A king of Anšan, named in an inscription as the father of Untaš-Napiriša; not the later Neo-Elamite king of the same name.",
       "sourceIds": [
@@ -2616,6 +2731,9 @@
     {
       "id": "person-untash-napirisha",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Untaš-Napiriša",
       "summary": "King of Anšan and Susa about 1275 to 1240 BCE, who built the sanctuary town of Dur-Untaš with its ziggurat.",
       "sourceIds": [
@@ -2645,6 +2763,9 @@
     {
       "id": "person-kudur-nahhunte",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Kudur-Nahhunte",
       "summary": "A Šutrukid king of Elam about 1155 to 1150 BCE, who began the dynastic temple at Susa.",
       "sourceIds": [
@@ -2673,6 +2794,9 @@
     {
       "id": "person-shilhak-inshushinak",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šilhak-Inšušinak",
       "summary": "King of Elam about 1150 to 1120 BCE, brother and successor of Kudur-Nahhunte, who finished the dynastic temple of the Šutrukids at Susa.",
       "sourceIds": [
@@ -2701,6 +2825,9 @@
     {
       "id": "person-assurbanipal",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aššurbanipal",
       "summary": "King of Assyria from 669/668 to 631 or perhaps 627 BCE, who subdued Elam and sacked Susa.",
       "sourceIds": [
@@ -2739,6 +2866,9 @@
     {
       "id": "event-sack-of-susa",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Assyrian sack of Susa",
       "summary": "Aššurbanipal destroyed Susa and the sanctuary of Dur-Untaš. The Livius pages differ on the year: 646 BCE, between 645 and 640 BCE, or the subjection of Elam in 643 BCE.",
       "sourceIds": [
@@ -2777,6 +2907,9 @@
     {
       "id": "dynasty-median",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Median kings",
       "summary": "The house of the Median kings as Herodotus gives it, from Deioces to Astyages. Its chronology rests on Herodotus, whose figures are suspect; Ctesias gives another list, and the story of Deioces looks like myth or saga.",
       "sourceIds": [
@@ -2830,6 +2963,9 @@
     {
       "id": "office-king-of-the-medes",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of the Medes",
       "summary": "The kingship of the Medes, held, according to Herodotus, by four kings in succession.",
       "sourceIds": [
@@ -2846,6 +2982,9 @@
     {
       "id": "person-deioces",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Deioces",
       "summary": "The legendary first king of the Medes, who according to Herodotus unified Media and founded Ecbatana; the story looks suspiciously like a myth.",
       "sourceIds": [
@@ -2875,6 +3014,9 @@
     {
       "id": "person-phraortes",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phraortes",
       "summary": "King of the Medes after Deioces according to Herodotus; not the rebel Phraortes of 522 BCE.",
       "sourceIds": [
@@ -2904,6 +3046,9 @@
     {
       "id": "person-cyaxares",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cyaxares",
       "summary": "King of the Medes about 625 to 585 BCE, who with the Babylonian king Nabopolassar took Nineveh in 612 BCE.",
       "sourceIds": [
@@ -2933,6 +3078,9 @@
     {
       "id": "person-astyages",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Astyages",
       "summary": "The last king of the Medes, son of Cyaxares, whose army revolted and handed him over to Cyrus in 550 BCE.",
       "sourceIds": [
@@ -2962,6 +3110,9 @@
     {
       "id": "person-mandane",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Mandane",
       "summary": "According to Herodotus a daughter of Astyages, wife of Cambyses I and mother of Cyrus the Great; it is unclear whether this is true.",
       "sourceIds": [
@@ -2991,6 +3142,9 @@
     {
       "id": "event-fall-of-nineveh",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The fall of Nineveh",
       "summary": "The Medes under Cyaxares and the Babylonians captured the Assyrian capital Nineveh in July 612 BCE.",
       "sourceIds": [
@@ -3023,6 +3177,9 @@
     {
       "id": "dynasty-achaemenid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Achaemenids",
       "summary": "The royal house of ancient Persia, named after its legendary founder Achaemenes. Its empire, founded by Cyrus the Great in 550 BCE, reached from Macedonia to Pakistan and ended with the death of Darius III in 330 BCE. No contemporary evidence calls Cyrus or Cambyses Achaemenids; the texts that do were written under Darius I.",
       "sourceIds": [
@@ -3073,6 +3230,9 @@
     {
       "id": "office-king-of-kings",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of the Persian empire",
       "summary": "The kingship of the Achaemenid empire, from Cyrus the Great to Darius III, which Alexander took over in 330 BCE.",
       "sourceIds": [
@@ -3090,6 +3250,9 @@
     {
       "id": "office-king-of-anshan",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Anšan",
       "summary": "The title the ancestors of Cyrus the Great bore, as the Cyrus Cylinder names them.",
       "sourceIds": [
@@ -3107,6 +3270,9 @@
     {
       "id": "person-achaemenes",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Achaemenes",
       "summary": "The legendary founder of the Achaemenid house, named by Darius I as the father of Teispes.",
       "sourceIds": [
@@ -3143,6 +3309,9 @@
     {
       "id": "person-teispes",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Teispes",
       "summary": "A king of Anšan, named as an ancestor both by Cyrus the Great in his Cylinder and by Darius I at Behistun.",
       "sourceIds": [
@@ -3172,6 +3341,9 @@
     {
       "id": "person-cyrus-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cyrus I",
       "summary": "King of Anšan, grandfather of Cyrus the Great, as the Cyrus Cylinder names him.",
       "sourceIds": [
@@ -3201,6 +3373,9 @@
     {
       "id": "person-cambyses-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cambyses I",
       "summary": "King in Anšan and vassal of the Medes, father of Cyrus the Great; he died in 559 BCE.",
       "sourceIds": [
@@ -3240,6 +3415,9 @@
     {
       "id": "person-ariaramnes",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ariaramnes",
       "summary": "Son of Teispes and great-grandfather of Darius I, who must have ruled in the first quarter of the sixth century BCE.",
       "sourceIds": [
@@ -3268,6 +3446,9 @@
     {
       "id": "person-arsames",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Arsames",
       "summary": "Son of Ariaramnes and grandfather of Darius I, still alive when Darius became king.",
       "sourceIds": [
@@ -3296,6 +3477,9 @@
     {
       "id": "person-hystaspes",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Hystaspes",
       "summary": "Father of Darius I and satrap of Parthia; he was not a king.",
       "sourceIds": [
@@ -3325,6 +3509,9 @@
     {
       "id": "person-cyrus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cyrus II the Great",
       "summary": "The founder of the Achaemenid empire. King of Persis from 559 BCE, he defeated his overlord Astyages of Media in 550, conquered Lydia and took Babylon in 539; he died in 530 BCE, perhaps campaigning against the Massagetae, and was buried at Pasargadae.",
       "sourceIds": [
@@ -3374,6 +3561,9 @@
     {
       "id": "person-cambyses-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cambyses II",
       "summary": "Son of Cyrus the Great and his successor from 530 BCE, who conquered Egypt in 525; he died in 522 BCE on his way home from Egypt during the revolt of Gaumâta.",
       "sourceIds": [
@@ -3409,6 +3599,9 @@
     {
       "id": "person-bardiya",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bardiya",
       "summary": "A son of Cyrus the Great who was king in 522 BCE until he was killed by Darius. Darius claimed he was an impostor, the Magian Gaumâta; Livius thinks this probably true, while it cannot be excluded that he was the real son of Cyrus.",
       "sourceIds": [
@@ -3456,6 +3649,9 @@
     {
       "id": "person-atossa",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Atossa",
       "summary": "Daughter of Cyrus the Great and the first wife of Darius I, mother of Xerxes; she was born before 545 BCE and probably died before 515 BCE.",
       "sourceIds": [
@@ -3485,6 +3681,9 @@
     {
       "id": "person-darius-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius I the Great",
       "summary": "King from 522 to 486 BCE, a distant relative of Cambyses who killed the king he called Gaumâta, fought nineteen battles against rebels in one year, described his victory at Behistun, organised the empire in satrapies and founded Persepolis.",
       "sourceIds": [
@@ -3534,6 +3733,9 @@
     {
       "id": "person-xerxes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xerxes I",
       "summary": "Son of Darius I and Atossa, king from 486 to 465 BCE; he led the war against the Greeks in 480–479 BCE and built much of Persepolis. He was murdered in August 465 BCE.",
       "sourceIds": [
@@ -3575,6 +3777,9 @@
     {
       "id": "person-amestris",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Amestris",
       "summary": "Wife of Xerxes I and mother of Artaxerxes I.",
       "sourceIds": [
@@ -3604,6 +3809,9 @@
     {
       "id": "person-artaxerxes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artaxerxes I",
       "summary": "Son of Xerxes and Amestris, king from 465 to 424 BCE; he repressed a revolt in Egypt. He died between December 424 and January 423 BCE.",
       "sourceIds": [
@@ -3655,6 +3863,9 @@
     {
       "id": "person-xerxes-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xerxes II",
       "summary": "Son of Artaxerxes I, king for forty-five days in 423 BCE and then killed; he is known only from Ctesias, an unreliable writer.",
       "sourceIds": [
@@ -3688,6 +3899,9 @@
     {
       "id": "person-sogdianus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sogdianus",
       "summary": "Son of Artaxerxes I, who according to Ctesias succeeded Xerxes II in 423 BCE and ruled six months and fifteen days.",
       "sourceIds": [
@@ -3716,6 +3930,9 @@
     {
       "id": "person-darius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius II",
       "summary": "Son of Artaxerxes I by a Babylonian woman, king from 423 to 404 BCE, whose real name was Ochus; he intervened in the Peloponnesian War and made a treaty with Sparta in 412.",
       "sourceIds": [
@@ -3762,6 +3979,9 @@
     {
       "id": "person-parysatis",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Parysatis",
       "summary": "Half-sister and wife of Darius II, mother of Artaxerxes II.",
       "sourceIds": [
@@ -3791,6 +4011,9 @@
     {
       "id": "person-artaxerxes-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artaxerxes II",
       "summary": "Son of Darius II and Parysatis, king from 404 to 358 BCE; he defeated his brother Cyrus the Younger at Cunaxa in 401.",
       "sourceIds": [
@@ -3837,6 +4060,10 @@
     {
       "id": "person-cyrus-the-younger",
       "type": "Person",
+      "kinds": [
+        "royal",
+        "general"
+      ],
       "label": "Cyrus the Younger",
       "summary": "Younger brother of Artaxerxes II, who marched against him with an army including Greek mercenaries and fell at Cunaxa in 401 BCE.",
       "sourceIds": [
@@ -3871,6 +4098,9 @@
     {
       "id": "person-artaxerxes-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artaxerxes III",
       "summary": "Son of Artaxerxes II, king from 358 to 338 BCE, whose generals reconquered Egypt in 343 BCE.",
       "sourceIds": [
@@ -3912,6 +4142,9 @@
     {
       "id": "person-artaxerxes-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artaxerxes IV",
       "summary": "Son of Artaxerxes III, whose real name was Arses; he reigned from 338 to 336 BCE under the power of the eunuch Bagoas, who killed him according to Diodorus.",
       "sourceIds": [
@@ -3953,6 +4186,9 @@
     {
       "id": "person-darius-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius III",
       "summary": "The last Achaemenid king, from 336 to 330 BCE, earlier satrap of Armenia. Alexander defeated him at Issus and Gaugamela, and he was murdered at Choara in July 330 BCE.",
       "sourceIds": [
@@ -4003,6 +4239,9 @@
     {
       "id": "person-astanes",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Astanes",
       "summary": "Father of Darius III; he was a grandson of Darius II.",
       "sourceIds": [
@@ -4032,6 +4271,9 @@
     {
       "id": "work-behistun-inscription",
       "type": "Work",
+      "kinds": [
+        "inscription"
+      ],
       "label": "The Behistun inscription",
       "summary": "The inscription of Darius I on the rock of Behistun, in Old Persian, Babylonian and Elamite, telling how he became king and defeated the rebels; Henry Rawlinson began to decipher it in 1835.",
       "sourceIds": [
@@ -4056,6 +4298,9 @@
     {
       "id": "work-cyrus-cylinder",
       "type": "Object",
+      "kinds": [
+        "inscription"
+      ],
       "label": "The Cyrus Cylinder",
       "summary": "A Babylonian clay cylinder, about 23 cm wide, written for Cyrus after he took Babylon in October 539 BCE; found in 1879 and now in the British Museum (BM 90920). It reports the return of exiles to their cities, but is no evidence of a new policy of tolerance.",
       "sourceIds": [
@@ -4079,6 +4324,10 @@
     {
       "id": "work-persepolis-fortification-tablets",
       "type": "Object",
+      "kinds": [
+        "inscription",
+        "document"
+      ],
       "label": "The Persepolis Fortification Tablets",
       "summary": "Some 20,000 to 25,000 administrative clay tablets, mostly in Elamite, written between 506 and 497 BCE and found at Persepolis by the Oriental Institute of Chicago between 1931 and 1939.",
       "sourceIds": [
@@ -4111,6 +4360,9 @@
     {
       "id": "event-cyrus-defeats-astyages",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Cyrus defeats Astyages",
       "summary": "Cyrus rose against his overlord Astyages of Media; the army of Astyages revolted and handed him over, and Cyrus took Ecbatana. Livius gives 550 BCE, and mentions a chronology of 554/553.",
       "sourceIds": [
@@ -4148,6 +4400,9 @@
     {
       "id": "event-conquest-of-lydia",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Cyrus conquers Lydia",
       "summary": "Cyrus defeated Croesus of Lydia and took Sardis. The traditional year 547 BCE rests on a reading of the Nabonidus Chronicle that most scholars now doubt; it was perhaps later.",
       "sourceIds": [
@@ -4182,6 +4437,9 @@
     {
       "id": "event-capture-of-babylon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Cyrus takes Babylon",
       "summary": "In October 539 BCE Cyrus captured Babylon and the Neo-Babylonian king Nabonidus, and appointed his son Cambyses king of Babylon.",
       "sourceIds": [
@@ -4218,6 +4476,9 @@
     {
       "id": "event-conquest-of-egypt",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Cambyses conquers Egypt",
       "summary": "In 525 BCE Cambyses II conquered Egypt; the pharaoh Psammetichus III was captured alive.",
       "sourceIds": [
@@ -4245,6 +4506,10 @@
     {
       "id": "event-darius-seizes-power",
       "type": "Event",
+      "kinds": [
+        "revolt",
+        "accession"
+      ],
       "label": "Darius seizes power",
       "summary": "On 29 September 522 BCE Darius and six noblemen killed the king whom Darius calls the usurper Gaumâta; Darius then fought nineteen battles in one year against rebels from Persia, Elam, Media, Babylonia and other lands, the last revolt ending in December 521 BCE.",
       "sourceIds": [
@@ -4277,6 +4542,9 @@
     {
       "id": "event-thermopylae",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Thermopylae",
       "summary": "In September 480 BCE the army of Xerxes defeated the Greeks under the Spartan king Leonidas at the pass of Thermopylae.",
       "sourceIds": [
@@ -4308,6 +4576,9 @@
     {
       "id": "event-salamis",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Salamis",
       "summary": "At the end of September 480 BCE the Greek fleet defeated the Persian fleet at Salamis, while Xerxes watched from a hill.",
       "sourceIds": [
@@ -4335,6 +4606,9 @@
     {
       "id": "event-plataea",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Plataea",
       "summary": "In the summer of 479 BCE the Greeks under Pausanias defeated the Persian army of Mardonius near Plataea.",
       "sourceIds": [
@@ -4362,6 +4636,9 @@
     {
       "id": "event-cunaxa",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Cunaxa",
       "summary": "In 401 BCE Cyrus the Younger, with an army including Greek mercenaries, fought his brother Artaxerxes II at Cunaxa near Babylon; his army won, but Cyrus fell.",
       "sourceIds": [
@@ -4394,6 +4671,9 @@
     {
       "id": "event-reconquest-of-egypt",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The reconquest of Egypt",
       "summary": "In 343 BCE the generals of Artaxerxes III, Bagoas and Mentor of Rhodes, reconquered Egypt.",
       "sourceIds": [
@@ -4422,6 +4702,9 @@
     {
       "id": "event-issus",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Issus",
       "summary": "In November 333 BCE Alexander defeated Darius III near Issus.",
       "sourceIds": [
@@ -4458,6 +4741,9 @@
     {
       "id": "event-gaugamela",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Gaugamela",
       "summary": "On 1 October 331 BCE Alexander defeated Darius III at Gaugamela in northern Iraq.",
       "sourceIds": [
@@ -4493,6 +4779,9 @@
     {
       "id": "event-burning-of-persepolis",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The burning of Persepolis",
       "summary": "Alexander captured Persepolis in the first weeks of 330 BCE and burnt several palace buildings in April 330 BCE.",
       "sourceIds": [
@@ -4525,6 +4814,9 @@
     {
       "id": "event-death-of-darius-iii",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The death of Darius III",
       "summary": "In July 330 BCE Darius III, fleeing from Alexander, was murdered by his own courtiers at Choara near modern Damghan.",
       "sourceIds": [
@@ -4557,6 +4849,9 @@
     {
       "id": "person-alexander-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alexander III of Macedon",
       "summary": "King of Macedonia from 336 BCE, born in the summer of 356, who conquered the Achaemenid empire and after the death of Darius III began to reign as an Achaemenid king; he made Babylon his capital and died there on 11 June 323 BCE.",
       "sourceIds": [
@@ -4609,6 +4904,9 @@
     {
       "id": "person-roxane",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Roxane",
       "summary": "A Sogdian princess, daughter of Oxyartes, born about 343 BCE, who married Alexander and was the mother of his posthumous son; she was executed in 311/310 BCE.",
       "sourceIds": [
@@ -4665,6 +4963,9 @@
     {
       "id": "event-susa-weddings",
       "type": "Event",
+      "kinds": [
+        "ceremony"
+      ],
       "label": "The weddings at Susa",
       "summary": "In March 324 BCE Alexander held a mass wedding at Susa where his officers married Iranian women by Persian rites; Alexander married a daughter of Darius III, and Seleucus married Apame.",
       "sourceIds": [
@@ -4701,6 +5002,9 @@
     {
       "id": "dynasty-seleucid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Seleucids",
       "summary": "The house of Seleucus I, a successor of Alexander, whose kingdom – officially called Asia – included the eastern provinces with modern Iran. Its founding is dated 312 BCE on one Livius page and 311 on another; the last king was dethroned in 64 BCE.",
       "sourceIds": [
@@ -4750,6 +5054,9 @@
     {
       "id": "office-seleucid-king",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Seleucid king",
       "summary": "The kingship of the Seleucid house.",
       "sourceIds": [
@@ -4766,6 +5073,9 @@
     {
       "id": "person-seleucus-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Seleucus I Nicator",
       "summary": "A Macedonian officer of Alexander, born about 358 BCE at Europos, satrap of Babylonia, who founded the Seleucid kingdom and the cities of Seleucia on the Tigris and Antioch; he was assassinated in September 281 BCE.",
       "sourceIds": [
@@ -4806,6 +5116,9 @@
     {
       "id": "person-apame",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Apame I",
       "summary": "Daughter of Spitamenes, who married Seleucus at Susa in 324 BCE; mother of Antiochus I.",
       "sourceIds": [
@@ -4835,6 +5148,9 @@
     {
       "id": "person-antiochus-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antiochus I Soter",
       "summary": "Son of Seleucus I and Apame, co-regent and satrap of Bactria from 292 BCE and king from 281 to 261 BCE.",
       "sourceIds": [
@@ -4869,6 +5185,9 @@
     {
       "id": "person-antiochus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antiochus II Theos",
       "summary": "Son of Antiochus I, born about 286 BCE, king from 261 to 246 BCE; he died at Ephesus.",
       "sourceIds": [
@@ -4909,6 +5228,9 @@
     {
       "id": "person-seleucus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Seleucus II Callinicus",
       "summary": "Son of Antiochus II, born about 265 BCE, king from 246 to 225 BCE; he failed to suppress the revolt in Parthia and lost Hyrcania.",
       "sourceIds": [
@@ -4949,6 +5271,9 @@
     {
       "id": "person-seleucus-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Seleucus III Keraunos",
       "summary": "Son of Seleucus II and elder brother of Antiochus III, king from 225 to 222 BCE, when he was assassinated.",
       "sourceIds": [
@@ -4983,6 +5308,9 @@
     {
       "id": "person-antiochus-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antiochus III the Great",
       "summary": "Son of Seleucus II, king from 222 to 187 BCE, who put down the revolt of Molon in Media and Persis, campaigned in the east and forced Arsaces II to accept his overlordship; he died on 3 July 187 BCE attacking a temple in Susa.",
       "sourceIds": [
@@ -5021,6 +5349,9 @@
     {
       "id": "person-antiochus-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antiochus IV Epiphanes",
       "summary": "Son of Antiochus III, originally named Mithradates, king from 175 to 164 BCE; he died late in 164 BCE after a failed attack on Susa.",
       "sourceIds": [
@@ -5055,6 +5386,9 @@
     {
       "id": "person-demetrius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Demetrius II Nicator",
       "summary": "Son of Demetrius I, born about 160 BCE, king from 145 BCE, who was taken captive by the Parthians in 138 BCE and married Rhodogyne, a daughter of Mithradates I; he was killed after March 125 BCE.",
       "sourceIds": [
@@ -5090,6 +5424,9 @@
     {
       "id": "person-antiochus-vii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antiochus VII Sidetes",
       "summary": "Son of Demetrius I and brother of Demetrius II, king from 138 BCE, who drove the Parthians out of Babylonia and Media in 130 BCE but was defeated by them in 129 BCE and took his own life.",
       "sourceIds": [
@@ -5124,6 +5461,9 @@
     {
       "id": "event-eastern-campaign-antiochus-iii",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The eastern campaign of Antiochus III",
       "summary": "Antiochus III campaigned in the east, forcing Arsaces II of Parthia (209 BCE) and the king of Bactria to accept his overlordship. Livius dates the campaign 212–205 BCE on one page and 209–204 on another.",
       "sourceIds": [
@@ -5162,6 +5502,9 @@
     {
       "id": "event-parthians-take-babylonia",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Parthians take Babylonia",
       "summary": "Mithradates I of Parthia captured Seleucia, the Seleucid capital in Babylonia, in 141 BCE – between April and June according to one Livius page, in July according to another – after taking Media; Susa followed in 139 BCE.",
       "sourceIds": [
@@ -5195,6 +5538,9 @@
     {
       "id": "event-defeat-of-antiochus-vii",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The defeat of Antiochus VII",
       "summary": "In 130 BCE Antiochus VII drove the Parthians out of Babylonia and Media; in 129 BCE they defeated him, he took his own life, and the Parthians retook all Seleucid territory in Iran.",
       "sourceIds": [
@@ -5227,6 +5573,9 @@
     {
       "id": "dynasty-arsacid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Arsacids",
       "summary": "The royal house of the Parthians, descended from the Parni, who took Parthia from the Seleucids and ruled an empire with residences at Nisa, Hecatompylos, Ecbatana and Ctesiphon until 224 CE. Livius dates its beginning to 247 BCE, following G.R.F. Assar; another Livius page dates the occupation of Astauene by the Parni to 238 BCE.",
       "sourceIds": [
@@ -5276,6 +5625,9 @@
     {
       "id": "office-arsacid-king",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Arsacid king",
       "summary": "The kingship of the Arsacid house; every king also bore the name Arsaces, by which Livius numbers them.",
       "sourceIds": [
@@ -5293,6 +5645,9 @@
     {
       "id": "person-arsaces-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Arsaces I",
       "summary": "The founder of the Arsacid house, leader of the Parni, who lived at Hecatompylos; Livius gives his reign as 247–211 BCE on one page and 247–217 on another.",
       "sourceIds": [
@@ -5321,6 +5676,9 @@
     {
       "id": "person-arsaces-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Arsaces II",
       "summary": "Son of Arsaces I, whose personal name was Artabanus; in 209 BCE Antiochus III forced him to accept Seleucid overlordship.",
       "sourceIds": [
@@ -5349,6 +5707,9 @@
     {
       "id": "person-phriapatius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phriapatius",
       "summary": "Arsacid king from 185 to 170 BCE, perhaps a grandson of Tiridates, a brother of Arsaces I; father of Phraates I and Mithradates I.",
       "sourceIds": [
@@ -5382,6 +5743,9 @@
     {
       "id": "person-phraates-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phraates I",
       "summary": "Son of Phriapatius, Arsacid king from 168 to 165 BCE, succeeded by his brother Mithradates I.",
       "sourceIds": [
@@ -5410,6 +5774,9 @@
     {
       "id": "person-mithridates-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mithradates I the Great",
       "summary": "Son of Phriapatius, Arsacid king from 165 to 132 BCE (171–138 on another Livius page), who conquered Media, took Babylonia in 141 BCE and Elam about 139 BCE, making Parthia an empire.",
       "sourceIds": [
@@ -5443,6 +5810,9 @@
     {
       "id": "person-phraates-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phraates II",
       "summary": "Son of Mithradates I, Arsacid king from 132 to 127 BCE, under whom the Parthians defeated Antiochus VII in 129 BCE.",
       "sourceIds": [
@@ -5476,6 +5846,9 @@
     {
       "id": "person-artabanus-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artabanus I",
       "summary": "Brother of Mithradates I, Arsacid king from 126 to 122 BCE; older literature calls him Artabanus II.",
       "sourceIds": [
@@ -5516,6 +5889,10 @@
     {
       "id": "person-mithridates-ii",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Mithradates II",
       "summary": "Son of Artabanus I, Arsacid king from 121 to 91 BCE, in whose time the Silk Road to China opened and who made a treaty with the Roman commander Sulla.",
       "sourceIds": [
@@ -5549,6 +5926,9 @@
     {
       "id": "person-gotarzes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gotarzes I",
       "summary": "Son of Mithradates II, Arsacid king from 91 to 87 BCE, married to Aryazate, a daughter of Tigranes II of Armenia.",
       "sourceIds": [
@@ -5577,6 +5957,9 @@
     {
       "id": "person-orodes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Orodes I",
       "summary": "A pretender who became Arsacid king from 80/79 to 75 BCE.",
       "sourceIds": [
@@ -5605,6 +5988,9 @@
     {
       "id": "person-sinatruces",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sinatruces",
       "summary": "A relative of Mithradates II who ruled as a rival king in 93/92–88/87 BCE and again from 76 to 70/69 BCE; father of Phraates III.",
       "sourceIds": [
@@ -5633,6 +6019,9 @@
     {
       "id": "person-phraates-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phraates III",
       "summary": "Son of Sinatruces, Arsacid king from 70/69 to 58/57 BCE, father of Mithradates IV and Orodes II.",
       "sourceIds": [
@@ -5671,6 +6060,9 @@
     {
       "id": "person-mithridates-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mithradates IV",
       "summary": "Son of Phraates III, Arsacid king from 58/57 to 54 BCE, captured for his brother Orodes II by the Surena and executed; other numberings call him Mithradates III.",
       "sourceIds": [
@@ -5712,6 +6104,10 @@
     {
       "id": "person-orodes-ii",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Orodes II",
       "summary": "Son of Phraates III, Arsacid king from 57 to 38 BCE, whose general Surena defeated Crassus at Carrhae in 53 BCE.",
       "sourceIds": [
@@ -5740,6 +6136,9 @@
     {
       "id": "person-phraates-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phraates IV",
       "summary": "Son of Orodes II, Arsacid king from 38 to 2 BCE, who sent sons to Rome; in his reign Antony invaded Parthia and the Roman standards were given back in 20 BCE.",
       "sourceIds": [
@@ -5773,6 +6172,9 @@
     {
       "id": "person-phraataces",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phraataces",
       "summary": "Son of Phraates IV and Musa, Arsacid king from 2 BCE to 4 CE.",
       "sourceIds": [
@@ -5814,6 +6216,9 @@
     {
       "id": "person-orodes-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Orodes III",
       "summary": "A son of Phraates IV, Arsacid king from about 6 to about 8 CE.",
       "sourceIds": [
@@ -5848,6 +6253,9 @@
     {
       "id": "person-vonones-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vonones I",
       "summary": "A son of Phraates IV, educated in Rome, Arsacid king from 8 to 12 CE; Artabanus II took Ctesiphon from him. He died in 19 CE.",
       "sourceIds": [
@@ -5881,6 +6289,9 @@
     {
       "id": "person-artabanus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artabanus II",
       "summary": "Arsacid king from 10 to 38 CE, who took Ctesiphon from Vonones I; father of Vardanes I and Gotarzes II. Older numberings call him Artabanus III.",
       "sourceIds": [
@@ -5909,6 +6320,9 @@
     {
       "id": "person-vardanes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vardanes I",
       "summary": "Son of Artabanus II, co-ruler with his father from perhaps 29 CE and king until about 47 CE; both years are uncertain.",
       "sourceIds": [
@@ -5943,6 +6357,9 @@
     {
       "id": "person-gotarzes-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gotarzes II",
       "summary": "Son of Artabanus II, king from perhaps 29 CE until his death in 51 CE.",
       "sourceIds": [
@@ -5976,6 +6393,9 @@
     {
       "id": "person-vologases-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vologases I",
       "summary": "Son of Vonones and a Greek concubine, Arsacid king from 51 to 78 CE, who made his brother Tiridates king of Armenia.",
       "sourceIds": [
@@ -6010,6 +6430,9 @@
     {
       "id": "person-pacorus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pacorus II",
       "summary": "Arsacid king from 78 to 105 CE, who enlarged Ctesiphon; in his last years Vologases III rose against him in the east.",
       "sourceIds": [
@@ -6043,6 +6466,9 @@
     {
       "id": "person-musa",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Musa",
       "summary": "Wife of Phraates IV and mother of Phraataces; the ancient tradition about her is hostile.",
       "sourceIds": [
@@ -6071,6 +6497,9 @@
     {
       "id": "person-surena",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Surena",
       "summary": "The Parthian general who defeated Crassus at Carrhae in 53 BCE for Orodes II, and who had earlier captured Mithradates IV for him.",
       "sourceIds": [
@@ -6107,6 +6536,9 @@
     {
       "id": "person-crassus",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Marcus Licinius Crassus",
       "summary": "A Roman general and one of the triumvirs, who invaded Parthia and was defeated and killed after the battle of Carrhae in 53 BCE.",
       "sourceIds": [
@@ -6147,6 +6579,9 @@
     {
       "id": "event-carrhae",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Carrhae",
       "summary": "In 53 BCE the Parthian army under Surena defeated the Roman army of Crassus on the plain east of Carrhae; Crassus was killed after a meeting with Surena.",
       "sourceIds": [
@@ -6183,6 +6618,9 @@
     {
       "id": "event-antony-parthian-war",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "Antony’s Parthian war",
       "summary": "In 36 BCE the Roman Mark Antony invaded the Parthian empire and failed; another Livius page connects his eastern campaigns with 34/33 BCE.",
       "sourceIds": [
@@ -6207,6 +6645,9 @@
     {
       "id": "event-return-of-standards",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The return of the Roman standards",
       "summary": "In 20 BCE the Parthians gave back to Rome the standards they had taken from Roman armies; Augustus records it in his Res Gestae.",
       "sourceIds": [
@@ -6231,6 +6672,9 @@
     {
       "id": "event-armenia-settlement",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The settlement over Armenia",
       "summary": "After a Roman army surrendered to the Parthians at Rhandeia (about 62 CE), Rome and Vologases I agreed in 63 CE that his brother Tiridates would be king of Armenia.",
       "sourceIds": [
@@ -6259,6 +6703,9 @@
     {
       "id": "person-vologases-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vologases II",
       "summary": "An Arsacid king known only from coins minted at Seleucia from 77/78 to 79/80 CE; he may have rebelled against Vologases I or ruled beside him, and seems to have lost Seleucia to Pacorus II.",
       "sourceIds": [
@@ -6287,6 +6734,9 @@
     {
       "id": "person-osroes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Osroes I",
       "summary": "Brother and successor of Pacorus II, Arsacid king from about 105 to 129 CE. He never put down the rebellion of Vologases III in the east, and in Trajan’s war (114–117) lost Armenia, Babylon, Seleucia and Ctesiphon for a time.",
       "sourceIds": [
@@ -6321,6 +6771,9 @@
     {
       "id": "person-vologases-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vologases III",
       "summary": "A rival Arsacid king who rose in the east towards the end of the reign of Pacorus II and, by his coins, ruled there from about 105 to 147 CE.",
       "sourceIds": [
@@ -6349,6 +6802,9 @@
     {
       "id": "person-mithradates-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mithradates V",
       "summary": "An Arsacid prince who rose against Trajan and became co-ruler and successor of Osroes I; Livius gives his reign as 115 to 147 CE, while its page on Vologases III dates the death of Osroes to 129.",
       "sourceIds": [
@@ -6377,6 +6833,9 @@
     {
       "id": "person-vologases-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vologases IV",
       "summary": "Son and successor of Mithradates V, Arsacid king from 147 to 191 CE, who united the empire again; in his war with Rome the Romans took Ctesiphon in 164.",
       "sourceIds": [
@@ -6410,6 +6869,9 @@
     {
       "id": "person-vologases-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vologases V",
       "summary": "Son of Vologases IV, king of Armenia from 180 and Arsacid king from 191 to 208 CE; he backed the losing side in the Roman civil war, and Septimius Severus took Seleucia and Ctesiphon in 197.",
       "sourceIds": [
@@ -6443,6 +6905,9 @@
     {
       "id": "person-vologases-vi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vologases VI",
       "summary": "Son of Vologases V, Arsacid king from 208 to about 226 CE; he held Ctesiphon and Seleucia while his brother Artabanus IV ruled the east, until Ardašir took his cities.",
       "sourceIds": [
@@ -6471,6 +6936,9 @@
     {
       "id": "person-artabanus-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Artabanus IV",
       "summary": "Son of Vologases V and the last Arsacid king (214–224 CE). He defeated the Roman emperor Macrinus near Nisibis in 217 and was defeated by Ardašir in 224.",
       "sourceIds": [
@@ -6500,6 +6968,9 @@
     {
       "id": "dynasty-sasanian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Sasanians",
       "summary": "The last native dynasty of Persia before the Arab conquest, named after Sasan, an ancestor; its kings and queens ruled from 224 to 651 CE, first from Istakhr and Firuzabad in Persis, then from Ctesiphon.",
       "sourceIds": [
@@ -6543,6 +7014,9 @@
     {
       "id": "office-sasanian-king",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Sasanian king of kings",
       "summary": "The kingship of the Sasanians; Ardašir I took the title \"king of kings\", which the Parthian and, centuries before, the Achaemenid kings had used, and the kings were inaugurated at Ctesiphon.",
       "sourceIds": [
@@ -6559,6 +7033,9 @@
     {
       "id": "period-sasanian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Sasanian period",
       "summary": "The rule of the Sasanian kings, from the revolt of Ardašir in 224 to the death of Yazdgard III in 651 CE.",
       "sourceIds": [
@@ -6595,6 +7072,9 @@
     {
       "id": "region-persis",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Persis",
       "summary": "The land of the Sasanians in the south of Iran, modern Fars; a vassal of the Parthian empire before Ardašir.",
       "sourceIds": [
@@ -6611,6 +7091,9 @@
     {
       "id": "place-firuzabad",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Ardašir Khureh (Firuzabad)",
       "summary": "A round city in Persis founded by Ardašir in the first quarter of the third century CE, with a tall tower at its centre; near it reliefs show his victory over Artabanus IV and his investiture.",
       "sourceIds": [
@@ -6633,6 +7116,9 @@
     {
       "id": "place-istakhr",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Istakhr",
       "summary": "A walled city near Persepolis, one of the residences of Ardašir; its builders reused stones of Persepolis. It held out against the Arabs in about 644 and was sacked in about 650.",
       "sourceIds": [
@@ -6655,6 +7141,9 @@
     {
       "id": "place-bishapur",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Bishapur",
       "summary": "A city in Persis founded by Shapur I and built by Roman soldiers captured with Valerian in 260; its reliefs show the defeat of Valerian.",
       "sourceIds": [
@@ -6677,6 +7166,9 @@
     {
       "id": "place-naqsh-e-rajab",
       "type": "Place",
+      "kinds": [
+        "monument"
+      ],
       "label": "Naqš-e Rajab",
       "summary": "A site three kilometres north of Persepolis with rock reliefs of the investiture of Ardašir I and Shapur I.",
       "sourceIds": [
@@ -6699,6 +7191,9 @@
     {
       "id": "place-sarvestan",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Sarvestan",
       "summary": "A town in eastern Fars with a small palace built by Bahram V, whose use – palace, hunting lodge or sanctuary – is not known.",
       "sourceIds": [
@@ -6715,6 +7210,9 @@
     {
       "id": "place-taq-e-bostan",
       "type": "Place",
+      "kinds": [
+        "monument"
+      ],
       "label": "Taq-e Bostan",
       "summary": "A site near Kermanshah with Sasanian rock reliefs: the investiture of Shapur II and the large cave of Khusrau II.",
       "sourceIds": [
@@ -6737,6 +7235,9 @@
     {
       "id": "place-nisibis",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Nisibis",
       "summary": "A city of the Upper Tigris region, the chief prize of the wars between Rome and the Persians; the Romans gave it up in 363.",
       "sourceIds": [
@@ -6755,6 +7256,9 @@
     {
       "id": "place-amida",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Amida",
       "summary": "A Roman city on the Upper Tigris, taken by Shapur II in 359 and by Kavad I in 502/503.",
       "sourceIds": [
@@ -6773,6 +7277,10 @@
     {
       "id": "place-nehavand",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Nehavand",
       "summary": "The place where the Arabs defeated Yazdgard III when they invaded Iran.",
       "sourceIds": [
@@ -6796,6 +7304,9 @@
     {
       "id": "person-sasan",
       "type": "Person",
+      "kinds": [
+        "religious"
+      ],
       "label": "Sasan",
       "summary": "A Persian priest after whom the Sasanians are named, the ancestor of the dynasty.",
       "sourceIds": [
@@ -6824,6 +7335,9 @@
     {
       "id": "person-papak",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pâpak",
       "summary": "A son of Sasan, who revolted against the Parthian king Artabanus IV at the beginning of the third century CE; father of Ardašir I.",
       "sourceIds": [
@@ -6860,6 +7374,9 @@
     {
       "id": "person-ardashir-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ardašir I",
       "summary": "Son of Pâpak and founder of the Sasanian empire. He revolted against Artabanus IV in 224, took Ctesiphon in 226 and took the title king of kings; his siege of Nisibis in 230 began a long war with Rome. He died a natural death in 241.",
       "sourceIds": [
@@ -6902,6 +7419,9 @@
     {
       "id": "person-shapur-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shapur I",
       "summary": "Son and successor of Ardašir I, king from 240 or 241 to 272. He defeated Gordian III in 244, made peace with Philip, captured the emperor Valerian in 260 and founded Bishapur.",
       "sourceIds": [
@@ -6932,6 +7452,9 @@
     {
       "id": "person-hormizd-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hormizd I",
       "summary": "Sasanian king from 272 to 273, also counted as Ardašir II; before he became king he ruled Armenia, which Shapur I had conquered.",
       "sourceIds": [
@@ -6969,6 +7492,9 @@
     {
       "id": "person-bahram-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bahram I",
       "summary": "Brother and successor of Hormizd I, king from 273 to 276 (both years are contested); in his reign Mani was arrested and executed.",
       "sourceIds": [
@@ -6998,6 +7524,9 @@
     {
       "id": "person-bahram-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bahram II",
       "summary": "King from 276 to 293, in a time of Sasanian weakness: he lost a war against the emperor Carus in 283 and with it Armenia and northern Mesopotamia; he left at least ten rock reliefs.",
       "sourceIds": [
@@ -7027,6 +7556,9 @@
     {
       "id": "person-bahram-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bahram III",
       "summary": "Son of Bahram II, king for a short time in 293; he was almost at once replaced by Narseh and probably killed.",
       "sourceIds": [
@@ -7056,6 +7588,9 @@
     {
       "id": "person-narseh",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Narseh",
       "summary": "Called \"the Sakan king\", Sasanian king from 293 to 303; before that he ruled Armenia. Galerius defeated him in 298, and the treaty of Nisibis gave Rome lands east of the Tigris.",
       "sourceIds": [
@@ -7093,6 +7628,9 @@
     {
       "id": "person-hormizd-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hormizd II",
       "summary": "Son and successor of Narseh, king from 303 to 309; a relief at Naqš-e Rustam shows him defeating an enemy.",
       "sourceIds": [
@@ -7122,6 +7660,9 @@
     {
       "id": "person-shapur-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shapur II",
       "summary": "Son of Hormizd II, reportedly crowned as a baby; king from 309 to 379. He fought the Arabs and the Kushans, took Amida in 359 and in 363 defeated Julian, after which Jovian gave up Nisibis and other lands.",
       "sourceIds": [
@@ -7154,6 +7695,9 @@
     {
       "id": "person-ardashir-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ardašir III",
       "summary": "Brother of Shapur II, king from 379 to 383 and regent for the young Shapur III.",
       "sourceIds": [
@@ -7183,6 +7727,9 @@
     {
       "id": "person-shapur-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shapur III",
       "summary": "Son of Shapur II, king from 383 to 388; in 387 he made peace with Rome, and Armenia was divided.",
       "sourceIds": [
@@ -7212,6 +7759,9 @@
     {
       "id": "person-bahram-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bahram IV",
       "summary": "Son of Shapur III, king from 388 to 399, who fought over Armenia and against the Huns.",
       "sourceIds": [
@@ -7241,6 +7791,9 @@
     {
       "id": "person-yazdgard-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Yazdgard I",
       "summary": "Sasanian king from 399 to 420, called \"the Sinner\"; father of Bahram V.",
       "sourceIds": [
@@ -7270,6 +7823,9 @@
     {
       "id": "person-bahram-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bahram V",
       "summary": "Younger son of Yazdgard I, raised among the Lakhmid Arabs, king from 420 to 438; he fought a short war with Rome in 421–422, recovered Margiana and Bactria and built the palace at Sarvestan. Sometimes called Gor.",
       "sourceIds": [
@@ -7307,6 +7863,9 @@
     {
       "id": "person-yazdgard-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Yazdgard II",
       "summary": "Son of Bahram V, king from 438 to 457; he fought the Hephthalites in the northeast, moved his residence to Nishapur and in 451 invaded Roman Armenia.",
       "sourceIds": [
@@ -7337,6 +7896,9 @@
     {
       "id": "person-hormizd-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hormizd III",
       "summary": "Son of Yazdgard II, king from 457 to 459, who lost a civil war to his brother Peroz.",
       "sourceIds": [
@@ -7367,6 +7929,9 @@
     {
       "id": "person-peroz-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Peroz I",
       "summary": "Son of Yazdgard II, king from 457 to 484; he overcame his brother Hormizd III with the help of the Hephthalites, then fought several wars against them, and was killed in action in 484.",
       "sourceIds": [
@@ -7401,6 +7966,9 @@
     {
       "id": "person-valkash",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Valkaš",
       "summary": "Brother of Peroz I, king from 484 to 488, who made peace with the Hephthalites and left them Margiana and Bactria.",
       "sourceIds": [
@@ -7437,6 +8005,9 @@
     {
       "id": "person-kavad-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Kavad I",
       "summary": "King from 488 to 496 and again from 498 to 530 or 531. His reforms against the power of the nobles led to his imprisonment; he escaped to the Hephthalites, returned, took Amida from the Romans in 502/503 and laid the ground for a flourishing empire.",
       "sourceIds": [
@@ -7466,6 +8037,9 @@
     {
       "id": "person-zamasp",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Zamasp",
       "summary": "Brother of Kavad I, king from 496 to 498/499 while Kavad was imprisoned by the nobles.",
       "sourceIds": [
@@ -7495,6 +8069,9 @@
     {
       "id": "person-khusrau-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khusrau I",
       "summary": "Successor of Kavad I, king from 531 to 579, called \"deathless soul\". He suppressed the Mazdakites in the 530s and took Antioch in 540, settling its people near Ctesiphon.",
       "sourceIds": [
@@ -7533,6 +8110,10 @@
     {
       "id": "person-hormizd-iv",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Hormizd IV",
       "summary": "King from 579 to 590, called \"the Turk\"; the rebel general Bahram VI rose against him and he was executed.",
       "sourceIds": [
@@ -7567,6 +8148,9 @@
     {
       "id": "person-khusrau-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khusrau II",
       "summary": "Son of Hormizd IV, king from 590 to 628, called \"the victorious\". Restored by a Byzantine army in 591, he later attacked the Byzantines, took Jerusalem in 614 and Alexandria in 619; after Heraclius defeated him he was deposed by his son and died in 628.",
       "sourceIds": [
@@ -7610,6 +8194,10 @@
     {
       "id": "person-bahram-vi",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Bahram VI",
       "summary": "A Parthian general, hero of the war against the Turks, who revolted against Hormizd IV and ruled as king in 590–591 until a Byzantine army brought Khusrau II back; he fled to the Turks and was assassinated. Not a Sasanian.",
       "sourceIds": [
@@ -7639,6 +8227,9 @@
     {
       "id": "person-bistam",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bistam",
       "summary": "A Parthian rebel, not a Sasanian, who held the title of king from 591/592 to 597 and was supported by the followers of Bahram VI.",
       "sourceIds": [
@@ -7668,6 +8259,9 @@
     {
       "id": "person-hormizd-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hormizd V",
       "summary": "A Sasanian king whom Livius dates to about 593.",
       "sourceIds": [
@@ -7696,6 +8290,9 @@
     {
       "id": "person-kavad-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Kavad II",
       "summary": "The crown prince Sheroe, who early in 628 imprisoned his father Khusrau II, took the throne as Kavad II, killed his brothers and sought peace with Heraclius. He died after a short reign: Livius dates his death to 628 on one page and to 630 on another.",
       "sourceIds": [
@@ -7743,6 +8340,10 @@
     {
       "id": "person-ardashir-iv",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Ardašir IV",
       "summary": "The young son of Kavad II, king from 628 to 630, when the general Shahrbaraz replaced him.",
       "sourceIds": [
@@ -7773,6 +8374,10 @@
     {
       "id": "person-shahrbaraz",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Shahrbaraz",
       "summary": "A Parthian general of Khusrau II, whose name means \"boar of the kingdom\"; he took Antioch, Damascus and Jerusalem, besieged Constantinople in 626, seized the throne in about 630, made peace with the Byzantines and was killed forty days later. Not a Sasanian; Livius dates his reign to 630 and, on its page on Heraclius, to 629.",
       "sourceIds": [
@@ -7816,6 +8421,9 @@
     {
       "id": "person-buran",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Buran",
       "summary": "A daughter of Khusrau II and queen of Persia from 630 to 632; in palace intrigues her sister Azarmedukht briefly replaced her before she was placed on the throne again and killed.",
       "sourceIds": [
@@ -7850,6 +8458,9 @@
     {
       "id": "person-hormizd-vi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hormizd VI",
       "summary": "One of the kings of the years of disorder after Khusrau II, ruling from 631 to 632.",
       "sourceIds": [
@@ -7878,6 +8489,9 @@
     {
       "id": "person-azarmedukht",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Azarmedukht",
       "summary": "A sister of Buran and queen of Persia in 631.",
       "sourceIds": [
@@ -7907,6 +8521,9 @@
     {
       "id": "person-peroz-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Peroz II",
       "summary": "A Sasanian king of about 631.",
       "sourceIds": [
@@ -7935,6 +8552,9 @@
     {
       "id": "person-khusrau-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khusrau III",
       "summary": "A Sasanian king of about 631.",
       "sourceIds": [
@@ -7963,6 +8583,9 @@
     {
       "id": "person-khusrau-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Khusrau IV",
       "summary": "A Sasanian king whom Livius lists from 631 to 637.",
       "sourceIds": [
@@ -7991,6 +8614,9 @@
     {
       "id": "person-yazdgard-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Yazdgard III",
       "summary": "The last Sasanian king, from 632 to 651. The Arabs invaded Mesopotamia in 633, took Ctesiphon and defeated him at Nehavand; he retreated to the northeast and died a fugitive in 651.",
       "sourceIds": [
@@ -8026,6 +8652,9 @@
     {
       "id": "person-mani",
       "type": "Person",
+      "kinds": [
+        "religious"
+      ],
       "label": "Mani",
       "summary": "A prophet (216–276) who tried to join Christianity, Buddhism and Zoroastrianism; under Bahram I he was arrested and executed.",
       "sourceIds": [
@@ -8065,6 +8694,9 @@
     {
       "id": "person-kartir",
       "type": "Person",
+      "kinds": [
+        "religious"
+      ],
       "label": "Kartir",
       "summary": "A Zoroastrian high priest to whom Bahram II in the end lost power; he added his own image to a relief at Naqš-e Rajab.",
       "sourceIds": [
@@ -8094,6 +8726,9 @@
     {
       "id": "person-gordian-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gordian III",
       "summary": "A Roman emperor (238–244) who made war on Shapur I and died in 244 in unclear circumstances: one Livius page says he was killed in action near Ctesiphon, another that his soldiers lynched him after a defeat.",
       "sourceIds": [
@@ -8138,6 +8773,9 @@
     {
       "id": "person-valerian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Valerian",
       "summary": "A Roman emperor (253–260) who was defeated and taken captive by Shapur I in 260 and died in captivity in 262.",
       "sourceIds": [
@@ -8178,6 +8816,9 @@
     {
       "id": "person-galerius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Galerius",
       "summary": "A Roman emperor who as caesar defeated Narseh in 298, leading to the treaty of Nisibis.",
       "sourceIds": [
@@ -8217,6 +8858,9 @@
     {
       "id": "person-julian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Julian the Apostate",
       "summary": "A Roman emperor (360–363) who invaded the Sasanian empire, reached Ctesiphon and was killed in action in 363.",
       "sourceIds": [
@@ -8256,6 +8900,9 @@
     {
       "id": "person-jovian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Jovian",
       "summary": "The Roman emperor who followed Julian in 363 and made peace with Shapur II, giving up lands in the east, Nisibis among them, for the first time.",
       "sourceIds": [
@@ -8294,6 +8941,9 @@
     {
       "id": "person-heraclius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Heraclius",
       "summary": "The East Roman emperor (610–641) who invaded the Sasanian empire, defeated a Persian army near Nineveh in 627 and returned the True Cross to Jerusalem in 630.",
       "sourceIds": [
@@ -8328,6 +8978,9 @@
     {
       "id": "event-trajan-takes-ctesiphon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Trajan takes Ctesiphon",
       "summary": "In Trajan’s war against Osroes I (114–117), the Romans took Babylon, Seleucia and Ctesiphon in 116; after Trajan’s death in 117 Hadrian gave up the conquests.",
       "sourceIds": [
@@ -8360,6 +9013,9 @@
     {
       "id": "event-ctesiphon-taken-164",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Romans take Ctesiphon under Vologases IV",
       "summary": "In the war that began over Armenia in 161, the Roman general Avidius Cassius took the Parthian capital; Livius dates it to 164 on one page and 165 on another.",
       "sourceIds": [
@@ -8397,6 +9053,9 @@
     {
       "id": "event-severus-takes-ctesiphon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Septimius Severus takes Ctesiphon",
       "summary": "In a new war with Vologases V, the emperor Septimius Severus took Seleucia and Ctesiphon; Livius dates it to 197 on one page and 198 on another. He then failed to take Hatra.",
       "sourceIds": [
@@ -8434,6 +9093,9 @@
     {
       "id": "event-artabanus-defeats-macrinus",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Artabanus IV against Macrinus at Nisibis",
       "summary": "After Caracalla’s attack and murder, Artabanus IV met the new emperor Macrinus near Nisibis in 217; the sources present it as a Roman defeat, and Rome paid an indemnity.",
       "sourceIds": [
@@ -8466,6 +9128,9 @@
     {
       "id": "event-ardashir-defeats-artabanus",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Ardašir defeats Artabanus IV",
       "summary": "Artabanus IV marched against the insurrection of Ardašir in Persis in 224 and was defeated; a relief near Firuzabad shows the victory. It marks the beginning of the Sasanian empire.",
       "sourceIds": [
@@ -8499,6 +9164,9 @@
     {
       "id": "event-ardashir-takes-ctesiphon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Ardašir takes Ctesiphon",
       "summary": "Two years after his victory, Ardašir took Ctesiphon, the Parthian capital, and was recognised as ruler of the former Parthian empire; Ctesiphon became the city where Sasanian kings were inaugurated.",
       "sourceIds": [
@@ -8533,6 +9201,9 @@
     {
       "id": "event-war-with-rome-230",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "Ardašir’s war with Rome begins",
       "summary": "Ardašir’s siege of Nisibis began a long war with Rome; Livius dates the siege to 230 on its page on Ardašir and the first fighting on the Euphrates to 231 on its page on the Sasanians.",
       "sourceIds": [
@@ -8570,6 +9241,10 @@
     {
       "id": "event-defeat-of-gordian-iii",
       "type": "Event",
+      "kinds": [
+        "battle",
+        "death"
+      ],
       "label": "The defeat and death of Gordian III",
       "summary": "The emperor Gordian III invaded Mesopotamia in 244, was defeated near Ctesiphon and died – killed in action, or lynched by his soldiers, as the Livius pages differ; his successor Philip made a peace that left Armenia to the Persians.",
       "sourceIds": [
@@ -8603,6 +9278,9 @@
     {
       "id": "event-capture-of-valerian",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Shapur captures Valerian",
       "summary": "In 260 Shapur I defeated the Roman emperor Valerian and took him captive; reliefs at Bishapur and Naqš-e Rustam show the triumph, and the captured soldiers built Bishapur.",
       "sourceIds": [
@@ -8637,6 +9315,9 @@
     {
       "id": "event-carus-takes-ctesiphon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Carus takes Ctesiphon",
       "summary": "The emperor Carus took Ctesiphon in 283; Bahram II lost the war and with it Armenia and northern Mesopotamia.",
       "sourceIds": [
@@ -8669,6 +9350,9 @@
     {
       "id": "event-treaty-of-nisibis-298",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The peace of 298",
       "summary": "After Galerius defeated Narseh, a treaty concluded at Nisibis in 298 made the Persians give up territories in northern Mesopotamia and gave Rome lands east of the Tigris.",
       "sourceIds": [
@@ -8705,6 +9389,9 @@
     {
       "id": "event-shapur-ii-takes-amida",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Shapur II takes Amida",
       "summary": "The Sasanian king Shapur II captured the Roman city of Amida in 359.",
       "sourceIds": [
@@ -8736,6 +9423,10 @@
     {
       "id": "event-death-of-julian",
       "type": "Event",
+      "kinds": [
+        "treaty",
+        "death"
+      ],
       "label": "The death of Julian and the peace of 363",
       "summary": "The emperor Julian invaded Mesopotamia and reached Ctesiphon, but was defeated by Shapur II and killed in action on 26 June 363; his successor Jovian made a peace that gave up Nisibis and other eastern lands.",
       "sourceIds": [
@@ -8774,6 +9465,9 @@
     {
       "id": "event-division-of-armenia",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "Armenia divided",
       "summary": "In 387 Shapur III made peace with Rome, and Armenia was divided between the two empires.",
       "sourceIds": [
@@ -8802,6 +9496,9 @@
     {
       "id": "event-war-of-421",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "Bahram V’s war with Rome",
       "summary": "A brief war between Bahram V and the Romans in 421–422.",
       "sourceIds": [
@@ -8834,6 +9531,9 @@
     {
       "id": "event-yazdgard-ii-invades-armenia",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Yazdgard II invades Roman Armenia",
       "summary": "In 451 Yazdgard II invaded the Roman province of Armenia; the borders in the end remained unchanged.",
       "sourceIds": [
@@ -8861,6 +9561,10 @@
     {
       "id": "event-death-of-peroz",
       "type": "Event",
+      "kinds": [
+        "battle",
+        "death"
+      ],
       "label": "Peroz I killed in battle",
       "summary": "Peroz I was killed in action in 484 – Livius places the war in the northeast on one page and on the northwestern frontier on another – which brought a crisis on the Sasanian empire.",
       "sourceIds": [
@@ -8889,6 +9593,9 @@
     {
       "id": "event-kavad-takes-amida",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Kavad I takes Amida",
       "summary": "Kavad I attacked the Byzantine empire and captured Amida in 502/503; a second Roman attempt in the winter of 505 recovered it, but the Romans had to pay the Persian garrison to leave.",
       "sourceIds": [
@@ -8925,6 +9632,9 @@
     {
       "id": "event-suppression-of-mazdakism",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The Mazdakites suppressed",
       "summary": "Khusrau I suppressed the religious movement called Mazdakism in the 530s; its adherents may have fled to Arabia.",
       "sourceIds": [
@@ -8957,6 +9667,9 @@
     {
       "id": "event-khusrau-i-takes-antioch",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Khusrau I takes Antioch",
       "summary": "In 540 Khusrau I conquered Antioch, the capital of Roman Syria, and settled its people in a new city near Ctesiphon, \"Khusrau’s Antioch\".",
       "sourceIds": [
@@ -8984,6 +9697,9 @@
     {
       "id": "event-revolt-of-bahram-vi",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The revolt of Bahram VI",
       "summary": "In 590 the general Bahram VI revolted and marched west; Hormizd IV was executed and his son Khusrau II fled to the Byzantines, who brought him back in 591.",
       "sourceIds": [
@@ -9019,6 +9735,9 @@
     {
       "id": "event-persians-take-jerusalem",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Persians take Jerusalem",
       "summary": "The armies of Khusrau II under Shahrbaraz took Antioch in 612 and Damascus in 613, and sacked Jerusalem in 614, carrying off the relic of the True Cross.",
       "sourceIds": [
@@ -9051,6 +9770,9 @@
     {
       "id": "event-persians-take-alexandria",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Persians take Alexandria",
       "summary": "The armies of Khusrau II invaded Egypt and captured Alexandria in 619, cutting the corn supply of Constantinople.",
       "sourceIds": [
@@ -9079,6 +9801,9 @@
     {
       "id": "event-siege-of-constantinople-626",
       "type": "Event",
+      "kinds": [
+        "siege"
+      ],
       "label": "The Persians before Constantinople",
       "summary": "In 626 Persian forces under Shahrbaraz reached the Asian shore of the Bosphorus, a mile from Constantinople, while the Avars besieged the city; they could not take it.",
       "sourceIds": [
@@ -9108,6 +9833,9 @@
     {
       "id": "event-battle-of-nineveh-627",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Heraclius defeats the Persians near Nineveh",
       "summary": "In December 627 Heraclius, who had invaded Mesopotamia, defeated a large Persian army near the ruins of Nineveh.",
       "sourceIds": [
@@ -9140,6 +9868,9 @@
     {
       "id": "event-fall-of-khusrau-ii",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The fall of Khusrau II",
       "summary": "After the defeat, the army mutinied; early in 628 the crown prince Sheroe imprisoned his father Khusrau II, who died soon after, and became king as Kavad II.",
       "sourceIds": [
@@ -9173,6 +9904,9 @@
     {
       "id": "event-return-of-the-true-cross",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The True Cross returned to Jerusalem",
       "summary": "After peace was made, Heraclius returned the relic of the True Cross to Jerusalem in 630.",
       "sourceIds": [
@@ -9201,6 +9935,9 @@
     {
       "id": "event-arabs-invade-mesopotamia",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The first Arab invasion of Mesopotamia",
       "summary": "In 633 an army of Christians and Muslims invaded Mesopotamia; a Sasanian counteroffensive was followed by an Arab one.",
       "sourceIds": [
@@ -9228,6 +9965,9 @@
     {
       "id": "event-arabs-take-ctesiphon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Arabs take Ctesiphon",
       "summary": "The Arabs captured Ctesiphon, the beginning of their conquest of Mesopotamia; Livius dates it to 636 on its page on the Sasanians and to 637 on its page on Ctesiphon.",
       "sourceIds": [
@@ -9265,6 +10005,9 @@
     {
       "id": "event-battle-of-nehavand",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Nehavand",
       "summary": "The Arabs invaded Iran and defeated Yazdgard III at Nehavand, after which he retreated to the northeast; Livius dates it to 641 on one page and 642 on another.",
       "sourceIds": [
@@ -9302,6 +10045,9 @@
     {
       "id": "event-fall-of-istakhr",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Arabs take Istakhr",
       "summary": "The walled city of Istakhr repulsed a first Arab attack in about 644, but was captured and sacked in about 650.",
       "sourceIds": [
@@ -9330,6 +10076,9 @@
     {
       "id": "event-death-of-yazdgard-iii",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The death of Yazdgard III",
       "summary": "Yazdgard III, the last Sasanian king, died as a fugitive in 651, ten years after Nehavand; with him the Sasanian empire ended.",
       "sourceIds": [
@@ -9358,6 +10107,9 @@
     {
       "id": "place-hira",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Hira",
       "summary": "The capital of the Lakhmid kings on the desert fringes of central Iraq, a centre of Nestorian Christian learning, where Bahram V was brought up.",
       "sourceIds": [
@@ -9387,6 +10139,9 @@
     {
       "id": "dynasty-lakhmid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Lakhmids",
       "summary": "An Arab dynasty that ruled central Iraq from Hira for about three centuries, from about 300 to 602, mostly as allies and clients of the Sasanian kings and their bulwark against Byzantium and the Ghassanids.",
       "sourceIds": [
@@ -9426,6 +10181,9 @@
     {
       "id": "office-lakhmid-king",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Hira",
       "summary": "The kingship of the Lakhmid house at Hira.",
       "sourceIds": [
@@ -9442,6 +10200,9 @@
     {
       "id": "person-amr-ibn-adi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "ʿAmr b. ʿAdi",
       "summary": "The Lakhmid who brought his family to prominence at the end of the third century, made Hira his capital and tried to extend his power across the Syrian desert.",
       "sourceIds": [
@@ -9470,6 +10231,10 @@
     {
       "id": "person-imru-al-qays-ibn-amr",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "statesman"
+      ],
       "label": "Emroʾ-al-Qays b. ʿAmr",
       "summary": "Son of ʿAmr b. ʿAdi and second of the Lakhmid line, at first governor for the Sasanians over the tribes of the Syrian desert; he later went over to the Byzantines and became a Christian. The inscription of Namāra of 328 calls him king of all the Arabs.",
       "sourceIds": [
@@ -9498,6 +10263,9 @@
     {
       "id": "person-mundhir-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Monḏer III",
       "summary": "Son of Noʿmān II, the Lakhmid king who dominated the sixth century and reigned for half a century, from 503 to 554; Khusrau I entrusted Arabia to him.",
       "sourceIds": [
@@ -9533,6 +10301,9 @@
     {
       "id": "person-numan-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Noʿmān III",
       "summary": "Son of Monḏer IV and the last Lakhmid king, from 580 to 602; he became a Christian and his court at Hira drew the leading Arab poets. Khusrau II had him killed in 602, ending the Lakhmid house.",
       "sourceIds": [
@@ -9573,6 +10344,9 @@
     {
       "id": "event-bahram-v-takes-throne",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Bahram V takes the throne with Lakhmid help",
       "summary": "Bahram V, brought up at the Lakhmid court of Hira, gained the throne at Ctesiphon in 420 with the help of the Lakhmid king against the nobles who had killed his brother Shapur.",
       "sourceIds": [
@@ -9604,6 +10378,9 @@
     {
       "id": "event-end-of-the-lakhmids",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The end of the Lakhmids",
       "summary": "Khusrau II had the Lakhmid king Noʿmān III killed in 602 and soon after brought Hira under direct Persian rule, removing the Arab bulwark of Iraq.",
       "sourceIds": [
@@ -9639,6 +10416,9 @@
     {
       "id": "event-battle-of-dhu-qar",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Ḏu Qār",
       "summary": "In 604 the Banu Bakr defeated a Persian force at Ḏu Qār, which Tabari saw as a consequence of Khusrau II’s action against Noʿmān.",
       "sourceIds": [
@@ -9662,6 +10442,9 @@
     {
       "id": "government-hephthalites",
       "type": "Government",
+      "kinds": [
+        "state"
+      ],
       "label": "The Hephthalites",
       "summary": "A people of “Hunnish” invaders, also called White Huns, who from the mid-fourth century pressed on Iran and India and after the defeats of Peroz I held Central Asia, Khorasan and Afghanistan; Khusrau I and the Turks crushed them near Bukhara between 558 and 561.",
       "sourceIds": [
@@ -9680,6 +10463,9 @@
     {
       "id": "event-peroz-against-the-hephthalites",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Peroz’s campaigns against the Hephthalites",
       "summary": "Peroz I led three disastrous campaigns against the Hephthalites: in the first he was forced to surrender, in the third, in 484, he died with his cavalry in a hidden ditch. The Shahnameh gives the fullest account of his defeats.",
       "sourceIds": [
@@ -9708,6 +10494,9 @@
     {
       "id": "event-defeat-of-the-hephthalites",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The Hephthalites crushed near Bukhara",
       "summary": "Between 558 and 561 Khusrau I, acting with the newly arrived Turks, crushed the Hephthalites in a great battle near Bukhara, and the two powers divided their land along the Oxus.",
       "sourceIds": [
@@ -9740,6 +10529,9 @@
     {
       "id": "place-baghdad",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Baghdad",
       "summary": "The city on the Tigris founded in 762 as the capital of the Abbasid caliphs, for the next five centuries the foremost cultural centre of the Islamic world.",
       "sourceIds": [
@@ -9762,6 +10554,9 @@
     {
       "id": "place-bukhara",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Bukhara",
       "summary": "The city of Transoxania that Ismaʿil I made the Samanid capital; with Samarkand a centre of Persian letters and learning.",
       "sourceIds": [
@@ -9786,6 +10581,9 @@
     {
       "id": "place-ghazni",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Ghazni",
       "summary": "The town in eastern Afghanistan from which Sebüktigin and Mahmud built the Ghaznavid power.",
       "sourceIds": [
@@ -9810,6 +10608,9 @@
     {
       "id": "place-ray",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Ray",
       "summary": "The old city of Media south of modern Tehran, held by Mardavij and his brother Vushmgir and then the capital of the northern Buyid emirate until Mahmud of Ghazni took it in 1029.",
       "sourceIds": [
@@ -9844,6 +10645,9 @@
     {
       "id": "place-nishapur",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Nishapur",
       "summary": "The chief city of Khorasan, seat of the Tahirid governors until Yaʿqub the Saffarid came there in 873.",
       "sourceIds": [
@@ -9868,6 +10672,9 @@
     {
       "id": "period-umayyad-caliphate",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Umayyad caliphate",
       "summary": "The first great Muslim dynasty to rule the empire of the caliphate, from 661 to 750; Iran was governed as provinces of this Arab empire.",
       "sourceIds": [
@@ -9902,6 +10709,9 @@
     {
       "id": "dynasty-abbasid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Abbasids",
       "summary": "The dynasty of caliphs established in 750 with the help of a revolt in Khorasan, closely linked with Persia; from 762 they ruled from Baghdad.",
       "sourceIds": [
@@ -9930,6 +10740,10 @@
     {
       "id": "office-abbasid-caliph",
       "type": "Office",
+      "kinds": [
+        "kingship",
+        "religiousOffice"
+      ],
       "label": "Abbasid caliph",
       "summary": "The caliphate held by the Abbasid house.",
       "sourceIds": [
@@ -9946,6 +10760,9 @@
     {
       "id": "period-abbasid-caliphate",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Abbasid caliphate before the Seljuks",
       "summary": "From the establishment of the Abbasids in 750 until Toghril Beg’s Seljuks entered Baghdad in 1055; within it the Iranian dynasties rose in the east and the Buyids held the caliphs in tutelage.",
       "sourceIds": [
@@ -9980,6 +10797,10 @@
     {
       "id": "person-abu-muslim",
       "type": "Person",
+      "kinds": [
+        "general",
+        "rebel"
+      ],
       "label": "Abu Muslim",
       "summary": "Leader of the revolutionary movement in Khorasan who, as agent of the Abbasid family, raised the banner of revolt in 747 and brought down the Umayyads; governor of Khorasan, he was put to death by al-Mansur in 755 and became a legendary hero.",
       "sourceIds": [
@@ -10020,6 +10841,9 @@
     {
       "id": "person-al-mansur",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "al-Mansur",
       "summary": "The second Abbasid caliph, from 754 to 775, who preferred his freedmen over the Arabs in office and had Abu Muslim put to death.",
       "sourceIds": [
@@ -10061,6 +10885,9 @@
     {
       "id": "person-al-mamun",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "al-Maʾmun",
       "summary": "Abbasid caliph who from his governorate in Marv commanded the resources of Persia and defeated his brother Amin in 813; the Samanid brothers were rewarded with provinces for their service to him.",
       "sourceIds": [
@@ -10097,6 +10924,9 @@
     {
       "id": "event-abbasid-revolution",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The Abbasid revolution",
       "summary": "On 15 June 747 Abu Muslim raised the banner of revolt in Khorasan; it triumphed in 750 when the last Umayyad caliph Marwan II was defeated and killed, and the Abbasids took the caliphate.",
       "sourceIds": [
@@ -10130,6 +10960,9 @@
     {
       "id": "event-death-of-abu-muslim",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The death of Abu Muslim",
       "summary": "Suspicious of a vassal with so much power, the caliph al-Mansur took Khorasan from Abu Muslim and had him put to death at court in February 755; his unavenged death inspired many later revolts.",
       "sourceIds": [
@@ -10161,6 +10994,9 @@
     {
       "id": "event-founding-of-baghdad",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The founding of Baghdad",
       "summary": "In 762 Baghdad was founded on the Tigris as the capital of the Abbasid caliphs.",
       "sourceIds": [
@@ -10188,6 +11024,9 @@
     {
       "id": "event-mamun-defeats-amin",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "al-Maʾmun defeats his brother Amin",
       "summary": "From his governorate in Marv, with the men and resources of Persia, al-Maʾmun defeated his brother Amin in 813, whose cause was that of the Arabs of Iraq and Syria.",
       "sourceIds": [
@@ -10215,6 +11054,9 @@
     {
       "id": "dynasty-saffarid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Saffarids",
       "summary": "A dynasty of eastern Iran from Sistan, ruling from 861 to 1003, whose first amirs built a vast military empire by the sword and made the first great breach in the Abbasid caliphate.",
       "sourceIds": [
@@ -10249,6 +11091,9 @@
     {
       "id": "office-saffarid-amir",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Saffarid amir",
       "summary": "The rule of the Saffarid amirs from Sistan.",
       "sourceIds": [
@@ -10265,6 +11110,9 @@
     {
       "id": "person-yaqub-ibn-layth",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Yaʿqub b. Layth",
       "summary": "Leader of the ʿayyar bands of Sistan, hailed as amir in 861, who conquered from Afghanistan to Fars and threatened Baghdad until his defeat at Dayr al-ʿAqul in 876; he died at Jundishapur three years later.",
       "sourceIds": [
@@ -10305,6 +11153,9 @@
     {
       "id": "person-amr-ibn-layth",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "ʿAmr b. Layth",
       "summary": "Brother of Yaʿqub and second Saffarid amir, whose ambition to take Transoxania from the Samanids ended in 900 with his defeat and capture outside Balkh.",
       "sourceIds": [
@@ -10333,6 +11184,9 @@
     {
       "id": "event-yaqub-hailed-amir",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Yaʿqub hailed as amir in Sistan",
       "summary": "Out of the power struggles of the ʿayyar leaders of Sistan, Yaʿqub emerged the victor and was hailed as amir by the army of Sistan in 861.",
       "sourceIds": [
@@ -10360,6 +11214,9 @@
     {
       "id": "event-yaqub-at-nishapur",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Yaʿqub at Nishapur",
       "summary": "In 873 Yaʿqub intervened at Nishapur and ended the rule of the Tahirid governors in Khorasan.",
       "sourceIds": [
@@ -10397,6 +11254,9 @@
     {
       "id": "event-battle-of-dayr-al-aqul",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Dayr al-ʿAqul",
       "summary": "Marching on Baghdad, Yaʿqub was decisively defeated by the regent al-Muwaffaq at Dayr al-ʿAqul southeast of Baghdad in 876; he kept Fars and Ahvaz.",
       "sourceIds": [
@@ -10424,6 +11284,9 @@
     {
       "id": "dynasty-samanid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Samanids",
       "summary": "An Iranian dynasty of Transoxania and Khorasan, from 819 to 999, with its capital at Bukhara, renowned for the impulse it gave to Iranian national sentiment and Persian letters.",
       "sourceIds": [
@@ -10462,6 +11325,9 @@
     {
       "id": "office-samanid-amir",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Samanid amir",
       "summary": "The rule of the Samanid amirs at Bukhara.",
       "sourceIds": [
@@ -10478,6 +11344,9 @@
     {
       "id": "person-ismail-samani",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ismaʿil I",
       "summary": "Samanid amir from 892 to 907 who overthrew the Saffarids in Khorasan in 900 and established Samanid rule over Transoxania and Khorasan from Bukhara.",
       "sourceIds": [
@@ -10519,6 +11388,9 @@
     {
       "id": "person-nasr-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nasr II",
       "summary": "Samanid amir from 914 to 943, at whose court in Bukhara Rudaki served as poet.",
       "sourceIds": [
@@ -10559,6 +11431,9 @@
     {
       "id": "event-battle-of-balkh",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "ʿAmr b. Layth defeated outside Balkh",
       "summary": "In 900 Ismaʿil the Samanid crossed the Oxus and defeated ʿAmr b. Layth outside Balkh, capturing him and overturning Saffarid power in a single day; Khorasan passed to the Samanids for almost a century.",
       "sourceIds": [
@@ -10591,6 +11466,10 @@
     {
       "id": "person-rudaki",
       "type": "Person",
+      "kinds": [
+        "poet",
+        "artistic"
+      ],
       "label": "Rudaki",
       "summary": "Poet, singer and musician born about 859, the first poet of note in New Persian and widely called the father of Persian poetry; he served Nasr II at Bukhara until 937 and translated Kalila wa Dimna into Persian.",
       "sourceIds": [
@@ -10643,6 +11522,9 @@
     {
       "id": "dynasty-ziyarid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Ziyarids",
       "summary": "A Gilite dynasty of the Caspian coastlands, from 931 to about 1090, which first ruled northern Iran from Ray and then only Tabarestan and Gorgan.",
       "sourceIds": [
@@ -10678,6 +11560,9 @@
     {
       "id": "office-ziyarid-amir",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Ziyarid amir",
       "summary": "The rule of the Ziyarid amirs.",
       "sourceIds": [
@@ -10694,6 +11579,9 @@
     {
       "id": "person-mardavij",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mardavij b. Ziyar",
       "summary": "Founder of the Ziyarids, who claimed descent from the old royal house of Gilan, won a dominion from Ray to Isfahan and dreamed of restoring the Persian empire and faith; his Turkish slaves killed him in 935.",
       "sourceIds": [
@@ -10728,6 +11616,9 @@
     {
       "id": "person-vushmgir",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vushmgir",
       "summary": "Brother and successor of Mardavij at Ray from 935 to 967, who after 940 held only the Caspian lands and was killed by a wild boar at the end of 967.",
       "sourceIds": [
@@ -10768,6 +11659,9 @@
     {
       "id": "person-qabus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Qabus b. Vushmgir",
       "summary": "Son of Vushmgir and Ziyarid amir from 978 to 981 and again from 997 to 1012, titled Shams al-Maʿali, at whose court Biruni wrote his first major work.",
       "sourceIds": [
@@ -10804,6 +11698,9 @@
     {
       "id": "event-death-of-mardavij",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The murder of Mardavij",
       "summary": "In 935 Mardavij was killed by his Turkish slaves; his empire fell apart and most of its lands south of the Caspian mountains went to the Buyid brothers.",
       "sourceIds": [
@@ -10832,6 +11729,9 @@
     {
       "id": "dynasty-buyid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Buyids",
       "summary": "A dynasty of Daylamite origin, sons of the fisherman Buya, which ruled western and southern Iran and Iraq from the middle of the tenth to the middle of the eleventh century as three principalities of one family, and held the caliphs of Baghdad in tutelage.",
       "sourceIds": [
@@ -10864,6 +11764,9 @@
     {
       "id": "office-buyid-amir",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Buyid amir",
       "summary": "The rule of the Buyid amirs over their principalities.",
       "sourceIds": [
@@ -10880,6 +11783,9 @@
     {
       "id": "person-imad-al-dawla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "ʿAli b. Buya ʿImad al-Dawla",
       "summary": "The eldest of the Buyid brothers, who served Mardavij, took Fars and Shiraz and exerted some supremacy over his brothers.",
       "sourceIds": [
@@ -10908,6 +11814,9 @@
     {
       "id": "person-rukn-al-dawla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hasan b. Buya Rukn al-Dawla",
       "summary": "The second Buyid brother, who took almost the whole of Media and ruled from 947 to 977.",
       "sourceIds": [
@@ -10937,6 +11846,9 @@
     {
       "id": "person-muizz-al-dawla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ahmad b. Buya Muʿizz al-Dawla",
       "summary": "The youngest Buyid brother, who gained Kerman and Khuzestan and entered Baghdad without a fight on 19 December 945.",
       "sourceIds": [
@@ -10965,6 +11877,9 @@
     {
       "id": "person-adud-al-dawla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Fana-Khusraw ʿAdud al-Dawla",
       "summary": "Son of Rukn al-Dawla and the greatest Buyid amir, from 949 to 983, who struck coins in Fars showing himself as a crowned king with the title shahanshah.",
       "sourceIds": [
@@ -10994,6 +11909,9 @@
     {
       "id": "event-buyids-enter-baghdad",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Buyids enter Baghdad",
       "summary": "On 19 December 945 Ahmad b. Buya entered Baghdad without a fight and the Buyids took the caliphs into their tutelage.",
       "sourceIds": [
@@ -11025,6 +11943,9 @@
     {
       "id": "event-adud-al-dawla-shahanshah",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "ʿAdud al-Dawla as shahanshah",
       "summary": "A coin struck in Fars in 970 shows ʿAdud al-Dawla as a crowned king with the inscription shahanshah.",
       "sourceIds": [
@@ -11052,6 +11973,9 @@
     {
       "id": "dynasty-ghaznavid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Ghaznavids",
       "summary": "A dynasty of Turkish slave origin, from 977 to 1186, which at its height ruled the eastern Iranian lands, briefly as far west as Ray, and northwestern India from Ghazni.",
       "sourceIds": [
@@ -11090,6 +12014,9 @@
     {
       "id": "office-ghaznavid-sultan",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Ghaznavid ruler",
       "summary": "The rule of the Ghaznavid house at Ghazni.",
       "sourceIds": [
@@ -11106,6 +12033,10 @@
     {
       "id": "person-sebuktigin",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Sebüktigin",
       "summary": "Turkish slave commander who governed Ghazni for twenty years until 997, nominally for the Samanids, and laid the foundations of the Ghaznavid power.",
       "sourceIds": [
@@ -11139,6 +12070,9 @@
     {
       "id": "person-mahmud-of-ghazni",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mahmud of Ghazni",
       "summary": "Son of Sebüktigin, ruler from 998 to 1030, who threw off Samanid authority in 999 and by ceaseless campaigning, in India and as far west as Ray, built a vast military empire.",
       "sourceIds": [
@@ -11189,6 +12123,9 @@
     {
       "id": "person-masud-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Masʿud I",
       "summary": "Son of Mahmud, who set aside his brother Muhammad and took over the empire and its army in 1030.",
       "sourceIds": [
@@ -11224,6 +12161,9 @@
     {
       "id": "event-mahmud-throws-off-samanid-authority",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Mahmud throws off Samanid authority",
       "summary": "In 999 Mahmud of Ghazni threw off Samanid authority; with the Qarakhanids north of the Oxus he divided up the former Samanid lands, and the Samanid dynasty came to its end.",
       "sourceIds": [
@@ -11252,6 +12192,9 @@
     {
       "id": "event-mahmud-takes-ray",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Mahmud takes Ray",
       "summary": "In 1029 Mahmud of Ghazni conquered Ray, until then the capital of the northern Buyid emirate.",
       "sourceIds": [
@@ -11283,6 +12226,9 @@
     {
       "id": "person-daqiqi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Daqiqi",
       "summary": "Abu Mansur Daqiqi, the poet who began versifying the Iranian national epic; Ferdowsi took up the task after his death.",
       "sourceIds": [
@@ -11326,6 +12272,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "Abu’l-Qasem Ferdowsi of Tus, who began the Shahnameh about 977 after the death of Daqiqi, completed a first version by 994 and finished the poem on 8 March 1010; he died in 1020 or 1025.",
       "sourceIds": [
@@ -11378,6 +12327,9 @@
     {
       "id": "event-ferdowsi-begins-the-shahnameh",
       "type": "Event",
+      "kinds": [
+        "writing"
+      ],
       "label": "Ferdowsi begins the Shahnameh",
       "summary": "About 977, after the death of Daqiqi, Ferdowsi began writing the Shahnameh; a first version was complete by 994.",
       "sourceIds": [
@@ -11406,6 +12358,9 @@
     {
       "id": "event-completion-of-the-shahnameh",
       "type": "Event",
+      "kinds": [
+        "writing"
+      ],
       "label": "The completion of the Shahnameh",
       "summary": "In his seventy-first year, on 8 March 1010, Ferdowsi finished the Shahnameh.",
       "sourceIds": [
@@ -11433,6 +12388,10 @@
     {
       "id": "person-avicenna",
       "type": "Person",
+      "kinds": [
+        "philosopher",
+        "scientific"
+      ],
       "label": "Avicenna",
       "summary": "Physician and philosopher born near Bukhara in 980 and died at Hamadan in 1037, the most famous philosopher-scientist of the medieval Islamic world, author of the Book of the Cure and the Canon of Medicine.",
       "sourceIds": [
@@ -11478,6 +12437,10 @@
     {
       "id": "person-biruni",
       "type": "Person",
+      "kinds": [
+        "historian",
+        "scientific"
+      ],
       "label": "al-Biruni",
       "summary": "Astronomer, mathematician, historian and geographer born in Khwarezm in 973, who served Qabus and then for over three decades the Ghaznavids, completed his book on India in 1030 and died after 1050.",
       "sourceIds": [
@@ -11519,6 +12482,9 @@
     {
       "id": "event-biruni-completes-india",
       "type": "Event",
+      "kinds": [
+        "writing"
+      ],
       "label": "Biruni completes his India",
       "summary": "In 1030, just after the death of Mahmud, Biruni completed his great work on India, the Tahqiq ma li’l-Hind.",
       "sourceIds": [
@@ -11546,6 +12512,9 @@
     {
       "id": "person-peroz-iii",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Peroz, son of Yazdgard III",
       "summary": "Son of the last Sasanian king, who after his father’s death in 651 sought Chinese help from Tokharistan, was recognised by the Tang as governor of Persia at Zarang and took refuge at the Tang court between 670 and 673.",
       "sourceIds": [
@@ -11581,6 +12550,9 @@
     {
       "id": "event-sui-embassy-to-khusrau-ii",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "The Sui and Khusrau II exchange embassies",
       "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
       "sourceIds": [
@@ -11613,6 +12585,9 @@
     {
       "id": "event-yazdgard-iii-embassy-to-china",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Yazdgard III sends an embassy to China",
       "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
       "sourceIds": [
@@ -11640,6 +12615,9 @@
     {
       "id": "event-peroz-iii-at-the-tang-court",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Peroz, son of Yazdgard III, at the Tang court",
       "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
       "sourceIds": [
@@ -11672,6 +12650,9 @@
     {
       "id": "event-battle-of-talas",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of the Talas River",
       "summary": "In 751 the Arabs defeated the Tang armies on the Talas River, establishing Arab dominance in Transoxania.",
       "sourceIds": [
@@ -11696,6 +12677,9 @@
     {
       "id": "event-first-settlement-at-susa",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "People settle at Susa",
       "summary": "Excavations show people living on the acropolis of Susa in 5000 BCE and urban structures about 4000 BCE.",
       "sourceIds": [
@@ -11723,6 +12707,9 @@
     {
       "id": "place-shahr-i-sokhta",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Shahr-i Sokhta",
       "summary": "The “Burnt City” in Sistan, at the junction of Bronze Age trade routes across the Iranian plateau, founded around 3200 BCE and lived in during four periods until 1800 BCE; proto-Elamite tablets were found there.",
       "sourceIds": [
@@ -11752,6 +12739,9 @@
     {
       "id": "period-shahr-i-sokhta",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Burnt City inhabited",
       "summary": "Shahr-i Sokhta was founded around 3200 BCE and inhabited through four periods until 1800 BCE, one of the first complex societies of eastern Iran.",
       "sourceIds": [
@@ -11787,6 +12777,9 @@
     {
       "id": "period-proto-elamite",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Proto-Elamite period",
       "summary": "From about 3200 BCE numerical and then proto-Elamite tablets appear at Susa and across the plateau as far as Shahr-i Sokhta; the undeciphered script remained in use until about 2700 BCE.",
       "sourceIds": [
@@ -11823,6 +12816,9 @@
     {
       "id": "period-old-elamite",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Old Elamite period",
       "summary": "The age of the three dynasties of Awan, Šimaški and the Epartids (sukkalmahs), about 2400 to 1600 BCE.",
       "sourceIds": [
@@ -11859,6 +12855,9 @@
     {
       "id": "period-awan-dynasty",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Awan dynasty",
       "summary": "The first Old Elamite dynasty, about 2400 to 2100 BCE, partly contemporary with Sargon of Akkad; its last king Puzur-Inšušinak reigned in the time of Ur-Nammu.",
       "sourceIds": [
@@ -11896,6 +12895,9 @@
     {
       "id": "period-simashki-dynasty",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Šimaški dynasty",
       "summary": "The second Old Elamite dynasty, about 2100 to 1970 BCE, whose king Kindattu conquered Ur in 2004 BCE.",
       "sourceIds": [
@@ -11932,6 +12934,9 @@
     {
       "id": "period-epartid-dynasty",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Epartids (sukkalmahs)",
       "summary": "The third Old Elamite dynasty, about 1970 to 1600 BCE, named after its founder Eparti and called “of the sukkalmahs” after the title of its rulers; contemporary with the Old Babylonian period.",
       "sourceIds": [
@@ -11968,6 +12973,9 @@
     {
       "id": "period-neo-elamite",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Neo-Elamite period",
       "summary": "The last age of Elam, from 1100 to 539 BCE.",
       "sourceIds": [
@@ -12002,6 +13010,9 @@
     {
       "id": "office-king-of-awan",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Awan",
       "summary": "The kingship of Awan, the nominal seat of Elamite rulers in the late third millennium BCE, whose location is unknown.",
       "sourceIds": [
@@ -12013,6 +13024,9 @@
     {
       "id": "person-luhhishshan",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Luhhiššan",
       "summary": "The eighth ruler in the Awan king list from Susa, dated by independent texts to about 2300 BCE.",
       "sourceIds": [
@@ -12041,6 +13055,9 @@
     {
       "id": "person-puzur-inshushinak",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Puzur-Inšušinak",
       "summary": "The twelfth and last king of Awan, dated to about 2100 BCE and thought to have reigned in the time of Ur-Nammu.",
       "sourceIds": [
@@ -12070,6 +13087,9 @@
     {
       "id": "person-kindattu",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Kindattu",
       "summary": "Sixth king of Šimaški, who led the Elamites and the people of Susiana in conquering Ur in 2004 BCE.",
       "sourceIds": [
@@ -12098,6 +13118,9 @@
     {
       "id": "person-eparti",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Eparti",
       "summary": "Named as the ninth king of Šimaški, the founder of the Epartid or sukkalmah dynasty.",
       "sourceIds": [
@@ -12133,6 +13156,9 @@
     {
       "id": "person-shilhaha",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šilhaha",
       "summary": "The second Epartid ruler, after Eparti; later kings still called themselves “son of the sister of Šilhaha”.",
       "sourceIds": [
@@ -12161,6 +13187,9 @@
     {
       "id": "event-elamites-conquer-ur",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Elamites conquer Ur",
       "summary": "In 2004 BCE the Elamites, allied with the people of Susiana under Kindattu of Šimaški, conquered Ur, ended its empire and led its king Ibbi-Sin away as a prisoner.",
       "sourceIds": [
@@ -12188,6 +13217,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "Ferdowsi’s epic of the kings of Iran from the first king to the Arab conquest, begun about 977 after the death of Daqiqi, a first version complete by 994, finished on 8 March 1010.",
       "sourceIds": [
@@ -12228,6 +13260,9 @@
     {
       "id": "work-canon-of-medicine",
       "type": "Work",
+      "kinds": [
+        "treatise"
+      ],
       "label": "The Canon of Medicine",
       "summary": "Avicenna’s al-Qanun fi al-tibb, among the most famous books in the history of medicine.",
       "sourceIds": [
@@ -12251,6 +13286,9 @@
     {
       "id": "work-book-of-the-cure",
       "type": "Work",
+      "kinds": [
+        "treatise"
+      ],
       "label": "The Book of the Cure",
       "summary": "Avicenna’s Kitab al-shifaʾ, a vast philosophical and scientific encyclopaedia.",
       "sourceIds": [
@@ -12274,6 +13312,9 @@
     {
       "id": "work-athar-al-baqiya",
       "type": "Work",
+      "kinds": [
+        "treatise"
+      ],
       "label": "The Chronology of Ancient Nations",
       "summary": "Biruni’s first major work, al-Athar al-baqiya, on historical and scientific chronology, written at the court of Qabus probably about 1000 and emended later.",
       "sourceIds": [
@@ -12302,6 +13343,9 @@
     {
       "id": "work-india-of-biruni",
       "type": "Work",
+      "kinds": [
+        "treatise"
+      ],
       "label": "Biruni’s India",
       "summary": "Biruni’s great work on India, the Tahqiq ma li’l-Hind, completed in 1030 just after the death of Mahmud.",
       "sourceIds": [
@@ -12329,6 +13373,9 @@
     {
       "id": "work-rudaki-kalila-wa-dimna",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "Rudaki’s Kalila wa Dimna",
       "summary": "Rudaki’s translation into New Persian of Kalila wa Dimna, fables of Indian origin; it is lost, but later retellings owe much to it.",
       "sourceIds": [
@@ -12345,6 +13392,9 @@
     {
       "id": "dynasty-tahirid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Tahirids",
       "summary": "A family of the early Abbasid period whose members governed Khorasan for the caliphs from 821 to 873, from Tahir b. Husayn to Muhammad b. Tahir, deferential to the caliphs yet in practice autonomous.",
       "sourceIds": [
@@ -12384,6 +13434,9 @@
     {
       "id": "office-tahirid-governor",
       "type": "Office",
+      "kinds": [
+        "magistracy"
+      ],
       "label": "Tahirid governor of Khorasan",
       "summary": "The governorship of Khorasan and the eastern provinces held by the Tahirids for the Abbasid caliphs.",
       "sourceIds": [
@@ -12400,6 +13453,10 @@
     {
       "id": "person-tahir-ibn-husayn",
       "type": "Person",
+      "kinds": [
+        "statesman",
+        "general"
+      ],
       "label": "Tahir b. Husayn",
       "summary": "Called Dhu’l-Yaminayn, “the ambidextrous”, the general who rose to prominence in the civil war of al-Amin and al-Maʾmun; named governor of Khorasan in 821, he died suddenly in 822.",
       "sourceIds": [
@@ -12450,6 +13507,9 @@
     {
       "id": "person-talha-ibn-tahir",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Talha b. Tahir",
       "summary": "Son of Tahir, governor of Khorasan from 822 to 828.",
       "sourceIds": [
@@ -12474,6 +13534,9 @@
     {
       "id": "person-abdallah-ibn-tahir",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "ʿAbdallah b. Tahir",
       "summary": "Son of Tahir, governor of Khorasan from 828 to 844.",
       "sourceIds": [
@@ -12498,6 +13561,9 @@
     {
       "id": "person-tahir-ibn-abdallah",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Tahir b. ʿAbdallah",
       "summary": "Son of ʿAbdallah, governor of Khorasan from 844 to his death in 862.",
       "sourceIds": [
@@ -12527,6 +13593,9 @@
     {
       "id": "person-muhammad-ibn-tahir",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Muhammad b. Tahir",
       "summary": "Son of Tahir b. ʿAbdallah, the last Tahirid governor of Khorasan, from 862 until Yaʿqub the Saffarid came to Nishapur in 873.",
       "sourceIds": [
@@ -12551,6 +13620,9 @@
     {
       "id": "person-nasr-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nasr I",
       "summary": "Son of Ahmad b. Asad, Samanid amir from 864 to 892, who extended his power from Samarkand to Bukhara and was invested with Transoxania by the caliph in 875.",
       "sourceIds": [
@@ -12575,6 +13647,9 @@
     {
       "id": "person-ahmad-ii-samanid",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ahmad II",
       "summary": "Son of Ismaʿil, Samanid amir from 907 to 914.",
       "sourceIds": [
@@ -12604,6 +13679,9 @@
     {
       "id": "person-nuh-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nuh I",
       "summary": "Son of Nasr II, called the Praiseworthy Amir, Samanid amir from 943 to 954, under whom the dynasty began to weaken.",
       "sourceIds": [
@@ -12633,6 +13711,9 @@
     {
       "id": "person-abd-al-malik-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "ʿAbd al-Malik I",
       "summary": "Eldest son of Nuh I, called the Rightly-Guided Amir, Samanid amir from 954 to 961.",
       "sourceIds": [
@@ -12657,6 +13738,9 @@
     {
       "id": "person-nuh-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nuh II",
       "summary": "Son of Mansur I, called the Well-Pleasing Amir, Samanid amir from 976 to 997, at thirteen at first under his mother and the vizier ʿUtbi; the last Samanid with a reign of significant length.",
       "sourceIds": [
@@ -12687,6 +13771,9 @@
     {
       "id": "person-mansur-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mansur II",
       "summary": "Son of Nuh II, Samanid amir from 997 until Faʾiq and Begtuzun deposed him in 999.",
       "sourceIds": [
@@ -12711,6 +13798,9 @@
     {
       "id": "person-abd-al-malik-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "ʿAbd al-Malik II",
       "summary": "Younger brother of Mansur II, raised to the throne by Faʾiq and Begtuzun, the last Samanid amir, from 999 to 1000.",
       "sourceIds": [
@@ -12735,6 +13825,9 @@
     {
       "id": "person-bisotun",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bisotun",
       "summary": "Eldest son of Vushmgir, Ziyarid amir from 967 to 978, backed by the Buyids and married to a daughter of ʿAdud al-Dawla; the caliph gave him the title Zahir al-Dawla in 971.",
       "sourceIds": [
@@ -12768,6 +13861,9 @@
     {
       "id": "person-fakhr-al-dawla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "ʿAli Fakhr al-Dawla",
       "summary": "Buyid amir from 983 to 997, brother of ʿAdud al-Dawla and brother-in-law of Qabus, who gave him refuge when he quarrelled with his brother.",
       "sourceIds": [
@@ -12796,6 +13892,9 @@
     {
       "id": "person-muayyad-al-dawla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Muʾayyad al-Dawla",
       "summary": "Brother of ʿAdud al-Dawla, who took Gorgan from Qabus in 981; he died in 984.",
       "sourceIds": [

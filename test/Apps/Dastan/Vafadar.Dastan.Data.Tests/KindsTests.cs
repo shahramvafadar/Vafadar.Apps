@@ -59,17 +59,25 @@ public sealed class KindsTests : IDisposable
     private static string Problems(ContentReport report) => string.Join('\n', report.Problems);
 
     [Fact]
-    public void A_record_names_kinds_of_the_list_and_the_check_counts_the_records_without_one()
+    public void A_record_names_kinds_of_the_list_and_the_check_refuses_the_records_without_one()
     {
         Write("kinds.json", List);
         var file = Collection(("character-first", ["hero", "champion"]), ("work-small", ["poem"]));
 
         var report = ContentCheck.File(file);
-        var collection = PilotSample.Load(file);
+        var collection = PilotSample.Read(File.ReadAllText(file), new PilotSampleOptions
+        {
+            SampleDirectory = Path.Combine(_folder, "samples"),
+            ContentRoot = _folder,
+            ReviewRoot = _folder,
+            Kinds = KindsFile.Load(_folder),
+            RequireKinds = false,
+        });
         var hero = collection.Entities.Single(entity => entity.Id.Value == "character-first");
 
-        Assert.True(report.IsUsable, Problems(report));
-        Assert.Contains(("without a kind", "2 of 4"), report.Summary);
+        // The story and the place of the template name no kind: with the rule of K4 the collection cannot be used.
+        Assert.False(report.IsUsable);
+        Assert.Equal(2, report.Problems.Count(problem => problem.Contains("kinds names no kind", StringComparison.Ordinal)));
         Assert.Equal(["hero", "champion"], hero.Kinds.Select(kind => kind.Key));
         Assert.True(hero.Kinds[1].Retired);
     }
@@ -101,7 +109,7 @@ public sealed class KindsTests : IDisposable
     }
 
     [Fact]
-    public void The_rule_that_every_record_has_a_kind_is_off_until_the_library_is_classified_and_refuses_when_on()
+    public void The_rule_that_every_record_has_a_kind_is_on_since_the_library_is_classified_and_refuses()
     {
         Write("kinds.json", List);
         var file = Collection(("character-first", ["hero"]));
@@ -114,8 +122,8 @@ public sealed class KindsTests : IDisposable
             RequireKinds = true,
         };
 
-        Assert.False(KindsFile.EveryRecordHasAKind);
-        Assert.False(new PilotSampleOptions { SampleDirectory = _folder, ContentRoot = _folder, ReviewRoot = _folder }.RequireKinds);
+        Assert.True(KindsFile.EveryRecordHasAKind);
+        Assert.True(new PilotSampleOptions { SampleDirectory = _folder, ContentRoot = _folder, ReviewRoot = _folder }.RequireKinds);
         var refused = Assert.Throws<SampleFormatException>(() => PilotSample.Read(File.ReadAllText(file), options));
         Assert.Equal(3, refused.Problems.Count(problem => problem.Contains("kinds names no kind", StringComparison.Ordinal)));
     }
@@ -175,13 +183,19 @@ public sealed class KindsTests : IDisposable
     {
         Write("kinds.json", List);
         var comparison = JsonNode.Parse(ContentTemplates.Comparison("two-lands", Today))!.AsObject();
-        comparison["lanes"]![0]!["periods"]![0]!["kinds"] = new JsonArray("war");
+        var without = ContentCheck.File(Write("comparisons/two-lands.json", comparison.ToJsonString()));
+        foreach (var item in comparison["lanes"]!.AsArray().SelectMany(lane => (lane!["periods"]?.AsArray() ?? []).Concat(lane!["events"]?.AsArray() ?? [])))
+        {
+            item!["kinds"] = new JsonArray("war");
+        }
+
         var good = ContentCheck.File(Write("comparisons/two-lands.json", comparison.ToJsonString()));
         comparison["lanes"]![0]!["periods"]![0]!["kinds"] = new JsonArray("battle");
         var refused = ContentCheck.File(Write("comparisons/two-lands.json", comparison.ToJsonString()));
 
+        Assert.Equal(3, without.Problems.Count(problem => problem.Contains("names no kind", StringComparison.Ordinal)));
         Assert.True(good.IsUsable, Problems(good));
-        Assert.Contains(good.Summary, entry => entry.Name == "without a kind" && entry.Value == "2 of 3");
+        Assert.Contains(good.Summary, entry => entry.Name == "without a kind" && entry.Value == "0 of 3");
         Assert.Contains(refused.Problems, problem => problem.Contains("the kind battle is not given to a period", StringComparison.Ordinal));
     }
 

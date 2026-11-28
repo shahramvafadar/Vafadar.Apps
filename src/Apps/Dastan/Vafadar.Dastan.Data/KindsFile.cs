@@ -22,11 +22,11 @@ public static partial class KindsFile
     public const string FileName = "kinds.json";
 
     /// <summary>
-    /// Whether every entity of a collection has to name a kind (K4 of the plan of kinds). It is off while the
-    /// library is being classified: the check only counts the entities without one. Turned on, a collection
-    /// with an entity without a kind cannot be used – the one line to change when the library is classified.
+    /// Whether every entity of a collection, and every period and event of a comparison, has to name a kind (K4 of
+    /// the plan of kinds). It was off while the library was being classified and is on since the whole library
+    /// was classified on 2026-11-28: a collection with an entity without a kind cannot be used.
     /// </summary>
-    public const bool EveryRecordHasAKind = false;
+    public const bool EveryRecordHasAKind = true;
 
     // The language the list is written in; a translation gives another.
     private const string SourceLanguage = "en";

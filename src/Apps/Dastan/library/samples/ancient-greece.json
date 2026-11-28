@@ -27,6 +27,9 @@
     {
       "id": "subject-ancient-greece",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Greece",
       "summary": "Ancient Greece from archaic Athens and Sparta through the Persian wars, the Athenian empire and the Peloponnesian War to the rise of Macedonia, Alexander and the Antigonid kings, until Rome defeated Macedonia at Pydna in 168 BCE and sacked Corinth in 146.",
       "sourceIds": [
@@ -40,6 +43,9 @@
     {
       "id": "office-king-of-macedonia",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Macedonia",
       "summary": "The kingship of Macedonia, held by Philip II and Alexander and later by the Antigonids.",
       "sourceIds": [
@@ -57,6 +63,9 @@
     {
       "id": "office-king-of-sparta",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Sparta",
       "summary": "One of the two kingships of Sparta, each held by its own house, among them the Agiads.",
       "sourceIds": [
@@ -73,6 +82,9 @@
     {
       "id": "dynasty-antigonid",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Antigonids",
       "summary": "The Macedonian dynasty of Antigonus the One-Eyed, which ruled Macedonia from 294 to 168 BCE, when Perseus was defeated by the Romans at Pydna.",
       "sourceIds": [
@@ -107,6 +119,9 @@
     {
       "id": "dynasty-agiad",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Agiads",
       "summary": "One of the two royal houses of Sparta, to which Anaxandridas, Cleomenes and Leonidas belonged.",
       "sourceIds": [
@@ -118,6 +133,9 @@
     {
       "id": "period-persian-wars",
       "type": "Period",
+      "kinds": [
+        "war"
+      ],
       "label": "The Persian wars",
       "summary": "From the Athenian part in the Ionian Revolt in 499 BCE through Marathon in 490 and Xerxes’ invasion of 480–479 to the founding of the Delian League in 478.",
       "sourceIds": [
@@ -152,6 +170,9 @@
     {
       "id": "period-peloponnesian-war",
       "type": "Period",
+      "kinds": [
+        "war"
+      ],
       "label": "The Peloponnesian War",
       "summary": "The war of Athens and Sparta from 431 BCE, with an interruption, until Athens surrendered in April 404 and gave up its empire.",
       "sourceIds": [
@@ -186,6 +207,9 @@
     {
       "id": "period-macedonian-hegemony",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "Macedonian Greece",
       "summary": "From Philip II’s victory at Chaeronea in 338 BCE, the end of Greek independence, through Alexander and the Antigonid kings to the Roman victory at Pydna in 168.",
       "sourceIds": [
@@ -221,6 +245,10 @@
     {
       "id": "person-solon",
       "type": "Person",
+      "kinds": [
+        "poet",
+        "statesman"
+      ],
       "label": "Solon",
       "summary": "Athenian statesman, poet and lawgiver, one of the Seven Sages, born about 650 BCE; appointed lawgiver in 594/593, he died in 561.",
       "sourceIds": [
@@ -256,6 +284,9 @@
     {
       "id": "person-pisistratus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pisistratus",
       "summary": "Tyrant of Athens from about 545 to 528/527 BCE, whose sons Hipparchus and Hippias followed him.",
       "sourceIds": [
@@ -280,6 +311,9 @@
     {
       "id": "person-hippias",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hippias",
       "summary": "Son of Pisistratus, tyrant of Athens, expelled in 510 BCE; the Persians tried to bring him back in 490.",
       "sourceIds": [
@@ -304,6 +338,9 @@
     {
       "id": "person-miltiades",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Miltiades",
       "summary": "The Athenian commander who led the Athenians to victory over the Persians at Marathon in 490 BCE.",
       "sourceIds": [
@@ -328,6 +365,10 @@
     {
       "id": "person-themistocles",
       "type": "Person",
+      "kinds": [
+        "general",
+        "statesman"
+      ],
       "label": "Themistocles",
       "summary": "Athenian commander and statesman, about 525 to 459 BCE, who had the Laurion silver spent on warships and lured the Persian fleet into the straits of Salamis.",
       "sourceIds": [
@@ -364,6 +405,9 @@
     {
       "id": "person-leonidas",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leonidas",
       "summary": "King of Sparta of the Agiad house from 488 to 480 BCE, third son of Anaxandridas, killed in the battle of Thermopylae.",
       "sourceIds": [
@@ -393,6 +437,9 @@
     {
       "id": "person-anaxandridas",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Anaxandridas",
       "summary": "King of Sparta of the Agiad house from about 540 to 520 BCE, father of Cleomenes, Dorieus and Leonidas.",
       "sourceIds": [
@@ -417,6 +464,9 @@
     {
       "id": "person-pericles",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Pericles",
       "summary": "Athenian politician, about 495 to 429 BCE, leader of the radical democrats and from 451 the leading man of Athens, whose strategy opened the Peloponnesian War; he died of the plague in 429.",
       "sourceIds": [
@@ -452,6 +502,9 @@
     {
       "id": "person-socrates",
       "type": "Person",
+      "kinds": [
+        "philosopher"
+      ],
       "label": "Socrates",
       "summary": "Athenian sculptor and philosopher, 469 to 399 BCE, teacher of Plato, Xenophon and Antisthenes.",
       "sourceIds": [
@@ -486,6 +539,9 @@
     {
       "id": "person-herodotus",
       "type": "Person",
+      "kinds": [
+        "historian"
+      ],
       "label": "Herodotus",
       "summary": "The Greek researcher of Halicarnassus, about 480 to 429 BCE, often called the first historian, who described the Persian empire and Xerxes’ expedition to Greece.",
       "sourceIds": [
@@ -522,6 +578,9 @@
     {
       "id": "work-histories-of-herodotus",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The Histories of Herodotus",
       "summary": "Herodotus’ account of the growth of the Achaemenid empire under Cyrus, Cambyses and Darius, culminating in Xerxes’ expedition to Greece in 480 BCE.",
       "sourceIds": [
@@ -538,6 +597,9 @@
     {
       "id": "person-philip-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Philip II of Macedon",
       "summary": "King of Macedonia from 360 to 336 BCE, born in 382, who modernized his kingdom, defeated Athens and Thebes at Chaeronea in 338 and was murdered before he could invade Persia; father of Alexander.",
       "sourceIds": [
@@ -567,6 +629,9 @@
     {
       "id": "person-alexander-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alexander III of Macedon",
       "summary": "King of Macedonia from 336 to 323 BCE, born in 356, who defeated Darius III, conquered the Achaemenid empire as far as the Indus and made Babylon his capital.",
       "sourceIds": [
@@ -603,6 +668,10 @@
     {
       "id": "person-antigonus-i",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Antigonus I Monophthalmus",
       "summary": "The “one-eyed” general of Alexander, recognized as supreme commander of the Macedonian forces in Asia in 320 BCE, who reigned as king from 306 and was killed at Ipsus in 301.",
       "sourceIds": [
@@ -627,6 +696,9 @@
     {
       "id": "person-demetrius-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Demetrius I Poliorcetes",
       "summary": "Son of Antigonus, king from 306 to 287 BCE, who kept the Antigonid holdings in Greece after Ipsus and became king in Macedonia from 294.",
       "sourceIds": [
@@ -651,6 +723,9 @@
     {
       "id": "person-antigonus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antigonus II Gonatas",
       "summary": "Antigonid king of Macedonia from 276 to 239 BCE.",
       "sourceIds": [
@@ -675,6 +750,9 @@
     {
       "id": "person-demetrius-ii-of-macedon",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Demetrius II",
       "summary": "Antigonid king of Macedonia from 239 to 229 BCE.",
       "sourceIds": [
@@ -699,6 +777,9 @@
     {
       "id": "person-antigonus-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antigonus III Doson",
       "summary": "Antigonid king of Macedonia from 229 to 221 BCE.",
       "sourceIds": [
@@ -723,6 +804,9 @@
     {
       "id": "person-philip-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Philip V",
       "summary": "Antigonid king of Macedonia from 221 to 179 BCE.",
       "sourceIds": [
@@ -747,6 +831,9 @@
     {
       "id": "person-perseus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Perseus",
       "summary": "The last Antigonid king of Macedonia, from 179 to 168 BCE, decisively defeated by the Romans at Pydna.",
       "sourceIds": [
@@ -771,6 +858,9 @@
     {
       "id": "person-xerxes-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xerxes I",
       "summary": "The Persian king who invaded Greece in 480 BCE, sacked Athens and lost his fleet at Salamis.",
       "sourceIds": [
@@ -795,6 +885,9 @@
     {
       "id": "person-darius-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius III",
       "summary": "The Persian king defeated by Alexander at Issus and Gaugamela.",
       "sourceIds": [
@@ -826,6 +919,9 @@
     {
       "id": "person-mardonius",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Mardonius",
       "summary": "The Persian commander in Europe who took Athens again in 479 BCE and was defeated at Plataea.",
       "sourceIds": [
@@ -850,6 +946,9 @@
     {
       "id": "place-athens",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Athens",
       "summary": "The city of Solon, Pisistratus and Pericles, sacked by Xerxes in 480 BCE, head of the Delian League and its empire, defeated by Sparta in 404 and by Philip II at Chaeronea in 338.",
       "sourceIds": [
@@ -879,6 +978,9 @@
     {
       "id": "place-sparta",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Sparta",
       "summary": "The city of the Peloponnese which fought the Persians at Thermopylae and Plataea, destroyed the Delian League in 404 BCE and lost its hegemony at Leuctra in 371.",
       "sourceIds": [
@@ -901,6 +1003,10 @@
     {
       "id": "place-marathon",
       "type": "Place",
+      "kinds": [
+        "landscape",
+        "battlefield"
+      ],
       "label": "Marathon",
       "summary": "The plain in Attica where some 10,000 Athenians defeated a Persian force in 490 BCE.",
       "sourceIds": [
@@ -923,6 +1029,9 @@
     {
       "id": "place-corinth",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Corinth",
       "summary": "The city of the Isthmus where Philip II organized the Greek states in the Corinthian League in 338 BCE; the Romans sacked it in 146.",
       "sourceIds": [
@@ -952,6 +1061,10 @@
     {
       "id": "place-chaeronea",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Chaeronea",
       "summary": "The town of Boeotia where Philip II defeated Athens and Thebes in 338 BCE.",
       "sourceIds": [
@@ -974,6 +1087,9 @@
     {
       "id": "place-pydna",
       "type": "Place",
+      "kinds": [
+        "battlefield"
+      ],
       "label": "Pydna",
       "summary": "The place in Macedonia where the Romans defeated Perseus on 22 June 168 BCE.",
       "sourceIds": [
@@ -996,6 +1112,10 @@
     {
       "id": "place-thermopylae",
       "type": "Place",
+      "kinds": [
+        "mountain",
+        "battlefield"
+      ],
       "label": "Thermopylae",
       "summary": "The narrow pass, the “Hot Gates”, where the Spartans were defeated by the Persians in 480 BCE.",
       "sourceIds": [
@@ -1018,6 +1138,10 @@
     {
       "id": "place-plataea",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Plataea",
       "summary": "The town of Boeotia where the Greeks defeated the Persian army in 479 BCE.",
       "sourceIds": [
@@ -1040,6 +1164,10 @@
     {
       "id": "place-gaugamela",
       "type": "Place",
+      "kinds": [
+        "landscape",
+        "battlefield"
+      ],
       "label": "Gaugamela",
       "summary": "The plain in northern Iraq where Alexander defeated Darius III on 1 October 331 BCE.",
       "sourceIds": [
@@ -1062,6 +1190,9 @@
     {
       "id": "place-delphi",
       "type": "Place",
+      "kinds": [
+        "sanctuary"
+      ],
       "label": "Delphi",
       "summary": "The sanctuary of Apollo, where the Greek victory monument of the Persian wars stood.",
       "sourceIds": [
@@ -1084,6 +1215,9 @@
     {
       "id": "place-olympia",
       "type": "Place",
+      "kinds": [
+        "sanctuary"
+      ],
       "label": "Olympia",
       "summary": "The sanctuary of Zeus in Elis, seat of the Olympic games.",
       "sourceIds": [
@@ -1106,6 +1240,9 @@
     {
       "id": "event-solon-lawgiver",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "Solon becomes lawgiver",
       "summary": "In 594/593 BCE, amid conflicts between the aristocrats and the new rich, the Athenians appointed Solon as lawgiver instead of a tyrant.",
       "sourceIds": [
@@ -1142,6 +1279,9 @@
     {
       "id": "event-expulsion-of-hippias",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The expulsion of Hippias",
       "summary": "In 510 BCE the Athenians expelled the tyrant Hippias, son of Pisistratus.",
       "sourceIds": [
@@ -1173,6 +1313,9 @@
     {
       "id": "event-battle-of-marathon",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Marathon",
       "summary": "In 490 BCE some 10,000 Athenians under Miltiades defeated a Persian force that had come to bring back Hippias.",
       "sourceIds": [
@@ -1205,6 +1348,9 @@
     {
       "id": "event-thermopylae",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Thermopylae",
       "summary": "In the summer of 480 BCE Xerxes attacked the Greeks at the pass of Thermopylae, where Leonidas and his Spartans were defeated and killed.",
       "sourceIds": [
@@ -1241,6 +1387,9 @@
     {
       "id": "event-salamis",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Salamis",
       "summary": "On 29 September 480 BCE the Greek allies, drawn up by Themistocles, defeated the Persian navy in the straits of Salamis, after Xerxes had captured Athens.",
       "sourceIds": [
@@ -1272,6 +1421,9 @@
     {
       "id": "event-plataea",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Plataea",
       "summary": "In 479 BCE the Spartans and Athenians defeated the Persian army of Mardonius at Plataea, the decisive battle of the Persian war.",
       "sourceIds": [
@@ -1304,6 +1456,9 @@
     {
       "id": "event-founding-of-delian-league",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The Delian League founded",
       "summary": "In 478 BCE Athens created the Delian League, an alliance against Persia that slowly became an Athenian empire.",
       "sourceIds": [
@@ -1331,6 +1486,9 @@
     {
       "id": "event-surrender-of-athens-404",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "Athens surrenders",
       "summary": "In April 404 BCE Athens surrendered to Sparta, gave up its empire and accepted the rule of thirty oligarchs; the Long Walls were torn down.",
       "sourceIds": [
@@ -1358,6 +1516,9 @@
     {
       "id": "event-death-of-socrates",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The death of Socrates",
       "summary": "The philosopher Socrates died at Athens in 399 BCE.",
       "sourceIds": [
@@ -1389,6 +1550,9 @@
     {
       "id": "event-battle-of-chaeronea",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Chaeronea",
       "summary": "In 338 BCE Philip II of Macedonia defeated Athens and Thebes at Chaeronea, which meant essentially the end of Greek independence.",
       "sourceIds": [
@@ -1420,6 +1584,9 @@
     {
       "id": "event-issus",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Issus",
       "summary": "In November 333 BCE Alexander met Darius III at Issus on a narrow strip of land and defeated the Persians for the second time.",
       "sourceIds": [
@@ -1451,6 +1618,9 @@
     {
       "id": "event-gaugamela",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Gaugamela",
       "summary": "On 1 October 331 BCE Alexander defeated Darius III at Gaugamela in northern Iraq, the decisive battle of his war with the Achaemenid empire.",
       "sourceIds": [
@@ -1486,6 +1656,9 @@
     {
       "id": "event-battle-of-ipsus",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Ipsus",
       "summary": "In 301 BCE Antigonus the One-Eyed was defeated by the other successors of Alexander at Ipsus and killed.",
       "sourceIds": [
@@ -1513,6 +1686,9 @@
     {
       "id": "event-battle-of-pydna",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Pydna",
       "summary": "On 22 June 168 BCE the Romans won their decisive victory of the Third Macedonian War over Perseus at Pydna; Macedonia was divided into four republics.",
       "sourceIds": [
@@ -1545,6 +1721,9 @@
     {
       "id": "event-sack-of-corinth",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Romans sack Corinth",
       "summary": "In 146 BCE the Romans sacked Corinth, which was left essentially abandoned; Greece became part of the Roman province of Achaea.",
       "sourceIds": [

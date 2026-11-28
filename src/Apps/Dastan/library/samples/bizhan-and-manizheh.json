@@ -218,6 +218,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the story of Bizhan and Manizheh is told.",
       "sourceIds": [
@@ -262,6 +265,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -308,6 +314,10 @@
     {
       "id": "story-bizhan-manizheh",
       "type": "NarrativeArc",
+      "kinds": [
+        "loveStory",
+        "heroicTale"
+      ],
       "label": "Bizhan and Manizheh",
       "summary": "The story of Bizhan, son of Giv, who is lured to the garden of Afrasiab’s daughter Manizheh, cast into a pit by Afrasiab, and freed by Rostam disguised as a merchant.",
       "sourceIds": [
@@ -324,6 +334,9 @@
     {
       "id": "character-kay-khosrow",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Khosrow",
       "summary": "The king of Iran, who sends Bizhan against the boars, sees him in the pit in his world-revealing cup and sends for Rostam.",
       "sourceIds": [
@@ -341,6 +354,9 @@
     {
       "id": "character-bizhan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Bizhan",
       "summary": "The young champion, son of Giv, who alone takes up the fight against the boars of the Armanians.",
       "sourceIds": [
@@ -357,6 +373,9 @@
     {
       "id": "character-gorgin",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gorgin",
       "summary": "Gorgin son of Milad, sent with Bizhan as his guide, who out of envy leads him to Manizheh’s garden and returns without him.",
       "sourceIds": [
@@ -374,6 +393,9 @@
     {
       "id": "character-manizheh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Manizheh",
       "summary": "The daughter of Afrasiab, who brings Bizhan to her palace, and when he is cast into the pit, begs bread for him and brings Rostam to him.",
       "sourceIds": [
@@ -392,6 +414,9 @@
     {
       "id": "character-afrasiab",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Afrasiab",
       "summary": "The king of Turan, who would hang Bizhan, casts him into the pit instead, and flees when Rostam attacks his palace.",
       "sourceIds": [
@@ -410,6 +435,9 @@
     {
       "id": "character-garsivaz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Garsivaz",
       "summary": "The brother of Afrasiab, who seizes and binds Bizhan.",
       "sourceIds": [
@@ -427,6 +455,9 @@
     {
       "id": "character-piran",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Piran",
       "summary": "The commander of Afrasiab, who pleads for Bizhan’s life; later he meets Rostam in Khotan without knowing him.",
       "sourceIds": [
@@ -444,6 +475,9 @@
     {
       "id": "character-giv",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Giv",
       "summary": "The father of Bizhan, who mourns his son and has Gorgin put in chains.",
       "sourceIds": [
@@ -461,6 +495,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "The champion of Zabulistan, who goes to Turan disguised as a merchant, lifts the stone from the pit and frees Bizhan.",
       "sourceIds": [
@@ -479,6 +516,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The kingdom of Kay Khosrow.",
       "sourceIds": [
@@ -489,6 +530,10 @@
     {
       "id": "place-turan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Turan",
       "summary": "The kingdom of Afrasiab.",
       "sourceIds": [
@@ -499,6 +544,9 @@
     {
       "id": "place-arman",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Arman",
       "summary": "The land of the Armanians on the border of Turan and Iran, whose forest is overrun by boars.",
       "sourceIds": [
@@ -509,6 +557,9 @@
     {
       "id": "place-khotan",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Khotan",
       "summary": "The city of Turan where Rostam comes as a merchant.",
       "sourceIds": [
@@ -519,6 +570,9 @@
     {
       "id": "object-bizhan-pit",
       "type": "NarrativeObject",
+      "kinds": [
+        "prison"
+      ],
       "label": "The pit of Bizhan",
       "summary": "The dark pit into which Bizhan is cast in chains, covered with the stone of Akvan the demon.",
       "sourceIds": [
@@ -537,6 +591,9 @@
     {
       "id": "object-cup-of-khosrow",
       "type": "NarrativeObject",
+      "kinds": [
+        "wonder"
+      ],
       "label": "The world-revealing cup",
       "summary": "Kay Khosrow’s cup in which he sees the whole world, and Bizhan in the pit.",
       "sourceIds": [
@@ -547,6 +604,9 @@
     {
       "id": "object-rostam-ring",
       "type": "NarrativeObject",
+      "kinds": [
+        "keepsake"
+      ],
       "label": "Rostam’s ring",
       "summary": "The ring Rostam hides in the food Manizheh takes to the pit, so that Bizhan knows he has come.",
       "sourceIds": [

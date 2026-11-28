@@ -1765,6 +1765,9 @@
     {
       "id": "subject-ancient-rome",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Rome",
       "summary": "Italy before Rome - the Villanovans, the Etruscans, the Greek colonies and Alba Longa of tradition - and the city of Rome and the state it ruled, from its traditional founding in 753 BCE through the kings, the Republic and the emperors to the end of the empire in the west in 476, and the empire in the east, from Constantinople, to the death of Basil II in 1025.",
       "sourceIds": [
@@ -1780,6 +1783,9 @@
     {
       "id": "place-rome",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Rome",
       "summary": "The city on the Tiber, founded according to tradition on 21 April 753 BCE, later the capital of the Roman Empire.",
       "sourceIds": [
@@ -1810,6 +1816,9 @@
     {
       "id": "place-ostia",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Ostia",
       "summary": "The port of Rome at the mouth of the Tiber, traditionally built by king Ancus Marcius.",
       "sourceIds": [
@@ -1832,6 +1841,9 @@
     {
       "id": "place-pompeii",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Pompeii",
       "summary": "A town that became a Roman colony in 80 BCE and was buried by Vesuvius in 79 CE.",
       "sourceIds": [
@@ -1854,6 +1866,9 @@
     {
       "id": "place-cannae",
       "type": "Place",
+      "kinds": [
+        "battlefield"
+      ],
       "label": "Cannae",
       "summary": "A place on the Italian east coast where Hannibal destroyed a Roman army in 216 BCE.",
       "sourceIds": [
@@ -1876,6 +1891,9 @@
     {
       "id": "place-antium",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Antium",
       "summary": "A town near Rome, the birthplace of Caligula and of Nero.",
       "sourceIds": [
@@ -1899,6 +1917,9 @@
     {
       "id": "place-narnia",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Narnia",
       "summary": "A town in Italy, the birthplace of Nerva.",
       "sourceIds": [
@@ -1921,6 +1942,9 @@
     {
       "id": "place-falacrinae",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Falacrinae",
       "summary": "A village near Reate, the birthplace of Vespasian.",
       "sourceIds": [
@@ -1943,6 +1967,9 @@
     {
       "id": "place-carthage",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Carthage",
       "summary": "The Phoenician city in Africa, Rome’s great rival, sacked by Rome in 146 BCE and later refounded; ancient authors date its founding to 814/813 or 825 BCE.",
       "sourceIds": [
@@ -1959,6 +1986,9 @@
     {
       "id": "place-zama",
       "type": "Place",
+      "kinds": [
+        "battlefield"
+      ],
       "label": "Zama",
       "summary": "A place in Africa where Scipio defeated Hannibal in 202 BCE.",
       "sourceIds": [
@@ -1975,6 +2005,9 @@
     {
       "id": "place-alexandria",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Alexandria",
       "summary": "The city founded by Alexander the Great in 330 BCE, capital of the Ptolemaic kingdom, captured by Octavian in 30 BCE.",
       "sourceIds": [
@@ -1991,6 +2024,10 @@
     {
       "id": "place-actium",
       "type": "Place",
+      "kinds": [
+        "landscape",
+        "battlefield"
+      ],
       "label": "Actium",
       "summary": "A promontory at the entrance of the Gulf of Ambracia, off which Octavian defeated Antony and Cleopatra in 31 BCE.",
       "sourceIds": [
@@ -2007,6 +2044,10 @@
     {
       "id": "place-philippi",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Philippi",
       "summary": "A town in Macedonia, renamed by Philip II in 356 BCE, where Antony and Octavian defeated Brutus and Cassius in October 42 BCE.",
       "sourceIds": [
@@ -2023,6 +2064,10 @@
     {
       "id": "place-pharsalus",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Pharsalus",
       "summary": "A town in Thessaly near which Caesar defeated Pompey in 48 BCE.",
       "sourceIds": [
@@ -2039,6 +2084,10 @@
     {
       "id": "place-carrhae",
       "type": "Place",
+      "kinds": [
+        "city",
+        "battlefield"
+      ],
       "label": "Carrhae",
       "summary": "Harran in Mesopotamia, where the Parthians defeated Crassus in 53 BCE.",
       "sourceIds": [
@@ -2062,6 +2111,9 @@
     {
       "id": "place-jerusalem",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Jerusalem",
       "summary": "The capital of Judaea and the sacred city of Judaism, taken by Titus in 70 CE.",
       "sourceIds": [
@@ -2078,6 +2130,9 @@
     {
       "id": "place-antioch",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Antioch",
       "summary": "A city in Syria where Germanicus died in 19 CE.",
       "sourceIds": [
@@ -2094,6 +2149,9 @@
     {
       "id": "place-lugdunum",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Lugdunum",
       "summary": "Modern Lyon, the birthplace of Claudius.",
       "sourceIds": [
@@ -2117,6 +2175,9 @@
     {
       "id": "government-roman-monarchy",
       "type": "Government",
+      "kinds": [
+        "state"
+      ],
       "label": "The Roman monarchy",
       "summary": "Rome under seven kings, according to tradition for 243 years from the founding to the expulsion of Tarquin the Proud; the kings and their years rest on later tradition.",
       "sourceIds": [
@@ -2156,6 +2217,9 @@
     {
       "id": "government-roman-republic",
       "type": "Government",
+      "kinds": [
+        "state"
+      ],
       "label": "The Roman Republic",
       "summary": "The Republic founded after the expulsion of the last king – traditionally in 509 BCE; one Livius page gives 510, and Livius itself argues for about 507–505 – and governed by annual magistrates and the Senate until Augustus.",
       "sourceIds": [
@@ -2201,6 +2265,9 @@
     {
       "id": "government-roman-empire",
       "type": "Government",
+      "kinds": [
+        "state"
+      ],
       "label": "The Roman Empire",
       "summary": "The rule of the emperors, which began when Octavian accepted the title Augustus in January 27 BCE; Rome was its capital.",
       "sourceIds": [
@@ -2230,6 +2297,9 @@
     {
       "id": "organisation-roman-senate",
       "type": "Organisation",
+      "kinds": [
+        "council"
+      ],
       "label": "The Senate",
       "summary": "The supreme deliberative body of Rome, named after senex, “old man”; according to tradition Romulus chose its first hundred members, and later it consisted of former magistrates and those chosen by the censors.",
       "sourceIds": [
@@ -2253,6 +2323,9 @@
     {
       "id": "office-king-of-rome",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Rome",
       "summary": "The kingship of early Rome, held according to tradition by seven kings.",
       "sourceIds": [
@@ -2269,6 +2342,9 @@
     {
       "id": "office-consul",
       "type": "Office",
+      "kinds": [
+        "magistracy"
+      ],
       "label": "Consul",
       "summary": "One of the two annually elected chief magistrates of the Republic, with command of the army and the highest judicial power; they chaired the Senate. The office was opened to plebeians in the 360s BCE.",
       "sourceIds": [
@@ -2285,6 +2361,9 @@
     {
       "id": "office-dictator",
       "type": "Office",
+      "kinds": [
+        "magistracy"
+      ],
       "label": "Dictator",
       "summary": "An emergency magistrate with extraordinary powers for at most six months, appointed by a consul; first appointed in the first decade of the fifth century BCE and last in the ordinary way in 202 BCE, later revived by Sulla and Caesar.",
       "sourceIds": [
@@ -2301,6 +2380,9 @@
     {
       "id": "office-tribune-of-the-plebs",
       "type": "Office",
+      "kinds": [
+        "magistracy"
+      ],
       "label": "Tribune of the plebs",
       "summary": "The defender of the plebeians, with a veto over consuls, praetors and quaestors; first two, later ten. Livius dates the office to about 490 BCE (494 in the traditional chronology).",
       "sourceIds": [
@@ -2317,6 +2399,9 @@
     {
       "id": "office-censor",
       "type": "Office",
+      "kinds": [
+        "magistracy"
+      ],
       "label": "Censor",
       "summary": "A magistrate created about 440 BCE who held the census every five years, oversaw public morals and let state contracts.",
       "sourceIds": [
@@ -2333,6 +2418,9 @@
     {
       "id": "office-praetor",
       "type": "Office",
+      "kinds": [
+        "magistracy"
+      ],
       "label": "Praetor",
       "summary": "A magistrate for the administration of justice, created in 367 or 366 BCE; a second praetor was added in 242 BCE.",
       "sourceIds": [
@@ -2350,6 +2438,9 @@
     {
       "id": "office-princeps",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor (princeps)",
       "summary": "The position of the Roman emperor: Augustus called himself princeps, “first senator”; he held the governorships of all provinces with armies, and his combination of offices made him essentially a king.",
       "sourceIds": [
@@ -2367,6 +2458,9 @@
     {
       "id": "period-monarchy",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The age of the kings (tradition)",
       "summary": "From the traditional founding of Rome to the traditional end of the monarchy.",
       "sourceIds": [
@@ -2402,6 +2496,9 @@
     {
       "id": "period-republic",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Republic",
       "summary": "From the end of the monarchy to the settlement of Augustus in 27 BCE; the beginning is dated 509, 510 or about 507–505 BCE.",
       "sourceIds": [
@@ -2443,6 +2540,9 @@
     {
       "id": "period-julio-claudian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Julio-Claudians",
       "summary": "The rule of the house of Augustus, from his sole rule in 31 BCE to the death of Nero in 68 CE.",
       "sourceIds": [
@@ -2477,6 +2577,9 @@
     {
       "id": "period-year-of-four-emperors",
       "type": "Period",
+      "kinds": [
+        "war"
+      ],
       "label": "The year of the four emperors",
       "summary": "The civil war after Nero’s death, when Galba, Otho, Vitellius and Vespasian were emperors in turn.",
       "sourceIds": [
@@ -2512,6 +2615,9 @@
     {
       "id": "period-flavian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Flavians",
       "summary": "The rule of Vespasian and his sons Titus and Domitian.",
       "sourceIds": [
@@ -2547,6 +2653,9 @@
     {
       "id": "period-nerva-trajan",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "Nerva and Trajan",
       "summary": "From the accession of Nerva in 96 CE to the death of Trajan in 117 CE.",
       "sourceIds": [
@@ -2582,6 +2691,9 @@
     {
       "id": "dynasty-julio-claudian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Julio-Claudians",
       "summary": "The first imperial house, named after the Julian family of Augustus and the Claudian family of Tiberius; it ruled from 31 BCE to 68 CE.",
       "sourceIds": [
@@ -2624,6 +2736,9 @@
     {
       "id": "dynasty-flavian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Flavians",
       "summary": "The house of Vespasian, emperor from 69 CE, and his sons Titus and Domitian; it ended with the murder of Domitian in 96 CE.",
       "sourceIds": [
@@ -2667,6 +2782,9 @@
     {
       "id": "person-romulus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Romulus",
       "summary": "The legendary founder and first king of Rome, said to be a son of Rhea Silvia and the god Mars; there are no indications that he existed. Tradition gives him 37 years of rule.",
       "sourceIds": [
@@ -2696,6 +2814,9 @@
     {
       "id": "person-numa-pompilius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Numa Pompilius",
       "summary": "A Sabine, the second king of Rome according to tradition, who gave the Romans laws, customs and religious rites; tradition gives him 43 years.",
       "sourceIds": [
@@ -2725,6 +2846,9 @@
     {
       "id": "person-tullus-hostilius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tullus Hostilius",
       "summary": "The third king of Rome according to tradition, who conquered the Albans; tradition gives him 32 years.",
       "sourceIds": [
@@ -2753,6 +2877,9 @@
     {
       "id": "person-ancus-marcius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ancus Marcius",
       "summary": "The fourth king of Rome according to tradition, a grandson of Numa through a daughter, who founded Ostia; tradition gives him 24 years.",
       "sourceIds": [
@@ -2782,6 +2909,9 @@
     {
       "id": "person-tarquinius-priscus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tarquinius Priscus",
       "summary": "An Etruscan who became the fifth king of Rome according to tradition and began the Capitol; tradition gives him 38 years.",
       "sourceIds": [
@@ -2811,6 +2941,9 @@
     {
       "id": "person-servius-tullius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Servius Tullius",
       "summary": "The sixth king of Rome according to tradition, who held the first census; tradition gives him 45 years.",
       "sourceIds": [
@@ -2839,6 +2972,9 @@
     {
       "id": "person-tarquinius-superbus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tarquinius Superbus",
       "summary": "Tarquin the Proud, son of Tarquinius Priscus and son-in-law of Servius Tullius, the seventh and last king of Rome according to tradition, who was expelled; tradition gives him 25 years.",
       "sourceIds": [
@@ -2876,6 +3012,9 @@
     {
       "id": "person-rhea-silvia",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Rhea Silvia",
       "summary": "In the legend, the mother of Romulus; the father is said to be the god Mars.",
       "sourceIds": [
@@ -2904,6 +3043,9 @@
     {
       "id": "event-founding-of-rome",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The founding of Rome (tradition)",
       "summary": "According to tradition Romulus founded Rome on the Palatine on 21 April 753 BCE; Livius calls this Varronian date an artificial calculation.",
       "sourceIds": [
@@ -2937,6 +3079,9 @@
     {
       "id": "person-lucius-junius-brutus",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Lucius Junius Brutus",
       "summary": "The legendary founder of the Republic, kin of the royal Tarquins, who according to tradition drove out the last king and was one of the first two consuls; he died in the first year of the Republic.",
       "sourceIds": [
@@ -2966,6 +3111,10 @@
     {
       "id": "person-camillus",
       "type": "Person",
+      "kinds": [
+        "statesman",
+        "general"
+      ],
       "label": "Marcus Furius Camillus",
       "summary": "A Roman leader whom Livy’s summaries connect with the deliverance of Rome from the Gauls and with the time of the Licinian-Sextian laws.",
       "sourceIds": [
@@ -3001,6 +3150,9 @@
     {
       "id": "event-founding-of-republic",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The founding of the Republic",
       "summary": "The last king was expelled and the Republic founded – in 509 BCE according to the traditional chronology, in 510 according to one Livius page, about 507–505 according to Livius’ own reconstruction.",
       "sourceIds": [
@@ -3039,6 +3191,9 @@
     {
       "id": "event-twelve-tables",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "The Twelve Tables",
       "summary": "The first codification of Roman law, written by a board of ten men in the middle of the fifth century BCE: ten tables in 451 and two more in 450 BCE in the traditional chronology.",
       "sourceIds": [
@@ -3073,6 +3228,9 @@
     {
       "id": "event-gallic-sack",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Gauls take Rome",
       "summary": "After their victory at the Allia the Gauls occupied Rome and besieged the Capitol until the Romans bought their freedom with gold – in 390 BCE in the traditional chronology, in 387 or 386 according to Livius.",
       "sourceIds": [
@@ -3111,6 +3269,9 @@
     {
       "id": "event-licinian-sextian-laws",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "The Licinian-Sextian laws",
       "summary": "Laws first proposed in 376 and passed in 367 BCE (traditional chronology) that opened the consulship to plebeians, adjusted debts and limited the ownership of public land.",
       "sourceIds": [
@@ -3143,6 +3304,9 @@
     {
       "id": "person-hamilcar-barca",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Hamilcar Barca",
       "summary": "A Carthaginian general, the father of Hannibal.",
       "sourceIds": [
@@ -3176,6 +3340,9 @@
     {
       "id": "person-hannibal",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Hannibal",
       "summary": "The Carthaginian general, born at Carthage in 247 BCE, who crossed the Alps in the Second Punic War, destroyed a Roman army at Cannae and was defeated at Zama; he poisoned himself at Libyssa in the winter of 183/182 BCE.",
       "sourceIds": [
@@ -3230,6 +3397,9 @@
     {
       "id": "person-scipio-africanus",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Scipio Africanus",
       "summary": "Publius Cornelius Scipio, who took Cartagena, ended the war in Spain in 206 BCE and defeated Hannibal at Zama; he died at Liternum in 183 BCE.",
       "sourceIds": [
@@ -3271,6 +3441,9 @@
     {
       "id": "person-cato-the-elder",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Cato the Elder",
       "summary": "Marcus Porcius Cato, censor in 184 BCE, who argued for war against Carthage.",
       "sourceIds": [
@@ -3307,6 +3480,9 @@
     {
       "id": "event-first-punic-war",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The First Punic War",
       "summary": "The war of Rome and Carthage from 264 to 241 BCE, in which Rome conquered Sicily.",
       "sourceIds": [
@@ -3335,6 +3511,9 @@
     {
       "id": "event-second-punic-war",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The Second Punic War",
       "summary": "The war of Rome and Carthage from 218 to 202 BCE, in which Hannibal crossed the Alps; the peace was signed in 201 BCE.",
       "sourceIds": [
@@ -3371,6 +3550,9 @@
     {
       "id": "event-cannae",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Cannae",
       "summary": "On 2 August 216 BCE Hannibal destroyed the army of the two Roman consuls at Cannae.",
       "sourceIds": [
@@ -3402,6 +3584,9 @@
     {
       "id": "event-zama",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Zama",
       "summary": "On 19 October 202 BCE Scipio defeated Hannibal at Zama in Africa.",
       "sourceIds": [
@@ -3438,6 +3623,9 @@
     {
       "id": "event-third-punic-war",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The Third Punic War",
       "summary": "The last war against Carthage, begun in 149 BCE after Cato had urged it; it ended in 146 BCE with the destruction of the city.",
       "sourceIds": [
@@ -3471,6 +3659,9 @@
     {
       "id": "event-destruction-of-carthage",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The destruction of Carthage",
       "summary": "In 146 BCE Rome took and sacked Carthage; Corinth was sacked in the same year.",
       "sourceIds": [
@@ -3499,6 +3690,9 @@
     {
       "id": "person-tiberius-gracchus",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Tiberius Gracchus",
       "summary": "A tribune of the plebs who in 133 BCE proposed a land bill limiting the holding of public land, and was killed on the Capitol in the same year.",
       "sourceIds": [
@@ -3532,6 +3726,9 @@
     {
       "id": "person-gaius-gracchus",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Gaius Gracchus",
       "summary": "Brother of Tiberius, tribune in 123 and again in 122 BCE, who passed a grain law, a land bill and colonies, one of them at Carthage; he died in 121 BCE.",
       "sourceIds": [
@@ -3566,6 +3763,9 @@
     {
       "id": "event-tribunate-of-tiberius-gracchus",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "The tribunate of Tiberius Gracchus",
       "summary": "In 133 BCE Tiberius Gracchus proposed his land bill; he was killed on the Capitol in the same year.",
       "sourceIds": [
@@ -3597,6 +3797,9 @@
     {
       "id": "person-marius",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Gaius Marius",
       "summary": "Leader of the populares, consul seven times from 107 to 86 BCE, who reformed the army and defeated Jugurtha, the Teutones (102) and the Cimbri (101); married to Julia, an aunt of Julius Caesar, he died in 86 BCE.",
       "sourceIds": [
@@ -3631,6 +3834,9 @@
     {
       "id": "person-sulla",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Sulla",
       "summary": "A leader of the optimates who marched on Rome in 88 BCE, beginning the first civil war; after his return from Asia he became dictator and published lists of the proscribed. He died in 78 BCE.",
       "sourceIds": [
@@ -3665,6 +3871,9 @@
     {
       "id": "event-social-war",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The Social War",
       "summary": "The war with Rome’s Italian allies, which began in 91 BCE; citizenship was promised to loyal allies in 90 and to those who surrendered in 89. Marius and Sulla fought on the Roman side.",
       "sourceIds": [
@@ -3696,6 +3905,9 @@
     {
       "id": "person-spartacus",
       "type": "Person",
+      "kinds": [
+        "rebel"
+      ],
       "label": "Spartacus",
       "summary": "The leader of a slave revolt that began at Capua and grew into a full-scale war in 73–71 BCE; his body was never found.",
       "sourceIds": [
@@ -3730,6 +3942,9 @@
     {
       "id": "person-crassus",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Marcus Licinius Crassus",
       "summary": "Born in 115 BCE and said to be the richest man in Rome, he suppressed the revolt of Spartacus as praetor in 71 BCE, joined Caesar and Pompey in 60 BCE and was killed after his defeat at Carrhae in 53 BCE.",
       "sourceIds": [
@@ -3774,6 +3989,9 @@
     {
       "id": "event-revolt-of-spartacus",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The revolt of Spartacus",
       "summary": "A slave revolt that began at Capua and was suppressed by Crassus; the Livius page dates the war 73–71 BCE in one place and 73–70 in another.",
       "sourceIds": [
@@ -3811,6 +4029,9 @@
     {
       "id": "person-pompey",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Pompey",
       "summary": "Gnaeus Pompeius, Pompey the Great, born in 106 BCE, who defeated the pirates and Mithridates and annexed Syria, married Caesar’s daughter Julia, was consul without a colleague in 52 BCE, and was murdered in Egypt in 48 BCE after Pharsalus.",
       "sourceIds": [
@@ -3862,6 +4083,10 @@
     {
       "id": "person-cicero",
       "type": "Person",
+      "kinds": [
+        "statesman",
+        "literary"
+      ],
       "label": "Cicero",
       "summary": "The orator, born in 106 BCE, who as consul discovered the conspiracy of Catilina; proscribed by the triumvirs, he was killed in 43 BCE.",
       "sourceIds": [
@@ -3903,6 +4128,10 @@
     {
       "id": "person-julius-caesar",
       "type": "Person",
+      "kinds": [
+        "statesman",
+        "general"
+      ],
       "label": "Gaius Julius Caesar",
       "summary": "Born on 13 July 100 BCE, consul in 59, conqueror of Gaul, who crossed the Rubicon in 49 BCE, defeated Pompey, became dictator for ten years in 46 and for life in 44, and was murdered on the Ides of March 44 BCE.",
       "sourceIds": [
@@ -3950,6 +4179,9 @@
     {
       "id": "person-julia",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Julia",
       "summary": "Daughter of Julius Caesar by Cornelia, married to Pompey to seal the alliance of 60 BCE.",
       "sourceIds": [
@@ -3985,6 +4217,9 @@
     {
       "id": "event-first-triumvirate",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The alliance of Caesar, Crassus and Pompey",
       "summary": "In 60 BCE Caesar, Crassus and Pompey made a private agreement, sealed by Pompey’s marriage to Caesar’s daughter Julia; modern historians call it the First Triumvirate.",
       "sourceIds": [
@@ -4021,6 +4256,9 @@
     {
       "id": "event-conquest-of-gaul",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Caesar conquers Gaul",
       "summary": "From 58 to 50 BCE Caesar conquered Gaul; in 52 BCE Vercingetorix surrendered to him at Alesia.",
       "sourceIds": [
@@ -4053,6 +4291,9 @@
     {
       "id": "event-carrhae",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Carrhae",
       "summary": "In 53 BCE the Parthians defeated the Roman army of Crassus at Carrhae; Crassus was killed.",
       "sourceIds": [
@@ -4085,6 +4326,9 @@
     {
       "id": "event-rubicon",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "Caesar crosses the Rubicon",
       "summary": "In the night of 10/11 January 49 BCE Caesar crossed the Rubicon, the border of Cisalpine Gaul and Italy, and began the second civil war; where the river was is not certain.",
       "sourceIds": [
@@ -4113,6 +4357,9 @@
     {
       "id": "event-pharsalus",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Pharsalus",
       "summary": "On 9 August 48 BCE Caesar defeated Pompey at Pharsalus; Pompey fled to Egypt and was murdered there.",
       "sourceIds": [
@@ -4150,6 +4397,9 @@
     {
       "id": "person-marcus-junius-brutus",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Marcus Junius Brutus",
       "summary": "Born about 85 BCE, son of Servilia, one of the murderers of Caesar and one of the last defenders of the Republic; he took his own life after Philippi in 42 BCE.",
       "sourceIds": [
@@ -4196,6 +4446,9 @@
     {
       "id": "event-murder-of-caesar",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The murder of Caesar",
       "summary": "On the Ides of March, 15 March 44 BCE, Caesar was murdered by a group led by Gaius Cassius, Decimus Brutus and Marcus Junius Brutus.",
       "sourceIds": [
@@ -4231,6 +4484,10 @@
     {
       "id": "person-mark-antony",
       "type": "Person",
+      "kinds": [
+        "statesman",
+        "general"
+      ],
       "label": "Mark Antony",
       "summary": "Born in 83 BCE (82 according to another Livius page), a member of the Second Triumvirate, partner of Cleopatra, defeated at Actium; he took his own life on 12 August 30 BCE.",
       "sourceIds": [
@@ -4281,6 +4538,9 @@
     {
       "id": "person-cleopatra-vii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cleopatra VII",
       "summary": "Queen of Egypt from 51 to 30 BCE, born in December 70 or January 69 BCE; partner of Julius Caesar and then of Mark Antony, she died on 12 August 30 BCE, reportedly by suicide.",
       "sourceIds": [
@@ -4324,6 +4584,9 @@
     {
       "id": "event-second-triumvirate",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The Second Triumvirate",
       "summary": "In 43 BCE Antony and Octavian became triumvirs with a third colleague, an official magistracy with dictatorial powers.",
       "sourceIds": [
@@ -4357,6 +4620,9 @@
     {
       "id": "event-philippi",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Philippi",
       "summary": "In October 42 BCE Mark Antony and Octavian defeated Brutus and Cassius at Philippi.",
       "sourceIds": [
@@ -4397,6 +4663,9 @@
     {
       "id": "event-actium",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Actium",
       "summary": "Octavian, with Agrippa, defeated Mark Antony and Cleopatra off Actium in 31 BCE – on 2 September according to the battle page, on 2 August according to another Livius page.",
       "sourceIds": [
@@ -4437,6 +4706,9 @@
     {
       "id": "event-augustan-settlement",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "The settlement of Augustus",
       "summary": "In January 27 BCE Octavian accepted the title Augustus (16 January); the rule of the emperors begins here.",
       "sourceIds": [
@@ -4469,6 +4741,9 @@
     {
       "id": "person-augustus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Augustus",
       "summary": "Born Gaius Octavius in Rome on 23 September 63 BCE, son of Gaius Octavius and Atia and adopted by his great-uncle Julius Caesar in 44 BCE; sole ruler from 31 BCE and the first emperor from 27 BCE until his death on 19 August 14 CE. Modern writers call him Octavian before 27 BCE, a name he never used.",
       "sourceIds": [
@@ -4524,6 +4799,9 @@
     {
       "id": "person-livia",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Livia",
       "summary": "Born in January 58 BCE, wife first of Tiberius Claudius Nero, by whom she was the mother of Tiberius, and from 17 January 38 BCE of Octavian; she died in 29 CE.",
       "sourceIds": [
@@ -4562,6 +4840,9 @@
     {
       "id": "person-tiberius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tiberius",
       "summary": "Born in Rome in 42 BCE, son of Livia and stepson of Augustus, who adopted him on 26 June 4 CE; emperor from 14 to 37 CE, he died on 16 March 37 CE.",
       "sourceIds": [
@@ -4605,6 +4886,10 @@
     {
       "id": "person-germanicus",
       "type": "Person",
+      "kinds": [
+        "royal",
+        "general"
+      ],
       "label": "Germanicus",
       "summary": "Born on 24 May 15 BCE, son of Drusus and Antonia, adopted by Tiberius and married to Agrippina the Elder; father of Caligula and Agrippina the Younger, he died at Antioch on 10 October 19 CE.",
       "sourceIds": [
@@ -4647,6 +4932,9 @@
     {
       "id": "person-caligula",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Caligula",
       "summary": "Son of Germanicus, born at Antium on 31 August 12 CE; emperor from 37 to 41 CE, he was murdered by Cassius Chaerea on 24 January 41 CE.",
       "sourceIds": [
@@ -4689,6 +4977,9 @@
     {
       "id": "person-claudius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Claudius",
       "summary": "Son of Drusus and Antonia, born at Lugdunum on 1 August 10 BCE; emperor from 41 to 54 CE, he married Agrippina the Younger, adopted her son Nero in 50 CE and died, poisoned, on 13 October 54 CE.",
       "sourceIds": [
@@ -4731,6 +5022,9 @@
     {
       "id": "person-agrippina-the-younger",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Agrippina the Younger",
       "summary": "Daughter of Germanicus, born at Cologne in 15 or 16 CE, wife of Claudius (married in 48 or 49 CE) and mother of Nero; she was killed in March 59 CE.",
       "sourceIds": [
@@ -4782,6 +5076,9 @@
     {
       "id": "person-nero",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nero",
       "summary": "Son of Agrippina the Younger, born at Antium on 15 December 37 CE and adopted by Claudius in 50 CE; emperor from 54 to 68 CE, his reign ended with the revolts of Vindex, Macer and Galba and his suicide in June 68 CE.",
       "sourceIds": [
@@ -4824,6 +5121,9 @@
     {
       "id": "person-galba",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Galba",
       "summary": "Born near Tarracina on 24 December 3 BCE, he revolted in Spain in April 68 and was emperor from June 68; he was lynched in Rome in January 69 CE (one Livius page says 15 June 69).",
       "sourceIds": [
@@ -4863,6 +5163,9 @@
     {
       "id": "person-otho",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Otho",
       "summary": "Born on 28 April 32 CE, he came to power in 69 CE by bribing the praetorian guard and took his own life on 16 April 69 after his army was defeated by that of Vitellius.",
       "sourceIds": [
@@ -4902,6 +5205,9 @@
     {
       "id": "person-vitellius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vitellius",
       "summary": "Born on 7 September 15 CE, proclaimed emperor by his troops on 2 January 69 and recognised by the Senate after Otho’s death; he was killed on 20 December 69 CE when Rome was taken by the army of Vespasian.",
       "sourceIds": [
@@ -4942,6 +5248,9 @@
     {
       "id": "person-vespasian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Vespasian",
       "summary": "Born at Falacrinae on 17 November 9 CE, sent by Nero to suppress the Jewish revolt, proclaimed emperor in Alexandria on 1 July 69; emperor until his death on 23 June 79 CE, he built the Colosseum.",
       "sourceIds": [
@@ -4985,6 +5294,9 @@
     {
       "id": "person-titus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Titus",
       "summary": "Son of Vespasian, born in Rome on 30 December 39 CE, who took Jerusalem in 70 CE; emperor from 79 to 81, in whose reign Vesuvius erupted and the Colosseum was dedicated. He died on 13 September 81 CE.",
       "sourceIds": [
@@ -5027,6 +5339,9 @@
     {
       "id": "person-domitian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Domitian",
       "summary": "Son of Vespasian, born in Rome on 24 October 51 CE, emperor from 81 to 96 CE; he was murdered by courtiers on 18 September 96 CE.",
       "sourceIds": [
@@ -5069,6 +5384,9 @@
     {
       "id": "person-nerva",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nerva",
       "summary": "Born at Narnia on 30 November 30 CE, emperor from 18 September 96 CE, who adopted Trajan in 97; he died in January 98 CE.",
       "sourceIds": [
@@ -5111,6 +5429,9 @@
     {
       "id": "person-trajan",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Trajan",
       "summary": "Born at Italica on 18 September 53 CE, adopted by Nerva in 97 and emperor from 28 January 98 CE until his death on 7 August 117; he conquered Dacia and made Arabia Petraea a province in 106.",
       "sourceIds": [
@@ -5150,6 +5471,9 @@
     {
       "id": "event-teutoburg",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle in the Teutoburg Forest",
       "summary": "In September 9 CE Arminius, leading a coalition of Germanic tribes, annihilated three Roman legions under Publius Quintilius Varus; Germania remained independent.",
       "sourceIds": [
@@ -5173,6 +5497,9 @@
     {
       "id": "event-death-of-augustus",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The death of Augustus",
       "summary": "Augustus died on 19 August 14 CE and Tiberius succeeded him.",
       "sourceIds": [
@@ -5204,6 +5531,9 @@
     {
       "id": "event-great-fire",
       "type": "Event",
+      "kinds": [
+        "disaster"
+      ],
       "label": "The Great Fire of Rome",
       "summary": "The great fire of Rome in 64 CE, under Nero.",
       "sourceIds": [
@@ -5235,6 +5565,9 @@
     {
       "id": "event-death-of-nero",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The death of Nero",
       "summary": "After the revolts of Vindex, Macer and Galba Nero took his own life in June 68 CE – on 9 June according to his page, on 8 June according to the chronology of 68–70.",
       "sourceIds": [
@@ -5263,6 +5596,9 @@
     {
       "id": "event-year-of-four-emperors",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The year of the four emperors",
       "summary": "In 69 CE Galba, Otho, Vitellius and Vespasian were emperors in turn; Vespasian was recognised on 21 December 69.",
       "sourceIds": [
@@ -5303,6 +5639,9 @@
     {
       "id": "event-jewish-war",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The Jewish War",
       "summary": "The war in Judaea that began in 66 CE and culminated in the destruction of the temple of Jerusalem in 70; the last resistance at Masada held out until 74.",
       "sourceIds": [
@@ -5340,6 +5679,9 @@
     {
       "id": "event-siege-of-jerusalem",
       "type": "Event",
+      "kinds": [
+        "siege"
+      ],
       "label": "The siege of Jerusalem",
       "summary": "Titus began the siege of Jerusalem on 14 April 70 CE and was master of the city on 8 September.",
       "sourceIds": [
@@ -5371,6 +5713,9 @@
     {
       "id": "event-vesuvius",
       "type": "Event",
+      "kinds": [
+        "naturalEvent"
+      ],
       "label": "The eruption of Vesuvius",
       "summary": "In 79 CE, in the reign of Titus, Vesuvius erupted and buried Pompeii.",
       "sourceIds": [
@@ -5399,6 +5744,9 @@
     {
       "id": "event-colosseum",
       "type": "Event",
+      "kinds": [
+        "construction"
+      ],
       "label": "The dedication of the Colosseum",
       "summary": "The Amphitheatrum Flavium, built by Vespasian, was dedicated by Titus in 80 CE.",
       "sourceIds": [
@@ -5431,6 +5779,9 @@
     {
       "id": "event-murder-of-domitian",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The murder of Domitian",
       "summary": "Domitian was murdered by courtiers on 18 September 96 CE; Nerva became emperor the same day.",
       "sourceIds": [
@@ -5463,6 +5814,9 @@
     {
       "id": "event-accession-of-trajan",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Trajan becomes emperor",
       "summary": "On Nerva’s death in January 98 CE Trajan, his adopted son, became emperor.",
       "sourceIds": [
@@ -5490,6 +5844,9 @@
     {
       "id": "office-west-roman-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor in the west",
       "summary": "The emperor of the western half of the empire after the death of Theodosius I in 395, until the last, Romulus Augustulus, was deposed in 476.",
       "sourceIds": [
@@ -5507,6 +5864,9 @@
     {
       "id": "office-east-roman-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor in the east",
       "summary": "The emperor of the eastern half of the empire, ruling from Constantinople after 395; Livius calls it the East-Roman or Byzantine empire.",
       "sourceIds": [
@@ -5524,6 +5884,9 @@
     {
       "id": "person-hadrian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hadrian",
       "summary": "Born at Italica in 76, emperor from 117 to 138. He travelled through the provinces, refounded Jerusalem as Aelia Capitolina and put down the revolt of Bar Kochba; Hadrian’s Wall in Britain and the Pantheon in Rome are among his works.",
       "sourceIds": [
@@ -5562,6 +5925,9 @@
     {
       "id": "person-antoninus-pius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Antoninus Pius",
       "summary": "Adopted by Hadrian and emperor from 138 to 161, the first of the Antonines, whose years are often called the golden age of the empire; he died a natural death.",
       "sourceIds": [
@@ -5600,6 +5966,9 @@
     {
       "id": "person-marcus-aurelius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Marcus Aurelius",
       "summary": "Emperor from 161 to 180, first with Lucius Verus. His reign saw the war with the Parthian king Vologases IV, the plague from 165 and long wars on the Danube; he wrote the Meditations.",
       "sourceIds": [
@@ -5638,6 +6007,9 @@
     {
       "id": "person-lucius-verus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Lucius Verus",
       "summary": "Co-ruler of Marcus Aurelius from 161 until his death in 169; he went east for the war with the Parthians and recovered Armenia.",
       "sourceIds": [
@@ -5676,6 +6048,9 @@
     {
       "id": "person-commodus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Commodus",
       "summary": "Son of Marcus Aurelius, emperor from 180 to 192; he grew increasingly tyrannical and was assassinated, which ended the Antonine dynasty.",
       "sourceIds": [
@@ -5714,6 +6089,10 @@
     {
       "id": "person-pertinax",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Pertinax",
       "summary": "A general, son of a former slave, whose short reign in 193 began the year of the five emperors.",
       "sourceIds": [
@@ -5752,6 +6131,9 @@
     {
       "id": "person-didius-julianus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Didius Julianus",
       "summary": "Roman emperor for sixty-six days in 193; Livius gives his birth year as 133 with a question mark.",
       "sourceIds": [
@@ -5785,6 +6167,9 @@
     {
       "id": "person-septimius-severus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Septimius Severus",
       "summary": "Born at Lepcis Magna in 145, founder of the Severan dynasty and emperor from 193 to 211. He won the civil wars, took Ctesiphon from the Parthians and added Mesopotamia to the empire.",
       "sourceIds": [
@@ -5823,6 +6208,9 @@
     {
       "id": "person-caracalla",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Caracalla",
       "summary": "Son of Septimius Severus, emperor from 211 to 217. He murdered his brother Geta, gave Roman citizenship to all free-born men in 212 and was murdered near Harran during his Parthian war.",
       "sourceIds": [
@@ -5861,6 +6249,9 @@
     {
       "id": "person-geta",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Geta",
       "summary": "Son of Septimius Severus and emperor with his brother Caracalla in 211, who murdered him that December.",
       "sourceIds": [
@@ -5899,6 +6290,9 @@
     {
       "id": "person-macrinus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Macrinus",
       "summary": "The praetorian prefect who succeeded Caracalla and ruled fourteen months in 217–218, an interlude in the Severan dynasty; the sources give his birth as 164 or 166.",
       "sourceIds": [
@@ -5937,6 +6331,9 @@
     {
       "id": "person-heliogabalus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Heliogabalus",
       "summary": "A Severan emperor from 218 to 222, known for his religious reforms and the cult of the Syrian sun god Elagabal.",
       "sourceIds": [
@@ -5972,6 +6369,9 @@
     {
       "id": "person-severus-alexander",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Severus Alexander",
       "summary": "The last Severan emperor, from 222 to 235, born in Phoenicia; he was lynched by his soldiers.",
       "sourceIds": [
@@ -6010,6 +6410,9 @@
     {
       "id": "person-maximinus-thrax",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Maximinus Thrax",
       "summary": "A soldier born in Thrace or Moesia, emperor from 235 to 238, lynched by his soldiers.",
       "sourceIds": [
@@ -6049,6 +6452,9 @@
     {
       "id": "person-pupienus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pupienus",
       "summary": "Emperor with Balbinus in 238, lynched by soldiers in May of that year.",
       "sourceIds": [
@@ -6088,6 +6494,10 @@
     {
       "id": "person-balbinus",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "statesman"
+      ],
       "label": "Balbinus",
       "summary": "A senator of an important family, emperor with Pupienus in 238.",
       "sourceIds": [
@@ -6116,6 +6526,9 @@
     {
       "id": "person-gordian-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gordian III",
       "summary": "Emperor from 238 to 244, who made war on the Sasanian king Shapur I and died in 244.",
       "sourceIds": [
@@ -6159,6 +6572,9 @@
     {
       "id": "person-philip-the-arab",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Philip the Arab",
       "summary": "Emperor from 244 to 249, who appears on the triumph reliefs of the Sasanian king Shapur I; he was killed in action in 249.",
       "sourceIds": [
@@ -6198,6 +6614,9 @@
     {
       "id": "person-decius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Decius",
       "summary": "Emperor from 249 to 251, who began a major persecution of the Christians and was killed in a battle on the Danube with his son.",
       "sourceIds": [
@@ -6237,6 +6656,9 @@
     {
       "id": "person-trebonianus-gallus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Trebonianus Gallus",
       "summary": "Emperor from 251 to 253, lynched by his soldiers.",
       "sourceIds": [
@@ -6276,6 +6698,9 @@
     {
       "id": "person-aemilianus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aemilianus",
       "summary": "Proclaimed emperor by his soldiers in Moesia in 253 and killed by them a few months later.",
       "sourceIds": [
@@ -6314,6 +6739,9 @@
     {
       "id": "person-valerian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Valerian",
       "summary": "Emperor from 253 to 260, who was defeated and taken captive by Shapur I in 260 and died in captivity in 262.",
       "sourceIds": [
@@ -6353,6 +6781,9 @@
     {
       "id": "person-gallienus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gallienus",
       "summary": "Son of Valerian, co-ruler from 253 and sole emperor from 260 to 268, years of many usurpers, the Gallic empire and the Palmyrene empire; he ended the persecution of the Christians and was murdered by soldiers.",
       "sourceIds": [
@@ -6392,6 +6823,9 @@
     {
       "id": "person-claudius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Claudius II Gothicus",
       "summary": "Emperor from 268 to 270, who died a natural death.",
       "sourceIds": [
@@ -6430,6 +6864,9 @@
     {
       "id": "person-quintillus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Quintillus",
       "summary": "Successor of Claudius II, emperor for a few weeks in September 270 until he was lynched by soldiers.",
       "sourceIds": [
@@ -6463,6 +6900,9 @@
     {
       "id": "person-aurelian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aurelian",
       "summary": "Emperor from 270 to 275, who defeated Zenobia and took Palmyra in 272, defeated the Gallic emperor Tetricus in 274, ordered a new wall for Rome and was murdered.",
       "sourceIds": [
@@ -6501,6 +6941,9 @@
     {
       "id": "person-tacitus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tacitus",
       "summary": "Emperor from December 275; he died in July 276 of an uncertain cause.",
       "sourceIds": [
@@ -6540,6 +6983,9 @@
     {
       "id": "person-florian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Florian",
       "summary": "Brother of Tacitus, emperor for a few months in 276 until he was lynched by soldiers.",
       "sourceIds": [
@@ -6573,6 +7019,9 @@
     {
       "id": "person-probus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Probus",
       "summary": "Emperor from 276 to 282, lynched by his soldiers.",
       "sourceIds": [
@@ -6611,6 +7060,9 @@
     {
       "id": "person-carus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Carus",
       "summary": "Emperor from 282 to 283, father of Numerian and Carinus; he died in 283, perhaps struck by lightning.",
       "sourceIds": [
@@ -6650,6 +7102,9 @@
     {
       "id": "person-carinus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Carinus",
       "summary": "Son of Carus, emperor from 283 to 285, killed by an officer.",
       "sourceIds": [
@@ -6689,6 +7144,9 @@
     {
       "id": "person-numerian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Numerian",
       "summary": "Son of Carus, emperor from 283 until he was murdered in 284.",
       "sourceIds": [
@@ -6728,6 +7186,9 @@
     {
       "id": "person-diocletian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Diocletian",
       "summary": "Born in Dalmatia, emperor from 284 to 305. He made Maximian co-ruler, created the tetrarchy of two augusti and two caesares in 293, and in 305 resigned, a transfer of power without bloodshed; he died in 313.",
       "sourceIds": [
@@ -6766,6 +7227,9 @@
     {
       "id": "person-maximian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Maximian",
       "summary": "Co-ruler of Diocletian in the west from 285, who resigned with him in 305, ruled again from 306 to 308 and, after a new rebellion, took his own life in 310.",
       "sourceIds": [
@@ -6805,6 +7269,9 @@
     {
       "id": "person-constantius-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantius I Chlorus",
       "summary": "Caesar of Maximian from 293 and emperor in the west from 305 until his death in 306; father of Constantine the Great.",
       "sourceIds": [
@@ -6843,6 +7310,9 @@
     {
       "id": "person-galerius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Galerius",
       "summary": "Caesar of Diocletian from 293, who defeated the Sasanian king Narseh in 298, and emperor in the east from 305 to 311; shortly before his death he ended the persecution of the Christians.",
       "sourceIds": [
@@ -6882,6 +7352,9 @@
     {
       "id": "person-severus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Severus II",
       "summary": "Caesar of the second tetrarchy, emperor in 306–307; he resigned and was murdered in 307.",
       "sourceIds": [
@@ -6915,6 +7388,9 @@
     {
       "id": "person-maxentius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Maxentius",
       "summary": "Son of Maximian, who ruled Italy and Africa from 306 until Constantine defeated him at the Milvian Bridge in 312, where he was killed.",
       "sourceIds": [
@@ -6954,6 +7430,9 @@
     {
       "id": "person-maximinus-daia",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Maximinus Daia",
       "summary": "Caesar from 305 and emperor from 310 until his death in 313.",
       "sourceIds": [
@@ -6987,6 +7466,9 @@
     {
       "id": "person-licinius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Licinius",
       "summary": "Emperor from 308 to 324, married to Constantia, a sister of Constantine the Great; he resigned in 324 and was executed in 325.",
       "sourceIds": [
@@ -7026,6 +7508,9 @@
     {
       "id": "person-constantine-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantine the Great",
       "summary": "Son of Constantius I, proclaimed by the soldiers in 306. He defeated Maxentius at the Milvian Bridge in 312, became sole ruler after defeating Licinius in 324, founded Constantinople and called the Council of Nicaea in 325; he died in 337.",
       "sourceIds": [
@@ -7072,6 +7557,9 @@
     {
       "id": "person-constantine-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantine II",
       "summary": "Son of Constantine the Great, emperor from 337 until he was killed in action in 340.",
       "sourceIds": [
@@ -7110,6 +7598,9 @@
     {
       "id": "person-constans",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constans",
       "summary": "Son of Constantine the Great, emperor from 337 until he was murdered in 350; he was born in 320 or 323.",
       "sourceIds": [
@@ -7153,6 +7644,9 @@
     {
       "id": "person-constantius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantius II",
       "summary": "Son of Constantine the Great, emperor from 337 until his death in 361.",
       "sourceIds": [
@@ -7191,6 +7685,9 @@
     {
       "id": "person-julian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Julian the Apostate",
       "summary": "Emperor from 360 to 363, called the Apostate, who invaded the Sasanian empire and was killed in action against Shapur II.",
       "sourceIds": [
@@ -7229,6 +7726,9 @@
     {
       "id": "person-jovian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Jovian",
       "summary": "Emperor after Julian from 363 to 364, who made peace with Shapur II and gave up Nisibis.",
       "sourceIds": [
@@ -7267,6 +7767,9 @@
     {
       "id": "person-valentinian-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Valentinian I",
       "summary": "Founder of the Valentinian dynasty, emperor in the west from 364 to 375, with Valens as co-emperor in the east.",
       "sourceIds": [
@@ -7305,6 +7808,9 @@
     {
       "id": "person-valens",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Valens",
       "summary": "Co-emperor of Valentinian I in the east from 364 until he was killed in action in 378.",
       "sourceIds": [
@@ -7344,6 +7850,9 @@
     {
       "id": "person-gratian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gratian",
       "summary": "Son of Valentinian I, emperor from 367 until he was murdered in 383.",
       "sourceIds": [
@@ -7382,6 +7891,10 @@
     {
       "id": "person-valentinian-ii",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Valentinian II",
       "summary": "Son of Valentinian I, emperor from 375 until his general Arbogast murdered him in 392.",
       "sourceIds": [
@@ -7420,6 +7933,9 @@
     {
       "id": "person-theodosius-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Theodosius I",
       "summary": "Founder of the Theodosian dynasty, emperor from 378 or 379 to 395. He declared the Nicene creed orthodox in 380 and settled the Visigoths in the empire; at his death his sons divided it.",
       "sourceIds": [
@@ -7458,6 +7974,9 @@
     {
       "id": "person-arcadius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Arcadius",
       "summary": "Son of Theodosius I, emperor in the east from 395 to 408.",
       "sourceIds": [
@@ -7496,6 +8015,9 @@
     {
       "id": "person-honorius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Honorius",
       "summary": "Son of Theodosius I, emperor in the west from 395 to 423. He moved the court from Rome to Ravenna in 402; in his reign the Visigoths took Rome in 410 and Britain was evacuated.",
       "sourceIds": [
@@ -7534,6 +8056,9 @@
     {
       "id": "person-theodosius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Theodosius II",
       "summary": "Son of Arcadius, emperor in the east from 408 to 450, much of the time beside his uncle Honorius and his cousin Valentinian III in the west.",
       "sourceIds": [
@@ -7572,6 +8097,9 @@
     {
       "id": "person-valentinian-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Valentinian III",
       "summary": "Grandson of Theodosius I, emperor in the west from 425 to 455, years in which the Vandals took Africa and the Huns invaded Gaul and Italy; he was murdered by Petronius Maximus.",
       "sourceIds": [
@@ -7610,6 +8138,9 @@
     {
       "id": "person-marcian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Marcian",
       "summary": "Emperor in the east from 450 to 457, married to Pulcheria.",
       "sourceIds": [
@@ -7648,6 +8179,9 @@
     {
       "id": "person-petronius-maximus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Petronius Maximus",
       "summary": "Emperor in the west for a few weeks in 455, after murdering Valentinian III; he was lynched by soldiers.",
       "sourceIds": [
@@ -7686,6 +8220,9 @@
     {
       "id": "person-avitus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Avitus",
       "summary": "Proclaimed emperor in the west by the Visigoths in 455, after the Vandal sack of Rome; he resigned in 456 and died in 457.",
       "sourceIds": [
@@ -7725,6 +8262,9 @@
     {
       "id": "person-majorian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Majorian",
       "summary": "Emperor in the west from 457 to 461, forced to resign and murdered by Ricimer.",
       "sourceIds": [
@@ -7764,6 +8304,9 @@
     {
       "id": "person-leo-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leo I",
       "summary": "Emperor in the east from 457 to 474, nicknamed \"the great Thracian\".",
       "sourceIds": [
@@ -7803,6 +8346,9 @@
     {
       "id": "person-anthemius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Anthemius",
       "summary": "Emperor in the west from 467, sent from the east, until Ricimer had him murdered in 472.",
       "sourceIds": [
@@ -7842,6 +8388,9 @@
     {
       "id": "person-olybrius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Olybrius",
       "summary": "Appointed emperor in the west by Ricimer in 472; he died a natural death the same year.",
       "sourceIds": [
@@ -7875,6 +8424,9 @@
     {
       "id": "person-glycerius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Glycerius",
       "summary": "Appointed emperor in the west in 473 and taken captive by Julius Nepos in 474.",
       "sourceIds": [
@@ -7903,6 +8455,9 @@
     {
       "id": "person-leo-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leo II",
       "summary": "Son of Zeno and Ariadne, the daughter of Leo I, emperor in the east for most of 474.",
       "sourceIds": [
@@ -7942,6 +8497,9 @@
     {
       "id": "person-julius-nepos",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Julius Nepos",
       "summary": "Emperor in the west from 474 until Orestes forced him to resign in 475 and he was made a bishop.",
       "sourceIds": [
@@ -7970,6 +8528,9 @@
     {
       "id": "person-romulus-augustulus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Romulus Augustulus",
       "summary": "The last emperor in the west, made emperor by his father Orestes in 475 and deposed by Odoacer in 476; he was still alive in 510.",
       "sourceIds": [
@@ -8003,6 +8564,9 @@
     {
       "id": "person-anastasius-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Anastasius I",
       "summary": "Emperor in the east from 491 to 518, chosen by Ariadne, the widow of Zeno.",
       "sourceIds": [
@@ -8042,6 +8606,9 @@
     {
       "id": "person-justin-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Justin I",
       "summary": "Emperor in the east from 518 to 527, succeeded by his relative Justinian.",
       "sourceIds": [
@@ -8081,6 +8648,10 @@
     {
       "id": "person-justinian",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Justinian",
       "summary": "Emperor in the east from 527 to 565. His general Belisarius took Africa and Italy, Roman law was codified, the Hagia Sophia was built after the Nika riots, and he fought the Sasanians.",
       "sourceIds": [
@@ -8119,6 +8690,9 @@
     {
       "id": "person-justin-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Justin II",
       "summary": "Nephew of Justinian, emperor in the east from 565 to 578; in his reign the Langobards invaded Italy and war with the Sasanians broke out again.",
       "sourceIds": [
@@ -8158,6 +8732,9 @@
     {
       "id": "person-tiberius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tiberius II",
       "summary": "Adopted by Justin II, emperor in the east from 578 to 582.",
       "sourceIds": [
@@ -8191,6 +8768,10 @@
     {
       "id": "person-maurice",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Maurice",
       "summary": "Commander in the Persian war and emperor in the east from 582 to 602; he was dethroned by Phocas and died in 602.",
       "sourceIds": [
@@ -8229,6 +8810,9 @@
     {
       "id": "person-phocas",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Phocas",
       "summary": "A centurion who seized power in 602 and ruled in the east until 610; in his reign the Sasanian king Khusrau II invaded the empire.",
       "sourceIds": [
@@ -8267,6 +8851,9 @@
     {
       "id": "person-heraclius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Heraclius",
       "summary": "Emperor in the east from 610 to 641, who invaded the Sasanian empire, defeated a Persian army near Nineveh in 627 and returned the True Cross to Jerusalem in 630.",
       "sourceIds": [
@@ -8300,6 +8887,9 @@
     {
       "id": "person-zenobia",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Zenobia",
       "summary": "Wife of Odaenathus and ruler of the Palmyrene empire from 267 to 272, when Aurelian took her captive; how she died is not known.",
       "sourceIds": [
@@ -8329,6 +8919,9 @@
     {
       "id": "dynasty-antonine",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Antonines",
       "summary": "The family of Antoninus Pius, Marcus Aurelius, Lucius Verus and Commodus, who ruled from about 138 to 192; their years are often called the golden age of the empire.",
       "sourceIds": [
@@ -8372,6 +8965,9 @@
     {
       "id": "period-antonine",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Antonines",
       "summary": "The family of Antoninus Pius, Marcus Aurelius, Lucius Verus and Commodus, who ruled from about 138 to 192; their years are often called the golden age of the empire.",
       "sourceIds": [
@@ -8407,6 +9003,9 @@
     {
       "id": "dynasty-severan",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Severans",
       "summary": "The dynasty of Septimius Severus, which ruled from 193 to 235 with a break in 217–218.",
       "sourceIds": [
@@ -8449,6 +9048,9 @@
     {
       "id": "period-severan",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Severans",
       "summary": "The dynasty of Septimius Severus, which ruled from 193 to 235 with a break in 217–218.",
       "sourceIds": [
@@ -8483,6 +9085,9 @@
     {
       "id": "dynasty-constantinian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Constantinian dynasty",
       "summary": "The family of Constantine the Great, which ruled the empire or parts of it from 305 to 363; under it Christianity was no longer persecuted and Constantinople was founded.",
       "sourceIds": [
@@ -8525,6 +9130,9 @@
     {
       "id": "period-constantinian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Constantinian dynasty",
       "summary": "The family of Constantine the Great, which ruled the empire or parts of it from 305 to 363; under it Christianity was no longer persecuted and Constantinople was founded.",
       "sourceIds": [
@@ -8559,6 +9167,9 @@
     {
       "id": "dynasty-valentinian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Valentinian dynasty",
       "summary": "The family of Valentinian I, which ruled the empire or parts of it from 363 to 392, in a western and an eastern branch.",
       "sourceIds": [
@@ -8601,6 +9212,9 @@
     {
       "id": "period-valentinian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Valentinian dynasty",
       "summary": "The family of Valentinian I, which ruled the empire or parts of it from 363 to 392, in a western and an eastern branch.",
       "sourceIds": [
@@ -8635,6 +9249,9 @@
     {
       "id": "dynasty-theodosian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Theodosian dynasty",
       "summary": "The dynasty of Theodosius I, which ruled from 378 to 457; his sons founded an eastern and a western line, and in its time Britain and Gaul were lost and Constantinople became the chief city of the empire.",
       "sourceIds": [
@@ -8677,6 +9294,9 @@
     {
       "id": "period-theodosian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Theodosian dynasty",
       "summary": "The dynasty of Theodosius I, which ruled from 378 to 457; his sons founded an eastern and a western line, and in its time Britain and Gaul were lost and Constantinople became the chief city of the empire.",
       "sourceIds": [
@@ -8711,6 +9331,9 @@
     {
       "id": "period-tetrarchy",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The first tetrarchy",
       "summary": "The rule of two augusti, Diocletian and Maximian, with two caesares, Galerius and Constantius, from 293 until the augusti resigned in 305.",
       "sourceIds": [
@@ -8745,6 +9368,9 @@
     {
       "id": "period-west-roman-empire",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The divided empire, west",
       "summary": "The western half of the empire under its own emperors, from the death of Theodosius I in 395 to the deposition of Romulus Augustulus in 476.",
       "sourceIds": [
@@ -8781,6 +9407,9 @@
     {
       "id": "place-constantinople",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Constantinople",
       "summary": "The Greek city of Byzantium on the Bosphorus, where Constantine founded a new residence in 324; it became the capital of the East-Roman empire, modern İstanbul.",
       "sourceIds": [
@@ -8806,6 +9435,9 @@
     {
       "id": "place-palmyra",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Palmyra",
       "summary": "A caravan city in the Syrian desert, seat of Odaenathus and Zenobia, taken by Aurelian in 272.",
       "sourceIds": [
@@ -8824,6 +9456,10 @@
     {
       "id": "place-milvian-bridge",
       "type": "Place",
+      "kinds": [
+        "monument",
+        "battlefield"
+      ],
       "label": "The Milvian Bridge",
       "summary": "A bridge over the Tiber north of Rome, where Constantine defeated Maxentius in 312.",
       "sourceIds": [
@@ -8853,6 +9489,9 @@
     {
       "id": "event-bar-kochba-revolt",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The revolt of Bar Kochba",
       "summary": "A Jewish insurrection that began in 132 under Hadrian; Hadrian took Bethar in 135/136 and the last fighting in Galilee was in 136.",
       "sourceIds": [
@@ -8885,6 +9524,9 @@
     {
       "id": "event-antonine-plague",
       "type": "Event",
+      "kinds": [
+        "epidemic"
+      ],
       "label": "The plague under Marcus Aurelius",
       "summary": "A plague broke out in 165, during the Parthian war, and reached Rome in 167.",
       "sourceIds": [
@@ -8912,6 +9554,9 @@
     {
       "id": "event-year-of-five-emperors",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The year of the five emperors",
       "summary": "After the murder of Pertinax in 193, Didius Julianus, Pescennius Niger, Clodius Albinus and Septimius Severus were all proclaimed emperor; Severus won the civil wars that followed.",
       "sourceIds": [
@@ -8948,6 +9593,9 @@
     {
       "id": "event-constitutio-antoniniana",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "Citizenship for all free men",
       "summary": "In 212 Caracalla gave Roman citizenship to all free-born men of the empire.",
       "sourceIds": [
@@ -8976,6 +9624,9 @@
     {
       "id": "event-capture-of-valerian",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Shapur captures Valerian",
       "summary": "In 260 the emperor Valerian was defeated and taken captive by the Sasanian king Shapur I; he died in captivity in 262, and in the following years many usurpers rose in the empire.",
       "sourceIds": [
@@ -9004,6 +9655,9 @@
     {
       "id": "event-aurelian-takes-palmyra",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Aurelian takes Palmyra",
       "summary": "In 272 Aurelian defeated Zenobia and her son Vaballathus and captured Palmyra; in 274 he defeated the Gallic emperor Tetricus.",
       "sourceIds": [
@@ -9040,6 +9694,9 @@
     {
       "id": "event-aurelian-wall",
       "type": "Event",
+      "kinds": [
+        "construction"
+      ],
       "label": "A new wall for Rome",
       "summary": "In 271 Aurelian ordered the building of a new wall around Rome.",
       "sourceIds": [
@@ -9071,6 +9728,9 @@
     {
       "id": "event-tetrarchy-founded",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "The first tetrarchy",
       "summary": "In 293 Diocletian and Maximian each appointed a caesar, Galerius and Constantius, who were to succeed them.",
       "sourceIds": [
@@ -9111,6 +9771,9 @@
     {
       "id": "event-abdication-of-diocletian",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "Diocletian and Maximian resign",
       "summary": "In May 305 the two augusti laid down their power, and the caesares Galerius and Constantius became augusti – for the first time in ages a transfer of power without bloodshed.",
       "sourceIds": [
@@ -9143,6 +9806,9 @@
     {
       "id": "event-milvian-bridge",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of the Milvian Bridge",
       "summary": "In 312 Constantine crossed the Alps and defeated Maxentius at the Milvian Bridge, where Maxentius was killed.",
       "sourceIds": [
@@ -9179,6 +9845,10 @@
     {
       "id": "event-edict-of-milan",
       "type": "Event",
+      "kinds": [
+        "religiousEvent",
+        "lawReform"
+      ],
       "label": "The meeting at Milan",
       "summary": "In 313 Constantine and Licinius met at Milan; the agreement is known as the Edict of Milan.",
       "sourceIds": [
@@ -9210,6 +9880,9 @@
     {
       "id": "event-founding-of-constantinople",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The founding of Constantinople",
       "summary": "After defeating Licinius in 324, Constantine became sole ruler and founded a new residence at Byzantium, Constantinople.",
       "sourceIds": [
@@ -9242,6 +9915,9 @@
     {
       "id": "event-council-of-nicaea",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The Council of Nicaea",
       "summary": "The first ecumenical council of the Church met at Nicaea from 20 May to 19 June 325.",
       "sourceIds": [
@@ -9269,6 +9945,10 @@
     {
       "id": "event-death-of-julian",
       "type": "Event",
+      "kinds": [
+        "treaty",
+        "death"
+      ],
       "label": "The death of Julian and the peace of 363",
       "summary": "Julian invaded the Sasanian empire and was killed in action on 26 June 363; Jovian then made a peace with Shapur II that gave up Nisibis.",
       "sourceIds": [
@@ -9301,6 +9981,9 @@
     {
       "id": "event-battle-of-adrianople",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Adrianople",
       "summary": "In 378 the Goths defeated and killed the emperor Valens at Adrianople, and Theodosius was made emperor in the east.",
       "sourceIds": [
@@ -9334,6 +10017,9 @@
     {
       "id": "event-division-of-the-empire",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "The empire divided between two sons",
       "summary": "At the death of Theodosius I in 395, his sons Arcadius and Honorius succeeded him in the east and the west.",
       "sourceIds": [
@@ -9367,6 +10053,9 @@
     {
       "id": "event-sack-of-rome-410",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Visigoths take Rome",
       "summary": "In 410 the Visigoths captured Rome; Alaric died the same year, and Britain was evacuated.",
       "sourceIds": [
@@ -9398,6 +10087,9 @@
     {
       "id": "event-vandals-take-carthage",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Vandals take Carthage",
       "summary": "The Vandals invaded Africa in 429 and took Carthage in 439.",
       "sourceIds": [
@@ -9429,6 +10121,9 @@
     {
       "id": "event-attila-in-gaul",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Attila defeated in Gaul",
       "summary": "In 451 the Huns crossed the Rhine and invaded Gaul; Aetius defeated Attila near Troyes. In 452 the Huns invaded Italy.",
       "sourceIds": [
@@ -9466,6 +10161,9 @@
     {
       "id": "event-vandal-sack-of-rome",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Vandals sack Rome",
       "summary": "In 455, after the murder of Valentinian III and the death of Petronius Maximus, the Vandals sacked Rome.",
       "sourceIds": [
@@ -9498,6 +10196,9 @@
     {
       "id": "event-end-of-the-west",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The end of the empire in the west",
       "summary": "In 476 the soldiers in Italy revolted and their leader Odoacer deposed Romulus Augustulus, the last emperor in the west.",
       "sourceIds": [
@@ -9530,6 +10231,9 @@
     {
       "id": "event-nika-riots",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The Nika riots",
       "summary": "In January 532 the Nika riots broke out in Constantinople under Justinian.",
       "sourceIds": [
@@ -9566,6 +10270,9 @@
     {
       "id": "event-codification-of-roman-law",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "Roman law codified",
       "summary": "In 533 the codification of Roman law, the Institutes and the Digest, was completed under Justinian.",
       "sourceIds": [
@@ -9593,6 +10300,9 @@
     {
       "id": "event-belisarius-takes-carthage",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Belisarius conquers Africa",
       "summary": "Justinian’s general Belisarius conquered Africa and entered Carthage on 15 September 534; he went on to Sicily and took Rome in 536.",
       "sourceIds": [
@@ -9629,6 +10339,9 @@
     {
       "id": "event-hagia-sophia",
       "type": "Event",
+      "kinds": [
+        "construction"
+      ],
       "label": "The Hagia Sophia inaugurated",
       "summary": "The Hagia Sophia in Constantinople was inaugurated on 26 December 537.",
       "sourceIds": [
@@ -9660,6 +10373,9 @@
     {
       "id": "event-narses-conquers-italy",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Narses conquers Italy",
       "summary": "Justinian’s general Narses completed the conquest of Italy in 552.",
       "sourceIds": [
@@ -9687,6 +10403,9 @@
     {
       "id": "event-langobards-invade-italy",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Langobards invade Italy",
       "summary": "In 568, under Justin II, the Langobards invaded Italy.",
       "sourceIds": [
@@ -9714,6 +10433,9 @@
     {
       "id": "event-battle-of-nineveh-627",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Heraclius defeats the Persians near Nineveh",
       "summary": "In December 627 Heraclius defeated a large Persian army near the ruins of Nineveh; Khusrau II fell soon after, and in 630 Heraclius returned the True Cross to Jerusalem.",
       "sourceIds": [
@@ -9741,6 +10463,9 @@
     {
       "id": "person-zeno",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Zeno",
       "summary": "An Isaurian who made his career under Leo I and married his daughter Ariadne; emperor in the east from 474, he was briefly dethroned by Basiliscus in 475, came back in 476 with the help of the Ostrogothic king Theodoric and ruled until his natural death in 491.",
       "sourceIds": [
@@ -9787,6 +10512,9 @@
     {
       "id": "person-basiliscus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Basiliscus",
       "summary": "The brother of Verina, widow of Leo I, who with her support dethroned Zeno in 475 and held the throne until Zeno returned in 476.",
       "sourceIds": [
@@ -9815,6 +10543,9 @@
     {
       "id": "government-kingdom-of-italy",
       "type": "Government",
+      "kinds": [
+        "state"
+      ],
       "label": "The kingdom of Italy",
       "summary": "The rule of Odoacer and then of the Ostrogothic king Theodoric over Italy after the last emperor in the west was deposed in 476; Theodoric’s capital was Ravenna.",
       "sourceIds": [
@@ -9839,6 +10570,9 @@
     {
       "id": "office-king-of-italy",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Italy",
       "summary": "The title Odoacer took in Italy while recognizing the eastern emperor as overlord; Theodoric held it after him.",
       "sourceIds": [
@@ -9856,6 +10590,9 @@
     {
       "id": "person-odoacer",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Odoacer",
       "summary": "A Germanic warrior, probably of the Sciri, who rose to command in the Roman army; proclaimed king by his troops in 476, he deposed Romulus Augustulus and ruled Italy as king until Theodoric’s conquest; he died in 493.",
       "sourceIds": [
@@ -9902,6 +10639,9 @@
     {
       "id": "person-theodoric",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Theodoric the Great",
       "summary": "King of the Ostrogoths from 471, who had lived as a boy as a hostage in Constantinople; he invaded Italy in 488, conquered it with Sicily by 493 and ruled as king of Italy from Ravenna until his death in 526.",
       "sourceIds": [
@@ -9940,6 +10680,9 @@
     {
       "id": "event-theodoric-conquers-italy",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Theodoric conquers Italy",
       "summary": "The Ostrogoths under Theodoric invaded Italy in 488 and by 493 had conquered almost the whole peninsula and Sicily, ending the rule of Odoacer.",
       "sourceIds": [
@@ -9976,6 +10719,9 @@
     {
       "id": "person-attila",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Attila",
       "summary": "King of the Huns from 434 to 453, first with his brother Bleda, whom he murdered in 445; he took a yearly tribute in gold from the eastern empire and invaded Gaul and Italy.",
       "sourceIds": [
@@ -10009,6 +10755,10 @@
     {
       "id": "person-aetius",
       "type": "Person",
+      "kinds": [
+        "general",
+        "statesman"
+      ],
       "label": "Flavius Aetius",
       "summary": "A Roman general who dominated the western empire under Valentinian III: master of both services from 430, patrician from 435 and three times consul; he defeated Attila in Gaul and was murdered in 454.",
       "sourceIds": [
@@ -10043,6 +10793,10 @@
     {
       "id": "person-stilicho",
       "type": "Person",
+      "kinds": [
+        "general",
+        "statesman"
+      ],
       "label": "Flavius Stilicho",
       "summary": "Half-Roman and half-Vandal, commander in chief of the army and regent for Honorius from 394 to 408; he fought Alaric’s Visigoths and repelled an invasion of Italy in 406, and was beheaded on Honorius’ orders in 408.",
       "sourceIds": [
@@ -10081,6 +10835,9 @@
     {
       "id": "person-belisarius",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Belisarius",
       "summary": "A general of Justinian who won his first victory against the Sasanians in 530, put down the Nika insurrection in 532 and led the reconquest of Africa and Italy; he died in 565.",
       "sourceIds": [
@@ -10120,6 +10877,9 @@
     {
       "id": "event-battle-of-dara",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Belisarius defeats the Persians",
       "summary": "Belisarius won his first victory as a commander against Sasanian Persia on the Mesopotamian front in 530.",
       "sourceIds": [
@@ -10147,6 +10907,9 @@
     {
       "id": "dynasty-heraclian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Heraclian dynasty",
       "summary": "The house of Heraclius, which ruled from 610 to 711; under his successors Egypt, Syria and Africa were lost to the Arabs, Constantinople withstood a four-year siege and the Bulgars settled south of the Danube.",
       "sourceIds": [
@@ -10187,6 +10950,9 @@
     {
       "id": "period-heraclian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Heraclian dynasty",
       "summary": "The house of Heraclius, which ruled from 610 to 711; under his successors Egypt, Syria and Africa were lost to the Arabs, Constantinople withstood a four-year siege and the Bulgars settled south of the Danube.",
       "sourceIds": [
@@ -10223,6 +10989,9 @@
     {
       "id": "dynasty-isaurian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Isaurian dynasty",
       "summary": "The house of Leo III, which ruled from 717 to 802; it turned back the Arabs from Constantinople and began the attack on the veneration of icons, and ended with the deposition of Irene.",
       "sourceIds": [
@@ -10262,6 +11031,9 @@
     {
       "id": "period-isaurian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Isaurian dynasty",
       "summary": "The house of Leo III, which ruled from 717 to 802; it turned back the Arabs from Constantinople and began the attack on the veneration of icons, and ended with the deposition of Irene.",
       "sourceIds": [
@@ -10297,6 +11069,9 @@
     {
       "id": "dynasty-amorian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Amorian dynasty",
       "summary": "The house of Michael II, also called Phrygian, which ruled from 820 to 867 through his son Theophilus and grandson Michael III; under it the icons were finally restored in 843.",
       "sourceIds": [
@@ -10336,6 +11111,9 @@
     {
       "id": "period-amorian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Amorian dynasty",
       "summary": "The house of Michael II, also called Phrygian, which ruled from 820 to 867 through his son Theophilus and grandson Michael III; under it the icons were finally restored in 843.",
       "sourceIds": [
@@ -10371,6 +11149,9 @@
     {
       "id": "dynasty-macedonian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Macedonian dynasty",
       "summary": "The house of Basil I, who murdered his way to the throne in 867; until the death of Basil II in 1025 the empire enjoyed a golden age, recovering Crete, Antioch and Bulgaria.",
       "sourceIds": [
@@ -10399,6 +11180,9 @@
     {
       "id": "period-macedonian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Macedonian dynasty",
       "summary": "The house of Basil I, who murdered his way to the throne in 867; until the death of Basil II in 1025 the empire enjoyed a golden age, recovering Crete, Antioch and Bulgaria.",
       "sourceIds": [
@@ -10434,6 +11218,10 @@
     {
       "id": "period-iconoclasm",
       "type": "Period",
+      "kinds": [
+        "era",
+        "religiousEvent"
+      ],
       "label": "The age of Iconoclasm",
       "summary": "From the accession of Leo III in 717 to 867 the emperors tried, often with wide support, to end the veneration of icons; Irene restored it at the Council of Nicaea in 787, Leo V renewed iconoclasm in 815, and the icons were finally restored in 843.",
       "sourceIds": [
@@ -10468,6 +11256,9 @@
     {
       "id": "person-constantine-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantine III",
       "summary": "Successor of Heraclius, emperor from February to May 641.",
       "sourceIds": [
@@ -10493,6 +11284,9 @@
     {
       "id": "person-heraclonas",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Heraclonas",
       "summary": "Emperor for a few months in 641, after Constantine III.",
       "sourceIds": [
@@ -10517,6 +11311,9 @@
     {
       "id": "person-constans-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constans II",
       "summary": "Emperor from 641 to 668, in whose reign the Arabs completed the conquest of Egypt; he led an expedition into Macedonia in 658.",
       "sourceIds": [
@@ -10542,6 +11339,9 @@
     {
       "id": "person-constantine-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantine IV",
       "summary": "Eldest son of Constans II, emperor from 668 to 685, who withstood the four-year Arab siege of Constantinople, recognised the Bulgar kingdom and summoned the sixth ecumenical council.",
       "sourceIds": [
@@ -10582,6 +11382,9 @@
     {
       "id": "person-justinian-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Justinian II",
       "summary": "Son of Constantine IV and last emperor of the Heraclian dynasty, emperor from 685 to 695, when he was deposed and mutilated, and again from 705 with Bulgar help until his death in 711.",
       "sourceIds": [
@@ -10623,6 +11426,9 @@
     {
       "id": "person-leontius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leontius",
       "summary": "Emperor from 695 to 698, after the deposition of Justinian II.",
       "sourceIds": [
@@ -10647,6 +11453,9 @@
     {
       "id": "person-tiberius-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tiberius III",
       "summary": "Emperor from 698 to 705, until Justinian II returned.",
       "sourceIds": [
@@ -10671,6 +11480,9 @@
     {
       "id": "person-philippicus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Philippikos Vardan",
       "summary": "Emperor from 711 to 713, after the second fall of Justinian II.",
       "sourceIds": [
@@ -10702,6 +11514,9 @@
     {
       "id": "person-anastasius-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Anastasios II",
       "summary": "Emperor from 713 to 715.",
       "sourceIds": [
@@ -10726,6 +11541,9 @@
     {
       "id": "person-theodosius-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Theodosios III",
       "summary": "Emperor from 715 to 717, the last of the short reigns before Leo III.",
       "sourceIds": [
@@ -10750,6 +11568,9 @@
     {
       "id": "person-leo-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leo III",
       "summary": "Founder of the Isaurian dynasty, emperor from 717 to 741, who turned back the Arab assault on Constantinople in 718, won at Akroinon in 740 and began the attack on the veneration of icons.",
       "sourceIds": [
@@ -10786,6 +11607,9 @@
     {
       "id": "person-constantine-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantine V",
       "summary": "Son of Leo III, emperor from 741 to 775, under whom iconoclasm intensified into persecution of the monks; one of the most successful Byzantine generals, he fought the Bulgars from 756 to 775.",
       "sourceIds": [
@@ -10818,6 +11642,9 @@
     {
       "id": "person-leo-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leo IV",
       "summary": "Son of Constantine V, emperor from 775 until his early death in 780.",
       "sourceIds": [
@@ -10848,6 +11675,9 @@
     {
       "id": "person-constantine-vi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantine VI",
       "summary": "Son of Leo IV, emperor at ten in 780 under the regency of his mother Irene, who had him deposed and blinded in 797.",
       "sourceIds": [
@@ -10873,6 +11703,9 @@
     {
       "id": "person-irene",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Irene",
       "summary": "Empress, regent for her son Constantine VI and, after having him deposed and blinded, sole ruler from 797 to 802; she restored the icons at the Council of Nicaea in 787 and died in exile on Lesbos.",
       "sourceIds": [
@@ -10902,6 +11735,9 @@
     {
       "id": "person-nicephorus-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nikephoros I",
       "summary": "The finance minister who succeeded Irene, emperor from 802 to 811, who reformed the taxes and fell in battle against the Bulgar khan Krum.",
       "sourceIds": [
@@ -10939,6 +11775,9 @@
     {
       "id": "person-stauracius",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Stauracius",
       "summary": "Successor of Nikephoros I, emperor for a short time in 811.",
       "sourceIds": [
@@ -10963,6 +11802,9 @@
     {
       "id": "person-michael-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Michael I Rhangabe",
       "summary": "Emperor from 811 to 813, who lost his throne after his army broke up before Krum near Adrianople.",
       "sourceIds": [
@@ -10988,6 +11830,9 @@
     {
       "id": "person-leo-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leo V the Armenian",
       "summary": "Emperor from 813 to 820, who renewed iconoclasm in 815.",
       "sourceIds": [
@@ -11013,6 +11858,9 @@
     {
       "id": "person-michael-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Michael II",
       "summary": "Founder of the Amorian dynasty, emperor from 820 to 829; in his reign the Arabs took Crete and began the conquest of Sicily.",
       "sourceIds": [
@@ -11038,6 +11886,9 @@
     {
       "id": "person-theophilus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Theophilus",
       "summary": "Son of Michael II, emperor from 829 to 842, defeated by a Muslim army in 838 before the fall of Amorium.",
       "sourceIds": [
@@ -11063,6 +11914,9 @@
     {
       "id": "person-michael-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Michael III",
       "summary": "Son of Theophilus, emperor from 842 to 867, in whose reign the icons were restored in 843.",
       "sourceIds": [
@@ -11088,6 +11942,9 @@
     {
       "id": "person-basil-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Basil I",
       "summary": "Founder of the Macedonian dynasty, who murdered his way to the throne in 867 and ruled until 886.",
       "sourceIds": [
@@ -11113,6 +11970,9 @@
     {
       "id": "person-leo-vi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Leo VI the Wise",
       "summary": "The scholarly successor of Basil I, emperor from 886 to 912.",
       "sourceIds": [
@@ -11138,6 +11998,9 @@
     {
       "id": "person-alexander-byzantine",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alexander",
       "summary": "Emperor from 912 to 913, between Leo VI and Constantine VII.",
       "sourceIds": [
@@ -11162,6 +12025,9 @@
     {
       "id": "person-constantine-vii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Constantine VII Porphyrogenitus",
       "summary": "Emperor from 913 to 959, at first beside Romanos I; in his reign Olga of Kiev was baptised and visited Constantinople.",
       "sourceIds": [
@@ -11187,6 +12053,9 @@
     {
       "id": "person-romanus-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Romanos I Lekapenos",
       "summary": "Co-emperor beside Constantine VII from 920 to 944, who passed laws in 922 and 934 to protect small landowners against the powerful.",
       "sourceIds": [
@@ -11219,6 +12088,9 @@
     {
       "id": "person-romanus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Romanos II",
       "summary": "Son of Constantine VII, emperor from 959 to 963.",
       "sourceIds": [
@@ -11251,6 +12123,10 @@
     {
       "id": "person-nicephorus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Nikephoros II Phokas",
       "summary": "General who reconquered Crete in 961 and was proclaimed emperor in 963, ruling until 969; his armies retook Cyprus and Antioch.",
       "sourceIds": [
@@ -11287,6 +12163,10 @@
     {
       "id": "person-john-i-tzimisces",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "John I Tzimiskes",
       "summary": "Armenian general who usurped the throne in 969, humbled the Russians and made Bulgaria a client kingdom in 971, and extended Byzantine rule over Syria; he died in 976.",
       "sourceIds": [
@@ -11324,6 +12204,9 @@
     {
       "id": "person-basil-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Basil II",
       "summary": "The legitimate heir of the Macedonian house, emperor from 976 to 1025, who after some twenty years of war crushed Bulgarian resistance by 1018, married his sister to Vladimir of Kiev and died in 1025 at the end of the empire’s golden age.",
       "sourceIds": [
@@ -11358,6 +12241,9 @@
     {
       "id": "event-arabs-take-alexandria",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Alexandria capitulates to the Arabs",
       "summary": "Alexandria capitulated in 642, removing Egypt forever from Byzantine authority.",
       "sourceIds": [
@@ -11385,6 +12271,9 @@
     {
       "id": "event-arab-siege-of-constantinople-674",
       "type": "Event",
+      "kinds": [
+        "siege"
+      ],
       "label": "The Arab siege of Constantinople",
       "summary": "After their assaults on Armenia and Asia Minor the Arabs besieged Constantinople for four years, from 674 to 678; Constantine IV withstood them, a turning point in European history.",
       "sourceIds": [
@@ -11422,6 +12311,9 @@
     {
       "id": "event-sixth-ecumenical-council",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The sixth ecumenical council",
       "summary": "The sixth general council, summoned by Constantine IV in 680–681 at Constantinople, condemned Monothelitism.",
       "sourceIds": [
@@ -11459,6 +12351,9 @@
     {
       "id": "event-bulgar-kingdom-recognised",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The Bulgar kingdom recognised",
       "summary": "Constantine IV failed to defeat the Bulgars in 681 and by treaty recognised them as an independent kingdom south of the Danube.",
       "sourceIds": [
@@ -11487,6 +12382,9 @@
     {
       "id": "event-justinian-ii-deposed",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "Justinian II deposed",
       "summary": "Justinian II was deposed and mutilated in 695; with Bulgar help he returned to the throne in 705.",
       "sourceIds": [
@@ -11514,6 +12412,9 @@
     {
       "id": "event-fall-of-septem",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The loss of Africa",
       "summary": "By the end of the seventh century Africa was largely lost to the Muslims, who in 711 seized the last outpost at Septem.",
       "sourceIds": [
@@ -11537,6 +12438,9 @@
     {
       "id": "event-arab-siege-of-constantinople-717",
       "type": "Event",
+      "kinds": [
+        "siege"
+      ],
       "label": "The second Arab siege of Constantinople",
       "summary": "In 717 the Arabs again besieged Constantinople by land and sea; with Bulgar help Leo III turned back the assault in 718.",
       "sourceIds": [
@@ -11574,6 +12478,9 @@
     {
       "id": "event-battle-of-akroinon",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Akroinon",
       "summary": "With the help of the Khazars, Leo III’s reign ended with a major victory over the Arabs at Akroinon in 740.",
       "sourceIds": [
@@ -11601,6 +12508,9 @@
     {
       "id": "event-second-council-of-nicaea",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The Council of Nicaea restores the icons",
       "summary": "At the instigation of the empress Irene, the Council of Nicaea in 787 restored the veneration of icons.",
       "sourceIds": [
@@ -11628,6 +12538,9 @@
     {
       "id": "event-irene-sole-ruler",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Irene rules alone",
       "summary": "Irene had her son Constantine VI deposed and blinded and ruled alone from 797 until a revolt of palace officials deposed her in 802.",
       "sourceIds": [
@@ -11659,6 +12572,9 @@
     {
       "id": "event-coronation-of-charlemagne",
       "type": "Event",
+      "kinds": [
+        "ceremony"
+      ],
       "label": "The coronation of Charlemagne",
       "summary": "On Christmas Day 800 Pope Leo III crowned Charlemagne, king of the Franks and Lombards, emperor of the Romans, a challenge to the emperor at Constantinople.",
       "sourceIds": [
@@ -11682,6 +12598,10 @@
     {
       "id": "event-death-of-nicephorus-i",
       "type": "Event",
+      "kinds": [
+        "battle",
+        "death"
+      ],
       "label": "Nikephoros I falls against Krum",
       "summary": "Nikephoros I led his army against the Bulgar khan Krum in 811 and met defeat and death.",
       "sourceIds": [
@@ -11709,6 +12629,9 @@
     {
       "id": "event-iconoclasm-renewed",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "Leo V renews iconoclasm",
       "summary": "After military reverses, Leo V revived the iconoclast policies of Constantine V in 815.",
       "sourceIds": [
@@ -11736,6 +12659,9 @@
     {
       "id": "event-arabs-take-crete",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Arabs take Crete",
       "summary": "In 826 or 827 the Arabs captured Crete, a sign of the decline of Byzantine strength in the Mediterranean.",
       "sourceIds": [
@@ -11764,6 +12690,10 @@
     {
       "id": "event-fall-of-amorium",
       "type": "Event",
+      "kinds": [
+        "battle",
+        "conquest"
+      ],
       "label": "Theophilus defeated and Amorium lost",
       "summary": "In 838 a Muslim army defeated Theophilus himself and went on to capture the fortress of Amorium in Asia Minor.",
       "sourceIds": [
@@ -11791,6 +12721,9 @@
     {
       "id": "event-restoration-of-the-icons",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The icons restored",
       "summary": "In 843, under Michael III, the icons were definitively restored and their veneration proclaimed as Orthodox belief.",
       "sourceIds": [
@@ -11818,6 +12751,9 @@
     {
       "id": "event-rus-attack-constantinople",
       "type": "Event",
+      "kinds": [
+        "siege"
+      ],
       "label": "The Rus attack Constantinople",
       "summary": "Sailing down the Dnieper from Kiev to the Black Sea, the warships of the Rus first attacked Constantinople in 860.",
       "sourceIds": [
@@ -11845,6 +12781,9 @@
     {
       "id": "event-basil-i-takes-throne",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Basil I seizes the throne",
       "summary": "In 867 Basil I murdered his way to the throne and founded the Macedonian dynasty.",
       "sourceIds": [
@@ -11872,6 +12811,9 @@
     {
       "id": "event-arabs-complete-sicily",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Arabs complete the conquest of Sicily",
       "summary": "In 902 the Arabs completed the conquest of Sicily, though they were kept out of Byzantine South Italy.",
       "sourceIds": [
@@ -11895,6 +12837,9 @@
     {
       "id": "event-simeon-at-constantinople",
       "type": "Event",
+      "kinds": [
+        "siege"
+      ],
       "label": "Simeon of Bulgaria before Constantinople",
       "summary": "In 913 Simeon I of Bulgaria brought his army to the walls of Constantinople, demanding the imperial title.",
       "sourceIds": [
@@ -11922,6 +12867,9 @@
     {
       "id": "event-reconquest-of-crete",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Crete reconquered",
       "summary": "In 961 Nikephoros Phokas reconquered Crete and destroyed the Arab fleet that had terrorised the Aegean for 150 years.",
       "sourceIds": [
@@ -11949,6 +12897,9 @@
     {
       "id": "event-recapture-of-antioch",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Antioch recaptured",
       "summary": "In 969 the Byzantine armies recaptured Antioch, seat of one of the patriarchs.",
       "sourceIds": [
@@ -11980,6 +12931,9 @@
     {
       "id": "event-tzimisces-subdues-bulgaria",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "John Tzimiskes humbles the Rus and Bulgaria",
       "summary": "In 971 John Tzimiskes humiliated the Rus and reduced Bulgaria to a client kingdom.",
       "sourceIds": [
@@ -12007,6 +12961,9 @@
     {
       "id": "event-baptism-of-vladimir",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The baptism of Vladimir of Kiev",
       "summary": "Vladimir of Kiev, who had helped Basil II to keep his throne, received the emperor’s sister in marriage and was baptised in 989.",
       "sourceIds": [
@@ -12034,6 +12991,9 @@
     {
       "id": "event-bulgaria-subdued",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Bulgaria subdued",
       "summary": "After a ruthless campaign of some twenty years Basil II crushed the last Bulgarian resistance by 1018.",
       "sourceIds": [
@@ -12061,6 +13021,9 @@
     {
       "id": "event-death-of-basil-ii",
       "type": "Event",
+      "kinds": [
+        "death"
+      ],
       "label": "The death of Basil II",
       "summary": "Basil II died in 1025 while preparing a campaign against the Arabs in Sicily; with him ended the golden age of the Macedonian era.",
       "sourceIds": [
@@ -12088,6 +13051,9 @@
     {
       "id": "event-roman-envoys-166",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Envoys from Rome at the Han court",
       "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of the Han emperor Huan.",
       "sourceIds": [
@@ -12111,6 +13077,9 @@
     {
       "id": "event-siege-of-constantinople-626",
       "type": "Event",
+      "kinds": [
+        "siege"
+      ],
       "label": "The Persians before Constantinople",
       "summary": "In 626 the Avars attacked Constantinople while a Persian army under Shahrbaraz stood across the Bosphorus; the walls held, the Avars retreated and Heraclius kept to his campaign in the east.",
       "sourceIds": [
@@ -12142,6 +13111,9 @@
     {
       "id": "period-villanovan",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Villanovan culture",
       "summary": "The Early Iron Age culture of Italy, named after Villanova near Bologna, whose cremating people appeared in the tenth or ninth century BCE and worked the copper and iron mines of Tuscany; in Tuscany an Orientalizing civilization, presumably Etruscan, overlaid it in the first quarter of the seventh century.",
       "sourceIds": [
@@ -12194,6 +13166,9 @@
     {
       "id": "region-etruria",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Etruria",
       "summary": "The land of the Etruscans between the rivers Tiber and Arno, whose material culture in the ninth century BCE was the Villanovan; by the eighth century they traded metal for Greek wine, and by the sixth their trade reached Spain.",
       "sourceIds": [
@@ -12212,6 +13187,9 @@
     {
       "id": "region-magna-graecia",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Magna Graecia",
       "summary": "The Greek cities along the coast of southern Italy, from the first Euboean colonies of Pithecussae and Cumae about 750 BCE to Tarentum, Sybaris, Croton, Locri and Rhegium; seat of the Pythagorean and Eleatic philosophies.",
       "sourceIds": [
@@ -12230,6 +13208,9 @@
     {
       "id": "place-alba-longa",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Alba Longa",
       "summary": "The ancient city of Latium in the Alban Hills near Castel Gandolfo, by tradition founded by Ascanius and the oldest Latin city, mother of Rome; its cemeteries go back to the tenth century BCE, and Rome destroyed it about 600 BCE.",
       "sourceIds": [
@@ -12252,6 +13233,9 @@
     {
       "id": "place-veii",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Veii",
       "summary": "An Etruscan city eighteen kilometres north of Rome, with origins in the ninth century BCE and its Portonaccio sanctuary from about 700 BCE; it fought Rome in the fifth century BCE.",
       "sourceIds": [
@@ -12274,6 +13258,9 @@
     {
       "id": "place-pithecusae",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Pithecusae",
       "summary": "The first Greek colony in Italy, on the island of Ischia, founded by Euboeans about 750 BCE.",
       "sourceIds": [
@@ -12303,6 +13290,9 @@
     {
       "id": "place-cumae",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Cumae",
       "summary": "The Euboean colony on the coast of Campania, founded with Pithecusae about 750 BCE; off it the Cumaeans and Syracusans defeated the Etruscans at sea about 474 BCE.",
       "sourceIds": [
@@ -12333,6 +13323,9 @@
     {
       "id": "event-founding-of-alba-longa",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The founding of Alba Longa (tradition)",
       "summary": "Tradition attributes the founding of Alba Longa, about 1152 BCE, to Ascanius, son of Aeneas, making it the oldest Latin city and the mother of Rome.",
       "sourceIds": [
@@ -12361,6 +13354,9 @@
     {
       "id": "event-first-greek-colonies-in-italy",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The first Greek colonies in Italy",
       "summary": "About 750 BCE Euboeans founded the first Greek colonies in Italy, Pithecussae and Cumae; Spartans, Achaeans, Locrians and Chalcidians followed.",
       "sourceIds": [
@@ -12389,6 +13385,9 @@
     {
       "id": "event-destruction-of-alba-longa",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Rome destroys Alba Longa",
       "summary": "Alba Longa, head of a Latin league, was destroyed by Rome about 600 BCE; distinguished families, among them the Julian clan, were said to have moved to Rome.",
       "sourceIds": [
@@ -12417,6 +13416,9 @@
     {
       "id": "event-battle-of-cumae",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The naval battle of Cumae",
       "summary": "About 474 BCE the Cumaeans and Syracusans defeated the Etruscans in a naval battle off Cumae.",
       "sourceIds": [
@@ -12445,6 +13447,9 @@
     {
       "id": "person-virgil",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Virgil",
       "summary": "Publius Vergilius Maro, Roman poet born at Mantua, of the circle of Maecenas and Octavian, author of the Eclogues and of the Aeneid, the national poem of the Romans.",
       "sourceIds": [
@@ -12490,6 +13495,9 @@
     {
       "id": "work-aeneid",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Aeneid",
       "summary": "Virgil’s epic of Aeneas, the national poem of the Romans.",
       "sourceIds": [
@@ -12506,6 +13514,9 @@
     {
       "id": "work-eclogues",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Eclogues",
       "summary": "Virgil’s shepherds’ songs, inspired by Theocritus and published between 42 and 39 BCE.",
       "sourceIds": [
@@ -12545,6 +13556,9 @@
     {
       "id": "person-livy",
       "type": "Person",
+      "kinds": [
+        "historian"
+      ],
       "label": "Livy",
       "summary": "Titus Livius, Roman historian, author of the History of Rome from its foundation, the authorized version of the history of the Republic; Jerome dates his life from 59 BCE to 17 CE.",
       "sourceIds": [
@@ -12590,6 +13604,9 @@
     {
       "id": "work-ab-urbe-condita",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "History of Rome from its foundation",
       "summary": "Livy’s voluminous history of Rome from its foundation; the first five books appeared between 27 and 25 BCE.",
       "sourceIds": [
@@ -12613,6 +13630,9 @@
     {
       "id": "person-procopius",
       "type": "Person",
+      "kinds": [
+        "historian"
+      ],
       "label": "Procopius",
       "summary": "Procopius of Caesarea, born about 495, secretary and legal adviser of Belisarius from 527 on his campaigns, author of the History of the Wars, the Buildings and the Secret History; prefect of the city in 562.",
       "sourceIds": [
@@ -12654,6 +13674,9 @@
     {
       "id": "work-history-of-the-wars",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "History of the Wars",
       "summary": "Procopius’ account of the wars of Belisarius against the Persians, the Vandals and the Ostrogoths, published in 550 or 551.",
       "sourceIds": [
@@ -12686,6 +13709,9 @@
     {
       "id": "work-buildings-of-procopius",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The Buildings",
       "summary": "Procopius’ overview of the monuments built and restored by Justinian, published in 554.",
       "sourceIds": [
@@ -12713,6 +13739,9 @@
     {
       "id": "work-secret-history",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The Secret History",
       "summary": "Procopius’ hostile account of Justinian, Theodora, Belisarius and Antonina, published after his death.",
       "sourceIds": [
@@ -12729,6 +13758,9 @@
     {
       "id": "work-pantheon",
       "type": "Work",
+      "kinds": [
+        "monument"
+      ],
       "label": "The Pantheon",
       "summary": "The temple in Rome rebuilt by Hadrian between 118 and 125 under the name of its first builder, when it received its famous vaulted roof; reckoned among Rome’s greatest wonders.",
       "sourceIds": [
@@ -12768,6 +13800,10 @@
     {
       "id": "person-tacitus-historian",
       "type": "Person",
+      "kinds": [
+        "historian",
+        "statesman"
+      ],
       "label": "Tacitus the historian",
       "summary": "Roman orator and official, born in 56 CE, probably the greatest historian who wrote in Latin: the Germania, the Histories of 69–96 and the Annals of 14–68; he died about 120.",
       "sourceIds": [
@@ -12807,6 +13843,9 @@
     {
       "id": "work-germania",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The Germania",
       "summary": "Tacitus’ description of the Germanic tribes.",
       "sourceIds": [
@@ -12823,6 +13862,9 @@
     {
       "id": "work-histories-of-tacitus",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The Histories of Tacitus",
       "summary": "Tacitus’ Historiae, on the Roman Empire from 69 to 96 CE.",
       "sourceIds": [
@@ -12839,6 +13881,9 @@
     {
       "id": "work-annals",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The Annals",
       "summary": "Tacitus’ later work on the empire from 14 to 68 CE.",
       "sourceIds": [
@@ -12855,6 +13900,9 @@
     {
       "id": "person-ovid",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ovid",
       "summary": "Publius Ovidius Naso, Roman poet born at Sulmo in 43 BCE, noted for the Ars amatoria and the Metamorphoses, whose retelling of Classical myth had immense influence; he died at Tomis on the Black Sea in 17 CE.",
       "sourceIds": [
@@ -12900,6 +13948,9 @@
     {
       "id": "work-metamorphoses",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Metamorphoses",
       "summary": "Ovid’s poem of transformations, an imaginative retelling of Classical myth.",
       "sourceIds": [
@@ -12916,6 +13967,9 @@
     {
       "id": "work-ars-amatoria",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Art of Love",
       "summary": "Ovid’s Ars amatoria.",
       "sourceIds": [
@@ -12932,6 +13986,10 @@
     {
       "id": "person-polybius",
       "type": "Person",
+      "kinds": [
+        "historian",
+        "statesman"
+      ],
       "label": "Polybius",
       "summary": "Greek statesman and historian from Megalopolis, born about 200 BCE, who wrote of the rise of Rome to world prominence; he died about 118 BCE.",
       "sourceIds": [
@@ -12972,6 +14030,9 @@
     {
       "id": "person-libius-severus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Libius Severus",
       "summary": "Emperor of the West from 461 to 465 CE, between Majorian and Anthemius.",
       "sourceIds": [

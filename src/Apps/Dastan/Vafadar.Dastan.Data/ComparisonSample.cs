@@ -290,6 +290,13 @@ public static partial class ComparisonSample
     {
         if (item.Kinds is not { Count: > 0 } keys)
         {
+            // The rule of K4 holds for a comparison whose content root has a list of kinds: a comparison read on
+            // its own, without a list, names no kind and is not refused for it.
+            if (KindsFile.EveryRecordHasAKind && list.Value is { All.IsEmpty: false })
+            {
+                problems.Add($"\"{item.Key}\" names no kind; every period and event has at least one kind of the list (kinds.json).");
+            }
+
             return [];
         }
 

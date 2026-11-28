@@ -258,6 +258,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the stories of Jamshid, Zahhak and Fereydun are told.",
       "sourceIds": [
@@ -302,6 +305,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -348,6 +354,9 @@
     {
       "id": "story-jamshid-zahhak-fereydun",
       "type": "NarrativeArc",
+      "kinds": [
+        "reignStory"
+      ],
       "label": "Jamshid, Zahhak and Kaveh, Fereydun",
       "summary": "The kings of the poem who follow Tahmuras – Jamshid, Zahhak and Fereydun – and the blacksmith Kaveh.",
       "sourceIds": [
@@ -364,6 +373,9 @@
     {
       "id": "character-jamshid",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Jamshid",
       "summary": "King of Iran after his father, who rules with the divine glory and teaches people the crafts.",
       "sourceIds": [
@@ -380,6 +392,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The land Jamshid rules.",
       "sourceIds": [
@@ -390,6 +406,9 @@
     {
       "id": "character-mardas",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Mardas",
       "summary": "A just and generous ruler of the riders of the plains, rich in herds.",
       "sourceIds": [
@@ -406,6 +425,9 @@
     {
       "id": "character-zahhak",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Zahhak",
       "summary": "Son of Mardas, bold and light-minded, to whom Iblis comes as a friend.",
       "sourceIds": [
@@ -429,6 +451,9 @@
     {
       "id": "character-iblis",
       "type": "Character",
+      "kinds": [
+        "demon"
+      ],
       "label": "Iblis",
       "summary": "The tempter, who comes to Zahhak in one guise after another.",
       "sourceIds": [
@@ -445,6 +470,9 @@
     {
       "id": "place-land-of-the-arabs",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "The land of the Arabs",
       "summary": "The plains of the spear-bearing riders, where Mardas rules.",
       "sourceIds": [
@@ -455,6 +483,9 @@
     {
       "id": "character-shahrnaz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Shahrnaz",
       "summary": "A daughter of Jamshid, taken to the palace of Zahhak.",
       "sourceIds": [
@@ -471,6 +502,9 @@
     {
       "id": "character-arnavaz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Arnavaz",
       "summary": "A daughter of Jamshid, taken to the palace of Zahhak.",
       "sourceIds": [
@@ -487,6 +521,9 @@
     {
       "id": "character-armayel",
       "type": "Character",
+      "kinds": [
+        "sage"
+      ],
       "label": "Armayel",
       "summary": "A pious man of royal descent who becomes a cook in Zahhak's kitchen.",
       "sourceIds": [
@@ -503,6 +540,9 @@
     {
       "id": "character-garmayel",
       "type": "Character",
+      "kinds": [
+        "sage"
+      ],
       "label": "Garmayel",
       "summary": "A far-sighted man of royal descent who becomes a cook in Zahhak's kitchen.",
       "sourceIds": [
@@ -519,6 +559,9 @@
     {
       "id": "place-sea-of-chin",
       "type": "NarrativePlace",
+      "kinds": [
+        "sea"
+      ],
       "label": "The sea of Chin",
       "summary": "The sea by which Jamshid is found after his years in hiding.",
       "sourceIds": [
@@ -529,6 +572,9 @@
     {
       "id": "character-zirak",
       "type": "Character",
+      "kinds": [
+        "sage"
+      ],
       "label": "Zirak",
       "summary": "A wise and outspoken mobad among those Zahhak summons to read his dream.",
       "sourceIds": [
@@ -545,6 +591,9 @@
     {
       "id": "character-fereydun",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Fereydun",
       "summary": "A prince of the line of Tahmuras, whose coming a mobad foretells to Zahhak.",
       "sourceIds": [
@@ -568,6 +617,9 @@
     {
       "id": "character-abtin",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Abtin",
       "summary": "A wise and gentle man of Iran, of the line of Tahmuras, hunted by the men of Zahhak.",
       "sourceIds": [
@@ -584,6 +636,9 @@
     {
       "id": "character-faranak",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Faranak",
       "summary": "The wise mother of Fereydun, who hides her son from Zahhak.",
       "sourceIds": [
@@ -600,6 +655,9 @@
     {
       "id": "character-barmayeh",
       "type": "AnimalCharacter",
+      "kinds": [
+        "creature"
+      ],
       "label": "Barmayeh",
       "summary": "A cow of wondrous colours, born when Fereydun is born, whose milk nourishes him.",
       "sourceIds": [
@@ -616,6 +674,9 @@
     {
       "id": "character-meadow-keeper",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The keeper of the meadow",
       "summary": "The keeper of the meadow where Barmayeh lives, who takes the infant Fereydun into his care.",
       "sourceIds": [
@@ -632,6 +693,9 @@
     {
       "id": "character-man-of-alborz",
       "type": "Character",
+      "kinds": [
+        "sage"
+      ],
       "label": "The holy man of Alborz",
       "summary": "A man of faith living on Mount Alborz, free of the cares of the world.",
       "sourceIds": [
@@ -648,6 +712,9 @@
     {
       "id": "character-tahmuras",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Tahmuras",
       "summary": "An earlier king, named by Faranak as the forefather of Abtin.",
       "sourceIds": [
@@ -664,6 +731,9 @@
     {
       "id": "place-alborz",
       "type": "NarrativePlace",
+      "kinds": [
+        "mountain"
+      ],
       "label": "Mount Alborz",
       "summary": "The mountain where Faranak hides her son.",
       "sourceIds": [
@@ -674,6 +744,9 @@
     {
       "id": "place-damavand",
       "type": "NarrativePlace",
+      "kinds": [
+        "mountain"
+      ],
       "label": "Mount Damavand",
       "summary": "The mountain that appears in the dream of Zahhak.",
       "sourceIds": [
@@ -684,6 +757,9 @@
     {
       "id": "object-ox-headed-mace",
       "type": "NarrativeObject",
+      "kinds": [
+        "weapon"
+      ],
       "label": "The ox-headed mace",
       "summary": "A mace with a head in the shape of an ox, first seen in the dream of Zahhak.",
       "sourceIds": [
@@ -694,6 +770,10 @@
     {
       "id": "character-kaveh",
       "type": "Character",
+      "kinds": [
+        "commoner",
+        "rebel"
+      ],
       "label": "Kaveh",
       "summary": "A blacksmith who comes to the court of Zahhak to cry for justice.",
       "sourceIds": [
@@ -710,6 +790,9 @@
     {
       "id": "character-kaveh-son",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The son of Kaveh",
       "summary": "A son of Kaveh, taken to be killed for the serpents of Zahhak.",
       "sourceIds": [
@@ -726,6 +809,9 @@
     {
       "id": "character-kianush",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Kianush",
       "summary": "One of the two elder brothers of Fereydun.",
       "sourceIds": [
@@ -742,6 +828,9 @@
     {
       "id": "character-purmayeh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Purmayeh",
       "summary": "One of the two elder brothers of Fereydun.",
       "sourceIds": [
@@ -758,6 +847,9 @@
     {
       "id": "object-testimony",
       "type": "NarrativeObject",
+      "kinds": [
+        "document"
+      ],
       "label": "The testimony of Zahhak",
       "summary": "A written testimony that Zahhak has the nobles sign, declaring him a just king.",
       "sourceIds": [
@@ -768,6 +860,9 @@
     {
       "id": "object-kaviani-banner",
       "type": "NarrativeObject",
+      "kinds": [
+        "emblem"
+      ],
       "label": "The Kaviani banner",
       "summary": "The leather apron of a blacksmith raised on a spear, later adorned with brocade and jewels.",
       "sourceIds": [
@@ -778,6 +873,9 @@
     {
       "id": "place-arvand-rud",
       "type": "NarrativePlace",
+      "kinds": [
+        "river"
+      ],
       "label": "The Arvand Rud",
       "summary": "A river on the road of Fereydun; the poem says that in Arabic it is called the Dejleh.",
       "sourceIds": [
@@ -795,6 +893,9 @@
     {
       "id": "place-baghdad",
       "type": "NarrativePlace",
+      "kinds": [
+        "capital"
+      ],
       "label": "Baghdad",
       "summary": "A city on the bank of the Dejleh where the army of Fereydun halts.",
       "sourceIds": [
@@ -805,6 +906,9 @@
     {
       "id": "place-kang-dezh-hukht",
       "type": "NarrativePlace",
+      "kinds": [
+        "capital"
+      ],
       "label": "Kang-dezh-hukht",
       "summary": "The city of Zahhak's palace; the poem says that in Arabic it is called Bayt al-Moqaddas.",
       "sourceIds": [
@@ -822,6 +926,9 @@
     {
       "id": "place-hindustan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Hindustan",
       "summary": "The land to which Zahhak has gone when Fereydun reaches his palace.",
       "sourceIds": [
@@ -832,6 +939,9 @@
     {
       "id": "character-kondrow",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "Kondrow",
       "summary": "The steward who keeps the treasury, throne and palace of Zahhak while he is away.",
       "sourceIds": [
@@ -848,6 +958,9 @@
     {
       "id": "character-sorush",
       "type": "Character",
+      "kinds": [
+        "divineBeing"
+      ],
       "label": "Sorush",
       "summary": "A blessed messenger from heaven who speaks to Fereydun.",
       "sourceIds": [
@@ -864,6 +977,9 @@
     {
       "id": "place-shirkhan",
       "type": "NarrativePlace",
+      "kinds": [
+        "landscape"
+      ],
       "label": "Shirkhan",
       "summary": "A place on the road by which Fereydun first leads his captive.",
       "sourceIds": [
@@ -874,6 +990,9 @@
     {
       "id": "place-amol",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Amol",
       "summary": "A town from which Fereydun goes on to Tamisha.",
       "sourceIds": [
@@ -884,6 +1003,9 @@
     {
       "id": "place-tamisha",
       "type": "NarrativePlace",
+      "kinds": [
+        "landscape"
+      ],
       "label": "Tamisha",
       "summary": "A renowned forest land where Fereydun settles; the poem says it is called Gush.",
       "sourceIds": [

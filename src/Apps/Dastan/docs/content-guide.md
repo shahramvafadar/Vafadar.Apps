@@ -124,9 +124,9 @@ dotnet run --project $content -- quotes src/Apps/Dastan/library/samples/my-story
    step: all are fixed sets. A value that is not listed does not exist for the site – see "What the formats cannot
    say yet" before you bend a meaning to fit.
 3. **Give every record its kinds** – a battle, a drought, a poet, a hero – from the list of kinds of the content
-   root (`kinds.json`, see "The kinds of a record" in [the format of a collection](collection-format.md)). A kind
-   is never guessed: a record you cannot classify from its sources is left without one, and the check counts it
-   (`without a kind`). A kind that is missing is added to the list by the editors, with its meaning, its types and
+   root (`kinds.json`, see "The kinds of a record" in [the format of a collection](collection-format.md)). Every
+   record needs at least one: a collection with a record without a kind cannot be used. A kind is never guessed:
+   read what the sources say of the record, and when no kind of the list fits, add one. A kind that is missing is added to the list by the editors, with its meaning, its types and
    its drawing; a kind is never deleted, only retired. A figure of myth is a kind of a character, not of a person.
 4. **Start** from a template for something new, or from the existing file for an addition or a correction.
 5. **Write**, sources first: a record can only cite a source that is in the file.

@@ -6,8 +6,7 @@
   literary or scientific person, a figure of myth), each kind with an icon of its own, the kinds editable over
   time, and the pages that show many records able to filter by kind. The design is
   [the plan of kinds](../plan-kinds.md).
-* Decisions K1–K4 of the plan were taken on its recommendations as working defaults; the owner may still change
-  them.
+* Decisions K1–K4 of the plan were taken on its recommendations; the owner confirmed them on 2026-11-28.
 
 ## Context
 
@@ -33,11 +32,12 @@ the profiles and the relations; a free tag would mean nothing fixed and could no
 3. **Figures of myth are kinds of characters (K3).** `hero`, `king`, `demon`, `divineBeing` and `creature` are
    given to `character` (and the two creatures of a story to `animalCharacter`), never to `person`: a figure of
    myth stays a character of a story, as the [chronology guidelines](../content-chronology-guidelines.md) say.
-4. **Every record a kind is a rule that is not on yet (K4).** The check counts the records without a kind
-   (`without a kind: n of m`, for every collection and comparison) so that the library can be classified; the
-   rule that refuses a record without a kind is written and tested, and is turned on by one line:
-   `KindsFile.EveryRecordHasAKind` in `Vafadar.Dastan.Data/KindsFile.cs` (the default of
-   `PilotSampleOptions.RequireKinds`). It is turned on when the library is classified.
+4. **Every record a kind (K4).** A collection or a comparison whose content root has a list of kinds cannot be
+   used while one of its entities, periods or events names no kind; the check still says how many have none
+   (`without a kind: n of m`). The rule is `KindsFile.EveryRecordHasAKind` in `Vafadar.Dastan.Data/KindsFile.cs`
+   (the default of `PilotSampleOptions.RequireKinds`); it was off while the library was classified and is on
+   since the whole library was, on 2026-11-28. A content root without a list – the pilot of `content/`, the
+   samples of the tests – has no kind to name and is not refused for it.
 5. **Shown with its drawing.** The page of a record and the card of a name (`IdentityHead`, `NodeCard`, the hits
    of the search) show the kinds beside the type, each with its drawing and its label (`KindNames`); the meaning
    is its hint. A kind that names a drawing the site does not have shows a drawing of the nature of its first
@@ -60,5 +60,9 @@ the profiles and the relations; a free tag would mean nothing fixed and could no
 * The tool of the editors carries `kinds` through as it is written; its form offers no choice of kinds yet.
 * The search of the whole site and the other views of many names (people, places, the graph) offer no choice
   of kinds yet; they show the kinds of a card where they use one.
-* The library is not classified yet: no collection has a kind, and the pages show no choice until one has. The
-  classification of the library (step 3 of the plan) and turning on K4 are the next work.
+* The whole library is classified (step 3 of the plan, 2026-11-28): every entity of its collections and every
+  period and event of its comparisons names its kinds. The list grew from 45 to 96 kinds while doing it, so that
+  every type the library uses has kinds of its own – offices, houses, ages, stories, lands, bodies, things of a
+  story. A script proposed kinds from the relations (a holder of a royal office is a ruler, of a magistracy a
+  statesman; an author of a poem a poet) and the words of a label (a "battle of", a "siege of", a "revolt");
+  everything else, and every proposal, was read by an editor.
