@@ -58,6 +58,18 @@ collections by the same rule as `iran-china-rome`: every period and event with y
 collection. An event two collections share – the fall of Nineveh, the conquest of Egypt, the battles of the Persian
 wars – stands in both lanes; that is the meeting the comparison is for.
 
+## The new stories of the Shahnameh (G5)
+
+Four story collections were added on the recommendation of decision F6, each made like Forud from the poem's
+sections on Ganjoor: `rostam-and-esfandiar` (24 scenes), `bizhan-and-manizheh` (15), `akvan-the-demon` (9) and
+`great-war-of-kay-khosrow` (23, drawn from groups of the 47 sections). Every scene carries a verse of its section as
+its quote – 75 in all, every one found in the text – and the summaries are the editors' own paraphrase, not a
+translation. Checked in this review: every record has its Persian, every role in every scene has its Persian, no
+character has a year, every place, object and character takes part in a scene, and every name shared with the
+earlier stories is written the same way. Corrected: Lohrasp, written لهراسب after the poem's spelling in one place,
+now لهراسپ as in the other collections; Iran, named in the story of Bizhan without a scene, now stands in the scene
+at Kay Khosrow's court.
+
 ## Open
 
 * **Gaps no free source read closes**, listed in the progress table of the plan: Sumer and Akkad, the Kassites and
@@ -65,6 +77,7 @@ wars – stands in both lanes; that is the meeting the comparison is for.
   Dark Age of Greece; the Vedic period, the Shungas, the Kushan kings and India after Harsha. The Britannica history of
   Mesopotamia now asks for a subscription, and the bot check of UCL's Digital Egypt was not passed – neither was
   worked around.
-* **The decisions F1–F6** of the plan. Part N followed the recommendations of F2–F5 as working defaults; F1
-  (hypothetical placements, needed for G7) and F6 (the next Shahnameh stories, for G5) are still the owner's.
+* **The decisions F1–F6** of the plan. Part N followed the recommendations of F2–F5 and G5 that of F6 as working
+  defaults, which the owner can change; F1 (hypothetical placements) is a change to the format and is the owner's to
+  approve before G7 can be done.
 * **The look in a browser** of the new collections and comparisons, as D5 of the earlier plan, waits for the owner.
