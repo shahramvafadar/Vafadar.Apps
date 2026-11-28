@@ -1068,7 +1068,7 @@
     },
     "person-zhu-wen": {
       "label": "جو ون",
-      "summary": "سرداری که در ۹۰۷ واپسین امپراتور تانگ را برکنار کرد و دودمان را به پایان رسمی رساند و لیانگ پسین را بنیاد نهاد.",
+      "summary": "سرداری زادهٔ ۸۵۲ در دانگ‌شان، روزگاری پیرو شورشی هوانگ چائو، که فرمانروایی پیرامون کای‌فنگ را گرفت، امپراتور تانگ، جائو‌زونگ، را به رفتن به لوئویانگ واداشت، در ۹۰۴ او را کشت، در ۹۰۷ کودکی به نام آی‌دی را به کناره‌گیری واداشت و خود را نخستین امپراتور لیانگ پسین خواند؛ پسر بزرگش در ۹۱۲ او را در کای‌فنگ کشت.",
       "facts": {
         "knownFor": "در ۹۰۷ به تانگ پایان داد."
       }
@@ -1249,6 +1249,61 @@
     "work-art-of-war": {
       "label": "هنر جنگ",
       "summary": "بینگ‌فا، «روش‌های جنگ»، از اثرگذارترین رساله‌های جنگ که تاکنون نوشته شده، به روایت از سون‌زی؛ برخی پژوهشگران آن را از دورهٔ کشورهای در جنگ می‌دانند."
+    },
+    "office-later-liang-emperor": {
+      "label": "امپراتور لیانگ پسین",
+      "summary": "تخت لیانگ پسین."
+    },
+    "office-later-tang-emperor": {
+      "label": "امپراتور تانگ پسین",
+      "summary": "تخت تانگ پسین."
+    },
+    "office-later-jin-emperor": {
+      "label": "امپراتور جین پسین",
+      "summary": "تخت جین پسین."
+    },
+    "office-later-han-emperor": {
+      "label": "امپراتور هان پسین",
+      "summary": "تخت هان پسین."
+    },
+    "person-tang-zhaozong": {
+      "label": "جائو‌زونگ تانگ",
+      "summary": "امپراتور تانگ که جو ون او را واداشت پایتخت را از چانگ‌آن به لوئویانگ ببرد و در ۹۰۴ او را با همهٔ پسرانش جز یکی کشت.",
+      "facts": {
+        "knownFor": "به زور به لوئویانگ برده شد."
+      }
+    },
+    "person-tang-aidi": {
+      "label": "آی‌دی تانگ",
+      "summary": "آخرین امپراتور تانگ، پسری از جائو‌زونگ که در ۹۰۴ در سیزده‌سالگی زنده ماند و جو ون او را بر تخت نشاند و در ۹۰۷ به کناره‌گیری واداشت.",
+      "facts": {
+        "knownFor": "آخرین امپراتور تانگ."
+      }
+    },
+    "person-later-tang-zhuangzong": {
+      "label": "جوانگ‌زونگ تانگ پسین",
+      "summary": "لی تسون‌شو، سردار لیانگ پسین که آن را برانداخت و در ۹۲۳ تانگ پسین را بنیاد نهاد.",
+      "facts": {
+        "knownFor": "بنیادگذار تانگ پسین."
+      }
+    },
+    "person-later-jin-gaozu": {
+      "label": "گائوزوی جین پسین",
+      "summary": "شی جینگ‌تانگ، سردار تانگ پسین که با یاری خیتان‌ها سرور خود را برانداخت و جین پسین را بنیاد نهاد.",
+      "facts": {
+        "knownFor": "بنیادگذار جین پسین."
+      }
+    },
+    "person-later-han-gaozu": {
+      "label": "گائوزوی هان پسین",
+      "summary": "لیو جی‌یوان، سردار پیشین جین پسین که هان پسین را بنیاد نهاد و خیتان‌ها را به آسیای درونی بازپس راند.",
+      "facts": {
+        "knownFor": "بنیادگذار هان پسین."
+      }
+    },
+    "place-kaifeng": {
+      "label": "کای‌فنگ",
+      "summary": "شهری در مرکز چین که جو ون فرمانروای پیرامونش بود و در ۹۱۲ در آن درگذشت؛ پایتخت سونگ شمالی که جورچن‌ها در ۱۱۲۶ آن را سوزاندند."
     }
   },
   "relations": {
@@ -2329,6 +2384,45 @@
     "relation-sunzi-author-of-work-art-of-war": {
       "label": "نویسنده",
       "note": "به روایت از او؛ برخی پژوهشگران این اثر را از دورهٔ کشورهای در جنگ می‌دانند."
+    },
+    "relation-zhu-wen-holder-of-later-liang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-zhaozong-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-aidi-holder-of-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-tang-aidi-successor-of-tang-zhaozong": {
+      "label": "جانشینِ"
+    },
+    "relation-tang-zhaozong-parent-of-tang-aidi": {
+      "label": "پدرِ"
+    },
+    "relation-zhu-wen-successor-of-tang-aidi": {
+      "label": "جانشینِ"
+    },
+    "relation-later-tang-zhuangzong-founder-of-later-tang": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-later-tang-zhuangzong-holder-of-later-tang-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-later-jin-gaozu-founder-of-later-jin": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-later-jin-gaozu-holder-of-later-jin-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-later-han-gaozu-founder-of-later-han": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-later-han-gaozu-holder-of-later-han-emperor": {
+      "label": "امپراتور"
+    },
+    "relation-kaifeng-capital-of-song": {
+      "label": "پایتختِ"
     }
   }
 }

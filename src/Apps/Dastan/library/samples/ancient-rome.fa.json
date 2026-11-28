@@ -1799,6 +1799,13 @@
       "facts": {
         "knownFor": "تاریخ‌نگار برآمدن روم."
       }
+    },
+    "person-libius-severus": {
+      "label": "لیبیوس سِوِروس",
+      "summary": "امپراتور باختر از ۴۶۱ تا ۴۶۵ میلادی، میان ماژوریان و آنتمیوس.",
+      "facts": {
+        "knownFor": "امپراتور باختر، ۴۶۱ تا ۴۶۵."
+      }
     }
   },
   "relations": {
@@ -3723,6 +3730,9 @@
     },
     "relation-ovid-author-of-work-ars-amatoria": {
       "label": "نویسنده"
+    },
+    "relation-libius-severus-holder-of-west-roman-emperor": {
+      "label": "امپراتور"
     }
   }
 }
