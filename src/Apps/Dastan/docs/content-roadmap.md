@@ -64,7 +64,7 @@ About 10 collections, each 30–50 records and 20–35 steps. One collection a s
 
 ## Pass 2 – the histories into late antiquity
 
-The histories are carried further – forward to a common horizon, back before their beginning, in more detail, and then reviewed – by [the content plan for the three histories](content-plan-histories.md) of 2026-11-27. Done on 2026-11-28: phases A to D of that plan – Iran to 1030, Rome and China to 1025, each reaching back before writing, first details, and the review, whose report is [the content review of 2026-11-28](reviews/2026-11-28-content-review.md); the look in a browser (D5) waits for the owner.
+The histories are carried further – forward to a common horizon, back before their beginning, in more detail, and then reviewed – by [the content plan for the three histories](content-plan-histories.md) of 2026-11-27. Done on 2026-11-28: phases A to D of that plan – Iran to 1030, Rome and China to 1025, each reaching back before writing, first details, and the review, whose report is [the content review of 2026-11-28](reviews/2026-11-28-content-review.md); the look in a browser (D5) waits for the owner. The next goal – closing the gaps of the three histories and adding Egypt, Mesopotamia, Anatolia, Greece and India – is planned in [the next content plan](content-plan-next.md).
 
 Each history goes on to about 650–700 CE, the span the first comparison was drawn for, and meets the historical part
 of the Shahnameh.
