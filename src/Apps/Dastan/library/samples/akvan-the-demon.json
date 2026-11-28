@@ -106,6 +106,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the story of Akvan the demon is told.",
       "sourceIds": [
@@ -150,6 +153,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -196,6 +202,9 @@
     {
       "id": "story-akvan",
       "type": "NarrativeArc",
+      "kinds": [
+        "heroicTale"
+      ],
       "label": "Akvan the demon",
       "summary": "The story of the golden onager that appears among the king’s herds, which Rostam recognizes as the demon Akvan, who carries him off sleeping and throws him into the sea.",
       "sourceIds": [
@@ -212,6 +221,9 @@
     {
       "id": "character-kay-khosrow",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Khosrow",
       "summary": "The king of Iran, who sees that the onager is no onager and sends Rostam against it.",
       "sourceIds": [
@@ -228,6 +240,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "The champion, who hunts the onager for three days, is thrown into the sea by the demon, swims to shore, wins back Rakhsh and kills Akvan.",
       "sourceIds": [
@@ -244,6 +259,9 @@
     {
       "id": "character-akvan",
       "type": "Character",
+      "kinds": [
+        "demon"
+      ],
       "label": "Akvan",
       "summary": "A demon in the shape of a golden onager, who vanishes from the lasso and arrow and, turned to wind, lifts the sleeping Rostam into the air; the poet asks that he be understood as a man who does not thank God.",
       "sourceIds": [
@@ -260,6 +278,9 @@
     {
       "id": "character-rakhsh",
       "type": "AnimalCharacter",
+      "kinds": [
+        "steed"
+      ],
       "label": "Rakhsh",
       "summary": "Rostam’s horse, which strays among Afrasiab’s mares while Rostam is in the sea.",
       "sourceIds": [
@@ -276,6 +297,9 @@
     {
       "id": "character-afrasiab",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Afrasiab",
       "summary": "The king of Turan, who comes to see his horses and loses his herds and four white elephants to Rostam.",
       "sourceIds": [
@@ -292,6 +316,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The kingdom of Kay Khosrow.",
       "sourceIds": [
@@ -302,6 +330,10 @@
     {
       "id": "place-turan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Turan",
       "summary": "The kingdom of Afrasiab.",
       "sourceIds": [

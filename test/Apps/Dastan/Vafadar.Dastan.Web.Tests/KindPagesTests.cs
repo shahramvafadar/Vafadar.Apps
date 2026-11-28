@@ -9,7 +9,8 @@ namespace Vafadar.Dastan.Web.Tests;
 
 /// <summary>
 /// The site on a copy of a collection and a comparison of the library with the list of kinds of the library
-/// (ADR 0029): a few of their records are given kinds here – the library itself is not classified yet. Test data.
+/// (ADR 0029): the library is classified, and a few records are given other kinds here, so that the pages have
+/// a kind no other record has (a drought) and records of known kinds. Test data.
 /// </summary>
 public sealed class KindsSite : DemoSite
 {
@@ -24,11 +25,11 @@ public sealed class KindsSite : DemoSite
     /// <summary>Gets the identifier and the name of the person of the list of names that is given the kind poet.</summary>
     public (string Id, string Label) Poet { get; private set; }
 
-    /// <summary>Gets the identifier of another person of the list of names, given no kind.</summary>
-    public string Unclassified { get; private set; } = string.Empty;
+    /// <summary>Gets the identifier of another person of the list of names, given the kind religious.</summary>
+    public string Priest { get; private set; } = string.Empty;
 
-    /// <summary>Gets the name of the first period of the comparison, given the kind war, and of the second, given none.</summary>
-    public (string War, string None) Periods { get; private set; }
+    /// <summary>Gets the name of the first period of the comparison, given the kind war, and of the second, given the kind era.</summary>
+    public (string War, string Era) Periods { get; private set; }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -59,11 +60,11 @@ public sealed class KindsSite : DemoSite
         Battle = (events[0].Id.Value, Label(events[0]));
         Drought = (events[1].Id.Value, Label(events[1]));
         Poet = (people[0].Id.Value, Label(people[0]));
-        Unclassified = people[1].Id.Value;
+        Priest = people[1].Id.Value;
 
         var path = Path.Combine(_content, "samples", "ancient-iran.json");
         var sample = JsonNode.Parse(File.ReadAllText(path))!.AsObject();
-        foreach (var (id, kind) in new[] { (Battle.Id, "battle"), (Drought.Id, "drought"), (Poet.Id, "poet") })
+        foreach (var (id, kind) in new[] { (Battle.Id, "battle"), (Drought.Id, "drought"), (Poet.Id, "poet"), (Priest, "religious") })
         {
             sample["entities"]!.AsArray().Single(entity => (string?)entity!["id"] == id)!["kinds"] = new JsonArray(kind);
         }
@@ -74,6 +75,7 @@ public sealed class KindsSite : DemoSite
         var comparison = JsonNode.Parse(File.ReadAllText(comparisonPath))!.AsObject();
         var periods = comparison["lanes"]![0]!["periods"]!.AsArray();
         periods[0]!["kinds"] = new JsonArray("war");
+        periods[1]!["kinds"] = new JsonArray("era");
         Periods = ((string)periods[0]!["label"]!, (string)periods[1]!["label"]!);
         File.WriteAllText(comparisonPath, comparison.ToJsonString());
     }
@@ -123,8 +125,8 @@ public sealed class KindPagesTests(KindsSite site) : IClassFixture<KindsSite>
         Assert.DoesNotContain("kinds=battle", all.Html, StringComparison.Ordinal);
 
         Assert.Contains(site.Poet.Label, narrowed.Main, StringComparison.Ordinal);
-        Assert.Contains($"entity/{site.Unclassified}\"", all.Html, StringComparison.Ordinal);
-        Assert.DoesNotContain($"entity/{site.Unclassified}\"", narrowed.Html, StringComparison.Ordinal);
+        Assert.Contains($"entity/{site.Priest}\"", all.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"entity/{site.Priest}\"", narrowed.Html, StringComparison.Ordinal);
         Assert.Contains("aria-current=\"true\"", narrowed.Html, StringComparison.Ordinal);
     }
 
@@ -156,10 +158,10 @@ public sealed class KindPagesTests(KindsSite site) : IClassFixture<KindsSite>
         var wars = await site.Visitor().Get($"/en/compare/iran-china-rome?{KindFilter.Parameter}=war");
 
         Assert.Contains("kinds=war#comparison-kinds", all.Html, StringComparison.Ordinal);
-        Assert.DoesNotContain("kinds=battle", all.Html, StringComparison.Ordinal);
-        Assert.Contains(site.Periods.None, all.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("kinds=demon", all.Html, StringComparison.Ordinal);
+        Assert.Contains(site.Periods.Era, all.Main, StringComparison.Ordinal);
         Assert.Contains(site.Periods.War, wars.Main, StringComparison.Ordinal);
-        Assert.DoesNotContain(site.Periods.None, wars.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain(site.Periods.Era, wars.Main, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -171,7 +173,7 @@ public sealed class KindPagesTests(KindsSite site) : IClassFixture<KindsSite>
 
         Assert.Contains("type=\"checkbox\" name=\"kinds\" value=\"poet\"", form.Html, StringComparison.Ordinal);
         Assert.Contains(site.Poet.Label, found.Main, StringComparison.Ordinal);
-        Assert.DoesNotContain($"entity/{site.Unclassified}\"", found.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"entity/{site.Priest}\"", found.Html, StringComparison.Ordinal);
     }
 
     [Fact]

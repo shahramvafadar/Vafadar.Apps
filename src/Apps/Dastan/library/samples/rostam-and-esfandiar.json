@@ -379,6 +379,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the story of Rostam and Esfandiar is told.",
       "sourceIds": [
@@ -423,6 +426,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -469,6 +475,10 @@
     {
       "id": "story-rostam-esfandiar",
       "type": "NarrativeArc",
+      "kinds": [
+        "tragedy",
+        "warStory"
+      ],
       "label": "Rostam and Esfandiar",
       "summary": "The story of how King Goshtasp sends his son Esfandiar to bring Rostam to court in bonds, and of the fight between the two champions on the Hirmand.",
       "sourceIds": [
@@ -485,6 +495,9 @@
     {
       "id": "character-goshtasp",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Goshtasp",
       "summary": "The king of Iran, father of Esfandiar, who has promised him the crown but, warned by Jamasp, sends him against Rostam instead.",
       "sourceIds": [
@@ -502,6 +515,10 @@
     {
       "id": "character-esfandiar",
       "type": "Character",
+      "kinds": [
+        "royal",
+        "hero"
+      ],
       "label": "Esfandiar",
       "summary": "The son of Goshtasp, champion of the faith, who has freed his father’s kingdom from Arjasp and now claims the crown.",
       "sourceIds": [
@@ -519,6 +536,9 @@
     {
       "id": "character-katayun",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Katayun",
       "summary": "The mother of Esfandiar, a daughter of the Caesar, who warns him against going to fight Rostam.",
       "sourceIds": [
@@ -536,6 +556,9 @@
     {
       "id": "character-jamasp",
       "type": "Character",
+      "kinds": [
+        "sage"
+      ],
       "label": "Jamasp",
       "summary": "The king’s sage and reader of the stars, who foretells that Esfandiar’s death lies in Zabulistan at the hand of Rostam.",
       "sourceIds": [
@@ -552,6 +575,10 @@
     {
       "id": "character-peshotan",
       "type": "Character",
+      "kinds": [
+        "royal",
+        "sage"
+      ],
       "label": "Peshotan",
       "summary": "The brother and counsellor of Esfandiar, who urges peace with Rostam to the end and afterwards reproaches Goshtasp.",
       "sourceIds": [
@@ -570,6 +597,9 @@
     {
       "id": "character-bahman",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Bahman",
       "summary": "The son of Esfandiar, sent as messenger to Rostam; his father entrusts him to Rostam as he dies, and Rostam raises him.",
       "sourceIds": [
@@ -588,6 +618,9 @@
     {
       "id": "character-nush-azar",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Nush-Azar",
       "summary": "A son of Esfandiar, killed by Zavareh in the fighting beside the Hirmand.",
       "sourceIds": [
@@ -604,6 +637,9 @@
     {
       "id": "character-mehrnush",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Mehrnush",
       "summary": "A son of Esfandiar, brother of Nush-Azar, killed by Faramarz.",
       "sourceIds": [
@@ -620,6 +656,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "The great champion of Zabulistan, son of Zal, who will not go to the king in bonds.",
       "sourceIds": [
@@ -637,6 +676,9 @@
     {
       "id": "character-zal",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zal",
       "summary": "The father of Rostam, who counsels him to yield and, when Rostam is wounded, calls the Simorgh.",
       "sourceIds": [
@@ -655,6 +697,9 @@
     {
       "id": "character-rudabeh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Rudabeh",
       "summary": "The mother of Rostam, who mourns when he comes home wounded.",
       "sourceIds": [
@@ -671,6 +716,9 @@
     {
       "id": "character-zavareh",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zavareh",
       "summary": "The brother of Rostam, who leads his men to the field and kills Nush-Azar.",
       "sourceIds": [
@@ -688,6 +736,9 @@
     {
       "id": "character-faramarz",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Faramarz",
       "summary": "The son of Rostam, who kills Mehrnush.",
       "sourceIds": [
@@ -705,6 +756,9 @@
     {
       "id": "character-simorgh",
       "type": "AnimalCharacter",
+      "kinds": [
+        "creature"
+      ],
       "label": "Simorgh",
       "summary": "The great bird who heals Rostam and Rakhsh and shows Rostam the branch of tamarisk that is Esfandiar’s death.",
       "sourceIds": [
@@ -721,6 +775,9 @@
     {
       "id": "character-rakhsh",
       "type": "AnimalCharacter",
+      "kinds": [
+        "steed"
+      ],
       "label": "Rakhsh",
       "summary": "Rostam’s horse, wounded by Esfandiar’s arrows and healed by the Simorgh.",
       "sourceIds": [
@@ -739,6 +796,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The kingdom of Goshtasp.",
       "sourceIds": [
@@ -749,6 +810,9 @@
     {
       "id": "place-zabulistan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Zabulistan",
       "summary": "The land of Zal and Rostam, where Jamasp foretells Esfandiar will die.",
       "sourceIds": [
@@ -767,6 +831,9 @@
     {
       "id": "place-hirmand",
       "type": "NarrativePlace",
+      "kinds": [
+        "river"
+      ],
       "label": "The Hirmand",
       "summary": "The river of Zabulistan beside which Esfandiar camps and the two champions meet and fight.",
       "sourceIds": [
@@ -779,6 +846,9 @@
     {
       "id": "object-tamarisk-arrow",
       "type": "NarrativeObject",
+      "kinds": [
+        "weapon"
+      ],
       "label": "The arrow of tamarisk",
       "summary": "The arrow Rostam makes from a tamarisk branch the Simorgh shows him, the only thing that can kill Esfandiar; he shoots it into Esfandiar’s eyes.",
       "sourceIds": [

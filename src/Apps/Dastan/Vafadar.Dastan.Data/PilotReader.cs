@@ -811,13 +811,14 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     /// <summary>
     /// Finds the kinds a record names (ADR 0029): each a kind of the list that may be given to the type of the
     /// record, each once. A retired kind stays valid – what was given it keeps its meaning. Without a kind the
-    /// record is valid unless the rule of K4 is on (<see cref="KindsFile.EveryRecordHasAKind"/>).
+    /// record is valid unless the rule of K4 is on (<see cref="KindsFile.EveryRecordHasAKind"/>) and the content
+    /// root has a list of kinds: a root without a list, as the sample of a test, has no kind to name.
     /// </summary>
     private ImmutableArray<Kind> Kinds(JsonRecord record, ImmutableArray<string> keys, EntityType type)
     {
         if (keys.IsEmpty)
         {
-            if (options.RequireKinds)
+            if (options.RequireKinds && !KindList.All.IsEmpty)
             {
                 record.Problem("kinds names no kind; every record has at least one kind of the list (kinds.json).");
             }

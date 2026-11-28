@@ -418,9 +418,10 @@ A translation of the list (`dastan-kinds-translation-0.1`) has `formatVersion`, 
 `reviewed`), an optional `note`, and `kinds`: key → `label`, `meaning`. A translation of a kind the list does not
 have is a problem.
 
-While the library is classified, a record without a kind is valid; the check says for every file how many records
-have none (`without a kind: n of m`). When every record has one, the rule that refuses a record without a kind is
-turned on (`KindsFile.EveryRecordHasAKind`).
+Every entity of a collection whose content root has a list of kinds names at least one kind; a record without one
+makes the file unusable (`KindsFile.EveryRecordHasAKind`, on since the library was classified on 2026-11-28). The
+check says for every file how many records have none (`without a kind: n of m`). The same holds for the periods
+and events of a comparison. A content root without a list has no kind to name.
 
 ## A relation
 

@@ -27,6 +27,9 @@
     {
       "id": "subject-ancient-mesopotamia",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Mesopotamia",
       "summary": "The land between the Euphrates and the Tigris: Uruk and Ur of the Sumerians, the Third Dynasty of Ur, the Babylon of Hammurabi, the kingdom and then the empire of Assyria, and the Neo-Babylonian empire until Cyrus took Babylon in 539 BCE, with its later history under the Persians, Alexander, the Seleucids and the Parthians.",
       "sourceIds": [
@@ -39,6 +42,9 @@
     {
       "id": "office-king-of-ur",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Ur",
       "summary": "The kingship of the city of Ur, whose Third Dynasty reunited Mesopotamia.",
       "sourceIds": [
@@ -55,6 +61,9 @@
     {
       "id": "office-king-of-babylon",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Babylon",
       "summary": "The kingship of Babylon and of Babylonia, the land of Akkad.",
       "sourceIds": [
@@ -71,6 +80,9 @@
     {
       "id": "office-king-of-assyria",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Assyria",
       "summary": "The kingship of Assyria, the land of the god Aššur on the Tigris.",
       "sourceIds": [
@@ -87,6 +99,9 @@
     {
       "id": "dynasty-ur-iii",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Third Dynasty of Ur",
       "summary": "The kings of Ur who ruled the city states of the alluvial plain for more than a century, from 2112 to about 2004 BCE, with Sumerian as the language of the chancery.",
       "sourceIds": [
@@ -123,6 +138,9 @@
     {
       "id": "dynasty-first-babylon",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The First Dynasty of Babylon",
       "summary": "The Amorite kings of Babylon, about 1894 to 1595 BCE, among them Hammurabi; it ended when the Hittite king Mursilis I sacked Babylon.",
       "sourceIds": [
@@ -158,6 +176,9 @@
     {
       "id": "dynasty-second-isin",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Second Dynasty of Isin",
       "summary": "The kings who replaced the Kassites in southern Mesopotamia; under Nebuchadnezzar I the statue of Marduk came back from Elam.",
       "sourceIds": [
@@ -169,6 +190,9 @@
     {
       "id": "dynasty-neo-babylonian",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Neo-Babylonian kings",
       "summary": "The house of Nabopolassar, recognized as king in 626 BCE, and the kings after it, until Cyrus took Babylon in 539.",
       "sourceIds": [
@@ -204,6 +228,9 @@
     {
       "id": "period-ur-iii",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The empire of Ur",
       "summary": "The Third Dynasty of Ur ruled the alluvial plain from 2112 to about 2004 BCE, the time sometimes called the Sumerian Renaissance, until an agricultural crisis ended the centralized state.",
       "sourceIds": [
@@ -240,6 +267,9 @@
     {
       "id": "period-old-babylonian",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Old Babylonian period",
       "summary": "The age of the First Dynasty of Babylon, about 1894 to 1595 BCE, when Hammurabi reunited the plain, which from then on was called the land of Akkad, Babylonia.",
       "sourceIds": [
@@ -275,6 +305,9 @@
     {
       "id": "period-middle-assyrian",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Middle Assyrian period",
       "summary": "From Aššur-Uballit I, about 1364 BCE, when Assyria won its independence from Mitanni, through the expansion under his successors and Tiglath-Pileser I to the long decline after about 1076.",
       "sourceIds": [
@@ -311,6 +344,9 @@
     {
       "id": "period-neo-assyrian",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Neo-Assyrian empire",
       "summary": "The empire from Aššurnasirpal II, from 883 BCE, to the fall of Nineveh in 612: it reached from the Zagros to Egypt, was organized in provinces under Tiglath-pileser III and was overthrown by the Babylonians and the Medes.",
       "sourceIds": [
@@ -345,6 +381,9 @@
     {
       "id": "period-neo-babylonian",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Neo-Babylonian empire",
       "summary": "From Nabopolassar, king from 626 BCE, to Cyrus’ capture of Babylon in 539: the most powerful state of the ancient world after the fall of Assyria.",
       "sourceIds": [
@@ -379,6 +418,9 @@
     {
       "id": "person-ur-nammu",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ur-Nammu",
       "summary": "King of Ur from 2112 to 2095 BCE, founder of the Third Dynasty of Ur, who built the temple and ziggurat of the goddess Nanna.",
       "sourceIds": [
@@ -403,6 +445,9 @@
     {
       "id": "person-shulgi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šulgi",
       "summary": "Son and successor of Ur-Nammu, king of Ur from 2094 to 2047 BCE, whose reign is recorded in a surviving chronicle.",
       "sourceIds": [
@@ -434,6 +479,9 @@
     {
       "id": "person-amar-sin",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amar-Sin",
       "summary": "King of Ur of the Third Dynasty, from 2046 to 2038 BCE.",
       "sourceIds": [
@@ -458,6 +506,9 @@
     {
       "id": "person-shu-sin",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shu-Sin",
       "summary": "King of Ur of the Third Dynasty, from 2037 to 2029 BCE.",
       "sourceIds": [
@@ -482,6 +533,9 @@
     {
       "id": "person-mes-ane-pada",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mes-ane-pada",
       "summary": "A king of Ur documented in the 26th century BCE and named in the Sumerian King List, of the age of the First Dynasty of Ur.",
       "sourceIds": [
@@ -506,6 +560,9 @@
     {
       "id": "person-hammurabi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hammurabi",
       "summary": "King of Babylon of Amorite descent, from 1792 to about 1750 BCE, who reunited the alluvial plain; from his reign it was called the land of Akkad, Babylonia.",
       "sourceIds": [
@@ -530,6 +587,9 @@
     {
       "id": "person-nebuchadnezzar-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nebuchadnezzar I",
       "summary": "King of Babylon of the Second Dynasty of Isin, 1126 to 1104 BCE, under whom the Babylonians advanced to Elam and took back the statue of Marduk.",
       "sourceIds": [
@@ -554,6 +614,9 @@
     {
       "id": "person-marduk-apla-iddin",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Marduk-apla-iddin",
       "summary": "King of Babylon who twice claimed its independence from Assyria, from 721 to 710 BCE and again in 703; the Bible’s Merodach Baladan.",
       "sourceIds": [
@@ -585,6 +648,9 @@
     {
       "id": "person-shamash-shuma-ukin",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šamaš-šuma-ukin",
       "summary": "Elder brother of Aššurbanipal, made king in Babylonia when he became king of Assyria; he revolted, and his brother restored order in 648 BCE.",
       "sourceIds": [
@@ -617,6 +683,9 @@
     {
       "id": "person-nabopolassar",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nabopolassar",
       "summary": "A Babylonian soldier who had served in the Assyrian army, expelled the Assyrian governors and was recognized as king on 23 November 626 BCE; first king of the Neo-Babylonian empire, he took Nineveh with the Medes in 612 and died in 605.",
       "sourceIds": [
@@ -642,6 +711,9 @@
     {
       "id": "person-nebuchadnezzar-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nebuchadnezzar II",
       "summary": "Son of Nabopolassar, king of Babylonia from 605 to 562 BCE: he defeated Necho II at Carchemish, took Jerusalem in 597 and 587 and rebuilt Babylon with the Ištar Gate.",
       "sourceIds": [
@@ -674,6 +746,9 @@
     {
       "id": "person-amel-marduk",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Amel-Marduk",
       "summary": "Son and successor of Nebuchadnezzar II in 562 BCE, almost immediately murdered and replaced by his brother-in-law Neriglissar.",
       "sourceIds": [
@@ -698,6 +773,9 @@
     {
       "id": "person-neriglissar",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Neriglissar",
       "summary": "Brother-in-law of Amel-Marduk, whom he replaced; king of Babylon from 559 to 556 BCE, he invaded Anatolia and crossed the Taurus.",
       "sourceIds": [
@@ -722,6 +800,9 @@
     {
       "id": "person-nabonidus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Nabonidus",
       "summary": "The last king of Babylonia, from 556 to 539 BCE, who came to power by a coup, added large parts of Arabia to the empire and lost Babylon to Cyrus.",
       "sourceIds": [
@@ -754,6 +835,9 @@
     {
       "id": "person-shamshi-adad-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šamši-Adad I",
       "summary": "King from 1813 to about 1781 BCE of a small empire reaching from the western Zagros to the land between the rivers, who called himself “king of the universe”.",
       "sourceIds": [
@@ -785,6 +869,9 @@
     {
       "id": "person-ishme-dagan",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Išme-Dagan",
       "summary": "Son of Šamši-Adad I, who lost his independence and became a vassal of Hammurabi of Babylon.",
       "sourceIds": [
@@ -809,6 +896,9 @@
     {
       "id": "person-ashur-uballit-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aššur-Uballit I",
       "summary": "King of Assyria from about 1364 to 1328 BCE, who with the Hittite Šuppiluliuma attacked Mitanni and won back Assyria’s independence, beginning the Middle Assyrian period.",
       "sourceIds": [
@@ -833,6 +923,9 @@
     {
       "id": "person-adad-nirari-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Adad-Nirari I",
       "summary": "King of Assyria from about 1305 to 1274 BCE, who continued its expansion.",
       "sourceIds": [
@@ -857,6 +950,9 @@
     {
       "id": "person-shalmaneser-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shalmaneser I",
       "summary": "King of Assyria from about 1273 to 1244 BCE, who continued its expansion.",
       "sourceIds": [
@@ -881,6 +977,9 @@
     {
       "id": "person-tukulti-ninurta-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tukulti-Ninurta I",
       "summary": "King of Assyria from about 1243 to 1207 BCE, whose empire bordered the Hittites in the west and who attacked Babylon.",
       "sourceIds": [
@@ -912,6 +1011,9 @@
     {
       "id": "person-tiglath-pileser-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tiglath-Pileser I",
       "summary": "King of Assyria from about 1114 to 1076 BCE, who resumed the aggressive policy and reached the Mediterranean; after him Assyria declined for a century and a half.",
       "sourceIds": [
@@ -936,6 +1038,9 @@
     {
       "id": "person-ashurnasirpal-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aššurnasirpal II",
       "summary": "King of Assyria from 883 to 859 BCE, who restored its fortunes, campaigned to the Zagros, Lake Urmia and Urartu and built a new capital at Kalhu.",
       "sourceIds": [
@@ -968,6 +1073,9 @@
     {
       "id": "person-shalmaneser-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šalmaneser III",
       "summary": "Son of Aššurnasirpal II, king of Assyria from 858 to 824 BCE, who broke the power of Damascus and received tribute from Jehu of Israel.",
       "sourceIds": [
@@ -999,6 +1107,9 @@
     {
       "id": "person-adad-nirari-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Adad-Nirari III",
       "summary": "King of Assyria who finally captured Damascus.",
       "sourceIds": [
@@ -1023,6 +1134,9 @@
     {
       "id": "person-tiglath-pileser-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tiglath-pileser III",
       "summary": "King of Assyria from 744 to 727 BCE, who turned the empire into provinces under governors, conquered Damascus and Gaza and joined Babylonia to Assyria in a personal union.",
       "sourceIds": [
@@ -1047,6 +1161,9 @@
     {
       "id": "person-shalmaneser-v",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šalmaneser V",
       "summary": "Son of Tiglath-pileser III, king from 726 to 722 BCE, murdered during the siege of Samaria.",
       "sourceIds": [
@@ -1078,6 +1195,9 @@
     {
       "id": "person-sargon-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sargon II",
       "summary": "King of Assyria from 721 to 705 BCE, not of the royal dynasty, who conquered Israel, defeated the Egyptians near Gaza and built the new capital Dur-Šarukkin.",
       "sourceIds": [
@@ -1102,6 +1222,9 @@
     {
       "id": "person-sennacherib",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sennacherib",
       "summary": "Son of Sargon II, king of Assyria from 704 to 681 BCE, who took Lachish, received tribute from Jerusalem, sacked Babylon and made Nineveh his capital.",
       "sourceIds": [
@@ -1126,6 +1249,9 @@
     {
       "id": "person-esarhaddon",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Esarhaddon",
       "summary": "Son and successor of Sennacherib, king of Assyria from 680 to 669 BCE, who defeated the Cimmerians, advanced into Egypt and let the people of Babylon return.",
       "sourceIds": [
@@ -1150,6 +1276,9 @@
     {
       "id": "person-assurbanipal",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aššurbanipal",
       "summary": "King of Assyria from 669/668 to 631 or perhaps 627 BCE: he sacked Thebes in Egypt, subdued his rebel brother in Babylon, destroyed Susa and gathered the great library of Nineveh.",
       "sourceIds": [
@@ -1182,6 +1311,9 @@
     {
       "id": "person-sin-shar-ishkun",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sin-šar-iškun",
       "summary": "King of Assyria, once governor of Babylon, who seems to have taken his own life when Nineveh fell in 612 BCE.",
       "sourceIds": [
@@ -1206,6 +1338,9 @@
     {
       "id": "person-ashur-uballit-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aššur-Uballit II",
       "summary": "The last king of Assyria, who regrouped at Harran after the fall of Nineveh but was expelled; when Necho II of Egypt came to his aid he was defeated.",
       "sourceIds": [
@@ -1230,6 +1365,9 @@
     {
       "id": "person-cyrus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cyrus II the Great",
       "summary": "The Persian king who captured Babylon in 539 BCE and made his son Cambyses king of Babylon.",
       "sourceIds": [
@@ -1254,6 +1392,9 @@
     {
       "id": "person-cyaxares",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cyaxares",
       "summary": "The Median leader who took Aššur in 614 BCE, allied himself with the Babylonians and with them besieged and took Nineveh in 612.",
       "sourceIds": [
@@ -1279,6 +1420,9 @@
     {
       "id": "person-alexander-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alexander III of Macedon",
       "summary": "The Macedonian king who captured Babylon in 331 BCE and intended to make it his residence.",
       "sourceIds": [
@@ -1303,6 +1447,9 @@
     {
       "id": "person-mursili-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mursilis I",
       "summary": "The Hittite king who advanced along the Euphrates, sacked Babylon about 1595 BCE and carried off the statue of Marduk.",
       "sourceIds": [
@@ -1327,6 +1474,9 @@
     {
       "id": "person-necho-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Necho II",
       "summary": "Pharaoh of Egypt from 610 to 595 BCE, who came to the aid of the last Assyrian king and was defeated by Nebuchadnezzar at Carchemish in 605.",
       "sourceIds": [
@@ -1351,6 +1501,9 @@
     {
       "id": "place-babylon",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Babylon",
       "summary": "The capital of Babylonia between the Euphrates and the Tigris; after the fall of Assyria the capital of the Near East, rebuilt by Nebuchadnezzar II, taken by Cyrus in 539 BCE and by Alexander in 331.",
       "sourceIds": [
@@ -1373,6 +1526,9 @@
     {
       "id": "place-nineveh",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Nineveh",
       "summary": "An Assyrian capital, founded anew under Šalmaneser III and made the capital of Sennacherib with a double wall; the Medes and the Babylonians took it in 612 BCE.",
       "sourceIds": [
@@ -1395,6 +1551,9 @@
     {
       "id": "place-ashur",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Aššur",
       "summary": "The city on the Tigris that gave Assyria its name, an independent city state in the late third millennium and the religious capital of Assyria; the Medes took it in 614 BCE.",
       "sourceIds": [
@@ -1429,6 +1588,9 @@
     {
       "id": "place-kalhu",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Kalhu",
       "summary": "The Assyrian capital that Aššurnasirpal II built at a small town with 47,000 workers, six times larger than old Aššur; modern Nimrud, the Bible’s Calah.",
       "sourceIds": [
@@ -1463,6 +1625,9 @@
     {
       "id": "place-ur",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Ur",
       "summary": "A Sumerian city by the Persian Gulf, seat of the royal tombs of its First Dynasty and of the Third Dynasty that reunited Mesopotamia; its ziggurat of Nanna was built by Ur-Nammu.",
       "sourceIds": [
@@ -1485,6 +1650,9 @@
     {
       "id": "place-uruk",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Uruk",
       "summary": "A city already important in the fourth millennium BCE, which about 3200 BCE covered some 250 hectares.",
       "sourceIds": [
@@ -1514,6 +1682,9 @@
     {
       "id": "place-harran",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Harran",
       "summary": "A city of Upper Mesopotamia near which Nabopolassar fought the Assyrians in 616 BCE and where the last Assyrian king regrouped after 612.",
       "sourceIds": [
@@ -1543,6 +1714,9 @@
     {
       "id": "event-hittites-sack-babylon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Hittites sack Babylon",
       "summary": "Mursilis I, the Hittite king, advanced along the Euphrates, sacked Babylon and carried off the statue of Marduk, ending the First Dynasty of Babylon; the Livius page on Babylon puts it about 1595 BCE, the page on the Hittites in 1587 by the low middle chronology.",
       "sourceIds": [
@@ -1581,6 +1755,9 @@
     {
       "id": "event-sennacherib-sacks-babylon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Sennacherib sacks Babylon",
       "summary": "After a revolt under Marduk-apla-iddin, Sennacherib sacked Babylon and deported its people to Nineveh; the Babylon page dates it to 689 BCE, the Assyria page to 703.",
       "sourceIds": [
@@ -1618,6 +1795,9 @@
     {
       "id": "event-assyrians-sack-thebes",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Assyrians sack Thebes",
       "summary": "Between 667 and 664 BCE Aššurbanipal carried on the war in Egypt, reconquered it as far as Thebes, sacked the city and expelled the Kushite king Taharqo.",
       "sourceIds": [
@@ -1650,6 +1830,9 @@
     {
       "id": "event-nabopolassar-king",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Nabopolassar becomes king",
       "summary": "The Babylonian general Nabopolassar, who had expelled the Assyrian governors, was recognized as king on 23 November 626 BCE, the beginning of the Neo-Babylonian empire.",
       "sourceIds": [
@@ -1681,6 +1864,9 @@
     {
       "id": "event-medes-take-ashur",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Medes take Aššur",
       "summary": "In 614 BCE the Medes captured Aššur, the religious capital of Assyria; Nabopolassar arrived too late but made a treaty with their king Cyaxares.",
       "sourceIds": [
@@ -1713,6 +1899,9 @@
     {
       "id": "event-fall-of-nineveh",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The fall of Nineveh",
       "summary": "The Medes and the Babylonians laid siege to Nineveh in May 612 BCE; in July the city fell, and Assyria was overthrown.",
       "sourceIds": [
@@ -1753,6 +1942,9 @@
     {
       "id": "event-battle-of-carchemish",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Carchemish",
       "summary": "In 605 BCE the crown prince Nebuchadnezzar defeated Necho II of Egypt near Carchemish on the Euphrates.",
       "sourceIds": [
@@ -1784,6 +1976,9 @@
     {
       "id": "event-babylonians-take-jerusalem",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Babylonians take Jerusalem",
       "summary": "Jerusalem was taken in 597 BCE and, after its vassal king revolted, again in 587, when its people were deported to Babylonia.",
       "sourceIds": [
@@ -1811,6 +2006,9 @@
     {
       "id": "event-capture-of-babylon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Cyrus takes Babylon",
       "summary": "In 539 BCE Cyrus the Great attacked and captured Babylon, ending the Neo-Babylonian empire, and made his son Cambyses king of Babylon.",
       "sourceIds": [
@@ -1847,6 +2045,9 @@
     {
       "id": "event-alexander-takes-babylon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Alexander takes Babylon",
       "summary": "In 331 BCE Alexander the Great captured Babylon and later meant to make it his residence.",
       "sourceIds": [
@@ -1878,6 +2079,9 @@
     {
       "id": "event-parthians-take-babylonia",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Parthians take Babylonia",
       "summary": "In 141 BCE the Parthians conquered Babylonia, a generation after Antiochus IV had tried to settle Greeks in Babylon.",
       "sourceIds": [

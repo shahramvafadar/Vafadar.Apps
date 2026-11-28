@@ -1,6 +1,6 @@
 {
   "formatVersion": "dastan-kinds-0.1",
-  "note": "The kinds of records under their types (ADR 0029, docs/plan-kinds.md). A kind that is no longer wanted is marked retired, never deleted. The first list of 2026-11-28; it is refined while the library is classified.",
+  "note": "The kinds of records under their types (ADR 0029, docs/plan-kinds.md). A kind that is no longer wanted is marked retired, never deleted. The first list of 2026-11-28, widened the same day while the whole library was classified.",
   "kinds": [
     {
       "key": "war",
@@ -429,7 +429,7 @@
     {
       "key": "inscription",
       "label": "Inscription",
-      "meaning": "Words cut into stone or metal.",
+      "meaning": "Words cut or pressed into stone, clay or metal.",
       "types": [
         "work",
         "object"
@@ -442,9 +442,495 @@
       "meaning": "A building or a work that was made to be remembered.",
       "types": [
         "object",
-        "place"
+        "place",
+        "narrativePlace",
+        "work"
       ],
       "icon": "monument"
+    },
+    {
+      "key": "lawReform",
+      "label": "Law and reform",
+      "meaning": "A law, an edict, a code or a reform of the state.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "journey",
+      "label": "Journey and embassy",
+      "meaning": "A journey to far lands, a pilgrimage or an embassy.",
+      "types": [
+        "event"
+      ],
+      "icon": "globe"
+    },
+    {
+      "key": "fall",
+      "label": "Fall of a state",
+      "meaning": "The end of a state, an empire or a ruling house.",
+      "types": [
+        "event"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "writing",
+      "label": "Writing of a work",
+      "meaning": "The writing, the completion or a gathering for the making of a work.",
+      "types": [
+        "event"
+      ],
+      "icon": "pen"
+    },
+    {
+      "key": "ceremony",
+      "label": "Ceremony",
+      "meaning": "A wedding, a coronation or another ceremony.",
+      "types": [
+        "event"
+      ],
+      "icon": "candle"
+    },
+    {
+      "key": "disaster",
+      "label": "Disaster",
+      "meaning": "A great fire or another catastrophe that nature did not bring.",
+      "types": [
+        "event"
+      ],
+      "icon": "nature"
+    },
+    {
+      "key": "reign",
+      "label": "Rule of a house",
+      "meaning": "A period named after the house or the state that ruled.",
+      "types": [
+        "period"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "era",
+      "label": "Age of history",
+      "meaning": "A period historians name for a land: a kingdom, an intermediate period, a republic.",
+      "types": [
+        "period"
+      ],
+      "icon": "timeline"
+    },
+    {
+      "key": "culture",
+      "label": "Ancient culture",
+      "meaning": "A culture known from what archaeologists dig up, before or beside written history.",
+      "types": [
+        "period"
+      ],
+      "icon": "building"
+    },
+    {
+      "key": "royal",
+      "label": "Royal house",
+      "meaning": "A member of a ruling house who did not rule: a queen, a consort, a prince, a princess.",
+      "types": [
+        "person",
+        "character"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "rebel",
+      "label": "Rebel",
+      "meaning": "A person who led a revolt against a ruler or a state.",
+      "types": [
+        "person",
+        "character"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "sage",
+      "label": "Sage",
+      "meaning": "A character of a story known for wisdom, faith or foresight: a mobad, a hermit, a reader of the stars.",
+      "types": [
+        "character"
+      ],
+      "icon": "candle"
+    },
+    {
+      "key": "sorcerer",
+      "label": "Sorcerer",
+      "meaning": "A character of a story who works magic: a sorcerer, a witch.",
+      "types": [
+        "character"
+      ],
+      "icon": "demon"
+    },
+    {
+      "key": "noble",
+      "label": "Noble",
+      "meaning": "A lord, a counsellor or an envoy of a court in a story.",
+      "types": [
+        "character"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "commoner",
+      "label": "Of the people",
+      "meaning": "A character who is neither a ruler nor a champion: a servant, a keeper, a craftsman, a messenger.",
+      "types": [
+        "character"
+      ],
+      "icon": "family"
+    },
+    {
+      "key": "steed",
+      "label": "Steed",
+      "meaning": "A horse of a story with a name and a part of its own.",
+      "types": [
+        "animalCharacter",
+        "character"
+      ],
+      "icon": "creature"
+    },
+    {
+      "key": "reignStory",
+      "label": "Story of a reign",
+      "meaning": "A section of a work on the reign of one king.",
+      "types": [
+        "storyArc"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "warStory",
+      "label": "War story",
+      "meaning": "A story told mostly through war and battle.",
+      "types": [
+        "storyArc"
+      ],
+      "icon": "war"
+    },
+    {
+      "key": "heroicTale",
+      "label": "Tale of a hero",
+      "meaning": "A story of a hero's trials, labours and growing up.",
+      "types": [
+        "storyArc"
+      ],
+      "icon": "hero"
+    },
+    {
+      "key": "loveStory",
+      "label": "Love story",
+      "meaning": "A story of love and of what lovers go through.",
+      "types": [
+        "storyArc"
+      ],
+      "icon": "family"
+    },
+    {
+      "key": "tragedy",
+      "label": "Tragedy",
+      "meaning": "A story that ends in the death or the ruin of its heroes.",
+      "types": [
+        "storyArc"
+      ],
+      "icon": "candle"
+    },
+    {
+      "key": "courtTale",
+      "label": "Tale of the court",
+      "meaning": "A story of wisdom, counsel and games at a king's court.",
+      "types": [
+        "storyArc"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "philosophy",
+      "label": "Teaching",
+      "meaning": "A work of thought or of a faith: sayings, a scripture, a book on how to live.",
+      "types": [
+        "work"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "treatise",
+      "label": "Treatise",
+      "meaning": "A work of knowledge: medicine, the stars, the art of war, lands and peoples.",
+      "types": [
+        "work"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "edition",
+      "label": "Edition",
+      "meaning": "A printed edition of a work, prepared by scholars.",
+      "types": [
+        "work"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "manuscript",
+      "label": "Manuscript",
+      "meaning": "A handwritten copy of a work.",
+      "types": [
+        "object"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "document",
+      "label": "Document",
+      "meaning": "A written decree, a record, a letter or a testimony.",
+      "types": [
+        "work",
+        "object",
+        "narrativeObject"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "weapon",
+      "label": "Weapon",
+      "meaning": "A weapon: a mace, a sword, an arrow.",
+      "types": [
+        "object",
+        "narrativeObject"
+      ],
+      "icon": "war"
+    },
+    {
+      "key": "keepsake",
+      "label": "Keepsake",
+      "meaning": "A ring, a token or a gift kept as a sign.",
+      "types": [
+        "object",
+        "narrativeObject"
+      ],
+      "icon": "saved"
+    },
+    {
+      "key": "wonder",
+      "label": "Wondrous thing",
+      "meaning": "A thing of a story with a power not of this world.",
+      "types": [
+        "narrativeObject"
+      ],
+      "icon": "divine"
+    },
+    {
+      "key": "emblem",
+      "label": "Banner",
+      "meaning": "A banner or another sign of a people or a cause.",
+      "types": [
+        "object",
+        "narrativeObject"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "prison",
+      "label": "Prison",
+      "meaning": "A pit, a cell or another place where someone is held captive.",
+      "types": [
+        "place",
+        "narrativePlace",
+        "narrativeObject"
+      ],
+      "icon": "building"
+    },
+    {
+      "key": "fortress",
+      "label": "Fortress",
+      "meaning": "A castle or a stronghold.",
+      "types": [
+        "place",
+        "narrativePlace"
+      ],
+      "icon": "building"
+    },
+    {
+      "key": "camp",
+      "label": "Camp",
+      "meaning": "The encampment of an army.",
+      "types": [
+        "place",
+        "narrativePlace"
+      ],
+      "icon": "war"
+    },
+    {
+      "key": "sea",
+      "label": "Sea or lake",
+      "meaning": "A sea, a lake or another great water.",
+      "types": [
+        "place",
+        "narrativePlace",
+        "region",
+        "narrativeRegion"
+      ],
+      "icon": "river"
+    },
+    {
+      "key": "landscape",
+      "label": "Open land",
+      "meaning": "A plain, a meadow, a forest or a pass.",
+      "types": [
+        "place",
+        "narrativePlace",
+        "region",
+        "narrativeRegion"
+      ],
+      "icon": "nature"
+    },
+    {
+      "key": "land",
+      "label": "Land",
+      "meaning": "A land or a country as a stretch of the earth.",
+      "types": [
+        "region",
+        "narrativeRegion"
+      ],
+      "icon": "globe"
+    },
+    {
+      "key": "state",
+      "label": "State",
+      "meaning": "A kingdom, a republic or an empire as a power.",
+      "types": [
+        "region",
+        "narrativeRegion",
+        "government"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "kingship",
+      "label": "Throne",
+      "meaning": "The office of a ruler: a kingship, an imperial throne, a caliphate, an emirate.",
+      "types": [
+        "office"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "magistracy",
+      "label": "Office of state",
+      "meaning": "An office of government under the ruler or of a republic: a consul, a governor.",
+      "types": [
+        "office"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "religiousOffice",
+      "label": "Office of a faith",
+      "meaning": "An office held in a faith: the leadership of believers, a priesthood.",
+      "types": [
+        "office"
+      ],
+      "icon": "faith"
+    },
+    {
+      "key": "rulingHouse",
+      "label": "Ruling house",
+      "meaning": "A house of kings, emperors or governors.",
+      "types": [
+        "dynasty",
+        "family"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "legendaryHouse",
+      "label": "House of legend",
+      "meaning": "A house of the epic or of tradition, not of recorded history.",
+      "types": [
+        "dynasty",
+        "family"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "heroicHouse",
+      "label": "House of heroes",
+      "meaning": "A house of champions of a story.",
+      "types": [
+        "family"
+      ],
+      "icon": "hero"
+    },
+    {
+      "key": "council",
+      "label": "Council",
+      "meaning": "A body of people who deliberate and decide: a senate.",
+      "types": [
+        "organisation"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "research",
+      "label": "Research",
+      "meaning": "A body that studies and discovers: an institute, a research society.",
+      "types": [
+        "organisation",
+        "university"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "university",
+      "label": "University",
+      "meaning": "A university or a school of higher learning.",
+      "types": [
+        "university"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "library",
+      "label": "Library",
+      "meaning": "A library that keeps books and manuscripts.",
+      "types": [
+        "organisation"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "museum",
+      "label": "Museum",
+      "meaning": "A museum that keeps and shows works of the past.",
+      "types": [
+        "organisation"
+      ],
+      "icon": "art"
+    },
+    {
+      "key": "idea",
+      "label": "Idea",
+      "meaning": "An idea of the state, of a faith or of thought.",
+      "types": [
+        "concept"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "topic",
+      "label": "Topic",
+      "meaning": "A subject that brings the records of a collection together.",
+      "types": [
+        "concept"
+      ],
+      "icon": "overview"
     }
   ]
 }

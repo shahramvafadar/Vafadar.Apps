@@ -258,6 +258,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the seven labours of Rostam are told.",
       "sourceIds": [
@@ -302,6 +305,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -348,6 +354,9 @@
     {
       "id": "story-haft-khan-rostam",
       "type": "NarrativeArc",
+      "kinds": [
+        "heroicTale"
+      ],
       "label": "The seven labours of Rostam",
       "summary": "The war of Kay Kavus in Mazandaran and Rostam’s journey there through seven trials.",
       "sourceIds": [
@@ -364,6 +373,9 @@
     {
       "id": "character-kay-kavus",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Kavus",
       "summary": "The king of Iran, proud of his fortune and eager for conquest.",
       "sourceIds": [
@@ -380,6 +392,9 @@
     {
       "id": "character-demon-minstrel",
       "type": "Character",
+      "kinds": [
+        "demon"
+      ],
       "label": "The demon minstrel",
       "summary": "A demon who comes to the court disguised as a singer from Mazandaran.",
       "sourceIds": [
@@ -396,6 +411,9 @@
     {
       "id": "character-tus",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Tus",
       "summary": "A noble of Iran, son of Nowzar.",
       "sourceIds": [
@@ -412,6 +430,9 @@
     {
       "id": "character-gudarz",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gudarz",
       "summary": "A noble of Iran, son of Keshvad.",
       "sourceIds": [
@@ -428,6 +449,9 @@
     {
       "id": "character-giv",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Giv",
       "summary": "A warrior of Iran.",
       "sourceIds": [
@@ -444,6 +468,9 @@
     {
       "id": "character-zal",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zal",
       "summary": "The son of Sam, lord of Nimruz, whose counsel the nobles seek.",
       "sourceIds": [
@@ -460,6 +487,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "The son of Zal, a hero of Iran.",
       "sourceIds": [
@@ -476,6 +506,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The kingdom of Kay Kavus.",
       "sourceIds": [
@@ -486,6 +520,9 @@
     {
       "id": "place-mazandaran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Mazandaran",
       "summary": "A land of demons and sorcerers, praised in song as forever in spring.",
       "sourceIds": [
@@ -496,6 +533,9 @@
     {
       "id": "place-sistan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Sistan",
       "summary": "The land of Zal and Rostam, also called Sistan.",
       "sourceIds": [
@@ -518,6 +558,9 @@
     {
       "id": "character-milad",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Milad",
       "summary": "A noble to whom Kavus entrusts Iran while he is away.",
       "sourceIds": [
@@ -534,6 +577,10 @@
     {
       "id": "character-king-of-mazandaran",
       "type": "Character",
+      "kinds": [
+        "king",
+        "sorcerer"
+      ],
       "label": "The king of Mazandaran",
       "summary": "The ruler of Mazandaran, a sorcerer.",
       "sourceIds": [
@@ -550,6 +597,9 @@
     {
       "id": "character-sanjeh",
       "type": "Character",
+      "kinds": [
+        "demon"
+      ],
       "label": "Sanjeh",
       "summary": "A demon whom the king of Mazandaran sends with a message.",
       "sourceIds": [
@@ -566,6 +616,9 @@
     {
       "id": "character-white-demon",
       "type": "Character",
+      "kinds": [
+        "demon"
+      ],
       "label": "The White Demon",
       "summary": "The mightiest of the demons of Mazandaran, who lives in a cave.",
       "sourceIds": [
@@ -582,6 +635,9 @@
     {
       "id": "character-arzhang",
       "type": "Character",
+      "kinds": [
+        "demon"
+      ],
       "label": "Arzhang",
       "summary": "A demon commander of Mazandaran.",
       "sourceIds": [
@@ -598,6 +654,9 @@
     {
       "id": "character-rudabeh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Rudabeh",
       "summary": "The mother of Rostam.",
       "sourceIds": [
@@ -614,6 +673,9 @@
     {
       "id": "place-asparuz",
       "type": "NarrativePlace",
+      "kinds": [
+        "mountain"
+      ],
       "label": "Mount Asparuz",
       "summary": "The mountain at the edge of Mazandaran where Kavus makes camp.",
       "sourceIds": [
@@ -624,6 +686,9 @@
     {
       "id": "place-zabulistan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Zabulistan",
       "summary": "The land of Zal and Rostam.",
       "sourceIds": [
@@ -634,6 +699,9 @@
     {
       "id": "character-rakhsh",
       "type": "AnimalCharacter",
+      "kinds": [
+        "steed"
+      ],
       "label": "Rakhsh",
       "summary": "The horse of Rostam, fierce and watchful.",
       "sourceIds": [
@@ -650,6 +718,9 @@
     {
       "id": "character-ram",
       "type": "AnimalCharacter",
+      "kinds": [
+        "creature"
+      ],
       "label": "The ram",
       "summary": "A wild sheep that appears in the desert.",
       "sourceIds": [
@@ -666,6 +737,9 @@
     {
       "id": "character-dragon",
       "type": "AnimalCharacter",
+      "kinds": [
+        "creature"
+      ],
       "label": "The dragon",
       "summary": "A fearsome dragon whose lair lies in the desert.",
       "sourceIds": [
@@ -682,6 +756,9 @@
     {
       "id": "character-witch",
       "type": "Character",
+      "kinds": [
+        "sorcerer"
+      ],
       "label": "The witch",
       "summary": "A sorceress who appears to travellers as a beautiful woman.",
       "sourceIds": [
@@ -698,6 +775,9 @@
     {
       "id": "character-field-keeper",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The field-keeper",
       "summary": "The keeper of a green field in Mazandaran.",
       "sourceIds": [
@@ -714,6 +794,9 @@
     {
       "id": "character-olad",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Olad",
       "summary": "A young lord of the borderland of Mazandaran.",
       "sourceIds": [
@@ -730,6 +813,9 @@
     {
       "id": "character-farhad",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Farhad",
       "summary": "A noble of Iran who carries a letter for Kavus.",
       "sourceIds": [
@@ -746,6 +832,9 @@
     {
       "id": "character-kalahur",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Kalahur",
       "summary": "A warrior of Mazandaran known for his fierceness.",
       "sourceIds": [
@@ -762,6 +851,9 @@
     {
       "id": "character-juyan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Juyan",
       "summary": "A champion of Mazandaran who challenges the army of Iran.",
       "sourceIds": [

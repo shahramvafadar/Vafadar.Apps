@@ -213,6 +213,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the story of Siavash is told.",
       "sourceIds": [
@@ -257,6 +260,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -303,6 +309,9 @@
     {
       "id": "story-siavash",
       "type": "NarrativeArc",
+      "kinds": [
+        "tragedy"
+      ],
       "label": "Siavash",
       "summary": "The story of the prince Siavash, son of Kay Kavus, and of his years in Iran and in Turan.",
       "sourceIds": [
@@ -319,6 +328,10 @@
     {
       "id": "character-siavash",
       "type": "Character",
+      "kinds": [
+        "royal",
+        "hero"
+      ],
       "label": "Siavash",
       "summary": "Son of Kay Kavus, raised by Rostam.",
       "sourceIds": [
@@ -335,6 +348,9 @@
     {
       "id": "character-siavash-mother",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "The mother of Siavash",
       "summary": "Young woman of Turanian and royal descent, unnamed in the text.",
       "sourceIds": [
@@ -351,6 +367,9 @@
     {
       "id": "character-kay-kavus",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Kavus",
       "summary": "King of Iran, father of Siavash.",
       "sourceIds": [
@@ -367,6 +386,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "Hero of Zabulistan who raises the prince.",
       "sourceIds": [
@@ -383,6 +405,9 @@
     {
       "id": "character-zal",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zal",
       "summary": "Lord of Zabulistan, also called Dastan.",
       "sourceIds": [
@@ -399,6 +424,9 @@
     {
       "id": "character-zavareh",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zavareh",
       "summary": "Warrior of Zabulistan.",
       "sourceIds": [
@@ -415,6 +443,9 @@
     {
       "id": "character-tus",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Tus",
       "summary": "Iranian noble and commander.",
       "sourceIds": [
@@ -431,6 +462,9 @@
     {
       "id": "character-giv",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Giv",
       "summary": "Iranian noble, son of Gudarz.",
       "sourceIds": [
@@ -447,6 +481,9 @@
     {
       "id": "character-gudarz",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gudarz",
       "summary": "Iranian noble, father of Giv and Bahram.",
       "sourceIds": [
@@ -463,6 +500,9 @@
     {
       "id": "character-sudabeh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Sudabeh",
       "summary": "Wife of Kay Kavus, from Hamavaran.",
       "sourceIds": [
@@ -479,6 +519,9 @@
     {
       "id": "character-hirbad",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "Hirbad",
       "summary": "Keeper of the royal women's quarters.",
       "sourceIds": [
@@ -495,6 +538,9 @@
     {
       "id": "character-sorceress",
       "type": "Character",
+      "kinds": [
+        "sorcerer"
+      ],
       "label": "The sorceress",
       "summary": "Pregnant woman in Sudabeh's service, unnamed in the text.",
       "sourceIds": [
@@ -511,6 +557,9 @@
     {
       "id": "character-afrasiab",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Afrasiab",
       "summary": "King of Turan.",
       "sourceIds": [
@@ -527,6 +576,9 @@
     {
       "id": "character-garsivaz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Garsivaz",
       "summary": "Brother of Afrasiab and Turanian commander.",
       "sourceIds": [
@@ -543,6 +595,9 @@
     {
       "id": "character-barman",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Barman",
       "summary": "Turanian commander.",
       "sourceIds": [
@@ -559,6 +614,9 @@
     {
       "id": "character-sepahram",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Sepahram",
       "summary": "Turanian commander.",
       "sourceIds": [
@@ -575,6 +633,9 @@
     {
       "id": "character-bahram-pahlavan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Bahram son of Gudarz",
       "summary": "Iranian warrior, son of Gudarz.",
       "sourceIds": [
@@ -591,6 +652,9 @@
     {
       "id": "character-zangeh",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zangeh-ye Shavaran",
       "summary": "Iranian warrior and envoy.",
       "sourceIds": [
@@ -607,6 +671,9 @@
     {
       "id": "character-piran",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Piran",
       "summary": "Chief counsellor and commander of Afrasiab.",
       "sourceIds": [
@@ -623,6 +690,9 @@
     {
       "id": "character-golshahr",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Golshahr",
       "summary": "Wife of Piran.",
       "sourceIds": [
@@ -639,6 +709,9 @@
     {
       "id": "character-jarira",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Jarira",
       "summary": "Eldest daughter of Piran.",
       "sourceIds": [
@@ -655,6 +728,9 @@
     {
       "id": "character-farangis",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Farangis",
       "summary": "Eldest daughter of Afrasiab.",
       "sourceIds": [
@@ -671,6 +747,10 @@
     {
       "id": "character-forud",
       "type": "Character",
+      "kinds": [
+        "royal",
+        "hero"
+      ],
       "label": "Forud",
       "summary": "Son of Jarira.",
       "sourceIds": [
@@ -687,6 +767,9 @@
     {
       "id": "character-garuy-zereh",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Garuy-ye Zereh",
       "summary": "Turanian warrior in Garsivaz's following.",
       "sourceIds": [
@@ -703,6 +786,9 @@
     {
       "id": "character-damur",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Damur",
       "summary": "Turanian warrior in Garsivaz's following.",
       "sourceIds": [
@@ -719,6 +805,9 @@
     {
       "id": "character-aghriras",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Aghriras",
       "summary": "Brother of Afrasiab, recalled in speech.",
       "sourceIds": [
@@ -735,6 +824,9 @@
     {
       "id": "character-behzad",
       "type": "AnimalCharacter",
+      "kinds": [
+        "steed"
+      ],
       "label": "Behzad",
       "summary": "Black horse of Siavash.",
       "sourceIds": [
@@ -751,6 +843,9 @@
     {
       "id": "character-pilsam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Pilsam",
       "summary": "Younger brother of Piran.",
       "sourceIds": [
@@ -767,6 +862,9 @@
     {
       "id": "character-lahhak",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Lahhak",
       "summary": "Turanian noble.",
       "sourceIds": [
@@ -783,6 +881,9 @@
     {
       "id": "character-farshidvard",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Farshidvard",
       "summary": "Turanian noble.",
       "sourceIds": [
@@ -799,6 +900,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "Kingdom of Kay Kavus.",
       "sourceIds": [
@@ -809,6 +914,10 @@
     {
       "id": "place-turan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Turan",
       "summary": "Kingdom of Afrasiab.",
       "sourceIds": [
@@ -819,6 +928,9 @@
     {
       "id": "place-zabulistan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Zabulistan",
       "summary": "Land of Rostam and Zal.",
       "sourceIds": [
@@ -829,6 +941,9 @@
     {
       "id": "place-kohestan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Kohestan",
       "summary": "Land granted to Siavash, also called Transoxiana in the text.",
       "sourceIds": [
@@ -839,6 +954,10 @@
     {
       "id": "place-hamavaran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Hamavaran",
       "summary": "Homeland of Sudabeh.",
       "sourceIds": [
@@ -849,6 +968,9 @@
     {
       "id": "place-hari",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Hari",
       "summary": "City on the army's route.",
       "sourceIds": [
@@ -866,6 +988,9 @@
     {
       "id": "place-balkh",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Balkh",
       "summary": "Border city fought over.",
       "sourceIds": [
@@ -876,6 +1001,9 @@
     {
       "id": "place-termez",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Termez",
       "summary": "Town beyond the river.",
       "sourceIds": [
@@ -886,6 +1014,9 @@
     {
       "id": "place-jeyhun",
       "type": "NarrativePlace",
+      "kinds": [
+        "river"
+      ],
       "label": "Jeyhun",
       "summary": "River between Iran and Turan.",
       "sourceIds": [
@@ -896,6 +1027,9 @@
     {
       "id": "place-sogd",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Sogd",
       "summary": "Region where Afrasiab camps.",
       "sourceIds": [
@@ -906,6 +1040,9 @@
     {
       "id": "place-gang",
       "type": "NarrativePlace",
+      "kinds": [
+        "capital"
+      ],
       "label": "Gang",
       "summary": "City of Afrasiab.",
       "sourceIds": [
@@ -916,6 +1053,9 @@
     {
       "id": "place-khotan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Khotan",
       "summary": "City of Piran.",
       "sourceIds": [
@@ -926,6 +1066,9 @@
     {
       "id": "place-gang-dezh",
       "type": "NarrativePlace",
+      "kinds": [
+        "fortress"
+      ],
       "label": "Gang-dezh",
       "summary": "Mountain stronghold built by Siavash.",
       "sourceIds": [
@@ -936,6 +1079,9 @@
     {
       "id": "place-siavashgerd",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Siavashgerd",
       "summary": "City founded by Siavash.",
       "sourceIds": [

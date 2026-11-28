@@ -330,6 +330,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the story of Forud is told.",
       "sourceIds": [
@@ -374,6 +377,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -420,6 +426,9 @@
     {
       "id": "story-forud",
       "type": "NarrativeArc",
+      "kinds": [
+        "warStory"
+      ],
       "label": "Forud",
       "summary": "The army Kay Khosrow sends against Turan under Tus, and its road past Kalat, where Forud, a son of Siavash, lives with his mother.",
       "sourceIds": [
@@ -436,6 +445,9 @@
     {
       "id": "character-kay-khosrow",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Khosrow",
       "summary": "The young king of Iran, son of Siavash, who seeks vengeance for his father.",
       "sourceIds": [
@@ -452,6 +464,9 @@
     {
       "id": "character-tus",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Tus",
       "summary": "A noble of Iran of the line of Nowzar, made commander of the army.",
       "sourceIds": [
@@ -468,6 +483,10 @@
     {
       "id": "character-forud",
       "type": "Character",
+      "kinds": [
+        "royal",
+        "hero"
+      ],
       "label": "Forud",
       "summary": "A son of Siavash by the daughter of Piran, who lives in the castle of Kalat with his mother.",
       "sourceIds": [
@@ -491,6 +510,10 @@
     {
       "id": "character-siavash",
       "type": "Character",
+      "kinds": [
+        "royal",
+        "hero"
+      ],
       "label": "Siavash",
       "summary": "The father of Kay Khosrow and Forud, killed in Turan before this story.",
       "sourceIds": [
@@ -507,6 +530,9 @@
     {
       "id": "character-piran",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Piran",
       "summary": "The commander and counsellor of Afrasiab, grandfather of Forud.",
       "sourceIds": [
@@ -523,6 +549,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "The hero of Iran, who stays at court with the king.",
       "sourceIds": [
@@ -539,6 +568,9 @@
     {
       "id": "character-afrasiab",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Afrasiab",
       "summary": "The king of Turan, grandfather of Kay Khosrow and the killer of Siavash.",
       "sourceIds": [
@@ -555,6 +587,9 @@
     {
       "id": "character-gudarz",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gudarz",
       "summary": "An old noble of Iran, son of Keshvad.",
       "sourceIds": [
@@ -571,6 +606,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The kingdom of Kay Khosrow.",
       "sourceIds": [
@@ -581,6 +620,10 @@
     {
       "id": "place-turan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Turan",
       "summary": "The kingdom of Afrasiab, where the army is sent.",
       "sourceIds": [
@@ -591,6 +634,9 @@
     {
       "id": "place-kalat",
       "type": "NarrativePlace",
+      "kinds": [
+        "fortress"
+      ],
       "label": "Kalat",
       "summary": "A castle on a high mountain beside a narrow road, the home of Forud; the mountain is called Sepid Kuh.",
       "sourceIds": [
@@ -608,6 +654,9 @@
     {
       "id": "place-charam",
       "type": "NarrativePlace",
+      "kinds": [
+        "landscape"
+      ],
       "label": "Charam",
       "summary": "A well-watered land on the road to Kalat, where the army halts.",
       "sourceIds": [
@@ -618,6 +667,9 @@
     {
       "id": "character-jarira",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Jarira",
       "summary": "The mother of Forud, a daughter of Piran and wife of Siavash.",
       "sourceIds": [
@@ -634,6 +686,9 @@
     {
       "id": "character-tokhar",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Tokhar",
       "summary": "A counsellor of Forud who knows the lords of Iran by name.",
       "sourceIds": [
@@ -650,6 +705,9 @@
     {
       "id": "character-bahram-pahlavan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Bahram son of Gudarz",
       "summary": "A warrior of Iran, son of Gudarz, once a companion of Siavash.",
       "sourceIds": [
@@ -666,6 +724,9 @@
     {
       "id": "character-zangeh",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zangeh-ye Shavaran",
       "summary": "A warrior of Iran, once a companion of Siavash.",
       "sourceIds": [
@@ -682,6 +743,9 @@
     {
       "id": "character-fariborz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Fariborz",
       "summary": "A son of Kay Kavus, brother of Siavash and so uncle of Forud.",
       "sourceIds": [
@@ -698,6 +762,9 @@
     {
       "id": "character-gostaham",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gostaham",
       "summary": "A warrior of Iran, son of Gazhdaham.",
       "sourceIds": [
@@ -714,6 +781,9 @@
     {
       "id": "character-bizhan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Bizhan",
       "summary": "A young warrior of Iran, the only son of Giv.",
       "sourceIds": [
@@ -730,6 +800,9 @@
     {
       "id": "character-giv",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Giv",
       "summary": "A warrior of Iran, son of Gudarz, who brought Kay Khosrow from Turan.",
       "sourceIds": [
@@ -746,6 +819,9 @@
     {
       "id": "character-rivniz",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rivniz",
       "summary": "A young warrior of Iran, son-in-law of Tus.",
       "sourceIds": [
@@ -762,6 +838,9 @@
     {
       "id": "character-zarasp",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zarasp",
       "summary": "A son of Tus, married to a sister of Rivniz.",
       "sourceIds": [
@@ -778,6 +857,9 @@
     {
       "id": "character-rohham",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rohham",
       "summary": "A warrior of Iran, son of Gudarz.",
       "sourceIds": [
@@ -794,6 +876,9 @@
     {
       "id": "character-palashan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Palashan",
       "summary": "A young Turanian warrior sent to count the Iranian banners.",
       "sourceIds": [
@@ -810,6 +895,10 @@
     {
       "id": "character-tazhav",
       "type": "Character",
+      "kinds": [
+        "noble",
+        "hero"
+      ],
       "label": "Tazhav",
       "summary": "A Turanian lord of Gorogerd, son-in-law of Afrasiab.",
       "sourceIds": [
@@ -826,6 +915,9 @@
     {
       "id": "character-kabudeh",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "Kabudeh",
       "summary": "A herdsman of Afrasiab whom Tazhav sends to spy on the Iranians.",
       "sourceIds": [
@@ -842,6 +934,9 @@
     {
       "id": "character-espanuy",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "Espanuy",
       "summary": "A woman of the household of Tazhav, called his companion.",
       "sourceIds": [
@@ -858,6 +953,9 @@
     {
       "id": "place-kaseh-rud",
       "type": "NarrativePlace",
+      "kinds": [
+        "river"
+      ],
       "label": "Kaseh Rud",
       "summary": "A river in Turan where the Iranian army makes camp.",
       "sourceIds": [
@@ -868,6 +966,9 @@
     {
       "id": "place-gorogerd",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Gorogerd",
       "summary": "The seat of Tazhav, where the herds of Afrasiab graze.",
       "sourceIds": [
@@ -878,6 +979,9 @@
     {
       "id": "character-houman",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Houman",
       "summary": "A Turanian hero, brother of Piran.",
       "sourceIds": [
@@ -894,6 +998,9 @@
     {
       "id": "character-lahhak",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Lahhak",
       "summary": "A Turanian warrior.",
       "sourceIds": [
@@ -910,6 +1017,9 @@
     {
       "id": "character-farshidvard",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Farshidvard",
       "summary": "A Turanian warrior.",
       "sourceIds": [
@@ -926,6 +1036,9 @@
     {
       "id": "character-rivniz-prince",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Rivniz, prince of the house of Kavus",
       "summary": "A young crowned prince dear to Kay Kavus; the poem calls him the youngest son of the king. Not the Rivniz who was son-in-law of Tus.",
       "sourceIds": [
@@ -942,6 +1055,9 @@
     {
       "id": "character-ruyin",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Ruyin",
       "summary": "A son of Piran.",
       "sourceIds": [
@@ -958,6 +1074,9 @@
     {
       "id": "place-khotan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Khotan",
       "summary": "The land of Piran, to which he returns.",
       "sourceIds": [

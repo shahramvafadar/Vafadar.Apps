@@ -354,6 +354,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "Ferdowsi’s epic, in which the story of Rostam and Sohrab stands.",
       "sourceIds": [
@@ -394,6 +397,9 @@
     {
       "id": "story-rostam-sohrab",
       "type": "NarrativeArc",
+      "kinds": [
+        "tragedy"
+      ],
       "label": "Rostam and Sohrab",
       "summary": "The story of Sohrab in Ferdowsi’s Shahnameh. It begins when Rostam goes hunting and loses his horse Rakhsh, and follows him to Samangan.",
       "sourceIds": [
@@ -406,6 +412,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "A warrior whose search for his missing horse opens the story.",
       "sourceIds": [
@@ -426,6 +435,9 @@
     {
       "id": "character-zal",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zal",
       "summary": "A figure in Rostam's family, also known as Dastan.",
       "sourceIds": [
@@ -438,6 +450,9 @@
     {
       "id": "character-tahmineh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Tahmineh",
       "summary": "A woman who meets Rostam in Samangan and makes a consequential choice.",
       "sourceIds": [
@@ -449,6 +464,9 @@
     {
       "id": "character-sohrab",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Sohrab",
       "summary": "A young warrior who seeks his father and sets out with ambitious plans.",
       "sourceIds": [
@@ -460,6 +478,9 @@
     {
       "id": "character-rakhsh",
       "type": "AnimalCharacter",
+      "kinds": [
+        "steed"
+      ],
       "label": "Rakhsh",
       "summary": "Rostam's horse; his disappearance brings Rostam to Samangan.",
       "sourceIds": [
@@ -487,6 +508,9 @@
     {
       "id": "character-king-samangan",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "King of Samangan",
       "summary": "The unnamed ruler who welcomes Rostam while he searches for Rakhsh.",
       "sourceIds": [
@@ -498,6 +522,9 @@
     {
       "id": "character-afrasiab",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Afrasiab",
       "summary": "A ruler who sees an opportunity in Sohrab's expedition.",
       "sourceIds": [
@@ -509,6 +536,9 @@
     {
       "id": "character-kay-kavus",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Kavus",
       "summary": "The king who summons Rostam during the confrontation with Sohrab's forces.",
       "sourceIds": [
@@ -520,6 +550,9 @@
     {
       "id": "place-samangan",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Samangan",
       "summary": "The narrative setting where Rostam is welcomed after losing Rakhsh. No modern coordinate match is asserted.",
       "sourceIds": [
@@ -532,6 +565,9 @@
     {
       "id": "place-zabul",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Zabulistan",
       "summary": "A region associated with Rostam and his family in the story; no modern boundary is asserted.",
       "sourceIds": [
@@ -543,6 +579,10 @@
     {
       "id": "place-turan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Turan",
       "summary": "The narrative region whose border is named in Rostam's opening hunting journey.",
       "sourceIds": [
@@ -554,6 +594,9 @@
     {
       "id": "object-token",
       "type": "NarrativeObject",
+      "kinds": [
+        "keepsake"
+      ],
       "label": "Rostam's keepsake token",
       "summary": "A small token Rostam entrusts to Tahmineh for a possible child.",
       "sourceIds": [
@@ -565,6 +608,9 @@
     {
       "id": "character-sam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Sam",
       "summary": "Ancestor of Rostam's house, named as a measure of valour.",
       "sourceIds": [
@@ -581,6 +627,9 @@
     {
       "id": "character-tus",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Tus",
       "summary": "Iranian lord, son of Nowzar.",
       "sourceIds": [
@@ -597,6 +646,9 @@
     {
       "id": "character-houman",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Houman",
       "summary": "Turanian captain sent by Afrasiab.",
       "sourceIds": [
@@ -613,6 +665,9 @@
     {
       "id": "character-barman",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Barman",
       "summary": "Turanian captain sent by Afrasiab.",
       "sourceIds": [
@@ -629,6 +684,9 @@
     {
       "id": "character-hojir",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Hojir",
       "summary": "Keeper of the White Castle.",
       "sourceIds": [
@@ -645,6 +703,9 @@
     {
       "id": "character-gostaham",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gostaham",
       "summary": "Young warrior named at the White Castle; a Gostaham is also among the Iranian lords.",
       "sourceIds": [
@@ -661,6 +722,9 @@
     {
       "id": "character-gordafarid",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gordafarid",
       "summary": "Woman warrior of the White Castle, daughter of Gazhdaham.",
       "sourceIds": [
@@ -677,6 +741,9 @@
     {
       "id": "character-gazhdaham",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Gazhdaham",
       "summary": "Old lord of the White Castle.",
       "sourceIds": [
@@ -693,6 +760,9 @@
     {
       "id": "character-gudarz",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gudarz",
       "summary": "Senior Iranian lord, son of Keshvad.",
       "sourceIds": [
@@ -709,6 +779,9 @@
     {
       "id": "character-giv",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Giv",
       "summary": "Iranian warrior, son of Gudarz.",
       "sourceIds": [
@@ -725,6 +798,9 @@
     {
       "id": "character-gorgin",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gorgin",
       "summary": "Iranian warrior.",
       "sourceIds": [
@@ -741,6 +817,9 @@
     {
       "id": "character-bahram-pahlavan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Bahram son of Gudarz",
       "summary": "Iranian warrior.",
       "sourceIds": [
@@ -757,6 +836,9 @@
     {
       "id": "character-farhad",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Farhad",
       "summary": "Iranian warrior.",
       "sourceIds": [
@@ -773,6 +855,9 @@
     {
       "id": "character-zhende-razm",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zhende Razm",
       "summary": "Turanian-side warrior at Sohrab's side.",
       "sourceIds": [
@@ -789,6 +874,9 @@
     {
       "id": "character-fariborz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Fariborz",
       "summary": "Son of Kay Kavus.",
       "sourceIds": [
@@ -805,6 +893,9 @@
     {
       "id": "character-gorazeh",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gorazeh",
       "summary": "Iranian warrior of Giv's house.",
       "sourceIds": [
@@ -821,6 +912,9 @@
     {
       "id": "character-rohham",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rohham",
       "summary": "Iranian warrior.",
       "sourceIds": [
@@ -837,6 +931,9 @@
     {
       "id": "character-zavareh",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zavareh",
       "summary": "Rostam's brother.",
       "sourceIds": [
@@ -853,6 +950,9 @@
     {
       "id": "character-rudabeh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Rudabeh",
       "summary": "Lady of Zal's house, named by Rostam.",
       "sourceIds": [
@@ -869,6 +969,9 @@
     {
       "id": "place-hunting-ground",
       "type": "NarrativePlace",
+      "kinds": [
+        "landscape"
+      ],
       "label": "The hunting ground",
       "summary": "Meadow at the border of Turan where Rostam hunts and sleeps.",
       "sourceIds": [
@@ -879,6 +982,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "Realm of Kay Kavus.",
       "sourceIds": [
@@ -889,6 +996,9 @@
     {
       "id": "place-white-castle",
       "type": "NarrativePlace",
+      "kinds": [
+        "fortress"
+      ],
       "label": "The White Castle",
       "summary": "Iranian border fortress.",
       "sourceIds": [
@@ -899,6 +1009,9 @@
     {
       "id": "place-iran-camp",
       "type": "NarrativePlace",
+      "kinds": [
+        "camp"
+      ],
       "label": "The camp of Iran",
       "summary": "Iranian encampment before the castle.",
       "sourceIds": [
@@ -909,6 +1022,9 @@
     {
       "id": "place-field-of-combat",
       "type": "NarrativePlace",
+      "kinds": [
+        "battlefield"
+      ],
       "label": "The field of combat",
       "summary": "Ground between the armies where the champions meet.",
       "sourceIds": [
@@ -919,6 +1035,9 @@
     {
       "id": "place-tomb",
       "type": "NarrativePlace",
+      "kinds": [
+        "monument"
+      ],
       "label": "The tomb",
       "summary": "Burial structure built in Zabul.",
       "sourceIds": [

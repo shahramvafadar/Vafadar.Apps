@@ -29,6 +29,9 @@
       "periods": [
         {
           "key": "iran-shahr-i-sokhta",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Burnt City inhabited",
           "summary": "Shahr-i Sokhta was founded around 3200 BCE and inhabited through four periods until 1800 BCE, one of the first complex societies of eastern Iran.",
           "time": {
@@ -59,6 +62,9 @@
         },
         {
           "key": "iran-proto-elamite",
+          "kinds": [
+            "era"
+          ],
           "label": "The Proto-Elamite period",
           "summary": "From about 3200 BCE numerical and then proto-Elamite tablets appear at Susa and across the plateau as far as Shahr-i Sokhta; the undeciphered script remained in use until about 2700 BCE.",
           "time": {
@@ -90,6 +96,9 @@
         },
         {
           "key": "iran-awan-shimashki",
+          "kinds": [
+            "reign"
+          ],
           "label": "Awan and Šimaški",
           "summary": "The kings of Awan and Šimaški, who ruled Elam from about 2400 to 1970 BCE, the first two dynasties of the Old Elamite period; a king list from Susa names them without the years of their reigns.",
           "time": {
@@ -123,6 +132,9 @@
         },
         {
           "key": "iran-old-elamite",
+          "kinds": [
+            "era"
+          ],
           "label": "The Old Elamite period",
           "summary": "The age of the three dynasties of Awan, Šimaški and the Epartids (sukkalmahs), about 2400 to 1600 BCE.",
           "time": {
@@ -154,6 +166,9 @@
         },
         {
           "key": "iran-awan-dynasty",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Awan dynasty",
           "summary": "The first Old Elamite dynasty, about 2400 to 2100 BCE, partly contemporary with Sargon of Akkad; its last king Puzur-Inšušinak reigned in the time of Ur-Nammu.",
           "time": {
@@ -186,6 +201,9 @@
         },
         {
           "key": "iran-simashki-dynasty",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Šimaški dynasty",
           "summary": "The second Old Elamite dynasty, about 2100 to 1970 BCE, whose king Kindattu conquered Ur in 2004 BCE.",
           "time": {
@@ -217,6 +235,9 @@
         },
         {
           "key": "iran-epartid-dynasty",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Epartids (sukkalmahs)",
           "summary": "The third Old Elamite dynasty, about 1970 to 1600 BCE, named after its founder Eparti and called “of the sukkalmahs” after the title of its rulers; contemporary with the Old Babylonian period.",
           "time": {
@@ -248,6 +269,9 @@
         },
         {
           "key": "iran-middle-elamite",
+          "kinds": [
+            "era"
+          ],
           "label": "Middle Elamite period",
           "summary": "The age of the Kidinuids, the Igehalkids and the Šutrukids, about 1500 to 1100 BCE.",
           "time": {
@@ -280,6 +304,9 @@
         },
         {
           "key": "iran-neo-elamite",
+          "kinds": [
+            "era"
+          ],
           "label": "The Neo-Elamite period",
           "summary": "The last age of Elam, from 1100 to 539 BCE.",
           "time": {
@@ -309,6 +336,9 @@
         },
         {
           "key": "iran-median-kingdom",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Median kingdom",
           "summary": "The time of the Median kings as Herodotus counts them, from Deioces to the fall of Astyages; the years are computed from his figures, which scholars regard as suspect.",
           "time": {
@@ -349,6 +379,9 @@
         },
         {
           "key": "iran-achaemenid",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Achaemenid period",
           "summary": "From the victory of Cyrus over Astyages in 550 BCE to the death of Darius III in 330 BCE.",
           "time": {
@@ -378,6 +411,9 @@
         },
         {
           "key": "iran-seleucid-iran",
+          "kinds": [
+            "reign"
+          ],
           "label": "Alexander and the Seleucids in Iran",
           "summary": "From Alexander’s rule over the former Achaemenid empire to the loss of Media, Babylonia and Elam to the Parthians between about 143 and 139 BCE and finally in 129 BCE.",
           "time": {
@@ -409,6 +445,9 @@
         },
         {
           "key": "iran-arsacid",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Arsacid period",
           "summary": "The rule of the Arsacid kings of Parthia, from Arsaces I to 224 CE. The dates follow the chronology of G.R.F. Assar that Livius uses.",
           "time": {
@@ -439,6 +478,9 @@
         },
         {
           "key": "iran-sasanian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Sasanian period",
           "summary": "The rule of the Sasanian kings, from the revolt of Ardašir in 224 to the death of Yazdgard III in 651 CE.",
           "time": {
@@ -470,6 +512,9 @@
         },
         {
           "key": "iran-umayyad-caliphate",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Umayyad caliphate",
           "summary": "The first great Muslim dynasty to rule the empire of the caliphate, from 661 to 750; Iran was governed as provinces of this Arab empire.",
           "time": {
@@ -499,6 +544,9 @@
         },
         {
           "key": "iran-abbasid-caliphate",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Abbasid caliphate before the Seljuks",
           "summary": "From the establishment of the Abbasids in 750 until Toghril Beg’s Seljuks entered Baghdad in 1055; within it the Iranian dynasties rose in the east and the Buyids held the caliphs in tutelage.",
           "time": {
@@ -530,6 +578,9 @@
       "events": [
         {
           "key": "iran-first-settlement-at-susa",
+          "kinds": [
+            "founding"
+          ],
           "label": "People settle at Susa",
           "summary": "Excavations show people living on the acropolis of Susa in 5000 BCE and urban structures about 4000 BCE.",
           "time": {
@@ -547,6 +598,9 @@
         },
         {
           "key": "iran-elamites-conquer-ur",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Elamites conquer Ur",
           "summary": "In 2004 BCE the Elamites, allied with the people of Susiana under Kindattu of Šimaški, conquered Ur, ended its empire and led its king Ibbi-Sin away as a prisoner.",
           "time": {
@@ -564,6 +618,9 @@
         },
         {
           "key": "iran-sack-of-susa",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Assyrian sack of Susa",
           "summary": "Aššurbanipal destroyed Susa and the sanctuary of Dur-Untaš. The Livius pages differ on the year: 646 BCE, between 645 and 640 BCE, or the subjection of Elam in 643 BCE.",
           "time": {
@@ -588,6 +645,9 @@
         },
         {
           "key": "iran-fall-of-nineveh",
+          "kinds": [
+            "fall"
+          ],
           "label": "The fall of Nineveh",
           "summary": "The Medes under Cyaxares and the Babylonians captured the Assyrian capital Nineveh in July 612 BCE.",
           "time": {
@@ -606,6 +666,9 @@
         },
         {
           "key": "iran-cyrus-defeats-astyages",
+          "kinds": [
+            "battle"
+          ],
           "label": "Cyrus defeats Astyages",
           "summary": "Cyrus rose against his overlord Astyages of Media; the army of Astyages revolted and handed him over, and Cyrus took Ecbatana. Livius gives 550 BCE, and mentions a chronology of 554/553.",
           "time": {
@@ -625,6 +688,9 @@
         },
         {
           "key": "iran-conquest-of-lydia",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Cyrus conquers Lydia",
           "summary": "Cyrus defeated Croesus of Lydia and took Sardis. The traditional year 547 BCE rests on a reading of the Nabonidus Chronicle that most scholars now doubt; it was perhaps later.",
           "time": {
@@ -645,6 +711,9 @@
         },
         {
           "key": "iran-capture-of-babylon",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Cyrus takes Babylon",
           "summary": "In October 539 BCE Cyrus captured Babylon and the Neo-Babylonian king Nabonidus, and appointed his son Cambyses king of Babylon.",
           "time": {
@@ -663,6 +732,9 @@
         },
         {
           "key": "iran-conquest-of-egypt",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Cambyses conquers Egypt",
           "summary": "In 525 BCE Cambyses II conquered Egypt; the pharaoh Psammetichus III was captured alive.",
           "time": {
@@ -680,6 +752,10 @@
         },
         {
           "key": "iran-darius-seizes-power",
+          "kinds": [
+            "revolt",
+            "accession"
+          ],
           "label": "Darius seizes power",
           "summary": "On 29 September 522 BCE Darius and six noblemen killed the king whom Darius calls the usurper Gaumâta; Darius then fought nineteen battles in one year against rebels from Persia, Elam, Media, Babylonia and other lands, the last revolt ending in December 521 BCE.",
           "time": {
@@ -698,6 +774,9 @@
         },
         {
           "key": "iran-thermopylae",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Thermopylae",
           "summary": "In September 480 BCE the army of Xerxes defeated the Greeks under the Spartan king Leonidas at the pass of Thermopylae.",
           "time": {
@@ -715,6 +794,9 @@
         },
         {
           "key": "iran-salamis",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Salamis",
           "summary": "At the end of September 480 BCE the Greek fleet defeated the Persian fleet at Salamis, while Xerxes watched from a hill.",
           "time": {
@@ -732,6 +814,9 @@
         },
         {
           "key": "iran-plataea",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Plataea",
           "summary": "In the summer of 479 BCE the Greeks under Pausanias defeated the Persian army of Mardonius near Plataea.",
           "time": {
@@ -749,6 +834,9 @@
         },
         {
           "key": "iran-cunaxa",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Cunaxa",
           "summary": "In 401 BCE Cyrus the Younger, with an army including Greek mercenaries, fought his brother Artaxerxes II at Cunaxa near Babylon; his army won, but Cyrus fell.",
           "time": {
@@ -767,6 +855,9 @@
         },
         {
           "key": "iran-reconquest-of-egypt",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The reconquest of Egypt",
           "summary": "In 343 BCE the generals of Artaxerxes III, Bagoas and Mentor of Rhodes, reconquered Egypt.",
           "time": {
@@ -785,6 +876,9 @@
         },
         {
           "key": "iran-issus",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Issus",
           "summary": "In November 333 BCE Alexander defeated Darius III near Issus.",
           "time": {
@@ -803,6 +897,9 @@
         },
         {
           "key": "iran-gaugamela",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Gaugamela",
           "summary": "On 1 October 331 BCE Alexander defeated Darius III at Gaugamela in northern Iraq.",
           "time": {
@@ -820,6 +917,9 @@
         },
         {
           "key": "iran-burning-of-persepolis",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The burning of Persepolis",
           "summary": "Alexander captured Persepolis in the first weeks of 330 BCE and burnt several palace buildings in April 330 BCE.",
           "time": {
@@ -838,6 +938,9 @@
         },
         {
           "key": "iran-death-of-darius-iii",
+          "kinds": [
+            "death"
+          ],
           "label": "The death of Darius III",
           "summary": "In July 330 BCE Darius III, fleeing from Alexander, was murdered by his own courtiers at Choara near modern Damghan.",
           "time": {
@@ -856,6 +959,9 @@
         },
         {
           "key": "iran-susa-weddings",
+          "kinds": [
+            "ceremony"
+          ],
           "label": "The weddings at Susa",
           "summary": "In March 324 BCE Alexander held a mass wedding at Susa where his officers married Iranian women by Persian rites; Alexander married a daughter of Darius III, and Seleucus married Apame.",
           "time": {
@@ -874,6 +980,9 @@
         },
         {
           "key": "iran-eastern-campaign-antiochus-iii",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The eastern campaign of Antiochus III",
           "summary": "Antiochus III campaigned in the east, forcing Arsaces II of Parthia (209 BCE) and the king of Bactria to accept his overlordship. Livius dates the campaign 212–205 BCE on one page and 209–204 on another.",
           "time": {
@@ -898,6 +1007,9 @@
         },
         {
           "key": "iran-parthians-take-babylonia",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Parthians take Babylonia",
           "summary": "Mithradates I of Parthia captured Seleucia, the Seleucid capital in Babylonia, in 141 BCE – between April and June according to one Livius page, in July according to another – after taking Media; Susa followed in 139 BCE.",
           "time": {
@@ -917,6 +1029,9 @@
         },
         {
           "key": "iran-defeat-of-antiochus-vii",
+          "kinds": [
+            "battle"
+          ],
           "label": "The defeat of Antiochus VII",
           "summary": "In 130 BCE Antiochus VII drove the Parthians out of Babylonia and Media; in 129 BCE they defeated him, he took his own life, and the Parthians retook all Seleucid territory in Iran.",
           "time": {
@@ -935,6 +1050,9 @@
         },
         {
           "key": "iran-carrhae",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Carrhae",
           "summary": "In 53 BCE the Parthian army under Surena defeated the Roman army of Crassus on the plain east of Carrhae; Crassus was killed after a meeting with Surena.",
           "time": {
@@ -953,6 +1071,9 @@
         },
         {
           "key": "iran-antony-parthian-war",
+          "kinds": [
+            "war"
+          ],
           "label": "Antony’s Parthian war",
           "summary": "In 36 BCE the Roman Mark Antony invaded the Parthian empire and failed; another Livius page connects his eastern campaigns with 34/33 BCE.",
           "time": {
@@ -971,6 +1092,9 @@
         },
         {
           "key": "iran-return-of-standards",
+          "kinds": [
+            "treaty"
+          ],
           "label": "The return of the Roman standards",
           "summary": "In 20 BCE the Parthians gave back to Rome the standards they had taken from Roman armies; Augustus records it in his Res Gestae.",
           "time": {
@@ -989,6 +1113,9 @@
         },
         {
           "key": "iran-armenia-settlement",
+          "kinds": [
+            "treaty"
+          ],
           "label": "The settlement over Armenia",
           "summary": "After a Roman army surrendered to the Parthians at Rhandeia (about 62 CE), Rome and Vologases I agreed in 63 CE that his brother Tiridates would be king of Armenia.",
           "time": {
@@ -1007,6 +1134,9 @@
         },
         {
           "key": "iran-trajan-takes-ctesiphon",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Trajan takes Ctesiphon",
           "summary": "In Trajan’s war against Osroes I (114–117), the Romans took Babylon, Seleucia and Ctesiphon in 116; after Trajan’s death in 117 Hadrian gave up the conquests.",
           "time": {
@@ -1025,6 +1155,9 @@
         },
         {
           "key": "iran-ctesiphon-taken-164",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Romans take Ctesiphon under Vologases IV",
           "summary": "In the war that began over Armenia in 161, the Roman general Avidius Cassius took the Parthian capital; Livius dates it to 164 on one page and 165 on another.",
           "time": {
@@ -1048,6 +1181,9 @@
         },
         {
           "key": "iran-severus-takes-ctesiphon",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Septimius Severus takes Ctesiphon",
           "summary": "In a new war with Vologases V, the emperor Septimius Severus took Seleucia and Ctesiphon; Livius dates it to 197 on one page and 198 on another. He then failed to take Hatra.",
           "time": {
@@ -1071,6 +1207,9 @@
         },
         {
           "key": "iran-artabanus-defeats-macrinus",
+          "kinds": [
+            "battle"
+          ],
           "label": "Artabanus IV against Macrinus at Nisibis",
           "summary": "After Caracalla’s attack and murder, Artabanus IV met the new emperor Macrinus near Nisibis in 217; the sources present it as a Roman defeat, and Rome paid an indemnity.",
           "time": {
@@ -1089,6 +1228,9 @@
         },
         {
           "key": "iran-ardashir-defeats-artabanus",
+          "kinds": [
+            "battle"
+          ],
           "label": "Ardašir defeats Artabanus IV",
           "summary": "Artabanus IV marched against the insurrection of Ardašir in Persis in 224 and was defeated; a relief near Firuzabad shows the victory. It marks the beginning of the Sasanian empire.",
           "time": {
@@ -1108,6 +1250,9 @@
         },
         {
           "key": "iran-ardashir-takes-ctesiphon",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Ardašir takes Ctesiphon",
           "summary": "Two years after his victory, Ardašir took Ctesiphon, the Parthian capital, and was recognised as ruler of the former Parthian empire; Ctesiphon became the city where Sasanian kings were inaugurated.",
           "time": {
@@ -1128,6 +1273,9 @@
         },
         {
           "key": "iran-war-with-rome-230",
+          "kinds": [
+            "war"
+          ],
           "label": "Ardašir’s war with Rome begins",
           "summary": "Ardašir’s siege of Nisibis began a long war with Rome; Livius dates the siege to 230 on its page on Ardašir and the first fighting on the Euphrates to 231 on its page on the Sasanians.",
           "time": {
@@ -1151,6 +1299,10 @@
         },
         {
           "key": "iran-defeat-of-gordian-iii",
+          "kinds": [
+            "battle",
+            "death"
+          ],
           "label": "The defeat and death of Gordian III",
           "summary": "The emperor Gordian III invaded Mesopotamia in 244, was defeated near Ctesiphon and died – killed in action, or lynched by his soldiers, as the Livius pages differ; his successor Philip made a peace that left Armenia to the Persians.",
           "time": {
@@ -1170,6 +1322,9 @@
         },
         {
           "key": "iran-capture-of-valerian",
+          "kinds": [
+            "battle"
+          ],
           "label": "Shapur captures Valerian",
           "summary": "In 260 Shapur I defeated the Roman emperor Valerian and took him captive; reliefs at Bishapur and Naqš-e Rustam show the triumph, and the captured soldiers built Bishapur.",
           "time": {
@@ -1190,6 +1345,9 @@
         },
         {
           "key": "iran-carus-takes-ctesiphon",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Carus takes Ctesiphon",
           "summary": "The emperor Carus took Ctesiphon in 283; Bahram II lost the war and with it Armenia and northern Mesopotamia.",
           "time": {
@@ -1208,6 +1366,9 @@
         },
         {
           "key": "iran-treaty-of-nisibis-298",
+          "kinds": [
+            "treaty"
+          ],
           "label": "The peace of 298",
           "summary": "After Galerius defeated Narseh, a treaty concluded at Nisibis in 298 made the Persians give up territories in northern Mesopotamia and gave Rome lands east of the Tigris.",
           "time": {
@@ -1226,6 +1387,9 @@
         },
         {
           "key": "iran-shapur-ii-takes-amida",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Shapur II takes Amida",
           "summary": "The Sasanian king Shapur II captured the Roman city of Amida in 359.",
           "time": {
@@ -1243,6 +1407,10 @@
         },
         {
           "key": "iran-death-of-julian",
+          "kinds": [
+            "treaty",
+            "death"
+          ],
           "label": "The death of Julian and the peace of 363",
           "summary": "The emperor Julian invaded Mesopotamia and reached Ctesiphon, but was defeated by Shapur II and killed in action on 26 June 363; his successor Jovian made a peace that gave up Nisibis and other eastern lands.",
           "time": {
@@ -1263,6 +1431,9 @@
         },
         {
           "key": "iran-division-of-armenia",
+          "kinds": [
+            "treaty"
+          ],
           "label": "Armenia divided",
           "summary": "In 387 Shapur III made peace with Rome, and Armenia was divided between the two empires.",
           "time": {
@@ -1281,6 +1452,9 @@
         },
         {
           "key": "iran-bahram-v-takes-throne",
+          "kinds": [
+            "accession"
+          ],
           "label": "Bahram V takes the throne with Lakhmid help",
           "summary": "Bahram V, brought up at the Lakhmid court of Hira, gained the throne at Ctesiphon in 420 with the help of the Lakhmid king against the nobles who had killed his brother Shapur.",
           "time": {
@@ -1298,6 +1472,9 @@
         },
         {
           "key": "iran-war-of-421",
+          "kinds": [
+            "war"
+          ],
           "label": "Bahram V’s war with Rome",
           "summary": "A brief war between Bahram V and the Romans in 421–422.",
           "time": {
@@ -1320,6 +1497,9 @@
         },
         {
           "key": "iran-yazdgard-ii-invades-armenia",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Yazdgard II invades Roman Armenia",
           "summary": "In 451 Yazdgard II invaded the Roman province of Armenia; the borders in the end remained unchanged.",
           "time": {
@@ -1337,6 +1517,10 @@
         },
         {
           "key": "iran-death-of-peroz",
+          "kinds": [
+            "battle",
+            "death"
+          ],
           "label": "Peroz I killed in battle",
           "summary": "Peroz I was killed in action in 484 – Livius places the war in the northeast on one page and on the northwestern frontier on another – which brought a crisis on the Sasanian empire.",
           "time": {
@@ -1355,6 +1539,9 @@
         },
         {
           "key": "iran-peroz-against-the-hephthalites",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Peroz’s campaigns against the Hephthalites",
           "summary": "Peroz I led three disastrous campaigns against the Hephthalites: in the first he was forced to surrender, in the third, in 484, he died with his cavalry in a hidden ditch. The Shahnameh gives the fullest account of his defeats.",
           "time": {
@@ -1373,6 +1560,9 @@
         },
         {
           "key": "iran-kavad-takes-amida",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Kavad I takes Amida",
           "summary": "Kavad I attacked the Byzantine empire and captured Amida in 502/503; a second Roman attempt in the winter of 505 recovered it, but the Romans had to pay the Persian garrison to leave.",
           "time": {
@@ -1395,6 +1585,9 @@
         },
         {
           "key": "iran-suppression-of-mazdakism",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The Mazdakites suppressed",
           "summary": "Khusrau I suppressed the religious movement called Mazdakism in the 530s; its adherents may have fled to Arabia.",
           "time": {
@@ -1417,6 +1610,9 @@
         },
         {
           "key": "iran-khusrau-i-takes-antioch",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Khusrau I takes Antioch",
           "summary": "In 540 Khusrau I conquered Antioch, the capital of Roman Syria, and settled its people in a new city near Ctesiphon, \"Khusrau’s Antioch\".",
           "time": {
@@ -1434,6 +1630,9 @@
         },
         {
           "key": "iran-defeat-of-the-hephthalites",
+          "kinds": [
+            "battle"
+          ],
           "label": "The Hephthalites crushed near Bukhara",
           "summary": "Between 558 and 561 Khusrau I, acting with the newly arrived Turks, crushed the Hephthalites in a great battle near Bukhara, and the two powers divided their land along the Oxus.",
           "time": {
@@ -1456,6 +1655,9 @@
         },
         {
           "key": "iran-revolt-of-bahram-vi",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The revolt of Bahram VI",
           "summary": "In 590 the general Bahram VI revolted and marched west; Hormizd IV was executed and his son Khusrau II fled to the Byzantines, who brought him back in 591.",
           "time": {
@@ -1473,6 +1675,9 @@
         },
         {
           "key": "iran-end-of-the-lakhmids",
+          "kinds": [
+            "fall"
+          ],
           "label": "The end of the Lakhmids",
           "summary": "Khusrau II had the Lakhmid king Noʿmān III killed in 602 and soon after brought Hira under direct Persian rule, removing the Arab bulwark of Iraq.",
           "time": {
@@ -1490,6 +1695,9 @@
         },
         {
           "key": "iran-battle-of-dhu-qar",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Ḏu Qār",
           "summary": "In 604 the Banu Bakr defeated a Persian force at Ḏu Qār, which Tabari saw as a consequence of Khusrau II’s action against Noʿmān.",
           "time": {
@@ -1507,6 +1715,9 @@
         },
         {
           "key": "iran-sui-embassy-to-khusrau-ii",
+          "kinds": [
+            "journey"
+          ],
           "label": "The Sui and Khusrau II exchange embassies",
           "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
           "time": {
@@ -1529,6 +1740,9 @@
         },
         {
           "key": "iran-persians-take-jerusalem",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Persians take Jerusalem",
           "summary": "The armies of Khusrau II under Shahrbaraz took Antioch in 612 and Damascus in 613, and sacked Jerusalem in 614, carrying off the relic of the True Cross.",
           "time": {
@@ -1547,6 +1761,9 @@
         },
         {
           "key": "iran-persians-take-alexandria",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Persians take Alexandria",
           "summary": "The armies of Khusrau II invaded Egypt and captured Alexandria in 619, cutting the corn supply of Constantinople.",
           "time": {
@@ -1565,6 +1782,9 @@
         },
         {
           "key": "iran-siege-of-constantinople-626",
+          "kinds": [
+            "siege"
+          ],
           "label": "The Persians before Constantinople",
           "summary": "In 626 Persian forces under Shahrbaraz reached the Asian shore of the Bosphorus, a mile from Constantinople, while the Avars besieged the city; they could not take it.",
           "time": {
@@ -1584,6 +1804,9 @@
         },
         {
           "key": "iran-battle-of-nineveh-627",
+          "kinds": [
+            "battle"
+          ],
           "label": "Heraclius defeats the Persians near Nineveh",
           "summary": "In December 627 Heraclius, who had invaded Mesopotamia, defeated a large Persian army near the ruins of Nineveh.",
           "time": {
@@ -1602,6 +1825,9 @@
         },
         {
           "key": "iran-fall-of-khusrau-ii",
+          "kinds": [
+            "fall"
+          ],
           "label": "The fall of Khusrau II",
           "summary": "After the defeat, the army mutinied; early in 628 the crown prince Sheroe imprisoned his father Khusrau II, who died soon after, and became king as Kavad II.",
           "time": {
@@ -1621,6 +1847,9 @@
         },
         {
           "key": "iran-return-of-the-true-cross",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The True Cross returned to Jerusalem",
           "summary": "After peace was made, Heraclius returned the relic of the True Cross to Jerusalem in 630.",
           "time": {
@@ -1639,6 +1868,9 @@
         },
         {
           "key": "iran-arabs-invade-mesopotamia",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The first Arab invasion of Mesopotamia",
           "summary": "In 633 an army of Christians and Muslims invaded Mesopotamia; a Sasanian counteroffensive was followed by an Arab one.",
           "time": {
@@ -1656,6 +1888,9 @@
         },
         {
           "key": "iran-arabs-take-ctesiphon",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Arabs take Ctesiphon",
           "summary": "The Arabs captured Ctesiphon, the beginning of their conquest of Mesopotamia; Livius dates it to 636 on its page on the Sasanians and to 637 on its page on Ctesiphon.",
           "time": {
@@ -1679,6 +1914,9 @@
         },
         {
           "key": "iran-yazdgard-iii-embassy-to-china",
+          "kinds": [
+            "journey"
+          ],
           "label": "Yazdgard III sends an embassy to China",
           "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
           "time": {
@@ -1696,6 +1934,9 @@
         },
         {
           "key": "iran-battle-of-nehavand",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Nehavand",
           "summary": "The Arabs invaded Iran and defeated Yazdgard III at Nehavand, after which he retreated to the northeast; Livius dates it to 641 on one page and 642 on another.",
           "time": {
@@ -1719,6 +1960,9 @@
         },
         {
           "key": "iran-fall-of-istakhr",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Arabs take Istakhr",
           "summary": "The walled city of Istakhr repulsed a first Arab attack in about 644, but was captured and sacked in about 650.",
           "time": {
@@ -1737,6 +1981,9 @@
         },
         {
           "key": "iran-death-of-yazdgard-iii",
+          "kinds": [
+            "death"
+          ],
           "label": "The death of Yazdgard III",
           "summary": "Yazdgard III, the last Sasanian king, died as a fugitive in 651, ten years after Nehavand; with him the Sasanian empire ended.",
           "time": {
@@ -1755,6 +2002,9 @@
         },
         {
           "key": "iran-peroz-iii-at-the-tang-court",
+          "kinds": [
+            "journey"
+          ],
           "label": "Peroz, son of Yazdgard III, at the Tang court",
           "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
           "time": {
@@ -1777,6 +2027,9 @@
         },
         {
           "key": "iran-abbasid-revolution",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The Abbasid revolution",
           "summary": "On 15 June 747 Abu Muslim raised the banner of revolt in Khorasan; it triumphed in 750 when the last Umayyad caliph Marwan II was defeated and killed, and the Abbasids took the caliphate.",
           "time": {
@@ -1800,6 +2053,9 @@
         },
         {
           "key": "iran-battle-of-talas",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of the Talas River",
           "summary": "In 751 the Arabs defeated the Tang armies on the Talas River, establishing Arab dominance in Transoxania.",
           "time": {
@@ -1818,6 +2074,9 @@
         },
         {
           "key": "iran-death-of-abu-muslim",
+          "kinds": [
+            "death"
+          ],
           "label": "The death of Abu Muslim",
           "summary": "Suspicious of a vassal with so much power, the caliph al-Mansur took Khorasan from Abu Muslim and had him put to death at court in February 755; his unavenged death inspired many later revolts.",
           "time": {
@@ -1835,6 +2094,9 @@
         },
         {
           "key": "iran-founding-of-baghdad",
+          "kinds": [
+            "founding"
+          ],
           "label": "The founding of Baghdad",
           "summary": "In 762 Baghdad was founded on the Tigris as the capital of the Abbasid caliphs.",
           "time": {
@@ -1852,6 +2114,9 @@
         },
         {
           "key": "iran-mamun-defeats-amin",
+          "kinds": [
+            "battle"
+          ],
           "label": "al-Maʾmun defeats his brother Amin",
           "summary": "From his governorate in Marv, with the men and resources of Persia, al-Maʾmun defeated his brother Amin in 813, whose cause was that of the Arabs of Iraq and Syria.",
           "time": {
@@ -1869,6 +2134,9 @@
         },
         {
           "key": "iran-yaqub-hailed-amir",
+          "kinds": [
+            "accession"
+          ],
           "label": "Yaʿqub hailed as amir in Sistan",
           "summary": "Out of the power struggles of the ʿayyar leaders of Sistan, Yaʿqub emerged the victor and was hailed as amir by the army of Sistan in 861.",
           "time": {
@@ -1886,6 +2154,9 @@
         },
         {
           "key": "iran-yaqub-at-nishapur",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Yaʿqub at Nishapur",
           "summary": "In 873 Yaʿqub intervened at Nishapur and ended the rule of the Tahirid governors in Khorasan.",
           "time": {
@@ -1905,6 +2176,9 @@
         },
         {
           "key": "iran-battle-of-dayr-al-aqul",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Dayr al-ʿAqul",
           "summary": "Marching on Baghdad, Yaʿqub was decisively defeated by the regent al-Muwaffaq at Dayr al-ʿAqul southeast of Baghdad in 876; he kept Fars and Ahvaz.",
           "time": {
@@ -1922,6 +2196,9 @@
         },
         {
           "key": "iran-battle-of-balkh",
+          "kinds": [
+            "battle"
+          ],
           "label": "ʿAmr b. Layth defeated outside Balkh",
           "summary": "In 900 Ismaʿil the Samanid crossed the Oxus and defeated ʿAmr b. Layth outside Balkh, capturing him and overturning Saffarid power in a single day; Khorasan passed to the Samanids for almost a century.",
           "time": {
@@ -1940,6 +2217,9 @@
         },
         {
           "key": "iran-death-of-mardavij",
+          "kinds": [
+            "death"
+          ],
           "label": "The murder of Mardavij",
           "summary": "In 935 Mardavij was killed by his Turkish slaves; his empire fell apart and most of its lands south of the Caspian mountains went to the Buyid brothers.",
           "time": {
@@ -1958,6 +2238,9 @@
         },
         {
           "key": "iran-buyids-enter-baghdad",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Buyids enter Baghdad",
           "summary": "On 19 December 945 Ahmad b. Buya entered Baghdad without a fight and the Buyids took the caliphs into their tutelage.",
           "time": {
@@ -1975,6 +2258,9 @@
         },
         {
           "key": "iran-adud-al-dawla-shahanshah",
+          "kinds": [
+            "accession"
+          ],
           "label": "ʿAdud al-Dawla as shahanshah",
           "summary": "A coin struck in Fars in 970 shows ʿAdud al-Dawla as a crowned king with the inscription shahanshah.",
           "time": {
@@ -1992,6 +2278,9 @@
         },
         {
           "key": "iran-ferdowsi-begins-the-shahnameh",
+          "kinds": [
+            "writing"
+          ],
           "label": "Ferdowsi begins the Shahnameh",
           "summary": "About 977, after the death of Daqiqi, Ferdowsi began writing the Shahnameh; a first version was complete by 994.",
           "time": {
@@ -2010,6 +2299,9 @@
         },
         {
           "key": "iran-mahmud-throws-off-samanid-authority",
+          "kinds": [
+            "accession"
+          ],
           "label": "Mahmud throws off Samanid authority",
           "summary": "In 999 Mahmud of Ghazni threw off Samanid authority; with the Qarakhanids north of the Oxus he divided up the former Samanid lands, and the Samanid dynasty came to its end.",
           "time": {
@@ -2028,6 +2320,9 @@
         },
         {
           "key": "iran-completion-of-the-shahnameh",
+          "kinds": [
+            "writing"
+          ],
           "label": "The completion of the Shahnameh",
           "summary": "In his seventy-first year, on 8 March 1010, Ferdowsi finished the Shahnameh.",
           "time": {
@@ -2045,6 +2340,9 @@
         },
         {
           "key": "iran-mahmud-takes-ray",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Mahmud takes Ray",
           "summary": "In 1029 Mahmud of Ghazni conquered Ray, until then the capital of the northern Buyid emirate.",
           "time": {
@@ -2062,6 +2360,9 @@
         },
         {
           "key": "iran-biruni-completes-india",
+          "kinds": [
+            "writing"
+          ],
           "label": "Biruni completes his India",
           "summary": "In 1030, just after the death of Mahmud, Biruni completed his great work on India, the Tahqiq ma li’l-Hind.",
           "time": {
@@ -2085,6 +2386,9 @@
       "periods": [
         {
           "key": "india-indus-civilization",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Indus civilization",
           "summary": "The earliest known urban culture of the Indian subcontinent, with its nuclear dates about 2600 to 1900 BCE; it declined in stages between about 2000 and 1750 BCE.",
           "time": {
@@ -2116,6 +2420,9 @@
         },
         {
           "key": "india-gupta",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Gupta period",
           "summary": "The broad period from about 300 to about 600 CE, regarded by many as the golden and classical age of India in literature, art, architecture and philosophy.",
           "time": {
@@ -2149,6 +2456,9 @@
       "events": [
         {
           "key": "india-alexander-defeats-porus",
+          "kinds": [
+            "battle"
+          ],
           "label": "Alexander defeats Porus",
           "summary": "In 326 BCE Alexander the Great, invited by the king of Taxila, defeated Porus on the banks of the Hydaspes.",
           "time": {
@@ -2167,6 +2477,9 @@
         },
         {
           "key": "india-treaty-of-seleucus-and-chandragupta",
+          "kinds": [
+            "treaty"
+          ],
           "label": "Seleucus and Chandragupta make peace",
           "summary": "In 304 BCE Seleucus, needing his army in the west, made peace with Chandragupta: he gave up Gandara and Arachosia and received 500 elephants.",
           "time": {
@@ -2185,6 +2498,9 @@
         },
         {
           "key": "india-greeks-invade-punjab",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Greeks invade the Punjab",
           "summary": "In 184 BCE the Greeks of Bactria under Demetrius invaded Gandara and the Punjab and founded an Indo-Greek kingdom.",
           "time": {
@@ -2203,6 +2519,9 @@
         },
         {
           "key": "india-faxian-in-india",
+          "kinds": [
+            "journey"
+          ],
           "label": "Faxian in India",
           "summary": "The Chinese Buddhist pilgrim Faxian spent six years in India, from 405 to 411 CE, in the reign of Chandragupta II.",
           "time": {
@@ -2225,6 +2544,9 @@
         },
         {
           "key": "india-harsha-envoy-to-china",
+          "kinds": [
+            "journey"
+          ],
           "label": "Harsha’s envoy to China",
           "summary": "In 641 CE Harsha sent an envoy to the Chinese emperor, establishing the first diplomatic relations between India and China.",
           "time": {
@@ -2248,6 +2570,9 @@
       "periods": [
         {
           "key": "china-first-pottery-china",
+          "kinds": [
+            "culture"
+          ],
           "label": "The first pottery of southern China",
           "summary": "At Xianrendong in Jiangxi and Zengpiyan in Guangxi, from the tenth to the seventh millennium BCE, people left low-fired cord-marked shards and mostly chipped stone tools.",
           "time": {
@@ -2287,6 +2612,9 @@
         },
         {
           "key": "china-yangshao",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Yangshao culture",
           "summary": "The prehistoric culture of the Yellow River basin, from 5000 to 3000 BCE, known by its painted pottery; its people grew millet, kept animals, made silk and fired pottery in kilns.",
           "time": {
@@ -2316,6 +2644,9 @@
         },
         {
           "key": "china-hongshan",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Hongshan culture",
           "summary": "A prehistoric culture of far northern China, about 4000 to 3000 BCE, centred in western Liaoning and eastern Inner Mongolia, with a three-tiered elite buried in complex tombs and fine jades.",
           "time": {
@@ -2348,6 +2679,9 @@
         },
         {
           "key": "china-liangzhu",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Liangzhu culture",
           "summary": "A jade-working culture of the eastern coast, about 3300 to 2200 BCE.",
           "time": {
@@ -2380,6 +2714,9 @@
         },
         {
           "key": "china-longshan",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Longshan culture",
           "summary": "The Neolithic culture of central China, about 2600 to 2000 BCE, named for its site in Shandong, with black burnished wheel-turned pottery, walls of rammed earth and divination by heating cattle bones.",
           "time": {
@@ -2411,6 +2748,9 @@
         },
         {
           "key": "china-xia",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Xia (tradition)",
           "summary": "The first dynasty in Chinese tradition, said to have been founded by Yu the Great; there is no written evidence of it, though many historians identify Erlitou as its capital. The traditional dates differ: about 2100 or 1900 to 1600 BCE.",
           "time": {
@@ -2447,6 +2787,9 @@
         },
         {
           "key": "china-erlitou",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Erlitou culture",
           "summary": "The culture of the central plains of northern China, from 1900 to 1350 BCE, the first state-level society in China, with palaces, royal tombs, paved roads and bronze; its remains are taken to correspond to the Xia of tradition.",
           "time": {
@@ -2476,6 +2819,9 @@
         },
         {
           "key": "china-western-zhou",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Western Zhou",
           "summary": "From the Zhou conquest of the Shang to the fall of the Western capital in 771 BCE. The sources date the conquest about 1050 or 1046 BCE.",
           "time": {
@@ -2512,6 +2858,9 @@
         },
         {
           "key": "china-eastern-zhou",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Eastern Zhou",
           "summary": "The Zhou after the move of the court to Luoyang in 770 BCE, to 256 BCE; some sources take it to 221 BCE.",
           "time": {
@@ -2554,6 +2903,9 @@
         },
         {
           "key": "china-spring-and-autumn",
+          "kinds": [
+            "era"
+          ],
           "label": "The Spring and Autumn period",
           "summary": "The first part of the Eastern Zhou, from 770 BCE to about 480–475 BCE.",
           "time": {
@@ -2589,6 +2941,10 @@
         },
         {
           "key": "china-warring-states",
+          "kinds": [
+            "era",
+            "war"
+          ],
           "label": "The Warring States",
           "summary": "From about 480–475 BCE to the unification under the Qin in 221 BCE, when the many small states were consolidated into seven kingdoms.",
           "time": {
@@ -2625,6 +2981,9 @@
         },
         {
           "key": "china-three-kingdoms",
+          "kinds": [
+            "era"
+          ],
           "label": "The Three Kingdoms",
           "summary": "Wei, Shu-Han and Wu, which divided China after the fall of the Han; Britannica dates the period 220–280, to the fall of Wu, and Asia for Educators 220–265.",
           "time": {
@@ -2661,6 +3020,9 @@
         },
         {
           "key": "china-western-jin",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Western Jin",
           "summary": "A short time of relative order after the Three Kingdoms, which ended with the fall of Luoyang in 311 and Chang’an in 316.",
           "time": {
@@ -2697,6 +3059,9 @@
         },
         {
           "key": "china-sixteen-kingdoms",
+          "kinds": [
+            "era"
+          ],
           "label": "The Sixteen Kingdoms",
           "summary": "The short-lived non-Chinese states that ruled northern China from 303 until the Northern Wei unified it in 439.",
           "time": {
@@ -2727,6 +3092,9 @@
         },
         {
           "key": "china-eastern-jin",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Eastern Jin",
           "summary": "The Jin court set up at Jiankang in 317 by a member of the imperial family, ruled by the great southern families until 420.",
           "time": {
@@ -2756,6 +3124,9 @@
         },
         {
           "key": "china-northern-wei",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Northern Wei",
           "summary": "The Tuoba state in the north; Britannica dates it 386–534/535 and Asia for Educators 386–535, and the Smithsonian says it brought all of north China under its rule in 439.",
           "time": {
@@ -2792,6 +3163,9 @@
         },
         {
           "key": "china-southern-dynasties",
+          "kinds": [
+            "era"
+          ],
           "label": "The Southern Dynasties",
           "summary": "The Liu-Song, Southern Qi, Southern Liang and Southern Chen, which ruled the south from Jiankang from 420 until the Sui overthrew the last of them in 589.",
           "time": {
@@ -2821,6 +3195,9 @@
         },
         {
           "key": "china-sui",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Sui",
           "summary": "The reunification of China under the Sui, from 581 to 618.",
           "time": {
@@ -2851,6 +3228,9 @@
         },
         {
           "key": "china-tang",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Tang",
           "summary": "The rule of the Tang, from 618 to 907; its high point came under Xuanzong, and after the rebellion of An Lushan in 755 the generals and provinces grew strong until the dynasty ended in 907.",
           "time": {
@@ -2882,6 +3262,9 @@
         },
         {
           "key": "china-late-tang",
+          "kinds": [
+            "reign"
+          ],
           "label": "The late Tang",
           "summary": "From the rebellion of An Lushan in 755 to the end of the dynasty in 907, an age of provincial governors, eunuch power at court and great uprisings.",
           "time": {
@@ -2911,6 +3294,9 @@
         },
         {
           "key": "china-five-dynasties",
+          "kinds": [
+            "era"
+          ],
           "label": "The Five Dynasties and Ten Kingdoms",
           "summary": "The half century of disunity between the Tang and the Song, from 907 to 960: five short-lived dynasties followed one another in the north while ten kingdoms held the south.",
           "time": {
@@ -2940,6 +3326,9 @@
         },
         {
           "key": "china-northern-song",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Northern Song",
           "summary": "The first part of the Song, from 960 to 1127, when the dynasty ruled the north as well as the south.",
           "time": {
@@ -2971,6 +3360,9 @@
       "events": [
         {
           "key": "china-zhou-conquest",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Zhou conquest of the Shang",
           "summary": "The Zhou under King Wu overthrew the Shang. The sources give about 1050 or 1046 BCE.",
           "time": {
@@ -2994,6 +3386,9 @@
         },
         {
           "key": "china-fall-of-western-zhou",
+          "kinds": [
+            "fall"
+          ],
           "label": "The fall of the Western Zhou",
           "summary": "In 771 BCE the Western Zhou fell; the court moved east to Luoyang.",
           "time": {
@@ -3011,6 +3406,9 @@
         },
         {
           "key": "china-qin-unification",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Qin unifies China",
           "summary": "In 221 BCE the king of Qin completed the conquest of the other states, unified China and took the title of emperor.",
           "time": {
@@ -3029,6 +3427,9 @@
         },
         {
           "key": "china-fall-of-qin",
+          "kinds": [
+            "fall"
+          ],
           "label": "The fall of the Qin",
           "summary": "The Qin fell in 206 BCE; Xiang Yu burnt Xianyang in 207 BCE.",
           "time": {
@@ -3052,6 +3453,9 @@
         },
         {
           "key": "china-zhang-qian-mission",
+          "kinds": [
+            "journey"
+          ],
           "label": "Zhang Qian travels to the west",
           "summary": "Zhang Qian set out for the west in 138 BCE (139 according to Eno, about 130 according to Livius) and returned to Chang’an in 125 BCE.",
           "time": {
@@ -3076,6 +3480,9 @@
         },
         {
           "key": "china-han-restoration",
+          "kinds": [
+            "accession"
+          ],
           "label": "The restoration of the Han",
           "summary": "In the autumn of 25 CE Liu Xiu claimed the imperial title and restored the Han; Wang Mang had died in 23 CE.",
           "time": {
@@ -3093,6 +3500,9 @@
         },
         {
           "key": "china-expedition-against-xiongnu",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The expedition against the Xiongnu",
           "summary": "In 73 CE Emperor Ming sent an army against the Xiongnu; in the same winter Ban Chao arrested Dou Ti.",
           "time": {
@@ -3110,6 +3520,9 @@
         },
         {
           "key": "china-gan-ying-mission",
+          "kinds": [
+            "journey"
+          ],
           "label": "Gan Ying’s journey toward Da Qin",
           "summary": "In 97 CE Ban Chao sent Gan Ying to explore the far west toward Da Qin; he reached Tiaozhi beside a large sea.",
           "time": {
@@ -3128,6 +3541,9 @@
         },
         {
           "key": "china-qiang-rebellion",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The great Qiang rebellion",
           "summary": "A mutiny of auxiliaries in the northwest grew in 107 into a full-scale rebellion of the Qiang within China, which lasted until 118.",
           "time": {
@@ -3150,6 +3566,9 @@
         },
         {
           "key": "china-roman-envoys-166",
+          "kinds": [
+            "journey"
+          ],
           "label": "Envoys from Rome at the Han court",
           "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of Emperor Huan.",
           "time": {
@@ -3167,6 +3586,9 @@
         },
         {
           "key": "china-yellow-turbans",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The Yellow Turban rebellion",
           "summary": "In the spring of 184 the Yellow Turbans, a popular sect led by Zhang Jue, rose and ravaged the north and east; the warlordism that followed ended the Han.",
           "time": {
@@ -3185,6 +3607,9 @@
         },
         {
           "key": "china-dong-zhuo-takes-power",
+          "kinds": [
+            "revolt"
+          ],
           "label": "Dong Zhuo takes power",
           "summary": "In 189 eunuchs and the general He Jin destroyed each other at Luoyang; the general Dong Zhuo took power, deposed Liu Bian and in 190 moved the capital to Chang’an.",
           "time": {
@@ -3202,6 +3627,9 @@
         },
         {
           "key": "china-battle-of-guandu",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Guandu",
           "summary": "In 200 Yuan Shao attacked Cao Cao and was defeated at Guandu.",
           "time": {
@@ -3219,6 +3647,9 @@
         },
         {
           "key": "china-red-cliffs",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of the Red Cliffs",
           "summary": "In 208 Cao Cao, who had taken over north China, was defeated at the Red Cliffs on the Yangtze by the forces of Sun Quan and Liu Bei.",
           "time": {
@@ -3236,6 +3667,9 @@
         },
         {
           "key": "china-end-of-han",
+          "kinds": [
+            "fall"
+          ],
           "label": "The end of the Han",
           "summary": "In the winter of 220 Emperor Xian abdicated to Cao Pi, who proclaimed himself emperor of the Wei dynasty.",
           "time": {
@@ -3255,6 +3689,9 @@
         },
         {
           "key": "china-wei-conquers-shu",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Wei conquers Shu-Han",
           "summary": "Wei conquered the Shu-Han kingdom in 263/264.",
           "time": {
@@ -3278,6 +3715,9 @@
         },
         {
           "key": "china-jin-legal-code",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "The Jin legal code",
           "summary": "The court of Wudi of Jin established one of China’s earliest legal codes in 268.",
           "time": {
@@ -3295,6 +3735,9 @@
         },
         {
           "key": "china-jin-reunifies-china",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Jin reunite China",
           "summary": "In 280 the Jin armies of Sima Yan overran Wu, the last of the Three Kingdoms, and China was nominally reunited.",
           "time": {
@@ -3314,6 +3757,10 @@
         },
         {
           "key": "china-fall-of-luoyang-311",
+          "kinds": [
+            "conquest",
+            "fall"
+          ],
           "label": "The fall of Luoyang",
           "summary": "In 311 the Xiongnu armies that Liu Yuan had led into northern China took and destroyed Luoyang.",
           "time": {
@@ -3331,6 +3778,10 @@
         },
         {
           "key": "china-fall-of-changan-316",
+          "kinds": [
+            "conquest",
+            "fall"
+          ],
           "label": "The fall of Chang’an",
           "summary": "The fall of Chang’an in 316 ended Chinese dynastic rule in the north for centuries.",
           "time": {
@@ -3349,6 +3800,9 @@
         },
         {
           "key": "china-jin-surrender-316",
+          "kinds": [
+            "fall"
+          ],
           "label": "The last Western Jin emperor surrenders",
           "summary": "In 316 the Jin emperor, a grandson of Wudi, surrendered to a chief of the Xiongnu, abdicated and was later put to death.",
           "time": {
@@ -3366,6 +3820,9 @@
         },
         {
           "key": "china-eastern-jin-at-jiankang",
+          "kinds": [
+            "founding"
+          ],
           "label": "A Jin court at Jiankang",
           "summary": "In 317 a member of the Jin imperial family set up a refugee court at Jiankang, the start of the Eastern Jin.",
           "time": {
@@ -3383,6 +3840,9 @@
         },
         {
           "key": "china-jin-reconquers-sichuan",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Eastern Jin reconquer Sichuan",
           "summary": "In 347 the general Huan Wen reconquered Sichuan for the Eastern Jin; he later deposed the reigning emperor.",
           "time": {
@@ -3400,6 +3860,9 @@
         },
         {
           "key": "china-orchid-pavilion-gathering",
+          "kinds": [
+            "writing"
+          ],
           "label": "The gathering at the Orchid Pavilion",
           "summary": "Some 42 literary figures met at the Orchid Pavilion during the Spring Purification Festival of 353 to compose poems; Wang Xizhi wrote the preface to their poems.",
           "time": {
@@ -3417,6 +3880,9 @@
         },
         {
           "key": "china-battle-of-fei-river",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of the Fei River",
           "summary": "In 383 the Eastern Jin turned back the invading armies of the northern nomads at the Fei River.",
           "time": {
@@ -3434,6 +3900,9 @@
         },
         {
           "key": "china-landowner-uprising-400",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The uprising of the landowners",
           "summary": "An uprising led by disaffected landowners began in 400 and was crushed in 402, giving army leaders more power.",
           "time": {
@@ -3456,6 +3925,9 @@
         },
         {
           "key": "china-jin-northwest-campaign",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Eastern Jin push northwest",
           "summary": "Between 415 and 417 the Eastern Jin pushed northwestward and regained access to the trade routes of Central Asia.",
           "time": {
@@ -3478,6 +3950,9 @@
         },
         {
           "key": "china-northern-wei-unifies-north",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Northern Wei unify the north",
           "summary": "In 439 the Northern Wei brought the whole of north China under its rule, ending the Sixteen Kingdoms.",
           "time": {
@@ -3496,6 +3971,9 @@
         },
         {
           "key": "china-equal-field-system",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "The equal-field system",
           "summary": "In 485 Xiaowendi of the Northern Wei introduced the equal-field system, which assigned land to every peasant family.",
           "time": {
@@ -3513,6 +3991,9 @@
         },
         {
           "key": "china-northern-zhou-reunifies-north",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Northern Zhou reunify the north",
           "summary": "After the Wei broke apart soon after 520, the Northern Zhou reunified northern China in 577.",
           "time": {
@@ -3530,6 +4011,9 @@
         },
         {
           "key": "china-sui-reunifies-china",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Sui reunite China",
           "summary": "In 589 Yang Jian crossed the Yangtze and overthrew the last southern dynasty at Jiankang, uniting China under one government after almost four centuries.",
           "time": {
@@ -3548,6 +4032,9 @@
         },
         {
           "key": "china-sui-embassy-to-khusrau-ii",
+          "kinds": [
+            "journey"
+          ],
           "label": "The Sui and Khusrau II exchange embassies",
           "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
           "time": {
@@ -3570,6 +4057,9 @@
         },
         {
           "key": "china-grand-canal",
+          "kinds": [
+            "construction"
+          ],
           "label": "The Grand Canal begun",
           "summary": "In 608 Yangdi built a great canal between the rice-growing south and the Beijing area, and in 610 extended it, beginning the Grand Canal network.",
           "time": {
@@ -3587,6 +4077,9 @@
         },
         {
           "key": "china-sui-korean-wars",
+          "kinds": [
+            "war"
+          ],
           "label": "The Sui expeditions against Korea",
           "summary": "Yangdi’s three expeditions against the Koreans between 612 and 614 ended in disaster and led to revolts.",
           "time": {
@@ -3609,6 +4102,9 @@
         },
         {
           "key": "china-tang-founded",
+          "kinds": [
+            "founding"
+          ],
           "label": "The Tang proclaimed",
           "summary": "Li Yuan rose in rebellion in 617, took Chang’an and in 618 proclaimed the Tang dynasty.",
           "time": {
@@ -3627,6 +4123,9 @@
         },
         {
           "key": "china-xuanwu-gate",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The Xuanwu gate incident",
           "summary": "In 626 Li Shimin ambushed and killed his two brothers at the Xuanwu gate of the palace; two months later his father abdicated in his favour.",
           "time": {
@@ -3645,6 +4144,9 @@
         },
         {
           "key": "china-xuanzang-journey",
+          "kinds": [
+            "journey"
+          ],
           "label": "Xuanzang’s journey to India",
           "summary": "The monk Xuanzang left for India in 629 and came back to China in 645 with the scriptures he had gathered.",
           "time": {
@@ -3668,6 +4170,9 @@
         },
         {
           "key": "china-yazdgard-iii-embassy-to-china",
+          "kinds": [
+            "journey"
+          ],
           "label": "Yazdgard III sends an embassy to China",
           "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
           "time": {
@@ -3685,6 +4190,9 @@
         },
         {
           "key": "china-korea-vassal-668",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Korea made a vassal",
           "summary": "Continuing his father’s campaigns, Gaozong conquered the Korean peninsula and made Korea a vassal state in 668.",
           "time": {
@@ -3702,6 +4210,9 @@
         },
         {
           "key": "china-peroz-iii-at-the-tang-court",
+          "kinds": [
+            "journey"
+          ],
           "label": "Peroz, son of Yazdgard III, at the Tang court",
           "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
           "time": {
@@ -3724,6 +4235,9 @@
         },
         {
           "key": "china-wuhou-takes-throne",
+          "kinds": [
+            "accession"
+          ],
           "label": "Wuhou takes the throne",
           "summary": "After ruling through puppets since Gaozong’s death in 683, Wu Zhao usurped the throne herself in 690.",
           "time": {
@@ -3742,6 +4256,9 @@
         },
         {
           "key": "china-wuhou-abdicates",
+          "kinds": [
+            "fall"
+          ],
           "label": "Wuhou forced to abdicate",
           "summary": "In 705 Wuhou’s ministers and generals seized the palace and forced her to abdicate in favour of her son Zhongzong.",
           "time": {
@@ -3759,6 +4276,9 @@
         },
         {
           "key": "china-xuanzong-takes-power",
+          "kinds": [
+            "accession"
+          ],
           "label": "Xuanzong takes full power",
           "summary": "After Ruizong ceded the throne in 712, a second coup in 713 put Xuanzong completely in charge; Ruizong retired and the princess Taiping took her life.",
           "time": {
@@ -3776,6 +4296,9 @@
         },
         {
           "key": "china-battle-of-talas",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of the Talas River",
           "summary": "In 751 the overextended Tang armies in the far west were defeated by the Arabs on the Talas River.",
           "time": {
@@ -3794,6 +4317,9 @@
         },
         {
           "key": "china-an-lushan-rebellion",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The rebellion of An Lushan",
           "summary": "The rebellion of An Lushan broke out in 755, took Luoyang and Chang’an in 756 and, carried on after his murder by his son and by Shi Siming, was not suppressed until 763.",
           "time": {
@@ -3816,6 +4342,9 @@
         },
         {
           "key": "china-rebels-take-changan",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The rebels take Chang’an",
           "summary": "Early in 756 An Lushan’s rebels captured the eastern capital Luoyang, and in July of the same year the main capital Chang’an.",
           "time": {
@@ -3833,6 +4362,9 @@
         },
         {
           "key": "china-tibetans-loot-changan",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Tibetans loot Chang’an",
           "summary": "In 763 the Tibetans, allied with Nanzhao, occupied present-day Gansu and late in the year took and looted the capital.",
           "time": {
@@ -3850,6 +4382,9 @@
         },
         {
           "key": "china-dezong-tax-reform",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "The tax reform of 780",
           "summary": "In 780 Dezong promulgated a new system of taxation in which each province was assessed a quota to be collected by its own government.",
           "time": {
@@ -3867,6 +4402,9 @@
         },
         {
           "key": "china-sweet-dew-incident",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The Sweet Dew coup",
           "summary": "In 835 Wenzong’s scheme against the eunuchs misfired in the Sweet Dew (Ganlu) coup and led to the deaths of several ministers and officials.",
           "time": {
@@ -3884,6 +4422,9 @@
         },
         {
           "key": "china-suppression-of-buddhism",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The suppression of Buddhism",
           "summary": "In 843–845 the emperor Wuzong, a fanatical Daoist, suppressed Buddhism and dissolved the monasteries.",
           "time": {
@@ -3906,6 +4447,9 @@
         },
         {
           "key": "china-huang-chao-takes-changan",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Huang Chao takes Chang’an",
           "summary": "Huang Chao, leader of the greatest uprising, took Luoyang late in 880 and Chang’an in 881; in 883 he was forced to abandon the capital.",
           "time": {
@@ -3923,6 +4467,9 @@
         },
         {
           "key": "china-end-of-the-tang",
+          "kinds": [
+            "fall"
+          ],
           "label": "The end of the Tang",
           "summary": "In 907 Zhu Wen deposed the last Tang emperor, bringing the dynasty to its formal end and beginning the Five Dynasties.",
           "time": {
@@ -3940,6 +4487,9 @@
         },
         {
           "key": "china-founding-of-the-liao",
+          "kinds": [
+            "founding"
+          ],
           "label": "The Khitan found the Liao",
           "summary": "In 907 the Khitan founded the Liao dynasty, expanding from the border of Mongolia into southern Manchuria and the sixteen prefectures south of the Great Wall.",
           "time": {
@@ -3957,6 +4507,9 @@
         },
         {
           "key": "china-founding-of-the-song",
+          "kinds": [
+            "founding"
+          ],
           "label": "The founding of the Song",
           "summary": "In 960 Zhao Kuangyin, Taizu, founded the Song, ending the rapid succession of the Five Dynasties.",
           "time": {
@@ -3975,6 +4528,9 @@
         },
         {
           "key": "china-song-conquers-sichuan",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Song take Sichuan",
           "summary": "Taizu’s strategy of reunification first took Sichuan in 965, then the far south in 971.",
           "time": {
@@ -3992,6 +4548,9 @@
         },
         {
           "key": "china-wuyue-surrenders",
+          "kinds": [
+            "fall"
+          ],
           "label": "The Wu-Yue surrender",
           "summary": "In 978 the Wu-Yue, the last of the Ten Kingdoms in the south, surrendered to the Song without a war.",
           "time": {
@@ -4009,6 +4568,9 @@
         },
         {
           "key": "china-song-conquers-northern-han",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Song conquer the Northern Han",
           "summary": "In 979 Taizong conquered the Northern Han, the last of the Ten Kingdoms, completing the reunification.",
           "time": {
@@ -4026,6 +4588,9 @@
         },
         {
           "key": "china-song-defeated-by-khitan",
+          "kinds": [
+            "battle"
+          ],
           "label": "The Song defeated by the Khitan",
           "summary": "Fighting on against the Khitan in the north, Taizong suffered a disastrous defeat in 986.",
           "time": {
@@ -4043,6 +4608,9 @@
         },
         {
           "key": "china-song-liao-peace",
+          "kinds": [
+            "treaty"
+          ],
           "label": "The sworn peace of the Song and the Liao",
           "summary": "After a Khitan offensive met by Zhenzong himself, the two empires pledged peaceful coexistence in 1004 through an exchange of sworn documents.",
           "time": {

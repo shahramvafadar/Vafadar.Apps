@@ -523,6 +523,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the great war of Kay Khosrow is told.",
       "sourceIds": [
@@ -567,6 +570,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -613,6 +619,9 @@
     {
       "id": "story-great-war",
       "type": "NarrativeArc",
+      "kinds": [
+        "warStory"
+      ],
       "label": "The great war of Kay Khosrow",
       "summary": "The story of Kay Khosrow’s last war on Afrasiab to avenge Siavash – from the elephant throne to Gang-dezh, Chin, Makran and the lake of Chichast where Afrasiab is taken – and of the king’s renunciation of the throne and disappearance.",
       "sourceIds": [
@@ -629,6 +638,9 @@
     {
       "id": "character-kay-khosrow",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Khosrow",
       "summary": "The king of Iran, son of Siavash, who fights Afrasiab to the end to avenge his father, and after sixty years of rule gives up the throne and vanishes.",
       "sourceIds": [
@@ -647,6 +659,9 @@
     {
       "id": "character-afrasiab",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Afrasiab",
       "summary": "The king of Turan, who flees from Gang-dezh to Chin and Makran and at last hides in a cave and in the lake of Chichast, where he is taken and killed.",
       "sourceIds": [
@@ -665,6 +680,10 @@
     {
       "id": "character-shideh",
       "type": "Character",
+      "kinds": [
+        "royal",
+        "hero"
+      ],
       "label": "Shideh",
       "summary": "A son of Afrasiab, who brings his father’s offer of peace and fights Kay Khosrow alone.",
       "sourceIds": [
@@ -682,6 +701,9 @@
     {
       "id": "character-jahn",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Jahn",
       "summary": "A son of Afrasiab, who leads thirty thousand men and later carries his father’s message from Gang-dezh.",
       "sourceIds": [
@@ -699,6 +721,9 @@
     {
       "id": "character-garsivaz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Garsivaz",
       "summary": "The brother of Afrasiab, taken captive and put to death with him.",
       "sourceIds": [
@@ -717,6 +742,9 @@
     {
       "id": "character-kavus",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Kay Kavus",
       "summary": "The old king, grandfather of Kay Khosrow, to whom he writes of his victories; they pray together at Azargoshasb, and Kavus dies after Afrasiab’s death.",
       "sourceIds": [
@@ -735,6 +763,9 @@
     {
       "id": "character-faghfur",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "The Faghfur of Chin",
       "summary": "The emperor of Chin, who allies himself with Afrasiab and afterwards asks Kay Khosrow’s pardon.",
       "sourceIds": [
@@ -752,6 +783,9 @@
     {
       "id": "character-king-of-makran",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "The king of Makran",
       "summary": "The king who refuses Kay Khosrow passage and is defeated and killed.",
       "sourceIds": [
@@ -769,6 +803,9 @@
     {
       "id": "character-hom",
       "type": "Character",
+      "kinds": [
+        "sage"
+      ],
       "label": "Hom",
       "summary": "A pious hermit of the line of Fereydun, who hears Afrasiab lamenting in his cave, binds him and, when he escapes into the lake, finds him again.",
       "sourceIds": [
@@ -786,6 +823,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "The champion, whose counsel the king follows in the war, and to whom he gives Nimruz at the end.",
       "sourceIds": [
@@ -803,6 +843,9 @@
     {
       "id": "character-zal",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zal",
       "summary": "The father of Rostam, who reproaches Kay Khosrow for withdrawing from the world, then begs his pardon.",
       "sourceIds": [
@@ -821,6 +864,9 @@
     {
       "id": "character-gudarz",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gudarz",
       "summary": "The old champion, to whom the king gives his treasures; he mourns the champions lost in the snow.",
       "sourceIds": [
@@ -838,6 +884,9 @@
     {
       "id": "character-lohrasp",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Lohrasp",
       "summary": "The man Kay Khosrow chooses as his successor, to the surprise of the Iranians.",
       "sourceIds": [
@@ -855,6 +904,9 @@
     {
       "id": "character-sorush",
       "type": "Character",
+      "kinds": [
+        "divineBeing"
+      ],
       "label": "Sorush",
       "summary": "The messenger of God who tells Kay Khosrow in a dream that he may leave the world.",
       "sourceIds": [
@@ -871,6 +923,9 @@
     {
       "id": "character-tus",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Tus",
       "summary": "A champion, given Khorasan and the banner of Kaveh, who follows the king to the mountain and dies in the snow.",
       "sourceIds": [
@@ -888,6 +943,9 @@
     {
       "id": "character-giv",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Giv",
       "summary": "A champion, given Qom and Isfahan, who follows the king to the mountain and dies in the snow.",
       "sourceIds": [
@@ -905,6 +963,9 @@
     {
       "id": "character-bizhan",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Bizhan",
       "summary": "The son of Giv, who brings Lohrasp before the king and dies in the snow.",
       "sourceIds": [
@@ -922,6 +983,9 @@
     {
       "id": "character-fariborz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Fariborz",
       "summary": "A son of Kay Kavus, who follows the king to the mountain and dies in the snow.",
       "sourceIds": [
@@ -939,6 +1003,9 @@
     {
       "id": "character-gostaham",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Gostaham",
       "summary": "A champion who follows the king to the mountain.",
       "sourceIds": [
@@ -956,6 +1023,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The kingdom of Kay Khosrow.",
       "sourceIds": [
@@ -966,6 +1037,10 @@
     {
       "id": "place-turan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Turan",
       "summary": "The kingdom of Afrasiab.",
       "sourceIds": [
@@ -976,6 +1051,9 @@
     {
       "id": "place-jayhun",
       "type": "NarrativePlace",
+      "kinds": [
+        "river"
+      ],
       "label": "The Jayhun",
       "summary": "The river between Iran and Turan, which Afrasiab’s army crosses by boat and over which he flees by night.",
       "sourceIds": [
@@ -987,6 +1065,9 @@
     {
       "id": "place-gang-dezh",
       "type": "NarrativePlace",
+      "kinds": [
+        "fortress"
+      ],
       "label": "Gang-dezh",
       "summary": "The stronghold of Afrasiab, which Kay Khosrow takes.",
       "sourceIds": [
@@ -998,6 +1079,10 @@
     {
       "id": "place-chin",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Chin",
       "summary": "The land of the Faghfur.",
       "sourceIds": [
@@ -1008,6 +1093,10 @@
     {
       "id": "place-makran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Makran",
       "summary": "The land whose king refuses Kay Khosrow passage.",
       "sourceIds": [
@@ -1019,6 +1108,9 @@
     {
       "id": "place-chichast",
       "type": "NarrativePlace",
+      "kinds": [
+        "sea"
+      ],
       "label": "The lake of Chichast",
       "summary": "The water into which Afrasiab escapes from Hom, and where he is caught again.",
       "sourceIds": [
@@ -1029,6 +1121,9 @@
     {
       "id": "place-azargoshasb",
       "type": "NarrativePlace",
+      "kinds": [
+        "sanctuary"
+      ],
       "label": "Azargoshasb",
       "summary": "The fire temple where Kay Khosrow and Kavus pray.",
       "sourceIds": [

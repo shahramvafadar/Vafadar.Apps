@@ -276,6 +276,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the story of Fereydun’s sons is told.",
       "sourceIds": [
@@ -320,6 +323,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -366,6 +372,9 @@
     {
       "id": "story-salm-tur-iraj",
       "type": "NarrativeArc",
+      "kinds": [
+        "tragedy"
+      ],
       "label": "Salm, Tur and Iraj",
       "summary": "The story of the three sons of Fereydun, from their marriages onward.",
       "sourceIds": [
@@ -382,6 +391,9 @@
     {
       "id": "character-fereydun",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Fereydun",
       "summary": "King of the world in the poem, father of three sons.",
       "sourceIds": [
@@ -398,6 +410,9 @@
     {
       "id": "character-shahrnaz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Shahrnaz",
       "summary": "A wife of Fereydun, mother of his two elder sons.",
       "sourceIds": [
@@ -414,6 +429,9 @@
     {
       "id": "character-arnavaz",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Arnavaz",
       "summary": "A wife of Fereydun, mother of his youngest son.",
       "sourceIds": [
@@ -430,6 +448,9 @@
     {
       "id": "character-salm",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Salm",
       "summary": "The eldest son of Fereydun.",
       "sourceIds": [
@@ -446,6 +467,9 @@
     {
       "id": "character-tur",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Tur",
       "summary": "A son of Fereydun, born of Shahrnaz.",
       "sourceIds": [
@@ -462,6 +486,9 @@
     {
       "id": "character-iraj",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Iraj",
       "summary": "The youngest son of Fereydun, born of Arnavaz.",
       "sourceIds": [
@@ -478,6 +505,9 @@
     {
       "id": "character-jandal",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Jandal",
       "summary": "A trusted and eloquent noble whom Fereydun sends to find brides for his sons.",
       "sourceIds": [
@@ -494,6 +524,9 @@
     {
       "id": "character-sarv",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Sarv",
       "summary": "The king of Yemen, father of three daughters.",
       "sourceIds": [
@@ -510,6 +543,9 @@
     {
       "id": "character-daughters-of-sarv",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "The daughters of Sarv",
       "summary": "Three sisters of one father and one mother, the daughters of the king of Yemen.",
       "sourceIds": [
@@ -526,6 +562,10 @@
     {
       "id": "place-iran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Iran",
       "summary": "The land of Fereydun.",
       "sourceIds": [
@@ -536,6 +576,10 @@
     {
       "id": "place-yemen",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Yemen",
       "summary": "The kingdom of Sarv.",
       "sourceIds": [
@@ -546,6 +590,10 @@
     {
       "id": "place-rum",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Rum and the West",
       "summary": "The lands Fereydun gives to Salm.",
       "sourceIds": [
@@ -556,6 +604,10 @@
     {
       "id": "place-turan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Turan",
       "summary": "The land of the Turks and Chin, which Fereydun gives to Tur.",
       "sourceIds": [
@@ -566,6 +618,10 @@
     {
       "id": "character-envoy-of-salm",
       "type": "Character",
+      "kinds": [
+        "sage",
+        "noble"
+      ],
       "label": "The mobad sent by Salm and Tur",
       "summary": "A shrewd and eloquent mobad whom the two brothers send to their father.",
       "sourceIds": [
@@ -582,6 +638,9 @@
     {
       "id": "character-mah-afarid",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "Mah-Afarid",
       "summary": "A handmaiden in the household of Iraj, whom Iraj loved.",
       "sourceIds": [
@@ -598,6 +657,9 @@
     {
       "id": "character-daughter-of-iraj",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "The daughter of Iraj",
       "summary": "The daughter of Iraj and Mah-Afarid, raised by Fereydun.",
       "sourceIds": [
@@ -614,6 +676,9 @@
     {
       "id": "character-pashang-of-iran",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "Pashang",
       "summary": "The husband Fereydun chooses for the daughter of Iraj; not the king of Turan of the same name.",
       "sourceIds": [
@@ -630,6 +695,9 @@
     {
       "id": "character-manuchehr",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Manuchehr",
       "summary": "The grandson of Iraj, raised and taught by Fereydun.",
       "sourceIds": [
@@ -646,6 +714,9 @@
     {
       "id": "character-qaren",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Qaren",
       "summary": "A commander of the army, named in the poem as Qaren of the house of Kaveh.",
       "sourceIds": [
@@ -662,6 +733,9 @@
     {
       "id": "character-shiruy-hero",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Shiruy",
       "summary": "A warrior and leader of the army, called a lion-slayer.",
       "sourceIds": [
@@ -678,6 +752,9 @@
     {
       "id": "character-sam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Sam",
       "summary": "A hero, son of Nariman, among the leaders of the army.",
       "sourceIds": [
@@ -694,6 +771,9 @@
     {
       "id": "character-shapur-hero",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Shapur",
       "summary": "A warrior of the court of Fereydun.",
       "sourceIds": [
@@ -710,6 +790,9 @@
     {
       "id": "character-envoy-of-pardon",
       "type": "Character",
+      "kinds": [
+        "noble"
+      ],
       "label": "The envoy seeking pardon",
       "summary": "An eloquent man whom Salm and Tur send to Fereydun with gifts.",
       "sourceIds": [
@@ -726,6 +809,9 @@
     {
       "id": "object-kaviani-banner",
       "type": "NarrativeObject",
+      "kinds": [
+        "emblem"
+      ],
       "label": "The Kaviani banner",
       "summary": "The banner of the kings of Iran.",
       "sourceIds": [
@@ -736,6 +822,9 @@
     {
       "id": "place-tamisha",
       "type": "NarrativePlace",
+      "kinds": [
+        "landscape"
+      ],
       "label": "Tamisha",
       "summary": "The seat of Fereydun, from which the army marches out.",
       "sourceIds": [
@@ -746,6 +835,9 @@
     {
       "id": "place-alanan-fortress",
       "type": "NarrativePlace",
+      "kinds": [
+        "fortress"
+      ],
       "label": "The fortress of Alanan",
       "summary": "A fortress behind the army of Salm and Tur, rising from the water.",
       "sourceIds": [
@@ -756,6 +848,9 @@
     {
       "id": "character-qobad-hero",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Qobad",
       "summary": "A warrior who leads the vanguard of Manuchehr.",
       "sourceIds": [
@@ -772,6 +867,9 @@
     {
       "id": "character-garshasp-hero",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Garshasp",
       "summary": "A warrior who commands the left wing of the army; not the later king of that name.",
       "sourceIds": [
@@ -788,6 +886,9 @@
     {
       "id": "character-castellan",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The keeper of the fortress",
       "summary": "The keeper of the fortress of Alanan.",
       "sourceIds": [
@@ -804,6 +905,9 @@
     {
       "id": "object-ring-of-tur",
       "type": "NarrativeObject",
+      "kinds": [
+        "keepsake"
+      ],
       "label": "The ring of Tur",
       "summary": "The seal ring of Tur.",
       "sourceIds": [
@@ -814,6 +918,9 @@
     {
       "id": "place-sari",
       "type": "NarrativePlace",
+      "kinds": [
+        "city"
+      ],
       "label": "Sari",
       "summary": "A town the victorious army reaches on its way back.",
       "sourceIds": [

@@ -621,6 +621,9 @@
     {
       "id": "subject-ancient-china",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "China",
       "summary": "China from the first pottery of the tenth millennium BCE, the Neolithic cultures and Erlitou, through the Xia of tradition and the Shang, to the Northern Song about 1025 CE: the Zhou and its states, the unification under the Qin, the Western Han, the Xin of Wang Mang, the restored Han, the Three Kingdoms and the long division, the reunification under the Sui and the Tang, the Five Dynasties and the Song.",
       "sourceIds": [
@@ -635,6 +638,10 @@
     {
       "id": "region-qin",
       "type": "Region",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Qin",
       "summary": "A state in the west of the Zhou world whose Duke Xiao (361–338 BCE) took Shang Yang as chancellor; its kings unified China in 221 BCE.",
       "sourceIds": [
@@ -652,6 +659,10 @@
     {
       "id": "region-chu",
       "type": "Region",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Chu",
       "summary": "A state based on the middle Yangzi that absorbed fifty or more small states.",
       "sourceIds": [
@@ -668,6 +679,10 @@
     {
       "id": "region-qi",
       "type": "Region",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Qi",
       "summary": "A state that tradition says was given to Commander Shangfu, the Grand Duke Wang, at the founding of the Zhou.",
       "sourceIds": [
@@ -684,6 +699,10 @@
     {
       "id": "region-yan",
       "type": "Region",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Yan",
       "summary": "A state that tradition says was given to Shi, Duke of Shao, at the founding of the Zhou.",
       "sourceIds": [
@@ -700,6 +719,10 @@
     {
       "id": "region-lu",
       "type": "Region",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Lu",
       "summary": "A state that tradition says was the estate of the Duke of Zhou; Confucius was born there and held minor offices in it.",
       "sourceIds": [
@@ -717,6 +740,9 @@
     {
       "id": "place-anyang",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Anyang",
       "summary": "The last capital of the Shang, after many moves, near present-day Anyang; the position is that of the modern city.",
       "sourceIds": [
@@ -741,6 +767,9 @@
     {
       "id": "place-zhengzhou",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Zhengzhou",
       "summary": "A Shang capital near present-day Zhengzhou; the position is that of the modern city.",
       "sourceIds": [
@@ -763,6 +792,9 @@
     {
       "id": "place-hao",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Hao",
       "summary": "The first capital of the Zhou, near present-day Xi’an, founded in the eleventh century BCE; the position is that of Xi’an.",
       "sourceIds": [
@@ -793,6 +825,9 @@
     {
       "id": "place-luoyang",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Luoyang",
       "summary": "A city on the river Luo, planned by King Wu and built under King Cheng of the Zhou; a capital of the Zhou with Hao, the first Han capital before Chang’an, and the capital of the Eastern Han.",
       "sourceIds": [
@@ -817,6 +852,9 @@
     {
       "id": "place-xianyang",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Xianyang",
       "summary": "The capital of the Qin, founded in 350 BCE near modern Xi’an and burnt by Xiang Yu in 207 BCE. Columbia’s timeline names Chang’an as the Qin capital instead.",
       "sourceIds": [
@@ -842,6 +880,9 @@
     {
       "id": "place-changan",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Chang’an",
       "summary": "The capital of the Western Han at present-day Xi’an, begun in 202–200 BCE and built during the reign of Emperor Hui; Livius calls it the Silk City.",
       "sourceIds": [
@@ -874,6 +915,9 @@
     {
       "id": "place-kashgar",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Kashgar",
       "summary": "A city of the Western Regions where Ban Chao stayed when the Han withdrew in 75 CE.",
       "sourceIds": [
@@ -891,6 +935,9 @@
     {
       "id": "place-tomb-of-the-first-emperor",
       "type": "Place",
+      "kinds": [
+        "monument"
+      ],
       "label": "The tomb of the First Emperor",
       "summary": "The tomb complex of the First Emperor of Qin at Lintong, east of Xianyang, covering some 56 square kilometres, with the army of terracotta figures discovered in the 1970s; the sources count 6,000 to more than 8,000 figures.",
       "sourceIds": [
@@ -909,6 +956,9 @@
     {
       "id": "period-xia",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Xia (tradition)",
       "summary": "The first dynasty in Chinese tradition, said to have been founded by Yu the Great; there is no written evidence of it, though many historians identify Erlitou as its capital. The traditional dates differ: about 2100 or 1900 to 1600 BCE.",
       "sourceIds": [
@@ -950,6 +1000,9 @@
     {
       "id": "period-western-zhou",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Western Zhou",
       "summary": "From the Zhou conquest of the Shang to the fall of the Western capital in 771 BCE. The sources date the conquest about 1050 or 1046 BCE.",
       "sourceIds": [
@@ -991,6 +1044,9 @@
     {
       "id": "period-eastern-zhou",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Eastern Zhou",
       "summary": "The Zhou after the move of the court to Luoyang in 770 BCE, to 256 BCE; some sources take it to 221 BCE.",
       "sourceIds": [
@@ -1038,6 +1094,9 @@
     {
       "id": "period-spring-and-autumn",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Spring and Autumn period",
       "summary": "The first part of the Eastern Zhou, from 770 BCE to about 480–475 BCE.",
       "sourceIds": [
@@ -1078,6 +1137,10 @@
     {
       "id": "period-warring-states",
       "type": "Period",
+      "kinds": [
+        "era",
+        "war"
+      ],
       "label": "The Warring States",
       "summary": "From about 480–475 BCE to the unification under the Qin in 221 BCE, when the many small states were consolidated into seven kingdoms.",
       "sourceIds": [
@@ -1119,6 +1182,9 @@
     {
       "id": "dynasty-shang",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Shang",
       "summary": "The earliest Chinese dynasty that written and archaeological evidence confirm, about 1600 to 1050/1046 BCE, known for its oracle bones, the earliest Chinese writing. Its capital moved many times, last to Anyang.",
       "sourceIds": [
@@ -1166,6 +1232,9 @@
     {
       "id": "dynasty-zhou",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Zhou",
       "summary": "The dynasty that overthrew the Shang, introducing the idea of the Mandate of Heaven to justify it, and ruled – first from Hao, then from Luoyang – until 256 BCE.",
       "sourceIds": [
@@ -1216,6 +1285,9 @@
     {
       "id": "dynasty-qin",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Qin",
       "summary": "The dynasty that unified China in 221 BCE and standardised script, coinage, weights and measures; it fell in 206 BCE.",
       "sourceIds": [
@@ -1260,6 +1332,9 @@
     {
       "id": "dynasty-western-han",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Western Han",
       "summary": "The dynasty founded by Liu Bang, who dated his accession from 206 BCE and was crowned emperor in 202 BCE, with its capital at Chang’an; it ended with the usurpation of Wang Mang in 9 CE (the sources give 7, 8 or 9 CE).",
       "sourceIds": [
@@ -1315,6 +1390,9 @@
     {
       "id": "dynasty-xin",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Xin",
       "summary": "The dynasty of Wang Mang, who took the throne in 9 CE and died in 23 CE; an interregnum between the Western and the Eastern Han.",
       "sourceIds": [
@@ -1357,6 +1435,9 @@
     {
       "id": "dynasty-eastern-han",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Eastern Han",
       "summary": "The Han restored by Liu Xiu, Emperor Guangwu, who claimed the imperial title in 25 CE, with its capital at Luoyang; it lasted until 220 CE.",
       "sourceIds": [
@@ -1400,6 +1481,9 @@
     {
       "id": "office-shang-king",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of the Shang",
       "summary": "The kingship of the Shang.",
       "sourceIds": [
@@ -1416,6 +1500,9 @@
     {
       "id": "office-zhou-king",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of the Zhou",
       "summary": "The kingship of the Zhou, held by the Son of Heaven with the Mandate of Heaven.",
       "sourceIds": [
@@ -1433,6 +1520,9 @@
     {
       "id": "office-king-of-qin",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Qin",
       "summary": "The kingship of the state of Qin before the unification.",
       "sourceIds": [
@@ -1449,6 +1539,9 @@
     {
       "id": "office-qin-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Qin",
       "summary": "The title huangdi, “august sovereign”, taken by the king of Qin in 221 BCE.",
       "sourceIds": [
@@ -1465,6 +1558,9 @@
     {
       "id": "office-western-han-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Western Han",
       "summary": "The throne of the Western Han.",
       "sourceIds": [
@@ -1482,6 +1578,9 @@
     {
       "id": "office-xin-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Xin",
       "summary": "The throne of Wang Mang’s Xin.",
       "sourceIds": [
@@ -1498,6 +1597,9 @@
     {
       "id": "office-eastern-han-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Eastern Han",
       "summary": "The throne of the Eastern Han.",
       "sourceIds": [
@@ -1514,6 +1616,9 @@
     {
       "id": "concept-mandate-of-heaven",
       "type": "Concept",
+      "kinds": [
+        "idea"
+      ],
       "label": "The Mandate of Heaven",
       "summary": "The idea, introduced by the Zhou to justify the overthrow of the Shang, that the ruler is the Son of Heaven and rules with the Mandate of Heaven.",
       "sourceIds": [
@@ -1531,6 +1636,9 @@
     {
       "id": "person-wu-ding",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Wu Ding",
       "summary": "A king of the late Shang, known from the oracle bones, the first of the last nine kings who ruled from Yinxu; by the short chronology he reigned about 1250 to 1192 BCE.",
       "sourceIds": [
@@ -1561,6 +1669,10 @@
     {
       "id": "person-fu-hao",
       "type": "Person",
+      "kinds": [
+        "royal",
+        "general"
+      ],
       "label": "Fu Hao",
       "summary": "A consort of Wu Ding known from the oracle bone inscriptions, who led military campaigns; her tomb at Anyang dates from about 1250 BCE.",
       "sourceIds": [
@@ -1589,6 +1701,9 @@
     {
       "id": "person-king-wu-of-zhou",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "King Wu of Zhou",
       "summary": "The Zhou king who conquered the Shang and, according to the Shiji, planned a second capital at Luo, the future Luoyang.",
       "sourceIds": [
@@ -1624,6 +1739,9 @@
     {
       "id": "person-duke-of-zhou",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "The Duke of Zhou",
       "summary": "Dan, younger brother of King Wu, who according to the Shiji was regent for King Cheng for seven years; Lu was his estate.",
       "sourceIds": [
@@ -1659,6 +1777,9 @@
     {
       "id": "person-king-cheng-of-zhou",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "King Cheng of Zhou",
       "summary": "King of the Zhou from 1042 to 1006 BCE, under whom the city on the river Luo was built.",
       "sourceIds": [
@@ -1687,6 +1808,9 @@
     {
       "id": "person-king-you-of-zhou",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "King You of Zhou",
       "summary": "The last king of the Western Zhou, from 781 to 771 BCE.",
       "sourceIds": [
@@ -1715,6 +1839,9 @@
     {
       "id": "person-king-ping-of-zhou",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "King Ping of Zhou",
       "summary": "The king who, according to the Shiji, moved the Zhou court east to Luo.",
       "sourceIds": [
@@ -1743,6 +1870,9 @@
     {
       "id": "event-zhou-conquest",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Zhou conquest of the Shang",
       "summary": "The Zhou under King Wu overthrew the Shang. The sources give about 1050 or 1046 BCE.",
       "sourceIds": [
@@ -1776,6 +1906,9 @@
     {
       "id": "event-fall-of-western-zhou",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The fall of the Western Zhou",
       "summary": "In 771 BCE the Western Zhou fell; the court moved east to Luoyang.",
       "sourceIds": [
@@ -1807,6 +1940,9 @@
     {
       "id": "person-confucius",
       "type": "Person",
+      "kinds": [
+        "philosopher"
+      ],
       "label": "Confucius",
       "summary": "Born in the state of Lu in about 551 BCE, where he held minor offices; a teacher whose sayings were collected in the Analects. He died about 479 BCE.",
       "sourceIds": [
@@ -1852,6 +1988,10 @@
     {
       "id": "person-laozi",
       "type": "Person",
+      "kinds": [
+        "philosopher",
+        "religious"
+      ],
       "label": "Laozi",
       "summary": "A sage whom tradition dates about 500 BCE – the same page also gives 606–530 BCE; historians think he may be fictional.",
       "sourceIds": [
@@ -1881,6 +2021,9 @@
     {
       "id": "person-mencius",
       "type": "Person",
+      "kinds": [
+        "philosopher"
+      ],
       "label": "Mencius",
       "summary": "A Confucian thinker, 371–289 BCE.",
       "sourceIds": [
@@ -1919,6 +2062,9 @@
     {
       "id": "person-xunzi",
       "type": "Person",
+      "kinds": [
+        "philosopher"
+      ],
       "label": "Xunzi",
       "summary": "A Confucian thinker, 298–238 BCE.",
       "sourceIds": [
@@ -1957,6 +2103,9 @@
     {
       "id": "person-zhuangzi",
       "type": "Person",
+      "kinds": [
+        "philosopher"
+      ],
       "label": "Zhuangzi",
       "summary": "A Daoist thinker, about 369–286 BCE.",
       "sourceIds": [
@@ -1997,6 +2146,9 @@
     {
       "id": "person-han-feizi",
       "type": "Person",
+      "kinds": [
+        "philosopher"
+      ],
       "label": "Han Feizi",
       "summary": "A Legalist thinker who died in 233 BCE.",
       "sourceIds": [
@@ -2030,6 +2182,10 @@
     {
       "id": "person-sunzi",
       "type": "Person",
+      "kinds": [
+        "general",
+        "literary"
+      ],
       "label": "Sunzi",
       "summary": "A military strategist who served the state of Wu, about the fifth century BCE.",
       "sourceIds": [
@@ -2058,6 +2214,9 @@
     {
       "id": "person-shang-yang",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Shang Yang",
       "summary": "Chancellor of Duke Xiao of Qin, whose Legalist reforms strengthened the state of Qin.",
       "sourceIds": [
@@ -2098,6 +2257,9 @@
     {
       "id": "person-duke-xiao-of-qin",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Duke Xiao of Qin",
       "summary": "Ruler of Qin from 361 to 338 BCE, who made Shang Yang his chancellor.",
       "sourceIds": [
@@ -2126,6 +2288,9 @@
     {
       "id": "person-qin-shi-huang",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Qin Shi Huang",
       "summary": "Ying Zheng, born in 259 BCE, king of Qin from 247 (246 according to another source), who ruled with full powers from 238, unified China in 221 BCE and took the title of First Emperor; he died in 210 BCE near Langye on the Shandong coast.",
       "sourceIds": [
@@ -2184,6 +2349,9 @@
     {
       "id": "person-li-si",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Li Si",
       "summary": "Chancellor of the Qin after 221 BCE, who reformed the script; he was imprisoned and executed in 208 BCE.",
       "sourceIds": [
@@ -2219,6 +2387,9 @@
     {
       "id": "person-qin-ershi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Qin Ershi",
       "summary": "Huhai, a younger son of the First Emperor, who succeeded him and ruled about two years until he took his own life in 207 BCE.",
       "sourceIds": [
@@ -2265,6 +2436,9 @@
     {
       "id": "person-ziying",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ziying",
       "summary": "A grandson of the First Emperor, the last ruler of the Qin as king, who surrendered.",
       "sourceIds": [
@@ -2293,6 +2467,9 @@
     {
       "id": "event-qin-unification",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Qin unifies China",
       "summary": "In 221 BCE the king of Qin completed the conquest of the other states, unified China and took the title of emperor.",
       "sourceIds": [
@@ -2321,6 +2498,9 @@
     {
       "id": "event-fall-of-qin",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The fall of the Qin",
       "summary": "The Qin fell in 206 BCE; Xiang Yu burnt Xianyang in 207 BCE.",
       "sourceIds": [
@@ -2358,6 +2538,9 @@
     {
       "id": "person-liu-bang",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Liu Bang (Emperor Gaozu)",
       "summary": "The founder of the Han, from Feng in the district of Pei, who was crowned emperor in 202 BCE; Major and Cook count his reign from 202, Eno from 206. He died in 195 BCE.",
       "sourceIds": [
@@ -2405,6 +2588,9 @@
     {
       "id": "person-han-huidi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Hui",
       "summary": "Liu Ying, emperor from 195 (194 according to Eno) to 188 BCE.",
       "sourceIds": [
@@ -2440,6 +2626,9 @@
     {
       "id": "person-han-wendi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Wen",
       "summary": "Liu Heng, king of Dai, a son of Emperor Gao, emperor from 180 (179 according to Eno) to 157 BCE.",
       "sourceIds": [
@@ -2476,6 +2665,9 @@
     {
       "id": "person-han-jingdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Jing",
       "summary": "Liu Qi, the son of Emperor Wen and Empress Dou, emperor from 157 to 141 BCE.",
       "sourceIds": [
@@ -2512,6 +2704,9 @@
     {
       "id": "person-han-wudi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Wu",
       "summary": "The son of Emperor Jing, emperor from the death of his father in 141 BCE to his own death in 87 BCE; in his reign Zhang Qian travelled to the west.",
       "sourceIds": [
@@ -2547,6 +2742,9 @@
     {
       "id": "person-han-zhaodi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Zhao",
       "summary": "Liu Fuling, a son of Emperor Wu according to Eno (Major and Cook make him a grandson), emperor from Wu’s death in 87 BCE to his own death in 74 BCE.",
       "sourceIds": [
@@ -2588,6 +2786,9 @@
     {
       "id": "person-han-xuandi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Xuan",
       "summary": "Liu Pingyi, a great-grandson of Emperor Wu, emperor from 74 to 49 BCE.",
       "sourceIds": [
@@ -2623,6 +2824,9 @@
     {
       "id": "person-han-yuandi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Yuan",
       "summary": "Emperor of the Western Han from 49 to 33 BCE.",
       "sourceIds": [
@@ -2651,6 +2855,9 @@
     {
       "id": "person-han-chengdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Cheng",
       "summary": "Liu Shi, the son of Emperor Yuan and Wang Zhengjun, emperor from 33 to 7 BCE.",
       "sourceIds": [
@@ -2686,6 +2893,9 @@
     {
       "id": "person-han-aidi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Ai",
       "summary": "Liu Xin, a grandson of Emperor Yuan, emperor from 7 to 1 BCE.",
       "sourceIds": [
@@ -2726,6 +2936,9 @@
     {
       "id": "person-han-pingdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Ping",
       "summary": "Liu Jizi, son of Liu Xing, emperor from the death of Emperor Ai in 1 BCE to his own death in 6 CE.",
       "sourceIds": [
@@ -2766,6 +2979,9 @@
     {
       "id": "person-empress-lu",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Empress Lü",
       "summary": "The wife of Liu Bang, who after the death of Emperor Hui acted as regent as empress dowager from 188 to 180 BCE; she was not formally emperor.",
       "sourceIds": [
@@ -2800,6 +3016,9 @@
     {
       "id": "person-liu-he",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Liu He",
       "summary": "Named emperor in 74 BCE and deposed within four weeks; he is not counted as a legitimate emperor.",
       "sourceIds": [
@@ -2828,6 +3047,9 @@
     {
       "id": "person-ruzi-ying",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Liu Ying (the infant heir)",
       "summary": "An infant named heir in 6 CE under the power of Wang Mang; he was never enthroned.",
       "sourceIds": [
@@ -2856,6 +3078,9 @@
     {
       "id": "person-zhang-qian",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Zhang Qian",
       "summary": "An envoy of Emperor Wu, about 199–113 BCE, who set out for the west in 138 BCE and returned to Chang’an in 125 BCE; other sources date his departure 139 or about 130 BCE.",
       "sourceIds": [
@@ -2898,6 +3123,9 @@
     {
       "id": "person-sima-qian",
       "type": "Person",
+      "kinds": [
+        "historian"
+      ],
       "label": "Sima Qian",
       "summary": "The historian, about 145–86 BCE, author of the Records of the Grand Historian.",
       "sourceIds": [
@@ -2937,6 +3165,9 @@
     {
       "id": "work-shiji",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The Records of the Grand Historian",
       "summary": "The history of China written by Sima Qian, the Shiji.",
       "sourceIds": [
@@ -2966,6 +3197,9 @@
     {
       "id": "event-zhang-qian-mission",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Zhang Qian travels to the west",
       "summary": "Zhang Qian set out for the west in 138 BCE (139 according to Eno, about 130 according to Livius) and returned to Chang’an in 125 BCE.",
       "sourceIds": [
@@ -3000,6 +3234,10 @@
     {
       "id": "person-wang-mang",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "statesman"
+      ],
       "label": "Wang Mang",
       "summary": "The statesman who took the throne in 9 CE as emperor of the Xin and died fighting for his life in Chang’an in 23 CE.",
       "sourceIds": [
@@ -3038,6 +3276,9 @@
     {
       "id": "person-guangwu",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Guangwu",
       "summary": "Liu Xiu, who claimed the imperial title in the autumn of 25 CE and restored the Han; his forces took Luoyang between 26 and 30 CE. He reigned until 57 CE.",
       "sourceIds": [
@@ -3079,6 +3320,9 @@
     {
       "id": "person-han-mingdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Ming",
       "summary": "Emperor from 57 to 75 CE, who sent an expedition against the Xiongnu in 73 CE; tradition says he dreamt of a golden man and sent envoys to India to ask about the Buddha.",
       "sourceIds": [
@@ -3113,6 +3357,9 @@
     {
       "id": "person-han-zhangdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Zhang",
       "summary": "Emperor of the Eastern Han from 75 to 88 CE.",
       "sourceIds": [
@@ -3146,6 +3393,9 @@
     {
       "id": "person-han-hedi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor He",
       "summary": "Emperor from 88 to 105 CE; the Dowager Dou was regent from 88 until he destroyed her family in the summer of 92 CE.",
       "sourceIds": [
@@ -3184,6 +3434,9 @@
     {
       "id": "person-ban-chao",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Ban Chao",
       "summary": "The Han general of the Western Regions, who stayed at Kashgar when the Han withdrew in 75 CE, pacified the Western Regions in 91 CE, became their Protector-General in 91 or 92 CE, sent Gan Ying west in 97 CE and returned in 102 CE.",
       "sourceIds": [
@@ -3224,6 +3477,9 @@
     {
       "id": "person-gan-ying",
       "type": "Person",
+      "kinds": [
+        "statesman"
+      ],
       "label": "Gan Ying",
       "summary": "An envoy sent by Ban Chao in 97 CE toward Da Qin; he reached Tiaozhi beside a large sea.",
       "sourceIds": [
@@ -3253,6 +3509,9 @@
     {
       "id": "person-ban-gu",
       "type": "Person",
+      "kinds": [
+        "historian"
+      ],
       "label": "Ban Gu",
       "summary": "The historian of the Western Han, who died in 92 CE before he had finished his history; his sister Ban Zhao completed it.",
       "sourceIds": [
@@ -3286,6 +3545,9 @@
     {
       "id": "person-ban-zhao",
       "type": "Person",
+      "kinds": [
+        "historian"
+      ],
       "label": "Ban Zhao",
       "summary": "A scholar, about 45–116 CE, sister of Ban Gu, who completed his history of the Western Han.",
       "sourceIds": [
@@ -3326,6 +3588,9 @@
     {
       "id": "work-history-of-western-han",
       "type": "Work",
+      "kinds": [
+        "history"
+      ],
       "label": "The history of the Western Han",
       "summary": "The history of the Western Han written by Ban Gu and completed by his sister Ban Zhao.",
       "sourceIds": [
@@ -3348,6 +3613,9 @@
     {
       "id": "event-gan-ying-mission",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Gan Ying’s journey toward Da Qin",
       "summary": "In 97 CE Ban Chao sent Gan Ying to explore the far west toward Da Qin; he reached Tiaozhi beside a large sea.",
       "sourceIds": [
@@ -3380,6 +3648,9 @@
     {
       "id": "event-han-restoration",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "The restoration of the Han",
       "summary": "In the autumn of 25 CE Liu Xiu claimed the imperial title and restored the Han; Wang Mang had died in 23 CE.",
       "sourceIds": [
@@ -3407,6 +3678,9 @@
     {
       "id": "event-expedition-against-xiongnu",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The expedition against the Xiongnu",
       "summary": "In 73 CE Emperor Ming sent an army against the Xiongnu; in the same winter Ban Chao arrested Dou Ti.",
       "sourceIds": [
@@ -3438,6 +3712,9 @@
     {
       "id": "person-han-shangdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Shang",
       "summary": "Liu Long, an infant brought to the throne in 106 under the regency of the Dowager Deng, who died the same year.",
       "sourceIds": [
@@ -3476,6 +3753,9 @@
     {
       "id": "person-han-andi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor An",
       "summary": "Liu You, emperor from 106 to 125; the Dowager Deng governed until her death in 121, and the great Qiang rebellion lasted from 107 to 118.",
       "sourceIds": [
@@ -3514,6 +3794,9 @@
     {
       "id": "person-han-shaodi-liu-yi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "The Little Emperor Liu Yi",
       "summary": "A child set on the throne by the regent Dowager Yan in 125, who died the same winter.",
       "sourceIds": [
@@ -3547,6 +3830,9 @@
     {
       "id": "person-han-shundi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Shun",
       "summary": "Liu Bao, the only son of Emperor An, placed on the throne by eunuchs in 125 and emperor until 144.",
       "sourceIds": [
@@ -3585,6 +3871,9 @@
     {
       "id": "person-han-chongdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Chong",
       "summary": "Liu Bing, the infant son of Emperor Shun, emperor from 144 until his death in 145.",
       "sourceIds": [
@@ -3623,6 +3912,9 @@
     {
       "id": "person-han-zhidi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Zhi",
       "summary": "Liu Zuan, brought to the throne by Liang Na and Liang Ji in 145; he died in 146.",
       "sourceIds": [
@@ -3661,6 +3953,9 @@
     {
       "id": "person-han-huandi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Huan",
       "summary": "Liu Zhi, emperor from 146 to 168, who destroyed Liang Ji in 159 and ruled through eunuch favourites; in 166 self-proclaimed ambassadors from the Roman empire came to his court.",
       "sourceIds": [
@@ -3699,6 +3994,9 @@
     {
       "id": "person-han-lingdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Ling",
       "summary": "Liu Hong, emperor from 168 to 189; eunuchs dominated his court, and the Yellow Turbans rose in 184.",
       "sourceIds": [
@@ -3737,6 +4035,9 @@
     {
       "id": "person-han-shaodi-liu-bian",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "The Little Emperor Liu Bian",
       "summary": "Son of the Dowager He, set on the throne in 189 and deposed the same year by the general Dong Zhuo in favour of his half-brother Liu Xie; he died in 190.",
       "sourceIds": [
@@ -3775,6 +4076,9 @@
     {
       "id": "person-han-xiandi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Emperor Xian",
       "summary": "Liu Xie, the last emperor of Han, from 189 to 220: a puppet first of Dong Zhuo and then of Cao Cao, he abdicated to Cao Pi in 220 and lived until 234 as Duke of Shanyang.",
       "sourceIds": [
@@ -3813,6 +4117,10 @@
     {
       "id": "person-cao-cao",
       "type": "Person",
+      "kinds": [
+        "general",
+        "statesman"
+      ],
       "label": "Cao Cao",
       "summary": "A general of the end of the Han who rose by suppressing the Yellow Turbans, took the emperor under his control and ruled the north as the kingdom of Wei; the Romance of the Three Kingdoms made him the archetypal villain.",
       "sourceIds": [
@@ -3852,6 +4160,9 @@
     {
       "id": "person-cao-pi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cao Pi",
       "summary": "Son of Cao Cao, who received the abdication of the last Han emperor in 220 and became the first emperor of the Wei dynasty, which never held more than the north.",
       "sourceIds": [
@@ -3897,6 +4208,10 @@
     {
       "id": "person-liu-bei",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Liu Bei",
       "summary": "A general who claimed descent from the Han emperors and founded the Shu-Han dynasty in Sichuan after 220; a hero of the Romance of the Three Kingdoms.",
       "sourceIds": [
@@ -3936,6 +4251,9 @@
     {
       "id": "person-sun-quan",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sun Quan",
       "summary": "Founder and first emperor of Wu, emperor from 222 to 251, whose capital Jianye became Nanjing.",
       "sourceIds": [
@@ -3974,6 +4292,10 @@
     {
       "id": "person-jin-wudi",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Wudi of Jin (Sima Yan)",
       "summary": "The most powerful general of Wei, who usurped its throne in 265 as the first emperor of the Western Jin and in 280 conquered Wu, reuniting China; after his death his dynasty fell apart in the war of the Eight Kings.",
       "sourceIds": [
@@ -4019,6 +4341,9 @@
     {
       "id": "person-wei-xiaowendi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xiaowendi of Northern Wei",
       "summary": "The seventh emperor of the Northern Wei, from 471 (at first under his grandmother) until 499; he moved the capital to Luoyang, made Chinese the language of the court and in 485 introduced the equal-field system.",
       "sourceIds": [
@@ -4064,6 +4389,9 @@
     {
       "id": "person-liang-wudi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Wudi of Liang",
       "summary": "The first emperor of the Southern Liang, who reigned from 502 to 549; a great protector of Buddhism, in whose long reign the southern dynasties reached their highest cultural flowering.",
       "sourceIds": [
@@ -4092,6 +4420,9 @@
     {
       "id": "dynasty-wei",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Wei",
       "summary": "The northernmost of the Three Kingdoms, proclaimed by Cao Pi in 220 when the last Han emperor ceded the throne; it conquered Shu-Han in 263/264 and was overthrown by the Sima clan in 265/266.",
       "sourceIds": [
@@ -4140,6 +4471,9 @@
     {
       "id": "office-wei-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Wei",
       "summary": "The throne of the Wei.",
       "sourceIds": [
@@ -4157,6 +4491,9 @@
     {
       "id": "dynasty-shu-han",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Shu-Han",
       "summary": "The kingdom of Liu Bei in Sichuan, one of the Three Kingdoms, which kept the name Han; Wei conquered it in 263/264.",
       "sourceIds": [
@@ -4201,6 +4538,9 @@
     {
       "id": "office-shu-han-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Shu-Han",
       "summary": "The throne of the Shu-Han.",
       "sourceIds": [
@@ -4218,6 +4558,9 @@
     {
       "id": "dynasty-wu",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Wu",
       "summary": "The kingdom of Sun Quan south of the Yangtze, with its capital at Jianye, one of the Three Kingdoms; it lasted until the Jin overran it in 280.",
       "sourceIds": [
@@ -4261,6 +4604,9 @@
     {
       "id": "office-wu-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Wu",
       "summary": "The throne of the Wu.",
       "sourceIds": [
@@ -4278,6 +4624,9 @@
     {
       "id": "dynasty-jin",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Jin",
       "summary": "The dynasty of the Sima clan: the Western Jin from 265 to 316/317, which reunited China in 280, and the Eastern Jin at Jiankang from 317 to 420.",
       "sourceIds": [
@@ -4321,6 +4670,9 @@
     {
       "id": "office-jin-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Jin",
       "summary": "The throne of the Jin.",
       "sourceIds": [
@@ -4338,6 +4690,9 @@
     {
       "id": "dynasty-northern-wei",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Northern Wei",
       "summary": "The state of the Tuoba, of the Xianbei, which unified northern China and was largely Sinicized within a century; Britannica dates it 386–534/535.",
       "sourceIds": [
@@ -4379,6 +4734,9 @@
     {
       "id": "office-northern-wei-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Northern Wei",
       "summary": "The throne of the Northern Wei.",
       "sourceIds": [
@@ -4397,6 +4755,9 @@
     {
       "id": "dynasty-sui",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Sui",
       "summary": "A short-lived dynasty, from 581 to 618, that reunified China after four centuries of division; its capital was Daxing, later called Chang’an.",
       "sourceIds": [
@@ -4440,6 +4801,9 @@
     {
       "id": "office-sui-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Sui",
       "summary": "The throne of the Sui.",
       "sourceIds": [
@@ -4457,6 +4821,9 @@
     {
       "id": "dynasty-tang",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Tang",
       "summary": "The dynasty that followed the Sui, from 618 to 907, often called a golden age, with capitals at Chang’an and Luoyang; its territory reached from Korea to present-day Afghanistan.",
       "sourceIds": [
@@ -4500,6 +4867,9 @@
     {
       "id": "office-tang-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Tang",
       "summary": "The throne of the Tang.",
       "sourceIds": [
@@ -4517,6 +4887,9 @@
     {
       "id": "dynasty-liang",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Southern Liang",
       "summary": "One of the southern dynasties at Jiankang, from 502 to 557.",
       "sourceIds": [
@@ -4559,6 +4932,9 @@
     {
       "id": "office-liang-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Southern Liang",
       "summary": "The throne of the Southern Liang.",
       "sourceIds": [
@@ -4575,6 +4951,9 @@
     {
       "id": "period-three-kingdoms",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Three Kingdoms",
       "summary": "Wei, Shu-Han and Wu, which divided China after the fall of the Han; Britannica dates the period 220–280, to the fall of Wu, and Asia for Educators 220–265.",
       "sourceIds": [
@@ -4616,6 +4995,9 @@
     {
       "id": "period-western-jin",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Western Jin",
       "summary": "A short time of relative order after the Three Kingdoms, which ended with the fall of Luoyang in 311 and Chang’an in 316.",
       "sourceIds": [
@@ -4657,6 +5039,9 @@
     {
       "id": "period-sixteen-kingdoms",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Sixteen Kingdoms",
       "summary": "The short-lived non-Chinese states that ruled northern China from 303 until the Northern Wei unified it in 439.",
       "sourceIds": [
@@ -4692,6 +5077,9 @@
     {
       "id": "period-eastern-jin",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Eastern Jin",
       "summary": "The Jin court set up at Jiankang in 317 by a member of the imperial family, ruled by the great southern families until 420.",
       "sourceIds": [
@@ -4726,6 +5114,9 @@
     {
       "id": "period-southern-dynasties",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Southern Dynasties",
       "summary": "The Liu-Song, Southern Qi, Southern Liang and Southern Chen, which ruled the south from Jiankang from 420 until the Sui overthrew the last of them in 589.",
       "sourceIds": [
@@ -4760,6 +5151,9 @@
     {
       "id": "period-northern-wei",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Northern Wei",
       "summary": "The Tuoba state in the north; Britannica dates it 386–534/535 and Asia for Educators 386–535, and the Smithsonian says it brought all of north China under its rule in 439.",
       "sourceIds": [
@@ -4801,6 +5195,9 @@
     {
       "id": "period-sui",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Sui",
       "summary": "The reunification of China under the Sui, from 581 to 618.",
       "sourceIds": [
@@ -4836,6 +5233,9 @@
     {
       "id": "period-tang",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Tang",
       "summary": "The rule of the Tang, from 618 to 907; its high point came under Xuanzong, and after the rebellion of An Lushan in 755 the generals and provinces grew strong until the dynasty ended in 907.",
       "sourceIds": [
@@ -4872,6 +5272,10 @@
     {
       "id": "person-sui-wendi",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "statesman"
+      ],
       "label": "Wendi of Sui (Yang Jian)",
       "summary": "A high official of the Northern Zhou who seized the throne in 581, founded the Sui and by 589 ruled a reunified China; he gave the country uniform institutions, a new law code and a census.",
       "sourceIds": [
@@ -4919,6 +5323,9 @@
     {
       "id": "person-sui-yangdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Yangdi of Sui",
       "summary": "Son of Wendi and second emperor of the Sui, from 604 to 617/618; he built a second capital at Luoyang and began the Grand Canal, and after three disastrous expeditions against Korea he was murdered in 618.",
       "sourceIds": [
@@ -4958,6 +5365,10 @@
     {
       "id": "person-tang-gaozu",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "statesman"
+      ],
       "label": "Gaozu of Tang (Li Yuan)",
       "summary": "An official of the Sui who rose in rebellion in 617, took Chang’an and proclaimed the Tang in 618; he abdicated to his son Li Shimin in 626.",
       "sourceIds": [
@@ -5004,6 +5415,9 @@
     {
       "id": "person-tang-taizong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Taizong of Tang (Li Shimin)",
       "summary": "Second son of Gaozu, who killed two brothers at the Xuanwu gate in 626 and took the throne; emperor until 649, he expanded the examinations and China’s reach to the west.",
       "sourceIds": [
@@ -5050,6 +5464,9 @@
     {
       "id": "person-tang-gaozong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gaozong of Tang",
       "summary": "Son of Taizong and emperor from 649 to 683, who made Korea a vassal in 668; in his later years he was dominated by his consort Wu Zhao.",
       "sourceIds": [
@@ -5095,6 +5512,9 @@
     {
       "id": "person-wuhou",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Wuhou (Wu Zhao)",
       "summary": "A concubine who became empress of Gaozong in 655, ruled through puppets after his death and in her own name from 690 until her ministers forced her to abdicate in 705.",
       "sourceIds": [
@@ -5141,6 +5561,9 @@
     {
       "id": "person-tang-zhongzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Zhongzong of Tang",
       "summary": "Son of Wuhou, deposed by her in 683 a month after he took the throne and restored in 705 when she was forced to abdicate; he reigned until 710.",
       "sourceIds": [
@@ -5169,6 +5592,9 @@
     {
       "id": "person-xuanzang",
       "type": "Person",
+      "kinds": [
+        "religious"
+      ],
       "label": "Xuanzang",
       "summary": "A Buddhist monk who travelled to India in 629, studied at Nalanda and returned in 645 to translate the scriptures he brought back; his record of the journey is a source for Central Asia and India.",
       "sourceIds": [
@@ -5208,6 +5634,9 @@
     {
       "id": "place-jiankang",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Jiankang (Nanjing)",
       "summary": "The capital of Wu as Jianye, renamed Jiankang under the Jin; from 317 the capital of the Eastern Jin and of the southern dynasties for more than 250 years, modern Nanjing.",
       "sourceIds": [
@@ -5243,6 +5672,9 @@
     {
       "id": "event-qiang-rebellion",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The great Qiang rebellion",
       "summary": "A mutiny of auxiliaries in the northwest grew in 107 into a full-scale rebellion of the Qiang within China, which lasted until 118.",
       "sourceIds": [
@@ -5275,6 +5707,9 @@
     {
       "id": "event-roman-envoys-166",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Envoys from Rome at the Han court",
       "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of Emperor Huan.",
       "sourceIds": [
@@ -5306,6 +5741,9 @@
     {
       "id": "event-yellow-turbans",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The Yellow Turban rebellion",
       "summary": "In the spring of 184 the Yellow Turbans, a popular sect led by Zhang Jue, rose and ravaged the north and east; the warlordism that followed ended the Han.",
       "sourceIds": [
@@ -5334,6 +5772,9 @@
     {
       "id": "event-dong-zhuo-takes-power",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "Dong Zhuo takes power",
       "summary": "In 189 eunuchs and the general He Jin destroyed each other at Luoyang; the general Dong Zhuo took power, deposed Liu Bian and in 190 moved the capital to Chang’an.",
       "sourceIds": [
@@ -5369,6 +5810,9 @@
     {
       "id": "event-battle-of-guandu",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of Guandu",
       "summary": "In 200 Yuan Shao attacked Cao Cao and was defeated at Guandu.",
       "sourceIds": [
@@ -5396,6 +5840,9 @@
     {
       "id": "event-red-cliffs",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of the Red Cliffs",
       "summary": "In 208 Cao Cao, who had taken over north China, was defeated at the Red Cliffs on the Yangtze by the forces of Sun Quan and Liu Bei.",
       "sourceIds": [
@@ -5431,6 +5878,9 @@
     {
       "id": "event-end-of-han",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The end of the Han",
       "summary": "In the winter of 220 Emperor Xian abdicated to Cao Pi, who proclaimed himself emperor of the Wei dynasty.",
       "sourceIds": [
@@ -5464,6 +5914,9 @@
     {
       "id": "event-wei-conquers-shu",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Wei conquers Shu-Han",
       "summary": "Wei conquered the Shu-Han kingdom in 263/264.",
       "sourceIds": [
@@ -5493,6 +5946,9 @@
     {
       "id": "event-jin-reunifies-china",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Jin reunite China",
       "summary": "In 280 the Jin armies of Sima Yan overran Wu, the last of the Three Kingdoms, and China was nominally reunited.",
       "sourceIds": [
@@ -5522,6 +5978,10 @@
     {
       "id": "event-fall-of-luoyang-311",
       "type": "Event",
+      "kinds": [
+        "conquest",
+        "fall"
+      ],
       "label": "The fall of Luoyang",
       "summary": "In 311 the Xiongnu armies that Liu Yuan had led into northern China took and destroyed Luoyang.",
       "sourceIds": [
@@ -5549,6 +6009,10 @@
     {
       "id": "event-fall-of-changan-316",
       "type": "Event",
+      "kinds": [
+        "conquest",
+        "fall"
+      ],
       "label": "The fall of Chang’an",
       "summary": "The fall of Chang’an in 316 ended Chinese dynastic rule in the north for centuries.",
       "sourceIds": [
@@ -5577,6 +6041,9 @@
     {
       "id": "event-eastern-jin-at-jiankang",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "A Jin court at Jiankang",
       "summary": "In 317 a member of the Jin imperial family set up a refugee court at Jiankang, the start of the Eastern Jin.",
       "sourceIds": [
@@ -5604,6 +6071,9 @@
     {
       "id": "event-northern-wei-unifies-north",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Northern Wei unify the north",
       "summary": "In 439 the Northern Wei brought the whole of north China under its rule, ending the Sixteen Kingdoms.",
       "sourceIds": [
@@ -5628,6 +6098,9 @@
     {
       "id": "event-equal-field-system",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "The equal-field system",
       "summary": "In 485 Xiaowendi of the Northern Wei introduced the equal-field system, which assigned land to every peasant family.",
       "sourceIds": [
@@ -5655,6 +6128,9 @@
     {
       "id": "event-northern-zhou-reunifies-north",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Northern Zhou reunify the north",
       "summary": "After the Wei broke apart soon after 520, the Northern Zhou reunified northern China in 577.",
       "sourceIds": [
@@ -5678,6 +6154,9 @@
     {
       "id": "event-sui-reunifies-china",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Sui reunite China",
       "summary": "In 589 Yang Jian crossed the Yangtze and overthrew the last southern dynasty at Jiankang, uniting China under one government after almost four centuries.",
       "sourceIds": [
@@ -5710,6 +6189,9 @@
     {
       "id": "event-grand-canal",
       "type": "Event",
+      "kinds": [
+        "construction"
+      ],
       "label": "The Grand Canal begun",
       "summary": "In 608 Yangdi built a great canal between the rice-growing south and the Beijing area, and in 610 extended it, beginning the Grand Canal network.",
       "sourceIds": [
@@ -5737,6 +6219,9 @@
     {
       "id": "event-sui-korean-wars",
       "type": "Event",
+      "kinds": [
+        "war"
+      ],
       "label": "The Sui expeditions against Korea",
       "summary": "Yangdi’s three expeditions against the Koreans between 612 and 614 ended in disaster and led to revolts.",
       "sourceIds": [
@@ -5769,6 +6254,9 @@
     {
       "id": "event-tang-founded",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The Tang proclaimed",
       "summary": "Li Yuan rose in rebellion in 617, took Chang’an and in 618 proclaimed the Tang dynasty.",
       "sourceIds": [
@@ -5801,6 +6289,9 @@
     {
       "id": "event-xuanwu-gate",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The Xuanwu gate incident",
       "summary": "In 626 Li Shimin ambushed and killed his two brothers at the Xuanwu gate of the palace; two months later his father abdicated in his favour.",
       "sourceIds": [
@@ -5837,6 +6328,9 @@
     {
       "id": "event-xuanzang-journey",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Xuanzang’s journey to India",
       "summary": "The monk Xuanzang left for India in 629 and came back to China in 645 with the scriptures he had gathered.",
       "sourceIds": [
@@ -5870,6 +6364,9 @@
     {
       "id": "event-korea-vassal-668",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Korea made a vassal",
       "summary": "Continuing his father’s campaigns, Gaozong conquered the Korean peninsula and made Korea a vassal state in 668.",
       "sourceIds": [
@@ -5897,6 +6394,9 @@
     {
       "id": "event-wuhou-takes-throne",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Wuhou takes the throne",
       "summary": "After ruling through puppets since Gaozong’s death in 683, Wu Zhao usurped the throne herself in 690.",
       "sourceIds": [
@@ -5925,6 +6425,9 @@
     {
       "id": "event-wuhou-abdicates",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "Wuhou forced to abdicate",
       "summary": "In 705 Wuhou’s ministers and generals seized the palace and forced her to abdicate in favour of her son Zhongzong.",
       "sourceIds": [
@@ -5960,6 +6463,9 @@
     {
       "id": "dynasty-liu-song",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Liu-Song",
       "summary": "The first of the Southern Dynasties at Jiankang, founded by the general Liu Yu when he took the throne of the Eastern Jin.",
       "sourceIds": [
@@ -6003,6 +6509,9 @@
     {
       "id": "dynasty-southern-qi",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Southern Qi",
       "summary": "The second of the Southern Dynasties at Jiankang.",
       "sourceIds": [
@@ -6041,6 +6550,9 @@
     {
       "id": "dynasty-chen",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Southern Chen",
       "summary": "The last of the Southern Dynasties at Jiankang, overthrown when the Sui reunified China in 589.",
       "sourceIds": [
@@ -6080,6 +6592,9 @@
     {
       "id": "person-liu-yu",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "Liu Yu",
       "summary": "A general popular for his victories over the northern kingdoms, who overthrew the usurper Huan Xuan, had two Eastern Jin emperors killed and took the throne himself, founding the Liu-Song dynasty.",
       "sourceIds": [
@@ -6108,6 +6623,9 @@
     {
       "id": "dynasty-northern-zhou",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Northern Zhou",
       "summary": "A northern state of the Yuwen house, from 557 to 581, which reunified the north in 577; its high official Yang Jian seized the throne and founded the Sui.",
       "sourceIds": [
@@ -6143,6 +6661,9 @@
     {
       "id": "person-sui-gongdi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gongdi of Sui",
       "summary": "The successor of Yangdi after his murder in 618, who reigned less than a year.",
       "sourceIds": [
@@ -6171,6 +6692,11 @@
     {
       "id": "person-gu-kaizhi",
       "type": "Person",
+      "kinds": [
+        "poet",
+        "artistic",
+        "statesman"
+      ],
       "label": "Gu Kaizhi",
       "summary": "A courtier of the Eastern Jin at Jiankang, a painter of portraits and figures and a poet, regarded as China’s first great genius in painting; the Nymph of the Luo River is recorded as his. Britannica gives his years as about 344 to about 406 in one article and about 348 to about 409 in another.",
       "sourceIds": [
@@ -6220,6 +6746,9 @@
     {
       "id": "person-wang-xizhi",
       "type": "Person",
+      "kinds": [
+        "artistic"
+      ],
       "label": "Wang Xizhi",
       "summary": "The most celebrated of Chinese calligraphers, at the Eastern Jin court; his Preface to the Poems Composed at the Orchid Pavilion records a gathering of 353.",
       "sourceIds": [
@@ -6261,6 +6790,9 @@
     {
       "id": "person-wang-xianzhi",
       "type": "Person",
+      "kinds": [
+        "artistic"
+      ],
       "label": "Wang Xianzhi",
       "summary": "The youngest son of Wang Xizhi, the most famous calligrapher of his family after his father.",
       "sourceIds": [
@@ -6300,6 +6832,9 @@
     {
       "id": "event-jin-legal-code",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "The Jin legal code",
       "summary": "The court of Wudi of Jin established one of China’s earliest legal codes in 268.",
       "sourceIds": [
@@ -6327,6 +6862,9 @@
     {
       "id": "event-jin-surrender-316",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The last Western Jin emperor surrenders",
       "summary": "In 316 the Jin emperor, a grandson of Wudi, surrendered to a chief of the Xiongnu, abdicated and was later put to death.",
       "sourceIds": [
@@ -6350,6 +6888,9 @@
     {
       "id": "event-jin-reconquers-sichuan",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Eastern Jin reconquer Sichuan",
       "summary": "In 347 the general Huan Wen reconquered Sichuan for the Eastern Jin; he later deposed the reigning emperor.",
       "sourceIds": [
@@ -6373,6 +6914,9 @@
     {
       "id": "event-battle-of-fei-river",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of the Fei River",
       "summary": "In 383 the Eastern Jin turned back the invading armies of the northern nomads at the Fei River.",
       "sourceIds": [
@@ -6396,6 +6940,9 @@
     {
       "id": "event-landowner-uprising-400",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The uprising of the landowners",
       "summary": "An uprising led by disaffected landowners began in 400 and was crushed in 402, giving army leaders more power.",
       "sourceIds": [
@@ -6424,6 +6971,9 @@
     {
       "id": "event-jin-northwest-campaign",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Eastern Jin push northwest",
       "summary": "Between 415 and 417 the Eastern Jin pushed northwestward and regained access to the trade routes of Central Asia.",
       "sourceIds": [
@@ -6452,6 +7002,9 @@
     {
       "id": "event-orchid-pavilion-gathering",
       "type": "Event",
+      "kinds": [
+        "writing"
+      ],
       "label": "The gathering at the Orchid Pavilion",
       "summary": "Some 42 literary figures met at the Orchid Pavilion during the Spring Purification Festival of 353 to compose poems; Wang Xizhi wrote the preface to their poems.",
       "sourceIds": [
@@ -6479,6 +7032,9 @@
     {
       "id": "period-late-tang",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The late Tang",
       "summary": "From the rebellion of An Lushan in 755 to the end of the dynasty in 907, an age of provincial governors, eunuch power at court and great uprisings.",
       "sourceIds": [
@@ -6513,6 +7069,9 @@
     {
       "id": "period-five-dynasties",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Five Dynasties and Ten Kingdoms",
       "summary": "The half century of disunity between the Tang and the Song, from 907 to 960: five short-lived dynasties followed one another in the north while ten kingdoms held the south.",
       "sourceIds": [
@@ -6554,6 +7113,9 @@
     {
       "id": "dynasty-later-liang",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Later Liang",
       "summary": "The dynasty founded by Zhu Wen in 907 when he deposed the last Tang emperor, the first of the Five Dynasties, superseded in 923.",
       "sourceIds": [
@@ -6588,6 +7150,9 @@
     {
       "id": "dynasty-later-tang",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Later Tang",
       "summary": "The second of the Five Dynasties, from 923 to 936.",
       "sourceIds": [
@@ -6622,6 +7187,9 @@
     {
       "id": "dynasty-later-jin",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Later Jin",
       "summary": "The third of the Five Dynasties, from 936 to 947.",
       "sourceIds": [
@@ -6656,6 +7224,9 @@
     {
       "id": "dynasty-later-han",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Later Han",
       "summary": "The fourth of the Five Dynasties, from 947 to 951.",
       "sourceIds": [
@@ -6690,6 +7261,9 @@
     {
       "id": "dynasty-later-zhou",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Later Zhou",
       "summary": "The last of the Five Dynasties, from 951 until the rise of the Song in 960.",
       "sourceIds": [
@@ -6724,6 +7298,9 @@
     {
       "id": "dynasty-liao",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Liao",
       "summary": "The dynasty of the Khitan, from 907 to 1125, which expanded from the border of Mongolia into southern Manchuria and the sixteen prefectures south of the Great Wall; the Song made a sworn peace with it in 1004.",
       "sourceIds": [
@@ -6765,6 +7342,9 @@
     {
       "id": "dynasty-song",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Song",
       "summary": "The dynasty founded by Taizu in 960, ruling until 1279, which reunified most of the former Tang empire and governed through a civil service, keeping its generals weak.",
       "sourceIds": [
@@ -6800,6 +7380,9 @@
     {
       "id": "office-song-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Song",
       "summary": "The throne of the Song.",
       "sourceIds": [
@@ -6816,6 +7399,9 @@
     {
       "id": "period-northern-song",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Northern Song",
       "summary": "The first part of the Song, from 960 to 1127, when the dynasty ruled the north as well as the south.",
       "sourceIds": [
@@ -6857,6 +7443,9 @@
     {
       "id": "person-tang-ruizong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ruizong of Tang",
       "summary": "Son of Wuhou and brother of Zhongzong, a puppet emperor under his mother; restored by his son Li Longji after Zhongzong’s death in 710, he ceded the throne to him in 712 and retired in 713.",
       "sourceIds": [
@@ -6881,6 +7470,9 @@
     {
       "id": "person-tang-xuanzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xuanzong of Tang",
       "summary": "Li Longji, son of Ruizong, emperor from 712 to 756, whose reign was the high point of the Tang; late in life he fell under the influence of Yang Guifei, and the rebellion of An Lushan drove him from the throne.",
       "sourceIds": [
@@ -6916,6 +7508,9 @@
     {
       "id": "person-tang-suzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Suzong of Tang",
       "summary": "Emperor from 756 to 762, who faced a desperate military situation in the rebellion of An Lushan.",
       "sourceIds": [
@@ -6940,6 +7535,9 @@
     {
       "id": "person-tang-daizong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Daizong of Tang",
       "summary": "Emperor from 762 to 779, a weak ruler under whom the eunuchs began to play a growing role.",
       "sourceIds": [
@@ -6964,6 +7562,9 @@
     {
       "id": "person-tang-dezong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Dezong of Tang",
       "summary": "An activist emperor from 779 to 805, who in 780 introduced a new tax system of provincial quotas.",
       "sourceIds": [
@@ -6993,6 +7594,9 @@
     {
       "id": "person-tang-shunzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Shunzong of Tang",
       "summary": "An invalid emperor whose brief reign followed Dezong’s death in 805.",
       "sourceIds": [
@@ -7017,6 +7621,9 @@
     {
       "id": "person-tang-xianzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xianzong of Tang",
       "summary": "Emperor from 805 to 820, under whom the Tang regained much of its power over the provinces.",
       "sourceIds": [
@@ -7041,6 +7648,9 @@
     {
       "id": "person-tang-wenzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Wenzong of Tang",
       "summary": "Emperor from 827 to 840, whose attempts to break the eunuchs failed in the Sweet Dew coup of 835.",
       "sourceIds": [
@@ -7065,6 +7675,9 @@
     {
       "id": "person-tang-wuzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Wuzong of Tang",
       "summary": "Emperor from 840, a fanatical Daoist who suppressed Buddhism in 843–845.",
       "sourceIds": [
@@ -7089,6 +7702,9 @@
     {
       "id": "person-tang-yizong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Yizong of Tang",
       "summary": "Emperor from 859 to 873, in whose reign the eunuchs’ power revived and uprisings spread.",
       "sourceIds": [
@@ -7113,6 +7729,9 @@
     {
       "id": "person-tang-xizong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Xizong of Tang",
       "summary": "Emperor from 873 to 888, chosen as a boy of eleven by the palace eunuchs; in his reign Huang Chao took Chang’an.",
       "sourceIds": [
@@ -7137,6 +7756,9 @@
     {
       "id": "person-yang-guifei",
       "type": "Person",
+      "kinds": [
+        "royal"
+      ],
       "label": "Yang Guifei",
       "summary": "The imperial concubine under whose influence Xuanzong fell from 745; her relative Yang Guozhong rose through her to dominate the court.",
       "sourceIds": [
@@ -7165,6 +7787,9 @@
     {
       "id": "person-an-lushan",
       "type": "Person",
+      "kinds": [
+        "general"
+      ],
       "label": "An Lushan",
       "summary": "The general whose rebellion of 755 swept through Hebei, took Luoyang and Chang’an and began the late Tang; he was murdered by a subordinate early in 757.",
       "sourceIds": [
@@ -7198,6 +7823,9 @@
     {
       "id": "person-huang-chao",
       "type": "Person",
+      "kinds": [
+        "rebel"
+      ],
       "label": "Huang Chao",
       "summary": "Leader of the most formidable of the uprisings that began in 874, who sacked Guangzhou, took Luoyang and Chang’an and died in Shandong in 884.",
       "sourceIds": [
@@ -7231,6 +7859,9 @@
     {
       "id": "person-bai-juyi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Bai Juyi",
       "summary": "Poet who wrote verse in clear and simple language.",
       "sourceIds": [
@@ -7269,6 +7900,10 @@
     {
       "id": "person-zhu-wen",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Zhu Wen",
       "summary": "A general born at Dangshan in 852, once a follower of the rebel Huang Chao, who was given the region around Kaifeng, forced the Tang emperor Zhaozong to move to Luoyang, murdered him in 904, made the boy Aidi abdicate in 907 and proclaimed himself first emperor of the Later Liang; his eldest son murdered him at Kaifeng in 912.",
       "sourceIds": [
@@ -7308,6 +7943,9 @@
     {
       "id": "person-song-taizu",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Taizu of Song",
       "summary": "Zhao Kuangyin, born at Luoyang in 927, who founded the Song in 960 and reigned until his death at Kaifeng in 976; he took the generals’ commands in exchange for honours and began the reunification of China.",
       "sourceIds": [
@@ -7354,6 +7992,9 @@
     {
       "id": "person-song-taizong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Taizong of Song",
       "summary": "Younger brother and successor of Taizu, emperor from 976 to 997, who completed the reunification by conquering the Northern Han in 979 but suffered a disastrous defeat by the Khitan in 986.",
       "sourceIds": [
@@ -7379,6 +8020,9 @@
     {
       "id": "person-song-zhenzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Zhenzong of Song",
       "summary": "The third Song emperor, from 997 to 1022, under whom the dynasty was consolidated and peace was sworn with the Khitan in 1004.",
       "sourceIds": [
@@ -7408,6 +8052,9 @@
     {
       "id": "person-song-renzong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Renzong of Song",
       "summary": "Son of Zhenzong by a palace lady, emperor from 1022 to 1063, at first under the regency of the empress dowager.",
       "sourceIds": [
@@ -7432,6 +8079,9 @@
     {
       "id": "event-xuanzong-takes-power",
       "type": "Event",
+      "kinds": [
+        "accession"
+      ],
       "label": "Xuanzong takes full power",
       "summary": "After Ruizong ceded the throne in 712, a second coup in 713 put Xuanzong completely in charge; Ruizong retired and the princess Taiping took her life.",
       "sourceIds": [
@@ -7463,6 +8113,9 @@
     {
       "id": "event-battle-of-talas",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of the Talas River",
       "summary": "In 751 the overextended Tang armies in the far west were defeated by the Arabs on the Talas River.",
       "sourceIds": [
@@ -7491,6 +8144,9 @@
     {
       "id": "event-an-lushan-rebellion",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The rebellion of An Lushan",
       "summary": "The rebellion of An Lushan broke out in 755, took Luoyang and Chang’an in 756 and, carried on after his murder by his son and by Shi Siming, was not suppressed until 763.",
       "sourceIds": [
@@ -7531,6 +8187,9 @@
     {
       "id": "event-rebels-take-changan",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The rebels take Chang’an",
       "summary": "Early in 756 An Lushan’s rebels captured the eastern capital Luoyang, and in July of the same year the main capital Chang’an.",
       "sourceIds": [
@@ -7562,6 +8221,9 @@
     {
       "id": "event-tibetans-loot-changan",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Tibetans loot Chang’an",
       "summary": "In 763 the Tibetans, allied with Nanzhao, occupied present-day Gansu and late in the year took and looted the capital.",
       "sourceIds": [
@@ -7589,6 +8251,9 @@
     {
       "id": "event-dezong-tax-reform",
       "type": "Event",
+      "kinds": [
+        "lawReform"
+      ],
       "label": "The tax reform of 780",
       "summary": "In 780 Dezong promulgated a new system of taxation in which each province was assessed a quota to be collected by its own government.",
       "sourceIds": [
@@ -7616,6 +8281,9 @@
     {
       "id": "event-sweet-dew-incident",
       "type": "Event",
+      "kinds": [
+        "revolt"
+      ],
       "label": "The Sweet Dew coup",
       "summary": "In 835 Wenzong’s scheme against the eunuchs misfired in the Sweet Dew (Ganlu) coup and led to the deaths of several ministers and officials.",
       "sourceIds": [
@@ -7643,6 +8311,9 @@
     {
       "id": "event-suppression-of-buddhism",
       "type": "Event",
+      "kinds": [
+        "religiousEvent"
+      ],
       "label": "The suppression of Buddhism",
       "summary": "In 843–845 the emperor Wuzong, a fanatical Daoist, suppressed Buddhism and dissolved the monasteries.",
       "sourceIds": [
@@ -7675,6 +8346,9 @@
     {
       "id": "event-huang-chao-takes-changan",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Huang Chao takes Chang’an",
       "summary": "Huang Chao, leader of the greatest uprising, took Luoyang late in 880 and Chang’an in 881; in 883 he was forced to abandon the capital.",
       "sourceIds": [
@@ -7706,6 +8380,9 @@
     {
       "id": "event-end-of-the-tang",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The end of the Tang",
       "summary": "In 907 Zhu Wen deposed the last Tang emperor, bringing the dynasty to its formal end and beginning the Five Dynasties.",
       "sourceIds": [
@@ -7733,6 +8410,9 @@
     {
       "id": "event-founding-of-the-liao",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The Khitan found the Liao",
       "summary": "In 907 the Khitan founded the Liao dynasty, expanding from the border of Mongolia into southern Manchuria and the sixteen prefectures south of the Great Wall.",
       "sourceIds": [
@@ -7756,6 +8436,9 @@
     {
       "id": "event-founding-of-the-song",
       "type": "Event",
+      "kinds": [
+        "founding"
+      ],
       "label": "The founding of the Song",
       "summary": "In 960 Zhao Kuangyin, Taizu, founded the Song, ending the rapid succession of the Five Dynasties.",
       "sourceIds": [
@@ -7784,6 +8467,9 @@
     {
       "id": "event-song-conquers-sichuan",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Song take Sichuan",
       "summary": "Taizu’s strategy of reunification first took Sichuan in 965, then the far south in 971.",
       "sourceIds": [
@@ -7811,6 +8497,9 @@
     {
       "id": "event-wuyue-surrenders",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The Wu-Yue surrender",
       "summary": "In 978 the Wu-Yue, the last of the Ten Kingdoms in the south, surrendered to the Song without a war.",
       "sourceIds": [
@@ -7834,6 +8523,9 @@
     {
       "id": "event-song-conquers-northern-han",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Song conquer the Northern Han",
       "summary": "In 979 Taizong conquered the Northern Han, the last of the Ten Kingdoms, completing the reunification.",
       "sourceIds": [
@@ -7861,6 +8553,9 @@
     {
       "id": "event-song-defeated-by-khitan",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The Song defeated by the Khitan",
       "summary": "Fighting on against the Khitan in the north, Taizong suffered a disastrous defeat in 986.",
       "sourceIds": [
@@ -7888,6 +8583,9 @@
     {
       "id": "event-song-liao-peace",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The sworn peace of the Song and the Liao",
       "summary": "After a Khitan offensive met by Zhenzong himself, the two empires pledged peaceful coexistence in 1004 through an exchange of sworn documents.",
       "sourceIds": [
@@ -7915,6 +8613,9 @@
     {
       "id": "event-sui-embassy-to-khusrau-ii",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "The Sui and Khusrau II exchange embassies",
       "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
       "sourceIds": [
@@ -7947,6 +8648,9 @@
     {
       "id": "event-yazdgard-iii-embassy-to-china",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Yazdgard III sends an embassy to China",
       "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
       "sourceIds": [
@@ -7970,6 +8674,9 @@
     {
       "id": "event-peroz-iii-at-the-tang-court",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Peroz, son of Yazdgard III, at the Tang court",
       "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
       "sourceIds": [
@@ -7998,6 +8705,9 @@
     {
       "id": "period-first-pottery-china",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The first pottery of southern China",
       "summary": "At Xianrendong in Jiangxi and Zengpiyan in Guangxi, from the tenth to the seventh millennium BCE, people left low-fired cord-marked shards and mostly chipped stone tools.",
       "sourceIds": [
@@ -8042,6 +8752,9 @@
     {
       "id": "period-yangshao",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Yangshao culture",
       "summary": "The prehistoric culture of the Yellow River basin, from 5000 to 3000 BCE, known by its painted pottery; its people grew millet, kept animals, made silk and fired pottery in kilns.",
       "sourceIds": [
@@ -8076,6 +8789,9 @@
     {
       "id": "period-hongshan",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Hongshan culture",
       "summary": "A prehistoric culture of far northern China, about 4000 to 3000 BCE, centred in western Liaoning and eastern Inner Mongolia, with a three-tiered elite buried in complex tombs and fine jades.",
       "sourceIds": [
@@ -8113,6 +8829,9 @@
     {
       "id": "period-liangzhu",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Liangzhu culture",
       "summary": "A jade-working culture of the eastern coast, about 3300 to 2200 BCE.",
       "sourceIds": [
@@ -8150,6 +8869,9 @@
     {
       "id": "period-longshan",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Longshan culture",
       "summary": "The Neolithic culture of central China, about 2600 to 2000 BCE, named for its site in Shandong, with black burnished wheel-turned pottery, walls of rammed earth and divination by heating cattle bones.",
       "sourceIds": [
@@ -8193,6 +8915,9 @@
     {
       "id": "period-erlitou",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Erlitou culture",
       "summary": "The culture of the central plains of northern China, from 1900 to 1350 BCE, the first state-level society in China, with palaces, royal tombs, paved roads and bronze; its remains are taken to correspond to the Xia of tradition.",
       "sourceIds": [
@@ -8227,6 +8952,9 @@
     {
       "id": "person-shang-tang",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tang of Shang",
       "summary": "The founder of the Shang dynasty, worshipped under the sacrificial name Dayi; his capital Bo is now usually identified with Zhengzhou.",
       "sourceIds": [
@@ -8267,6 +8995,9 @@
     {
       "id": "person-pangeng",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Pangeng",
       "summary": "The Shang king with whom, by the traditional long chronology, the last twelve Shang kings ruled from Yinxu.",
       "sourceIds": [
@@ -8295,6 +9026,9 @@
     {
       "id": "person-diyi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Diyi",
       "summary": "The second-to-last Shang king, reigning with his successor Dixin about 1101 to 1046 BCE.",
       "sourceIds": [
@@ -8323,6 +9057,9 @@
     {
       "id": "person-dixin",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Dixin",
       "summary": "The last Shang king; with Diyi he reigned about 1101 to 1046 BCE, when the Zhou overthrew the Shang.",
       "sourceIds": [
@@ -8351,6 +9088,9 @@
     {
       "id": "person-li-bai",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Li Bai",
       "summary": "Tang poet, born in Sichuan in 701, who came to Chang’an in 742 hoping for a post at court and rivalled Du Fu for the title of China’s greatest poet; he died in 762.",
       "sourceIds": [
@@ -8396,6 +9136,9 @@
     {
       "id": "person-du-fu",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Du Fu",
       "summary": "Tang poet, born in Henan in 712 into a scholarly family, who failed the examinations of 735, travelled, met Li Bai and is held by many critics to be the greatest poet of all time; he died on a riverboat in 770.",
       "sourceIds": [
@@ -8441,6 +9184,9 @@
     {
       "id": "work-analects",
       "type": "Work",
+      "kinds": [
+        "philosophy"
+      ],
       "label": "The Analects of Confucius",
       "summary": "The Lunyu, held by scholars to be the most reliable source of the doctrine of Confucius; in 1190 Zhu Xi published it with three other texts as the Four Books.",
       "sourceIds": [
@@ -8459,6 +9205,9 @@
     {
       "id": "work-daodejing",
       "type": "Work",
+      "kinds": [
+        "philosophy"
+      ],
       "label": "The Daodejing",
       "summary": "A primary Daoist writing, by tradition the work of Laozi; modern scholars doubt that it was written by one person.",
       "sourceIds": [
@@ -8477,6 +9226,9 @@
     {
       "id": "work-art-of-war",
       "type": "Work",
+      "kinds": [
+        "treatise"
+      ],
       "label": "The Art of War",
       "summary": "The Bingfa, “Military Methods”, one of the most influential treatises on warfare ever written, traditionally attributed to Sunzi; some scholars date it to the Warring States period.",
       "sourceIds": [
@@ -8500,6 +9252,9 @@
     {
       "id": "office-later-liang-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Later Liang",
       "summary": "The throne of the Later Liang.",
       "sourceIds": [
@@ -8516,6 +9271,9 @@
     {
       "id": "office-later-tang-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Later Tang",
       "summary": "The throne of the Later Tang.",
       "sourceIds": [
@@ -8532,6 +9290,9 @@
     {
       "id": "office-later-jin-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Later Jin",
       "summary": "The throne of the Later Jin.",
       "sourceIds": [
@@ -8548,6 +9309,9 @@
     {
       "id": "office-later-han-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Emperor of the Later Han",
       "summary": "The throne of the Later Han.",
       "sourceIds": [
@@ -8564,6 +9328,9 @@
     {
       "id": "person-tang-zhaozong",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Zhaozong of Tang",
       "summary": "Tang emperor whom Zhu Wen forced to move the capital from Chang’an to Luoyang, and murdered with all but one of his sons in 904.",
       "sourceIds": [
@@ -8597,6 +9364,9 @@
     {
       "id": "person-tang-aidi",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Aidi of Tang",
       "summary": "The last Tang emperor, a son of Zhaozong spared as a boy of thirteen in 904 and put on the throne by Zhu Wen, who forced him to abdicate in 907.",
       "sourceIds": [
@@ -8625,6 +9395,10 @@
     {
       "id": "person-later-tang-zhuangzong",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Zhuangzong of the Later Tang",
       "summary": "Li Cunxu, a general of the Later Liang who overthrew it and founded the Later Tang in 923.",
       "sourceIds": [
@@ -8660,6 +9434,10 @@
     {
       "id": "person-later-jin-gaozu",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Gaozu of the Later Jin",
       "summary": "Shi Jingtang, a general of the Later Tang who overthrew his master with the help of the Khitan and founded the Later Jin.",
       "sourceIds": [
@@ -8695,6 +9473,10 @@
     {
       "id": "person-later-han-gaozu",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Gaozu of the Later Han",
       "summary": "Liu Zhiyuan, a former general of the Later Jin who founded the Later Han and pushed the Khitan back into Inner Asia.",
       "sourceIds": [
@@ -8730,6 +9512,9 @@
     {
       "id": "place-kaifeng",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Kaifeng",
       "summary": "A city of central China whose region Zhu Wen governed and where he died in 912; the capital of the Northern Song, burned by the Juchen in 1126.",
       "sourceIds": [

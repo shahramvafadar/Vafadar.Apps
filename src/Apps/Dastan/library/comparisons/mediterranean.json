@@ -29,6 +29,9 @@
       "periods": [
         {
           "key": "egypt-egypt-early-dynastic",
+          "kinds": [
+            "era"
+          ],
           "label": "The Early Dynastic period",
           "summary": "The 1st to the 3rd dynasty, from about 2900 to about 2544 BCE: Memphis became the capital and Djoser’s step pyramid was built.",
           "time": {
@@ -60,6 +63,9 @@
         },
         {
           "key": "egypt-egypt-old-kingdom",
+          "kinds": [
+            "era"
+          ],
           "label": "The Old Kingdom",
           "summary": "The 4th to the 8th dynasty, from about 2543 to about 2118 BCE, the age of the pyramids of Giza.",
           "time": {
@@ -91,6 +97,9 @@
         },
         {
           "key": "egypt-egypt-first-intermediate",
+          "kinds": [
+            "era"
+          ],
           "label": "The First Intermediate period",
           "summary": "The time of the kings of Heracleopolis, the 9th and 10th dynasties, from about 2118 to about 1980 BCE.",
           "time": {
@@ -122,6 +131,9 @@
         },
         {
           "key": "egypt-egypt-middle-kingdom",
+          "kinds": [
+            "era"
+          ],
           "label": "The Middle Kingdom",
           "summary": "The 11th and 12th dynasties, from about 2080 to about 1760 BCE; Mentuhotep II of Thebes united much of Egypt and began it.",
           "time": {
@@ -153,6 +165,9 @@
         },
         {
           "key": "egypt-egypt-second-intermediate",
+          "kinds": [
+            "era"
+          ],
           "label": "The Second Intermediate period",
           "summary": "The 13th to the 17th dynasty, from about 1759 to about 1530 BCE, when the Hyksos from Southwest Asia ruled in the north.",
           "time": {
@@ -184,6 +199,9 @@
         },
         {
           "key": "egypt-egypt-new-kingdom",
+          "kinds": [
+            "era"
+          ],
           "label": "The New Kingdom",
           "summary": "The 18th to the 20th dynasty, from about 1539 to about 1077 BCE: Ahmose I drove out the Hyksos and Egypt reached into western Asia.",
           "time": {
@@ -215,6 +233,9 @@
         },
         {
           "key": "egypt-egypt-third-intermediate",
+          "kinds": [
+            "era"
+          ],
           "label": "The Third Intermediate period",
           "summary": "The 21st to the 25th dynasty, from about 1076 to about 655 BCE, with kings at Tanis, Libyan lines and finally kings from Kush.",
           "time": {
@@ -246,6 +267,9 @@
         },
         {
           "key": "egypt-egypt-late",
+          "kinds": [
+            "era"
+          ],
           "label": "The Late period",
           "summary": "The 26th to the 30th dynasty and the second Persian period, from 664 to 332 BCE; the kings of Sais, then the Persian kings, then Egyptian kings again until the Persians returned in 343.",
           "time": {
@@ -275,6 +299,9 @@
         },
         {
           "key": "egypt-egypt-macedonian-ptolemaic",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Macedonian and Ptolemaic periods",
           "summary": "Egypt in the empire of Alexander from 332 BCE, and under the Ptolemies from 305 until it became Roman in 30 BCE.",
           "time": {
@@ -304,6 +331,9 @@
         },
         {
           "key": "egypt-egypt-roman-byzantine",
+          "kinds": [
+            "era"
+          ],
           "label": "Roman and Byzantine Egypt",
           "summary": "Egypt as a province of Rome from 30 BCE, governed from Constantinople after its founding, lost to the Persians from 619 to 628 and to the Arabs, who entered Alexandria in 642 CE.",
           "time": {
@@ -336,6 +366,9 @@
       "events": [
         {
           "key": "egypt-conquest-of-egypt",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Cambyses conquers Egypt",
           "summary": "Cambyses II made Egypt part of the Persian empire in 525 BCE; the Persian kings counted as Egypt’s 27th dynasty held it until 404.",
           "time": {
@@ -354,6 +387,9 @@
         },
         {
           "key": "egypt-reconquest-of-egypt",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The reconquest of Egypt",
           "summary": "In 343 BCE Artaxerxes III brought Egypt back under Persian rule, ending the last native dynasty; his successors held it until Alexander came.",
           "time": {
@@ -371,6 +407,9 @@
         },
         {
           "key": "egypt-alexander-takes-egypt",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Alexander takes Egypt",
           "summary": "In 332 BCE Egypt passed from the last Persian king to Alexander the Great and became part of his empire.",
           "time": {
@@ -388,6 +427,9 @@
         },
         {
           "key": "egypt-ptolemy-i-king-of-egypt",
+          "kinds": [
+            "accession"
+          ],
           "label": "Ptolemy I becomes king of Egypt",
           "summary": "In 305 BCE Ptolemy, satrap of Egypt since 323 under Alexander and his successors, declared himself king and founded the Ptolemaic dynasty.",
           "time": {
@@ -405,6 +447,9 @@
         },
         {
           "key": "egypt-egypt-becomes-roman",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Egypt becomes Roman",
           "summary": "At the deaths of Cleopatra VII and her son Ptolemy XV in 30 BCE, Egypt became part of the Roman Empire.",
           "time": {
@@ -422,6 +467,9 @@
         },
         {
           "key": "egypt-vespasian-proclaimed-at-alexandria",
+          "kinds": [
+            "accession"
+          ],
           "label": "Vespasian proclaimed at Alexandria",
           "summary": "In the Year of the Four Emperors Vespasian was first proclaimed emperor at Alexandria on 1 July 69 CE, in a move contrived by Tiberius Julius Alexander, prefect of Egypt.",
           "time": {
@@ -439,6 +487,9 @@
         },
         {
           "key": "egypt-edict-of-caracalla",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "The edict of Caracalla",
           "summary": "In 212 CE an edict of Caracalla gave Roman citizenship to practically all subjects of the empire, ending the distinction between citizens and noncitizens in Egypt.",
           "time": {
@@ -456,6 +507,9 @@
         },
         {
           "key": "egypt-palmyrene-egypt",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Palmyra holds Egypt",
           "summary": "From 270 to 272 Egypt fell into the hands of the ruling dynasty of Palmyra, the only long time in the 3rd century when it was lost to the emperors.",
           "time": {
@@ -478,6 +532,9 @@
         },
         {
           "key": "egypt-diocletian-visits-egypt",
+          "kinds": [
+            "journey"
+          ],
           "label": "Diocletian visits Egypt",
           "summary": "In 302 CE Diocletian came to Egypt, the last reigning Roman emperor to visit it.",
           "time": {
@@ -495,6 +552,9 @@
         },
         {
           "key": "egypt-ban-of-polytheist-cults",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The old cults forbidden",
           "summary": "In 391 the practice of the local polytheistic religions of Egypt was officially made illegal.",
           "time": {
@@ -512,6 +572,9 @@
         },
         {
           "key": "egypt-persians-take-alexandria",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Persians take Alexandria",
           "summary": "The Persians advanced to the Nile delta and captured Alexandria; their occupation of Egypt was complete early in 619 and lasted until the peace of 628, when they withdrew.",
           "time": {
@@ -529,6 +592,9 @@
         },
         {
           "key": "egypt-battle-of-heliopolis-640",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Heliopolis",
           "summary": "In July 640, during the Arab conquest of Egypt, 15,000 Arabs met 20,000 Egyptian defenders at Heliopolis.",
           "time": {
@@ -546,6 +612,10 @@
         },
         {
           "key": "egypt-capture-of-babylon-fortress",
+          "kinds": [
+            "siege",
+            "conquest"
+          ],
           "label": "The fortress of Babylon taken",
           "summary": "The Arabs stormed and took Trajan’s old fortress of Babylon, where Old Cairo now stands, on 6 April 641 – the decisive step of the conquest.",
           "time": {
@@ -563,6 +633,9 @@
         },
         {
           "key": "egypt-treaty-of-alexandria-641",
+          "kinds": [
+            "treaty"
+          ],
           "label": "Byzantium signs Egypt away",
           "summary": "On 8 November 641 Byzantium signed Egypt away, with an armistice of eleven months for the emperor and the caliph to ratify the surrender.",
           "time": {
@@ -580,6 +653,9 @@
         },
         {
           "key": "egypt-arabs-enter-alexandria",
+          "kinds": [
+            "conquest"
+          ],
           "label": "ʿAmr enters Alexandria",
           "summary": "By 29 September 642 the Arab general ʿAmr ibn al-ʿĀṣ marched into Alexandria, and the conquest of Egypt, begun three years before, ended in a peaceful capitulation.",
           "time": {
@@ -604,6 +680,9 @@
       "periods": [
         {
           "key": "greece-persian-wars",
+          "kinds": [
+            "war"
+          ],
           "label": "The Persian wars",
           "summary": "From the Athenian part in the Ionian Revolt in 499 BCE through Marathon in 490 and Xerxes’ invasion of 480–479 to the founding of the Delian League in 478.",
           "time": {
@@ -633,6 +712,9 @@
         },
         {
           "key": "greece-peloponnesian-war",
+          "kinds": [
+            "war"
+          ],
           "label": "The Peloponnesian War",
           "summary": "The war of Athens and Sparta from 431 BCE, with an interruption, until Athens surrendered in April 404 and gave up its empire.",
           "time": {
@@ -662,6 +744,9 @@
         },
         {
           "key": "greece-macedonian-hegemony",
+          "kinds": [
+            "era"
+          ],
           "label": "Macedonian Greece",
           "summary": "From Philip II’s victory at Chaeronea in 338 BCE, the end of Greek independence, through Alexander and the Antigonid kings to the Roman victory at Pydna in 168.",
           "time": {
@@ -694,6 +779,9 @@
       "events": [
         {
           "key": "greece-solon-lawgiver",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "Solon becomes lawgiver",
           "summary": "In 594/593 BCE, amid conflicts between the aristocrats and the new rich, the Athenians appointed Solon as lawgiver instead of a tyrant.",
           "time": {
@@ -716,6 +804,9 @@
         },
         {
           "key": "greece-expulsion-of-hippias",
+          "kinds": [
+            "fall"
+          ],
           "label": "The expulsion of Hippias",
           "summary": "In 510 BCE the Athenians expelled the tyrant Hippias, son of Pisistratus.",
           "time": {
@@ -733,6 +824,9 @@
         },
         {
           "key": "greece-battle-of-marathon",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Marathon",
           "summary": "In 490 BCE some 10,000 Athenians under Miltiades defeated a Persian force that had come to bring back Hippias.",
           "time": {
@@ -751,6 +845,9 @@
         },
         {
           "key": "greece-thermopylae",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Thermopylae",
           "summary": "In the summer of 480 BCE Xerxes attacked the Greeks at the pass of Thermopylae, where Leonidas and his Spartans were defeated and killed.",
           "time": {
@@ -769,6 +866,9 @@
         },
         {
           "key": "greece-salamis",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Salamis",
           "summary": "On 29 September 480 BCE the Greek allies, drawn up by Themistocles, defeated the Persian navy in the straits of Salamis, after Xerxes had captured Athens.",
           "time": {
@@ -786,6 +886,9 @@
         },
         {
           "key": "greece-plataea",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Plataea",
           "summary": "In 479 BCE the Spartans and Athenians defeated the Persian army of Mardonius at Plataea, the decisive battle of the Persian war.",
           "time": {
@@ -804,6 +907,9 @@
         },
         {
           "key": "greece-founding-of-delian-league",
+          "kinds": [
+            "founding"
+          ],
           "label": "The Delian League founded",
           "summary": "In 478 BCE Athens created the Delian League, an alliance against Persia that slowly became an Athenian empire.",
           "time": {
@@ -821,6 +927,9 @@
         },
         {
           "key": "greece-surrender-of-athens-404",
+          "kinds": [
+            "fall"
+          ],
           "label": "Athens surrenders",
           "summary": "In April 404 BCE Athens surrendered to Sparta, gave up its empire and accepted the rule of thirty oligarchs; the Long Walls were torn down.",
           "time": {
@@ -838,6 +947,9 @@
         },
         {
           "key": "greece-death-of-socrates",
+          "kinds": [
+            "death"
+          ],
           "label": "The death of Socrates",
           "summary": "The philosopher Socrates died at Athens in 399 BCE.",
           "time": {
@@ -855,6 +967,9 @@
         },
         {
           "key": "greece-battle-of-chaeronea",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Chaeronea",
           "summary": "In 338 BCE Philip II of Macedonia defeated Athens and Thebes at Chaeronea, which meant essentially the end of Greek independence.",
           "time": {
@@ -872,6 +987,9 @@
         },
         {
           "key": "greece-issus",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Issus",
           "summary": "In November 333 BCE Alexander met Darius III at Issus on a narrow strip of land and defeated the Persians for the second time.",
           "time": {
@@ -889,6 +1007,9 @@
         },
         {
           "key": "greece-gaugamela",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Gaugamela",
           "summary": "On 1 October 331 BCE Alexander defeated Darius III at Gaugamela in northern Iraq, the decisive battle of his war with the Achaemenid empire.",
           "time": {
@@ -906,6 +1027,9 @@
         },
         {
           "key": "greece-battle-of-ipsus",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Ipsus",
           "summary": "In 301 BCE Antigonus the One-Eyed was defeated by the other successors of Alexander at Ipsus and killed.",
           "time": {
@@ -923,6 +1047,9 @@
         },
         {
           "key": "greece-battle-of-pydna",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Pydna",
           "summary": "On 22 June 168 BCE the Romans won their decisive victory of the Third Macedonian War over Perseus at Pydna; Macedonia was divided into four republics.",
           "time": {
@@ -941,6 +1068,9 @@
         },
         {
           "key": "greece-sack-of-corinth",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Romans sack Corinth",
           "summary": "In 146 BCE the Romans sacked Corinth, which was left essentially abandoned; Greece became part of the Roman province of Achaea.",
           "time": {
@@ -965,6 +1095,9 @@
       "periods": [
         {
           "key": "rome-villanovan",
+          "kinds": [
+            "culture"
+          ],
           "label": "The Villanovan culture",
           "summary": "The Early Iron Age culture of Italy, named after Villanova near Bologna, whose cremating people appeared in the tenth or ninth century BCE and worked the copper and iron mines of Tuscany; in Tuscany an Orientalizing civilization, presumably Etruscan, overlaid it in the first quarter of the seventh century.",
           "time": {
@@ -1005,6 +1138,9 @@
         },
         {
           "key": "rome-monarchy",
+          "kinds": [
+            "era"
+          ],
           "label": "The age of the kings (tradition)",
           "summary": "From the traditional founding of Rome to the traditional end of the monarchy.",
           "time": {
@@ -1035,6 +1171,9 @@
         },
         {
           "key": "rome-republic",
+          "kinds": [
+            "era"
+          ],
           "label": "The Republic",
           "summary": "From the end of the monarchy to the settlement of Augustus in 27 BCE; the beginning is dated 509, 510 or about 507–505 BCE.",
           "time": {
@@ -1071,6 +1210,9 @@
         },
         {
           "key": "rome-julio-claudian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Julio-Claudians",
           "summary": "The rule of the house of Augustus, from his sole rule in 31 BCE to the death of Nero in 68 CE.",
           "time": {
@@ -1100,6 +1242,9 @@
         },
         {
           "key": "rome-year-of-four-emperors",
+          "kinds": [
+            "war"
+          ],
           "label": "The year of the four emperors",
           "summary": "The civil war after Nero’s death, when Galba, Otho, Vitellius and Vespasian were emperors in turn.",
           "time": {
@@ -1130,6 +1275,9 @@
         },
         {
           "key": "rome-flavian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Flavians",
           "summary": "The rule of Vespasian and his sons Titus and Domitian.",
           "time": {
@@ -1160,6 +1308,9 @@
         },
         {
           "key": "rome-nerva-trajan",
+          "kinds": [
+            "reign"
+          ],
           "label": "Nerva and Trajan",
           "summary": "From the accession of Nerva in 96 CE to the death of Trajan in 117 CE.",
           "time": {
@@ -1190,6 +1341,9 @@
         },
         {
           "key": "rome-antonine",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Antonines",
           "summary": "The family of Antoninus Pius, Marcus Aurelius, Lucius Verus and Commodus, who ruled from about 138 to 192; their years are often called the golden age of the empire.",
           "time": {
@@ -1220,6 +1374,9 @@
         },
         {
           "key": "rome-severan",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Severans",
           "summary": "The dynasty of Septimius Severus, which ruled from 193 to 235 with a break in 217–218.",
           "time": {
@@ -1249,6 +1406,9 @@
         },
         {
           "key": "rome-tetrarchy",
+          "kinds": [
+            "reign"
+          ],
           "label": "The first tetrarchy",
           "summary": "The rule of two augusti, Diocletian and Maximian, with two caesares, Galerius and Constantius, from 293 until the augusti resigned in 305.",
           "time": {
@@ -1278,6 +1438,9 @@
         },
         {
           "key": "rome-constantinian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Constantinian dynasty",
           "summary": "The family of Constantine the Great, which ruled the empire or parts of it from 305 to 363; under it Christianity was no longer persecuted and Constantinople was founded.",
           "time": {
@@ -1307,6 +1470,9 @@
         },
         {
           "key": "rome-valentinian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Valentinian dynasty",
           "summary": "The family of Valentinian I, which ruled the empire or parts of it from 363 to 392, in a western and an eastern branch.",
           "time": {
@@ -1336,6 +1502,9 @@
         },
         {
           "key": "rome-theodosian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Theodosian dynasty",
           "summary": "The dynasty of Theodosius I, which ruled from 378 to 457; his sons founded an eastern and a western line, and in its time Britain and Gaul were lost and Constantinople became the chief city of the empire.",
           "time": {
@@ -1365,6 +1534,9 @@
         },
         {
           "key": "rome-west-roman-empire",
+          "kinds": [
+            "era"
+          ],
           "label": "The divided empire, west",
           "summary": "The western half of the empire under its own emperors, from the death of Theodosius I in 395 to the deposition of Romulus Augustulus in 476.",
           "time": {
@@ -1396,6 +1568,9 @@
         },
         {
           "key": "rome-heraclian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Heraclian dynasty",
           "summary": "The house of Heraclius, which ruled from 610 to 711; under his successors Egypt, Syria and Africa were lost to the Arabs, Constantinople withstood a four-year siege and the Bulgars settled south of the Danube.",
           "time": {
@@ -1427,6 +1602,9 @@
         },
         {
           "key": "rome-isaurian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Isaurian dynasty",
           "summary": "The house of Leo III, which ruled from 717 to 802; it turned back the Arabs from Constantinople and began the attack on the veneration of icons, and ended with the deposition of Irene.",
           "time": {
@@ -1457,6 +1635,10 @@
         },
         {
           "key": "rome-iconoclasm",
+          "kinds": [
+            "era",
+            "religiousEvent"
+          ],
           "label": "The age of Iconoclasm",
           "summary": "From the accession of Leo III in 717 to 867 the emperors tried, often with wide support, to end the veneration of icons; Irene restored it at the Council of Nicaea in 787, Leo V renewed iconoclasm in 815, and the icons were finally restored in 843.",
           "time": {
@@ -1486,6 +1668,9 @@
         },
         {
           "key": "rome-amorian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Amorian dynasty",
           "summary": "The house of Michael II, also called Phrygian, which ruled from 820 to 867 through his son Theophilus and grandson Michael III; under it the icons were finally restored in 843.",
           "time": {
@@ -1516,6 +1701,9 @@
         },
         {
           "key": "rome-macedonian",
+          "kinds": [
+            "reign"
+          ],
           "label": "The Macedonian dynasty",
           "summary": "The house of Basil I, who murdered his way to the throne in 867; until the death of Basil II in 1025 the empire enjoyed a golden age, recovering Crete, Antioch and Bulgaria.",
           "time": {
@@ -1548,6 +1736,9 @@
       "events": [
         {
           "key": "rome-founding-of-alba-longa",
+          "kinds": [
+            "founding"
+          ],
           "label": "The founding of Alba Longa (tradition)",
           "summary": "Tradition attributes the founding of Alba Longa, about 1152 BCE, to Ascanius, son of Aeneas, making it the oldest Latin city and the mother of Rome.",
           "time": {
@@ -1566,6 +1757,9 @@
         },
         {
           "key": "rome-founding-of-rome",
+          "kinds": [
+            "founding"
+          ],
           "label": "The founding of Rome (tradition)",
           "summary": "According to tradition Romulus founded Rome on the Palatine on 21 April 753 BCE; Livius calls this Varronian date an artificial calculation.",
           "time": {
@@ -1585,6 +1779,9 @@
         },
         {
           "key": "rome-first-greek-colonies-in-italy",
+          "kinds": [
+            "founding"
+          ],
           "label": "The first Greek colonies in Italy",
           "summary": "About 750 BCE Euboeans founded the first Greek colonies in Italy, Pithecussae and Cumae; Spartans, Achaeans, Locrians and Chalcidians followed.",
           "time": {
@@ -1603,6 +1800,9 @@
         },
         {
           "key": "rome-destruction-of-alba-longa",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Rome destroys Alba Longa",
           "summary": "Alba Longa, head of a Latin league, was destroyed by Rome about 600 BCE; distinguished families, among them the Julian clan, were said to have moved to Rome.",
           "time": {
@@ -1621,6 +1821,9 @@
         },
         {
           "key": "rome-founding-of-republic",
+          "kinds": [
+            "founding"
+          ],
           "label": "The founding of the Republic",
           "summary": "The last king was expelled and the Republic founded – in 509 BCE according to the traditional chronology, in 510 according to one Livius page, about 507–505 according to Livius’ own reconstruction.",
           "time": {
@@ -1645,6 +1848,9 @@
         },
         {
           "key": "rome-battle-of-cumae",
+          "kinds": [
+            "battle"
+          ],
           "label": "The naval battle of Cumae",
           "summary": "About 474 BCE the Cumaeans and Syracusans defeated the Etruscans in a naval battle off Cumae.",
           "time": {
@@ -1663,6 +1869,9 @@
         },
         {
           "key": "rome-twelve-tables",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "The Twelve Tables",
           "summary": "The first codification of Roman law, written by a board of ten men in the middle of the fifth century BCE: ten tables in 451 and two more in 450 BCE in the traditional chronology.",
           "time": {
@@ -1687,6 +1896,9 @@
         },
         {
           "key": "rome-gallic-sack",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Gauls take Rome",
           "summary": "After their victory at the Allia the Gauls occupied Rome and besieged the Capitol until the Romans bought their freedom with gold – in 390 BCE in the traditional chronology, in 387 or 386 according to Livius.",
           "time": {
@@ -1711,6 +1923,9 @@
         },
         {
           "key": "rome-licinian-sextian-laws",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "The Licinian-Sextian laws",
           "summary": "Laws first proposed in 376 and passed in 367 BCE (traditional chronology) that opened the consulship to plebeians, adjusted debts and limited the ownership of public land.",
           "time": {
@@ -1729,6 +1944,9 @@
         },
         {
           "key": "rome-first-punic-war",
+          "kinds": [
+            "war"
+          ],
           "label": "The First Punic War",
           "summary": "The war of Rome and Carthage from 264 to 241 BCE, in which Rome conquered Sicily.",
           "time": {
@@ -1751,6 +1969,9 @@
         },
         {
           "key": "rome-second-punic-war",
+          "kinds": [
+            "war"
+          ],
           "label": "The Second Punic War",
           "summary": "The war of Rome and Carthage from 218 to 202 BCE, in which Hannibal crossed the Alps; the peace was signed in 201 BCE.",
           "time": {
@@ -1773,6 +1994,9 @@
         },
         {
           "key": "rome-cannae",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Cannae",
           "summary": "On 2 August 216 BCE Hannibal destroyed the army of the two Roman consuls at Cannae.",
           "time": {
@@ -1790,6 +2014,9 @@
         },
         {
           "key": "rome-zama",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Zama",
           "summary": "On 19 October 202 BCE Scipio defeated Hannibal at Zama in Africa.",
           "time": {
@@ -1808,6 +2035,9 @@
         },
         {
           "key": "rome-third-punic-war",
+          "kinds": [
+            "war"
+          ],
           "label": "The Third Punic War",
           "summary": "The last war against Carthage, begun in 149 BCE after Cato had urged it; it ended in 146 BCE with the destruction of the city.",
           "time": {
@@ -1831,6 +2061,9 @@
         },
         {
           "key": "rome-destruction-of-carthage",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The destruction of Carthage",
           "summary": "In 146 BCE Rome took and sacked Carthage; Corinth was sacked in the same year.",
           "time": {
@@ -1849,6 +2082,9 @@
         },
         {
           "key": "rome-tribunate-of-tiberius-gracchus",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "The tribunate of Tiberius Gracchus",
           "summary": "In 133 BCE Tiberius Gracchus proposed his land bill; he was killed on the Capitol in the same year.",
           "time": {
@@ -1866,6 +2102,9 @@
         },
         {
           "key": "rome-social-war",
+          "kinds": [
+            "war"
+          ],
           "label": "The Social War",
           "summary": "The war with Rome’s Italian allies, which began in 91 BCE; citizenship was promised to loyal allies in 90 and to those who surrendered in 89. Marius and Sulla fought on the Roman side.",
           "time": {
@@ -1883,6 +2122,9 @@
         },
         {
           "key": "rome-revolt-of-spartacus",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The revolt of Spartacus",
           "summary": "A slave revolt that began at Capua and was suppressed by Crassus; the Livius page dates the war 73–71 BCE in one place and 73–70 in another.",
           "time": {
@@ -1906,6 +2148,9 @@
         },
         {
           "key": "rome-first-triumvirate",
+          "kinds": [
+            "treaty"
+          ],
           "label": "The alliance of Caesar, Crassus and Pompey",
           "summary": "In 60 BCE Caesar, Crassus and Pompey made a private agreement, sealed by Pompey’s marriage to Caesar’s daughter Julia; modern historians call it the First Triumvirate.",
           "time": {
@@ -1924,6 +2169,9 @@
         },
         {
           "key": "rome-conquest-of-gaul",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Caesar conquers Gaul",
           "summary": "From 58 to 50 BCE Caesar conquered Gaul; in 52 BCE Vercingetorix surrendered to him at Alesia.",
           "time": {
@@ -1946,6 +2194,9 @@
         },
         {
           "key": "rome-carrhae",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Carrhae",
           "summary": "In 53 BCE the Parthians defeated the Roman army of Crassus at Carrhae; Crassus was killed.",
           "time": {
@@ -1964,6 +2215,9 @@
         },
         {
           "key": "rome-rubicon",
+          "kinds": [
+            "war"
+          ],
           "label": "Caesar crosses the Rubicon",
           "summary": "In the night of 10/11 January 49 BCE Caesar crossed the Rubicon, the border of Cisalpine Gaul and Italy, and began the second civil war; where the river was is not certain.",
           "time": {
@@ -1982,6 +2236,9 @@
         },
         {
           "key": "rome-pharsalus",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Pharsalus",
           "summary": "On 9 August 48 BCE Caesar defeated Pompey at Pharsalus; Pompey fled to Egypt and was murdered there.",
           "time": {
@@ -2001,6 +2258,9 @@
         },
         {
           "key": "rome-murder-of-caesar",
+          "kinds": [
+            "death"
+          ],
           "label": "The murder of Caesar",
           "summary": "On the Ides of March, 15 March 44 BCE, Caesar was murdered by a group led by Gaius Cassius, Decimus Brutus and Marcus Junius Brutus.",
           "time": {
@@ -2018,6 +2278,9 @@
         },
         {
           "key": "rome-second-triumvirate",
+          "kinds": [
+            "treaty"
+          ],
           "label": "The Second Triumvirate",
           "summary": "In 43 BCE Antony and Octavian became triumvirs with a third colleague, an official magistracy with dictatorial powers.",
           "time": {
@@ -2037,6 +2300,9 @@
         },
         {
           "key": "rome-philippi",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Philippi",
           "summary": "In October 42 BCE Mark Antony and Octavian defeated Brutus and Cassius at Philippi.",
           "time": {
@@ -2055,6 +2321,9 @@
         },
         {
           "key": "rome-actium",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Actium",
           "summary": "Octavian, with Agrippa, defeated Mark Antony and Cleopatra off Actium in 31 BCE – on 2 September according to the battle page, on 2 August according to another Livius page.",
           "time": {
@@ -2073,6 +2342,9 @@
         },
         {
           "key": "rome-augustan-settlement",
+          "kinds": [
+            "accession"
+          ],
           "label": "The settlement of Augustus",
           "summary": "In January 27 BCE Octavian accepted the title Augustus (16 January); the rule of the emperors begins here.",
           "time": {
@@ -2091,6 +2363,9 @@
         },
         {
           "key": "rome-teutoburg",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle in the Teutoburg Forest",
           "summary": "In September 9 CE Arminius, leading a coalition of Germanic tribes, annihilated three Roman legions under Publius Quintilius Varus; Germania remained independent.",
           "time": {
@@ -2108,6 +2383,9 @@
         },
         {
           "key": "rome-death-of-augustus",
+          "kinds": [
+            "death"
+          ],
           "label": "The death of Augustus",
           "summary": "Augustus died on 19 August 14 CE and Tiberius succeeded him.",
           "time": {
@@ -2125,6 +2403,9 @@
         },
         {
           "key": "rome-great-fire",
+          "kinds": [
+            "disaster"
+          ],
           "label": "The Great Fire of Rome",
           "summary": "The great fire of Rome in 64 CE, under Nero.",
           "time": {
@@ -2142,6 +2423,9 @@
         },
         {
           "key": "rome-jewish-war",
+          "kinds": [
+            "war"
+          ],
           "label": "The Jewish War",
           "summary": "The war in Judaea that began in 66 CE and culminated in the destruction of the temple of Jerusalem in 70; the last resistance at Masada held out until 74.",
           "time": {
@@ -2165,6 +2449,9 @@
         },
         {
           "key": "rome-death-of-nero",
+          "kinds": [
+            "death"
+          ],
           "label": "The death of Nero",
           "summary": "After the revolts of Vindex, Macer and Galba Nero took his own life in June 68 CE – on 9 June according to his page, on 8 June according to the chronology of 68–70.",
           "time": {
@@ -2183,6 +2470,9 @@
         },
         {
           "key": "rome-event-year-of-four-emperors",
+          "kinds": [
+            "war"
+          ],
           "label": "The year of the four emperors",
           "summary": "In 69 CE Galba, Otho, Vitellius and Vespasian were emperors in turn; Vespasian was recognised on 21 December 69.",
           "time": {
@@ -2201,6 +2491,9 @@
         },
         {
           "key": "rome-siege-of-jerusalem",
+          "kinds": [
+            "siege"
+          ],
           "label": "The siege of Jerusalem",
           "summary": "Titus began the siege of Jerusalem on 14 April 70 CE and was master of the city on 8 September.",
           "time": {
@@ -2218,6 +2511,9 @@
         },
         {
           "key": "rome-vesuvius",
+          "kinds": [
+            "naturalEvent"
+          ],
           "label": "The eruption of Vesuvius",
           "summary": "In 79 CE, in the reign of Titus, Vesuvius erupted and buried Pompeii.",
           "time": {
@@ -2236,6 +2532,9 @@
         },
         {
           "key": "rome-colosseum",
+          "kinds": [
+            "construction"
+          ],
           "label": "The dedication of the Colosseum",
           "summary": "The Amphitheatrum Flavium, built by Vespasian, was dedicated by Titus in 80 CE.",
           "time": {
@@ -2254,6 +2553,9 @@
         },
         {
           "key": "rome-murder-of-domitian",
+          "kinds": [
+            "death"
+          ],
           "label": "The murder of Domitian",
           "summary": "Domitian was murdered by courtiers on 18 September 96 CE; Nerva became emperor the same day.",
           "time": {
@@ -2272,6 +2574,9 @@
         },
         {
           "key": "rome-accession-of-trajan",
+          "kinds": [
+            "accession"
+          ],
           "label": "Trajan becomes emperor",
           "summary": "On Nerva’s death in January 98 CE Trajan, his adopted son, became emperor.",
           "time": {
@@ -2289,6 +2594,9 @@
         },
         {
           "key": "rome-bar-kochba-revolt",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The revolt of Bar Kochba",
           "summary": "A Jewish insurrection that began in 132 under Hadrian; Hadrian took Bethar in 135/136 and the last fighting in Galilee was in 136.",
           "time": {
@@ -2311,6 +2619,9 @@
         },
         {
           "key": "rome-antonine-plague",
+          "kinds": [
+            "epidemic"
+          ],
           "label": "The plague under Marcus Aurelius",
           "summary": "A plague broke out in 165, during the Parthian war, and reached Rome in 167.",
           "time": {
@@ -2328,6 +2639,9 @@
         },
         {
           "key": "rome-roman-envoys-166",
+          "kinds": [
+            "journey"
+          ],
           "label": "Envoys from Rome at the Han court",
           "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of the Han emperor Huan.",
           "time": {
@@ -2345,6 +2659,9 @@
         },
         {
           "key": "rome-year-of-five-emperors",
+          "kinds": [
+            "war"
+          ],
           "label": "The year of the five emperors",
           "summary": "After the murder of Pertinax in 193, Didius Julianus, Pescennius Niger, Clodius Albinus and Septimius Severus were all proclaimed emperor; Severus won the civil wars that followed.",
           "time": {
@@ -2363,6 +2680,9 @@
         },
         {
           "key": "rome-constitutio-antoniniana",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "Citizenship for all free men",
           "summary": "In 212 Caracalla gave Roman citizenship to all free-born men of the empire.",
           "time": {
@@ -2381,6 +2701,9 @@
         },
         {
           "key": "rome-capture-of-valerian",
+          "kinds": [
+            "battle"
+          ],
           "label": "Shapur captures Valerian",
           "summary": "In 260 the emperor Valerian was defeated and taken captive by the Sasanian king Shapur I; he died in captivity in 262, and in the following years many usurpers rose in the empire.",
           "time": {
@@ -2399,6 +2722,9 @@
         },
         {
           "key": "rome-aurelian-wall",
+          "kinds": [
+            "construction"
+          ],
           "label": "A new wall for Rome",
           "summary": "In 271 Aurelian ordered the building of a new wall around Rome.",
           "time": {
@@ -2416,6 +2742,9 @@
         },
         {
           "key": "rome-aurelian-takes-palmyra",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Aurelian takes Palmyra",
           "summary": "In 272 Aurelian defeated Zenobia and her son Vaballathus and captured Palmyra; in 274 he defeated the Gallic emperor Tetricus.",
           "time": {
@@ -2434,6 +2763,9 @@
         },
         {
           "key": "rome-tetrarchy-founded",
+          "kinds": [
+            "accession"
+          ],
           "label": "The first tetrarchy",
           "summary": "In 293 Diocletian and Maximian each appointed a caesar, Galerius and Constantius, who were to succeed them.",
           "time": {
@@ -2452,6 +2784,9 @@
         },
         {
           "key": "rome-abdication-of-diocletian",
+          "kinds": [
+            "fall"
+          ],
           "label": "Diocletian and Maximian resign",
           "summary": "In May 305 the two augusti laid down their power, and the caesares Galerius and Constantius became augusti – for the first time in ages a transfer of power without bloodshed.",
           "time": {
@@ -2470,6 +2805,9 @@
         },
         {
           "key": "rome-milvian-bridge",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of the Milvian Bridge",
           "summary": "In 312 Constantine crossed the Alps and defeated Maxentius at the Milvian Bridge, where Maxentius was killed.",
           "time": {
@@ -2488,6 +2826,10 @@
         },
         {
           "key": "rome-edict-of-milan",
+          "kinds": [
+            "religiousEvent",
+            "lawReform"
+          ],
           "label": "The meeting at Milan",
           "summary": "In 313 Constantine and Licinius met at Milan; the agreement is known as the Edict of Milan.",
           "time": {
@@ -2505,6 +2847,9 @@
         },
         {
           "key": "rome-founding-of-constantinople",
+          "kinds": [
+            "founding"
+          ],
           "label": "The founding of Constantinople",
           "summary": "After defeating Licinius in 324, Constantine became sole ruler and founded a new residence at Byzantium, Constantinople.",
           "time": {
@@ -2523,6 +2868,9 @@
         },
         {
           "key": "rome-council-of-nicaea",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The Council of Nicaea",
           "summary": "The first ecumenical council of the Church met at Nicaea from 20 May to 19 June 325.",
           "time": {
@@ -2540,6 +2888,10 @@
         },
         {
           "key": "rome-death-of-julian",
+          "kinds": [
+            "treaty",
+            "death"
+          ],
           "label": "The death of Julian and the peace of 363",
           "summary": "Julian invaded the Sasanian empire and was killed in action on 26 June 363; Jovian then made a peace with Shapur II that gave up Nisibis.",
           "time": {
@@ -2558,6 +2910,9 @@
         },
         {
           "key": "rome-battle-of-adrianople",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Adrianople",
           "summary": "In 378 the Goths defeated and killed the emperor Valens at Adrianople, and Theodosius was made emperor in the east.",
           "time": {
@@ -2577,6 +2932,9 @@
         },
         {
           "key": "rome-division-of-the-empire",
+          "kinds": [
+            "accession"
+          ],
           "label": "The empire divided between two sons",
           "summary": "At the death of Theodosius I in 395, his sons Arcadius and Honorius succeeded him in the east and the west.",
           "time": {
@@ -2596,6 +2954,9 @@
         },
         {
           "key": "rome-sack-of-rome-410",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Visigoths take Rome",
           "summary": "In 410 the Visigoths captured Rome; Alaric died the same year, and Britain was evacuated.",
           "time": {
@@ -2613,6 +2974,9 @@
         },
         {
           "key": "rome-vandals-take-carthage",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Vandals take Carthage",
           "summary": "The Vandals invaded Africa in 429 and took Carthage in 439.",
           "time": {
@@ -2630,6 +2994,9 @@
         },
         {
           "key": "rome-attila-in-gaul",
+          "kinds": [
+            "battle"
+          ],
           "label": "Attila defeated in Gaul",
           "summary": "In 451 the Huns crossed the Rhine and invaded Gaul; Aetius defeated Attila near Troyes. In 452 the Huns invaded Italy.",
           "time": {
@@ -2649,6 +3016,9 @@
         },
         {
           "key": "rome-vandal-sack-of-rome",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Vandals sack Rome",
           "summary": "In 455, after the murder of Valentinian III and the death of Petronius Maximus, the Vandals sacked Rome.",
           "time": {
@@ -2667,6 +3037,9 @@
         },
         {
           "key": "rome-end-of-the-west",
+          "kinds": [
+            "fall"
+          ],
           "label": "The end of the empire in the west",
           "summary": "In 476 the soldiers in Italy revolted and their leader Odoacer deposed Romulus Augustulus, the last emperor in the west.",
           "time": {
@@ -2685,6 +3058,9 @@
         },
         {
           "key": "rome-theodoric-conquers-italy",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Theodoric conquers Italy",
           "summary": "The Ostrogoths under Theodoric invaded Italy in 488 and by 493 had conquered almost the whole peninsula and Sicily, ending the rule of Odoacer.",
           "time": {
@@ -2707,6 +3083,9 @@
         },
         {
           "key": "rome-battle-of-dara",
+          "kinds": [
+            "battle"
+          ],
           "label": "Belisarius defeats the Persians",
           "summary": "Belisarius won his first victory as a commander against Sasanian Persia on the Mesopotamian front in 530.",
           "time": {
@@ -2724,6 +3103,9 @@
         },
         {
           "key": "rome-nika-riots",
+          "kinds": [
+            "revolt"
+          ],
           "label": "The Nika riots",
           "summary": "In January 532 the Nika riots broke out in Constantinople under Justinian.",
           "time": {
@@ -2742,6 +3124,9 @@
         },
         {
           "key": "rome-codification-of-roman-law",
+          "kinds": [
+            "lawReform"
+          ],
           "label": "Roman law codified",
           "summary": "In 533 the codification of Roman law, the Institutes and the Digest, was completed under Justinian.",
           "time": {
@@ -2759,6 +3144,9 @@
         },
         {
           "key": "rome-belisarius-takes-carthage",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Belisarius conquers Africa",
           "summary": "Justinian’s general Belisarius conquered Africa and entered Carthage on 15 September 534; he went on to Sicily and took Rome in 536.",
           "time": {
@@ -2777,6 +3165,9 @@
         },
         {
           "key": "rome-hagia-sophia",
+          "kinds": [
+            "construction"
+          ],
           "label": "The Hagia Sophia inaugurated",
           "summary": "The Hagia Sophia in Constantinople was inaugurated on 26 December 537.",
           "time": {
@@ -2794,6 +3185,9 @@
         },
         {
           "key": "rome-narses-conquers-italy",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Narses conquers Italy",
           "summary": "Justinian’s general Narses completed the conquest of Italy in 552.",
           "time": {
@@ -2811,6 +3205,9 @@
         },
         {
           "key": "rome-langobards-invade-italy",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Langobards invade Italy",
           "summary": "In 568, under Justin II, the Langobards invaded Italy.",
           "time": {
@@ -2828,6 +3225,9 @@
         },
         {
           "key": "rome-siege-of-constantinople-626",
+          "kinds": [
+            "siege"
+          ],
           "label": "The Persians before Constantinople",
           "summary": "In 626 the Avars attacked Constantinople while a Persian army under Shahrbaraz stood across the Bosphorus; the walls held, the Avars retreated and Heraclius kept to his campaign in the east.",
           "time": {
@@ -2845,6 +3245,9 @@
         },
         {
           "key": "rome-battle-of-nineveh-627",
+          "kinds": [
+            "battle"
+          ],
           "label": "Heraclius defeats the Persians near Nineveh",
           "summary": "In December 627 Heraclius defeated a large Persian army near the ruins of Nineveh; Khusrau II fell soon after, and in 630 Heraclius returned the True Cross to Jerusalem.",
           "time": {
@@ -2862,6 +3265,9 @@
         },
         {
           "key": "rome-arabs-take-alexandria",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Alexandria capitulates to the Arabs",
           "summary": "Alexandria capitulated in 642, removing Egypt forever from Byzantine authority.",
           "time": {
@@ -2879,6 +3285,9 @@
         },
         {
           "key": "rome-arab-siege-of-constantinople-674",
+          "kinds": [
+            "siege"
+          ],
           "label": "The Arab siege of Constantinople",
           "summary": "After their assaults on Armenia and Asia Minor the Arabs besieged Constantinople for four years, from 674 to 678; Constantine IV withstood them, a turning point in European history.",
           "time": {
@@ -2902,6 +3311,9 @@
         },
         {
           "key": "rome-sixth-ecumenical-council",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The sixth ecumenical council",
           "summary": "The sixth general council, summoned by Constantine IV in 680–681 at Constantinople, condemned Monothelitism.",
           "time": {
@@ -2925,6 +3337,9 @@
         },
         {
           "key": "rome-bulgar-kingdom-recognised",
+          "kinds": [
+            "treaty"
+          ],
           "label": "The Bulgar kingdom recognised",
           "summary": "Constantine IV failed to defeat the Bulgars in 681 and by treaty recognised them as an independent kingdom south of the Danube.",
           "time": {
@@ -2943,6 +3358,9 @@
         },
         {
           "key": "rome-justinian-ii-deposed",
+          "kinds": [
+            "fall"
+          ],
           "label": "Justinian II deposed",
           "summary": "Justinian II was deposed and mutilated in 695; with Bulgar help he returned to the throne in 705.",
           "time": {
@@ -2960,6 +3378,9 @@
         },
         {
           "key": "rome-fall-of-septem",
+          "kinds": [
+            "fall"
+          ],
           "label": "The loss of Africa",
           "summary": "By the end of the seventh century Africa was largely lost to the Muslims, who in 711 seized the last outpost at Septem.",
           "time": {
@@ -2977,6 +3398,9 @@
         },
         {
           "key": "rome-arab-siege-of-constantinople-717",
+          "kinds": [
+            "siege"
+          ],
           "label": "The second Arab siege of Constantinople",
           "summary": "In 717 the Arabs again besieged Constantinople by land and sea; with Bulgar help Leo III turned back the assault in 718.",
           "time": {
@@ -3000,6 +3424,9 @@
         },
         {
           "key": "rome-battle-of-akroinon",
+          "kinds": [
+            "battle"
+          ],
           "label": "The battle of Akroinon",
           "summary": "With the help of the Khazars, Leo III’s reign ended with a major victory over the Arabs at Akroinon in 740.",
           "time": {
@@ -3017,6 +3444,9 @@
         },
         {
           "key": "rome-second-council-of-nicaea",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The Council of Nicaea restores the icons",
           "summary": "At the instigation of the empress Irene, the Council of Nicaea in 787 restored the veneration of icons.",
           "time": {
@@ -3034,6 +3464,9 @@
         },
         {
           "key": "rome-irene-sole-ruler",
+          "kinds": [
+            "accession"
+          ],
           "label": "Irene rules alone",
           "summary": "Irene had her son Constantine VI deposed and blinded and ruled alone from 797 until a revolt of palace officials deposed her in 802.",
           "time": {
@@ -3051,6 +3484,9 @@
         },
         {
           "key": "rome-coronation-of-charlemagne",
+          "kinds": [
+            "ceremony"
+          ],
           "label": "The coronation of Charlemagne",
           "summary": "On Christmas Day 800 Pope Leo III crowned Charlemagne, king of the Franks and Lombards, emperor of the Romans, a challenge to the emperor at Constantinople.",
           "time": {
@@ -3068,6 +3504,10 @@
         },
         {
           "key": "rome-death-of-nicephorus-i",
+          "kinds": [
+            "battle",
+            "death"
+          ],
           "label": "Nikephoros I falls against Krum",
           "summary": "Nikephoros I led his army against the Bulgar khan Krum in 811 and met defeat and death.",
           "time": {
@@ -3085,6 +3525,9 @@
         },
         {
           "key": "rome-iconoclasm-renewed",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "Leo V renews iconoclasm",
           "summary": "After military reverses, Leo V revived the iconoclast policies of Constantine V in 815.",
           "time": {
@@ -3102,6 +3545,9 @@
         },
         {
           "key": "rome-arabs-take-crete",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Arabs take Crete",
           "summary": "In 826 or 827 the Arabs captured Crete, a sign of the decline of Byzantine strength in the Mediterranean.",
           "time": {
@@ -3124,6 +3570,10 @@
         },
         {
           "key": "rome-fall-of-amorium",
+          "kinds": [
+            "battle",
+            "conquest"
+          ],
           "label": "Theophilus defeated and Amorium lost",
           "summary": "In 838 a Muslim army defeated Theophilus himself and went on to capture the fortress of Amorium in Asia Minor.",
           "time": {
@@ -3141,6 +3591,9 @@
         },
         {
           "key": "rome-restoration-of-the-icons",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The icons restored",
           "summary": "In 843, under Michael III, the icons were definitively restored and their veneration proclaimed as Orthodox belief.",
           "time": {
@@ -3158,6 +3611,9 @@
         },
         {
           "key": "rome-rus-attack-constantinople",
+          "kinds": [
+            "siege"
+          ],
           "label": "The Rus attack Constantinople",
           "summary": "Sailing down the Dnieper from Kiev to the Black Sea, the warships of the Rus first attacked Constantinople in 860.",
           "time": {
@@ -3175,6 +3631,9 @@
         },
         {
           "key": "rome-basil-i-takes-throne",
+          "kinds": [
+            "accession"
+          ],
           "label": "Basil I seizes the throne",
           "summary": "In 867 Basil I murdered his way to the throne and founded the Macedonian dynasty.",
           "time": {
@@ -3192,6 +3651,9 @@
         },
         {
           "key": "rome-arabs-complete-sicily",
+          "kinds": [
+            "conquest"
+          ],
           "label": "The Arabs complete the conquest of Sicily",
           "summary": "In 902 the Arabs completed the conquest of Sicily, though they were kept out of Byzantine South Italy.",
           "time": {
@@ -3209,6 +3671,9 @@
         },
         {
           "key": "rome-simeon-at-constantinople",
+          "kinds": [
+            "siege"
+          ],
           "label": "Simeon of Bulgaria before Constantinople",
           "summary": "In 913 Simeon I of Bulgaria brought his army to the walls of Constantinople, demanding the imperial title.",
           "time": {
@@ -3226,6 +3691,9 @@
         },
         {
           "key": "rome-reconquest-of-crete",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Crete reconquered",
           "summary": "In 961 Nikephoros Phokas reconquered Crete and destroyed the Arab fleet that had terrorised the Aegean for 150 years.",
           "time": {
@@ -3243,6 +3711,9 @@
         },
         {
           "key": "rome-recapture-of-antioch",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Antioch recaptured",
           "summary": "In 969 the Byzantine armies recaptured Antioch, seat of one of the patriarchs.",
           "time": {
@@ -3260,6 +3731,9 @@
         },
         {
           "key": "rome-tzimisces-subdues-bulgaria",
+          "kinds": [
+            "battle"
+          ],
           "label": "John Tzimiskes humbles the Rus and Bulgaria",
           "summary": "In 971 John Tzimiskes humiliated the Rus and reduced Bulgaria to a client kingdom.",
           "time": {
@@ -3277,6 +3751,9 @@
         },
         {
           "key": "rome-baptism-of-vladimir",
+          "kinds": [
+            "religiousEvent"
+          ],
           "label": "The baptism of Vladimir of Kiev",
           "summary": "Vladimir of Kiev, who had helped Basil II to keep his throne, received the emperor’s sister in marriage and was baptised in 989.",
           "time": {
@@ -3294,6 +3771,9 @@
         },
         {
           "key": "rome-bulgaria-subdued",
+          "kinds": [
+            "conquest"
+          ],
           "label": "Bulgaria subdued",
           "summary": "After a ruthless campaign of some twenty years Basil II crushed the last Bulgarian resistance by 1018.",
           "time": {
@@ -3311,6 +3791,9 @@
         },
         {
           "key": "rome-death-of-basil-ii",
+          "kinds": [
+            "death"
+          ],
           "label": "The death of Basil II",
           "summary": "Basil II died in 1025 while preparing a campaign against the Arabs in Sicily; with him ended the golden age of the Macedonian era.",
           "time": {

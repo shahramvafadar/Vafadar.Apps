@@ -339,6 +339,9 @@
     {
       "id": "work-shahnameh",
       "type": "Work",
+      "kinds": [
+        "poem"
+      ],
       "label": "The Shahnameh",
       "summary": "The literary work in which the story of Zal and Rudabeh is told.",
       "sourceIds": [
@@ -383,6 +386,9 @@
     {
       "id": "person-ferdowsi",
       "type": "Person",
+      "kinds": [
+        "poet"
+      ],
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
@@ -429,6 +435,9 @@
     {
       "id": "story-zal-rudabeh",
       "type": "NarrativeArc",
+      "kinds": [
+        "loveStory"
+      ],
       "label": "Zal and Rudabeh",
       "summary": "The story of Zal, the white-haired son of Sam, from his birth onward, in the reign of Manuchehr.",
       "sourceIds": [
@@ -445,6 +454,9 @@
     {
       "id": "character-sam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Sam",
       "summary": "A great hero of Iran, son of Nariman, who long has no child.",
       "sourceIds": [
@@ -461,6 +473,9 @@
     {
       "id": "character-zal-mother",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The mother of Zal",
       "summary": "A beloved of Sam in his household, who bears him a son.",
       "sourceIds": [
@@ -477,6 +492,9 @@
     {
       "id": "character-zal",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Zal",
       "summary": "The son of Sam, born with white hair; also called Dastan.",
       "sourceIds": [
@@ -500,6 +518,9 @@
     {
       "id": "character-nurse-of-zal",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The nurse",
       "summary": "A bold nurse of Sam's household who brings him the news of his son.",
       "sourceIds": [
@@ -516,6 +537,9 @@
     {
       "id": "character-simorgh",
       "type": "AnimalCharacter",
+      "kinds": [
+        "creature"
+      ],
       "label": "Simorgh",
       "summary": "A great bird that nests on Mount Alborz.",
       "sourceIds": [
@@ -532,6 +556,10 @@
     {
       "id": "object-simorgh-feather",
       "type": "NarrativeObject",
+      "kinds": [
+        "keepsake",
+        "wonder"
+      ],
       "label": "The feather of the Simorgh",
       "summary": "A feather the Simorgh gives Zal, to be burned in fire if he is ever in need.",
       "sourceIds": [
@@ -542,6 +570,9 @@
     {
       "id": "place-alborz",
       "type": "NarrativePlace",
+      "kinds": [
+        "mountain"
+      ],
       "label": "Mount Alborz",
       "summary": "The mountain where the Simorgh has her nest.",
       "sourceIds": [
@@ -552,6 +583,9 @@
     {
       "id": "character-manuchehr",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Manuchehr",
       "summary": "The king of Iran.",
       "sourceIds": [
@@ -568,6 +602,9 @@
     {
       "id": "character-nowzar",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Nowzar",
       "summary": "A prince of the court of Manuchehr whom the king sends to Sam.",
       "sourceIds": [
@@ -584,6 +621,9 @@
     {
       "id": "character-qaren",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Qaren",
       "summary": "A great man of Manuchehr's court who sits at the king's side.",
       "sourceIds": [
@@ -600,6 +640,9 @@
     {
       "id": "place-zabulistan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Zabulistan",
       "summary": "The land of Sam, which he entrusts to Zal.",
       "sourceIds": [
@@ -610,6 +653,9 @@
     {
       "id": "place-gorgsaran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Gorgsaran",
       "summary": "A land of enemies against which Sam leads his army.",
       "sourceIds": [
@@ -620,6 +666,9 @@
     {
       "id": "place-mazandaran",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Mazandaran",
       "summary": "A land of enemies against which Sam leads his army.",
       "sourceIds": [
@@ -630,6 +679,9 @@
     {
       "id": "character-mehrab",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Mehrab",
       "summary": "The king of Kabul, of the line of Zahhak, who pays tribute to Sam.",
       "sourceIds": [
@@ -646,6 +698,9 @@
     {
       "id": "character-rudabeh",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Rudabeh",
       "summary": "The daughter of Mehrab, renowned for her beauty.",
       "sourceIds": [
@@ -662,6 +717,9 @@
     {
       "id": "character-sindokht",
       "type": "Character",
+      "kinds": [
+        "royal"
+      ],
       "label": "Sindokht",
       "summary": "The wise wife of Mehrab.",
       "sourceIds": [
@@ -678,6 +736,9 @@
     {
       "id": "character-zahhak",
       "type": "Character",
+      "kinds": [
+        "king"
+      ],
       "label": "Zahhak",
       "summary": "A king of old from whom Mehrab descends.",
       "sourceIds": [
@@ -694,6 +755,9 @@
     {
       "id": "character-maids-of-rudabeh",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The maids of Rudabeh",
       "summary": "Five Turkish maids who serve Rudabeh and keep her secret.",
       "sourceIds": [
@@ -710,6 +774,10 @@
     {
       "id": "place-kabul",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land",
+        "state"
+      ],
       "label": "Kabul",
       "summary": "The kingdom of Mehrab.",
       "sourceIds": [
@@ -720,6 +788,9 @@
     {
       "id": "character-go-between",
       "type": "Character",
+      "kinds": [
+        "commoner"
+      ],
       "label": "The go-between",
       "summary": "A woman who carries messages between Zal and Rudabeh.",
       "sourceIds": [
@@ -736,6 +807,9 @@
     {
       "id": "character-kakuy",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Kakuy",
       "summary": "A warrior who leads the enemy army against Sam.",
       "sourceIds": [
@@ -752,6 +826,9 @@
     {
       "id": "place-kashaf-river",
       "type": "NarrativePlace",
+      "kinds": [
+        "river"
+      ],
       "label": "The Kashaf river",
       "summary": "A river from which a dragon once came out, as Sam recalls.",
       "sourceIds": [
@@ -762,6 +839,9 @@
     {
       "id": "place-sistan",
       "type": "NarrativeRegion",
+      "kinds": [
+        "land"
+      ],
       "label": "Sistan",
       "summary": "The land of Sam's house, also called Nimruz.",
       "sourceIds": [
@@ -779,6 +859,9 @@
     {
       "id": "character-rostam",
       "type": "Character",
+      "kinds": [
+        "hero"
+      ],
       "label": "Rostam",
       "summary": "The son of Zal and Rudabeh, a child of wondrous size and strength.",
       "sourceIds": [

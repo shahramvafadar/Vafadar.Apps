@@ -27,6 +27,9 @@
     {
       "id": "subject-ancient-anatolia",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "Anatolia",
       "summary": "Ancient Anatolia from the Hittite kingdom of Hattusa, its Old and New Kingdoms and its collapse about 1190 BCE, through the Neo-Hittite states, Urartu and the Phrygian kingdom of Gordium, to Lydia of Gyges and Croesus, which Cyrus conquered.",
       "sourceIds": [
@@ -40,6 +43,9 @@
     {
       "id": "office-hittite-king",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Hittite king",
       "summary": "The kingship of the Hittites at Hattusa.",
       "sourceIds": [
@@ -56,6 +62,9 @@
     {
       "id": "office-king-of-phrygia",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Phrygia",
       "summary": "The kingship of the Phrygians at Gordium.",
       "sourceIds": [
@@ -72,6 +81,9 @@
     {
       "id": "office-king-of-lydia",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "King of Lydia",
       "summary": "The kingship of Lydia at Sardis.",
       "sourceIds": [
@@ -88,6 +100,9 @@
     {
       "id": "dynasty-mermnad",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Mermnads",
       "summary": "The Lydian dynasty founded by Gyges, about 680 BCE, which ended with Croesus when Cyrus took Sardis.",
       "sourceIds": [
@@ -113,6 +128,9 @@
     {
       "id": "period-hittite-old-kingdom",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Hittite Old Kingdom",
       "summary": "From Labarna and Hattusili, about 1650 BCE, through the sack of Babylon by Mursili I to the crisis after him and the restoration under Telepinu, about 1500.",
       "sourceIds": [
@@ -149,6 +167,9 @@
     {
       "id": "period-hittite-new-kingdom",
       "type": "Period",
+      "kinds": [
+        "era"
+      ],
       "label": "The Hittite New Kingdom",
       "summary": "From Šuppiluliuma I, king from about 1355 BCE, who made the Hittites a great power reaching into Syria, to the collapse of the empire after about 1190.",
       "sourceIds": [
@@ -185,6 +206,9 @@
     {
       "id": "person-labarna",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Labarna",
       "summary": "The founder of the Hittite kingdom according to the edict of Telepinu; he and his successor Hattusili may have been the same person.",
       "sourceIds": [
@@ -209,6 +233,9 @@
     {
       "id": "person-hattusili-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hattusili I",
       "summary": "Successor of Labarna, king from about 1650 to 1620 BCE, who fought wars that made his kingdom “neighbour to the sea” and added Kizzuwatna in Cilicia.",
       "sourceIds": [
@@ -233,6 +260,9 @@
     {
       "id": "person-mursili-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mursilis I",
       "summary": "Hittite king who in the first years of the 16th century BCE – 1587 by the low middle chronology – reached and sacked Babylon.",
       "sourceIds": [
@@ -264,6 +294,9 @@
     {
       "id": "person-hantili-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hantili I",
       "summary": "Hittite king from about 1585 to 1560 BCE, in whose reign a crisis of the dynasty led to the collapse of Hittite power.",
       "sourceIds": [
@@ -288,6 +321,9 @@
     {
       "id": "person-telepinu",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Telepinu",
       "summary": "Hittite king from about 1525 to 1500 BCE who restored order and laid down the principles of good government in his edict, the source for the earliest kings.",
       "sourceIds": [
@@ -312,6 +348,9 @@
     {
       "id": "person-tudhaliya-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tudhaliya I",
       "summary": "Hittite king from about 1420 to 1400 BCE, from a new dynasty, eighth successor of Telepinu.",
       "sourceIds": [
@@ -336,6 +375,9 @@
     {
       "id": "person-suppiluliuma-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Šuppiluliuma I",
       "summary": "Hittite king from about 1355 BCE for thirty-five years, founder of the New Kingdom, who defeated Mitanni and took northern Syria from Egypt; about 1320 he left the kingdom to his eldest son.",
       "sourceIds": [
@@ -367,6 +409,9 @@
     {
       "id": "person-arnuwanda-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Arnuwanda II",
       "summary": "Eldest son of Šuppiluliuma I, who succeeded him about 1320 BCE for a brief reign.",
       "sourceIds": [
@@ -391,6 +436,9 @@
     {
       "id": "person-mursili-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mursili II",
       "summary": "Another son of Šuppiluliuma I, king from about 1318 to 1290 BCE, who overcame Arzawa in western Anatolia.",
       "sourceIds": [
@@ -415,6 +463,9 @@
     {
       "id": "person-muwatalli-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Muwatalli II",
       "summary": "Son of Mursili II, king from about 1290 to 1272 BCE, who met Ramesses II of Egypt in the great chariot battle on the Orontes in 1274.",
       "sourceIds": [
@@ -439,6 +490,9 @@
     {
       "id": "person-mursili-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Mursili III",
       "summary": "First son of Muwatalli II, king from about 1272 to 1265 BCE, dethroned by Hattusili III.",
       "sourceIds": [
@@ -463,6 +517,9 @@
     {
       "id": "person-hattusili-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Hattusili III",
       "summary": "Hittite king from about 1265 to 1240 BCE, who dethroned Mursili III, created the vice-kingdom of Tarhuntassa and wrote to the king of Ahhiyawa about the rebel Piyamaradu.",
       "sourceIds": [
@@ -487,6 +544,9 @@
     {
       "id": "person-tudhaliya-iv",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Tudhaliya IV",
       "summary": "Son of Hattusili III, king from about 1240 to 1215 BCE, who still resided at Hattusa and ordered the reliefs of nearby Yazılıkaya.",
       "sourceIds": [
@@ -511,6 +571,9 @@
     {
       "id": "person-midas",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Midas",
       "summary": "The most famous king of Phrygia, known from Greek legend and perhaps as Mit-ta-a of the Assyrian records, who asked Sargon II for help against the Cimmerians in 710/709 BCE and took his own life after a lost battle in 696/695.",
       "sourceIds": [
@@ -544,6 +607,9 @@
     {
       "id": "person-gyges",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Gyges",
       "summary": "Founder of the Mermnad dynasty of Lydia, tentatively dated 680 to 644 BCE, who overthrew Sadyattes, defeated the Cimmerians in 679 and was killed when they returned in 644.",
       "sourceIds": [
@@ -568,6 +634,9 @@
     {
       "id": "person-ardys",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ardys",
       "summary": "Son and successor of Gyges, who buried his father at Bin Tepe and was succeeded by his son Sadyattes about 625 BCE.",
       "sourceIds": [
@@ -592,6 +661,9 @@
     {
       "id": "person-sadyattes",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sadyattes",
       "summary": "Son of Ardys, king of Lydia from about 625 BCE, hardly more than a name.",
       "sourceIds": [
@@ -616,6 +688,9 @@
     {
       "id": "person-alyattes",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alyattes",
       "summary": "Son and successor of Sadyattes, king of Lydia from about 600 to 560 BCE, who took Smyrna and Gordium, defeated the Cimmerians and fought the Medes of Cyaxares at the Halys until the eclipse of 585.",
       "sourceIds": [
@@ -641,6 +716,9 @@
     {
       "id": "person-croesus",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Croesus",
       "summary": "Son of Alyattes, born about 595 BCE, fifth and last king of the Mermnad dynasty from 560, whose reign ended when Cyrus took Sardis – traditionally in 547, a date now doubted.",
       "sourceIds": [
@@ -672,6 +750,9 @@
     {
       "id": "person-ramses-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramses II",
       "summary": "King of Egypt of the 19th dynasty, who set out to reconquer northern Syria and fought Muwatalli II on the Orontes in 1274 BCE; a treaty with the Hittites followed in 1259.",
       "sourceIds": [
@@ -703,6 +784,9 @@
     {
       "id": "person-cyaxares",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cyaxares",
       "summary": "The Median leader who invaded Cappadocia and fought Alyattes of Lydia at the Halys in 585 BCE.",
       "sourceIds": [
@@ -727,6 +811,9 @@
     {
       "id": "person-cyrus-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Cyrus II the Great",
       "summary": "The Persian king who defeated Croesus, besieged him in Sardis and took the city.",
       "sourceIds": [
@@ -751,6 +838,9 @@
     {
       "id": "person-sargon-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Sargon II",
       "summary": "The Assyrian king whom Midas asked for help against the Cimmerians in 710/709 BCE, and who defeated Rusa of Urartu in 714.",
       "sourceIds": [
@@ -776,6 +866,9 @@
     {
       "id": "place-hattusa",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Hattusa",
       "summary": "The capital of the Hittites, where Tudhaliya IV still resided; it was later evacuated, dangerously exposed to Kashka attacks.",
       "sourceIds": [
@@ -798,6 +891,9 @@
     {
       "id": "place-gordium",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Gordium",
       "summary": "The capital of the Phrygians, founded in the 9th century BCE; sacked by the Cimmerians, held by Lydians and Persians, and taken by Parmenion for Alexander in 334.",
       "sourceIds": [
@@ -828,6 +924,9 @@
     {
       "id": "place-carchemish",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Carchemish",
       "summary": "A city on the Euphrates where Šuppiluliuma I set a son as vice-king; after the Hittite collapse it became one of the Neo-Hittite states.",
       "sourceIds": [
@@ -857,6 +956,9 @@
     {
       "id": "place-sardis",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Sardis",
       "summary": "The capital of Lydia on the river Pactolus, which became an impressive city under Gyges and was taken by Cyrus.",
       "sourceIds": [
@@ -886,6 +988,9 @@
     {
       "id": "event-hittites-sack-babylon",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Hittites sack Babylon",
       "summary": "Mursilis I, the Hittite king, advanced along the Euphrates, sacked Babylon and carried off the statue of Marduk, ending the First Dynasty of Babylon; the Livius page on Babylon puts it about 1595 BCE, the page on the Hittites in 1587 by the low middle chronology.",
       "sourceIds": [
@@ -920,6 +1025,9 @@
     {
       "id": "event-battle-on-the-orontes",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle on the Orontes (Kadesh)",
       "summary": "In 1274 BCE Muwatalli II caught Ramesses II by surprise on the plain of the Orontes, where two chariot armies fought a great battle; both sides claimed victory.",
       "sourceIds": [
@@ -951,6 +1059,9 @@
     {
       "id": "event-hittite-egyptian-treaty",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "The treaty of the Hittites and Egypt",
       "summary": "In 1259 BCE the Hittites and Egypt concluded a treaty dividing Syria between the two great powers.",
       "sourceIds": [
@@ -978,6 +1089,9 @@
     {
       "id": "event-collapse-of-hittite-empire",
       "type": "Event",
+      "kinds": [
+        "fall"
+      ],
       "label": "The collapse of the Hittite empire",
       "summary": "After about 1190 BCE power passed to the vice-kings of Tarhuntassa and Carchemish, whose lands split into the Neo-Hittite states, while the Phrygians and the Sea Peoples moved in.",
       "sourceIds": [
@@ -1002,6 +1116,9 @@
     {
       "id": "event-sargon-defeats-rusa",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Sargon II defeats Urartu",
       "summary": "In 714 BCE Sargon II defeated Rusa of Urartu, marched almost unopposed through the country and took the statue of the god Haldi; Rusa took his own life.",
       "sourceIds": [
@@ -1029,6 +1146,9 @@
     {
       "id": "event-cimmerians-sack-sardis",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Cimmerians sack Sardis",
       "summary": "In 644 BCE the Cimmerians invaded Lydia again; Gyges was defeated and killed and Sardis was sacked.",
       "sourceIds": [
@@ -1060,6 +1180,9 @@
     {
       "id": "event-battle-of-the-eclipse",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "The battle of the eclipse",
       "summary": "On 28 May 585 BCE Alyattes of Lydia and Cyaxares of Media fought at the Halys; the sun was eclipsed, the kings made peace, and the Halys became the border.",
       "sourceIds": [
@@ -1091,6 +1214,9 @@
     {
       "id": "event-conquest-of-lydia",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "Cyrus conquers Lydia",
       "summary": "Cyrus defeated Croesus east of Ankara, besieged him in Sardis and took the city; the war is usually dated to 547 BCE on a very uncertain reading of a Babylonian chronicle.",
       "sourceIds": [

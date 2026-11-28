@@ -5,12 +5,12 @@ Asked by the owner on 2026-11-28: every record the site shows should have a *kin
 kind with an icon of its own, the kinds editable over time, and the pages that show many records able to filter by
 kind. This plan records the design and the decisions; it is carried out as one batch with its ADR.
 
-**State (2026-11-28).** K1–K4 are taken on the recommendations below as working defaults (D-103,
-[ADR 0029](adr/0029-kinds.md)). Steps 1 and 2 of the work are done: the format, the reader and the check, the
-vocabulary, the first list `library/kinds.json` with its Persian, the drawings, and the choice of kinds on the list
-of names, the timeline, the comparisons and the search. Step 3 – classifying the library – is open; the rule of K4
-is written and tested and is turned on by `KindsFile.EveryRecordHasAKind` once it is done. The look in a browser
-waits for the owner's word.
+**State (2026-11-28).** The owner confirmed K1–K4 as recommended (D-103, [ADR 0029](adr/0029-kinds.md)).
+Steps 1 to 3 are done: the format, the reader and the check, the vocabulary, the list `library/kinds.json` with its
+Persian, the drawings, the choice of kinds on the list of names, the timeline, the comparisons and the search, and
+the classification of the whole library – 1,717 distinct entities of the collections and 796 periods and events of
+the comparisons – with the rule of K4 on. The list grew from 45 to 96 kinds while classifying (below). The look in
+a browser waits for the owner's word.
 
 ## What exists
 
@@ -44,6 +44,15 @@ waits for the owner's word.
    * characters: hero, king, demon, divine being, creature;
    * places and regions: city, capital, battlefield, sanctuary, river, mountain;
    * works: poem, history, inscription, monument.
+
+   Added while classifying, so that every type the library uses has kinds of its own: events – law and reform,
+   journey and embassy, fall of a state, writing of a work, ceremony, disaster; periods – rule of a house, age of
+   history, ancient culture; persons and characters – royal house, rebel, and for characters sage, sorcerer,
+   noble, of the people, steed; stories – story of a reign, war story, tale of a hero, love story, tragedy, tale of
+   the court; works and things – teaching, treatise, edition, manuscript, document, weapon, keepsake, wondrous
+   thing, banner; places – fortress, camp, prison, sea or lake, open land, land, state; offices – throne, office
+   of state, office of a faith; houses – ruling house, house of legend, house of heroes; bodies – council,
+   research, university, library, museum; ideas – idea, topic.
 6. **Classifying the library** – every existing record of the library is given its kinds, by a script proposing a
    kind from the type, the relations (a holder of a royal office → ruler; an author of a work → literary) and the
    label (a "battle of …"), and an editor's reading of what the script could not decide. Nothing is guessed: a

@@ -27,6 +27,9 @@
     {
       "id": "subject-ancient-india",
       "type": "Region",
+      "kinds": [
+        "land"
+      ],
       "label": "India",
       "summary": "Ancient India from the cities of the Indus civilization through the Persian and Macedonian conquests of Gandara and the Punjab, the Mauryan empire of Chandragupta and Ashoka, the Indo-Greek kings and the Kushans, to the Gupta age and the empire of Harsha in the 7th century CE.",
       "sourceIds": [
@@ -40,6 +43,9 @@
     {
       "id": "office-mauryan-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Mauryan emperor",
       "summary": "The throne of the Mauryan empire, with its capital at Patna on the Ganges.",
       "sourceIds": [
@@ -56,6 +62,9 @@
     {
       "id": "office-gupta-emperor",
       "type": "Office",
+      "kinds": [
+        "kingship"
+      ],
       "label": "Gupta emperor",
       "summary": "The throne of the Gupta dynasty of northern India.",
       "sourceIds": [
@@ -72,6 +81,9 @@
     {
       "id": "dynasty-maurya",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Mauryas",
       "summary": "The dynasty of Chandragupta Maurya, who took the Nanda throne of Magadha and united the Indus and Ganges valleys; after Ashoka its empire declined.",
       "sourceIds": [
@@ -83,6 +95,9 @@
     {
       "id": "dynasty-kushan",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Kushans",
       "summary": "A ruling line descended from the Yuezhi, which ruled most of the northern Indian subcontinent, Afghanistan and parts of Central Asia in the first three centuries CE.",
       "sourceIds": [
@@ -94,6 +109,9 @@
     {
       "id": "dynasty-gupta",
       "type": "Dynasty",
+      "kinds": [
+        "rulingHouse"
+      ],
       "label": "The Guptas",
       "summary": "The dynasty that ruled northern and parts of central and western India from the early 4th to the mid-6th century CE; its age is often called the classical age of India.",
       "sourceIds": [
@@ -118,6 +136,9 @@
     {
       "id": "period-indus-civilization",
       "type": "Period",
+      "kinds": [
+        "culture"
+      ],
       "label": "The Indus civilization",
       "summary": "The earliest known urban culture of the Indian subcontinent, with its nuclear dates about 2600 to 1900 BCE; it declined in stages between about 2000 and 1750 BCE.",
       "sourceIds": [
@@ -154,6 +175,9 @@
     {
       "id": "period-gupta",
       "type": "Period",
+      "kinds": [
+        "reign"
+      ],
       "label": "The Gupta period",
       "summary": "The broad period from about 300 to about 600 CE, regarded by many as the golden and classical age of India in literature, art, architecture and philosophy.",
       "sourceIds": [
@@ -190,6 +214,9 @@
     {
       "id": "person-chandragupta-maurya",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Chandragupta Maurya",
       "summary": "Founder of the Mauryan empire, king from 321 to 297 BCE: a pupil of Kautilya who had seen Alexander’s army at Taxila, he took the Nanda throne, captured Taxila and made a treaty with Seleucus, who gave up the eastern provinces for 500 elephants.",
       "sourceIds": [
@@ -222,6 +249,9 @@
     {
       "id": "person-bindusara",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Bindusara",
       "summary": "Son of Chandragupta, emperor for a quarter of a century until 272 BCE, the least known of the three great Mauryan emperors.",
       "sourceIds": [
@@ -246,6 +276,9 @@
     {
       "id": "person-ashoka",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ashoka",
       "summary": "Son of Bindusara, Mauryan emperor from 272 to 232 BCE, who first united the subcontinent except its far south, turned against war after the conquest of Kalinga, became a Buddhist and published his rock edicts also in Greek.",
       "sourceIds": [
@@ -279,6 +312,10 @@
     {
       "id": "person-porus",
       "type": "Person",
+      "kinds": [
+        "ruler",
+        "general"
+      ],
       "label": "Porus",
       "summary": "King in the eastern Punjab, defeated by Alexander the Great at the Hydaspes in 326 BCE and murdered in 317 by the Macedonian commander at Taxila.",
       "sourceIds": [
@@ -310,6 +347,9 @@
     {
       "id": "person-demetrius-i-of-bactria",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Demetrius I of Bactria",
       "summary": "Son of Euthydemus, who invaded Gandara and the Punjab in 184 BCE and created an Indo-Greek kingdom reaching into the Ganges valley; he ruled until about 170.",
       "sourceIds": [
@@ -334,6 +374,9 @@
     {
       "id": "person-menander",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Menander",
       "summary": "Indo-Greek king who reunited the kingdom about 125 BCE, invaded the Mauryan heartland and took Patna; the Buddhist “Questions of Menander” bear his name.",
       "sourceIds": [
@@ -365,6 +408,9 @@
     {
       "id": "person-chandragupta-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Chandragupta I",
       "summary": "Gupta king from about 319 CE to 335 or 350, who united the Guptas with the Lichchhavis by marrying Kumaradevi; the Gupta era is counted from his coronation or marriage.",
       "sourceIds": [
@@ -389,6 +435,9 @@
     {
       "id": "person-samudragupta",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Samudragupta",
       "summary": "Son of Chandragupta I, who succeeded him about 335 CE – or about 350 by another view – and reigned until about 370.",
       "sourceIds": [
@@ -413,6 +462,9 @@
     {
       "id": "person-ramagupta",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Ramagupta",
       "summary": "A king of 370 to 375 CE known from evidence outside the Gupta records, probably the elder brother of Chandragupta II, who may have killed him.",
       "sourceIds": [
@@ -437,6 +489,9 @@
     {
       "id": "person-chandragupta-ii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Chandragupta II",
       "summary": "Gupta king from about 375 CE to 413/415, called Vikramaditya, “Sun of Valor”; the Chinese pilgrim Faxian, in India from 405 to 411, praised his government.",
       "sourceIds": [
@@ -468,6 +523,9 @@
     {
       "id": "person-kumaragupta",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Kumaragupta",
       "summary": "Successor of Chandragupta II, Gupta king from 415 to 454 CE, when the invasions of the Hunas began to bring the empire down.",
       "sourceIds": [
@@ -492,6 +550,9 @@
     {
       "id": "person-skandagupta",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Skandagupta",
       "summary": "Gupta king from 454 to 467 CE, in the time of the repeated invasions of the Hunas, a branch of the Hephthalites.",
       "sourceIds": [
@@ -516,6 +577,9 @@
     {
       "id": "person-harsha",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Harsha",
       "summary": "Ruler of a large empire in northern India from 606 to 647 CE, born about 590; in 641 he sent an envoy to the Chinese emperor, the first diplomatic relations between India and China.",
       "sourceIds": [
@@ -540,6 +604,9 @@
     {
       "id": "person-alexander-iii",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Alexander III of Macedon",
       "summary": "The Macedonian king who invaded the Kabul valley in 327 BCE, took Taxila, defeated Porus at the Hydaspes and turned back at the eastern border of the Punjab.",
       "sourceIds": [
@@ -564,6 +631,9 @@
     {
       "id": "person-seleucus-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Seleucus I Nicator",
       "summary": "The successor of Alexander who tried to recover the eastern provinces and made peace with Chandragupta, giving up Gandara and Arachosia for 500 elephants.",
       "sourceIds": [
@@ -588,6 +658,9 @@
     {
       "id": "person-darius-i",
       "type": "Person",
+      "kinds": [
+        "ruler"
+      ],
       "label": "Darius I the Great",
       "summary": "The Persian king under whom Taxila and the western Punjab, Hinduš, were added to the Achaemenid empire.",
       "sourceIds": [
@@ -612,6 +685,9 @@
     {
       "id": "place-taxila",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Taxila",
       "summary": "The capital of the western Punjab, added to the Achaemenid empire under Darius I, which invited Alexander in 329 BCE, fell to Chandragupta, had Ashoka as governor and Greek kings from 184.",
       "sourceIds": [
@@ -641,6 +717,9 @@
     {
       "id": "place-pataliputra",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Pataliputra",
       "summary": "The Mauryan capital on the Ganges, modern Patna, which Menander took in the 2nd century BCE.",
       "sourceIds": [
@@ -676,6 +755,9 @@
     {
       "id": "place-mohenjo-daro",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Mohenjo-daro",
       "summary": "A city of the Indus civilization near the Indus in Sindh, identified in 1922.",
       "sourceIds": [
@@ -698,6 +780,9 @@
     {
       "id": "event-alexander-defeats-porus",
       "type": "Event",
+      "kinds": [
+        "battle"
+      ],
       "label": "Alexander defeats Porus",
       "summary": "In 326 BCE Alexander the Great, invited by the king of Taxila, defeated Porus on the banks of the Hydaspes.",
       "sourceIds": [
@@ -730,6 +815,9 @@
     {
       "id": "event-treaty-of-seleucus-and-chandragupta",
       "type": "Event",
+      "kinds": [
+        "treaty"
+      ],
       "label": "Seleucus and Chandragupta make peace",
       "summary": "In 304 BCE Seleucus, needing his army in the west, made peace with Chandragupta: he gave up Gandara and Arachosia and received 500 elephants.",
       "sourceIds": [
@@ -762,6 +850,9 @@
     {
       "id": "event-greeks-invade-punjab",
       "type": "Event",
+      "kinds": [
+        "conquest"
+      ],
       "label": "The Greeks invade the Punjab",
       "summary": "In 184 BCE the Greeks of Bactria under Demetrius invaded Gandara and the Punjab and founded an Indo-Greek kingdom.",
       "sourceIds": [
@@ -794,6 +885,9 @@
     {
       "id": "event-faxian-in-india",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Faxian in India",
       "summary": "The Chinese Buddhist pilgrim Faxian spent six years in India, from 405 to 411 CE, in the reign of Chandragupta II.",
       "sourceIds": [
@@ -822,6 +916,9 @@
     {
       "id": "event-harsha-envoy-to-china",
       "type": "Event",
+      "kinds": [
+        "journey"
+      ],
       "label": "Harsha’s envoy to China",
       "summary": "In 641 CE Harsha sent an envoy to the Chinese emperor, establishing the first diplomatic relations between India and China.",
       "sourceIds": [

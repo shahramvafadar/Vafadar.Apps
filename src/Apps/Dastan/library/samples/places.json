@@ -293,6 +293,9 @@
     {
       "id": "subject-places",
       "type": "Concept",
+      "kinds": [
+        "topic"
+      ],
       "label": "Places of learning and work",
       "summary": "Universities and organisations of several countries that a visitor can name as places they were at; each with its record in the Research Organization Registry (ROR).",
       "sourceIds": [
@@ -309,6 +312,9 @@
     {
       "id": "place-tehran",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Tehran",
       "summary": "A city in Iran.",
       "sourceIds": [
@@ -325,6 +331,9 @@
     {
       "id": "university-university-of-tehran",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "University of Tehran",
       "summary": "The university in Tehran inaugurated in the winter of 1934, heir of the college of Dar ol-Fonun and a symbol of higher education in Iran.",
       "sourceIds": [
@@ -378,6 +387,9 @@
     {
       "id": "university-sharif-university-of-technology",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "Sharif University of Technology",
       "summary": "A university of technology in Tehran, established in 1966 as the Aryamehr University of Industry, according to its ROR record; its own site could not be read.",
       "sourceIds": [
@@ -430,6 +442,9 @@
     {
       "id": "place-oxford",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Oxford",
       "summary": "A city in United Kingdom.",
       "sourceIds": [
@@ -446,6 +461,9 @@
     {
       "id": "university-university-of-oxford",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "University of Oxford",
       "summary": "The university in Oxford; its ROR record gives 1096 as the year it was established. Its own site could not be read.",
       "sourceIds": [
@@ -493,6 +511,9 @@
     {
       "id": "place-heidelberg",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Heidelberg",
       "summary": "A city in Germany.",
       "sourceIds": [
@@ -509,6 +530,9 @@
     {
       "id": "university-heidelberg-university",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "Heidelberg University",
       "summary": "The research university in Heidelberg, founded in 1386.",
       "sourceIds": [
@@ -557,6 +581,9 @@
     {
       "id": "place-paris",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Paris",
       "summary": "A city in France.",
       "sourceIds": [
@@ -573,6 +600,9 @@
     {
       "id": "university-sorbonne-university",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "Sorbonne Université",
       "summary": "The university in Paris that calls itself an heir of the University of Paris; it came into being on 1 January 2018, while its ROR record gives 2010 as the year it was established.",
       "sourceIds": [
@@ -616,6 +646,9 @@
     {
       "id": "place-bologna",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Bologna",
       "summary": "A city in Italy.",
       "sourceIds": [
@@ -632,6 +665,9 @@
     {
       "id": "university-university-of-bologna",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "University of Bologna",
       "summary": "The university in Bologna, which calls itself the oldest university in the Western world; its founding is dated conventionally to 1088.",
       "sourceIds": [
@@ -680,6 +716,9 @@
     {
       "id": "place-cambridge",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Cambridge",
       "summary": "A city in United States.",
       "sourceIds": [
@@ -696,6 +735,9 @@
     {
       "id": "university-harvard-university",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "Harvard University",
       "summary": "The university in Cambridge, Massachusetts, founded on 28 October 1636 as the first college in the American colonies; it has fourteen schools.",
       "sourceIds": [
@@ -739,6 +781,9 @@
     {
       "id": "place-toronto",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Toronto",
       "summary": "A city in Canada.",
       "sourceIds": [
@@ -755,6 +800,9 @@
     {
       "id": "university-university-of-toronto",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "University of Toronto",
       "summary": "The university in Toronto, chartered as King’s College on 15 March 1827; it has been called the University of Toronto since the end of 1849.",
       "sourceIds": [
@@ -808,6 +856,9 @@
     {
       "id": "place-tokyo",
       "type": "Place",
+      "kinds": [
+        "capital"
+      ],
       "label": "Tokyo",
       "summary": "A city in Japan.",
       "sourceIds": [
@@ -824,6 +875,9 @@
     {
       "id": "university-university-of-tokyo",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "The University of Tokyo",
       "summary": "The university in Tokyo, founded in 1877.",
       "sourceIds": [
@@ -877,6 +931,9 @@
     {
       "id": "place-munich",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Munich",
       "summary": "A city in Germany.",
       "sourceIds": [
@@ -893,6 +950,9 @@
     {
       "id": "university-technical-university-of-munich",
       "type": "University",
+      "kinds": [
+        "university"
+      ],
       "label": "Technical University of Munich",
       "summary": "The technical university in Munich, founded in 1868 as the Technische Hochschule München.",
       "sourceIds": [
@@ -946,6 +1006,9 @@
     {
       "id": "place-geneva",
       "type": "Place",
+      "kinds": [
+        "city"
+      ],
       "label": "Geneva",
       "summary": "A city in Switzerland.",
       "sourceIds": [
@@ -962,6 +1025,9 @@
     {
       "id": "organisation-cern",
       "type": "Organisation",
+      "kinds": [
+        "research"
+      ],
       "label": "European Organization for Nuclear Research",
       "summary": "The European Organization for Nuclear Research near Geneva, founded in 1954, which studies the fundamental structure of the universe.",
       "sourceIds": [
@@ -1014,6 +1080,9 @@
     {
       "id": "organisation-max-planck-society",
       "type": "Organisation",
+      "kinds": [
+        "research"
+      ],
       "label": "Max Planck Society",
       "summary": "The research society founded in Göttingen on 26 February 1948 as the successor of the Kaiser Wilhelm Society; its seat is in Munich.",
       "sourceIds": [
