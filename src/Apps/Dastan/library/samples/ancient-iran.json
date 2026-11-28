@@ -11051,7 +11051,8 @@
       "summary": "Son of Sebüktigin, ruler from 998 to 1030, who threw off Samanid authority in 999 and by ceaseless campaigning, in India and as far west as Ray, built a vast military empire.",
       "sourceIds": [
         "src-iranica-ghaznavids",
-        "src-iranica-ziyarids"
+        "src-iranica-ziyarids",
+        "src-iranica-biruni-i"
       ],
       "spoilerLevel": 0,
       "names": [
@@ -13136,7 +13137,8 @@
       "label": "Held the office of",
       "note": "As Darius calls him, the usurper Gaumâta.",
       "sourceIds": [
-        "src-livius-achaemenids-achaemenid-kings"
+        "src-livius-achaemenids-achaemenid-kings",
+        "src-livius-person-gaumata-smerdis"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
@@ -18417,7 +18419,8 @@
       "directionality": "directed",
       "label": "Ruled",
       "sourceIds": [
-        "src-livius-place-parthia"
+        "src-livius-place-parthia",
+        "src-livius-person-arsaces-i"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

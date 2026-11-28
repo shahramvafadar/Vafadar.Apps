@@ -4,6 +4,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The review checks every dated statement of the three histories against a passage of its source.
 - China gains Li Bai and Du Fu, and the Analects, the Daodejing and the Art of War as works.
 - Rome gains its writers and monuments: Virgil, Livy and Procopius with their works, and the Pantheon rebuilt by
   Hadrian.
