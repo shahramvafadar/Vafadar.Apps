@@ -1759,6 +1759,14 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-perseus-livy-5-13",
+      "title": "Livy, History of Rome 5.13 – Perseus Digital Library",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0026%3Abook%3D5%3Achapter%3D13",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -14055,6 +14063,137 @@
         {
           "fact": "knownFor",
           "text": "Emperor of the West, 461–465."
+        }
+      ]
+    },
+    {
+      "id": "event-severe-winter-of-rome",
+      "type": "Event",
+      "kinds": [
+        "frost"
+      ],
+      "label": "The severe winter at Rome",
+      "summary": "A winter so cold and snowy, in the time of the war against Veii, that the roads were blocked and the Tiber could not be sailed; Livy dates it to the year before the pestilence of 399 BCE.",
+      "sourceIds": [
+        "src-perseus-livy-5-13"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 400
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 399
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-rome"
+        }
+      ]
+    },
+    {
+      "id": "event-pestilence-of-399-bce",
+      "type": "Event",
+      "kinds": [
+        "epidemic"
+      ],
+      "label": "The pestilence after the severe winter",
+      "summary": "A deadly summer of pestilence that followed the severe winter, in the city and the countryside; the senate had the Sibylline Books consulted and held the first lectisternium for the gods.",
+      "sourceIds": [
+        "src-perseus-livy-5-13"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 399
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-rome"
+        }
+      ]
+    },
+    {
+      "id": "event-famine-of-440-bce",
+      "type": "Event",
+      "kinds": [
+        "famine"
+      ],
+      "label": "The famine of 440 BCE",
+      "summary": "A famine at Rome, during which the knight Spurius Maelius gave grain to the people; when it was said that he aimed at kingship, he was killed in 439.",
+      "sourceIds": [
+        "src-livius-livy-livy-periochae-1-5"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 440
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-rome"
+        }
+      ]
+    },
+    {
+      "id": "event-famine-at-constantinople",
+      "type": "Event",
+      "kinds": [
+        "famine",
+        "epidemic"
+      ],
+      "label": "Famine and epidemic at Constantinople",
+      "summary": "When the Persians seized Alexandria and blocked the corn supply of Egypt, famine broke out at Constantinople, followed by an epidemic; Heraclius even thought of moving the capital to Africa.",
+      "sourceIds": [
+        "src-livius-person-heraclius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 619
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 621
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-constantinople"
         }
       ]
     }
@@ -27805,6 +27944,125 @@
         },
         "continuity": "notAsserted"
       },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-severe-winter-of-rome-took-place-in-rome",
+      "from": "event-severe-winter-of-rome",
+      "to": "place-rome",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-perseus-livy-5-13"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-severe-winter-of-rome-during-republic",
+      "from": "event-severe-winter-of-rome",
+      "to": "period-republic",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-perseus-livy-5-13"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-pestilence-of-399-bce-took-place-in-rome",
+      "from": "event-pestilence-of-399-bce",
+      "to": "place-rome",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-perseus-livy-5-13"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-pestilence-of-399-bce-during-republic",
+      "from": "event-pestilence-of-399-bce",
+      "to": "period-republic",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-perseus-livy-5-13"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-famine-of-440-bce-took-place-in-rome",
+      "from": "event-famine-of-440-bce",
+      "to": "place-rome",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-livy-livy-periochae-1-5"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-famine-of-440-bce-during-republic",
+      "from": "event-famine-of-440-bce",
+      "to": "period-republic",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-livy-livy-periochae-1-5"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-famine-at-constantinople-took-place-in-constantinople",
+      "from": "event-famine-at-constantinople",
+      "to": "place-constantinople",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-person-heraclius"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
       "scope": {
         "kind": "outside_the_story",
         "eventIds": []

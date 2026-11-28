@@ -2101,6 +2101,33 @@
           }
         }
       ]
+    },
+    {
+      "id": "event-drought-of-2200-bce",
+      "type": "Event",
+      "kinds": [
+        "drought"
+      ],
+      "label": "The great drought about 2200 BCE",
+      "summary": "A drought of decades about 2200 BCE, at the time the Akkadian empire declined; people left thriving cities in Mesopotamia and the Indus valley at about the same time. How far it caused the fall of Akkad is debated.",
+      "sourceIds": [
+        "src-uci-mega-drought"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2200,
+              "approximate": true
+            }
+          }
+        }
+      ]
     }
   ],
   "relations": [
@@ -4507,6 +4534,14 @@
       "id": "src-pleiades-942018830",
       "title": "Pleiades: Central Building at Kalhu",
       "url": "https://pleiades.stoa.org/places/942018830",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-uci-mega-drought",
+      "title": "Did a mega drought topple empires 4,200 years ago? – UC Irvine Earth System Science",
+      "url": "https://ess.uci.edu/news/782",
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0

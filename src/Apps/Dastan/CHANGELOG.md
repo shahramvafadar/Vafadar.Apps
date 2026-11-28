@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Disasters of nature in the histories: the drought about 2200 BCE, the great flood of the Yellow River, the
+  severe winter at Rome, famines, the plague of Athens and other pestilences, the earthquake at Olympia, and the
+  silver found at Laurion.
 - Kinds of records: a battle, a drought, a poet, a hero – each with a drawing of its own, shown beside the type on
   the page of a record and on its card. The list of names, the timeline and a comparison can be narrowed to one
   kind or several, and the search asks for kinds; the choice is in the address. Every record of the library has its
