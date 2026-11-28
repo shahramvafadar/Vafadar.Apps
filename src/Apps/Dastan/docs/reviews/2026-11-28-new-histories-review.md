@@ -111,5 +111,22 @@ span is a question of the site, not of the collections.
   2200 BCE, the great flood of the Yellow River and the flood of 14–17 CE, the severe winter at Rome, the famines
   of 440 BCE and at Constantinople, the plague of Athens and two other pestilences, the earthquake at Olympia and
   the silver of Laurion. All quotes of the four collections stand in their sources.
-* The choice of kinds on the pages is covered by the tests of the pages (lists, timeline, comparison, search); a
-  look in a browser waits for the owner's word.
+* The choice of kinds on the pages is covered by the tests of the pages (lists, timeline, comparison, search) and
+  was seen in a browser on the owner's word – Persian and English, wide and 360 pixels: a wider kind takes in the
+  narrower ones, the choice is in the address, nothing scrolls sideways. The boxes of kinds in the search of a
+  collection were stretched to the width of a line one under the other (47 kinds, about 5,000 pixels); they now
+  stand in columns. In the timeline of Iran the choice offers 38 kinds and takes six rows before the chart (about
+  730 pixels at 360); whether it should fold away is left to the owner.
+
+## The last review of everything written (2026-11-28)
+
+| Check | How | Result |
+|---|---|---|
+| The site can read every file | the content tool's `check` on the 21 collections and the 4 comparisons | all 25 in order |
+| Every quote stands in its source | the content tool's `quotes` on the 13 quoted collections | all stand (2,324 at the classification of kinds; nothing quoted changed since) |
+| Persian beside English | a script compares the label and summary of every entity, event and comparison item – 3,059 records – in both languages: presence and the numbers of both | all present; 14 Persian names of Rostam and Sohrab stand in the sample itself (`labelFa`), as its translation says |
+| Months of dates | every Persian summary naming an Iranian month beside a year was read against the English | 46 had turned a Gregorian month into an Iranian one (July as Tir, 1 October as 9 Mehr); both calendars' months do not coincide and dates are written in the Gregorian calendar, the site converting them (D-043, D-100); each now names the month of the English, with its day, and so do the two months of the capture of Seleucia in 141 BCE |
+| Sources of times | the tables of the charts of time, read in the browser | every row said "No source recorded": no time of the library names sources of its own (none of 2,196), the sources stand on the record. A time whose facts name no source now rests on the sources of its record, and the table names them |
+
+The other differences of numbers the script reports are counts written out in words (fifteen thousand, thirty-
+seven years), the Solar Hijri year beside 1934 for the University of Tehran and the Persian group separator.

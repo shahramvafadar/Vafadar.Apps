@@ -50,6 +50,9 @@ public sealed class RecordTimesTests
             Add("event-sack", "Event", 0, Between("happened", 646, 640));
             Add("period-reign", "Period", 0, At("began", 550), At("ended", 530));
             Add("person-later", "Person", 3, At("born", 580), At("died", 570));
+            var cited = At("happened", 620);
+            cited["sourceIds"] = new JsonArray("src-ganjoor-s02");
+            Add("event-cited", "Event", 0, cited);
         }),
         new ReadingLevel(level),
         Audience.LocalDemonstration)!;
@@ -75,6 +78,17 @@ public sealed class RecordTimesTests
         Assert.Empty(Of("person-no-time"));
         Assert.Equal(ProfileFacts.Happened.Key, Assert.Single(Of("event-sack")).From.Key);
         Assert.True(Assert.Single(Of("period-reign")).IsSpan);
+    }
+
+    [Fact]
+    public void A_time_whose_facts_name_no_source_rests_on_the_sources_of_its_record()
+    {
+        var read = Read(0);
+        RecordTime[] Of(string id) => [.. RecordTimes.Of(read.Entities.Single(entity => entity.Id.Value == id))];
+
+        Assert.Equal(["src-ganjoor-index"], Assert.Single(Of("event-sack")).Sources.Select(source => source.Value));
+        Assert.Equal(["src-ganjoor-index"], Assert.Single(Of("person-whole-life")).Sources.Select(source => source.Value));
+        Assert.Equal(["src-ganjoor-s02"], Assert.Single(Of("event-cited")).Sources.Select(source => source.Value));
     }
 
     [Fact]
