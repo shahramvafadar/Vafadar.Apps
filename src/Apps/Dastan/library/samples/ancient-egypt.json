@@ -28,10 +28,11 @@
       "id": "subject-ancient-egypt",
       "type": "Region",
       "label": "Egypt",
-      "summary": "Ancient Egypt from the kings before the unification, through the thirty dynasties of Manetho with their Old, Middle and New Kingdoms and the Intermediate periods between them, the Persian kings and Alexander, to the Ptolemies and the Roman conquest in 30 BCE.",
+      "summary": "Ancient Egypt from the kings before the unification, through the thirty dynasties of Manetho with their Old, Middle and New Kingdoms and the Intermediate periods between them, the Persian kings and Alexander, the Ptolemies, and Roman and Byzantine Egypt to the Arab conquest of 642 CE.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs",
-        "src-britannica-list-of-dynasties"
+        "src-britannica-list-of-dynasties",
+        "src-britannica-roman-byzantine-egypt"
       ],
       "spoilerLevel": 0,
       "facts": []
@@ -6024,7 +6025,7 @@
       ]
     },
     {
-      "id": "event-persian-conquest-of-egypt",
+      "id": "event-conquest-of-egypt",
       "type": "Event",
       "label": "The Persians conquer Egypt",
       "summary": "Cambyses II made Egypt part of the Persian empire in 525 BCE; the Persian kings counted as Egypt’s 27th dynasty held it until 404.",
@@ -6052,7 +6053,7 @@
       ]
     },
     {
-      "id": "event-artaxerxes-iii-reconquers-egypt",
+      "id": "event-reconquest-of-egypt",
       "type": "Event",
       "label": "Artaxerxes III reconquers Egypt",
       "summary": "In 343 BCE Artaxerxes III brought Egypt back under Persian rule, ending the last native dynasty; his successors held it until Alexander came.",
@@ -6156,6 +6157,667 @@
         {
           "fact": "participant",
           "entityId": "person-cleopatra-vii"
+        }
+      ]
+    },
+    {
+      "id": "period-egypt-roman-byzantine",
+      "type": "Period",
+      "label": "Roman and Byzantine Egypt",
+      "summary": "Egypt as a province of Rome from 30 BCE, governed from Constantinople after its founding, lost to the Persians from 619 to 628 and to the Arabs, who entered Alexandria in 642 CE.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt",
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 30
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "place-alexandria",
+      "type": "Place",
+      "label": "Alexandria",
+      "summary": "The city founded by Alexander the Great in 332 BCE, capital of Egypt until it surrendered to the Arabs in 642 CE; famed for its lighthouse on the island of Pharos and its Museum with the great Library.",
+      "sourceIds": [
+        "src-britannica-alexandria",
+        "src-pleiades-727070"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 31.201435,
+        "longitude": 29.909773,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-memphis",
+      "type": "Place",
+      "label": "Memphis",
+      "summary": "The capital of ancient Egypt at the head of the Nile delta, which the kings of the 1st dynasty probably founded; its priests composed the decree on the Rosetta Stone.",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties",
+        "src-britannica-rosetta-stone",
+        "src-pleiades-736963"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 29.849491,
+        "longitude": 31.255061,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-thebes-egypt",
+      "type": "Place",
+      "label": "Thebes",
+      "summary": "The city of Upper Egypt, Waset to the Egyptians, from which the kings of the 11th dynasty ruled; Karnak is the northern half of its ruins.",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties",
+        "src-britannica-karnak",
+        "src-pleiades-786017"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Waset",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Diospolis Magna",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 25.664781,
+        "longitude": 32.631884,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-tanis",
+      "type": "Place",
+      "label": "Tanis",
+      "summary": "A city in the eastern Nile delta from which the kings of the 21st dynasty ruled.",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties",
+        "src-pleiades-727236"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 30.975453,
+        "longitude": 31.88362,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-sais",
+      "type": "Place",
+      "label": "Sais",
+      "summary": "A town in the western Nile delta from which the kings of the 26th dynasty ruled.",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties",
+        "src-pleiades-727217"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 30.96715,
+        "longitude": 30.774367,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-heracleopolis",
+      "type": "Place",
+      "label": "Heracleopolis",
+      "summary": "The city of Middle Egypt from which the kings of the 9th and 10th dynasties ruled.",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties",
+        "src-pleiades-736920"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Herakleopolis Magna",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 29.085505,
+        "longitude": 30.934575,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-giza",
+      "type": "Place",
+      "label": "Giza",
+      "summary": "The plateau on the west bank of the Nile where the three pyramids of the 4th dynasty and the Great Sphinx stand.",
+      "sourceIds": [
+        "src-britannica-pyramids-of-giza",
+        "src-pleiades-442962448"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 29.970056,
+        "longitude": 31.126682,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-karnak",
+      "type": "Place",
+      "label": "Karnak",
+      "summary": "The northern half of the ruins of Thebes, with the Great Temple of Amon; in ancient times called Ipet-Isut, “Chosen of Places”.",
+      "sourceIds": [
+        "src-britannica-karnak",
+        "src-pleiades-786017"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-egypt"
+        }
+      ],
+      "position": {
+        "latitude": 25.664781,
+        "longitude": 32.631884,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "work-great-pyramid",
+      "type": "Work",
+      "label": "The Great Pyramid of Giza",
+      "summary": "The northernmost, oldest and largest of the three pyramids of Giza, built for Khufu of the 4th dynasty; it was originally 147 metres high and counted among the Seven Wonders of the World.",
+      "sourceIds": [
+        "src-britannica-pyramids-of-giza"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "work-pyramid-of-khafre",
+      "type": "Work",
+      "label": "The pyramid of Khafre",
+      "summary": "The middle pyramid of Giza, built for Khafre of the 4th dynasty; the Great Sphinx lies near its valley temple.",
+      "sourceIds": [
+        "src-britannica-pyramids-of-giza"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "work-pyramid-of-menkaure",
+      "type": "Work",
+      "label": "The pyramid of Menkaure",
+      "summary": "The southernmost and last of the three pyramids of Giza, built for Menkaure of the 4th dynasty.",
+      "sourceIds": [
+        "src-britannica-pyramids-of-giza"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "work-step-pyramid-of-djoser",
+      "type": "Work",
+      "label": "The Step Pyramid of Djoser",
+      "summary": "The pyramid at Saqqara designed by Imhotep in the reign of Djoser of the 3rd dynasty.",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties",
+        "src-pleiades-922537087"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "work-rosetta-stone",
+      "type": "Work",
+      "label": "The Rosetta Stone",
+      "summary": "A basalt slab with a decree of Ptolemy V of 196 BCE in Greek, hieroglyphic and demotic Egyptian, composed by the priests of Memphis; found in August 1799, it served to decipher the Egyptian scripts, largely through Thomas Young and Jean-François Champollion.",
+      "sourceIds": [
+        "src-britannica-rosetta-stone"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "created",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 196
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-vespasian",
+      "type": "Person",
+      "label": "Vespasian",
+      "summary": "Roman emperor, first proclaimed at Alexandria on 1 July 69 CE in a move contrived by the prefect of Egypt.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-caracalla",
+      "type": "Person",
+      "label": "Caracalla",
+      "summary": "Roman emperor whose edict of 212 CE gave Roman citizenship to practically all subjects of the empire, Egyptians among them.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-diocletian",
+      "type": "Person",
+      "label": "Diocletian",
+      "summary": "Roman emperor, the last reigning emperor to visit Egypt, in 302 CE.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-amr-ibn-al-as",
+      "type": "Person",
+      "label": "ʿAmr ibn al-ʿĀṣ",
+      "summary": "The Arab general who conquered Egypt and marched into Alexandria by September 642.",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt",
+        "src-britannica-alexandria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-vespasian-proclaimed-at-alexandria",
+      "type": "Event",
+      "label": "Vespasian proclaimed at Alexandria",
+      "summary": "In the Year of the Four Emperors Vespasian was first proclaimed emperor at Alexandria on 1 July 69 CE, in a move contrived by Tiberius Julius Alexander, prefect of Egypt.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 69
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-alexandria"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-vespasian"
+        }
+      ]
+    },
+    {
+      "id": "event-edict-of-caracalla",
+      "type": "Event",
+      "label": "The edict of Caracalla",
+      "summary": "In 212 CE an edict of Caracalla gave Roman citizenship to practically all subjects of the empire, ending the distinction between citizens and noncitizens in Egypt.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 212
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-caracalla"
+        }
+      ]
+    },
+    {
+      "id": "event-palmyrene-egypt",
+      "type": "Event",
+      "label": "Palmyra holds Egypt",
+      "summary": "From 270 to 272 Egypt fell into the hands of the ruling dynasty of Palmyra, the only long time in the 3rd century when it was lost to the emperors.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 270
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 272
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-diocletian-visits-egypt",
+      "type": "Event",
+      "label": "Diocletian visits Egypt",
+      "summary": "In 302 CE Diocletian came to Egypt, the last reigning Roman emperor to visit it.",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 302
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-diocletian"
+        }
+      ]
+    },
+    {
+      "id": "event-ban-of-polytheist-cults",
+      "type": "Event",
+      "label": "The old cults forbidden",
+      "summary": "In 391 the practice of the local polytheistic religions of Egypt was officially made illegal.",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 391
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-persians-take-alexandria",
+      "type": "Event",
+      "label": "The Persians take Alexandria",
+      "summary": "The Persians advanced to the Nile delta and captured Alexandria; their occupation of Egypt was complete early in 619 and lasted until the peace of 628, when they withdrew.",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 619
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-alexandria"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-heliopolis-640",
+      "type": "Event",
+      "label": "The battle of Heliopolis",
+      "summary": "In July 640, during the Arab conquest of Egypt, 15,000 Arabs met 20,000 Egyptian defenders at Heliopolis.",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 640
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-capture-of-babylon-fortress",
+      "type": "Event",
+      "label": "The fortress of Babylon taken",
+      "summary": "The Arabs stormed and took Trajan’s old fortress of Babylon, where Old Cairo now stands, on 6 April 641 – the decisive step of the conquest.",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-treaty-of-alexandria-641",
+      "type": "Event",
+      "label": "Byzantium signs Egypt away",
+      "summary": "On 8 November 641 Byzantium signed Egypt away, with an armistice of eleven months for the emperor and the caliph to ratify the surrender.",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-arabs-enter-alexandria",
+      "type": "Event",
+      "label": "ʿAmr enters Alexandria",
+      "summary": "By 29 September 642 the Arab general ʿAmr ibn al-ʿĀṣ marched into Alexandria, and the conquest of Egypt, begun three years before, ended in a peaceful capitulation.",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt",
+        "src-britannica-alexandria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-alexandria"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-amr-ibn-al-as"
         }
       ]
     }
@@ -16409,9 +17071,9 @@
       }
     },
     {
-      "id": "relation-cambyses-ii-participant-in-persian-conquest-of-egypt",
+      "id": "relation-cambyses-ii-participant-in-conquest-of-egypt",
       "from": "person-cambyses-ii",
-      "to": "event-persian-conquest-of-egypt",
+      "to": "event-conquest-of-egypt",
       "type": "participantIn",
       "directionality": "directed",
       "label": "Took part in",
@@ -16427,8 +17089,8 @@
       }
     },
     {
-      "id": "relation-persian-conquest-of-egypt-during-egypt-late",
-      "from": "event-persian-conquest-of-egypt",
+      "id": "relation-conquest-of-egypt-during-egypt-late",
+      "from": "event-conquest-of-egypt",
       "to": "period-egypt-late",
       "type": "during",
       "directionality": "directed",
@@ -16445,9 +17107,9 @@
       }
     },
     {
-      "id": "relation-artaxerxes-iii-participant-in-artaxerxes-iii-reconquers-egypt",
+      "id": "relation-artaxerxes-iii-participant-in-reconquest-of-egypt",
       "from": "person-artaxerxes-iii",
-      "to": "event-artaxerxes-iii-reconquers-egypt",
+      "to": "event-reconquest-of-egypt",
       "type": "participantIn",
       "directionality": "directed",
       "label": "Took part in",
@@ -16462,8 +17124,8 @@
       }
     },
     {
-      "id": "relation-artaxerxes-iii-reconquers-egypt-during-egypt-late",
-      "from": "event-artaxerxes-iii-reconquers-egypt",
+      "id": "relation-reconquest-of-egypt-during-egypt-late",
+      "from": "event-reconquest-of-egypt",
       "to": "period-egypt-late",
       "type": "during",
       "directionality": "directed",
@@ -16579,6 +17241,502 @@
         "kind": "outside_the_story",
         "eventIds": []
       }
+    },
+    {
+      "id": "relation-alexander-iii-founder-of-alexandria",
+      "from": "person-alexander-iii",
+      "to": "place-alexandria",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-alexandria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexandria-capital-of-ptolemaic",
+      "from": "place-alexandria",
+      "to": "dynasty-ptolemaic",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-alexandria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-memphis-capital-of-egypt-1",
+      "from": "place-memphis",
+      "to": "dynasty-egypt-1",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-thebes-egypt-capital-of-egypt-11",
+      "from": "place-thebes-egypt",
+      "to": "dynasty-egypt-11",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tanis-capital-of-egypt-21",
+      "from": "place-tanis",
+      "to": "dynasty-egypt-21",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sais-capital-of-egypt-26",
+      "from": "place-sais",
+      "to": "dynasty-egypt-26",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-heracleopolis-capital-of-egypt-9",
+      "from": "place-heracleopolis",
+      "to": "dynasty-egypt-9",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-karnak-part-of-thebes-egypt",
+      "from": "place-karnak",
+      "to": "place-thebes-egypt",
+      "type": "partOf",
+      "directionality": "directed",
+      "label": "Part of",
+      "sourceIds": [
+        "src-britannica-karnak"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-khufu-commissioner-of-work-great-pyramid",
+      "from": "person-khufu",
+      "to": "work-great-pyramid",
+      "type": "commissionerOf",
+      "directionality": "directed",
+      "label": "Built for",
+      "sourceIds": [
+        "src-britannica-pyramids-of-giza"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-khafre-commissioner-of-work-pyramid-of-khafre",
+      "from": "person-khafre",
+      "to": "work-pyramid-of-khafre",
+      "type": "commissionerOf",
+      "directionality": "directed",
+      "label": "Built for",
+      "sourceIds": [
+        "src-britannica-pyramids-of-giza"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-menkaure-commissioner-of-work-pyramid-of-menkaure",
+      "from": "person-menkaure",
+      "to": "work-pyramid-of-menkaure",
+      "type": "commissionerOf",
+      "directionality": "directed",
+      "label": "Built for",
+      "sourceIds": [
+        "src-britannica-pyramids-of-giza"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-djoser-commissioner-of-work-step-pyramid-of-djoser",
+      "from": "person-djoser",
+      "to": "work-step-pyramid-of-djoser",
+      "type": "commissionerOf",
+      "directionality": "directed",
+      "label": "Built in the reign of",
+      "sourceIds": [
+        "src-britannica-list-of-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vespasian-participant-in-vespasian-proclaimed-at-alexandria",
+      "from": "person-vespasian",
+      "to": "event-vespasian-proclaimed-at-alexandria",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vespasian-proclaimed-at-alexandria-took-place-in-alexandria",
+      "from": "event-vespasian-proclaimed-at-alexandria",
+      "to": "place-alexandria",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vespasian-proclaimed-at-alexandria-during-egypt-roman-byzantine",
+      "from": "event-vespasian-proclaimed-at-alexandria",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-caracalla-participant-in-edict-of-caracalla",
+      "from": "person-caracalla",
+      "to": "event-edict-of-caracalla",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-edict-of-caracalla-during-egypt-roman-byzantine",
+      "from": "event-edict-of-caracalla",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-palmyrene-egypt-during-egypt-roman-byzantine",
+      "from": "event-palmyrene-egypt",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-diocletian-participant-in-diocletian-visits-egypt",
+      "from": "person-diocletian",
+      "to": "event-diocletian-visits-egypt",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-diocletian-visits-egypt-during-egypt-roman-byzantine",
+      "from": "event-diocletian-visits-egypt",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-roman-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ban-of-polytheist-cults-during-egypt-roman-byzantine",
+      "from": "event-ban-of-polytheist-cults",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-persians-take-alexandria-took-place-in-alexandria",
+      "from": "event-persians-take-alexandria",
+      "to": "place-alexandria",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-persians-take-alexandria-during-egypt-roman-byzantine",
+      "from": "event-persians-take-alexandria",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-heliopolis-640-during-egypt-roman-byzantine",
+      "from": "event-battle-of-heliopolis-640",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-capture-of-babylon-fortress-during-egypt-roman-byzantine",
+      "from": "event-capture-of-babylon-fortress",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-treaty-of-alexandria-641-during-egypt-roman-byzantine",
+      "from": "event-treaty-of-alexandria-641",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amr-ibn-al-as-participant-in-arabs-enter-alexandria",
+      "from": "person-amr-ibn-al-as",
+      "to": "event-arabs-enter-alexandria",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt",
+        "src-britannica-alexandria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arabs-enter-alexandria-took-place-in-alexandria",
+      "from": "event-arabs-enter-alexandria",
+      "to": "place-alexandria",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt",
+        "src-britannica-alexandria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-arabs-enter-alexandria-during-egypt-roman-byzantine",
+      "from": "event-arabs-enter-alexandria",
+      "to": "period-egypt-roman-byzantine",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-byzantine-egypt",
+        "src-britannica-alexandria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
     }
   ],
   "sources": [
@@ -16594,6 +17752,118 @@
       "id": "src-britannica-list-of-dynasties",
       "title": "List of dynasties of ancient Egypt – Britannica",
       "url": "https://www.britannica.com/topic/list-of-dynasties-of-ancient-Egypt",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-roman-byzantine-egypt",
+      "title": "Ancient Egypt: Roman and Byzantine Egypt (30 BCE–642 CE) – Britannica",
+      "url": "https://www.britannica.com/place/ancient-Egypt/Roman-and-Byzantine-Egypt-30-bce-642-ce",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-byzantine-egypt",
+      "title": "Ancient Egypt: Egypt’s role in the Byzantine Empire – Britannica",
+      "url": "https://www.britannica.com/place/ancient-Egypt/Egypts-role-in-the-Byzantine-Empire",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-alexandria",
+      "title": "Alexandria – Britannica",
+      "url": "https://www.britannica.com/place/Alexandria-Egypt",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-rosetta-stone",
+      "title": "Rosetta Stone – Britannica",
+      "url": "https://www.britannica.com/topic/Rosetta-Stone",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-karnak",
+      "title": "Karnak – Britannica",
+      "url": "https://www.britannica.com/place/Karnak",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-pyramids-of-giza",
+      "title": "Pyramids of Giza – Britannica",
+      "url": "https://www.britannica.com/topic/Pyramids-of-Giza",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-727070",
+      "title": "Pleiades: Alexandria",
+      "url": "https://pleiades.stoa.org/places/727070",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-736963",
+      "title": "Pleiades: Memphis",
+      "url": "https://pleiades.stoa.org/places/736963",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-786017",
+      "title": "Pleiades: Diospolis Magna/Thebai",
+      "url": "https://pleiades.stoa.org/places/786017",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-727236",
+      "title": "Pleiades: Tanis",
+      "url": "https://pleiades.stoa.org/places/727236",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-727217",
+      "title": "Pleiades: Sais",
+      "url": "https://pleiades.stoa.org/places/727217",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-736920",
+      "title": "Pleiades: Herakleopolis",
+      "url": "https://pleiades.stoa.org/places/736920",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-442962448",
+      "title": "Pleiades: Giza",
+      "url": "https://pleiades.stoa.org/places/442962448",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-922537087",
+      "title": "Pleiades: Pyramid of Djoser",
+      "url": "https://pleiades.stoa.org/places/922537087",
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0

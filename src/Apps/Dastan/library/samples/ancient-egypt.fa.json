@@ -9,7 +9,7 @@
   "entities": {
     "subject-ancient-egypt": {
       "label": "مصر",
-      "summary": "مصر باستان از شاهان پیش از یکپارچگی، در سی دودمان مانتو با پادشاهی‌های کهن، میانه و نو و دوره‌های میانی میان آن‌ها، شاهان پارسی و اسکندر، تا بطلمیوسیان و گشودن آن به دست روم در ۳۰ پیش از میلاد."
+      "summary": "مصر باستان از شاهان پیش از یکپارچگی، در سی دودمان مانتو با پادشاهی‌های کهن، میانه و نو و دوره‌های میانی میان آن‌ها، شاهان پارسی و اسکندر، بطلمیوسیان، و مصر رومی و بیزانسی تا گشودن آن به دست عرب‌ها در ۶۴۲ میلادی."
     },
     "office-king-of-egypt": {
       "label": "پادشاه مصر",
@@ -919,11 +919,11 @@
       "label": "بطلمیوس پانزدهم سزار",
       "summary": "پادشاه مصر از دودمان بطلمیوسی، فرمانروا از ۴۴ تا ۳۰ پیش از میلاد."
     },
-    "event-persian-conquest-of-egypt": {
+    "event-conquest-of-egypt": {
       "label": "گشودن مصر به دست پارسیان",
       "summary": "کمبوجیهٔ دوم در ۵۲۵ پیش از میلاد مصر را بخشی از شاهنشاهی پارس کرد؛ شاهان پارسی که دودمان بیست‌وهفتم مصر شمرده می‌شوند تا ۴۰۴ آن را در دست داشتند."
     },
-    "event-artaxerxes-iii-reconquers-egypt": {
+    "event-reconquest-of-egypt": {
       "label": "بازگشودن مصر به دست اردشیر سوم",
       "summary": "اردشیر سوم در ۳۴۳ پیش از میلاد مصر را باز زیر فرمان پارس آورد و به واپسین دودمان بومی پایان داد؛ جانشینانش تا آمدن اسکندر آن را نگه داشتند."
     },
@@ -938,6 +938,118 @@
     "event-egypt-becomes-roman": {
       "label": "رومی شدن مصر",
       "summary": "با مرگ کلئوپاترای هفتم و پسرش بطلمیوس پانزدهم در ۳۰ پیش از میلاد، مصر بخشی از امپراتوری روم شد."
+    },
+    "period-egypt-roman-byzantine": {
+      "label": "مصر رومی و بیزانسی",
+      "summary": "مصر در جایگاه استانی از روم از ۳۰ پیش از میلاد، که پس از بنیاد قسطنطنیه از آنجا اداره می‌شد، از ۶۱۹ تا ۶۲۸ به دست ایرانیان افتاد و سرانجام به دست عرب‌ها، که در ۶۴۲ میلادی به اسکندریه درآمدند."
+    },
+    "place-alexandria": {
+      "label": "اسکندریه",
+      "summary": "شهری که اسکندر بزرگ در ۳۳۲ پیش از میلاد بنیاد نهاد و تا تسلیمش به عرب‌ها در ۶۴۲ میلادی پایتخت مصر بود؛ نامدار به فانوس دریایی‌اش در جزیرهٔ فاروس و موزه‌اش با کتابخانهٔ بزرگ."
+    },
+    "place-memphis": {
+      "label": "ممفیس",
+      "summary": "پایتخت مصر باستان در سر دلتای نیل که شاید شاهان دودمان یکم بنیاد نهادند؛ کاهنانش فرمان سنگ روزتا را نوشتند."
+    },
+    "place-thebes-egypt": {
+      "label": "تبس",
+      "summary": "شهر مصر علیا، که مصریان واست می‌خواندند و شاهان دودمان یازدهم از آن فرمان می‌راندند؛ کرنک نیمهٔ شمالی ویرانه‌های آن است."
+    },
+    "place-tanis": {
+      "label": "تانیس",
+      "summary": "شهری در خاور دلتای نیل که شاهان دودمان بیست‌ویکم از آن فرمان می‌راندند."
+    },
+    "place-sais": {
+      "label": "سائیس",
+      "summary": "شهری در باختر دلتای نیل که شاهان دودمان بیست‌وششم از آن فرمان می‌راندند."
+    },
+    "place-heracleopolis": {
+      "label": "هراکلئوپولیس",
+      "summary": "شهر مصر میانه که شاهان دودمان‌های نهم و دهم از آن فرمان می‌راندند."
+    },
+    "place-giza": {
+      "label": "جیزه",
+      "summary": "فلاتی در کرانهٔ باختری نیل که سه هرم دودمان چهارم و ابوالهول بزرگ در آن جای دارند."
+    },
+    "place-karnak": {
+      "label": "کرنک",
+      "summary": "نیمهٔ شمالی ویرانه‌های تبس، با پرستشگاه بزرگ آمون؛ در روزگار باستان «ایپت‌ایسوت»، یعنی «برگزیدهٔ جای‌ها»، خوانده می‌شد."
+    },
+    "work-great-pyramid": {
+      "label": "هرم بزرگ جیزه",
+      "summary": "شمالی‌ترین، کهن‌ترین و بزرگ‌ترین سه هرم جیزه که برای خوفو از دودمان چهارم ساخته شد؛ در آغاز ۱۴۷ متر بلندی داشت و از عجایب هفت‌گانهٔ جهان شمرده می‌شد."
+    },
+    "work-pyramid-of-khafre": {
+      "label": "هرم خفرع",
+      "summary": "هرم میانی جیزه که برای خفرع از دودمان چهارم ساخته شد؛ ابوالهول بزرگ نزدیک پرستشگاه دره‌ای آن است."
+    },
+    "work-pyramid-of-menkaure": {
+      "label": "هرم منکاورع",
+      "summary": "جنوبی‌ترین و واپسین سه هرم جیزه که برای منکاورع از دودمان چهارم ساخته شد."
+    },
+    "work-step-pyramid-of-djoser": {
+      "label": "هرم پلکانی جوسر",
+      "summary": "هرمی در سقاره که ایمحوتپ در روزگار جوسر از دودمان سوم طراحی کرد."
+    },
+    "work-rosetta-stone": {
+      "label": "سنگ روزتا",
+      "summary": "تخته‌سنگی از بازالت با فرمانی از بطلمیوس پنجم از ۱۹۶ پیش از میلاد به یونانی و به خط هیروگلیف و دموتیک مصری، نوشتهٔ کاهنان ممفیس؛ در اوت ۱۷۹۹ یافت شد و برای خواندن خط‌های مصری به کار رفت، بیشتر به دست تامس یانگ و ژان‌فرانسوا شامپولیون."
+    },
+    "person-vespasian": {
+      "label": "وسپاسیان",
+      "summary": "امپراتور روم که نخستین بار در ۱ ژوئیهٔ ۶۹ میلادی با تدبیر فرماندار مصر در اسکندریه امپراتور خوانده شد."
+    },
+    "person-caracalla": {
+      "label": "کاراکالا",
+      "summary": "امپراتور روم که فرمانش در ۲۱۲ میلادی شهروندی روم را به تقریباً همهٔ اتباع امپراتوری، از جمله مصریان، داد."
+    },
+    "person-diocletian": {
+      "label": "دیوکلسین",
+      "summary": "امپراتور روم، واپسین امپراتور بر تخت که در ۳۰۲ میلادی به مصر آمد."
+    },
+    "person-amr-ibn-al-as": {
+      "label": "عمرو بن عاص",
+      "summary": "سردار عرب که مصر را گشود و تا سپتامبر ۶۴۲ به اسکندریه درآمد."
+    },
+    "event-vespasian-proclaimed-at-alexandria": {
+      "label": "امپراتور خوانده شدن وسپاسیان در اسکندریه",
+      "summary": "در سال چهار امپراتور، وسپاسیان نخستین بار در ۱ ژوئیهٔ ۶۹ میلادی در اسکندریه امپراتور خوانده شد، با تدبیر تیبریوس یولیوس الکساندر، فرماندار مصر."
+    },
+    "event-edict-of-caracalla": {
+      "label": "فرمان کاراکالا",
+      "summary": "در ۲۱۲ میلادی فرمانی از کاراکالا شهروندی روم را به تقریباً همهٔ اتباع امپراتوری داد و جدایی شهروند و ناشهروند را در مصر از میان برد."
+    },
+    "event-palmyrene-egypt": {
+      "label": "مصر در دست پالمیرا",
+      "summary": "از ۲۷۰ تا ۲۷۲ مصر به دست خاندان فرمانروای پالمیرا افتاد، تنها زمان درازی در سدهٔ سوم که از دست امپراتوران بیرون رفت."
+    },
+    "event-diocletian-visits-egypt": {
+      "label": "سفر دیوکلسین به مصر",
+      "summary": "در ۳۰۲ میلادی دیوکلسین به مصر آمد، واپسین امپراتور روم بر تخت که به آنجا سفر کرد."
+    },
+    "event-ban-of-polytheist-cults": {
+      "label": "ممنوع شدن آیین‌های کهن",
+      "summary": "در ۳۹۱ برگزاری آیین‌های چندخدایی بومی مصر به‌طور رسمی ممنوع شد."
+    },
+    "event-persians-take-alexandria": {
+      "label": "ایرانیان اسکندریه را می‌گیرند",
+      "summary": "ایرانیان تا دلتای نیل پیش آمدند و اسکندریه را گرفتند؛ گرفتن مصر در آغاز ۶۱۹ کامل شد و تا آشتی ۶۲۸ که بازگشتند ادامه یافت."
+    },
+    "event-battle-of-heliopolis-640": {
+      "label": "نبرد هلیوپولیس",
+      "summary": "در ژوئیهٔ ۶۴۰، در گشودن مصر به دست عرب‌ها، پانزده هزار عرب با بیست هزار مدافع مصری در هلیوپولیس رو‌به‌رو شدند."
+    },
+    "event-capture-of-babylon-fortress": {
+      "label": "گرفتن دژ بابلیون",
+      "summary": "عرب‌ها در ۶ آوریل ۶۴۱ دژ کهن تراژان در بابلیون، جای قاهرهٔ کهنهٔ امروز، را یورش‌وار گرفتند؛ گامی سرنوشت‌ساز در گشودن مصر."
+    },
+    "event-treaty-of-alexandria-641": {
+      "label": "واگذاری مصر به دست بیزانس",
+      "summary": "بیزانس در ۸ نوامبر ۶۴۱ مصر را واگذار کرد، با آتش‌بسی یازده‌ماهه تا امپراتور و خلیفه پیمان تسلیم را بپذیرند."
+    },
+    "event-arabs-enter-alexandria": {
+      "label": "درآمدن عمرو بن عاص به اسکندریه",
+      "summary": "تا ۲۹ سپتامبر ۶۴۲ سردار عرب، عمرو بن عاص، به اسکندریه درآمد و گشودن مصر، که سه سال پیش‌تر آغاز شده بود، با تسلیمی آرام پایان یافت."
     }
   },
   "relations": {
@@ -2069,16 +2181,16 @@
     "relation-ptolemy-i-founder-of-ptolemaic": {
       "label": "بنیادگذارِ"
     },
-    "relation-cambyses-ii-participant-in-persian-conquest-of-egypt": {
+    "relation-cambyses-ii-participant-in-conquest-of-egypt": {
       "label": "شرکت در"
     },
-    "relation-persian-conquest-of-egypt-during-egypt-late": {
+    "relation-conquest-of-egypt-during-egypt-late": {
       "label": "در دورهٔ"
     },
-    "relation-artaxerxes-iii-participant-in-artaxerxes-iii-reconquers-egypt": {
+    "relation-artaxerxes-iii-participant-in-reconquest-of-egypt": {
       "label": "شرکت در"
     },
-    "relation-artaxerxes-iii-reconquers-egypt-during-egypt-late": {
+    "relation-reconquest-of-egypt-during-egypt-late": {
       "label": "در دورهٔ"
     },
     "relation-alexander-iii-participant-in-alexander-takes-egypt": {
@@ -2097,6 +2209,93 @@
       "label": "شرکت در"
     },
     "relation-egypt-becomes-roman-during-egypt-macedonian-ptolemaic": {
+      "label": "در دورهٔ"
+    },
+    "relation-alexander-iii-founder-of-alexandria": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-alexandria-capital-of-ptolemaic": {
+      "label": "پایتختِ"
+    },
+    "relation-memphis-capital-of-egypt-1": {
+      "label": "پایتختِ"
+    },
+    "relation-thebes-egypt-capital-of-egypt-11": {
+      "label": "پایتختِ"
+    },
+    "relation-tanis-capital-of-egypt-21": {
+      "label": "پایتختِ"
+    },
+    "relation-sais-capital-of-egypt-26": {
+      "label": "پایتختِ"
+    },
+    "relation-heracleopolis-capital-of-egypt-9": {
+      "label": "پایتختِ"
+    },
+    "relation-karnak-part-of-thebes-egypt": {
+      "label": "بخشی از"
+    },
+    "relation-khufu-commissioner-of-work-great-pyramid": {
+      "label": "ساخته‌شده برای"
+    },
+    "relation-khafre-commissioner-of-work-pyramid-of-khafre": {
+      "label": "ساخته‌شده برای"
+    },
+    "relation-menkaure-commissioner-of-work-pyramid-of-menkaure": {
+      "label": "ساخته‌شده برای"
+    },
+    "relation-djoser-commissioner-of-work-step-pyramid-of-djoser": {
+      "label": "ساخته‌شده در روزگار"
+    },
+    "relation-vespasian-participant-in-vespasian-proclaimed-at-alexandria": {
+      "label": "شرکت در"
+    },
+    "relation-vespasian-proclaimed-at-alexandria-took-place-in-alexandria": {
+      "label": "رخ داد در"
+    },
+    "relation-vespasian-proclaimed-at-alexandria-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-caracalla-participant-in-edict-of-caracalla": {
+      "label": "شرکت در"
+    },
+    "relation-edict-of-caracalla-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-palmyrene-egypt-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-diocletian-participant-in-diocletian-visits-egypt": {
+      "label": "شرکت در"
+    },
+    "relation-diocletian-visits-egypt-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-ban-of-polytheist-cults-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-persians-take-alexandria-took-place-in-alexandria": {
+      "label": "رخ داد در"
+    },
+    "relation-persians-take-alexandria-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-battle-of-heliopolis-640-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-capture-of-babylon-fortress-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-treaty-of-alexandria-641-during-egypt-roman-byzantine": {
+      "label": "در دورهٔ"
+    },
+    "relation-amr-ibn-al-as-participant-in-arabs-enter-alexandria": {
+      "label": "شرکت در"
+    },
+    "relation-arabs-enter-alexandria-took-place-in-alexandria": {
+      "label": "رخ داد در"
+    },
+    "relation-arabs-enter-alexandria-during-egypt-roman-byzantine": {
       "label": "در دورهٔ"
     }
   }
