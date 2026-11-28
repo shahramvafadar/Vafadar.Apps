@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The kinds to look for in the search of a collection stand in columns, each box with its drawing and name
+  beside it, instead of a long column of wide boxes.
 - Disasters of nature in the histories: the drought about 2200 BCE, the great flood of the Yellow River, the
   severe winter at Rome, famines, the plague of Athens and other pestilences, the earthquake at Olympia, and the
   silver found at Laurion.
