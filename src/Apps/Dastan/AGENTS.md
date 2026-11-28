@@ -41,6 +41,11 @@ for Dastan is added here in the same commit as the work it came with.
   or of the tool of the editors, no launch profile and no browser on them, on one's own initiative. The automated
   tests – also those that start the site inside the test, and the browser tests – are not looking and run as
   before. What was not looked at for that reason is said so in the report and the documents.
+* **Myth and history in time** (2026-11-28): legendary and mythological figures and events are placed in time only
+  as [the chronology guidelines](docs/content-chronology-guidelines.md) say – narrative, literary, historical and
+  hypothetical chronology kept apart, a legend's date marked as tradition, a hypothesis never written as a date of
+  history. Until the format can mark a hypothetical placement (the proposal in those guidelines), none is written
+  into a collection.
 
 ## 3. Architecture
 

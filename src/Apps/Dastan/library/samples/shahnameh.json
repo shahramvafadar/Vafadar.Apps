@@ -1232,6 +1232,30 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-esfandiar",
+      "title": "Esfandīār (Kayanian prince) – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/esfandiar-1-son-gostasp/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-kayanian-ix",
+      "title": "Kayānīān ix. Kauui Vištāspa, Kay Wištāsp, Kay Goštāsb – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/kayanian-ix/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-kayanian-xiii",
+      "title": "Kayānīān xiii. Synchronism of the Kayanids and Near Eastern history – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/kayanian-xiii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -1879,9 +1903,10 @@
       "id": "character-manuchehr",
       "type": "Character",
       "label": "Manuchehr",
-      "summary": "A king of Iran in the Shahnameh, the 7th in its order of reigns.",
+      "summary": "A king of Iran in the Shahnameh, the 7th in its order of reigns. Medieval historians who fitted Iranian, Biblical and Classical history into one chronology placed Moses in his reign – the reckoning of the chroniclers, not a date of history.",
       "sourceIds": [
-        "src-ganjoor-manoochehr"
+        "src-ganjoor-manoochehr",
+        "src-iranica-kayanian-xiii"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2011,9 +2036,10 @@
       "id": "character-kay-qobad",
       "type": "Character",
       "label": "Kay Qobad",
-      "summary": "A king of Iran in the Shahnameh, the 11th in its order of reigns.",
+      "summary": "A king of Iran in the Shahnameh, the 11th in its order of reigns. Medieval historians thought he ruled at the time of Solomon; Biruni placed him after Esarhaddon – the reckoning of the chroniclers, not a date of history.",
       "sourceIds": [
-        "src-ganjoor-kqobad"
+        "src-ganjoor-kqobad",
+        "src-iranica-kayanian-xiii"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2044,9 +2070,10 @@
       "id": "character-kay-kavus",
       "type": "Character",
       "label": "Kay Kavus",
-      "summary": "A king of Iran in the Shahnameh, the 12th in its order of reigns.",
+      "summary": "A king of Iran in the Shahnameh, the 12th in its order of reigns. Biruni took him to be Nebuchadnezzar – the reckoning of the chroniclers, not a date of history.",
       "sourceIds": [
-        "src-ganjoor-kkavoos"
+        "src-ganjoor-kkavoos",
+        "src-iranica-kayanian-xiii"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2077,9 +2104,10 @@
       "id": "character-kay-khosrow",
       "type": "Character",
       "label": "Kay Khosrow",
-      "summary": "A king of Iran in the Shahnameh, the 13th in its order of reigns.",
+      "summary": "A king of Iran in the Shahnameh, the 13th in its order of reigns. Biruni identified him with the Koresh of the Bible – the reckoning of the chroniclers, not a date of history.",
       "sourceIds": [
-        "src-ganjoor-kkhosro"
+        "src-ganjoor-kkhosro",
+        "src-iranica-kayanian-xiii"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2110,9 +2138,10 @@
       "id": "character-lohrasp",
       "type": "Character",
       "label": "Lohrasp",
-      "summary": "A king of Iran in the Shahnameh, the 14th in its order of reigns.",
+      "summary": "A king of Iran in the Shahnameh, the 14th in its order of reigns. Biruni identified him with Cyrus – the reckoning of the chroniclers, not a date of history.",
       "sourceIds": [
-        "src-ganjoor-lohrasp"
+        "src-ganjoor-lohrasp",
+        "src-iranica-kayanian-xiii"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -2143,9 +2172,10 @@
       "id": "character-goshtasp",
       "type": "Character",
       "label": "Goshtasp",
-      "summary": "A king of Iran in the Shahnameh, the 15th in its order of reigns.",
+      "summary": "A king of Iran in the Shahnameh, the 15th in its order of reigns; the Kauui Vištāspa of the Avesta, the support of the religion of Zarathustra.",
       "sourceIds": [
-        "src-ganjoor-goshtasp"
+        "src-ganjoor-goshtasp",
+        "src-iranica-kayanian-ix"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -3746,9 +3776,10 @@
       "id": "character-esfandiar",
       "type": "Character",
       "label": "Esfandiar",
-      "summary": "A prince, son of Goshtasp, in the poem.",
+      "summary": "A prince, son of Goshtasp, champion of the faith of Zoroaster in the poem and in tradition, best known for his tragic combat with Rostam; his Avestan name is Spəntōδāta.",
       "sourceIds": [
-        "src-ganjoor-esfandyar-sh18"
+        "src-ganjoor-esfandyar-sh18",
+        "src-iranica-esfandiar"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -3842,15 +3873,35 @@
       "id": "character-rostam",
       "type": "Character",
       "label": "Rostam",
-      "summary": "The great hero of the poem, son of Zal.",
+      "summary": "The great hero of the poem, son of Zal and Rudabeh and grandson of Sam, of Zabulistan in Sistan, also called Tahamtan. The poem has him born in the reign of Manuchehr and fighting on until the reign of Goshtasp, when he meets Esfandiar. He is a figure of legend with no date in history: he and Zal are absent from the Avesta, and scholars trace his legend to the Sakas of Sistan.",
       "sourceIds": [
-        "src-ganjoor-akvan-sh1"
+        "src-ganjoor-akvan-sh1",
+        "src-ganjoor-manoochehr",
+        "src-ganjoor-goshtasp",
+        "src-iranica-esfandiar"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "role",
           "text": "The great hero of the poem, son of Zal."
+        }
+      ],
+      "names": [
+        {
+          "name": "Rostam-e Dastan",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Tahamtan",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Rustam",
+          "language": "en",
+          "kind": "alternative"
         }
       ]
     },

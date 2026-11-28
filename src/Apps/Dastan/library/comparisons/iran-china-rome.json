@@ -5664,7 +5664,7 @@
         },
         {
           "key": "roman-monarchy",
-          "label": "The Roman monarchy",
+          "label": "The Roman monarchy (tradition)",
           "summary": "The kings and their years rest on tradition.",
           "time": {
             "kind": "period",
@@ -6221,7 +6221,7 @@
         },
         {
           "key": "founding-of-rome",
-          "label": "The founding of Rome",
+          "label": "The founding of Rome (tradition)",
           "summary": "According to tradition Romulus founded Rome on the Palatine on 21 April 753 BCE; Livius calls this Varronian date an artificial calculation.",
           "time": {
             "kind": "occurrence",

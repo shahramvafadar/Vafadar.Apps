@@ -4,6 +4,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Rostam and the kings around him say where they stand in time without a false date: the reigns of the poem he
+  spans, his absence from the Avesta and the Saka origin of his legend, Esfandiar and Goshtasp as the Avesta
+  names them, and the medieval synchronisms (Moses under Manuchehr, Biruni's Kay Khosrow as Koresh) as the
+  chroniclers' reckoning. The founding of Rome and the Roman monarchy are marked as tradition on the timeline.
 - The content review report lists what was checked and corrected, what no source yet carries, and what the owner
   decides.
 - The steps of the seven Shahnameh stories are compared with their sections on Ganjoor, and the reading stages
