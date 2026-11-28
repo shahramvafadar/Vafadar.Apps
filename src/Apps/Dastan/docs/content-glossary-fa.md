@@ -1,6 +1,6 @@
 # Persian names of the collections
 
-The forms in which the Persian translations of the histories of Iran, Rome and China and of the Shahnameh write
+The forms in which the Persian translations of the histories of Iran, Rome, China and Egypt and of the Shahnameh write
 names, gathered from the collections themselves (review D3 of `content-plan-histories.md`, 2026-11-28). A new
 translation takes its names from here; where a name is not yet here, it follows the rules below and is added.
 
@@ -14,6 +14,10 @@ translation takes its names from here; where a name is not yet here, it follows 
 * **China**: pinyin read aloud – zh and j as ج, q and ch as چ, x as ش, z as ز, with the established forms ژو
   (Zhou) and ژنگ‌ژو (Zhengzhou); the parts of a temple name joined by a half-space (تای‌زونگ), the house after it
   (تای‌زونگ تانگ).
+* **Egypt**: the forms Persian books on ancient Egypt use where they are settled (خوفو, خفرع, جوسر, رامسس,
+  تحوتمس, آمنحوتپ, هتشپسوت, توت‌عنخ‌آمون, بطلمیوس, کلئوپاترا), otherwise the name read aloud with its parts joined
+  by a half-space (سبک‌حتپ, حتپ‌سخموی), numbers written out (رامسس دوم); a Persian or Macedonian king keeps the
+  form of the Iran collection (کمبوجیهٔ دوم, اسکندر سوم مقدونی).
 * **The Shahnameh**: the poem's own forms, as on Ganjoor – کی‌کاووس, کیخسرو, تهمورث, هفت‌خوان; a champion
   who shares a king's name keeps the poem's distinction (بهرام the champion, بهرام گور the king).
 * A summary in Persian says no more than the English; a name in it is written as in its own entry.
@@ -40,6 +44,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | The Sasanians | ساسانیان |
 | The Seleucids | سلوکیان |
 | The Šutrukids | شوتروکیان |
+| The Tahirids | طاهریان |
 | The Ziyarids | زیاریان |
 
 ### People
@@ -49,6 +54,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Abu Muslim | ابومسلم خراسانی |
 | Achaemenes | هخامنش |
 | Ahmad b. Buya Muʿizz al-Dawla | معزالدوله احمد بویه |
+| Ahmad II | احمد دوم |
 | al-Biruni | ابوریحان بیرونی |
 | al-Mansur | منصور |
 | al-Maʾmun | مأمون |
@@ -87,6 +93,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Bahram V | بهرام پنجم |
 | Bahram VI | بهرام ششم |
 | Bardiya | بردیا |
+| Bisotun | بیستون |
 | Bistam | بستام |
 | Buran | پوران |
 | Cambyses I | کمبوجیهٔ یکم |
@@ -134,6 +141,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Mahmud of Ghazni | محمود غزنوی |
 | Mandane | ماندانا |
 | Mani | مانی |
+| Mansur II | منصور دوم |
 | Marcus Licinius Crassus | مارکوس لیکینیوس کراسوس |
 | Mardavij b. Ziyar | مرداویج زیاری |
 | Masʿud I | مسعود یکم |
@@ -142,10 +150,15 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Mithradates IV | مهرداد چهارم |
 | Mithradates V | مهرداد پنجم |
 | Monḏer III | منذر سوم |
+| Muhammad b. Tahir | محمد بن طاهر |
 | Musa | موزا |
+| Muʾayyad al-Dawla | مؤیدالدوله |
 | Narseh | نرسه |
+| Nasr I | نصر یکم |
 | Nasr II | نصر دوم |
 | Noʿmān III | نعمان سوم |
+| Nuh I | نوح یکم |
+| Nuh II | نوح دوم |
 | Orodes I | ارد یکم |
 | Orodes II | ارد دوم |
 | Orodes III | ارد سوم |
@@ -182,6 +195,9 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Sogdianus | سغدیانوس |
 | Surena | سورنا |
 | Šutur-Nahhunte | شوتور نهونته |
+| Tahir b. Husayn | طاهر بن حسین (ذوالیمینین) |
+| Tahir b. ʿAbdallah | طاهر بن عبدالله |
+| Talha b. Tahir | طلحه بن طاهر |
 | Teispes | چیش‌پیش |
 | Untaš-Napiriša | اونتش‌نپیریشا |
 | Valerian | والرین |
@@ -202,7 +218,11 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Yazdgard III | یزدگرد سوم |
 | Yaʿqub b. Layth | یعقوب لیث صفاری |
 | Zamasp | جاماسب |
+| ʿAbd al-Malik I | عبدالملک یکم |
+| ʿAbd al-Malik II | عبدالملک دوم |
+| ʿAbdallah b. Tahir | عبدالله بن طاهر |
 | ʿAli b. Buya ʿImad al-Dawla | عمادالدوله علی بویه |
+| ʿAli Fakhr al-Dawla | فخرالدوله علی |
 | ʿAmr b. Layth | عمرو لیث |
 | ʿAmr b. ʿAdi | عمرو بن عدی |
 
@@ -358,6 +378,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Leo V the Armenian | لئون پنجم ارمنی |
 | Leo VI the Wise | لئون ششم فرزانه |
 | Leontius | لئونتیوس |
+| Libius Severus | لیبیوس سِوِروس |
 | Licinius | لیکینیوس |
 | Livia | لیویا |
 | Livy | تیتوس لیویوس |
@@ -388,11 +409,13 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Odoacer | ادواکر |
 | Olybrius | اولیبریوس |
 | Otho | اوتو |
+| Ovid | اووید |
 | Pertinax | پرتیناکس |
 | Petronius Maximus | پترونیوس ماکسیموس |
 | Philip the Arab | فیلیپ عرب |
 | Philippikos Vardan | فیلیپیکوس |
 | Phocas | فوکاس |
+| Polybius | پولیبیوس |
 | Pompey | پومپه |
 | Probus | پروبوس |
 | Procopius | پروکوپیوس |
@@ -412,6 +435,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Stauracius | استاوراکیوس |
 | Sulla | سولا |
 | Tacitus | تاسیتوس |
+| Tacitus the historian | تاسیتوس تاریخ‌نگار |
 | Tarquinius Priscus | تارکوینیوس پریسکوس |
 | Tarquinius Superbus | تارکوینیوس مغرور |
 | Theodoric the Great | تئودوریک بزرگ |
@@ -506,6 +530,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 
 | English | Persian |
 |---|---|
+| Aidi of Tang | آی‌دی تانگ |
 | An Lushan | آن لوشان |
 | Bai Juyi | بای جوی‌یی |
 | Ban Chao | بان چائو |
@@ -547,6 +572,8 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Gan Ying | گان یینگ |
 | Gaozong of Tang | گائوزونگ تانگ |
 | Gaozu of Tang (Li Yuan) | گائوزو تانگ (لی یوان) |
+| Gaozu of the Later Han | گائوزوی هان پسین |
+| Gaozu of the Later Jin | گائوزوی جین پسین |
 | Gongdi of Sui | گونگ‌دی سویی |
 | Gu Kaizhi | گو کای‌جی |
 | Han Feizi | هان فی‌زی |
@@ -602,10 +629,12 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Yangdi of Sui | یانگ‌دی سویی |
 | Yizong of Tang | یی‌زونگ تانگ |
 | Zhang Qian | ژانگ چیان |
+| Zhaozong of Tang | جائو‌زونگ تانگ |
 | Zhenzong of Song | جن‌زونگ سونگ |
 | Zhongzong of Tang | جونگ‌زونگ تانگ |
 | Zhu Wen | جو ون |
 | Zhuangzi | جوانگ‌زی |
+| Zhuangzong of the Later Tang | جوانگ‌زونگ تانگ پسین |
 | Ziying | زی‌یینگ |
 
 ### Places and regions
@@ -618,6 +647,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Chu | چو (Chu) |
 | Hao | هائو |
 | Jiankang (Nanjing) | جیان‌کانگ (نانجینگ) |
+| Kaifeng | کای‌فنگ |
 | Kashgar | کاشغر |
 | Lu | لو (Lu) |
 | Luoyang | لوئویانگ |
@@ -627,6 +657,240 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Xianyang | شیان‌یانگ |
 | Yan | یان (Yan) |
 | Zhengzhou | ژنگ‌ژو |
+
+## Egypt
+
+### Houses and dynasties
+
+| English | Persian |
+|---|---|
+| Dynasty 0 | دودمان صفر |
+| The 11th dynasty | دودمان یازدهم |
+| The 12th dynasty | دودمان دوازدهم |
+| The 13th dynasty | دودمان سیزدهم |
+| The 14th dynasty | دودمان چهاردهم |
+| The 15th dynasty | دودمان پانزدهم |
+| The 16th dynasty | دودمان شانزدهم |
+| The 17th dynasty | دودمان هفدهم |
+| The 18th dynasty | دودمان هجدهم |
+| The 19th dynasty | دودمان نوزدهم |
+| The 1st dynasty | دودمان یکم |
+| The 20th dynasty | دودمان بیستم |
+| The 21st dynasty | دودمان بیست‌ویکم |
+| The 22nd dynasty | دودمان بیست‌ودوم |
+| The 23rd dynasty | دودمان بیست‌وسوم |
+| The 24th dynasty | دودمان بیست‌وچهارم |
+| The 25th dynasty | دودمان بیست‌وپنجم |
+| The 26th dynasty | دودمان بیست‌وششم |
+| The 27th dynasty (the Persian kings) | دودمان بیست‌وهفتم (شاهان پارسی) |
+| The 28th dynasty | دودمان بیست‌وهشتم |
+| The 29th dynasty | دودمان بیست‌ونهم |
+| The 2nd dynasty | دودمان دوم |
+| The 30th dynasty | دودمان سی‌ام |
+| The 3rd dynasty | دودمان سوم |
+| The 4th dynasty | دودمان چهارم |
+| The 5th dynasty | دودمان پنجم |
+| The 6th dynasty | دودمان ششم |
+| The 7th dynasty | دودمان هفتم |
+| The 8th dynasty | دودمان هشتم |
+| The 9th and 10th dynasties | دودمان‌های نهم و دهم |
+| The Macedonian kings | شاهان مقدونی |
+| The Ptolemies | بطلمیوسیان |
+| The second Persian period | دوره دوم پارسی |
+
+### People
+
+| English | Persian |
+|---|---|
+| Achoris | هاکوریس |
+| Aha | آها |
+| Ahmose I | احمس یکم |
+| Alexander III of Macedon | اسکندر سوم مقدونی |
+| Alexander IV | اسکندر چهارم |
+| Amasis | آماسیس |
+| Amenemhet I | آمنمحات یکم |
+| Amenemhet II | آمنمحات دوم |
+| Amenemhet III | آمنمحات سوم |
+| Amenemhet IV | آمنمحات چهارم |
+| Amenemhet VII | آمنمحات هفتم |
+| Amenemnisut | آمنم‌نیسو |
+| Amenemope | آمنموپه |
+| Amenhotep I | آمنحوتپ یکم |
+| Amenhotep II | آمنحوتپ دوم |
+| Amenhotep III | آمنحوتپ سوم |
+| Amenhotep IV | آمنحوتپ چهارم (آخناتون) |
+| Amenmesses | آمنمسس |
+| Amyrtaeus | آمیرتائوس |
+| Apopis | آپوپیس |
+| Apries | آپریس |
+| Arses | اردشیر چهارم |
+| Artaxerxes I | اردشیر یکم |
+| Artaxerxes III Ochus | اردشیر سوم |
+| Aya | آیا |
+| Berenice III | برنیکه سوم |
+| Berenice IV | برنیکه چهارم |
+| Bikheris | بیخریس |
+| Bocchoris | بوخوریس |
+| Cambyses II | کمبوجیهٔ دوم |
+| Cleopatra III | کلئوپاترای سوم |
+| Cleopatra VII Thea Philopator | کلئوپاترای هفتم |
+| Darius I | داریوش یکم (داریوش بزرگ) |
+| Darius II | داریوش دوم |
+| Darius III Codoman | داریوش سوم |
+| Den | دن |
+| Djedkare Izezi | جدکارع ایززی |
+| Djer | جر |
+| Djoser | جوسر |
+| Hatshepsut | هتشپسوت |
+| Hetepsekhemwy | حتپ‌سخموی |
+| Horemheb | حورمحب |
+| Huni | حونی |
+| Ibiau | ایبیاو |
+| Ini | اینی |
+| Inyotef I | اینیوتف یکم |
+| Inyotef II | اینیوتف دوم |
+| Inyotef III | اینیوتف سوم |
+| Inyotef V | اینیوتف پنجم |
+| Itnetjer Ay | آی |
+| Iuput I | ایوپوت یکم |
+| Kamose | کاموس |
+| Khafre | خفرع |
+| Khamudi | خامودی |
+| Khasekhemwy | خع‌سخموی |
+| Khaʿba | خع‌با |
+| Khendjer | خنجر |
+| Khian | خیان |
+| Khufu | خوفو |
+| Menkauhor | منکاوحور |
+| Menkaure | منکاورع |
+| Mentuhotep I | منتوحتپ یکم |
+| Mentuhotep II | منتوحتپ دوم |
+| Mentuhotep III | منتوحتپ سوم |
+| Mentuhotep IV | منتوحتپ چهارم |
+| Merneptah | مرنپتاح |
+| Narmer | نارمر |
+| Nebka | نبکا |
+| Necho II | نکو دوم |
+| Nectanebo I | نختانبو یکم |
+| Nectanebo II | نختانبو دوم |
+| Neferhotep I | نفرحتپ یکم |
+| Neferirkare | نفرایرکارع |
+| Neferirkare Kakai | نفرایرکارع کاکای |
+| Neferkauhor | نفرکاوحور |
+| Neferkaure | نفرکاورع |
+| Neferneferuaten | نفرنفروآتن |
+| Nemtyemzaef II | نمتی‌ام‌ساف دوم |
+| Nemtyemzaef Merenre | نمتی‌ام‌ساف مرن‌رع |
+| Nepherites | نفریتس |
+| Nepherites II | نفریتس دوم |
+| Neuserre Ini | نی‌اوسررع اینی |
+| Nynetjer | نی‌نتجر |
+| Osorkon | اوسورکون |
+| Osorkon I | اوسورکون یکم |
+| Osorkon II | اوسورکون دوم |
+| Osorkon III | اوسورکون سوم |
+| Osorkon IV | اوسورکون چهارم |
+| Pami | پامی |
+| Pepi I | پپی یکم |
+| Pepi II | پپی دوم |
+| Peribsen | پریبسن |
+| Petubaste II | پتوباست دوم |
+| Philip III | فیلیپ سوم |
+| Piye | پیه |
+| Psammuthis | پساموتیس |
+| Psamtik I | پسامتیک یکم |
+| Psamtik II | پسامتیک دوم |
+| Psamtik III | پسامتیک سوم |
+| Psusennes I | پسوسنس یکم |
+| Psusennes II | پسوسنس دوم |
+| Ptolemy I Soter I | بطلمیوس یکم سوتر |
+| Ptolemy II Philadelphus | بطلمیوس دوم فیلادلفوس |
+| Ptolemy III Euergetes I | بطلمیوس سوم ائورگتس |
+| Ptolemy IV Philopator | بطلمیوس چهارم فیلوپاتور |
+| Ptolemy IX Soter II Lathyros | بطلمیوس نهم سوتر دوم |
+| Ptolemy V Epiphanes | بطلمیوس پنجم اپیفانس |
+| Ptolemy VI Philometor | بطلمیوس ششم فیلومتور |
+| Ptolemy VIII Euergetes II Physcon | بطلمیوس هشتم ائورگتس دوم |
+| Ptolemy X Alexander I | بطلمیوس دهم |
+| Ptolemy XI Alexander II | بطلمیوس یازدهم |
+| Ptolemy XII Auletes | بطلمیوس دوازدهم اولتس |
+| Ptolemy XIII Theos Philopator | بطلمیوس سیزدهم |
+| Ptolemy XIV Theos Philopator II | بطلمیوس چهاردهم |
+| Ptolemy XV Caesar | بطلمیوس پانزدهم سزار |
+| Qaʿa | قاعا |
+| Ramses I | رامسس یکم |
+| Ramses II | رامسس دوم |
+| Ramses III | رامسس سوم |
+| Ramses IV | رامسس چهارم |
+| Ramses IX | رامسس نهم |
+| Ramses V | رامسس پنجم |
+| Ramses VI | رامسس ششم |
+| Ramses VII | رامسس هفتم |
+| Ramses VIII | رامسس هشتم |
+| Ramses X | رامسس دهم |
+| Ramses XI | رامسس یازدهم |
+| Redjedef | جدف‌رع |
+| Reneferef | رع‌نفرف |
+| Reʿneb | رع‌نب |
+| Sahure | ساحورع |
+| Sebeknefru | سبک‌نفرو |
+| Sekhemib | سخم‌ایب |
+| Sekhemkhet | سخم‌خت |
+| Semerkhet | سمرخت |
+| Sened | سند |
+| Serpent | «مار» |
+| Sesostris I | سنوسرت یکم |
+| Sesostris II | سنوسرت دوم |
+| Sesostris III | سنوسرت سوم |
+| Sethnakht | ست‌نخت |
+| Seti I | ستی یکم |
+| Seti II | ستی دوم |
+| Shabaka | شاباکا |
+| Shebitku | شبیتکو |
+| Shepseskaf | شپسس‌کاف |
+| Shepseskare Izi | شپسس‌کارع ایزی |
+| Sheshonk I | ششنق یکم |
+| Sheshonk II | ششنق دوم |
+| Sheshonk III | ششنق سوم |
+| Sheshonk IIIa | ششنق سوم الف |
+| Sheshonk V | ششنق پنجم |
+| Siamun | سیامون |
+| Siptah | سیپتاح |
+| Smendes | سمندس |
+| Smenkhkare | سمنخ‌کارع |
+| Snefru | اسنفرو |
+| Sobekhotep II | سبک‌حتپ دوم |
+| Sobekhotep III | سبک‌حتپ سوم |
+| Sobekhotep IV | سبک‌حتپ چهارم |
+| Sobekhotep V | سبک‌حتپ پنجم |
+| Tachos | تاخوس |
+| Taharqa | طهارقا |
+| Takelot I | تکلوت یکم |
+| Takelot II | تکلوت دوم |
+| Takelot III | تکلوت سوم |
+| Tantamani | تانوت‌آمانی |
+| Tausert | تاوسرت |
+| Taʿo I | تائو یکم |
+| Taʿo II | تائو دوم |
+| Tefnakhte | تفنخت |
+| Teti | تتی |
+| Thutmose I | تحوتمس یکم |
+| Thutmose II | تحوتمس دوم |
+| Thutmose III | تحوتمس سوم |
+| Thutmose IV | تحوتمس چهارم |
+| Tutankhamun | توت‌عنخ‌آمون |
+| Unas | اوناس |
+| Userkaf | اوسرکاف |
+| Userkare | اوسرکارع |
+| Wegaf | وگاف |
+| Xerxes I | خشایارشا یکم |
+| ʿAdjib | عجیب |
+
+### Places and regions
+
+| English | Persian |
+|---|---|
+| Egypt | مصر |
 
 ## The Shahnameh
 
