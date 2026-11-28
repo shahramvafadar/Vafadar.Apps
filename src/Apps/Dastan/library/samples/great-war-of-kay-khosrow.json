@@ -1,0 +1,2075 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "great-war-of-kay-khosrow",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-great-war",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-28",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-mahmood-2026-11-28",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the great war of Kay Khosrow with Afrasiab, sections 1 to 47.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/mahmood",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "The great war of Kay Khosrow with Afrasiab as the poem tells it, with its praise of Sultan Mahmud, through the death of Afrasiab, the death of Kavus and Kay Khosrow’s renunciation and disappearance, to the enthronement of Lohrasp; the scenes are drawn from groups of sections, not verse by verse.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "The elephant throne"
+      },
+      {
+        "level": 1,
+        "label": "Shideh"
+      },
+      {
+        "level": 2,
+        "label": "Gang-dezh"
+      },
+      {
+        "level": 3,
+        "label": "Makran and the sea"
+      },
+      {
+        "level": 4,
+        "label": "Hom"
+      },
+      {
+        "level": 5,
+        "label": "The end of Afrasiab"
+      },
+      {
+        "level": 6,
+        "label": "The king’s departure"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-mahmood-index",
+      "title": "Ganjoor: the great war of Kay Khosrow, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-mahmood-s01",
+      "title": "Ganjoor: بخش ۱ - اندر ستایش سلطان محمود",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱ - اندر ستایش سلطان محمود"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s02",
+      "title": "Ganjoor: بخش ۲ - نشستن کیخسرو بر تخت پیل و زدن مهره فراخوان مهتران و آرایش سپاه برای جنگ افراسیاب",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲ - نشستن کیخسرو بر تخت پیل و زدن مهره فراخوان مهتران و آرایش سپاه برای جنگ افراسیاب"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s03",
+      "title": "Ganjoor: بخش ۳ - خبر شکست و مرگ خویشان: شیون افراسیاب سوگند کین و آراستن سپاه بر جیحون",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳ - خبر شکست و مرگ خویشان: شیون افراسیاب سوگند کین و آراستن سپاه بر جیحون"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s04",
+      "title": "Ganjoor: بخش ۴ - لشکرکشی کیخسرو به رویارویی افراسیاب خندق و دو روز خاموشی و گفت‌وگوی پشنگ و شیده در شیوه نبرد",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴ - لشکرکشی کیخسرو به رویارویی افراسیاب خندق و دو روز خاموشی و گفت‌وگوی پشنگ و شیده در شیوه نبرد"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s05",
+      "title": "Ganjoor: بخش ۵ - پیام آشتی افراسیاب به دست شیده پند سپاه و پافشاری کیخسرو بر کین سیاوش",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۵ - پیام آشتی افراسیاب به دست شیده پند سپاه و پافشاری کیخسرو بر کین سیاوش"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s06",
+      "title": "Ganjoor: بخش ۶ - پاسخ کیخسرو به شیده: پیشنهاد نبرد تن‌به‌تن هراس افراسیاب از خواب و اصرار پسر بر جنگ",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۶ - پاسخ کیخسرو به شیده: پیشنهاد نبرد تن‌به‌تن هراس افراسیاب از خواب و اصرار پسر بر جنگ"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s07",
+      "title": "Ganjoor: بخش ۷ - نبرد دور از سپاه کیخسرو و شیده کشتن شیده و سوگ افراسیاب",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۷ - نبرد دور از سپاه کیخسرو و شیده کشتن شیده و سوگ افراسیاب"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s08",
+      "title": "Ganjoor: بخش ۸ - چیرگی قارن بر جهن نیایش کیخسرو و گریز شبانگاهی افراسیاب",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۸ - چیرگی قارن بر جهن نیایش کیخسرو و گریز شبانگاهی افراسیاب"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s09",
+      "title": "Ganjoor: بخش ۹ - گریز شبانه افراسیاب از جیحون نیایش کیخسرو و دخمه کشتگان ایران",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۹ - گریز شبانه افراسیاب از جیحون نیایش کیخسرو و دخمه کشتگان ایران"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s10",
+      "title": "Ganjoor: بخش ۱۰ - نامه سه رزم به کاووس گریز افراسیاب به گنگ و رسیدن کیخسرو به گلزریون",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۰ - نامه سه رزم به کاووس گریز افراسیاب به گنگ و رسیدن کیخسرو به گلزریون"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s11",
+      "title": "Ganjoor: بخش ۱۱ - نبرد کیخسرو و افراسیاب: دعای شاه و باد سخت گریز به بهشت گنگ و نامه به فغفور چین",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۱ - نبرد کیخسرو و افراسیاب: دعای شاه و باد سخت گریز به بهشت گنگ و نامه به فغفور چین"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s12",
+      "title": "Ganjoor: بخش ۱۲ - رسیدن کیخسرو به گنگ‌دژ گردش بر حصار و آرایش سپاه برای ویرانی باره افراسیاب",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۲ - رسیدن کیخسرو به گنگ‌دژ گردش بر حصار و آرایش سپاه برای ویرانی باره افراسیاب"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s13",
+      "title": "Ganjoor: بخش ۱۳ - آمدن جهن از دژ و گزاردن پیام افراسیاب به کیخسرو: پشیمانی از خون سیاوش پیشنهاد آشتی و تهدید جنگ",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh13",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۳ - آمدن جهن از دژ و گزاردن پیام افراسیاب به کیخسرو: پشیمانی از خون سیاوش پیشنهاد آشتی و تهدید جنگ"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s14",
+      "title": "Ganjoor: بخش ۱۴ - پاسخ کیخسرو به پیام افراسیاب: رد چاپلوسی یادآوری کشتن سیاوش و پیمان شمشیر تا رستخیز",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۴ - پاسخ کیخسرو به پیام افراسیاب: رد چاپلوسی یادآوری کشتن سیاوش و پیمان شمشیر تا رستخیز"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s15",
+      "title": "Ganjoor: بخش ۱۵ - فتح گنگ‌دژ و گریز نهانی افراسیاب زاری زنان توران و بخشایش کیخسرو",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh15",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۵ - فتح گنگ‌دژ و گریز نهانی افراسیاب زاری زنان توران و بخشایش کیخسرو"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s16",
+      "title": "Ganjoor: بخش ۱۶ - نامه فتح گلزریون و گنگ هم‌پیمانی افراسیاب با فغفور چین و آرایش دو سپاه",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh16",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۶ - نامه فتح گلزریون و گنگ هم‌پیمانی افراسیاب با فغفور چین و آرایش دو سپاه"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s17",
+      "title": "Ganjoor: بخش ۱۷ - پیشنهاد نبرد تن‌به‌تن افراسیاب رد خسرو به رای رستم و کمین شبیخون",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh17",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۷ - پیشنهاد نبرد تن‌به‌تن افراسیاب رد خسرو به رای رستم و کمین شبیخون"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s18",
+      "title": "Ganjoor: بخش ۱۸ - شکست شبیخون افراسیاب پوزش فغفور و گریختن شاه توران از آب زره به گنگ‌دژ",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh18",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۸ - شکست شبیخون افراسیاب پوزش فغفور و گریختن شاه توران از آب زره به گنگ‌دژ"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s19",
+      "title": "Ganjoor: بخش ۱۹ - نامه گشودن دژ افراسیاب نزد کاووس نیایش شاه بند گرسیوز و خلعت گیو",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh19",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۹ - نامه گشودن دژ افراسیاب نزد کاووس نیایش شاه بند گرسیوز و خلعت گیو"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s20",
+      "title": "Ganjoor: بخش ۲۰ - نامه به کیخسرو در گنگ پذیرایی خاقان و فغفور و سرپیچی شاه مکران",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh20",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۰ - نامه به کیخسرو در گنگ پذیرایی خاقان و فغفور و سرپیچی شاه مکران"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s21",
+      "title": "Ganjoor: بخش ۲۱ - پیروزی کیخسرو بر شاه مکران خاکسپاری او گذر از دریا و زاری بر باره سیاوش",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh21",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۱ - پیروزی کیخسرو بر شاه مکران خاکسپاری او گذر از دریا و زاری بر باره سیاوش"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s22",
+      "title": "Ganjoor: بخش ۲۲ - گریختن شبانه افراسیاب از گنگ سوگ سیاوش و بازگشت کیخسرو از چین به سوی ایران",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh22",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۲ - گریختن شبانه افراسیاب از گنگ سوگ سیاوش و بازگشت کیخسرو از چین به سوی ایران"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s23",
+      "title": "Ganjoor: بخش ۲۳ - بازگشت کیخسرو از بلخ دیدار با کاووس و نیایش دو شاه در آذرگشسب",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh23",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۳ - بازگشت کیخسرو از بلخ دیدار با کاووس و نیایش دو شاه در آذرگشسب"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s24",
+      "title": "Ganjoor: بخش ۲۴ - پناه افراسیاب به هنگ بستن او به دست هوم بخشایش کمند و گریز به دریا",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh24",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۴ - پناه افراسیاب به هنگ بستن او به دست هوم بخشایش کمند و گریز به دریا"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s25",
+      "title": "Ganjoor: بخش ۲۵ - گریختن افراسیاب به دریای چیچست ناله گرسیوز و گرفتن دوباره او به دست هوم",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh25",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۵ - گریختن افراسیاب به دریای چیچست ناله گرسیوز و گرفتن دوباره او به دست هوم"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s26",
+      "title": "Ganjoor: بخش ۲۶ - کشتن افراسیاب و گرسیوز به دست کیخسرو نیایش در آذرگشسب و داد و دهش بر جهان",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh26",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۶ - کشتن افراسیاب و گرسیوز به دست کیخسرو نیایش در آذرگشسب و داد و دهش بر جهان"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s27",
+      "title": "Ganjoor: بخش ۲۷ - نیایش و وداع کاووس به خاک سپردن او و تاجگذاری کیخسرو",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh27",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۷ - نیایش و وداع کاووس به خاک سپردن او و تاجگذاری کیخسرو"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s28",
+      "title": "Ganjoor: بخش ۲۸ - اندیشه کیخسرو پس از شصت سال شاهی بستن بارگاه و نیایش از بیم گسستن فره",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh28",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۸ - اندیشه کیخسرو پس از شصت سال شاهی بستن بارگاه و نیایش از بیم گسستن فره"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s29",
+      "title": "Ganjoor: بخش ۲۹ - هفته پرستش کیخسرو آمدن بر تخت و پاسخ به نگرانی پهلوانان نیایش شبانه برای گذشتن از سپنجی‌سرای",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh29",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۹ - هفته پرستش کیخسرو آمدن بر تخت و پاسخ به نگرانی پهلوانان نیایش شبانه برای گذشتن از سپنجی‌سرای"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s30",
+      "title": "Ganjoor: بخش ۳۰ - یک هفته نهان شدن کیخسرو آمدن زال و رستم و آرزوی ناگفته شاه",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh30",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۰ - یک هفته نهان شدن کیخسرو آمدن زال و رستم و آرزوی ناگفته شاه"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s31",
+      "title": "Ganjoor: بخش ۳۱ - نیایش پنج‌هفته‌ای کیخسرو خواب سروش و فرمان ترک جهان و نشستن بی‌تاج بر تخت",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh31",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۱ - نیایش پنج‌هفته‌ای کیخسرو خواب سروش و فرمان ترک جهان و نشستن بی‌تاج بر تخت"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s32",
+      "title": "Ganjoor: بخش ۳۲ - رسیدن زال و رستم به بارگاه کیخسرو گوشه‌نشین راست شدن پشت شاه و پند زال در گنج و نیایش",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh32",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۲ - رسیدن زال و رستم به بارگاه کیخسرو گوشه‌نشین راست شدن پشت شاه و پند زال در گنج و نیایش"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s33",
+      "title": "Ganjoor: بخش ۳۳ - پاسخ کیخسرو به دستان: ستایش رستم و بشارت سروش به ترک تاج و تخت",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh33",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۳ - پاسخ کیخسرو به دستان: ستایش رستم و بشارت سروش به ترک تاج و تخت"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s34",
+      "title": "Ganjoor: بخش ۳۴ - پند زال به کیخسرو: نکوهش رای دیو و زنهار از رفتن فر و تخت شاهی",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh34",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۴ - پند زال به کیخسرو: نکوهش رای دیو و زنهار از رفتن فر و تخت شاهی"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s35",
+      "title": "Ganjoor: بخش ۳۵ - پاسخ کیخسرو به زال: دفاع از نژاد و کین پدر بیم دوزخ و عزم ترک تخت",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh35",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۵ - پاسخ کیخسرو به زال: دفاع از نژاد و کین پدر بیم دوزخ و عزم ترک تخت"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s36",
+      "title": "Ganjoor: بخش ۳۶ - پوزش زال از شاه و آشتی آراستن خرگاه و درفش کاویانی در هامون",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh36",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۶ - پوزش زال از شاه و آشتی آراستن خرگاه و درفش کاویانی در هامون"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s37",
+      "title": "Ganjoor: بخش ۳۷ - سخن کیخسرو بر تخت: ترک شاهی و جهان بخشش گنج و کشور و شادی یک‌هفته سپاه",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh37",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۷ - سخن کیخسرو بر تخت: ترک شاهی و جهان بخشش گنج و کشور و شادی یک‌هفته سپاه"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s38",
+      "title": "Ganjoor: بخش ۳۸ - وصیت کیخسرو در آستانه رفتن: سپردن گنج‌ها به گودرز و بخشش خواسته به یلان و بینوایان",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh38",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۸ - وصیت کیخسرو در آستانه رفتن: سپردن گنج‌ها به گودرز و بخشش خواسته به یلان و بینوایان"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s39",
+      "title": "Ganjoor: بخش ۳۹ - فرارسیدن هنگام کیخسرو زاری مهتران و سخن زال در کردارهای رستم و بی‌همتایی او",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh39",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۹ - فرارسیدن هنگام کیخسرو زاری مهتران و سخن زال در کردارهای رستم و بی‌همتایی او"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s40",
+      "title": "Ganjoor: بخش ۴۰ - عهد و منشور کیخسرو برای رستم سپردن نیمروز و خلعت مهان همراه زال",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh40",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۰ - عهد و منشور کیخسرو برای رستم سپردن نیمروز و خلعت مهان همراه زال"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s41",
+      "title": "Ganjoor: بخش ۴۱ - سخن گودرز از رنج هفت‌ساله گیو منشور قم و اصفهان و فرمان شاه به اطاعت ایرانیان",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh41",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۱ - سخن گودرز از رنج هفت‌ساله گیو منشور قم و اصفهان و فرمان شاه به اطاعت ایرانیان"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s42",
+      "title": "Ganjoor: بخش ۴۲ - یادکرد خدمات طوس پیش کیخسرو سپردن درفش کاویانی و خراسان با عهد طوق و کمر زرین",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh42",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۲ - یادکرد خدمات طوس پیش کیخسرو سپردن درفش کاویانی و خراسان با عهد طوق و کمر زرین"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s43",
+      "title": "Ganjoor: بخش ۴۳ - سپردن تاج کیخسرو به لهراسب خروش ایرانیان و پوزش خاک‌آلود زال",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh43",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۳ - سپردن تاج کیخسرو به لهراسب خروش ایرانیان و پوزش خاک‌آلود زال"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s44",
+      "title": "Ganjoor: بخش ۴۴ - وداع کیخسرو با ایرانیان و کنیزان سپردن تاج به لهراسب و عزیمت به کوه با پهلوانان",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh44",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۴ - وداع کیخسرو با ایرانیان و کنیزان سپردن تاج به لهراسب و عزیمت به کوه با پهلوانان"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s45",
+      "title": "Ganjoor: بخش ۴۵ - وداع کیخسرو در چشمه ناپدید شدنش با برآمدن خورشید و سوگ بیهوده یاران",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh45",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۵ - وداع کیخسرو در چشمه ناپدید شدنش با برآمدن خورشید و سوگ بیهوده یاران"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s46",
+      "title": "Ganjoor: بخش ۴۶ - مرگ نامداران در برف زاری گودرز و بازگشت رستم و زال از کوه",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh46",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۶ - مرگ نامداران در برف زاری گودرز و بازگشت رستم و زال از کوه"
+    },
+    {
+      "id": "src-ganjoor-mahmood-s47",
+      "title": "Ganjoor: بخش ۴۷ - بر تخت نشستن لهراسب بیعت زال و گودرز و تاج‌گذاری به آیین مهرگان",
+      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh47",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴۷ - بر تخت نشستن لهراسب بیعت زال و گودرز و تاج‌گذاری به آیین مهرگان"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-index",
+      "title": "Ganjoor, Ferdowsi’s Shahnameh: the table of contents",
+      "url": "https://ganjoor.net/ferdousi/shahname",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "The Shahnameh",
+      "summary": "The literary work in which the great war of Kay Khosrow is told.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-index",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-golha-ferdowsi",
+        "src-ganjoor-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-index",
+        "src-iranica-ferdowsi-i",
+        "src-golha-ferdowsi",
+        "src-agakhan-firdausi-court-poets"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1020
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-great-war",
+      "type": "NarrativeArc",
+      "label": "The great war of Kay Khosrow",
+      "summary": "The story of Kay Khosrow’s last war on Afrasiab to avenge Siavash – from the elephant throne to Gang-dezh, Chin, Makran and the lake of Chichast where Afrasiab is taken – and of the king’s renunciation of the throne and disappearance.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-kay-khosrow",
+      "type": "Character",
+      "label": "Kay Khosrow",
+      "summary": "The king of Iran, son of Siavash, who fights Afrasiab to the end to avenge his father, and after sixty years of rule gives up the throne and vanishes.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s02",
+        "src-ganjoor-mahmood-s28",
+        "src-ganjoor-mahmood-s45"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-afrasiab",
+      "type": "Character",
+      "label": "Afrasiab",
+      "summary": "The king of Turan, who flees from Gang-dezh to Chin and Makran and at last hides in a cave and in the lake of Chichast, where he is taken and killed.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s03",
+        "src-ganjoor-mahmood-s24",
+        "src-ganjoor-mahmood-s26"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Turan"
+        }
+      ]
+    },
+    {
+      "id": "character-shideh",
+      "type": "Character",
+      "label": "Shideh",
+      "summary": "A son of Afrasiab, who brings his father’s offer of peace and fights Kay Khosrow alone.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s05",
+        "src-ganjoor-mahmood-s07"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Afrasiab"
+        }
+      ]
+    },
+    {
+      "id": "character-jahn",
+      "type": "Character",
+      "label": "Jahn",
+      "summary": "A son of Afrasiab, who leads thirty thousand men and later carries his father’s message from Gang-dezh.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s08",
+        "src-ganjoor-mahmood-s13"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Afrasiab"
+        }
+      ]
+    },
+    {
+      "id": "character-garsivaz",
+      "type": "Character",
+      "label": "Garsivaz",
+      "summary": "The brother of Afrasiab, taken captive and put to death with him.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s19",
+        "src-ganjoor-mahmood-s25",
+        "src-ganjoor-mahmood-s26"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Brother of Afrasiab"
+        }
+      ]
+    },
+    {
+      "id": "character-kavus",
+      "type": "Character",
+      "label": "Kay Kavus",
+      "summary": "The old king, grandfather of Kay Khosrow, to whom he writes of his victories; they pray together at Azargoshasb, and Kavus dies after Afrasiab’s death.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s10",
+        "src-ganjoor-mahmood-s23",
+        "src-ganjoor-mahmood-s27"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Grandfather of the king"
+        }
+      ]
+    },
+    {
+      "id": "character-faghfur",
+      "type": "Character",
+      "label": "The Faghfur of Chin",
+      "summary": "The emperor of Chin, who allies himself with Afrasiab and afterwards asks Kay Khosrow’s pardon.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s16",
+        "src-ganjoor-mahmood-s18"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Emperor of Chin"
+        }
+      ]
+    },
+    {
+      "id": "character-king-of-makran",
+      "type": "Character",
+      "label": "The king of Makran",
+      "summary": "The king who refuses Kay Khosrow passage and is defeated and killed.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s20",
+        "src-ganjoor-mahmood-s21"
+      ],
+      "spoilerLevel": 3,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Makran"
+        }
+      ]
+    },
+    {
+      "id": "character-hom",
+      "type": "Character",
+      "label": "Hom",
+      "summary": "A pious hermit of the line of Fereydun, who hears Afrasiab lamenting in his cave, binds him and, when he escapes into the lake, finds him again.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s24",
+        "src-ganjoor-mahmood-s25"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Hermit"
+        }
+      ]
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "The champion, whose counsel the king follows in the war, and to whom he gives Nimruz at the end.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s17",
+        "src-ganjoor-mahmood-s40"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "character-zal",
+      "type": "Character",
+      "label": "Zal",
+      "summary": "The father of Rostam, who reproaches Kay Khosrow for withdrawing from the world, then begs his pardon.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s32",
+        "src-ganjoor-mahmood-s34",
+        "src-ganjoor-mahmood-s36"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Father of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-gudarz",
+      "type": "Character",
+      "label": "Gudarz",
+      "summary": "The old champion, to whom the king gives his treasures; he mourns the champions lost in the snow.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s38",
+        "src-ganjoor-mahmood-s46"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "character-lohrasp",
+      "type": "Character",
+      "label": "Lohrasp",
+      "summary": "The man Kay Khosrow chooses as his successor, to the surprise of the Iranians.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s43",
+        "src-ganjoor-mahmood-s47"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Successor of the king"
+        }
+      ]
+    },
+    {
+      "id": "character-sorush",
+      "type": "Character",
+      "label": "Sorush",
+      "summary": "The messenger of God who tells Kay Khosrow in a dream that he may leave the world.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s31"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Angel"
+        }
+      ]
+    },
+    {
+      "id": "character-tus",
+      "type": "Character",
+      "label": "Tus",
+      "summary": "A champion, given Khorasan and the banner of Kaveh, who follows the king to the mountain and dies in the snow.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s44",
+        "src-ganjoor-mahmood-s46"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "character-giv",
+      "type": "Character",
+      "label": "Giv",
+      "summary": "A champion, given Qom and Isfahan, who follows the king to the mountain and dies in the snow.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s44",
+        "src-ganjoor-mahmood-s46"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "character-bizhan",
+      "type": "Character",
+      "label": "Bizhan",
+      "summary": "The son of Giv, who brings Lohrasp before the king and dies in the snow.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s44",
+        "src-ganjoor-mahmood-s46"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "character-fariborz",
+      "type": "Character",
+      "label": "Fariborz",
+      "summary": "A son of Kay Kavus, who follows the king to the mountain and dies in the snow.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s44",
+        "src-ganjoor-mahmood-s46"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "character-gostaham",
+      "type": "Character",
+      "label": "Gostaham",
+      "summary": "A champion who follows the king to the mountain.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s44",
+        "src-ganjoor-mahmood-s46"
+      ],
+      "spoilerLevel": 6,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "The kingdom of Kay Khosrow.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-turan",
+      "type": "NarrativeRegion",
+      "label": "Turan",
+      "summary": "The kingdom of Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s03"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-jayhun",
+      "type": "NarrativePlace",
+      "label": "The Jayhun",
+      "summary": "The river between Iran and Turan, which Afrasiab’s army crosses by boat and over which he flees by night.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s03",
+        "src-ganjoor-mahmood-s09"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-gang-dezh",
+      "type": "NarrativePlace",
+      "label": "Gang-dezh",
+      "summary": "The stronghold of Afrasiab, which Kay Khosrow takes.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s11",
+        "src-ganjoor-mahmood-s15"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-chin",
+      "type": "NarrativeRegion",
+      "label": "Chin",
+      "summary": "The land of the Faghfur.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s16"
+      ],
+      "spoilerLevel": 2
+    },
+    {
+      "id": "place-makran",
+      "type": "NarrativeRegion",
+      "label": "Makran",
+      "summary": "The land whose king refuses Kay Khosrow passage.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s20",
+        "src-ganjoor-mahmood-s21"
+      ],
+      "spoilerLevel": 3
+    },
+    {
+      "id": "place-chichast",
+      "type": "NarrativePlace",
+      "label": "The lake of Chichast",
+      "summary": "The water into which Afrasiab escapes from Hom, and where he is caught again.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s25"
+      ],
+      "spoilerLevel": 4
+    },
+    {
+      "id": "place-azargoshasb",
+      "type": "NarrativePlace",
+      "label": "Azargoshasb",
+      "summary": "The fire temple where Kay Khosrow and Kavus pray.",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s23",
+        "src-ganjoor-mahmood-s26"
+      ],
+      "spoilerLevel": 3
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-great-war",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-mahmood-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-great-war",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-mahmood-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-kay-khosrow",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-great-war",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-afrasiab",
+      "to": "place-turan",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s03"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-great-war",
+        "eventIds": [
+          "event-03"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-afrasiab",
+      "to": "character-shideh",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s05"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-great-war",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-afrasiab",
+      "to": "character-jahn",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s08"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-great-war",
+        "eventIds": [
+          "event-06"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-garsivaz",
+      "to": "character-afrasiab",
+      "type": "siblingOf",
+      "label": "Brother",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s25"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-great-war",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-kay-khosrow",
+      "to": "character-afrasiab",
+      "type": "opponentOf",
+      "label": "Opponent of",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-great-war",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "In praise of Sultan Mahmud",
+      "summary": "The poet opens the story with a long praise of Sultan Mahmud, a lion in battle.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "person-ferdowsi",
+          "role": "narrator",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "The elephant throne",
+      "summary": "Kay Khosrow sits on a turquoise throne on an elephant’s back, sounds the call, gathers his great men and arrays his army against Afrasiab.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "kingdom",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "Afrasiab’s mourning and muster",
+      "summary": "Hearing of the defeat and death of his kinsmen, Afrasiab mourns, swears revenge and sends his army over the Jayhun by boat.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "kingdom",
+          "presence": "setting"
+        },
+        {
+          "entityId": "place-jayhun",
+          "role": "river crossed",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "The offer of peace",
+      "summary": "The armies face each other across a trench. Afrasiab sends his son Shideh with an offer of peace; Kay Khosrow answers that Siavash was killed without guilt and will have revenge, and proposes single combat.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s04",
+        "src-ganjoor-mahmood-s05",
+        "src-ganjoor-mahmood-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "who offers peace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shideh",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "who refuses",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "Kay Khosrow and Shideh",
+      "summary": "Away from the armies Kay Khosrow fights Shideh alone and kills him; the Turks wait in vain for him to return, and Afrasiab mourns.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s07"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "victor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-shideh",
+          "role": "killed",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "mourning father",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "Afrasiab flees over the Jayhun",
+      "summary": "Jahn brings thirty thousand men; Qaren prevails, the king prays, and Afrasiab flees by night over the Jayhun towards Gang. Kay Khosrow writes to Kavus of three battles.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s08",
+        "src-ganjoor-mahmood-s09",
+        "src-ganjoor-mahmood-s10"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-jahn",
+          "role": "commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "fleeing king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kavus",
+          "role": "addressee",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-jayhun",
+          "role": "river crossed",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "The wind at Golzarriun",
+      "summary": "The kings meet in battle; at Kay Khosrow’s prayer a strong wind rises and Afrasiab flees to Gang and writes to the Faghfur of Chin.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s11"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "praying king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "fleeing king",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "The message from Gang-dezh",
+      "summary": "Kay Khosrow surrounds Gang-dezh. Jahn brings his father’s message of regret for Siavash’s blood and offer of peace; the king rejects it and swears to fight to the end.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s12",
+        "src-ganjoor-mahmood-s13",
+        "src-ganjoor-mahmood-s14"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "besieger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jahn",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "sender",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-gang-dezh",
+          "role": "stronghold",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "Gang-dezh taken",
+      "summary": "The stronghold falls; Afrasiab escapes in secret, the women of Turan lament and Kay Khosrow spares them.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s15"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "conqueror",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "fugitive",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-gang-dezh",
+          "role": "stronghold",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "Afrasiab and the Faghfur",
+      "summary": "The Faghfur of Chin allies himself with Afrasiab. Afrasiab offers single combat; on Rostam’s advice the king declines and lays an ambush, the night attack fails, the Faghfur asks pardon, and Afrasiab crosses the water of Zereh back to Gang-dezh.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s16",
+        "src-ganjoor-mahmood-s17",
+        "src-ganjoor-mahmood-s18"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-faghfur",
+          "role": "ally",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "adviser",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-chin",
+          "role": "land",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "The king of Makran",
+      "summary": "After letters to Kavus and the submission of the Khaqan and the Faghfur, the king of Makran refuses passage; Kay Khosrow defeats and buries him, crosses the sea and weeps at the walls Siavash built.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s19",
+        "src-ganjoor-mahmood-s20",
+        "src-ganjoor-mahmood-s21"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-king-of-makran",
+          "role": "enemy king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-makran",
+          "role": "land",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "The return to Kavus",
+      "summary": "Afrasiab flees again by night; Kay Khosrow mourns Siavash and returns to Iran, meets Kavus and the two kings pray at the fire temple of Azargoshasb.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s22",
+        "src-ganjoor-mahmood-s23"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kavus",
+          "role": "grandfather",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-azargoshasb",
+          "role": "fire temple",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "Hom and the cave",
+      "summary": "Afrasiab hides in a cave near Barda; the hermit Hom hears him lament, binds his arms and leads him away, but in pity loosens the bonds and Afrasiab escapes into the water.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s24"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "fugitive",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hom",
+          "role": "hermit",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "The lake of Chichast",
+      "summary": "Afrasiab hides in the lake of Chichast; hearing Garsivaz lament, he comes out and Hom takes him again.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s25"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "fugitive",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "captive brother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-hom",
+          "role": "hermit",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-chichast",
+          "role": "lake",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "The death of Afrasiab",
+      "summary": "Kay Khosrow puts Afrasiab and Garsivaz to death with the sword; he gives thanks at Azargoshasb and spreads justice and gifts over the world.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s26"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "avenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "killed",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-garsivaz",
+          "role": "killed",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "The death of Kavus",
+      "summary": "Kavus, at peace, prays and dies; Kay Khosrow buries him.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s27"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kavus",
+          "role": "dying king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "grandson",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "The king withdraws",
+      "summary": "After sixty years of rule, with the world at his feet, Kay Khosrow fears that pride will cost him the divine glory; he closes his court and prays for weeks, and Sorush tells him in a dream that he may leave the world.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s28",
+        "src-ganjoor-mahmood-s29",
+        "src-ganjoor-mahmood-s30",
+        "src-ganjoor-mahmood-s31"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-sorush",
+          "role": "messenger in the dream",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "Zal’s reproach",
+      "summary": "Zal and Rostam come to the withdrawn king. Zal says a demon has turned him from God’s path; Kay Khosrow answers with his lineage and his vengeance and his fear of hell, and Zal asks his pardon.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s32",
+        "src-ganjoor-mahmood-s33",
+        "src-ganjoor-mahmood-s34",
+        "src-ganjoor-mahmood-s35",
+        "src-ganjoor-mahmood-s36"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "who reproaches",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "companion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "The king’s gifts",
+      "summary": "Kay Khosrow gives away his treasures and lands: his treasures to Gudarz, Nimruz to Rostam, Qom and Isfahan to Giv, Khorasan and the banner of Kaveh to Tus.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s37",
+        "src-ganjoor-mahmood-s38",
+        "src-ganjoor-mahmood-s39",
+        "src-ganjoor-mahmood-s40",
+        "src-ganjoor-mahmood-s41",
+        "src-ganjoor-mahmood-s42"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "giver",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "receiver",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "receiver of Nimruz",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "receiver of Qom and Isfahan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "receiver of Khorasan",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "The crown to Lohrasp",
+      "summary": "To the dismay of the Iranians the king has Bizhan bring Lohrasp and gives him the crown; then he takes leave and goes to the mountain with his champions.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s43",
+        "src-ganjoor-mahmood-s44"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "departing king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-lohrasp",
+          "role": "new king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "who brings Lohrasp",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "who submits",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "The king vanishes",
+      "summary": "At a spring in the mountains the king bids his companions farewell; when the sun rises he has vanished from their sight.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s45"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "vanishing king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-tus",
+          "role": "companion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "companion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "companion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fariborz",
+          "role": "companion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gostaham",
+          "role": "companion",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "The champions in the snow",
+      "summary": "A snowstorm buries the champions who would not turn back – Tus, Giv, Bizhan and Fariborz – and Gudarz mourns; Rostam and Zal come back from the mountain.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s46"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-tus",
+          "role": "lost in the snow",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-giv",
+          "role": "lost in the snow",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bizhan",
+          "role": "lost in the snow",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-fariborz",
+          "role": "lost in the snow",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "mourner",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "who returns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "who returns",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "Lohrasp enthroned",
+      "summary": "Lohrasp sits on the throne; Zal and Gudarz pledge him allegiance and he is crowned at Mehregan.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-mahmood-s47"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-lohrasp",
+          "role": "new king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "who pledges",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-gudarz",
+          "role": "who pledges",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    }
+  ],
+  "media": []
+}

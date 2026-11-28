@@ -1196,6 +1196,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Gudarz | گودرز |
 | Hirbad | هیربد |
 | Hojir | هجیر |
+| Hom | هوم |
 | Homay | همای |
 | Hormoz | هرمز |
 | Hormozd | هرمزد |
@@ -1203,6 +1204,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Hushang | هوشنگ |
 | Iblis | ابلیس |
 | Iraj | ایرج |
+| Jahn | جهن |
 | Jamasp | جاماسپ |
 | Jamshid | جمشید |
 | Jandal | جندل |
@@ -1213,6 +1215,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Kalahur | کلاهور |
 | Katayun | کتایون |
 | Kaveh | کاوه |
+| Kay Kavus | کی‌کاووس |
 | Kay Kavus | کی‌کاووس |
 | Kay Khosrow | کیخسرو |
 | Kay Qobad | کیقباد |
@@ -1226,7 +1229,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | King of Samangan | شاه سمنگان |
 | Kondrow | کندرو |
 | Lahhak | لهاک |
-| Lohrasp | لهراسپ |
+| Lohrasp | لهراسب |
 | Mah-Afarid | ماه‌آفرید |
 | Mahmud of Ghazni | محمود غزنوی |
 | Manizheh | منیژه |
@@ -1274,6 +1277,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Shapur son of Ardashir | شاپور پسر اردشیر |
 | Shapur the Third | شاپور سوم |
 | Shapur Zu’l-Aktaf | شاپور ذوالاکتاف |
+| Shideh | شیده |
 | Shiruy | شیرویه |
 | Shiruy | شیروی |
 | Siamak | سیامک |
@@ -1292,11 +1296,13 @@ translation takes its names from here; where a name is not yet here, it follows 
 | The demon minstrel | دیو رامشگر |
 | The dragon | اژدها |
 | The envoy seeking pardon | فرستادهٔ پوزش‌خواه |
+| The Faghfur of Chin | فغفور چین |
 | The field-keeper | دشتبان |
 | The go-between | زن پیام‌بر |
 | The holy man of Alborz | مرد دینی البرز |
 | The keeper of the fortress | دژبان |
 | The keeper of the meadow | نگهبان مرغزار |
+| The king of Makran | شاه مکران |
 | The king of Mazandaran | شاه مازندران |
 | The maids of Rudabeh | پرستندگان رودابه |
 | The mobad sent by Salm and Tur | موبد فرستادهٔ سلم و تور |
@@ -1330,9 +1336,11 @@ translation takes its names from here; where a name is not yet here, it follows 
 |---|---|
 | Amol | آمل |
 | Arman | ارمان |
+| Azargoshasb | آذرگشسب |
 | Baghdad | بغداد |
 | Balkh | بلخ |
 | Charam | چرم |
+| Chin | چین |
 | Florence | فلورانس |
 | Gang | گنگ |
 | Gang-dezh | گنگ‌دژ |
@@ -1350,6 +1358,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Kaseh Rud | کاسه‌رود |
 | Khotan | ختن |
 | Kohestan | کهستان |
+| Makran | مکران |
 | Mazandaran | مازندران |
 | Mount Alborz | کوه البرز |
 | Mount Asparuz | کوه اسپروز |
@@ -1370,7 +1379,9 @@ translation takes its names from here; where a name is not yet here, it follows 
 | The fortress of Alanan | دژ الانان |
 | The Hirmand | هیرمند |
 | The hunting ground | نخچیرگه |
+| The Jayhun | جیحون |
 | The Kashaf river | رود کشف |
+| The lake of Chichast | دریای چیچست |
 | The land of the Arabs | سرزمین تازیان |
 | The sea of Chin | دریای چین |
 | The tomb | دخمه |

@@ -86,3 +86,4 @@ working session; a civilization is about four batches.
 | G5 | 2026-11-28 | In part, on the recommendation of F6 as a working default: Rostam and Esfandiar (24 scenes, 22 records, 28 verse quotes). Left: Bizhan and Manizheh, the great war of Kay Khosrow and Akvan the demon, and portrayalOf links for further Sasanian kings. |
 | G5 | 2026-11-28 | Continued: Bizhan and Manizheh (15 scenes, 19 records, 20 verse quotes). |
 | G5 | 2026-11-28 | Continued: Akvan the demon (9 scenes, 10 records, 9 verse quotes). Left of F6: the great war of Kay Khosrow, the longest story of the poem. |
+| G5 | 2026-11-28 | Done on the recommendation of F6: the four stories (Rostam and Esfandiar, Bizhan and Manizheh, Akvan the demon, the great war of Kay Khosrow), 69 verse quotes. The great war is told in scenes drawn from groups of sections. Left: portrayalOf links for further Sasanian kings, correspondences between stories. |
