@@ -4,6 +4,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The table under a chart of time names the sources of each period and event, instead of saying that no source is
+  recorded.
+- Persian dates name the Gregorian month of their source (July 330 BCE, not Tir).
 - The kinds to look for in the search of a collection stand in columns, each box with its drawing and name
   beside it, instead of a long column of wide boxes.
 - Disasters of nature in the histories: the drought about 2200 BCE, the great flood of the Yellow River, the

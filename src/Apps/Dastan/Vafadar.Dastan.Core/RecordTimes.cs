@@ -66,11 +66,11 @@ public static class RecordTimes
                 var period = new Period(
                     first.Time is OccurrenceWindow began ? PeriodStart.Between(began.Earliest, began.Latest) : PeriodStart.At(((Occurrence)first.Time!).At),
                     last.Time is OccurrenceWindow ended ? PeriodEnd.Between(ended.Earliest, ended.Latest) : PeriodEnd.At(((Occurrence)last.Time!).At));
-                times.Add(new($"{entity.Id.Value}~{begins.Key}~{ends.Key}", begins, ends, period, [.. first.Sources.Concat(last.Sources).Distinct()]));
+                times.Add(new($"{entity.Id.Value}~{begins.Key}~{ends.Key}", begins, ends, period, RestsOn(entity, [.. first.Sources.Concat(last.Sources).Distinct()])));
             }
             else if ((first ?? last) is { } one)
             {
-                times.Add(new($"{entity.Id.Value}~{one.Kind.Key}", one.Kind, null, one.Time!, one.Sources));
+                times.Add(new($"{entity.Id.Value}~{one.Kind.Key}", one.Kind, null, one.Time!, RestsOn(entity, one.Sources)));
             }
         }
 
@@ -78,12 +78,18 @@ public static class RecordTimes
         {
             if (entity.Facts.FirstOrDefault(fact => fact.Kind.Key == kind.Key && YearCover.Reach(fact.Time) is not null) is { } fact)
             {
-                times.Add(new($"{entity.Id.Value}~{kind.Key}", kind, null, fact.Time!, fact.Sources));
+                times.Add(new($"{entity.Id.Value}~{kind.Key}", kind, null, fact.Time!, RestsOn(entity, fact.Sources)));
             }
         }
 
         return times.ToImmutable();
     }
+
+    // The sources of a fact are optional (collection format): a fact that names none rests on the sources of its
+    // record, which says it in the same breath – so the table of a chart names them and does not say "no source
+    // recorded" beside a record that has one.
+    private static ImmutableArray<SourceId> RestsOn(Entity entity, ImmutableArray<SourceId> sources) =>
+        sources.IsDefaultOrEmpty ? entity.Sources : sources;
 
     /// <summary>Returns whether the record of a name states a time that can be placed among the years.</summary>
     public static bool Any(Entity entity) => !Of(entity).IsEmpty;
