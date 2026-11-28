@@ -163,3 +163,4 @@ was left out, and – if E5 allows – the chart looked at.
 | B4 | 2026-11-28 | Rebuilt: 62 periods, 238 events; the subject descriptions name the earliest stretch. Shown stretch unchanged. |
 | C1 | 2026-11-28 | In part: 5 portrayals (Ardashir I, Shapur II, Bahram V, Khosrow I, Khosrow II), 6 works. The other Sasanian kings of the poem wait for a page that says the poem portrays them; offices beyond the throne and positions of the remaining places stay open. |
 | C2 | 2026-11-28 | In part: 3 writers, 7 works, the Pantheon. Tacitus, Polybius, Ovid, Horace, Cicero and the Colosseum have no Livius page; they wait for another source. |
+| C3 | 2026-11-28 | In part: 2 poets, 3 works, authorship by tradition written in the notes of the relations. Wang Wei, Han Yu and the Song writers wait for the next pass. |

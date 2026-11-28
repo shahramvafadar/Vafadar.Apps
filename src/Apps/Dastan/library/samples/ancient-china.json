@@ -543,6 +543,46 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-li-bai",
+      "title": "Li Bai – Britannica",
+      "url": "https://www.britannica.com/biography/Li-Bai",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-du-fu",
+      "title": "Du Fu – Britannica",
+      "url": "https://www.britannica.com/biography/Du-Fu",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-lunyu",
+      "title": "Lunyu – Britannica",
+      "url": "https://www.britannica.com/topic/Lunyu",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-laozi",
+      "title": "Laozi – Britannica",
+      "url": "https://www.britannica.com/topic/Tao-te-Ching",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-the-art-of-war",
+      "title": "The Art of War – Britannica",
+      "url": "https://www.britannica.com/topic/The-Art-of-War-by-Sun-Tzu",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -8264,6 +8304,155 @@
           "text": "Last Shang king."
         }
       ]
+    },
+    {
+      "id": "person-li-bai",
+      "type": "Person",
+      "label": "Li Bai",
+      "summary": "Tang poet, born in Sichuan in 701, who came to Chang’an in 742 hoping for a post at court and rivalled Du Fu for the title of China’s greatest poet; he died in 762.",
+      "sourceIds": [
+        "src-britannica-li-bai"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Li Po",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 701
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 762
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Rival of Du Fu as China’s greatest poet."
+        }
+      ]
+    },
+    {
+      "id": "person-du-fu",
+      "type": "Person",
+      "label": "Du Fu",
+      "summary": "Tang poet, born in Henan in 712 into a scholarly family, who failed the examinations of 735, travelled, met Li Bai and is held by many critics to be the greatest poet of all time; he died on a riverboat in 770.",
+      "sourceIds": [
+        "src-britannica-du-fu"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Tu Fu",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 712
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 770
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Held by many to be the greatest poet."
+        }
+      ]
+    },
+    {
+      "id": "work-analects",
+      "type": "Work",
+      "label": "The Analects of Confucius",
+      "summary": "The Lunyu, held by scholars to be the most reliable source of the doctrine of Confucius; in 1190 Zhu Xi published it with three other texts as the Four Books.",
+      "sourceIds": [
+        "src-britannica-lunyu"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Lunyu",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": []
+    },
+    {
+      "id": "work-daodejing",
+      "type": "Work",
+      "label": "The Daodejing",
+      "summary": "A primary Daoist writing, by tradition the work of Laozi; modern scholars doubt that it was written by one person.",
+      "sourceIds": [
+        "src-britannica-laozi"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Tao-te Ching",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": []
+    },
+    {
+      "id": "work-art-of-war",
+      "type": "Work",
+      "label": "The Art of War",
+      "summary": "The Bingfa, “Military Methods”, one of the most influential treatises on warfare ever written, traditionally attributed to Sunzi; some scholars date it to the Warring States period.",
+      "sourceIds": [
+        "src-britannica-the-art-of-war"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Bingfa",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Sunzi Bingfa",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": []
     }
   ],
   "relations": [
@@ -15824,6 +16013,42 @@
         "kind": "outside_the_story",
         "eventIds": []
       }
+    },
+    {
+      "id": "relation-laozi-author-of-work-daodejing",
+      "from": "person-laozi",
+      "to": "work-daodejing",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-laozi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "note": "Its author only by tradition; modern scholars doubt that one person wrote it."
+    },
+    {
+      "id": "relation-sunzi-author-of-work-art-of-war",
+      "from": "person-sunzi",
+      "to": "work-art-of-war",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-the-art-of-war"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "note": "Attributed to him by tradition; some scholars date the work to the Warring States period."
     }
   ],
   "events": [],
