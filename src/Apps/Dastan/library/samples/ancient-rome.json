@@ -1751,6 +1751,14 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-list-of-emperors",
+      "title": "List of emperors – Britannica",
+      "url": "https://www.britannica.com/topic/list-of-emperors-2045456",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -12958,6 +12966,34 @@
         {
           "fact": "knownFor",
           "text": "Historian of the rise of Rome."
+        }
+      ]
+    },
+    {
+      "id": "person-libius-severus",
+      "type": "Person",
+      "label": "Libius Severus",
+      "summary": "Emperor of the West from 461 to 465 CE, between Majorian and Anthemius.",
+      "sourceIds": [
+        "src-britannica-list-of-emperors"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Emperor of the West, 461–465."
         }
       ]
     }
@@ -26671,6 +26707,43 @@
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-libius-severus-holder-of-west-roman-emperor",
+      "from": "person-libius-severus",
+      "to": "office-west-roman-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-list-of-emperors"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 461
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 465
+          }
+        },
+        "continuity": "notAsserted"
+      },
       "scope": {
         "kind": "outside_the_story",
         "eventIds": []

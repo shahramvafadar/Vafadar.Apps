@@ -583,6 +583,38 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-zhu-wen",
+      "title": "Zhu Wen – Britannica",
+      "url": "https://www.britannica.com/biography/Zhu-Wen",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-five-dynasties",
+      "title": "Five Dynasties – Britannica",
+      "url": "https://www.britannica.com/event/Five-Dynasties",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-song-dynasty",
+      "title": "Song dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Song-dynasty",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-geonames-1804879",
+      "title": "GeoNames: Kaifeng",
+      "url": "https://www.geonames.org/1804879/kaifeng.html",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -7238,8 +7270,9 @@
       "id": "person-zhu-wen",
       "type": "Person",
       "label": "Zhu Wen",
-      "summary": "The warlord who deposed the last Tang emperor in 907, bringing the dynasty to its formal end, and founded the Later Liang.",
+      "summary": "A general born at Dangshan in 852, once a follower of the rebel Huang Chao, who was given the region around Kaifeng, forced the Tang emperor Zhaozong to move to Luoyang, murdered him in 904, made the boy Aidi abdicate in 907 and proclaimed himself first emperor of the Later Liang; his eldest son murdered him at Kaifeng in 912.",
       "sourceIds": [
+        "src-britannica-zhu-wen",
         "src-britannica-history-of-china-five-dynasties"
       ],
       "spoilerLevel": 0,
@@ -7247,13 +7280,23 @@
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 852
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 912
+            }
           }
         },
         {
@@ -8453,6 +8496,259 @@
         }
       ],
       "facts": []
+    },
+    {
+      "id": "office-later-liang-emperor",
+      "type": "Office",
+      "label": "Emperor of the Later Liang",
+      "summary": "The throne of the Later Liang.",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-later-liang"
+        }
+      ]
+    },
+    {
+      "id": "office-later-tang-emperor",
+      "type": "Office",
+      "label": "Emperor of the Later Tang",
+      "summary": "The throne of the Later Tang.",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-later-tang"
+        }
+      ]
+    },
+    {
+      "id": "office-later-jin-emperor",
+      "type": "Office",
+      "label": "Emperor of the Later Jin",
+      "summary": "The throne of the Later Jin.",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-later-jin"
+        }
+      ]
+    },
+    {
+      "id": "office-later-han-emperor",
+      "type": "Office",
+      "label": "Emperor of the Later Han",
+      "summary": "The throne of the Later Han.",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-later-han"
+        }
+      ]
+    },
+    {
+      "id": "person-tang-zhaozong",
+      "type": "Person",
+      "label": "Zhaozong of Tang",
+      "summary": "Tang emperor whom Zhu Wen forced to move the capital from Chang’an to Luoyang, and murdered with all but one of his sons in 904.",
+      "sourceIds": [
+        "src-britannica-zhu-wen"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 904
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Moved by force to Luoyang."
+        }
+      ]
+    },
+    {
+      "id": "person-tang-aidi",
+      "type": "Person",
+      "label": "Aidi of Tang",
+      "summary": "The last Tang emperor, a son of Zhaozong spared as a boy of thirteen in 904 and put on the throne by Zhu Wen, who forced him to abdicate in 907.",
+      "sourceIds": [
+        "src-britannica-zhu-wen"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The last Tang emperor."
+        }
+      ]
+    },
+    {
+      "id": "person-later-tang-zhuangzong",
+      "type": "Person",
+      "label": "Zhuangzong of the Later Tang",
+      "summary": "Li Cunxu, a general of the Later Liang who overthrew it and founded the Later Tang in 923.",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Li Cunxu",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Later Tang."
+        }
+      ]
+    },
+    {
+      "id": "person-later-jin-gaozu",
+      "type": "Person",
+      "label": "Gaozu of the Later Jin",
+      "summary": "Shi Jingtang, a general of the Later Tang who overthrew his master with the help of the Khitan and founded the Later Jin.",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shi Jingtang",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Later Jin."
+        }
+      ]
+    },
+    {
+      "id": "person-later-han-gaozu",
+      "type": "Person",
+      "label": "Gaozu of the Later Han",
+      "summary": "Liu Zhiyuan, a former general of the Later Jin who founded the Later Han and pushed the Khitan back into Inner Asia.",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Liu Zhiyuan",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Later Han."
+        }
+      ]
+    },
+    {
+      "id": "place-kaifeng",
+      "type": "Place",
+      "label": "Kaifeng",
+      "summary": "A city of central China whose region Zhu Wen governed and where he died in 912; the capital of the Northern Song, burned by the Juchen in 1126.",
+      "sourceIds": [
+        "src-britannica-zhu-wen",
+        "src-britannica-song-dynasty",
+        "src-geonames-1804879"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-china"
+        }
+      ],
+      "position": {
+        "latitude": 34.7986,
+        "longitude": 114.30742,
+        "precision": "approximate"
+      }
     }
   ],
   "relations": [
@@ -16049,6 +16345,298 @@
         "eventIds": []
       },
       "note": "Attributed to him by tradition; some scholars date the work to the Warring States period."
+    },
+    {
+      "id": "relation-zhu-wen-holder-of-later-liang-emperor",
+      "from": "person-zhu-wen",
+      "to": "office-later-liang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 907
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 912
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-zhaozong-holder-of-tang-emperor",
+      "from": "person-tang-zhaozong",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-zhu-wen"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 904
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-aidi-holder-of-tang-emperor",
+      "from": "person-tang-aidi",
+      "to": "office-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-zhu-wen"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 904
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 907
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-aidi-successor-of-tang-zhaozong",
+      "from": "person-tang-aidi",
+      "to": "person-tang-zhaozong",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-zhu-wen"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tang-zhaozong-parent-of-tang-aidi",
+      "from": "person-tang-zhaozong",
+      "to": "person-tang-aidi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-zhu-wen"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-zhu-wen-successor-of-tang-aidi",
+      "from": "person-zhu-wen",
+      "to": "person-tang-aidi",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-zhu-wen"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "note": "He took the throne by usurpation."
+    },
+    {
+      "id": "relation-later-tang-zhuangzong-founder-of-later-tang",
+      "from": "person-later-tang-zhuangzong",
+      "to": "dynasty-later-tang",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-tang-zhuangzong-holder-of-later-tang-emperor",
+      "from": "person-later-tang-zhuangzong",
+      "to": "office-later-tang-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 923
+          }
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-jin-gaozu-founder-of-later-jin",
+      "from": "person-later-jin-gaozu",
+      "to": "dynasty-later-jin",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-jin-gaozu-holder-of-later-jin-emperor",
+      "from": "person-later-jin-gaozu",
+      "to": "office-later-jin-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-han-gaozu-founder-of-later-han",
+      "from": "person-later-han-gaozu",
+      "to": "dynasty-later-han",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-later-han-gaozu-holder-of-later-han-emperor",
+      "from": "person-later-han-gaozu",
+      "to": "office-later-han-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-five-dynasties"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-kaifeng-capital-of-song",
+      "from": "place-kaifeng",
+      "to": "dynasty-song",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-britannica-song-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
     }
   ],
   "events": [],

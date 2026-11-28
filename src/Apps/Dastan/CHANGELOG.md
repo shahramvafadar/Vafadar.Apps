@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- China gains the last Tang emperors Zhaozong and Aidi, Zhu Wen's years, the founders of the Later Tang, Later
+  Jin and Later Han, and Kaifeng; Rome gains Libius Severus.
 - Rome gains Tacitus the historian, Ovid and Polybius, with the works of Tacitus and Ovid.
 - Iran gains the Tahirid governors of Khorasan and the Samanid amirs from Nasr I to the last, with Bisotun of
   the Ziyarids and two more Buyids.
