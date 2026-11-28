@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A new history: Greece, from archaic Athens and Sparta through the Persian wars and the Peloponnesian War to
+  Philip II, Alexander, the Antigonids and the Roman conquest.
 - A new history: Anatolia, from the Hittite kings of Hattusa through Midas of Phrygia to the Lydian kings and
   Croesus.
 - A new history: Mesopotamia, from Ur and the Babylon of Hammurabi through Assyria to the Neo-Babylonian kings
