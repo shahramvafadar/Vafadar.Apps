@@ -2327,7 +2327,7 @@
     {
       "id": "period-monarchy",
       "type": "Period",
-      "label": "The age of the kings",
+      "label": "The age of the kings (tradition)",
       "summary": "From the traditional founding of Rome to the traditional end of the monarchy.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1",
@@ -2864,7 +2864,7 @@
     {
       "id": "event-founding-of-rome",
       "type": "Event",
-      "label": "The founding of Rome",
+      "label": "The founding of Rome (tradition)",
       "summary": "According to tradition Romulus founded Rome on the Palatine on 21 April 753 BCE; Livius calls this Varronian date an artificial calculation.",
       "sourceIds": [
         "src-livius-eutropius-short-history-eutropius-short-history-1",
