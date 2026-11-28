@@ -1228,6 +1228,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Lohrasp | لهراسپ |
 | Mah-Afarid | ماه‌آفرید |
 | Mahmud of Ghazni | محمود غزنوی |
+| Manizheh | منیژه |
 | Manuchehr | منوچهر |
 | Mardas | مرداس |
 | Mehrab | مهراب |
@@ -1327,6 +1328,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | English | Persian |
 |---|---|
 | Amol | آمل |
+| Arman | ارمان |
 | Baghdad | بغداد |
 | Balkh | بلخ |
 | Charam | چرم |
