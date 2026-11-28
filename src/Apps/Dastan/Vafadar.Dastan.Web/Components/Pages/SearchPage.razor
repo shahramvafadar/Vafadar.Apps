@@ -34,7 +34,7 @@
                 {
                     <li class="card">
                         <h2><a href="@($"{Site.Collection}/entity/{hit.Entity.Id}")"><Loc Text="hit.Entity.Label" /></a></h2>
-                        <p class="meta"><TypeName Type="hit.Entity.Type" /></p>
+                        <p class="meta"><TypeName Type="hit.Entity.Type" /> <KindNames Kinds="hit.Entity.Kinds" /></p>
                         @* A hit says why it is one: the name that matched, when it is not the name shown above. *@
                         @if (hit.Name.Length > 0 && hit.Name != Visitor.Text(hit.Entity.Label).Value)
                         {
@@ -86,6 +86,10 @@
     [SupplyParameterFromQuery(Name = "year")]
     public string? Year { get; set; }
 
+    /// <summary>Gets or sets the kinds of records looked for (ADR 0029): keys, each in a value of its own or with commas between them.</summary>
+    [SupplyParameterFromQuery(Name = KindFilter.Parameter)]
+    public string[]? KindsAsked { get; set; }
+
     protected override void OnInitialized()
     {
         if (Collection != Site.Collection || Visitor.Projection is not { } projection)
@@ -110,6 +114,9 @@
         {
             Time = AskedTime.Read(string.IsNullOrWhiteSpace(Time) ? Year : Time),
             Present = Clock.GetUtcNow().Year,
+
+            // Only a kind some name of the collection has is asked for (ADR 0029).
+            Kinds = KindFilter.Read(KindsAsked, KindFilter.Offered(projection.Entities.Select(entity => entity.Kinds))),
         };
         _hits = projection.Search(_query, _filter, MostHits);
     }

@@ -145,10 +145,13 @@ public sealed class DastanLibrary
         // The public gets reviewed texts only: a translation that is a draft is not read into a public site.
         var reviewedOnly = Audience == Audience.Public;
 
+        // The list of kinds of the content root (ADR 0029): one for every collection and comparison of the site.
+        Kinds = KindsFile.Load(content, reviewedOnly);
+
         // A comparison that is not released to the audience of the site does not exist for it.
         // A site that reads from the database reads its comparisons there too: the ones that were released.
         var comparisons = settings.Published && !string.IsNullOrWhiteSpace(settings.Database)
-            ? [.. PublishedCollections.ReadComparisons(settings.Database).Select(released => ComparisonSample.Read(released.Json, released.Translations, reviewedOnly))]
+            ? [.. PublishedCollections.ReadComparisons(settings.Database).Select(released => ComparisonSample.Read(released.Json, released.Translations, reviewedOnly, Kinds))]
             : ComparisonSample.LoadAll(Path.Combine(content, "comparisons"), reviewedOnly);
         Comparisons = [.. comparisons.Where(comparison => comparison.MayBeShownTo(Audience))];
 
@@ -177,6 +180,7 @@ public sealed class DastanLibrary
                         ReviewRoot = Path.GetDirectoryName(content) ?? content,
                         Translations = [.. revision.Translations],
                         ReviewedTextsOnly = reviewedOnly,
+                        Kinds = Kinds,
                     }),
                     Audience,
                     content,
@@ -223,6 +227,9 @@ public sealed class DastanLibrary
 
     /// <summary>Gets who the site shows its collections to.</summary>
     public Audience Audience { get; }
+
+    /// <summary>Gets the list of kinds of the content root (ADR 0029); empty when it has none.</summary>
+    public KindList Kinds { get; }
 
     /// <summary>Gets the collections, the one a visitor enters first at the beginning.</summary>
     public ImmutableArray<DastanSite> Collections { get; }

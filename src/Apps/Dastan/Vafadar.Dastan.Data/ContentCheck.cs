@@ -51,7 +51,7 @@ public static class ContentCheck
             return Refused(file, null, problem!);
         }
 
-        if (format is PilotSample.TranslationVersion or ComparisonSample.TranslationVersion)
+        if (format is PilotSample.TranslationVersion or ComparisonSample.TranslationVersion or KindsFile.TranslationVersion)
         {
             // A translation says nothing by itself: it is read with the file it translates.
             var name = Path.GetFileNameWithoutExtension(file);
@@ -62,7 +62,12 @@ public static class ContentCheck
                 return Refused(file, format, "a translation is named <file>.<language>.json and lies beside the <file>.json it translates; that file was not found.");
             }
 
-            var expected = format == PilotSample.TranslationVersion ? PilotSample.SchemaVersion : ComparisonSample.FormatVersion;
+            var expected = format switch
+            {
+                PilotSample.TranslationVersion => PilotSample.SchemaVersion,
+                KindsFile.TranslationVersion => KindsFile.FormatVersion,
+                _ => ComparisonSample.FormatVersion,
+            };
             var found = Format(translated, out _);
             if (found != expected)
             {
@@ -79,7 +84,8 @@ public static class ContentCheck
             {
                 PilotSample.SchemaVersion => new ContentReport(file, format, [], Describe(PilotSample.Load(file), file), Unfilled(file)),
                 ComparisonSample.FormatVersion => new ContentReport(file, format, [], Describe(ComparisonSample.Load(file), file), Unfilled(file)),
-                _ => Refused(file, format, $"the format {format} is not one the site reads; it reads {PilotSample.SchemaVersion} and {ComparisonSample.FormatVersion}, and their translations."),
+                KindsFile.FormatVersion => Kinds(file, format),
+                _ => Refused(file, format, $"the format {format} is not one the site reads; it reads {PilotSample.SchemaVersion}, {ComparisonSample.FormatVersion} and {KindsFile.FormatVersion}, and their translations."),
             };
         }
         catch (SampleFormatException refused)
@@ -114,6 +120,30 @@ public static class ContentCheck
         ArgumentException.ThrowIfNullOrWhiteSpace(folder);
         return new[] { "samples", "comparisons", "media" }.All(name => Directory.Exists(Path.Combine(folder, name)));
     }
+
+    // The list of kinds is read where the site reads it: as kinds.json of a content root, beside its translations.
+    private static ContentReport Kinds(string file, string format)
+    {
+        if (!string.Equals(Path.GetFileName(file), KindsFile.FileName, StringComparison.Ordinal))
+        {
+            return Refused(file, format, $"a list of kinds is read only as {KindsFile.FileName} of a content root; this file is named otherwise.");
+        }
+
+        var kinds = KindsFile.Load(Path.GetDirectoryName(file)!);
+        return new ContentReport(
+            file,
+            format,
+            [],
+            [
+                ("kinds", Count(kinds.All.Length)),
+                ("retired", Count(kinds.All.Count(kind => kind.Retired))),
+                ("translations", Translations(file)),
+            ],
+            Unfilled(file));
+    }
+
+    // How many records have no kind yet (ADR 0029, K4): what is left to classify.
+    private static string WithoutKind(int without, int all) => $"{Count(without)} of {Count(all)}";
 
     private static ContentReport Refused(string file, string? format, string problem) =>
         new(file, format, [$"{Path.GetFileName(file)}: {problem}"], []);
@@ -189,6 +219,7 @@ public static class ContentCheck
         ("reading stages", Count(collection.Info.ReadingStages.Length)),
         ("sources", Count(collection.Sources.Length)),
         ("entities", Count(collection.Entities.Length) + " (" + string.Join(", ", collection.Entities.GroupBy(entity => PilotReader.NameOf(entity.Type)).Select(group => $"{group.Key} {Count(group.Count())}")) + ")"),
+        ("without a kind", WithoutKind(collection.Entities.Count(entity => entity.Kinds.IsEmpty), collection.Entities.Length)),
         ("relations", Count(collection.Relations.Length)),
         ("events", Count(collection.Events.Length)),
         ("media", Count(collection.Media.Length)),
@@ -202,6 +233,9 @@ public static class ContentCheck
         ("lanes", Count(comparison.Lanes.Length)),
         ("periods", Count(comparison.Lanes.Sum(lane => lane.Periods.Length))),
         ("events", Count(comparison.Lanes.Sum(lane => lane.Events.Length))),
+        ("without a kind", WithoutKind(
+            comparison.Lanes.Sum(lane => lane.Periods.Count(period => period.Kinds.IsEmpty) + lane.Events.Count(single => single.Kinds.IsEmpty)),
+            comparison.Lanes.Sum(lane => lane.Periods.Length + lane.Events.Length))),
         ("sources", Count(comparison.Sources.Length)),
         ("released to", comparison.Publication.PublicReleaseApproved ? "everybody" : comparison.Publication.LocalDemoAllowed ? "the local demonstration only" : "nobody"),
     ];

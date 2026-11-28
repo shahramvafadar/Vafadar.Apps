@@ -5,6 +5,13 @@ Asked by the owner on 2026-11-28: every record the site shows should have a *kin
 kind with an icon of its own, the kinds editable over time, and the pages that show many records able to filter by
 kind. This plan records the design and the decisions; it is carried out as one batch with its ADR.
 
+**State (2026-11-28).** K1–K4 are taken on the recommendations below as working defaults (D-103,
+[ADR 0029](adr/0029-kinds.md)). Steps 1 and 2 of the work are done: the format, the reader and the check, the
+vocabulary, the first list `library/kinds.json` with its Persian, the drawings, and the choice of kinds on the list
+of names, the timeline, the comparisons and the search. Step 3 – classifying the library – is open; the rule of K4
+is written and tested and is turned on by `KindsFile.EveryRecordHasAKind` once it is done. The look in a browser
+waits for the owner's word.
+
 ## What exists
 
 * **Types** – the fixed vocabulary of `EntityType` (Vafadar.Dastan.Core/Vocabulary.cs): `person`, `event`,

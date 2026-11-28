@@ -93,6 +93,97 @@
             <path d="M12 4 21 19.500H3z" />
             <path d="M12 10v4.500M12 17v.300" />
             break;
+        case "war":
+            @* Two crossed swords: a war, a battle, a siege, a field of battle (ADR 0029). *@
+            <path d="M5 5l11 11M19 5 8 16M14 18l4-4M6 14l4 4M4 20l2-2M20 20l-2-2" />
+            break;
+        case "flag":
+            @* A flag on its pole: a revolt, a conquest. *@
+            <path d="M6 21V4M6 4h11l-2.500 3.500L17 11H6" />
+            break;
+        case "scroll":
+            @* A written sheet: a treaty, a history, an inscription, who writes for a state. *@
+            <path d="M7 4h11v13a3 3 0 0 1-3 3H6a2 2 0 0 1-2-2v-2h11v2" />
+            <path d="M10 8h5M10 11h5" />
+            break;
+        case "building":
+            @* A house under its roof: a founding, a building made. *@
+            <path d="M4 20h16M6 20v-9M18 20v-9M3 11l9-6 9 6z" />
+            <path d="M10 20v-5h4v5" />
+            break;
+        case "nature":
+            @* A cloud and what falls from it: what nature does. *@
+            <path d="M7 15a4 4 0 0 1 .500-8 5 5 0 0 1 9.500 1.500A3.300 3.300 0 0 1 17 15z" />
+            <path d="M9 18l-1 2M13 18l-1 2M17 18l-1 2" />
+            break;
+        case "river":
+            @* Three waves: water that runs or rises. *@
+            <path d="M3 8c3-2 6 2 9 0s6-2 9 0M3 13c3-2 6 2 9 0s6-2 9 0M3 18c3-2 6 2 9 0s6-2 9 0" />
+            break;
+        case "faith":
+            @* A dome: what belongs to a faith. *@
+            <path d="M5 20h14M7 20v-7a5 5 0 0 1 10 0v7M12 4v4M10.500 5.500h3" />
+            break;
+        case "candle":
+            @* A candle: a death. *@
+            <path d="M10 9h4v11h-4zM12 9V7" />
+            <path d="M12 3.500c1 1.200 1 2.300 0 3-1-.700-1-1.800 0-3z" />
+            break;
+        case "crown":
+            @* A crown: who rules, a king, a capital. *@
+            <path d="M4 18h16M4 18 3 8l5 4 4-6 4 6 5-4-1 10" />
+            break;
+        case "pen":
+            @* A pen of a feather: who writes poems and books, and a poem. *@
+            <path d="M19 4C13 5 8 10 6 17l-1 3 3-1c7-2 12-7 11-15z" />
+            <path d="M6 17l6-6" />
+            break;
+        case "learning":
+            @* A flask: who learns and finds, a discovery. *@
+            <path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.800 3h10.400a2 2 0 0 0 1.800-3l-5-9V3" />
+            <path d="M7.500 15h9" />
+            break;
+        case "art":
+            @* A palette: who makes art. *@
+            <path d="M12 4a8 8 0 1 0 0 16c1.500 0 2-1 1.500-2s0-2 1.500-2h2a3 3 0 0 0 3-3c0-5-3.600-9-8-9z" />
+            <circle cx="8" cy="10" r="1" />
+            <circle cx="12" cy="7.500" r="1" />
+            <circle cx="16" cy="10" r="1" />
+            break;
+        case "hero":
+            @* A shield: a hero of a story. *@
+            <path d="M12 3l7 3v5c0 4.500-3 8-7 10-4-2-7-5.500-7-10V6z" />
+            break;
+        case "demon":
+            @* A head with horns: a demon of a story. *@
+            <circle cx="12" cy="14" r="5.500" />
+            <path d="M7.500 10.500 5 4l4.500 4M16.500 10.500 19 4l-4.500 4" />
+            break;
+        case "divine":
+            @* A sun: a being of the other world. *@
+            <circle cx="12" cy="12" r="3.500" />
+            <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M5.600 18.400l2.100-2.100M16.300 7.700l2.100-2.100" />
+            break;
+        case "creature":
+            @* A paw: a creature of a story. *@
+            <circle cx="7" cy="9" r="1.800" />
+            <circle cx="11" cy="6" r="1.800" />
+            <circle cx="15.500" cy="7" r="1.800" />
+            <circle cx="18" cy="11" r="1.800" />
+            <path d="M8 17c0-3 2-5 4.500-5S17 14 17 17c0 2-2 3-4.500 2S8 19 8 17z" />
+            break;
+        case "city":
+            @* Houses of different heights: a city. *@
+            <path d="M3 20h18M5 20V10h5v10M10 20V5h6v15M16 20v-8h3v8" />
+            break;
+        case "mountain":
+            @* Two peaks: a mountain. *@
+            <path d="M3 19 9.500 8l3.500 6 2.500-4L21 19z" />
+            break;
+        case "monument":
+            @* An obelisk: a monument. *@
+            <path d="M10 20 11 6l1-2 1 2 1 14zM7 20h10" />
+            break;
         default:
             <circle cx="12" cy="12" r="3" />
             break;
@@ -101,7 +192,8 @@
 
 @code {
     /// <summary>The drawings there are, by their names.</summary>
-    public static readonly string[] Names = ["discover", "compare", "world", "saved", "search", "account", "settings", "connections", "timeline", "pictures", "overview", "family", "story", "globe", "waiting", "nothing", "failed"];
+    public static readonly string[] Names = ["discover", "compare", "world", "saved", "search", "account", "settings", "connections", "timeline", "pictures", "overview", "family", "story", "globe", "waiting", "nothing", "failed",
+        "war", "flag", "scroll", "building", "nature", "river", "faith", "candle", "crown", "pen", "learning", "art", "hero", "demon", "divine", "creature", "city", "mountain", "monument"];
 
     /// <summary>Gets or sets the name of the drawing.</summary>
     [Parameter, EditorRequired]

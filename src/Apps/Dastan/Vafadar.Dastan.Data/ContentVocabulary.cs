@@ -42,4 +42,10 @@ public static class ContentVocabulary
 
     /// <summary>Gets the fixed sets of the file of a comparison (<see cref="ComparisonSample.FormatVersion"/>) and of its translations.</summary>
     public static ImmutableArray<ContentChoices> Comparison { get; } = ComparisonSample.Choices();
+
+    /// <summary>
+    /// Gets the fixed sets of the list of kinds (<see cref="KindsFile.FormatVersion"/>) and of its translations
+    /// (ADR 0029). The kinds themselves are the list of a content root: a record names them in <c>kinds</c>.
+    /// </summary>
+    public static ImmutableArray<ContentChoices> Kinds { get; } = KindsFile.Choices();
 }

@@ -72,7 +72,9 @@ public static partial class ComparisonSample
             .ToArray();
         try
         {
-            return Read(File.ReadAllText(path), translations, reviewedTextsOnly);
+            // The list of kinds lies in the content root, the folder above the folder of the comparisons.
+            var root = Path.GetDirectoryName(Path.GetDirectoryName(path)!) ?? Path.GetDirectoryName(path)!;
+            return Read(File.ReadAllText(path), translations, reviewedTextsOnly, () => KindsFile.Load(root, reviewedTextsOnly));
         }
         catch (SampleFormatException refused)
         {
@@ -81,8 +83,16 @@ public static partial class ComparisonSample
     }
 
     /// <summary>Reads a comparison from its JSON and the JSON of its translations.</summary>
+    /// <param name="json">The comparison.</param>
+    /// <param name="translations">The translations, as JSON.</param>
+    /// <param name="reviewedTextsOnly">Whether a translation that is a draft is left out, as for the public.</param>
+    /// <param name="kinds">The list of kinds its periods and events may name (ADR 0029); none when nothing is given.</param>
     /// <exception cref="SampleFormatException">The comparison or a translation cannot be used.</exception>
-    public static Comparison Read(string json, IReadOnlyList<string>? translations = null, bool reviewedTextsOnly = false)
+    public static Comparison Read(string json, IReadOnlyList<string>? translations = null, bool reviewedTextsOnly = false, KindList? kinds = null) =>
+        Read(json, translations, reviewedTextsOnly, () => kinds ?? KindList.Empty);
+
+    // Reads a comparison; the list of kinds is asked for when an item names a kind.
+    private static Comparison Read(string json, IReadOnlyList<string>? translations, bool reviewedTextsOnly, Func<KindList> kindList)
     {
         ArgumentNullException.ThrowIfNull(json);
         var document = Parse<ComparisonDocument>(json, "The comparison");
@@ -142,7 +152,19 @@ public static partial class ComparisonSample
         }
 
         var sources = document.Sources.Select(source => ReadSource(source, problems)).ToList();
-        var lanes = document.Lanes.Select(lane => ReadLane(lane, texts, problems)).ToList();
+        var list = new Lazy<KindList?>(() =>
+        {
+            try
+            {
+                return kindList();
+            }
+            catch (SampleFormatException refused)
+            {
+                problems.AddRange(refused.Problems);
+                return null;
+            }
+        });
+        var lanes = document.Lanes.Select(lane => ReadLane(lane, texts, problems, list)).ToList();
         if (problems.Count > 0)
         {
             throw new SampleFormatException(problems);
@@ -263,7 +285,46 @@ public static partial class ComparisonSample
         return localized;
     }
 
-    private static ComparisonLane ReadLane(LaneDocument lane, List<TranslationDocument> translations, List<string> problems) => new()
+    // The kinds an item names (ADR 0029): each a kind of the list that is given to periods or to events, each once.
+    private static ImmutableArray<Kind> Kinds(ItemDocument item, EntityType type, List<string> problems, Lazy<KindList?> list)
+    {
+        if (item.Kinds is not { Count: > 0 } keys)
+        {
+            return [];
+        }
+
+        if (list.Value is not { } kinds)
+        {
+            return [];
+        }
+
+        var found = ImmutableArray.CreateBuilder<Kind>();
+        foreach (var key in keys)
+        {
+            if (kinds.Find(key) is not { } kind)
+            {
+                problems.Add(kinds.All.IsEmpty
+                    ? $"\"{item.Key}\" names the kind {key}, and the content root has no list of kinds (kinds.json)."
+                    : $"\"{item.Key}\" names the kind {key}, which is not a kind of the list (kinds.json).");
+            }
+            else if (!kind.Allows(type))
+            {
+                problems.Add($"\"{item.Key}\": the kind {key} is not given to a {type.Key}; it is given to {string.Join(", ", kind.Types.Select(allowed => allowed.Key))}.");
+            }
+            else if (found.Contains(kind))
+            {
+                problems.Add($"\"{item.Key}\" names the kind {key} twice.");
+            }
+            else
+            {
+                found.Add(kind);
+            }
+        }
+
+        return found.ToImmutable();
+    }
+
+    private static ComparisonLane ReadLane(LaneDocument lane, List<TranslationDocument> translations, List<string> problems, Lazy<KindList?> kinds) => new()
     {
         Key = lane.Key,
         Label = Localized(lane.Label, translations, translation => translation.Lanes.GetValueOrDefault(lane.Key)),
@@ -284,6 +345,7 @@ public static partial class ComparisonSample
                     Time = period.Time as Period ?? new Period(PeriodStart.Unknown, PeriodEnd.Unknown),
                     Sources = [.. period.SourceIds.Select(id => new SourceId(id))],
                     Review = Review(period.ReviewStatus, period.Key, problems),
+                    Kinds = Kinds(period, EntityTypes.Period, problems, kinds),
                 };
             }),
         ],
@@ -297,6 +359,7 @@ public static partial class ComparisonSample
                 Time = single.Time,
                 Sources = [.. single.SourceIds.Select(id => new SourceId(id))],
                 Review = Review(single.ReviewStatus, single.Key, problems),
+                Kinds = Kinds(single, EntityTypes.Event, problems, kinds),
             }),
         ],
     };
@@ -427,6 +490,8 @@ public static partial class ComparisonSample
         public required List<string> SourceIds { get; init; }
 
         public required string ReviewStatus { get; init; }
+
+        public List<string>? Kinds { get; init; }
     }
 
     private sealed class TranslationDocument

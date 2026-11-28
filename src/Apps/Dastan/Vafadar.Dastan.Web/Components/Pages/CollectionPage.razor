@@ -1,4 +1,5 @@
 @page "/{Collection}"
+@using System.Collections.Immutable
 @inject Visitor Visitor
 @inject DastanSite Site
 @inject DastanLibrary Library
@@ -173,19 +174,25 @@
 
     <section aria-labelledby="subjects">
         <h2 id="subjects">@T["Collection_Subjects"]</h2>
+        @* The names narrowed by kind (ADR 0029): only kinds the names of the page have are offered. *@
+        <KindChoice Offered="_offered" Chosen="_chosen" Id="subject-kinds" Address="@(kinds => KindChoice.With($"{Site.Collection}#subject-kinds", kinds))" />
+        @if (_subjects.IsEmpty && !_chosen.IsEmpty)
+        {
+            <p class="note" role="status">@T["Kinds_None"]</p>
+        }
         <ul class="cards" role="list">
-            @foreach (var subject in overview.Subjects.Take(Few))
+            @foreach (var subject in _subjects.Take(Few))
             {
                 @SubjectCard(subject)
             }
         </ul>
-        @if (overview.Subjects.Length > Few)
+        @if (_subjects.Length > Few)
         {
             @* To start with, a few: the names that come first. The others stand in the same page, one step away. *@
             <details class="fold more-cards">
-                <summary>@string.Format(CultureInfo.CurrentCulture, T["Collection_MoreSubjects"], Visitor.Number(overview.Subjects.Length - Few))</summary>
+                <summary>@string.Format(CultureInfo.CurrentCulture, T["Collection_MoreSubjects"], Visitor.Number(_subjects.Length - Few))</summary>
                 <ul class="cards" role="list">
-                    @foreach (var subject in overview.Subjects.Skip(Few))
+                    @foreach (var subject in _subjects.Skip(Few))
                     {
                         @SubjectCard(subject)
                     }
@@ -203,6 +210,11 @@
     private const int Few = 12;
 
     private CollectionOverview? _overview;
+
+    // The names of the list as the choice of kinds leaves them, the kinds offered and the kinds chosen (ADR 0029).
+    private ImmutableArray<Entity> _subjects = [];
+    private ImmutableArray<Kind> _offered = [];
+    private ImmutableHashSet<string> _chosen = [];
 
     // A story the collection tells in steps leads to its steps; a story it only names leads to what is known of it.
     private RenderFragment StoryCard(Entity told) =>
@@ -224,6 +236,10 @@
     [Parameter]
     public string Collection { get; set; } = string.Empty;
 
+    /// <summary>Gets or sets the kinds the names are narrowed to, in the address: keys with commas between them.</summary>
+    [SupplyParameterFromQuery(Name = KindFilter.Parameter)]
+    public string[]? KindsAsked { get; set; }
+
     protected override void OnInitialized()
     {
         _overview = Collection == Site.Collection ? Visitor.Projection?.Overview() : null;
@@ -233,6 +249,9 @@
             return;
         }
 
+        _offered = KindFilter.Offered(_overview.Subjects.Select(subject => subject.Kinds));
+        _chosen = KindFilter.Read(KindsAsked, _offered);
+        _subjects = [.. _overview.Subjects.Where(subject => KindFilter.Passes(subject.Kinds, _chosen))];
         _comparable = Visitor.Projection!.Timeline().Subjects.Length + Visitor.Projection!.Entities.Count(TimelineLanes.HasLifespan) >= 2;
     }
 }

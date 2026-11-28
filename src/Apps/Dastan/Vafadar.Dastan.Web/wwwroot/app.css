@@ -4370,3 +4370,46 @@ ul.statements .evidence-link {
 :root :is(h1, h2, h3):lang(ar) {
   line-height: 1.5;
 }
+
+/* The kinds of a record (ADR 0029): each its drawing and its name, beside the type. */
+.kinds {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  margin-inline-start: var(--space-1);
+}
+
+.kind {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.kind .icon,
+.kind-choice .choice .icon {
+  inline-size: 1em;
+  block-size: 1em;
+}
+
+.kind-choice .choice {
+  gap: var(--space-1);
+}
+
+/* The kinds of the search: a row of boxes that can be ticked, each a target large enough for a finger. */
+.kind-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.kind-fields legend {
+  inline-size: 100%;
+  padding: 0;
+}
+
+.kind-fields .kind {
+  min-block-size: 2.75rem;
+}

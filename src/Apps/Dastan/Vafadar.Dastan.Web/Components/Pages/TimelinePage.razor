@@ -40,6 +40,12 @@
         <ExploreBar State="_explore" />
     }
 
+    @if (_of is null)
+    {
+        @* The chart narrowed by kind (ADR 0029): only kinds of the names that have a time are offered. *@
+        <KindChoice Offered="_offered" Chosen="_chosen" Id="timeline-kinds" Address="@(kinds => KindChoice.With(KeptOpen($"{_page}{_state.Query()}") + "#timeline-kinds", kinds))" />
+    }
+
     @if (_canGroup)
     {
         @* A collection of many names (D-099): its names by kind, each kind one lane in which names that do not
@@ -83,7 +89,7 @@
     {
         @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
         <p class="note" role="status">
-            @T["Timeline_Empty"]
+            @T[_chosen.IsEmpty ? "Timeline_Empty" : "Kinds_None"]
             @if (_continues)
             {
                 <text> @T["Gallery_EmptyHint"] </text><a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
@@ -113,6 +119,11 @@
     private HashSet<string> _open = [];
     private List<(string Key, int Names, YearSpan? Reach, bool Open)> _kinds = [];
     private string _kept = string.Empty;
+
+    // The kinds the chart is narrowed to and the kinds offered (ADR 0029); every link of the chart keeps the choice.
+    private ImmutableArray<Kind> _offered = [];
+    private ImmutableHashSet<string> _chosen = [];
+    private string _kindsKept = string.Empty;
 
     private Entity? _story;
     private Entity? _of;
@@ -162,6 +173,10 @@
     [SupplyParameterFromQuery(Name = "open")]
     public string? Open { get; set; }
 
+    /// <summary>Gets or sets the kinds of records the chart is narrowed to, in the address: keys with commas between them.</summary>
+    [SupplyParameterFromQuery(Name = KindFilter.Parameter)]
+    public string[]? KindsAsked { get; set; }
+
     protected override void OnInitialized()
     {
         if (Collection != Site.Collection || Visitor.Projection is not { } projection)
@@ -192,19 +207,29 @@
         var asked = (Open ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Where(Kinds.Contains).Distinct().ToList();
         _kept = _of is not null ? string.Empty : By == "names" ? "by=names" : asked.Count > 0 ? "open=" + string.Join(',', Kinds.Where(asked.Contains)) : string.Empty;
         _open = [.. asked];
+        if (_of is null)
+        {
+            _offered = KindFilter.Offered(projection.Timeline().Subjects.Select(subject => subject.Kinds));
+            _chosen = KindFilter.Read(KindsAsked, _offered);
+            _kindsKept = KindFilter.Written(_chosen, _offered);
+        }
+
         _here = Kept($"{_page}{_state.Query()}");
         _timeline = Build(projection);
     }
 
-    // An address of the chart with what the visitor chose of the kinds.
-    private string Kept(string address) => _kept.Length == 0 ? address : $"{address}{(address.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{_kept}";
+    // An address of the chart with what the visitor chose of the kinds of names and of the kinds of records.
+    private string Kept(string address) => KindChoice.With(KeptOpen(address), _kindsKept);
+
+    // An address of the chart with what the visitor chose of the kinds of names (the lanes), without the kinds of records.
+    private string KeptOpen(string address) => _kept.Length == 0 ? address : $"{address}{(address.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{_kept}";
 
     // The address of the chart as it is looked at, with another choice of the kinds.
     private string Chosen(string? by, IEnumerable<string>? open)
     {
         var address = $"{_page}{_state.Query()}";
         var kept = by is not null ? "by=" + by : open is null ? string.Empty : "open=" + string.Join(',', Kinds.Where(open.Contains));
-        return (kept.Length == 0 ? address : $"{address}{(address.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{kept}") + "#kinds";
+        return KindChoice.With(kept.Length == 0 ? address : $"{address}{(address.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{kept}", _kindsKept) + "#kinds";
     }
 
     private string YearAt(decimal place)
@@ -243,6 +268,12 @@
 
         else
         {
+            // Narrowed by kind (ADR 0029): only names of the chosen kinds, and no pictures – a picture is of no kind.
+            if (!_chosen.IsEmpty)
+            {
+                view = view with { Subjects = [.. view.Subjects.Where(subject => KindFilter.Passes(subject.Kinds, _chosen))], Made = [] };
+            }
+
             // The whole collection: the lanes in the order of time, what cannot be placed among the years last
             // and in the order of the collection. Names that begin together keep the order of the collection.
             view = view with

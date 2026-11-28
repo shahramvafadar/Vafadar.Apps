@@ -426,8 +426,14 @@ public sealed record SearchFilter(EntityNature? Nature = null, EntityId? Place =
     /// <summary>Gets the year of the common era the visitor asks in; a depth of time is counted from it.</summary>
     public int Present { get; init; }
 
+    /// <summary>
+    /// Gets the keys of the kinds a hit has to be of (ADR 0029): one of them, or a kind below one of them. Empty,
+    /// the kind does not matter.
+    /// </summary>
+    public ImmutableHashSet<string> Kinds { get; init; } = [];
+
     /// <summary>Gets a value indicating whether the filter lets everything through.</summary>
-    public bool IsEmpty => Nature is null && Place is null && Year is null && Time is null;
+    public bool IsEmpty => Nature is null && Place is null && Year is null && Time is null && Kinds.IsEmpty;
 }
 
 /// <summary>What a collection has with a time of the calendar, as far as the visitor may see it.</summary>

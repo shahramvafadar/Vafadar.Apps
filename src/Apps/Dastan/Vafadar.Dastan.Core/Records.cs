@@ -102,6 +102,12 @@ public sealed class Entity
     /// not a place on a map.
     /// </summary>
     public GeoPosition? Position { get; init; }
+
+    /// <summary>
+    /// Gets the kinds of the entity under its type (ADR 0029): a battle, a poet, a hero – several when it is
+    /// several things. Empty while the collection is not classified.
+    /// </summary>
+    public ImmutableArray<Kind> Kinds { get; init; } = [];
 }
 
 /// <summary>How exactly a position says where a place is.</summary>

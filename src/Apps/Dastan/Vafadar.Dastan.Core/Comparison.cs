@@ -46,6 +46,9 @@ public sealed class ComparisonPeriod
 
     /// <summary>Gets how far the editors have come with the statement.</summary>
     public required ReviewStatus Review { get; init; }
+
+    /// <summary>Gets the kinds of the item (ADR 0029): a war, a drought, a reign. Empty while the comparison is not classified.</summary>
+    public ImmutableArray<Kind> Kinds { get; init; } = [];
 }
 
 /// <summary>A single event of a lane, with the time it is stated to have happened.</summary>
@@ -68,6 +71,9 @@ public sealed class ComparisonEvent
 
     /// <summary>Gets how far the editors have come with the statement.</summary>
     public required ReviewStatus Review { get; init; }
+
+    /// <summary>Gets the kinds of the item (ADR 0029): a war, a drought, a reign. Empty while the comparison is not classified.</summary>
+    public ImmutableArray<Kind> Kinds { get; init; } = [];
 }
 
 /// <summary>One of the subjects that are compared, with its periods and its single events.</summary>
@@ -122,6 +128,48 @@ public sealed class Comparison
 
     /// <summary>Gets what the editors allow to be done with the comparison.</summary>
     public required PublicationState Publication { get; init; }
+
+    /// <summary>Gets the kinds the periods and events of the comparison have, and the wider kinds above them, in the order of their list (ADR 0029).</summary>
+    public ImmutableArray<Kind> Kinds => KindFilter.Offered(Lanes.SelectMany(lane => lane.Periods.Select(period => period.Kinds).Concat(lane.Events.Select(single => single.Kinds))));
+
+    /// <summary>
+    /// Returns the comparison with only the periods and events of the chosen kinds (ADR 0029); a lane left with
+    /// nothing is left out. Nothing chosen, it is the comparison itself; nothing left, it is nothing.
+    /// </summary>
+    /// <param name="chosen">The keys of the kinds chosen; a wider kind takes in those below it.</param>
+    public Comparison? Narrowed(IReadOnlySet<string> chosen)
+    {
+        ArgumentNullException.ThrowIfNull(chosen);
+        if (chosen.Count == 0)
+        {
+            return this;
+        }
+
+        ImmutableArray<ComparisonLane> lanes =
+        [
+            .. Lanes
+                .Select(lane => new ComparisonLane
+                {
+                    Key = lane.Key,
+                    Label = lane.Label,
+                    Periods = [.. lane.Periods.Where(period => KindFilter.Passes(period.Kinds, chosen))],
+                    Events = [.. lane.Events.Where(single => KindFilter.Passes(single.Kinds, chosen))],
+                })
+                .Where(lane => !lane.Periods.IsEmpty || !lane.Events.IsEmpty),
+        ];
+        return lanes.IsEmpty ? null : new Comparison
+        {
+            Id = Id,
+            Title = Title,
+            Summary = Summary,
+            Frame = Frame,
+            From = From,
+            To = To,
+            Lanes = lanes,
+            Sources = Sources,
+            Publication = Publication,
+        };
+    }
 
     /// <summary>Returns whether the comparison may be shown to an audience.</summary>
     public bool MayBeShownTo(Audience audience) =>

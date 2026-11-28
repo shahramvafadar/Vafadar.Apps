@@ -28,8 +28,9 @@ public static class ContentCommands
               Reads each file exactly as the site reads it and says whether the site can use it. A folder
               stands for every content file in it; a translation is checked with the file it translates.
 
-          vocabulary [collection|comparison] [--json]
-              Lists every field that takes one of a fixed set of values, with the values.
+          vocabulary [collection|comparison|kinds] [--json]
+              Lists every field that takes one of a fixed set of values, with the values. "kinds" is the
+              list of kinds of a content root (kinds.json), whose keys a record names in its field kinds.
 
           template collection|subject|comparison <id> [--out <file>]
               Writes the smallest file of that kind the site accepts, to start from. Never over a file.
@@ -84,7 +85,7 @@ public static class ContentCommands
         {
             ["check", _, ..] => Check(words[1..], output, json),
             ["vocabulary"] => Vocabulary(null, output, json),
-            ["vocabulary", "collection" or "comparison"] => Vocabulary(words[1], output, json),
+            ["vocabulary", "collection" or "comparison" or "kinds"] => Vocabulary(words[1], output, json),
             ["template", "collection" or "subject" or "comparison", _] => Template(words[1], words[2], null, output, today),
             ["template", "collection" or "subject" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
             ["quotes", _, "--quotes", _, "--sources", _] => Quotes(words[1], words[3], words[5], output, json),
@@ -319,6 +320,11 @@ public static class ContentCommands
             kinds.Add(("comparison", ComparisonSample.FormatVersion, ContentVocabulary.Comparison));
         }
 
+        if (kind is null or "kinds")
+        {
+            kinds.Add(("kinds", KindsFile.FormatVersion, ContentVocabulary.Kinds));
+        }
+
         if (json)
         {
             Write(output, writer =>
@@ -362,7 +368,7 @@ public static class ContentCommands
         {
             foreach (var (name, format, fields) in kinds)
             {
-                output.WriteLine($"The file of a {name} ({format})");
+                output.WriteLine(name == "kinds" ? $"The list of kinds, kinds.json of a content root ({format})" : $"The file of a {name} ({format})");
                 output.WriteLine();
                 foreach (var field in fields)
                 {
