@@ -1,6 +1,6 @@
 # Persian names of the collections
 
-The forms in which the Persian translations of the histories of Iran, Rome, China, Egypt, Mesopotamia, Anatolia and Greece and of the Shahnameh write
+The forms in which the Persian translations of the histories of Iran, Rome, China, Egypt, Mesopotamia, Anatolia, Greece and India and of the Shahnameh write
 names, gathered from the collections themselves (review D3 of `content-plan-histories.md`, 2026-11-28). A new
 translation takes its names from here; where a name is not yet here, it follows the rules below and is added.
 
@@ -25,6 +25,8 @@ translation takes its names from here; where a name is not yet here, it follows 
   the Hittite names read aloud (هتوسیلی, مورسیلی, شوپیلولیوما, تودخلیا), numbers written out.
 * **Greece**: the forms of Persian books on Greek history and philosophy (آتن, اسپارت, سقراط, هرودوت, پریکلس,
   فیلیپ دوم مقدونی, ماراتن, ترموپیل, پلاته); other names read from the Greek (تمیستوکلس, لئونیداس, آنتیگونوس).
+* **India**: the forms of Persian writing on India (آشوکا, چندرگوپت, گنگ, سند, پنجاب, گندهاره), Sanskrit names read
+  aloud otherwise with the -gupta of the Gupta kings kept as گوپت (سمودرگوپت).
 * **The Shahnameh**: the poem's own forms, as on Ganjoor – کی‌کاووس, کیخسرو, تهمورث, هفت‌خوان; a champion
   who shares a king's name keeps the poem's distinction (بهرام the champion, بهرام گور the king).
 * A summary in Persian says no more than the English; a name in it is written as in its own entry.
@@ -1075,6 +1077,46 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Pydna | پیدنا |
 | Sparta | اسپارت |
 | Thermopylae | ترموپیل |
+
+## India
+
+### Houses and dynasties
+
+| English | Persian |
+|---|---|
+| The Guptas | گوپتاها |
+| The Kushans | کوشانیان |
+| The Mauryas | موریاییان |
+
+### People
+
+| English | Persian |
+|---|---|
+| Alexander III of Macedon | اسکندر سوم مقدونی |
+| Ashoka | آشوکا |
+| Bindusara | بیندوسارا |
+| Chandragupta I | چندرگوپت یکم |
+| Chandragupta II | چندرگوپت دوم |
+| Chandragupta Maurya | چندرگوپت موریا |
+| Darius I the Great | داریوش یکم (داریوش بزرگ) |
+| Demetrius I of Bactria | دمتریوس یکم باختری |
+| Harsha | هرشا |
+| Kumaragupta | کوماراگوپت |
+| Menander | منندر |
+| Porus | پوروس |
+| Ramagupta | رامگوپت |
+| Samudragupta | سمودرگوپت |
+| Seleucus I Nicator | سلوکوس یکم نیکاتور |
+| Skandagupta | اسکندگوپت |
+
+### Places and regions
+
+| English | Persian |
+|---|---|
+| India | هند |
+| Mohenjo-daro | موهنجودارو |
+| Pataliputra | پاتلیپوترا |
+| Taxila | تکسیلا |
 
 ## The Shahnameh
 

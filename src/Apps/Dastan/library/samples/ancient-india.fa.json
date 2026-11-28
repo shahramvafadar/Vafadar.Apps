@@ -1,0 +1,255 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "ancient-india",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-ancient-india": {
+      "label": "هند",
+      "summary": "هند باستان از شهرهای تمدن سند، در گشودن گندهاره و پنجاب به دست پارسیان و مقدونیان، شاهنشاهی موریایی چندرگوپت و آشوکا، شاهان هندو-یونانی و کوشانیان، تا روزگار گوپتاها و امپراتوری هرشا در سدهٔ هفتم میلادی."
+    },
+    "office-mauryan-emperor": {
+      "label": "پادشاه موریایی",
+      "summary": "تخت شاهنشاهی موریایی با پایتخت پاتنا بر کرانهٔ گنگ."
+    },
+    "office-gupta-emperor": {
+      "label": "پادشاه گوپتا",
+      "summary": "تخت دودمان گوپتا در شمال هند."
+    },
+    "dynasty-maurya": {
+      "label": "موریاییان",
+      "summary": "دودمان چندرگوپت موریا که تخت ننده‌ها را در مگده گرفت و دره‌های سند و گنگ را یکی کرد؛ پس از آشوکا شاهنشاهی‌اش رو به افول رفت."
+    },
+    "dynasty-kushan": {
+      "label": "کوشانیان",
+      "summary": "خاندانی فرمانروا از تبار یوئه‌جی‌ها که در سه سدهٔ نخست میلادی بر بیشتر شمال شبه‌قاره، افغانستان و بخش‌هایی از آسیای میانه فرمان راند."
+    },
+    "dynasty-gupta": {
+      "label": "گوپتاها",
+      "summary": "دودمانی که از آغاز سدهٔ چهارم تا میانهٔ سدهٔ ششم میلادی بر شمال و بخش‌هایی از مرکز و باختر هند فرمان راند؛ روزگارش را اغلب دورهٔ کلاسیک هند می‌خوانند."
+    },
+    "period-indus-civilization": {
+      "label": "تمدن سند",
+      "summary": "کهن‌ترین فرهنگ شهری شناخته‌شدهٔ شبه‌قارهٔ هند، با سال‌های هسته‌ای حدود ۲۶۰۰ تا ۱۹۰۰ پیش از میلاد؛ میان حدود ۲۰۰۰ و ۱۷۵۰ پیش از میلاد گام‌به‌گام رو به افول رفت."
+    },
+    "period-gupta": {
+      "label": "دورهٔ گوپتا",
+      "summary": "دورهٔ گسترده‌ای از حدود ۳۰۰ تا حدود ۶۰۰ میلادی که بسیاری آن را عصر زرین و کلاسیک هند در ادبیات، هنر، معماری و فلسفه می‌دانند."
+    },
+    "person-chandragupta-maurya": {
+      "label": "چندرگوپت موریا",
+      "summary": "بنیادگذار شاهنشاهی موریایی، پادشاه از ۳۲۱ تا ۲۹۷ پیش از میلاد: شاگرد کائوتیلیا که سپاه اسکندر را در تکسیلا دیده بود، تخت ننده‌ها را گرفت، تکسیلا را گشود و با سلوکوس پیمان بست که در برابر ۵۰۰ فیل از استان‌های خاوری دست کشید."
+    },
+    "person-bindusara": {
+      "label": "بیندوسارا",
+      "summary": "پسر چندرگوپت، پادشاه به مدت یک‌چهارم سده تا ۲۷۲ پیش از میلاد، کم‌شناخته‌ترین سه پادشاه بزرگ موریایی."
+    },
+    "person-ashoka": {
+      "label": "آشوکا",
+      "summary": "پسر بیندوسارا، پادشاه موریایی از ۲۷۲ تا ۲۳۲ پیش از میلاد، که نخستین بار شبه‌قاره را جز جنوب دور یکپارچه کرد، پس از گشودن کلینگه از جنگ بیزار شد، بودایی شد و فرمان‌های سنگ‌نبشته‌اش را به یونانی نیز منتشر کرد."
+    },
+    "person-porus": {
+      "label": "پوروس",
+      "summary": "پادشاهی در خاور پنجاب که در ۳۲۶ پیش از میلاد در کنار هوداسپس از اسکندر بزرگ شکست خورد و در ۳۱۷ به دست فرماندهٔ مقدونی تکسیلا کشته شد."
+    },
+    "person-demetrius-i-of-bactria": {
+      "label": "دمتریوس یکم باختری",
+      "summary": "پسر ائوتیدموس که در ۱۸۴ پیش از میلاد به گندهاره و پنجاب تاخت و پادشاهی هندو-یونانی‌ای تا درهٔ گنگ پدید آورد؛ تا حدود ۱۷۰ فرمان راند."
+    },
+    "person-menander": {
+      "label": "منندر",
+      "summary": "شاه هندو-یونانی که حدود ۱۲۵ پیش از میلاد پادشاهی را یکپارچه کرد، به سرزمین مرکزی موریایی تاخت و پاتنا را گرفت؛ متن بودایی «پرسش‌های منندر» به نام اوست."
+    },
+    "person-chandragupta-i": {
+      "label": "چندرگوپت یکم",
+      "summary": "شاه گوپتا از حدود ۳۱۹ میلادی تا ۳۳۵ یا ۳۵۰، که با زناشویی با کوماراده‌وی گوپتاها را با لیچاوی‌ها یکی کرد؛ تقویم گوپتا از تاج‌گذاری یا زناشویی او شمرده می‌شود."
+    },
+    "person-samudragupta": {
+      "label": "سمودرگوپت",
+      "summary": "پسر چندرگوپت یکم که حدود ۳۳۵ میلادی – یا به دیدی دیگر حدود ۳۵۰ – جانشینش شد و تا حدود ۳۷۰ فرمان راند."
+    },
+    "person-ramagupta": {
+      "label": "رامگوپت",
+      "summary": "شاهی از ۳۷۰ تا ۳۷۵ میلادی که از گواهی‌هایی بیرون از نوشته‌های گوپتا شناخته است، شاید برادر بزرگ چندرگوپت دوم که شاید به دست او کشته شد."
+    },
+    "person-chandragupta-ii": {
+      "label": "چندرگوپت دوم",
+      "summary": "شاه گوپتا از حدود ۳۷۵ میلادی تا ۴۱۳/۴۱۵ که ویکرامادیتیه، «خورشید دلیری»، خوانده می‌شد؛ زائر چینی فاشیان، که از ۴۰۵ تا ۴۱۱ در هند بود، فرمانروایی‌اش را ستود."
+    },
+    "person-kumaragupta": {
+      "label": "کوماراگوپت",
+      "summary": "جانشین چندرگوپت دوم، شاه گوپتا از ۴۱۵ تا ۴۵۴ میلادی، هنگامی که یورش‌های هوناها امپراتوری را رو به فروپاشی بردند."
+    },
+    "person-skandagupta": {
+      "label": "اسکندگوپت",
+      "summary": "شاه گوپتا از ۴۵۴ تا ۴۶۷ میلادی، در روزگار یورش‌های پیاپی هوناها، شاخه‌ای از هپتالیان."
+    },
+    "person-harsha": {
+      "label": "هرشا",
+      "summary": "فرمانروای امپراتوری بزرگی در شمال هند از ۶۰۶ تا ۶۴۷ میلادی، زادهٔ حدود ۵۹۰؛ در ۶۴۱ فرستاده‌ای نزد امپراتور چین فرستاد، نخستین پیوند دیپلماتیک هند و چین."
+    },
+    "person-alexander-iii": {
+      "label": "اسکندر سوم مقدونی",
+      "summary": "شاه مقدونی که در ۳۲۷ پیش از میلاد به درهٔ کابل تاخت، تکسیلا را گرفت، پوروس را در کنار هوداسپس شکست داد و در مرز خاوری پنجاب بازگشت."
+    },
+    "person-seleucus-i": {
+      "label": "سلوکوس یکم نیکاتور",
+      "summary": "جانشین اسکندر که کوشید استان‌های خاوری را بازپس گیرد و با چندرگوپت آشتی کرد و در برابر ۵۰۰ فیل از گندهاره و رخج دست کشید."
+    },
+    "person-darius-i": {
+      "label": "داریوش یکم (داریوش بزرگ)",
+      "summary": "شاه پارسی که در روزگارش تکسیلا و باختر پنجاب، هندوش، به شاهنشاهی هخامنشی افزوده شد."
+    },
+    "place-taxila": {
+      "label": "تکسیلا",
+      "summary": "پایتخت باختر پنجاب که در روزگار داریوش یکم به شاهنشاهی هخامنشی افزوده شد، در ۳۲۹ پیش از میلاد اسکندر را فراخواند، به دست چندرگوپت افتاد، آشوکا فرماندارش بود و از ۱۸۴ شاهان یونانی داشت."
+    },
+    "place-pataliputra": {
+      "label": "پاتلیپوترا",
+      "summary": "پایتخت موریایی بر کرانهٔ گنگ، پاتنای امروزی، که منندر در سدهٔ دوم پیش از میلاد آن را گرفت."
+    },
+    "place-mohenjo-daro": {
+      "label": "موهنجودارو",
+      "summary": "شهری از تمدن سند نزدیک رود سند در سند، که در ۱۹۲۲ شناسایی شد."
+    },
+    "event-alexander-defeats-porus": {
+      "label": "شکست پوروس از اسکندر",
+      "summary": "در ۳۲۶ پیش از میلاد اسکندر بزرگ، به دعوت شاه تکسیلا، پوروس را در کرانهٔ هوداسپس شکست داد."
+    },
+    "event-treaty-of-seleucus-and-chandragupta": {
+      "label": "آشتی سلوکوس و چندرگوپت",
+      "summary": "در ۳۰۴ پیش از میلاد سلوکوس، که سپاهش را در باختر نیاز داشت، با چندرگوپت آشتی کرد: از گندهاره و رخج دست کشید و ۵۰۰ فیل گرفت."
+    },
+    "event-greeks-invade-punjab": {
+      "label": "یورش یونانیان به پنجاب",
+      "summary": "در ۱۸۴ پیش از میلاد یونانیان باختر به سرکردگی دمتریوس به گندهاره و پنجاب تاختند و پادشاهی هندو-یونانی را بنیاد نهادند."
+    },
+    "event-faxian-in-india": {
+      "label": "فاشیان در هند",
+      "summary": "زائر بودایی چینی فاشیان شش سال، از ۴۰۵ تا ۴۱۱ میلادی، در روزگار چندرگوپت دوم در هند ماند."
+    },
+    "event-harsha-envoy-to-china": {
+      "label": "فرستادهٔ هرشا به چین",
+      "summary": "در ۶۴۱ میلادی هرشا فرستاده‌ای نزد امپراتور چین فرستاد و نخستین پیوند دیپلماتیک هند و چین را برقرار کرد."
+    }
+  },
+  "relations": {
+    "relation-chandragupta-maurya-holder-of-mauryan-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-chandragupta-maurya-member-of-maurya": {
+      "label": "از خاندان"
+    },
+    "relation-chandragupta-maurya-founder-of-maurya": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-bindusara-holder-of-mauryan-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-bindusara-member-of-maurya": {
+      "label": "از خاندان"
+    },
+    "relation-chandragupta-maurya-parent-of-bindusara": {
+      "label": "پدرِ"
+    },
+    "relation-bindusara-successor-of-chandragupta-maurya": {
+      "label": "جانشینِ"
+    },
+    "relation-ashoka-holder-of-mauryan-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-ashoka-member-of-maurya": {
+      "label": "از خاندان"
+    },
+    "relation-bindusara-parent-of-ashoka": {
+      "label": "پدرِ"
+    },
+    "relation-ashoka-successor-of-bindusara": {
+      "label": "جانشینِ"
+    },
+    "relation-chandragupta-i-holder-of-gupta-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-chandragupta-i-member-of-gupta": {
+      "label": "از خاندان"
+    },
+    "relation-chandragupta-i-founder-of-gupta": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-samudragupta-holder-of-gupta-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-samudragupta-member-of-gupta": {
+      "label": "از خاندان"
+    },
+    "relation-chandragupta-i-parent-of-samudragupta": {
+      "label": "پدرِ"
+    },
+    "relation-samudragupta-successor-of-chandragupta-i": {
+      "label": "جانشینِ"
+    },
+    "relation-ramagupta-holder-of-gupta-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-ramagupta-member-of-gupta": {
+      "label": "از خاندان"
+    },
+    "relation-chandragupta-ii-holder-of-gupta-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-chandragupta-ii-member-of-gupta": {
+      "label": "از خاندان"
+    },
+    "relation-ramagupta-sibling-of-chandragupta-ii": {
+      "label": "برادرِ"
+    },
+    "relation-kumaragupta-holder-of-gupta-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-kumaragupta-member-of-gupta": {
+      "label": "از خاندان"
+    },
+    "relation-kumaragupta-successor-of-chandragupta-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-skandagupta-holder-of-gupta-emperor": {
+      "label": "پادشاه"
+    },
+    "relation-skandagupta-member-of-gupta": {
+      "label": "از خاندان"
+    },
+    "relation-skandagupta-successor-of-kumaragupta": {
+      "label": "جانشینِ"
+    },
+    "relation-pataliputra-capital-of-maurya": {
+      "label": "پایتختِ"
+    },
+    "relation-alexander-iii-participant-in-alexander-defeats-porus": {
+      "label": "شرکت در"
+    },
+    "relation-porus-participant-in-alexander-defeats-porus": {
+      "label": "شرکت در"
+    },
+    "relation-seleucus-i-participant-in-treaty-of-seleucus-and-chandragupta": {
+      "label": "شرکت در"
+    },
+    "relation-chandragupta-maurya-participant-in-treaty-of-seleucus-and-chandragupta": {
+      "label": "شرکت در"
+    },
+    "relation-demetrius-i-of-bactria-participant-in-greeks-invade-punjab": {
+      "label": "شرکت در"
+    },
+    "relation-greeks-invade-punjab-took-place-in-taxila": {
+      "label": "رخ داد در"
+    },
+    "relation-faxian-in-india-during-gupta": {
+      "label": "در دورهٔ"
+    },
+    "relation-harsha-participant-in-harsha-envoy-to-china": {
+      "label": "شرکت در"
+    }
+  }
+}
