@@ -74,7 +74,7 @@
         "role": "بزرگی از ایران، پسر نوذر"
       }
     },
-    "character-human": {
+    "character-houman": {
       "label": "هومان",
       "summary": "سرداری تورانی که افراسیاب فرستاده است.",
       "facts": {
@@ -137,8 +137,8 @@
         "role": "جنگاور ایرانی"
       }
     },
-    "character-bahram": {
-      "label": "بهرام",
+    "character-bahram-pahlavan": {
+      "label": "بهرام گودرز",
       "summary": "جنگاور ایرانی.",
       "facts": {
         "role": "جنگاور ایرانی"
@@ -423,7 +423,7 @@
       "summary": "افراسیاب این خبر را خوش‌آمد می‌گوید، دوازده هزار سوار به سرداری هومان و بارمان برمی‌گزیند و پنهانی فرمان می‌دهد که پدر و پسر یکدیگر را نشناسند.",
       "roles": {
         "character-afrasiab": "شاه توران",
-        "character-human": "سرکردهٔ فرستاده",
+        "character-houman": "سرکردهٔ فرستاده",
         "character-barman": "سرکردهٔ فرستاده",
         "character-sohrab": "گیرندهٔ نامه و هدیه‌ها",
         "character-rostam": "کسی که نقشه دربارهٔ اوست"
@@ -435,7 +435,7 @@
       "roles": {
         "character-sohrab": "یورش‌برنده",
         "character-hojir": "نگهبان دژ",
-        "character-human": "اسیر را می‌پذیرد",
+        "character-houman": "اسیر را می‌پذیرد",
         "character-gostaham": "جنگاور جوان در دژ"
       }
     },
@@ -468,7 +468,7 @@
         "character-tus": "رایزن",
         "character-gudarz": "رایزن",
         "character-gorgin": "رایزن",
-        "character-bahram": "رایزن",
+        "character-bahram-pahlavan": "رایزن",
         "character-farhad": "رایزن",
         "character-zal": "حاضر در زابل",
         "character-sohrab": "کسی که نامه دربارهٔ اوست"
@@ -494,7 +494,7 @@
         "character-giv": "سردار",
         "character-tus": "سردار",
         "character-sohrab": "پاسدار دژ",
-        "character-human": "همراه نگران",
+        "character-houman": "همراه نگران",
         "character-afrasiab": "پشتیبانی که یاد می‌شود"
       }
     },
@@ -505,7 +505,7 @@
         "character-rostam": "دیدارکنندهٔ ناشناس",
         "character-sohrab": "میزبان بزم",
         "character-zhende-razm": "همراه در بزم",
-        "character-human": "در بزم",
+        "character-houman": "در بزم",
         "character-barman": "در بزم",
         "character-giv": "دیده‌بان",
         "character-kay-kavus": "خبر را می‌شنود"
@@ -563,7 +563,7 @@
       "summary": "سهراب و هومان روز را می‌سنجند؛ رستم از نیروی جوان به کاووس می‌گوید و سپس به برادرش زواره برای فردا سفارش می‌کند.",
       "roles": {
         "character-sohrab": "روز را بازمی‌نگرد",
-        "character-human": "همراه",
+        "character-houman": "همراه",
         "character-rostam": "روز را بازمی‌نگرد",
         "character-giv": "از تاخت خبر می‌دهد",
         "character-kay-kavus": "نوید نیایش می‌دهد",
@@ -577,7 +577,7 @@
       "summary": "سهراب به هومان می‌گوید به هماوردش گمان دارد و بامداد از پهلوان می‌خواهد سلاح بر زمین بگذارد و تبارش را بگوید؛ رستم نمی‌پذیرد.",
       "roles": {
         "character-sohrab": "آشتی پیشنهاد می‌کند",
-        "character-human": "رایزن",
+        "character-houman": "رایزن",
         "character-rostam": "پیشنهاد را نمی‌پذیرد",
         "character-rakhsh": "اسبی که با آن سنجیده می‌شود"
       }
@@ -588,7 +588,7 @@
       "roles": {
         "character-rostam": "کشتی‌گیری که بر زمین زده می‌شود",
         "character-sohrab": "پیروز کشتی",
-        "character-human": "خرده‌گیر رها کردن"
+        "character-houman": "خرده‌گیر رها کردن"
       }
     },
     "event-26": {
@@ -630,7 +630,7 @@
         "character-sohrab": "پسر جان‌باخته",
         "character-rostam": "پدر سوگوار",
         "character-kay-kavus": "شاه دلداری‌دهنده",
-        "character-human": "سالار تورانی که باید زنده بماند",
+        "character-houman": "سالار تورانی که باید زنده بماند",
         "character-zavareh": "همراه سپاه",
         "character-zal": "کسی که در سوگ‌سرود نامش می‌آید",
         "character-rudabeh": "کسی که در سوگ‌سرود نامش می‌آید",
@@ -646,7 +646,7 @@
         "character-zavareh": "با سپاه بازمی‌گردد",
         "character-kay-kavus": "به ایران بازمی‌گردد",
         "character-sohrab": "پسر جان‌باخته",
-        "character-bahram": "پند می‌گوید"
+        "character-bahram-pahlavan": "پند می‌گوید"
       }
     }
   },

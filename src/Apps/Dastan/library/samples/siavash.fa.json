@@ -43,7 +43,7 @@
       }
     },
     "character-kay-kavus": {
-      "label": "کاووس",
+      "label": "کی‌کاووس",
       "summary": "شاه ایران، پدر سیاوش.",
       "facts": {
         "role": "شاه ایران، پدر سیاوش"
@@ -140,8 +140,8 @@
         "role": "سرداری تورانی"
       }
     },
-    "character-bahram": {
-      "label": "بهرام",
+    "character-bahram-pahlavan": {
+      "label": "بهرام گودرز",
       "summary": "جنگاور ایرانی، پسر گودرز.",
       "facts": {
         "role": "جنگاور ایرانی، پسر گودرز"
@@ -258,7 +258,7 @@
       "label": "هاماوران",
       "summary": "زادگاه سودابه."
     },
-    "place-herat": {
+    "place-hari": {
       "label": "هری",
       "summary": "شهری در راه سپاه."
     },
@@ -520,7 +520,7 @@
         "character-rostam": "پهلوانی که با شاهزاده فرستاده می‌شود",
         "character-afrasiab": "شاه توران که به ایران می‌تازد",
         "character-tus": "سرداری که به لشکر می‌پیوندد",
-        "character-bahram": "جنگاوری که برای سپاه برگزیده می‌شود",
+        "character-bahram-pahlavan": "جنگاوری که برای سپاه برگزیده می‌شود",
         "character-zangeh": "جنگاوری که برای سپاه برگزیده می‌شود",
         "character-sudabeh": "شهبانویی که شاهزاده می‌خواهد از او دور شود"
       }
@@ -577,7 +577,7 @@
       "roles": {
         "character-siavash": "شاهزاده در برابر فرمان پدرش",
         "character-kay-kavus": "شاهی که نامه را می‌فرستد",
-        "character-bahram": "همراز شاهزاده",
+        "character-bahram-pahlavan": "همراز شاهزاده",
         "character-zangeh": "همراز شاهزاده",
         "character-tus": "سرداری که باید سپاه را به دست گیرد",
         "character-sudabeh": "شهبانویی که شاهزاده به یاد می‌آورد"
@@ -591,7 +591,7 @@
         "character-afrasiab": "شاهی که فراخوان می‌فرستد",
         "character-piran": "رایزن افراسیاب",
         "character-siavash": "شاهزاده‌ای که می‌پذیرد و راهی می‌شود",
-        "character-bahram": "جنگاوری که سپاه به او سپرده می‌شود",
+        "character-bahram-pahlavan": "جنگاوری که سپاه به او سپرده می‌شود",
         "character-kay-kavus": "شاهی که نامهٔ پسرش را می‌گیرد"
       }
     },
@@ -778,7 +778,7 @@
         "character-gudarz": "پهلوانی در انجمن",
         "character-tus": "پهلوانی در انجمن",
         "character-giv": "پهلوانی در انجمن",
-        "character-bahram": "پهلوانی در انجمن",
+        "character-bahram-pahlavan": "پهلوانی در انجمن",
         "character-garuy-zereh": "کسی که رستم کشنده‌اش می‌خواند",
         "character-siavash": "شاهزادهٔ کشته‌شده"
       }
