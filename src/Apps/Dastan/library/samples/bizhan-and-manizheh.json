@@ -749,6 +749,11 @@
           "presence": "acts_in_selected_scenes"
         },
         {
+          "entityId": "place-iran",
+          "role": "court",
+          "presence": "setting"
+        },
+        {
           "entityId": "place-arman",
           "role": "the troubled land",
           "presence": "setting"

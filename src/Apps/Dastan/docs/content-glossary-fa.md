@@ -1229,7 +1229,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | King of Samangan | شاه سمنگان |
 | Kondrow | کندرو |
 | Lahhak | لهاک |
-| Lohrasp | لهراسب |
+| Lohrasp | لهراسپ |
 | Mah-Afarid | ماه‌آفرید |
 | Mahmud of Ghazni | محمود غزنوی |
 | Manizheh | منیژه |
