@@ -99,3 +99,17 @@ span is a question of the site, not of the collections.
   defaults, which the owner can change; F1 (hypothetical placements) is a change to the format and is the owner's to
   approve before G7 can be done.
 
+## The kinds of the library (2026-11-28)
+
+* Every entity of the 21 collections and every period and event of the four comparisons names its kinds; the rule
+  of K4 is on and the check finds no record without one. Each kind given is allowed for the type of its record.
+* The spread of the kinds per collection was read: rulers, ruling houses, thrones and conquests carry the
+  histories; heroes, kings, the royal house and lands the stories; the stories of the poem are reigns, wars, tales
+  of heroes, love stories, tragedies and tales of the court. No odd kind was found.
+* Every kind of the list but the wider kind "political" (whose narrower kinds are used) has records. Eleven
+  events were added for the kinds of nature and discovery, each quoted from its source: the drought about
+  2200 BCE, the great flood of the Yellow River and the flood of 14–17 CE, the severe winter at Rome, the famines
+  of 440 BCE and at Constantinople, the plague of Athens and two other pestilences, the earthquake at Olympia and
+  the silver of Laurion. All quotes of the four collections stand in their sources.
+* The choice of kinds on the pages is covered by the tests of the pages (lists, timeline, comparison, search); a
+  look in a browser waits for the owner's word.
