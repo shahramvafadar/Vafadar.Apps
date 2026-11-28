@@ -1,6 +1,6 @@
 # Persian names of the collections
 
-The forms in which the Persian translations of the histories of Iran, Rome, China and Egypt and of the Shahnameh write
+The forms in which the Persian translations of the histories of Iran, Rome, China, Egypt and Mesopotamia and of the Shahnameh write
 names, gathered from the collections themselves (review D3 of `content-plan-histories.md`, 2026-11-28). A new
 translation takes its names from here; where a name is not yet here, it follows the rules below and is added.
 
@@ -18,6 +18,9 @@ translation takes its names from here; where a name is not yet here, it follows 
   تحوتمس, آمنحوتپ, هتشپسوت, توت‌عنخ‌آمون, بطلمیوس, کلئوپاترا), otherwise the name read aloud with its parts joined
   by a half-space (سبک‌حتپ, حتپ‌سخموی), numbers written out (رامسس دوم); a Persian or Macedonian king keeps the
   form of the Iran collection (کمبوجیهٔ دوم, اسکندر سوم مقدونی).
+* **Mesopotamia**: the forms of Persian histories of the Near East where settled (حمورابی, نبوکدنصر, آشوربانیپال,
+  سناخریب, اسرحدون, شلمنصر, تیگلات‌پیلسر, نبونید, بابل, نینوا, اور, اوروک), otherwise the cuneiform name read aloud
+  with its parts joined by a hyphen as in the English (اور-نمو, شمشی-ادد); a king shared with Iran keeps its form there.
 * **The Shahnameh**: the poem's own forms, as on Ganjoor – کی‌کاووس, کیخسرو, تهمورث, هفت‌خوان; a champion
   who shares a king's name keeps the poem's distinction (بهرام the champion, بهرام گور the king).
 * A summary in Persian says no more than the English; a name in it is written as in its own entry.
@@ -723,9 +726,9 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Amyrtaeus | آمیرتائوس |
 | Apopis | آپوپیس |
 | Apries | آپریس |
-| Arses | اردشیر چهارم |
 | Artaxerxes I | اردشیر یکم |
-| Artaxerxes III Ochus | اردشیر سوم |
+| Artaxerxes III | اردشیر سوم |
+| Artaxerxes IV | اردشیر چهارم |
 | Aya | آیا |
 | Berenice III | برنیکه سوم |
 | Berenice IV | برنیکه چهارم |
@@ -734,10 +737,10 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Cambyses II | کمبوجیهٔ دوم |
 | Caracalla | کاراکالا |
 | Cleopatra III | کلئوپاترای سوم |
-| Cleopatra VII Thea Philopator | کلئوپاترای هفتم |
-| Darius I | داریوش یکم (داریوش بزرگ) |
+| Cleopatra VII | کلئوپاترای هفتم |
+| Darius I the Great | داریوش یکم (داریوش بزرگ) |
 | Darius II | داریوش دوم |
-| Darius III Codoman | داریوش سوم |
+| Darius III | داریوش سوم |
 | Den | دن |
 | Diocletian | دیوکلسین |
 | Djedkare Izezi | جدکارع ایززی |
@@ -903,6 +906,72 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Sais | سائیس |
 | Tanis | تانیس |
 | Thebes | تبس |
+
+## Mesopotamia
+
+### Houses and dynasties
+
+| English | Persian |
+|---|---|
+| The First Dynasty of Babylon | دودمان یکم بابل |
+| The Neo-Babylonian kings | شاهان بابل نو |
+| The Second Dynasty of Isin | دودمان دوم ایسین |
+| The Third Dynasty of Ur | دودمان سوم اور |
+
+### People
+
+| English | Persian |
+|---|---|
+| Adad-Nirari I | ادد-نیراری یکم |
+| Adad-Nirari III | ادد-نیراری سوم |
+| Alexander III of Macedon | اسکندر سوم مقدونی |
+| Amar-Sin | امر-سین |
+| Amel-Marduk | امل-مردوک |
+| Aššur-Uballit I | آشور-اوبالیط یکم |
+| Aššur-Uballit II | آشور-اوبالیط دوم |
+| Aššurbanipal | آشوربانیپال |
+| Aššurnasirpal II | آشورنصیرپال دوم |
+| Cyaxares | هووخشتره |
+| Cyrus II the Great | کوروش دوم (کوروش بزرگ) |
+| Esarhaddon | اسرحدون |
+| Hammurabi | حمورابی |
+| Išme-Dagan | ایشمه-دگان |
+| Marduk-apla-iddin | مردوک-اپله-ایدین |
+| Mes-ane-pada | مس-انه-پده |
+| Mursilis I | مورسیلی یکم |
+| Nabonidus | نبونید |
+| Nabopolassar | نبوپلسر |
+| Nebuchadnezzar I | نبوکدنصر یکم |
+| Nebuchadnezzar II | نبوکدنصر دوم |
+| Necho II | نکو دوم |
+| Neriglissar | نریگلیسار |
+| Šalmaneser III | شلمنصر سوم |
+| Šalmaneser V | شلمنصر پنجم |
+| Šamaš-šuma-ukin | شمش-شوم-اوکین |
+| Šamši-Adad I | شمشی-ادد یکم |
+| Sargon II | سارگن دوم |
+| Sennacherib | سناخریب |
+| Shalmaneser I | شلمنصر یکم |
+| Shu-Sin | شو-سین |
+| Sin-šar-iškun | سین-شر-ایشکون |
+| Šulgi | شولگی |
+| Tiglath-Pileser I | تیگلات‌پیلسر یکم |
+| Tiglath-pileser III | تیگلات‌پیلسر سوم |
+| Tukulti-Ninurta I | توکولتی-نینورتا یکم |
+| Ur-Nammu | اور-نمو |
+
+### Places and regions
+
+| English | Persian |
+|---|---|
+| Aššur | آشور (شهر) |
+| Babylon | بابل |
+| Harran | حران |
+| Kalhu | کلخو |
+| Mesopotamia | میان‌رودان |
+| Nineveh | نینوا |
+| Ur | اور |
+| Uruk | اوروک |
 
 ## The Shahnameh
 

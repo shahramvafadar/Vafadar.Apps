@@ -1,0 +1,573 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "ancient-mesopotamia",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-ancient-mesopotamia": {
+      "label": "میان‌رودان",
+      "summary": "سرزمین میان فرات و دجله: اوروک و اورِ سومریان، دودمان سوم اور، بابلِ حمورابی، پادشاهی و سپس امپراتوری آشور، و امپراتوری بابل نو تا گرفتن بابل به دست کوروش در ۵۳۹ پیش از میلاد، با تاریخ پسین آن زیر فرمان پارسیان، اسکندر، سلوکیان و اشکانیان."
+    },
+    "office-king-of-ur": {
+      "label": "پادشاه اور",
+      "summary": "پادشاهی شهر اور که دودمان سومش میان‌رودان را دوباره یکپارچه کرد."
+    },
+    "office-king-of-babylon": {
+      "label": "پادشاه بابل",
+      "summary": "پادشاهی بابل و بابِلیه، سرزمین اکد."
+    },
+    "office-king-of-assyria": {
+      "label": "پادشاه آشور",
+      "summary": "پادشاهی آشور، سرزمین خدای آشور بر کرانهٔ دجله."
+    },
+    "dynasty-ur-iii": {
+      "label": "دودمان سوم اور",
+      "summary": "شاهان اور که بیش از یک سده، از ۲۱۱۲ تا حدود ۲۰۰۴ پیش از میلاد، بر شهرهای دشت آبرفتی فرمان راندند و سومری زبان دیوانشان بود."
+    },
+    "dynasty-first-babylon": {
+      "label": "دودمان یکم بابل",
+      "summary": "شاهان آموری بابل، حدود ۱۸۹۴ تا ۱۵۹۵ پیش از میلاد، که حمورابی از آنان بود؛ با غارت بابل به دست مورسیلی یکم، شاه هیتی، پایان یافت."
+    },
+    "dynasty-second-isin": {
+      "label": "دودمان دوم ایسین",
+      "summary": "شاهانی که در جنوب میان‌رودان جای کاسی‌ها را گرفتند؛ در روزگار نبوکدنصر یکم پیکرهٔ مردوک از ایلام بازگردانده شد."
+    },
+    "dynasty-neo-babylonian": {
+      "label": "شاهان بابل نو",
+      "summary": "خاندان نبوپلسر، که در ۶۲۶ پیش از میلاد پادشاه شناخته شد، و شاهان پس از آن، تا گرفتن بابل به دست کوروش در ۵۳۹."
+    },
+    "period-ur-iii": {
+      "label": "امپراتوری اور",
+      "summary": "دودمان سوم اور از ۲۱۱۲ تا حدود ۲۰۰۴ پیش از میلاد بر دشت آبرفتی فرمان راند، روزگاری که گاه «رنسانس سومری» خوانده می‌شود، تا اینکه بحرانی کشاورزی به این دولت متمرکز پایان داد."
+    },
+    "period-old-babylonian": {
+      "label": "دوره بابل کهن",
+      "summary": "روزگار دودمان یکم بابل، حدود ۱۸۹۴ تا ۱۵۹۵ پیش از میلاد، که حمورابی دشت را یکپارچه کرد و از آن پس سرزمین اکد، یعنی بابلیه، خوانده شد."
+    },
+    "period-middle-assyrian": {
+      "label": "دوره آشور میانه",
+      "summary": "از آشور-اوبالیط یکم، حدود ۱۳۶۴ پیش از میلاد، که آشور استقلالش را از میتانی بازگرفت، تا گسترش آن زیر فرمان جانشینانش و تیگلات‌پیلسر یکم و افول درازی که پس از حدود ۱۰۷۶ آمد."
+    },
+    "period-neo-assyrian": {
+      "label": "امپراتوری آشور نو",
+      "summary": "امپراتوری از آشورنصیرپال دوم، از ۸۸۳ پیش از میلاد، تا سقوط نینوا در ۶۱۲: از زاگرس تا مصر می‌رسید، زیر فرمان تیگلات‌پیلسر سوم در استان‌ها سازمان یافت و به دست بابلیان و مادها برافتاد."
+    },
+    "period-neo-babylonian": {
+      "label": "امپراتوری بابل نو",
+      "summary": "از نبوپلسر، شاه از ۶۲۶ پیش از میلاد، تا گرفتن بابل به دست کوروش در ۵۳۹: نیرومندترین دولت جهان باستان پس از سقوط آشور."
+    },
+    "person-ur-nammu": {
+      "label": "اور-نمو",
+      "summary": "پادشاه اور از ۲۱۱۲ تا ۲۰۹۵ پیش از میلاد، بنیادگذار دودمان سوم اور، که پرستشگاه و زیگورات ایزدبانو نانا را ساخت."
+    },
+    "person-shulgi": {
+      "label": "شولگی",
+      "summary": "پسر و جانشین اور-نمو، پادشاه اور از ۲۰۹۴ تا ۲۰۴۷ پیش از میلاد، که گاه‌نامه‌ای بازمانده از پادشاهی‌اش خبر می‌دهد."
+    },
+    "person-amar-sin": {
+      "label": "امر-سین",
+      "summary": "پادشاه اور از دودمان سوم، از ۲۰۴۶ تا ۲۰۳۸ پیش از میلاد."
+    },
+    "person-shu-sin": {
+      "label": "شو-سین",
+      "summary": "پادشاه اور از دودمان سوم، از ۲۰۳۷ تا ۲۰۲۹ پیش از میلاد."
+    },
+    "person-mes-ane-pada": {
+      "label": "مس-انه-پده",
+      "summary": "پادشاهی از اور که در سدهٔ بیست‌وششم پیش از میلاد گواهی شده و در فهرست شاهان سومری آمده است، از روزگار دودمان یکم اور."
+    },
+    "person-hammurabi": {
+      "label": "حمورابی",
+      "summary": "پادشاه بابل از تبار آموری، از ۱۷۹۲ تا حدود ۱۷۵۰ پیش از میلاد، که دشت آبرفتی را یکپارچه کرد؛ از روزگار او آن را سرزمین اکد، یعنی بابلیه، خواندند."
+    },
+    "person-nebuchadnezzar-i": {
+      "label": "نبوکدنصر یکم",
+      "summary": "پادشاه بابل از دودمان دوم ایسین، ۱۱۲۶ تا ۱۱۰۴ پیش از میلاد، که در روزگارش بابلیان تا ایلام پیش رفتند و پیکرهٔ مردوک را بازپس گرفتند."
+    },
+    "person-marduk-apla-iddin": {
+      "label": "مردوک-اپله-ایدین",
+      "summary": "پادشاه بابل که دو بار، از ۷۲۱ تا ۷۱۰ پیش از میلاد و باز در ۷۰۳، استقلال آن را از آشور خواستار شد؛ مرودخ بلادانِ کتاب مقدس."
+    },
+    "person-shamash-shuma-ukin": {
+      "label": "شمش-شوم-اوکین",
+      "summary": "برادر بزرگ آشوربانیپال که هنگام پادشاهی او بر آشور، در بابلیه پادشاه شد؛ شورید و برادرش در ۶۴۸ پیش از میلاد نظم را بازگرداند."
+    },
+    "person-nabopolassar": {
+      "label": "نبوپلسر",
+      "summary": "سربازی بابلی که در سپاه آشور خدمت کرده بود، فرمانداران آشوری را بیرون راند و در ۲۳ نوامبر ۶۲۶ پیش از میلاد پادشاه شناخته شد؛ نخستین شاه امپراتوری بابل نو، در ۶۱۲ با مادها نینوا را گرفت و در ۶۰۵ درگذشت."
+    },
+    "person-nebuchadnezzar-ii": {
+      "label": "نبوکدنصر دوم",
+      "summary": "پسر نبوپلسر، پادشاه بابلیه از ۶۰۵ تا ۵۶۲ پیش از میلاد: نکوی دوم را در کرکمیش شکست داد، اورشلیم را در ۵۹۷ و ۵۸۷ گرفت و بابل را با دروازهٔ ایشتار از نو ساخت."
+    },
+    "person-amel-marduk": {
+      "label": "امل-مردوک",
+      "summary": "پسر و جانشین نبوکدنصر دوم در ۵۶۲ پیش از میلاد که تقریباً بی‌درنگ کشته شد و شوهرخواهرش نریگلیسار جایش را گرفت."
+    },
+    "person-neriglissar": {
+      "label": "نریگلیسار",
+      "summary": "شوهرخواهر امل-مردوک که جای او را گرفت؛ پادشاه بابل از ۵۵۹ تا ۵۵۶ پیش از میلاد، به آناتولی تاخت و از توروس گذشت."
+    },
+    "person-nabonidus": {
+      "label": "نبونید",
+      "summary": "واپسین پادشاه بابلیه، از ۵۵۶ تا ۵۳۹ پیش از میلاد، که با کودتا به قدرت رسید، بخش‌های بزرگی از عربستان را به امپراتوری افزود و بابل را به کوروش باخت."
+    },
+    "person-shamshi-adad-i": {
+      "label": "شمشی-ادد یکم",
+      "summary": "پادشاه یک امپراتوری کوچک از ۱۸۱۳ تا حدود ۱۷۸۱ پیش از میلاد، از باختر زاگرس تا سرزمین میان دو رود، که خود را «شاه جهان» می‌خواند."
+    },
+    "person-ishme-dagan": {
+      "label": "ایشمه-دگان",
+      "summary": "پسر شمشی-ادد یکم که استقلالش را از دست داد و دست‌نشاندهٔ حمورابیِ بابل شد."
+    },
+    "person-ashur-uballit-i": {
+      "label": "آشور-اوبالیط یکم",
+      "summary": "پادشاه آشور از حدود ۱۳۶۴ تا ۱۳۲۸ پیش از میلاد که همراه شوپیلولیومای هیتی به میتانی تاخت و استقلال آشور را بازگرفت و دوره آشور میانه را آغاز کرد."
+    },
+    "person-adad-nirari-i": {
+      "label": "ادد-نیراری یکم",
+      "summary": "پادشاه آشور از حدود ۱۳۰۵ تا ۱۲۷۴ پیش از میلاد که گسترش آن را ادامه داد."
+    },
+    "person-shalmaneser-i": {
+      "label": "شلمنصر یکم",
+      "summary": "پادشاه آشور از حدود ۱۲۷۳ تا ۱۲۴۴ پیش از میلاد که گسترش آن را ادامه داد."
+    },
+    "person-tukulti-ninurta-i": {
+      "label": "توکولتی-نینورتا یکم",
+      "summary": "پادشاه آشور از حدود ۱۲۴۳ تا ۱۲۰۷ پیش از میلاد که امپراتوری‌اش در باختر با هیتی‌ها هم‌مرز بود و به بابل تاخت."
+    },
+    "person-tiglath-pileser-i": {
+      "label": "تیگلات‌پیلسر یکم",
+      "summary": "پادشاه آشور از حدود ۱۱۱۴ تا ۱۰۷۶ پیش از میلاد که سیاست تهاجمی را از سر گرفت و به دریای مدیترانه رسید؛ پس از او آشور یک سده و نیم رو به افول بود."
+    },
+    "person-ashurnasirpal-ii": {
+      "label": "آشورنصیرپال دوم",
+      "summary": "پادشاه آشور از ۸۸۳ تا ۸۵۹ پیش از میلاد که بخت آن را بازگرداند، تا زاگرس، دریاچهٔ ارومیه و اورارتو لشکر کشید و پایتختی نو در کلخو ساخت."
+    },
+    "person-shalmaneser-iii": {
+      "label": "شلمنصر سوم",
+      "summary": "پسر آشورنصیرپال دوم، پادشاه آشور از ۸۵۸ تا ۸۲۴ پیش از میلاد، که قدرت دمشق را شکست و از یاهوی اسرائیل باج گرفت."
+    },
+    "person-adad-nirari-iii": {
+      "label": "ادد-نیراری سوم",
+      "summary": "پادشاه آشور که سرانجام دمشق را گرفت."
+    },
+    "person-tiglath-pileser-iii": {
+      "label": "تیگلات‌پیلسر سوم",
+      "summary": "پادشاه آشور از ۷۴۴ تا ۷۲۷ پیش از میلاد که امپراتوری را به استان‌هایی زیر فرمانداران بدل کرد، دمشق و غزه را گرفت و بابلیه را در اتحادی شخصی با آشور یکی کرد."
+    },
+    "person-shalmaneser-v": {
+      "label": "شلمنصر پنجم",
+      "summary": "پسر تیگلات‌پیلسر سوم، پادشاه از ۷۲۶ تا ۷۲۲ پیش از میلاد، که در محاصرهٔ سامره کشته شد."
+    },
+    "person-sargon-ii": {
+      "label": "سارگن دوم",
+      "summary": "پادشاه آشور از ۷۲۱ تا ۷۰۵ پیش از میلاد، نه از خاندان شاهی، که اسرائیل را گرفت، مصریان را نزدیک غزه شکست داد و پایتخت نو دور-شروکین را ساخت."
+    },
+    "person-sennacherib": {
+      "label": "سناخریب",
+      "summary": "پسر سارگن دوم، پادشاه آشور از ۷۰۴ تا ۶۸۱ پیش از میلاد، که لاکیش را گرفت، از اورشلیم باج ستاند، بابل را غارت کرد و نینوا را پایتخت خود کرد."
+    },
+    "person-esarhaddon": {
+      "label": "اسرحدون",
+      "summary": "پسر و جانشین سناخریب، پادشاه آشور از ۶۸۰ تا ۶۶۹ پیش از میلاد، که کیمری‌ها را شکست داد، به مصر پیش رفت و گذاشت مردم بابل بازگردند."
+    },
+    "person-assurbanipal": {
+      "label": "آشوربانیپال",
+      "summary": "پادشاه آشور از ۶۶۹/۶۶۸ تا ۶۳۱ یا شاید ۶۲۷ پیش از میلاد: تبس را در مصر غارت کرد، برادر شورشی‌اش را در بابل رام کرد، شوش را ویران کرد و کتابخانهٔ بزرگ نینوا را گرد آورد."
+    },
+    "person-sin-shar-ishkun": {
+      "label": "سین-شر-ایشکون",
+      "summary": "پادشاه آشور، روزگاری فرماندار بابل، که گویا هنگام سقوط نینوا در ۶۱۲ پیش از میلاد خودکشی کرد."
+    },
+    "person-ashur-uballit-ii": {
+      "label": "آشور-اوبالیط دوم",
+      "summary": "واپسین پادشاه آشور که پس از سقوط نینوا در حران نیرو گرد آورد ولی بیرون رانده شد؛ هنگامی که نکوی دوم مصر به یاری‌اش آمد شکست خورد."
+    },
+    "person-cyrus-ii": {
+      "label": "کوروش دوم (کوروش بزرگ)",
+      "summary": "شاه پارسی که در ۵۳۹ پیش از میلاد بابل را گرفت و پسرش کمبوجیه را پادشاه بابل کرد."
+    },
+    "person-cyaxares": {
+      "label": "هووخشتره",
+      "summary": "سرکردهٔ مادها که در ۶۱۴ پیش از میلاد آشور را گرفت، با بابلیان هم‌پیمان شد و با آنان نینوا را در ۶۱۲ محاصره کرد و گرفت."
+    },
+    "person-alexander-iii": {
+      "label": "اسکندر سوم مقدونی",
+      "summary": "شاه مقدونی که در ۳۳۱ پیش از میلاد بابل را گرفت و می‌خواست آن را اقامتگاه خود کند."
+    },
+    "person-mursili-i": {
+      "label": "مورسیلی یکم",
+      "summary": "شاه هیتی که در کنار فرات پیش آمد، حدود ۱۵۹۵ پیش از میلاد بابل را غارت کرد و پیکرهٔ مردوک را برد."
+    },
+    "person-necho-ii": {
+      "label": "نکو دوم",
+      "summary": "فرعون مصر از ۶۱۰ تا ۵۹۵ پیش از میلاد که به یاری واپسین شاه آشور آمد و در ۶۰۵ در کرکمیش از نبوکدنصر شکست خورد."
+    },
+    "place-babylon": {
+      "label": "بابل",
+      "summary": "پایتخت بابلیه میان فرات و دجله؛ پس از سقوط آشور پایتخت خاور نزدیک، که نبوکدنصر دوم از نو ساخت، کوروش در ۵۳۹ پیش از میلاد و اسکندر در ۳۳۱ گرفتند."
+    },
+    "place-nineveh": {
+      "label": "نینوا",
+      "summary": "پایتختی آشوری که در روزگار شلمنصر سوم از نو بنیاد شد و سناخریب با دیواری دولایه آن را پایتخت خود کرد؛ مادها و بابلیان در ۶۱۲ پیش از میلاد آن را گرفتند."
+    },
+    "place-ashur": {
+      "label": "آشور (شهر)",
+      "summary": "شهری بر کرانهٔ دجله که نامش را به آشور داد، دولت‌شهری مستقل در پایان هزارهٔ سوم و پایتخت دینی آشور؛ مادها در ۶۱۴ پیش از میلاد آن را گرفتند."
+    },
+    "place-kalhu": {
+      "label": "کلخو",
+      "summary": "پایتخت آشوری که آشورنصیرپال دوم با ۴۷٬۰۰۰ کارگر در جای شهرکی کوچک ساخت، شش برابر آشورِ کهن؛ نمرود امروزی، کالَحِ کتاب مقدس."
+    },
+    "place-ur": {
+      "label": "اور",
+      "summary": "شهری سومری نزدیک خلیج فارس، جای گورهای شاهی دودمان یکمش و دودمان سومی که میان‌رودان را یکپارچه کرد؛ زیگورات نانا در آن را اور-نمو ساخت."
+    },
+    "place-uruk": {
+      "label": "اوروک",
+      "summary": "شهری که در هزارهٔ چهارم پیش از میلاد مهم بود و حدود ۳۲۰۰ پیش از میلاد نزدیک ۲۵۰ هکتار وسعت داشت."
+    },
+    "place-harran": {
+      "label": "حران",
+      "summary": "شهری در میان‌رودان علیا که نبوپلسر در ۶۱۶ پیش از میلاد نزدیک آن با آشوریان جنگید و واپسین شاه آشور پس از ۶۱۲ در آن نیرو گرد آورد."
+    },
+    "event-hittites-sack-babylon": {
+      "label": "غارت بابل به دست هیتی‌ها",
+      "summary": "حدود ۱۵۹۵ پیش از میلاد مورسیلی یکم، شاه هیتی، در کنار فرات پیش آمد، بابل را غارت کرد و پیکرهٔ مردوک را برد و دودمان یکم بابل پایان یافت."
+    },
+    "event-sennacherib-sacks-babylon": {
+      "label": "غارت بابل به دست سناخریب",
+      "summary": "پس از شورشی به سرکردگی مردوک-اپله-ایدین، سناخریب بابل را غارت کرد و مردمش را به نینوا کوچاند؛ صفحهٔ بابل آن را در ۶۸۹ پیش از میلاد و صفحهٔ آشور در ۷۰۳ می‌گذارد."
+    },
+    "event-assyrians-sack-thebes": {
+      "label": "غارت تبس به دست آشوریان",
+      "summary": "میان ۶۶۷ و ۶۶۴ پیش از میلاد آشوربانیپال جنگ مصر را ادامه داد، آن را تا تبس بازگرفت، شهر را غارت کرد و طهارقای کوشی را بیرون راند."
+    },
+    "event-nabopolassar-king": {
+      "label": "پادشاهی نبوپلسر",
+      "summary": "سردار بابلی نبوپلسر، که فرمانداران آشوری را بیرون رانده بود، در ۲۳ نوامبر ۶۲۶ پیش از میلاد پادشاه شناخته شد؛ آغاز امپراتوری بابل نو."
+    },
+    "event-medes-take-ashur": {
+      "label": "گرفتن آشور به دست مادها",
+      "summary": "در ۶۱۴ پیش از میلاد مادها آشور، پایتخت دینی آشور، را گرفتند؛ نبوپلسر دیر رسید ولی با شاهشان هووخشتره پیمان بست."
+    },
+    "event-fall-of-nineveh": {
+      "label": "سقوط نینوا",
+      "summary": "مادها و بابلیان در مه ۶۱۲ پیش از میلاد نینوا را محاصره کردند؛ در ژوئیه شهر افتاد و آشور برافتاد."
+    },
+    "event-battle-of-carchemish": {
+      "label": "نبرد کرکمیش",
+      "summary": "در ۶۰۵ پیش از میلاد ولیعهد نبوکدنصر نکوی دوم مصر را نزدیک کرکمیش بر کرانهٔ فرات شکست داد."
+    },
+    "event-babylonians-take-jerusalem": {
+      "label": "گرفتن اورشلیم به دست بابلیان",
+      "summary": "اورشلیم در ۵۹۷ پیش از میلاد گرفته شد و پس از شورش شاه دست‌نشانده‌اش باز در ۵۸۷، هنگامی که مردمش به بابلیه کوچانده شدند."
+    },
+    "event-capture-of-babylon": {
+      "label": "گرفتن بابل به دست کوروش",
+      "summary": "در ۵۳۹ پیش از میلاد کوروش بزرگ به بابل تاخت و آن را گرفت و به امپراتوری بابل نو پایان داد و پسرش کمبوجیه را پادشاه بابل کرد."
+    },
+    "event-alexander-takes-babylon": {
+      "label": "گرفتن بابل به دست اسکندر",
+      "summary": "در ۳۳۱ پیش از میلاد اسکندر بزرگ بابل را گرفت و بعدها می‌خواست آن را اقامتگاه خود کند."
+    },
+    "event-parthians-take-babylonia": {
+      "label": "گرفتن بابلیه به دست پارت‌ها",
+      "summary": "در ۱۴۱ پیش از میلاد پارت‌ها بابلیه را گشودند، یک نسل پس از آنکه آنتیوخوس چهارم کوشید یونانیان را در بابل جای دهد."
+    }
+  },
+  "relations": {
+    "relation-ur-nammu-holder-of-king-of-ur": {
+      "label": "پادشاه"
+    },
+    "relation-ur-nammu-member-of-ur-iii": {
+      "label": "از خاندان"
+    },
+    "relation-shulgi-holder-of-king-of-ur": {
+      "label": "پادشاه"
+    },
+    "relation-shulgi-member-of-ur-iii": {
+      "label": "از خاندان"
+    },
+    "relation-amar-sin-holder-of-king-of-ur": {
+      "label": "پادشاه"
+    },
+    "relation-amar-sin-member-of-ur-iii": {
+      "label": "از خاندان"
+    },
+    "relation-shu-sin-holder-of-king-of-ur": {
+      "label": "پادشاه"
+    },
+    "relation-shu-sin-member-of-ur-iii": {
+      "label": "از خاندان"
+    },
+    "relation-ur-nammu-parent-of-shulgi": {
+      "label": "پدرِ"
+    },
+    "relation-shulgi-successor-of-ur-nammu": {
+      "label": "جانشینِ"
+    },
+    "relation-ur-nammu-founder-of-ur-iii": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-mes-ane-pada-holder-of-king-of-ur": {
+      "label": "پادشاه"
+    },
+    "relation-hammurabi-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-hammurabi-member-of-first-babylon": {
+      "label": "از خاندان"
+    },
+    "relation-nebuchadnezzar-i-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-nebuchadnezzar-i-member-of-second-isin": {
+      "label": "از خاندان"
+    },
+    "relation-marduk-apla-iddin-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-marduk-apla-iddin-holder-of-king-of-babylon-2": {
+      "label": "پادشاه"
+    },
+    "relation-shamash-shuma-ukin-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-nabopolassar-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-nabopolassar-member-of-neo-babylonian": {
+      "label": "از خاندان"
+    },
+    "relation-nabopolassar-founder-of-neo-babylonian": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-nebuchadnezzar-ii-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-nebuchadnezzar-ii-member-of-neo-babylonian": {
+      "label": "از خاندان"
+    },
+    "relation-nabopolassar-parent-of-nebuchadnezzar-ii": {
+      "label": "پدرِ"
+    },
+    "relation-nebuchadnezzar-ii-successor-of-nabopolassar": {
+      "label": "جانشینِ"
+    },
+    "relation-amel-marduk-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-amel-marduk-member-of-neo-babylonian": {
+      "label": "از خاندان"
+    },
+    "relation-nebuchadnezzar-ii-parent-of-amel-marduk": {
+      "label": "پدرِ"
+    },
+    "relation-amel-marduk-successor-of-nebuchadnezzar-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-neriglissar-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-neriglissar-member-of-neo-babylonian": {
+      "label": "از خاندان"
+    },
+    "relation-neriglissar-successor-of-amel-marduk": {
+      "label": "جانشینِ"
+    },
+    "relation-nabonidus-holder-of-king-of-babylon": {
+      "label": "پادشاه"
+    },
+    "relation-nabonidus-member-of-neo-babylonian": {
+      "label": "از خاندان"
+    },
+    "relation-shamshi-adad-i-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-shamshi-adad-i-parent-of-ishme-dagan": {
+      "label": "پدرِ"
+    },
+    "relation-ashur-uballit-i-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-adad-nirari-i-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-shalmaneser-i-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-tukulti-ninurta-i-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-tiglath-pileser-i-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-ashurnasirpal-ii-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-shalmaneser-iii-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-ashurnasirpal-ii-parent-of-shalmaneser-iii": {
+      "label": "پدرِ"
+    },
+    "relation-adad-nirari-iii-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-tiglath-pileser-iii-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-shalmaneser-v-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-tiglath-pileser-iii-parent-of-shalmaneser-v": {
+      "label": "پدرِ"
+    },
+    "relation-sargon-ii-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-sargon-ii-successor-of-shalmaneser-v": {
+      "label": "جانشینِ"
+    },
+    "relation-sennacherib-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-sargon-ii-parent-of-sennacherib": {
+      "label": "پدرِ"
+    },
+    "relation-esarhaddon-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-sennacherib-parent-of-esarhaddon": {
+      "label": "پدرِ"
+    },
+    "relation-esarhaddon-successor-of-sennacherib": {
+      "label": "جانشینِ"
+    },
+    "relation-assurbanipal-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-assurbanipal-successor-of-esarhaddon": {
+      "label": "جانشینِ"
+    },
+    "relation-assurbanipal-sibling-of-shamash-shuma-ukin": {
+      "label": "برادرِ"
+    },
+    "relation-sin-shar-ishkun-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-ashur-uballit-ii-holder-of-king-of-assyria": {
+      "label": "پادشاه"
+    },
+    "relation-ashur-uballit-ii-successor-of-sin-shar-ishkun": {
+      "label": "جانشینِ"
+    },
+    "relation-babylon-capital-of-neo-babylonian": {
+      "label": "پایتختِ"
+    },
+    "relation-babylon-capital-of-first-babylon": {
+      "label": "پایتختِ"
+    },
+    "relation-ashurnasirpal-ii-founder-of-kalhu": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-ur-capital-of-ur-iii": {
+      "label": "پایتختِ"
+    },
+    "relation-mursili-i-participant-in-hittites-sack-babylon": {
+      "label": "شرکت در"
+    },
+    "relation-hittites-sack-babylon-took-place-in-babylon": {
+      "label": "رخ داد در"
+    },
+    "relation-hittites-sack-babylon-during-old-babylonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-sennacherib-participant-in-sennacherib-sacks-babylon": {
+      "label": "شرکت در"
+    },
+    "relation-sennacherib-sacks-babylon-took-place-in-babylon": {
+      "label": "رخ داد در"
+    },
+    "relation-sennacherib-sacks-babylon-during-neo-assyrian": {
+      "label": "در دورهٔ"
+    },
+    "relation-assurbanipal-participant-in-assyrians-sack-thebes": {
+      "label": "شرکت در"
+    },
+    "relation-assyrians-sack-thebes-during-neo-assyrian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nabopolassar-participant-in-nabopolassar-king": {
+      "label": "شرکت در"
+    },
+    "relation-nabopolassar-king-took-place-in-babylon": {
+      "label": "رخ داد در"
+    },
+    "relation-nabopolassar-king-during-neo-babylonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-cyaxares-participant-in-medes-take-ashur": {
+      "label": "شرکت در"
+    },
+    "relation-medes-take-ashur-took-place-in-ashur": {
+      "label": "رخ داد در"
+    },
+    "relation-medes-take-ashur-during-neo-assyrian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nabopolassar-participant-in-fall-of-nineveh": {
+      "label": "شرکت در"
+    },
+    "relation-cyaxares-participant-in-fall-of-nineveh": {
+      "label": "شرکت در"
+    },
+    "relation-sin-shar-ishkun-participant-in-fall-of-nineveh": {
+      "label": "شرکت در"
+    },
+    "relation-fall-of-nineveh-took-place-in-nineveh": {
+      "label": "رخ داد در"
+    },
+    "relation-fall-of-nineveh-during-neo-assyrian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nebuchadnezzar-ii-participant-in-battle-of-carchemish": {
+      "label": "شرکت در"
+    },
+    "relation-necho-ii-participant-in-battle-of-carchemish": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-carchemish-during-neo-babylonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-nebuchadnezzar-ii-participant-in-babylonians-take-jerusalem": {
+      "label": "شرکت در"
+    },
+    "relation-babylonians-take-jerusalem-during-neo-babylonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-cyrus-ii-participant-in-capture-of-babylon": {
+      "label": "شرکت در"
+    },
+    "relation-nabonidus-participant-in-capture-of-babylon": {
+      "label": "شرکت در"
+    },
+    "relation-capture-of-babylon-took-place-in-babylon": {
+      "label": "رخ داد در"
+    },
+    "relation-capture-of-babylon-during-neo-babylonian": {
+      "label": "در دورهٔ"
+    },
+    "relation-alexander-iii-participant-in-alexander-takes-babylon": {
+      "label": "شرکت در"
+    },
+    "relation-alexander-takes-babylon-took-place-in-babylon": {
+      "label": "رخ داد در"
+    }
+  }
+}

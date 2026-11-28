@@ -1,0 +1,4307 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "ancient-mesopotamia",
+  "worldId": "world-ancient-mesopotamia",
+  "subjectId": "subject-ancient-mesopotamia",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "entities": [
+    {
+      "id": "subject-ancient-mesopotamia",
+      "type": "Region",
+      "label": "Mesopotamia",
+      "summary": "The land between the Euphrates and the Tigris: Uruk and Ur of the Sumerians, the Third Dynasty of Ur, the Babylon of Hammurabi, the kingdom and then the empire of Assyria, and the Neo-Babylonian empire until Cyrus took Babylon in 539 BCE, with its later history under the Persians, Alexander, the Seleucids and the Parthians.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "office-king-of-ur",
+      "type": "Office",
+      "label": "King of Ur",
+      "summary": "The kingship of the city of Ur, whose Third Dynasty reunited Mesopotamia.",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-babylon",
+      "type": "Office",
+      "label": "King of Babylon",
+      "summary": "The kingship of Babylon and of Babylonia, the land of Akkad.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-assyria",
+      "type": "Office",
+      "label": "King of Assyria",
+      "summary": "The kingship of Assyria, the land of the god Aššur on the Tigris.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-ur-iii",
+      "type": "Dynasty",
+      "label": "The Third Dynasty of Ur",
+      "summary": "The kings of Ur who ruled the city states of the alluvial plain for more than a century, from 2112 to about 2004 BCE, with Sumerian as the language of the chancery.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire",
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2112
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2004,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-first-babylon",
+      "type": "Dynasty",
+      "label": "The First Dynasty of Babylon",
+      "summary": "The Amorite kings of Babylon, about 1894 to 1595 BCE, among them Hammurabi; it ended when the Hittite king Mursilis I sacked Babylon.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1894
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1595,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-second-isin",
+      "type": "Dynasty",
+      "label": "The Second Dynasty of Isin",
+      "summary": "The kings who replaced the Kassites in southern Mesopotamia; under Nebuchadnezzar I the statue of Marduk came back from Elam.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "dynasty-neo-babylonian",
+      "type": "Dynasty",
+      "label": "The Neo-Babylonian kings",
+      "summary": "The house of Nabopolassar, recognized as king in 626 BCE, and the kings after it, until Cyrus took Babylon in 539.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire",
+        "src-livius-person-nabopolassar"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 626
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 539
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-ur-iii",
+      "type": "Period",
+      "label": "The empire of Ur",
+      "summary": "The Third Dynasty of Ur ruled the alluvial plain from 2112 to about 2004 BCE, the time sometimes called the Sumerian Renaissance, until an agricultural crisis ended the centralized state.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire",
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2112
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2004,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-old-babylonian",
+      "type": "Period",
+      "label": "The Old Babylonian period",
+      "summary": "The age of the First Dynasty of Babylon, about 1894 to 1595 BCE, when Hammurabi reunited the plain, which from then on was called the land of Akkad, Babylonia.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1894
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1595,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-middle-assyrian",
+      "type": "Period",
+      "label": "The Middle Assyrian period",
+      "summary": "From Aššur-Uballit I, about 1364 BCE, when Assyria won its independence from Mitanni, through the expansion under his successors and Tiglath-Pileser I to the long decline after about 1076.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1364,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1076,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-neo-assyrian",
+      "type": "Period",
+      "label": "The Neo-Assyrian empire",
+      "summary": "The empire from Aššurnasirpal II, from 883 BCE, to the fall of Nineveh in 612: it reached from the Zagros to Egypt, was organized in provinces under Tiglath-pileser III and was overthrown by the Babylonians and the Medes.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 883
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 612
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-neo-babylonian",
+      "type": "Period",
+      "label": "The Neo-Babylonian empire",
+      "summary": "From Nabopolassar, king from 626 BCE, to Cyrus’ capture of Babylon in 539: the most powerful state of the ancient world after the fall of Assyria.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 626
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 539
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ur-nammu",
+      "type": "Person",
+      "label": "Ur-Nammu",
+      "summary": "King of Ur from 2112 to 2095 BCE, founder of the Third Dynasty of Ur, who built the temple and ziggurat of the goddess Nanna.",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shulgi",
+      "type": "Person",
+      "label": "Šulgi",
+      "summary": "Son and successor of Ur-Nammu, king of Ur from 2094 to 2047 BCE, whose reign is recorded in a surviving chronicle.",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shulgi",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-amar-sin",
+      "type": "Person",
+      "label": "Amar-Sin",
+      "summary": "King of Ur of the Third Dynasty, from 2046 to 2038 BCE.",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shu-sin",
+      "type": "Person",
+      "label": "Shu-Sin",
+      "summary": "King of Ur of the Third Dynasty, from 2037 to 2029 BCE.",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-mes-ane-pada",
+      "type": "Person",
+      "label": "Mes-ane-pada",
+      "summary": "A king of Ur documented in the 26th century BCE and named in the Sumerian King List, of the age of the First Dynasty of Ur.",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-hammurabi",
+      "type": "Person",
+      "label": "Hammurabi",
+      "summary": "King of Babylon of Amorite descent, from 1792 to about 1750 BCE, who reunited the alluvial plain; from his reign it was called the land of Akkad, Babylonia.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nebuchadnezzar-i",
+      "type": "Person",
+      "label": "Nebuchadnezzar I",
+      "summary": "King of Babylon of the Second Dynasty of Isin, 1126 to 1104 BCE, under whom the Babylonians advanced to Elam and took back the statue of Marduk.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-marduk-apla-iddin",
+      "type": "Person",
+      "label": "Marduk-apla-iddin",
+      "summary": "King of Babylon who twice claimed its independence from Assyria, from 721 to 710 BCE and again in 703; the Bible’s Merodach Baladan.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Merodach Baladan",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shamash-shuma-ukin",
+      "type": "Person",
+      "label": "Šamaš-šuma-ukin",
+      "summary": "Elder brother of Aššurbanipal, made king in Babylonia when he became king of Assyria; he revolted, and his brother restored order in 648 BCE.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-person-assurbanipal"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shamash-shum-ukin",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nabopolassar",
+      "type": "Person",
+      "label": "Nabopolassar",
+      "summary": "A Babylonian soldier who had served in the Assyrian army, expelled the Assyrian governors and was recognized as king on 23 November 626 BCE; first king of the Neo-Babylonian empire, he took Nineveh with the Medes in 612 and died in 605.",
+      "sourceIds": [
+        "src-livius-person-nabopolassar",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nebuchadnezzar-ii",
+      "type": "Person",
+      "label": "Nebuchadnezzar II",
+      "summary": "Son of Nabopolassar, king of Babylonia from 605 to 562 BCE: he defeated Necho II at Carchemish, took Jerusalem in 597 and 587 and rebuilt Babylon with the Ištar Gate.",
+      "sourceIds": [
+        "src-livius-person-nebuchadnezzar-ii",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Nabû-kuduri-usur",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-amel-marduk",
+      "type": "Person",
+      "label": "Amel-Marduk",
+      "summary": "Son and successor of Nebuchadnezzar II in 562 BCE, almost immediately murdered and replaced by his brother-in-law Neriglissar.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-neriglissar",
+      "type": "Person",
+      "label": "Neriglissar",
+      "summary": "Brother-in-law of Amel-Marduk, whom he replaced; king of Babylon from 559 to 556 BCE, he invaded Anatolia and crossed the Taurus.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nabonidus",
+      "type": "Person",
+      "label": "Nabonidus",
+      "summary": "The last king of Babylonia, from 556 to 539 BCE, who came to power by a coup, added large parts of Arabia to the empire and lost Babylon to Cyrus.",
+      "sourceIds": [
+        "src-livius-person-nabonidus",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Nabû-na'id",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shamshi-adad-i",
+      "type": "Person",
+      "label": "Šamši-Adad I",
+      "summary": "King from 1813 to about 1781 BCE of a small empire reaching from the western Zagros to the land between the rivers, who called himself “king of the universe”.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shamshi-Adad I",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ishme-dagan",
+      "type": "Person",
+      "label": "Išme-Dagan",
+      "summary": "Son of Šamši-Adad I, who lost his independence and became a vassal of Hammurabi of Babylon.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ashur-uballit-i",
+      "type": "Person",
+      "label": "Aššur-Uballit I",
+      "summary": "King of Assyria from about 1364 to 1328 BCE, who with the Hittite Šuppiluliuma attacked Mitanni and won back Assyria’s independence, beginning the Middle Assyrian period.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-adad-nirari-i",
+      "type": "Person",
+      "label": "Adad-Nirari I",
+      "summary": "King of Assyria from about 1305 to 1274 BCE, who continued its expansion.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shalmaneser-i",
+      "type": "Person",
+      "label": "Shalmaneser I",
+      "summary": "King of Assyria from about 1273 to 1244 BCE, who continued its expansion.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tukulti-ninurta-i",
+      "type": "Person",
+      "label": "Tukulti-Ninurta I",
+      "summary": "King of Assyria from about 1243 to 1207 BCE, whose empire bordered the Hittites in the west and who attacked Babylon.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Tikulti-Ninurta",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tiglath-pileser-i",
+      "type": "Person",
+      "label": "Tiglath-Pileser I",
+      "summary": "King of Assyria from about 1114 to 1076 BCE, who resumed the aggressive policy and reached the Mediterranean; after him Assyria declined for a century and a half.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ashurnasirpal-ii",
+      "type": "Person",
+      "label": "Aššurnasirpal II",
+      "summary": "King of Assyria from 883 to 859 BCE, who restored its fortunes, campaigned to the Zagros, Lake Urmia and Urartu and built a new capital at Kalhu.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-kalhu"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ashurnasirpal II",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shalmaneser-iii",
+      "type": "Person",
+      "label": "Šalmaneser III",
+      "summary": "Son of Aššurnasirpal II, king of Assyria from 858 to 824 BCE, who broke the power of Damascus and received tribute from Jehu of Israel.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shalmaneser III",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-adad-nirari-iii",
+      "type": "Person",
+      "label": "Adad-Nirari III",
+      "summary": "King of Assyria who finally captured Damascus.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tiglath-pileser-iii",
+      "type": "Person",
+      "label": "Tiglath-pileser III",
+      "summary": "King of Assyria from 744 to 727 BCE, who turned the empire into provinces under governors, conquered Damascus and Gaza and joined Babylonia to Assyria in a personal union.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-shalmaneser-v",
+      "type": "Person",
+      "label": "Šalmaneser V",
+      "summary": "Son of Tiglath-pileser III, king from 726 to 722 BCE, murdered during the siege of Samaria.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Shalmaneser V",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-sargon-ii",
+      "type": "Person",
+      "label": "Sargon II",
+      "summary": "King of Assyria from 721 to 705 BCE, not of the royal dynasty, who conquered Israel, defeated the Egyptians near Gaza and built the new capital Dur-Šarukkin.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-sennacherib",
+      "type": "Person",
+      "label": "Sennacherib",
+      "summary": "Son of Sargon II, king of Assyria from 704 to 681 BCE, who took Lachish, received tribute from Jerusalem, sacked Babylon and made Nineveh his capital.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-esarhaddon",
+      "type": "Person",
+      "label": "Esarhaddon",
+      "summary": "Son and successor of Sennacherib, king of Assyria from 680 to 669 BCE, who defeated the Cimmerians, advanced into Egypt and let the people of Babylon return.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-assurbanipal",
+      "type": "Person",
+      "label": "Aššurbanipal",
+      "summary": "King of Assyria from 669/668 to 631 or perhaps 627 BCE: he sacked Thebes in Egypt, subdued his rebel brother in Babylon, destroyed Susa and gathered the great library of Nineveh.",
+      "sourceIds": [
+        "src-livius-person-assurbanipal",
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ashurbanipal",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-sin-shar-ishkun",
+      "type": "Person",
+      "label": "Sin-šar-iškun",
+      "summary": "King of Assyria, once governor of Babylon, who seems to have taken his own life when Nineveh fell in 612 BCE.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ashur-uballit-ii",
+      "type": "Person",
+      "label": "Aššur-Uballit II",
+      "summary": "The last king of Assyria, who regrouped at Harran after the fall of Nineveh but was expelled; when Necho II of Egypt came to his aid he was defeated.",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-cyrus-ii",
+      "type": "Person",
+      "label": "Cyrus II the Great",
+      "summary": "The Persian king who captured Babylon in 539 BCE and made his son Cambyses king of Babylon.",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-cyaxares",
+      "type": "Person",
+      "label": "Cyaxares",
+      "summary": "The Median leader who took Aššur in 614 BCE, allied himself with the Babylonians and with them besieged and took Nineveh in 612.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-alexander-iii",
+      "type": "Person",
+      "label": "Alexander III of Macedon",
+      "summary": "The Macedonian king who captured Babylon in 331 BCE and intended to make it his residence.",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-mursili-i",
+      "type": "Person",
+      "label": "Mursilis I",
+      "summary": "The Hittite king who advanced along the Euphrates, sacked Babylon about 1595 BCE and carried off the statue of Marduk.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-necho-ii",
+      "type": "Person",
+      "label": "Necho II",
+      "summary": "Pharaoh of Egypt from 610 to 595 BCE, who came to the aid of the last Assyrian king and was defeated by Nebuchadnezzar at Carchemish in 605.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "place-babylon",
+      "type": "Place",
+      "label": "Babylon",
+      "summary": "The capital of Babylonia between the Euphrates and the Tigris; after the fall of Assyria the capital of the Near East, rebuilt by Nebuchadnezzar II, taken by Cyrus in 539 BCE and by Alexander in 331.",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-pleiades-893951"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ],
+      "position": {
+        "latitude": 32.5373,
+        "longitude": 44.42498,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-nineveh",
+      "type": "Place",
+      "label": "Nineveh",
+      "summary": "An Assyrian capital, founded anew under Šalmaneser III and made the capital of Sennacherib with a double wall; the Medes and the Babylonians took it in 612 BCE.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-pleiades-874621"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ],
+      "position": {
+        "latitude": 36.36076,
+        "longitude": 43.15994,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-ashur",
+      "type": "Place",
+      "label": "Aššur",
+      "summary": "The city on the Tigris that gave Assyria its name, an independent city state in the late third millennium and the religious capital of Assyria; the Medes took it in 614 BCE.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-pleiades-893945"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Ashur",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Assur",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ],
+      "position": {
+        "latitude": 35.45557,
+        "longitude": 43.2613,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-kalhu",
+      "type": "Place",
+      "label": "Kalhu",
+      "summary": "The Assyrian capital that Aššurnasirpal II built at a small town with 47,000 workers, six times larger than old Aššur; modern Nimrud, the Bible’s Calah.",
+      "sourceIds": [
+        "src-livius-place-kalhu",
+        "src-pleiades-942018830"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Nimrud",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Calah",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ],
+      "position": {
+        "latitude": 36.09837,
+        "longitude": 43.32865,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-ur",
+      "type": "Place",
+      "label": "Ur",
+      "summary": "A Sumerian city by the Persian Gulf, seat of the royal tombs of its First Dynasty and of the Third Dynasty that reunited Mesopotamia; its ziggurat of Nanna was built by Ur-Nammu.",
+      "sourceIds": [
+        "src-livius-place-ur",
+        "src-pleiades-912985"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ],
+      "position": {
+        "latitude": 30.96132,
+        "longitude": 46.10542,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-uruk",
+      "type": "Place",
+      "label": "Uruk",
+      "summary": "A city already important in the fourth millennium BCE, which about 3200 BCE covered some 250 hectares.",
+      "sourceIds": [
+        "src-livius-place-uruk",
+        "src-pleiades-912986"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Erech",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ],
+      "position": {
+        "latitude": 31.32338,
+        "longitude": 45.63905,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-harran",
+      "type": "Place",
+      "label": "Harran",
+      "summary": "A city of Upper Mesopotamia near which Nabopolassar fought the Assyrians in 616 BCE and where the last Assyrian king regrouped after 612.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-pleiades-658427"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Carrhae",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-mesopotamia"
+        }
+      ],
+      "position": {
+        "latitude": 36.86359,
+        "longitude": 39.03075,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "event-hittites-sack-babylon",
+      "type": "Event",
+      "label": "The Hittites sack Babylon",
+      "summary": "About 1595 BCE the Hittite king Mursilis I advanced along the Euphrates, sacked Babylon and carried off the statue of Marduk, ending the First Dynasty of Babylon.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1595,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-babylon"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-mursili-i"
+        }
+      ]
+    },
+    {
+      "id": "event-sennacherib-sacks-babylon",
+      "type": "Event",
+      "label": "Sennacherib sacks Babylon",
+      "summary": "After a revolt under Marduk-apla-iddin, Sennacherib sacked Babylon and deported its people to Nineveh; the Babylon page dates it to 689 BCE, the Assyria page to 703.",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 703
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 689
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-babylon"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-sennacherib"
+        }
+      ]
+    },
+    {
+      "id": "event-assyrians-sack-thebes",
+      "type": "Event",
+      "label": "The Assyrians sack Thebes",
+      "summary": "Between 667 and 664 BCE Aššurbanipal carried on the war in Egypt, reconquered it as far as Thebes, sacked the city and expelled the Kushite king Taharqo.",
+      "sourceIds": [
+        "src-livius-person-assurbanipal"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 667
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 664
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-assurbanipal"
+        }
+      ]
+    },
+    {
+      "id": "event-nabopolassar-king",
+      "type": "Event",
+      "label": "Nabopolassar becomes king",
+      "summary": "The Babylonian general Nabopolassar, who had expelled the Assyrian governors, was recognized as king on 23 November 626 BCE, the beginning of the Neo-Babylonian empire.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 626
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-babylon"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nabopolassar"
+        }
+      ]
+    },
+    {
+      "id": "event-medes-take-ashur",
+      "type": "Event",
+      "label": "The Medes take Aššur",
+      "summary": "In 614 BCE the Medes captured Aššur, the religious capital of Assyria; Nabopolassar arrived too late but made a treaty with their king Cyaxares.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 614
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-ashur"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-cyaxares"
+        }
+      ]
+    },
+    {
+      "id": "event-fall-of-nineveh",
+      "type": "Event",
+      "label": "The fall of Nineveh",
+      "summary": "The Medes and the Babylonians laid siege to Nineveh in May 612 BCE; in July the city fell, and Assyria was overthrown.",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 612
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-nineveh"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nabopolassar"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-cyaxares"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-sin-shar-ishkun"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-carchemish",
+      "type": "Event",
+      "label": "The battle of Carchemish",
+      "summary": "In 605 BCE the crown prince Nebuchadnezzar defeated Necho II of Egypt near Carchemish on the Euphrates.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 605
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nebuchadnezzar-ii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-necho-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-babylonians-take-jerusalem",
+      "type": "Event",
+      "label": "The Babylonians take Jerusalem",
+      "summary": "Jerusalem was taken in 597 BCE and, after its vassal king revolted, again in 587, when its people were deported to Babylonia.",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 587
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nebuchadnezzar-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-capture-of-babylon",
+      "type": "Event",
+      "label": "Cyrus takes Babylon",
+      "summary": "In 539 BCE Cyrus the Great attacked and captured Babylon, ending the Neo-Babylonian empire, and made his son Cambyses king of Babylon.",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 539
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-babylon"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-cyrus-ii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-nabonidus"
+        }
+      ]
+    },
+    {
+      "id": "event-alexander-takes-babylon",
+      "type": "Event",
+      "label": "Alexander takes Babylon",
+      "summary": "In 331 BCE Alexander the Great captured Babylon and later meant to make it his residence.",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 331
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-babylon"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-alexander-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-parthians-take-babylonia",
+      "type": "Event",
+      "label": "The Parthians take Babylonia",
+      "summary": "In 141 BCE the Parthians conquered Babylonia, a generation after Antiochus IV had tried to settle Greeks in Babylon.",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 141
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-ur-nammu-holder-of-king-of-ur",
+      "from": "person-ur-nammu",
+      "to": "office-king-of-ur",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2112
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2095
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ur-nammu-member-of-ur-iii",
+      "from": "person-ur-nammu",
+      "to": "dynasty-ur-iii",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shulgi-holder-of-king-of-ur",
+      "from": "person-shulgi",
+      "to": "office-king-of-ur",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2094
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2047
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shulgi-member-of-ur-iii",
+      "from": "person-shulgi",
+      "to": "dynasty-ur-iii",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amar-sin-holder-of-king-of-ur",
+      "from": "person-amar-sin",
+      "to": "office-king-of-ur",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2046
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2038
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amar-sin-member-of-ur-iii",
+      "from": "person-amar-sin",
+      "to": "dynasty-ur-iii",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shu-sin-holder-of-king-of-ur",
+      "from": "person-shu-sin",
+      "to": "office-king-of-ur",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2037
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 2029
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shu-sin-member-of-ur-iii",
+      "from": "person-shu-sin",
+      "to": "dynasty-ur-iii",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ur-nammu-parent-of-shulgi",
+      "from": "person-ur-nammu",
+      "to": "person-shulgi",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shulgi-successor-of-ur-nammu",
+      "from": "person-shulgi",
+      "to": "person-ur-nammu",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ur-nammu-founder-of-ur-iii",
+      "from": "person-ur-nammu",
+      "to": "dynasty-ur-iii",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mes-ane-pada-holder-of-king-of-ur",
+      "from": "person-mes-ane-pada",
+      "to": "office-king-of-ur",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hammurabi-holder-of-king-of-babylon",
+      "from": "person-hammurabi",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1792
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1750,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hammurabi-member-of-first-babylon",
+      "from": "person-hammurabi",
+      "to": "dynasty-first-babylon",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-i-holder-of-king-of-babylon",
+      "from": "person-nebuchadnezzar-i",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1126
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1104
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-i-member-of-second-isin",
+      "from": "person-nebuchadnezzar-i",
+      "to": "dynasty-second-isin",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-marduk-apla-iddin-holder-of-king-of-babylon",
+      "from": "person-marduk-apla-iddin",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 721
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 710
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-marduk-apla-iddin-holder-of-king-of-babylon-2",
+      "from": "person-marduk-apla-iddin",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 703
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 703
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shamash-shuma-ukin-holder-of-king-of-babylon",
+      "from": "person-shamash-shuma-ukin",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-person-assurbanipal"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 648
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-holder-of-king-of-babylon",
+      "from": "person-nabopolassar",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-nabopolassar",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 626
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 605
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-member-of-neo-babylonian",
+      "from": "person-nabopolassar",
+      "to": "dynasty-neo-babylonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-person-nabopolassar",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-founder-of-neo-babylonian",
+      "from": "person-nabopolassar",
+      "to": "dynasty-neo-babylonian",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-ii-holder-of-king-of-babylon",
+      "from": "person-nebuchadnezzar-ii",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-nebuchadnezzar-ii",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 605
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 562
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-ii-member-of-neo-babylonian",
+      "from": "person-nebuchadnezzar-ii",
+      "to": "dynasty-neo-babylonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-person-nebuchadnezzar-ii",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-parent-of-nebuchadnezzar-ii",
+      "from": "person-nabopolassar",
+      "to": "person-nebuchadnezzar-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-ii-successor-of-nabopolassar",
+      "from": "person-nebuchadnezzar-ii",
+      "to": "person-nabopolassar",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amel-marduk-holder-of-king-of-babylon",
+      "from": "person-amel-marduk",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 562
+          }
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amel-marduk-member-of-neo-babylonian",
+      "from": "person-amel-marduk",
+      "to": "dynasty-neo-babylonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-ii-parent-of-amel-marduk",
+      "from": "person-nebuchadnezzar-ii",
+      "to": "person-amel-marduk",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-amel-marduk-successor-of-nebuchadnezzar-ii",
+      "from": "person-amel-marduk",
+      "to": "person-nebuchadnezzar-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-neriglissar-holder-of-king-of-babylon",
+      "from": "person-neriglissar",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 559
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 556
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-neriglissar-member-of-neo-babylonian",
+      "from": "person-neriglissar",
+      "to": "dynasty-neo-babylonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-neriglissar-successor-of-amel-marduk",
+      "from": "person-neriglissar",
+      "to": "person-amel-marduk",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabonidus-holder-of-king-of-babylon",
+      "from": "person-nabonidus",
+      "to": "office-king-of-babylon",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-nabonidus",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 556
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 539
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabonidus-member-of-neo-babylonian",
+      "from": "person-nabonidus",
+      "to": "dynasty-neo-babylonian",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-person-nabonidus",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shamshi-adad-i-holder-of-king-of-assyria",
+      "from": "person-shamshi-adad-i",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1813
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1781,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shamshi-adad-i-parent-of-ishme-dagan",
+      "from": "person-shamshi-adad-i",
+      "to": "person-ishme-dagan",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashur-uballit-i-holder-of-king-of-assyria",
+      "from": "person-ashur-uballit-i",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1364,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1328,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-adad-nirari-i-holder-of-king-of-assyria",
+      "from": "person-adad-nirari-i",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1305,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1274,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shalmaneser-i-holder-of-king-of-assyria",
+      "from": "person-shalmaneser-i",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1273,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1244,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tukulti-ninurta-i-holder-of-king-of-assyria",
+      "from": "person-tukulti-ninurta-i",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1243,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1207,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tiglath-pileser-i-holder-of-king-of-assyria",
+      "from": "person-tiglath-pileser-i",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1114,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 1076,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashurnasirpal-ii-holder-of-king-of-assyria",
+      "from": "person-ashurnasirpal-ii",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-kalhu"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 883
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 859
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shalmaneser-iii-holder-of-king-of-assyria",
+      "from": "person-shalmaneser-iii",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 858
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 824
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashurnasirpal-ii-parent-of-shalmaneser-iii",
+      "from": "person-ashurnasirpal-ii",
+      "to": "person-shalmaneser-iii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-adad-nirari-iii-holder-of-king-of-assyria",
+      "from": "person-adad-nirari-iii",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tiglath-pileser-iii-holder-of-king-of-assyria",
+      "from": "person-tiglath-pileser-iii",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 744
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 727
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-shalmaneser-v-holder-of-king-of-assyria",
+      "from": "person-shalmaneser-v",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 726
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 722
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tiglath-pileser-iii-parent-of-shalmaneser-v",
+      "from": "person-tiglath-pileser-iii",
+      "to": "person-shalmaneser-v",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sargon-ii-holder-of-king-of-assyria",
+      "from": "person-sargon-ii",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 721
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 705
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sargon-ii-successor-of-shalmaneser-v",
+      "from": "person-sargon-ii",
+      "to": "person-shalmaneser-v",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sennacherib-holder-of-king-of-assyria",
+      "from": "person-sennacherib",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 704
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 681
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sargon-ii-parent-of-sennacherib",
+      "from": "person-sargon-ii",
+      "to": "person-sennacherib",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-esarhaddon-holder-of-king-of-assyria",
+      "from": "person-esarhaddon",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 680
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 669
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sennacherib-parent-of-esarhaddon",
+      "from": "person-sennacherib",
+      "to": "person-esarhaddon",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-esarhaddon-successor-of-sennacherib",
+      "from": "person-esarhaddon",
+      "to": "person-sennacherib",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-assurbanipal-holder-of-king-of-assyria",
+      "from": "person-assurbanipal",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-assurbanipal",
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 669,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 631
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-assurbanipal-successor-of-esarhaddon",
+      "from": "person-assurbanipal",
+      "to": "person-esarhaddon",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-assurbanipal-sibling-of-shamash-shuma-ukin",
+      "from": "person-assurbanipal",
+      "to": "person-shamash-shuma-ukin",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sin-shar-ishkun-holder-of-king-of-assyria",
+      "from": "person-sin-shar-ishkun",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "unknown"
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 612
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashur-uballit-ii-holder-of-king-of-assyria",
+      "from": "person-ashur-uballit-ii",
+      "to": "office-king-of-assyria",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 612
+          }
+        },
+        "end": {
+          "state": "unknown"
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashur-uballit-ii-successor-of-sin-shar-ishkun",
+      "from": "person-ashur-uballit-ii",
+      "to": "person-sin-shar-ishkun",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-babylon-capital-of-neo-babylonian",
+      "from": "place-babylon",
+      "to": "dynasty-neo-babylonian",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-babylon-capital-of-first-babylon",
+      "from": "place-babylon",
+      "to": "dynasty-first-babylon",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashurnasirpal-ii-founder-of-kalhu",
+      "from": "person-ashurnasirpal-ii",
+      "to": "place-kalhu",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ur-capital-of-ur-iii",
+      "from": "place-ur",
+      "to": "dynasty-ur-iii",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-livius-place-ur"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mursili-i-participant-in-hittites-sack-babylon",
+      "from": "person-mursili-i",
+      "to": "event-hittites-sack-babylon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hittites-sack-babylon-took-place-in-babylon",
+      "from": "event-hittites-sack-babylon",
+      "to": "place-babylon",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hittites-sack-babylon-during-old-babylonian",
+      "from": "event-hittites-sack-babylon",
+      "to": "period-old-babylonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sennacherib-participant-in-sennacherib-sacks-babylon",
+      "from": "person-sennacherib",
+      "to": "event-sennacherib-sacks-babylon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sennacherib-sacks-babylon-took-place-in-babylon",
+      "from": "event-sennacherib-sacks-babylon",
+      "to": "place-babylon",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sennacherib-sacks-babylon-during-neo-assyrian",
+      "from": "event-sennacherib-sacks-babylon",
+      "to": "period-neo-assyrian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-assyria"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-assurbanipal-participant-in-assyrians-sack-thebes",
+      "from": "person-assurbanipal",
+      "to": "event-assyrians-sack-thebes",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-assurbanipal"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-assyrians-sack-thebes-during-neo-assyrian",
+      "from": "event-assyrians-sack-thebes",
+      "to": "period-neo-assyrian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-person-assurbanipal"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-participant-in-nabopolassar-king",
+      "from": "person-nabopolassar",
+      "to": "event-nabopolassar-king",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-king-took-place-in-babylon",
+      "from": "event-nabopolassar-king",
+      "to": "place-babylon",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-king-during-neo-babylonian",
+      "from": "event-nabopolassar-king",
+      "to": "period-neo-babylonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-cyaxares-participant-in-medes-take-ashur",
+      "from": "person-cyaxares",
+      "to": "event-medes-take-ashur",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-medes-take-ashur-took-place-in-ashur",
+      "from": "event-medes-take-ashur",
+      "to": "place-ashur",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-medes-take-ashur-during-neo-assyrian",
+      "from": "event-medes-take-ashur",
+      "to": "period-neo-assyrian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabopolassar-participant-in-fall-of-nineveh",
+      "from": "person-nabopolassar",
+      "to": "event-fall-of-nineveh",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-cyaxares-participant-in-fall-of-nineveh",
+      "from": "person-cyaxares",
+      "to": "event-fall-of-nineveh",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sin-shar-ishkun-participant-in-fall-of-nineveh",
+      "from": "person-sin-shar-ishkun",
+      "to": "event-fall-of-nineveh",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fall-of-nineveh-took-place-in-nineveh",
+      "from": "event-fall-of-nineveh",
+      "to": "place-nineveh",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fall-of-nineveh-during-neo-assyrian",
+      "from": "event-fall-of-nineveh",
+      "to": "period-neo-assyrian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-assyria",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-ii-participant-in-battle-of-carchemish",
+      "from": "person-nebuchadnezzar-ii",
+      "to": "event-battle-of-carchemish",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-necho-ii-participant-in-battle-of-carchemish",
+      "from": "person-necho-ii",
+      "to": "event-battle-of-carchemish",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-carchemish-during-neo-babylonian",
+      "from": "event-battle-of-carchemish",
+      "to": "period-neo-babylonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nebuchadnezzar-ii-participant-in-babylonians-take-jerusalem",
+      "from": "person-nebuchadnezzar-ii",
+      "to": "event-babylonians-take-jerusalem",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-babylonians-take-jerusalem-during-neo-babylonian",
+      "from": "event-babylonians-take-jerusalem",
+      "to": "period-neo-babylonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-cyrus-ii-participant-in-capture-of-babylon",
+      "from": "person-cyrus-ii",
+      "to": "event-capture-of-babylon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nabonidus-participant-in-capture-of-babylon",
+      "from": "person-nabonidus",
+      "to": "event-capture-of-babylon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-capture-of-babylon-took-place-in-babylon",
+      "from": "event-capture-of-babylon",
+      "to": "place-babylon",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-capture-of-babylon-during-neo-babylonian",
+      "from": "event-capture-of-babylon",
+      "to": "period-neo-babylonian",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-babylon",
+        "src-livius-place-babylonian-empire"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-iii-participant-in-alexander-takes-babylon",
+      "from": "person-alexander-iii",
+      "to": "event-alexander-takes-babylon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-takes-babylon-took-place-in-babylon",
+      "from": "event-alexander-takes-babylon",
+      "to": "place-babylon",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-babylon"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-livius-place-assyria",
+      "title": "Assyria – Livius",
+      "url": "https://www.livius.org/articles/place/assyria/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-babylon",
+      "title": "Babylon – Livius",
+      "url": "https://www.livius.org/articles/place/babylon/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-babylonian-empire",
+      "title": "Babylonian Empire – Livius",
+      "url": "https://www.livius.org/articles/place/babylonian-empire/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-ur",
+      "title": "Ur – Livius",
+      "url": "https://www.livius.org/articles/place/ur/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-uruk",
+      "title": "Uruk – Livius",
+      "url": "https://www.livius.org/articles/place/uruk/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-nabonidus",
+      "title": "Nabonidus – Livius",
+      "url": "https://www.livius.org/articles/person/nabonidus/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-assurbanipal",
+      "title": "Aššurbanipal – Livius",
+      "url": "https://www.livius.org/articles/person/assurbanipal/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-kalhu",
+      "title": "Kalhu (Nimrud) – Livius",
+      "url": "https://www.livius.org/articles/place/kalhu-nimrud/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-nabopolassar",
+      "title": "Nabopolassar – Livius",
+      "url": "https://www.livius.org/articles/person/nabopolassar/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-nebuchadnezzar-ii",
+      "title": "Nebuchadnezzar II – Livius",
+      "url": "https://www.livius.org/articles/person/nebuchadnezzar-ii/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-893951",
+      "title": "Pleiades: Babylon",
+      "url": "https://pleiades.stoa.org/places/893951",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-874621",
+      "title": "Pleiades: Nineveh/Ninos",
+      "url": "https://pleiades.stoa.org/places/874621",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-912985",
+      "title": "Pleiades: Ur(i)",
+      "url": "https://pleiades.stoa.org/places/912985",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-912986",
+      "title": "Pleiades: Uruk/Orchoe/Erech/Orikut",
+      "url": "https://pleiades.stoa.org/places/912986",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-893945",
+      "title": "Pleiades: Ashur",
+      "url": "https://pleiades.stoa.org/places/893945",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-658427",
+      "title": "Pleiades: Harran/Carrhae",
+      "url": "https://pleiades.stoa.org/places/658427",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-942018830",
+      "title": "Pleiades: Central Building at Kalhu",
+      "url": "https://pleiades.stoa.org/places/942018830",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    }
+  ],
+  "events": [],
+  "media": []
+}

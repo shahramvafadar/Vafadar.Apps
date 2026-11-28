@@ -4953,7 +4953,7 @@
     {
       "id": "person-darius-i",
       "type": "Person",
-      "label": "Darius I",
+      "label": "Darius I the Great",
       "summary": "Darius I, counted among the kings of Egypt of the 27th dynasty, from 521 to 486 BCE.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs"
@@ -5381,7 +5381,7 @@
     {
       "id": "person-artaxerxes-iii",
       "type": "Person",
-      "label": "Artaxerxes III Ochus",
+      "label": "Artaxerxes III",
       "summary": "Artaxerxes III Ochus, counted among the kings of Egypt in the second Persian period, from 343 to 338 BCE.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs"
@@ -5400,12 +5400,19 @@
             "kind": "unknown"
           }
         }
+      ],
+      "names": [
+        {
+          "name": "Artaxerxes III Ochus",
+          "language": "en",
+          "kind": "alternative"
+        }
       ]
     },
     {
       "id": "person-artaxerxes-iv",
       "type": "Person",
-      "label": "Arses",
+      "label": "Artaxerxes IV",
       "summary": "Arses, counted among the kings of Egypt in the second Persian period, from 338 to 336 BCE.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs"
@@ -5424,12 +5431,19 @@
             "kind": "unknown"
           }
         }
+      ],
+      "names": [
+        {
+          "name": "Arses",
+          "language": "en",
+          "kind": "alternative"
+        }
       ]
     },
     {
       "id": "person-darius-iii",
       "type": "Person",
-      "label": "Darius III Codoman",
+      "label": "Darius III",
       "summary": "Darius III Codoman, counted among the kings of Egypt in the second Persian period, from 335 to 332 BCE.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs"
@@ -5447,6 +5461,13 @@
           "time": {
             "kind": "unknown"
           }
+        }
+      ],
+      "names": [
+        {
+          "name": "Darius III Codoman",
+          "language": "en",
+          "kind": "alternative"
         }
       ]
     },
@@ -5931,7 +5952,7 @@
     {
       "id": "person-cleopatra-vii",
       "type": "Person",
-      "label": "Cleopatra VII Thea Philopator",
+      "label": "Cleopatra VII",
       "summary": "Cleopatra VII Thea Philopator, counted among the kings of Egypt of the Ptolemaic dynasty, from 51 to 30 BCE.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs"
@@ -5949,6 +5970,13 @@
           "time": {
             "kind": "unknown"
           }
+        }
+      ],
+      "names": [
+        {
+          "name": "Cleopatra VII Thea Philopator",
+          "language": "en",
+          "kind": "alternative"
         }
       ]
     },
@@ -6027,7 +6055,7 @@
     {
       "id": "event-conquest-of-egypt",
       "type": "Event",
-      "label": "The Persians conquer Egypt",
+      "label": "Cambyses conquers Egypt",
       "summary": "Cambyses II made Egypt part of the Persian empire in 525 BCE; the Persian kings counted as Egypt’s 27th dynasty held it until 404.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs",
@@ -6055,7 +6083,7 @@
     {
       "id": "event-reconquest-of-egypt",
       "type": "Event",
-      "label": "Artaxerxes III reconquers Egypt",
+      "label": "The reconquest of Egypt",
       "summary": "In 343 BCE Artaxerxes III brought Egypt back under Persian rule, ending the last native dynasty; his successors held it until Alexander came.",
       "sourceIds": [
         "src-britannica-list-of-pharaohs"

@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A new history: Mesopotamia, from Ur and the Babylon of Hammurabi through Assyria to the Neo-Babylonian kings
+  and Cyrus.
 - Egypt reaches the Arab conquest of 642: Roman and Byzantine Egypt, its capitals with their positions, the
   pyramids of Giza and the Rosetta Stone.
 - A new history: ancient Egypt, from the kings before the unification through the thirty dynasties to the
