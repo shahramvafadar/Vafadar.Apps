@@ -153,4 +153,41 @@ public sealed class StudioStagesAndDatedTests : IDisposable
         Assert.EndsWith("?done=changed", removed.Arrived, StringComparison.Ordinal);
         Assert.Empty(store.DatedTexts(Collection, "work-shahnameh").Single().Texts);
     }
+
+    [Fact]
+    public async Task A_hypothetical_placement_and_the_translation_of_its_explanation_are_carried_through_the_form()
+    {
+        // A placement (ADR 0028) has no inputs of its own: the form writes it as it stands, and keeps the
+        // explanation of the translation, for which it has no input either.
+        using (var store = _studio.Store())
+        {
+            var rostam = store.Record(Collection, "entities", "character-rostam")!.Body;
+            rostam["dated"] = JsonNode.Parse(
+                """
+                [ {
+                  "key": "placement-rostam-birth",
+                  "label": "Hypothetical birth",
+                  "time": { "kind": "occurrence", "at": { "frame": "calendar", "era": "beforeCommonEra", "year": 1300, "approximate": true } },
+                  "placement": { "basis": "editorialHypothesis", "confidence": "veryLow", "explanation": "Test data." },
+                  "sourceIds": ["src-ganjoor-index"],
+                  "spoilerLevel": 0,
+                  "reviewStatus": "proposed"
+                } ]
+                """);
+            var persian = new Dictionary<string, JsonObject> { ["fa"] = JsonNode.Parse("""{ "placement-rostam-birth": { "label": "تولد فرضی", "explanation": "دادهٔ آزمایشی." } }""")!.AsObject() };
+            Assert.True(store.Put(Collection, "entities", rostam, "a writer", "A placement of the tests.", dated: persian).Done);
+        }
+
+        var form = $"/en/{Collection}/record/entities/character-rostam";
+        var same = await _desk.Fill(form, "fields", Filled);
+        var changed = await _desk.Fill(form, "fields", [("t.fa.dated[0].label", "زادن فرضی"), .. Filled]);
+
+        Assert.EndsWith("?done=unchanged", same.Arrived, StringComparison.Ordinal);
+        Assert.EndsWith("?done=changed", changed.Arrived, StringComparison.Ordinal);
+        using var after = _studio.Store();
+        var placement = after.Record(Collection, "entities", "character-rostam")!.Body["dated"]![0]!["placement"]!;
+        Assert.Equal(("editorialHypothesis", "veryLow", "Test data."), ((string?)placement["basis"], (string?)placement["confidence"], (string?)placement["explanation"]));
+        var texts = after.DatedTexts(Collection, "character-rostam").Single().Texts["placement-rostam-birth"]!;
+        Assert.Equal(("زادن فرضی", "دادهٔ آزمایشی."), ((string?)texts["label"], (string?)texts["explanation"]));
+    }
 }
