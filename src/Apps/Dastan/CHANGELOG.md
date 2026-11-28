@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Quotes for 203 more statements without a year: parents, siblings, marriages, successions, founders, capitals
+  and authors.
 - Every Persian summary has been read against its English; two that said less are completed.
 - China gains the last Tang emperors Zhaozong and Aidi, Zhu Wen's years, the founders of the Later Tang, Later
   Jin and Later Han, and Kaifeng; Rome gains Libius Severus.
