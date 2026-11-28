@@ -1,6 +1,6 @@
 # Persian names of the collections
 
-The forms in which the Persian translations of the histories of Iran, Rome, China, Egypt, Mesopotamia and Anatolia and of the Shahnameh write
+The forms in which the Persian translations of the histories of Iran, Rome, China, Egypt, Mesopotamia, Anatolia and Greece and of the Shahnameh write
 names, gathered from the collections themselves (review D3 of `content-plan-histories.md`, 2026-11-28). A new
 translation takes its names from here; where a name is not yet here, it follows the rules below and is added.
 
@@ -23,6 +23,8 @@ translation takes its names from here; where a name is not yet here, it follows 
   with its parts joined by a hyphen as in the English (اور-نمو, شمشی-ادد); a king shared with Iran keeps its form there.
 * **Anatolia**: the forms Persian history uses for Lydia and Phrygia (لیدی, سارد, کرزوس, گوگس, میداس, فریگیه, گوردیون),
   the Hittite names read aloud (هتوسیلی, مورسیلی, شوپیلولیوما, تودخلیا), numbers written out.
+* **Greece**: the forms of Persian books on Greek history and philosophy (آتن, اسپارت, سقراط, هرودوت, پریکلس,
+  فیلیپ دوم مقدونی, ماراتن, ترموپیل, پلاته); other names read from the Greek (تمیستوکلس, لئونیداس, آنتیگونوس).
 * **The Shahnameh**: the poem's own forms, as on Ganjoor – کی‌کاووس, کیخسرو, تهمورث, هفت‌خوان; a champion
   who shares a king's name keeps the poem's distinction (بهرام the champion, بهرام گور the king).
 * A summary in Persian says no more than the English; a name in it is written as in its own entry.
@@ -1020,6 +1022,59 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Gordium | گوردیون |
 | Hattusa | هتوسا |
 | Sardis | سارد |
+
+## Greece
+
+### Houses and dynasties
+
+| English | Persian |
+|---|---|
+| The Agiads | آگیادها |
+| The Antigonids | آنتیگونیان |
+
+### People
+
+| English | Persian |
+|---|---|
+| Alexander III of Macedon | اسکندر سوم مقدونی |
+| Anaxandridas | آناکساندریداس |
+| Antigonus I Monophthalmus | آنتیگونوس یکم یک‌چشم |
+| Antigonus II Gonatas | آنتیگونوس دوم گوناتاس |
+| Antigonus III Doson | آنتیگونوس سوم دوسون |
+| Darius III | داریوش سوم |
+| Demetrius I Poliorcetes | دمتریوس یکم پولیورکتس |
+| Demetrius II | دمتریوس دوم |
+| Herodotus | هرودوت |
+| Hippias | هیپیاس |
+| Leonidas | لئونیداس |
+| Mardonius | ماردونیه |
+| Miltiades | میلتیادس |
+| Pericles | پریکلس |
+| Perseus | پرسئوس |
+| Philip II of Macedon | فیلیپ دوم مقدونی |
+| Philip V | فیلیپ پنجم |
+| Pisistratus | پیسیستراتوس |
+| Socrates | سقراط |
+| Solon | سولون |
+| Themistocles | تمیستوکلس |
+| Xerxes I | خشایارشا یکم |
+
+### Places and regions
+
+| English | Persian |
+|---|---|
+| Athens | آتن |
+| Chaeronea | خایرونیا |
+| Corinth | کورنت |
+| Delphi | دلفی |
+| Gaugamela | گوگمل |
+| Greece | یونان |
+| Marathon | ماراتن |
+| Olympia | المپیا |
+| Plataea | پلاته |
+| Pydna | پیدنا |
+| Sparta | اسپارت |
+| Thermopylae | ترموپیل |
 
 ## The Shahnameh
 

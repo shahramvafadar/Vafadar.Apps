@@ -1,0 +1,439 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "ancient-greece",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-ancient-greece": {
+      "label": "یونان",
+      "summary": "یونان باستان از آتن و اسپارت روزگار کهن، در جنگ‌های پارسی، امپراتوری آتن و جنگ پلوپونزی، تا برآمدن مقدونیه، اسکندر و شاهان آنتیگونی، تا اینکه روم در ۱۶۸ پیش از میلاد مقدونیه را در پیدنا شکست داد و در ۱۴۶ کورنت را غارت کرد."
+    },
+    "office-king-of-macedonia": {
+      "label": "پادشاه مقدونیه",
+      "summary": "پادشاهی مقدونیه که فیلیپ دوم و اسکندر و سپس آنتیگونی‌ها داشتند."
+    },
+    "office-king-of-sparta": {
+      "label": "پادشاه اسپارت",
+      "summary": "یکی از دو پادشاهی اسپارت که هر کدام از آنِ خاندانی بود، از جمله آگیادها."
+    },
+    "dynasty-antigonid": {
+      "label": "آنتیگونیان",
+      "summary": "دودمان مقدونی آنتیگونوس یک‌چشم که از ۲۹۴ تا ۱۶۸ پیش از میلاد بر مقدونیه فرمان راند، تا شکست پرسئوس از رومیان در پیدنا."
+    },
+    "dynasty-agiad": {
+      "label": "آگیادها",
+      "summary": "یکی از دو خاندان شاهی اسپارت که آناکساندریداس، کلئومنس و لئونیداس از آن بودند."
+    },
+    "period-persian-wars": {
+      "label": "جنگ‌های پارسی",
+      "summary": "از دست داشتن آتن در شورش ایونیه در ۴۹۹ پیش از میلاد، در ماراتن در ۴۹۰ و یورش خشایارشا در ۴۸۰–۴۷۹، تا بنیاد اتحادیهٔ دلوس در ۴۷۸."
+    },
+    "period-peloponnesian-war": {
+      "label": "جنگ پلوپونزی",
+      "summary": "جنگ آتن و اسپارت از ۴۳۱ پیش از میلاد، با وقفه‌ای، تا تسلیم آتن در آوریل ۴۰۴ و دست کشیدنش از امپراتوری."
+    },
+    "period-macedonian-hegemony": {
+      "label": "یونان مقدونی",
+      "summary": "از پیروزی فیلیپ دوم در خایرونیا در ۳۳۸ پیش از میلاد، پایان استقلال یونان، در روزگار اسکندر و شاهان آنتیگونی، تا پیروزی روم در پیدنا در ۱۶۸."
+    },
+    "person-solon": {
+      "label": "سولون",
+      "summary": "دولتمرد، شاعر و قانون‌گذار آتنی، یکی از هفت فرزانه، زادهٔ حدود ۶۵۰ پیش از میلاد؛ در ۵۹۴/۵۹۳ قانون‌گذار شد و در ۵۶۱ درگذشت."
+    },
+    "person-pisistratus": {
+      "label": "پیسیستراتوس",
+      "summary": "خودکامهٔ آتن از حدود ۵۴۵ تا ۵۲۸/۵۲۷ پیش از میلاد که پسرانش هیپارخوس و هیپیاس پس از او آمدند."
+    },
+    "person-hippias": {
+      "label": "هیپیاس",
+      "summary": "پسر پیسیستراتوس، خودکامهٔ آتن، که در ۵۱۰ پیش از میلاد بیرون رانده شد؛ پارسیان در ۴۹۰ کوشیدند او را بازگردانند."
+    },
+    "person-miltiades": {
+      "label": "میلتیادس",
+      "summary": "فرماندهٔ آتنی که آتنیان را در ۴۹۰ پیش از میلاد در ماراتن به پیروزی بر پارسیان رساند."
+    },
+    "person-themistocles": {
+      "label": "تمیستوکلس",
+      "summary": "فرمانده و دولتمرد آتنی، حدود ۵۲۵ تا ۴۵۹ پیش از میلاد، که نقرهٔ لائوریون را خرج کشتی‌های جنگی کرد و ناوگان پارسی را به تنگه‌های سالامیس کشاند."
+    },
+    "person-leonidas": {
+      "label": "لئونیداس",
+      "summary": "پادشاه اسپارت از خاندان آگیاد از ۴۸۸ تا ۴۸۰ پیش از میلاد، پسر سوم آناکساندریداس، که در نبرد ترموپیل کشته شد."
+    },
+    "person-anaxandridas": {
+      "label": "آناکساندریداس",
+      "summary": "پادشاه اسپارت از خاندان آگیاد از حدود ۵۴۰ تا ۵۲۰ پیش از میلاد، پدر کلئومنس، دوریئوس و لئونیداس."
+    },
+    "person-pericles": {
+      "label": "پریکلس",
+      "summary": "سیاستمدار آتنی، حدود ۴۹۵ تا ۴۲۹ پیش از میلاد، رهبر دموکرات‌های تندرو و از ۴۵۱ مرد نخست آتن، که راهبردش جنگ پلوپونزی را گشود؛ در ۴۲۹ از طاعون درگذشت."
+    },
+    "person-socrates": {
+      "label": "سقراط",
+      "summary": "پیکرتراش و فیلسوف آتنی، ۴۶۹ تا ۳۹۹ پیش از میلاد، آموزگار افلاطون، گزنفون و آنتیستنس."
+    },
+    "person-herodotus": {
+      "label": "هرودوت",
+      "summary": "پژوهشگر یونانی اهل هالیکارناس، حدود ۴۸۰ تا ۴۲۹ پیش از میلاد، که اغلب نخستین تاریخ‌نگار خوانده می‌شود و شاهنشاهی پارس و لشکرکشی خشایارشا به یونان را وصف کرد."
+    },
+    "work-histories-of-herodotus": {
+      "label": "تاریخ‌های هرودوت",
+      "summary": "گزارش هرودوت از گسترش شاهنشاهی هخامنشی زیر فرمان کوروش، کمبوجیه و داریوش، که به لشکرکشی خشایارشا به یونان در ۴۸۰ پیش از میلاد می‌انجامد."
+    },
+    "person-philip-ii": {
+      "label": "فیلیپ دوم مقدونی",
+      "summary": "پادشاه مقدونیه از ۳۶۰ تا ۳۳۶ پیش از میلاد، زادهٔ ۳۸۲، که پادشاهی‌اش را نو کرد، آتن و تبس را در ۳۳۸ در خایرونیا شکست داد و پیش از آنکه به پارس بتازد کشته شد؛ پدر اسکندر."
+    },
+    "person-alexander-iii": {
+      "label": "اسکندر سوم مقدونی",
+      "summary": "پادشاه مقدونیه از ۳۳۶ تا ۳۲۳ پیش از میلاد، زادهٔ ۳۵۶، که داریوش سوم را شکست داد، شاهنشاهی هخامنشی را تا سند گشود و بابل را پایتخت خود کرد."
+    },
+    "person-antigonus-i": {
+      "label": "آنتیگونوس یکم یک‌چشم",
+      "summary": "سردار «یک‌چشم» اسکندر که در ۳۲۰ پیش از میلاد فرمانده کل سپاه مقدونی در آسیا شناخته شد، از ۳۰۶ پادشاهی کرد و در ۳۰۱ در ایپسوس کشته شد."
+    },
+    "person-demetrius-i": {
+      "label": "دمتریوس یکم پولیورکتس",
+      "summary": "پسر آنتیگونوس، پادشاه از ۳۰۶ تا ۲۸۷ پیش از میلاد، که پس از ایپسوس دارایی‌های آنتیگونی را در یونان نگه داشت و از ۲۹۴ پادشاه مقدونیه شد."
+    },
+    "person-antigonus-ii": {
+      "label": "آنتیگونوس دوم گوناتاس",
+      "summary": "پادشاه آنتیگونی مقدونیه از ۲۷۶ تا ۲۳۹ پیش از میلاد."
+    },
+    "person-demetrius-ii": {
+      "label": "دمتریوس دوم",
+      "summary": "پادشاه آنتیگونی مقدونیه از ۲۳۹ تا ۲۲۹ پیش از میلاد."
+    },
+    "person-antigonus-iii": {
+      "label": "آنتیگونوس سوم دوسون",
+      "summary": "پادشاه آنتیگونی مقدونیه از ۲۲۹ تا ۲۲۱ پیش از میلاد."
+    },
+    "person-philip-v": {
+      "label": "فیلیپ پنجم",
+      "summary": "پادشاه آنتیگونی مقدونیه از ۲۲۱ تا ۱۷۹ پیش از میلاد."
+    },
+    "person-perseus": {
+      "label": "پرسئوس",
+      "summary": "واپسین شاه آنتیگونی مقدونیه، از ۱۷۹ تا ۱۶۸ پیش از میلاد، که در پیدنا از رومیان شکستی قطعی خورد."
+    },
+    "person-xerxes-i": {
+      "label": "خشایارشا یکم",
+      "summary": "شاه پارسی که در ۴۸۰ پیش از میلاد به یونان تاخت، آتن را غارت کرد و ناوگانش را در سالامیس از دست داد."
+    },
+    "person-darius-iii": {
+      "label": "داریوش سوم",
+      "summary": "شاه پارسی که در ایسوس و گوگمل از اسکندر شکست خورد."
+    },
+    "person-mardonius": {
+      "label": "ماردونیه",
+      "summary": "فرماندهٔ پارسی در اروپا که در ۴۷۹ پیش از میلاد باز آتن را گرفت و در پلاته شکست خورد."
+    },
+    "place-athens": {
+      "label": "آتن",
+      "summary": "شهر سولون، پیسیستراتوس و پریکلس، که خشایارشا در ۴۸۰ پیش از میلاد غارتش کرد، سر اتحادیهٔ دلوس و امپراتوری آن، که در ۴۰۴ از اسپارت و در ۳۳۸ در خایرونیا از فیلیپ دوم شکست خورد."
+    },
+    "place-sparta": {
+      "label": "اسپارت",
+      "summary": "شهر پلوپونز که در ترموپیل و پلاته با پارسیان جنگید، در ۴۰۴ پیش از میلاد اتحادیهٔ دلوس را نابود کرد و در ۳۷۱ در لئوکترا برتری‌اش را از دست داد."
+    },
+    "place-marathon": {
+      "label": "ماراتن",
+      "summary": "دشتی در آتیکا که نزدیک ده هزار آتنی در ۴۹۰ پیش از میلاد سپاهی پارسی را در آن شکست دادند."
+    },
+    "place-corinth": {
+      "label": "کورنت",
+      "summary": "شهر تنگهٔ کورنت که فیلیپ دوم در ۳۳۸ پیش از میلاد دولت‌های یونانی را در اتحادیهٔ کورنت گرد آورد؛ رومیان در ۱۴۶ آن را غارت کردند."
+    },
+    "place-chaeronea": {
+      "label": "خایرونیا",
+      "summary": "شهری در بئوتیا که فیلیپ دوم در ۳۳۸ پیش از میلاد آتن و تبس را در آن شکست داد."
+    },
+    "place-pydna": {
+      "label": "پیدنا",
+      "summary": "جایی در مقدونیه که رومیان در ۲۲ ژوئن ۱۶۸ پیش از میلاد پرسئوس را در آن شکست دادند."
+    },
+    "place-thermopylae": {
+      "label": "ترموپیل",
+      "summary": "تنگهٔ باریک، «دروازه‌های گرم»، که اسپارتی‌ها در ۴۸۰ پیش از میلاد در آن از پارسیان شکست خوردند."
+    },
+    "place-plataea": {
+      "label": "پلاته",
+      "summary": "شهری در بئوتیا که یونانیان در ۴۷۹ پیش از میلاد سپاه پارسی را در آن شکست دادند."
+    },
+    "place-gaugamela": {
+      "label": "گوگمل",
+      "summary": "دشتی در شمال عراق که اسکندر در ۱ اکتبر ۳۳۱ پیش از میلاد داریوش سوم را در آن شکست داد."
+    },
+    "place-delphi": {
+      "label": "دلفی",
+      "summary": "پرستشگاه آپولون که یادمان پیروزی یونانیان در جنگ‌های پارسی در آن برپا بود."
+    },
+    "place-olympia": {
+      "label": "المپیا",
+      "summary": "پرستشگاه زئوس در الیس، جای بازی‌های المپیک."
+    },
+    "event-solon-lawgiver": {
+      "label": "قانون‌گذاری سولون",
+      "summary": "در ۵۹۴/۵۹۳ پیش از میلاد، در میان کشمکش اشراف و نوکیسگان، آتنیان به جای خودکامه‌ای سولون را قانون‌گذار کردند."
+    },
+    "event-expulsion-of-hippias": {
+      "label": "بیرون راندن هیپیاس",
+      "summary": "در ۵۱۰ پیش از میلاد آتنیان هیپیاس خودکامه، پسر پیسیستراتوس، را بیرون راندند."
+    },
+    "event-battle-of-marathon": {
+      "label": "نبرد ماراتن",
+      "summary": "در ۴۹۰ پیش از میلاد نزدیک ده هزار آتنی به فرماندهی میلتیادس سپاهی پارسی را که برای بازگرداندن هیپیاس آمده بود شکست دادند."
+    },
+    "event-thermopylae": {
+      "label": "نبرد ترموپیل",
+      "summary": "در تابستان ۴۸۰ پیش از میلاد خشایارشا در تنگهٔ ترموپیل به یونانیان تاخت و لئونیداس و اسپارتی‌هایش شکست خوردند و کشته شدند."
+    },
+    "event-salamis": {
+      "label": "نبرد سالامیس",
+      "summary": "در ۲۹ سپتامبر ۴۸۰ پیش از میلاد هم‌پیمانان یونانی، به آرایش تمیستوکلس، ناوگان پارسی را در تنگه‌های سالامیس شکست دادند، پس از آنکه خشایارشا آتن را گرفته بود."
+    },
+    "event-plataea": {
+      "label": "نبرد پلاته",
+      "summary": "در ۴۷۹ پیش از میلاد اسپارتی‌ها و آتنیان سپاه پارسی ماردونیه را در پلاته شکست دادند، نبرد سرنوشت‌ساز جنگ پارسی."
+    },
+    "event-founding-of-delian-league": {
+      "label": "بنیاد اتحادیهٔ دلوس",
+      "summary": "در ۴۷۸ پیش از میلاد آتن اتحادیهٔ دلوس را پدید آورد، پیمانی در برابر پارس که آرام‌آرام امپراتوری آتن شد."
+    },
+    "event-surrender-of-athens-404": {
+      "label": "تسلیم آتن",
+      "summary": "در آوریل ۴۰۴ پیش از میلاد آتن به اسپارت تسلیم شد، از امپراتوری‌اش دست کشید و فرمانروایی سی الیگارش را پذیرفت؛ دیوارهای بلند فروریخته شد."
+    },
+    "event-death-of-socrates": {
+      "label": "مرگ سقراط",
+      "summary": "سقراط فیلسوف در ۳۹۹ پیش از میلاد در آتن درگذشت."
+    },
+    "event-battle-of-chaeronea": {
+      "label": "نبرد خایرونیا",
+      "summary": "در ۳۳۸ پیش از میلاد فیلیپ دوم مقدونی آتن و تبس را در خایرونیا شکست داد، که در اصل پایان استقلال یونان بود."
+    },
+    "event-issus": {
+      "label": "نبرد ایسوس",
+      "summary": "در نوامبر ۳۳۳ پیش از میلاد اسکندر در ایسوس، بر نوار باریکی از زمین، با داریوش سوم رو‌به‌رو شد و پارسیان را بار دوم شکست داد."
+    },
+    "event-gaugamela": {
+      "label": "نبرد گوگمل",
+      "summary": "در ۱ اکتبر ۳۳۱ پیش از میلاد اسکندر داریوش سوم را در گوگمل در شمال عراق شکست داد، نبرد سرنوشت‌ساز جنگش با شاهنشاهی هخامنشی."
+    },
+    "event-battle-of-ipsus": {
+      "label": "نبرد ایپسوس",
+      "summary": "در ۳۰۱ پیش از میلاد آنتیگونوس یک‌چشم در ایپسوس از دیگر جانشینان اسکندر شکست خورد و کشته شد."
+    },
+    "event-battle-of-pydna": {
+      "label": "نبرد پیدنا",
+      "summary": "در ۲۲ ژوئن ۱۶۸ پیش از میلاد رومیان در پیدنا پیروزی سرنوشت‌ساز جنگ سوم مقدونی را بر پرسئوس به دست آوردند؛ مقدونیه به چهار جمهوری بخش شد."
+    },
+    "event-sack-of-corinth": {
+      "label": "غارت کورنت به دست رومیان",
+      "summary": "در ۱۴۶ پیش از میلاد رومیان کورنت را غارت کردند و شهر کمابیش رها شد؛ یونان بخشی از استان رومی آخائیا شد."
+    }
+  },
+  "relations": {
+    "relation-pisistratus-parent-of-hippias": {
+      "label": "پدرِ"
+    },
+    "relation-leonidas-holder-of-king-of-sparta": {
+      "label": "پادشاه"
+    },
+    "relation-leonidas-member-of-agiad": {
+      "label": "از خاندان"
+    },
+    "relation-anaxandridas-holder-of-king-of-sparta": {
+      "label": "پادشاه"
+    },
+    "relation-anaxandridas-member-of-agiad": {
+      "label": "از خاندان"
+    },
+    "relation-anaxandridas-parent-of-leonidas": {
+      "label": "پدرِ"
+    },
+    "relation-herodotus-author-of-work-histories-of-herodotus": {
+      "label": "نویسنده"
+    },
+    "relation-philip-ii-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-alexander-iii-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-philip-ii-parent-of-alexander-iii": {
+      "label": "پدرِ"
+    },
+    "relation-alexander-iii-successor-of-philip-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-antigonus-i-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-antigonus-i-member-of-antigonid": {
+      "label": "از خاندان"
+    },
+    "relation-demetrius-i-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-demetrius-i-member-of-antigonid": {
+      "label": "از خاندان"
+    },
+    "relation-antigonus-ii-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-antigonus-ii-member-of-antigonid": {
+      "label": "از خاندان"
+    },
+    "relation-demetrius-ii-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-demetrius-ii-member-of-antigonid": {
+      "label": "از خاندان"
+    },
+    "relation-antigonus-iii-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-antigonus-iii-member-of-antigonid": {
+      "label": "از خاندان"
+    },
+    "relation-philip-v-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-philip-v-member-of-antigonid": {
+      "label": "از خاندان"
+    },
+    "relation-perseus-holder-of-king-of-macedonia": {
+      "label": "پادشاه"
+    },
+    "relation-perseus-member-of-antigonid": {
+      "label": "از خاندان"
+    },
+    "relation-antigonus-i-founder-of-antigonid": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-sparta-capital-of-agiad": {
+      "label": "پایتختِ"
+    },
+    "relation-solon-participant-in-solon-lawgiver": {
+      "label": "شرکت در"
+    },
+    "relation-solon-lawgiver-took-place-in-athens": {
+      "label": "رخ داد در"
+    },
+    "relation-hippias-participant-in-expulsion-of-hippias": {
+      "label": "شرکت در"
+    },
+    "relation-expulsion-of-hippias-took-place-in-athens": {
+      "label": "رخ داد در"
+    },
+    "relation-miltiades-participant-in-battle-of-marathon": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-marathon-took-place-in-marathon": {
+      "label": "رخ داد در"
+    },
+    "relation-battle-of-marathon-during-persian-wars": {
+      "label": "در دورهٔ"
+    },
+    "relation-xerxes-i-participant-in-thermopylae": {
+      "label": "شرکت در"
+    },
+    "relation-leonidas-participant-in-thermopylae": {
+      "label": "شرکت در"
+    },
+    "relation-thermopylae-took-place-in-thermopylae": {
+      "label": "رخ داد در"
+    },
+    "relation-thermopylae-during-persian-wars": {
+      "label": "در دورهٔ"
+    },
+    "relation-xerxes-i-participant-in-salamis": {
+      "label": "شرکت در"
+    },
+    "relation-themistocles-participant-in-salamis": {
+      "label": "شرکت در"
+    },
+    "relation-salamis-during-persian-wars": {
+      "label": "در دورهٔ"
+    },
+    "relation-mardonius-participant-in-plataea": {
+      "label": "شرکت در"
+    },
+    "relation-plataea-took-place-in-plataea": {
+      "label": "رخ داد در"
+    },
+    "relation-plataea-during-persian-wars": {
+      "label": "در دورهٔ"
+    },
+    "relation-founding-of-delian-league-took-place-in-athens": {
+      "label": "رخ داد در"
+    },
+    "relation-founding-of-delian-league-during-persian-wars": {
+      "label": "در دورهٔ"
+    },
+    "relation-surrender-of-athens-404-took-place-in-athens": {
+      "label": "رخ داد در"
+    },
+    "relation-surrender-of-athens-404-during-peloponnesian-war": {
+      "label": "در دورهٔ"
+    },
+    "relation-socrates-participant-in-death-of-socrates": {
+      "label": "شرکت در"
+    },
+    "relation-death-of-socrates-took-place-in-athens": {
+      "label": "رخ داد در"
+    },
+    "relation-philip-ii-participant-in-battle-of-chaeronea": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-chaeronea-took-place-in-chaeronea": {
+      "label": "رخ داد در"
+    },
+    "relation-battle-of-chaeronea-during-macedonian-hegemony": {
+      "label": "در دورهٔ"
+    },
+    "relation-alexander-iii-participant-in-issus": {
+      "label": "شرکت در"
+    },
+    "relation-darius-iii-participant-in-issus": {
+      "label": "شرکت در"
+    },
+    "relation-issus-during-macedonian-hegemony": {
+      "label": "در دورهٔ"
+    },
+    "relation-alexander-iii-participant-in-gaugamela": {
+      "label": "شرکت در"
+    },
+    "relation-darius-iii-participant-in-gaugamela": {
+      "label": "شرکت در"
+    },
+    "relation-gaugamela-took-place-in-gaugamela": {
+      "label": "رخ داد در"
+    },
+    "relation-gaugamela-during-macedonian-hegemony": {
+      "label": "در دورهٔ"
+    },
+    "relation-antigonus-i-participant-in-battle-of-ipsus": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-ipsus-during-macedonian-hegemony": {
+      "label": "در دورهٔ"
+    },
+    "relation-perseus-participant-in-battle-of-pydna": {
+      "label": "شرکت در"
+    },
+    "relation-battle-of-pydna-took-place-in-pydna": {
+      "label": "رخ داد در"
+    },
+    "relation-battle-of-pydna-during-macedonian-hegemony": {
+      "label": "در دورهٔ"
+    },
+    "relation-sack-of-corinth-took-place-in-corinth": {
+      "label": "رخ داد در"
+    }
+  }
+}

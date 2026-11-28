@@ -1,0 +1,3202 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "ancient-greece",
+  "worldId": "world-ancient-greece",
+  "subjectId": "subject-ancient-greece",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "entities": [
+    {
+      "id": "subject-ancient-greece",
+      "type": "Region",
+      "label": "Greece",
+      "summary": "Ancient Greece from archaic Athens and Sparta through the Persian wars, the Athenian empire and the Peloponnesian War to the rise of Macedonia, Alexander and the Antigonid kings, until Rome defeated Macedonia at Pydna in 168 BCE and sacked Corinth in 146.",
+      "sourceIds": [
+        "src-livius-place-athens",
+        "src-livius-place-macedonia",
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "office-king-of-macedonia",
+      "type": "Office",
+      "label": "King of Macedonia",
+      "summary": "The kingship of Macedonia, held by Philip II and Alexander and later by the Antigonids.",
+      "sourceIds": [
+        "src-livius-place-macedonia",
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ]
+    },
+    {
+      "id": "office-king-of-sparta",
+      "type": "Office",
+      "label": "King of Sparta",
+      "summary": "One of the two kingships of Sparta, each held by its own house, among them the Agiads.",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-antigonid",
+      "type": "Dynasty",
+      "label": "The Antigonids",
+      "summary": "The Macedonian dynasty of Antigonus the One-Eyed, which ruled Macedonia from 294 to 168 BCE, when Perseus was defeated by the Romans at Pydna.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 294
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 168
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "dynasty-agiad",
+      "type": "Dynasty",
+      "label": "The Agiads",
+      "summary": "One of the two royal houses of Sparta, to which Anaxandridas, Cleomenes and Leonidas belonged.",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "period-persian-wars",
+      "type": "Period",
+      "label": "The Persian wars",
+      "summary": "From the Athenian part in the Ionian Revolt in 499 BCE through Marathon in 490 and Xerxes’ invasion of 480–479 to the founding of the Delian League in 478.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 499
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 478
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-peloponnesian-war",
+      "type": "Period",
+      "label": "The Peloponnesian War",
+      "summary": "The war of Athens and Sparta from 431 BCE, with an interruption, until Athens surrendered in April 404 and gave up its empire.",
+      "sourceIds": [
+        "src-livius-concept-peloponnesian-war"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 431
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 404
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-macedonian-hegemony",
+      "type": "Period",
+      "label": "Macedonian Greece",
+      "summary": "From Philip II’s victory at Chaeronea in 338 BCE, the end of Greek independence, through Alexander and the Antigonid kings to the Roman victory at Pydna in 168.",
+      "sourceIds": [
+        "src-livius-battle-chaeronea-338-bce",
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 338
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 168
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-solon",
+      "type": "Person",
+      "label": "Solon",
+      "summary": "Athenian statesman, poet and lawgiver, one of the Seven Sages, born about 650 BCE; appointed lawgiver in 594/593, he died in 561.",
+      "sourceIds": [
+        "src-livius-person-solon"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 650,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 561
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-pisistratus",
+      "type": "Person",
+      "label": "Pisistratus",
+      "summary": "Tyrant of Athens from about 545 to 528/527 BCE, whose sons Hipparchus and Hippias followed him.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-hippias",
+      "type": "Person",
+      "label": "Hippias",
+      "summary": "Son of Pisistratus, tyrant of Athens, expelled in 510 BCE; the Persians tried to bring him back in 490.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-miltiades",
+      "type": "Person",
+      "label": "Miltiades",
+      "summary": "The Athenian commander who led the Athenians to victory over the Persians at Marathon in 490 BCE.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-themistocles",
+      "type": "Person",
+      "label": "Themistocles",
+      "summary": "Athenian commander and statesman, about 525 to 459 BCE, who had the Laurion silver spent on warships and lured the Persian fleet into the straits of Salamis.",
+      "sourceIds": [
+        "src-livius-person-themistocles",
+        "src-livius-battle-salamis-480-bce"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 525,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 459
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-leonidas",
+      "type": "Person",
+      "label": "Leonidas",
+      "summary": "King of Sparta of the Agiad house from 488 to 480 BCE, third son of Anaxandridas, killed in the battle of Thermopylae.",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-anaxandridas",
+      "type": "Person",
+      "label": "Anaxandridas",
+      "summary": "King of Sparta of the Agiad house from about 540 to 520 BCE, father of Cleomenes, Dorieus and Leonidas.",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-pericles",
+      "type": "Person",
+      "label": "Pericles",
+      "summary": "Athenian politician, about 495 to 429 BCE, leader of the radical democrats and from 451 the leading man of Athens, whose strategy opened the Peloponnesian War; he died of the plague in 429.",
+      "sourceIds": [
+        "src-livius-person-pericles"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 495,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 429
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-socrates",
+      "type": "Person",
+      "label": "Socrates",
+      "summary": "Athenian sculptor and philosopher, 469 to 399 BCE, teacher of Plato, Xenophon and Antisthenes.",
+      "sourceIds": [
+        "src-livius-person-socrates"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 469
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 399
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-herodotus",
+      "type": "Person",
+      "label": "Herodotus",
+      "summary": "The Greek researcher of Halicarnassus, about 480 to 429 BCE, often called the first historian, who described the Persian empire and Xerxes’ expedition to Greece.",
+      "sourceIds": [
+        "src-livius-person-herodotus"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 429,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "work-histories-of-herodotus",
+      "type": "Work",
+      "label": "The Histories of Herodotus",
+      "summary": "Herodotus’ account of the growth of the Achaemenid empire under Cyrus, Cambyses and Darius, culminating in Xerxes’ expedition to Greece in 480 BCE.",
+      "sourceIds": [
+        "src-livius-person-herodotus"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-herodotus"
+        }
+      ]
+    },
+    {
+      "id": "person-philip-ii",
+      "type": "Person",
+      "label": "Philip II of Macedon",
+      "summary": "King of Macedonia from 360 to 336 BCE, born in 382, who modernized his kingdom, defeated Athens and Thebes at Chaeronea in 338 and was murdered before he could invade Persia; father of Alexander.",
+      "sourceIds": [
+        "src-livius-person-philip-ii-of-macedonia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 382
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-alexander-iii",
+      "type": "Person",
+      "label": "Alexander III of Macedon",
+      "summary": "King of Macedonia from 336 to 323 BCE, born in 356, who defeated Darius III, conquered the Achaemenid empire as far as the Indus and made Babylon his capital.",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Alexander the Great",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 356
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-antigonus-i",
+      "type": "Person",
+      "label": "Antigonus I Monophthalmus",
+      "summary": "The “one-eyed” general of Alexander, recognized as supreme commander of the Macedonian forces in Asia in 320 BCE, who reigned as king from 306 and was killed at Ipsus in 301.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-demetrius-i",
+      "type": "Person",
+      "label": "Demetrius I Poliorcetes",
+      "summary": "Son of Antigonus, king from 306 to 287 BCE, who kept the Antigonid holdings in Greece after Ipsus and became king in Macedonia from 294.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-antigonus-ii",
+      "type": "Person",
+      "label": "Antigonus II Gonatas",
+      "summary": "Antigonid king of Macedonia from 276 to 239 BCE.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-demetrius-ii",
+      "type": "Person",
+      "label": "Demetrius II",
+      "summary": "Antigonid king of Macedonia from 239 to 229 BCE.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-antigonus-iii",
+      "type": "Person",
+      "label": "Antigonus III Doson",
+      "summary": "Antigonid king of Macedonia from 229 to 221 BCE.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-philip-v",
+      "type": "Person",
+      "label": "Philip V",
+      "summary": "Antigonid king of Macedonia from 221 to 179 BCE.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-perseus",
+      "type": "Person",
+      "label": "Perseus",
+      "summary": "The last Antigonid king of Macedonia, from 179 to 168 BCE, decisively defeated by the Romans at Pydna.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-xerxes-i",
+      "type": "Person",
+      "label": "Xerxes I",
+      "summary": "The Persian king who invaded Greece in 480 BCE, sacked Athens and lost his fleet at Salamis.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-darius-iii",
+      "type": "Person",
+      "label": "Darius III",
+      "summary": "The Persian king defeated by Alexander at Issus and Gaugamela.",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Darius III Codomannus",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-mardonius",
+      "type": "Person",
+      "label": "Mardonius",
+      "summary": "The Persian commander in Europe who took Athens again in 479 BCE and was defeated at Plataea.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "place-athens",
+      "type": "Place",
+      "label": "Athens",
+      "summary": "The city of Solon, Pisistratus and Pericles, sacked by Xerxes in 480 BCE, head of the Delian League and its empire, defeated by Sparta in 404 and by Philip II at Chaeronea in 338.",
+      "sourceIds": [
+        "src-livius-place-athens",
+        "src-pleiades-579885"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Athenae",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 37.9716,
+        "longitude": 23.724,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-sparta",
+      "type": "Place",
+      "label": "Sparta",
+      "summary": "The city of the Peloponnese which fought the Persians at Thermopylae and Plataea, destroyed the Delian League in 404 BCE and lost its hegemony at Leuctra in 371.",
+      "sourceIds": [
+        "src-livius-place-sparta",
+        "src-pleiades-570685"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 37.0818,
+        "longitude": 22.4247,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-marathon",
+      "type": "Place",
+      "label": "Marathon",
+      "summary": "The plain in Attica where some 10,000 Athenians defeated a Persian force in 490 BCE.",
+      "sourceIds": [
+        "src-livius-battle-marathon-490-bce",
+        "src-pleiades-580021"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 38.1466,
+        "longitude": 23.9701,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-corinth",
+      "type": "Place",
+      "label": "Corinth",
+      "summary": "The city of the Isthmus where Philip II organized the Greek states in the Corinthian League in 338 BCE; the Romans sacked it in 146.",
+      "sourceIds": [
+        "src-livius-place-corinth",
+        "src-pleiades-570182"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Korinthos",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 37.9056,
+        "longitude": 22.8786,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-chaeronea",
+      "type": "Place",
+      "label": "Chaeronea",
+      "summary": "The town of Boeotia where Philip II defeated Athens and Thebes in 338 BCE.",
+      "sourceIds": [
+        "src-livius-battle-chaeronea-338-bce",
+        "src-pleiades-540701"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 38.494,
+        "longitude": 22.8414,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-pydna",
+      "type": "Place",
+      "label": "Pydna",
+      "summary": "The place in Macedonia where the Romans defeated Perseus on 22 June 168 BCE.",
+      "sourceIds": [
+        "src-livius-battle-pydna-168-bce",
+        "src-pleiades-491703"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 40.3976,
+        "longitude": 22.615,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-thermopylae",
+      "type": "Place",
+      "label": "Thermopylae",
+      "summary": "The narrow pass, the “Hot Gates”, where the Spartans were defeated by the Persians in 480 BCE.",
+      "sourceIds": [
+        "src-livius-battle-thermopylae-480-bce",
+        "src-pleiades-541140"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 38.796,
+        "longitude": 22.5436,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-plataea",
+      "type": "Place",
+      "label": "Plataea",
+      "summary": "The town of Boeotia where the Greeks defeated the Persian army in 479 BCE.",
+      "sourceIds": [
+        "src-livius-battle-plataea-479-bce",
+        "src-pleiades-541063"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 38.2211,
+        "longitude": 23.2735,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-gaugamela",
+      "type": "Place",
+      "label": "Gaugamela",
+      "summary": "The plain in northern Iraq where Alexander defeated Darius III on 1 October 331 BCE.",
+      "sourceIds": [
+        "src-livius-battle-gaugamela-331-bce",
+        "src-pleiades-874478"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 36.5733,
+        "longitude": 43.4943,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-delphi",
+      "type": "Place",
+      "label": "Delphi",
+      "summary": "The sanctuary of Apollo, where the Greek victory monument of the Persian wars stood.",
+      "sourceIds": [
+        "src-livius-place-corinth",
+        "src-pleiades-540726"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 38.4823,
+        "longitude": 22.5012,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-olympia",
+      "type": "Place",
+      "label": "Olympia",
+      "summary": "The sanctuary of Zeus in Elis, seat of the Olympic games.",
+      "sourceIds": [
+        "src-livius-place-olympia",
+        "src-pleiades-570531"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-greece"
+        }
+      ],
+      "position": {
+        "latitude": 37.6387,
+        "longitude": 21.6308,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "event-solon-lawgiver",
+      "type": "Event",
+      "label": "Solon becomes lawgiver",
+      "summary": "In 594/593 BCE, amid conflicts between the aristocrats and the new rich, the Athenians appointed Solon as lawgiver instead of a tyrant.",
+      "sourceIds": [
+        "src-livius-person-solon"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 594
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 593
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-athens"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-solon"
+        }
+      ]
+    },
+    {
+      "id": "event-expulsion-of-hippias",
+      "type": "Event",
+      "label": "The expulsion of Hippias",
+      "summary": "In 510 BCE the Athenians expelled the tyrant Hippias, son of Pisistratus.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 510
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-athens"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-hippias"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-marathon",
+      "type": "Event",
+      "label": "The battle of Marathon",
+      "summary": "In 490 BCE some 10,000 Athenians under Miltiades defeated a Persian force that had come to bring back Hippias.",
+      "sourceIds": [
+        "src-livius-battle-marathon-490-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 490
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-marathon"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-miltiades"
+        }
+      ]
+    },
+    {
+      "id": "event-thermopylae",
+      "type": "Event",
+      "label": "The battle of Thermopylae",
+      "summary": "In the summer of 480 BCE Xerxes attacked the Greeks at the pass of Thermopylae, where Leonidas and his Spartans were defeated and killed.",
+      "sourceIds": [
+        "src-livius-battle-thermopylae-480-bce",
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-thermopylae"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-xerxes-i"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-leonidas"
+        }
+      ]
+    },
+    {
+      "id": "event-salamis",
+      "type": "Event",
+      "label": "The battle of Salamis",
+      "summary": "On 29 September 480 BCE the Greek allies, drawn up by Themistocles, defeated the Persian navy in the straits of Salamis, after Xerxes had captured Athens.",
+      "sourceIds": [
+        "src-livius-battle-salamis-480-bce"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-xerxes-i"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-themistocles"
+        }
+      ]
+    },
+    {
+      "id": "event-plataea",
+      "type": "Event",
+      "label": "The battle of Plataea",
+      "summary": "In 479 BCE the Spartans and Athenians defeated the Persian army of Mardonius at Plataea, the decisive battle of the Persian war.",
+      "sourceIds": [
+        "src-livius-battle-plataea-479-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 479
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-plataea"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-mardonius"
+        }
+      ]
+    },
+    {
+      "id": "event-founding-of-delian-league",
+      "type": "Event",
+      "label": "The Delian League founded",
+      "summary": "In 478 BCE Athens created the Delian League, an alliance against Persia that slowly became an Athenian empire.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 478
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-athens"
+        }
+      ]
+    },
+    {
+      "id": "event-surrender-of-athens-404",
+      "type": "Event",
+      "label": "Athens surrenders",
+      "summary": "In April 404 BCE Athens surrendered to Sparta, gave up its empire and accepted the rule of thirty oligarchs; the Long Walls were torn down.",
+      "sourceIds": [
+        "src-livius-concept-peloponnesian-war"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 404
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-athens"
+        }
+      ]
+    },
+    {
+      "id": "event-death-of-socrates",
+      "type": "Event",
+      "label": "The death of Socrates",
+      "summary": "The philosopher Socrates died at Athens in 399 BCE.",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 399
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-athens"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-socrates"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-chaeronea",
+      "type": "Event",
+      "label": "The battle of Chaeronea",
+      "summary": "In 338 BCE Philip II of Macedonia defeated Athens and Thebes at Chaeronea, which meant essentially the end of Greek independence.",
+      "sourceIds": [
+        "src-livius-battle-chaeronea-338-bce"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 338
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-chaeronea"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-philip-ii"
+        }
+      ]
+    },
+    {
+      "id": "event-issus",
+      "type": "Event",
+      "label": "The battle of Issus",
+      "summary": "In November 333 BCE Alexander met Darius III at Issus on a narrow strip of land and defeated the Persians for the second time.",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 333
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-alexander-iii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-darius-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-gaugamela",
+      "type": "Event",
+      "label": "The battle of Gaugamela",
+      "summary": "On 1 October 331 BCE Alexander defeated Darius III at Gaugamela in northern Iraq, the decisive battle of his war with the Achaemenid empire.",
+      "sourceIds": [
+        "src-livius-battle-gaugamela-331-bce"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 331
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-gaugamela"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-alexander-iii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-darius-iii"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-ipsus",
+      "type": "Event",
+      "label": "The battle of Ipsus",
+      "summary": "In 301 BCE Antigonus the One-Eyed was defeated by the other successors of Alexander at Ipsus and killed.",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 301
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-antigonus-i"
+        }
+      ]
+    },
+    {
+      "id": "event-battle-of-pydna",
+      "type": "Event",
+      "label": "The battle of Pydna",
+      "summary": "On 22 June 168 BCE the Romans won their decisive victory of the Third Macedonian War over Perseus at Pydna; Macedonia was divided into four republics.",
+      "sourceIds": [
+        "src-livius-battle-pydna-168-bce",
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 168
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-pydna"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-perseus"
+        }
+      ]
+    },
+    {
+      "id": "event-sack-of-corinth",
+      "type": "Event",
+      "label": "The Romans sack Corinth",
+      "summary": "In 146 BCE the Romans sacked Corinth, which was left essentially abandoned; Greece became part of the Roman province of Achaea.",
+      "sourceIds": [
+        "src-livius-place-corinth",
+        "src-livius-place-sparta"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 146
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-corinth"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-pisistratus-parent-of-hippias",
+      "from": "person-pisistratus",
+      "to": "person-hippias",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leonidas-holder-of-king-of-sparta",
+      "from": "person-leonidas",
+      "to": "office-king-of-sparta",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 488
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 480
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leonidas-member-of-agiad",
+      "from": "person-leonidas",
+      "to": "dynasty-agiad",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-anaxandridas-holder-of-king-of-sparta",
+      "from": "person-anaxandridas",
+      "to": "office-king-of-sparta",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 540,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 520,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-anaxandridas-member-of-agiad",
+      "from": "person-anaxandridas",
+      "to": "dynasty-agiad",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-anaxandridas-parent-of-leonidas",
+      "from": "person-anaxandridas",
+      "to": "person-leonidas",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-herodotus-author-of-work-histories-of-herodotus",
+      "from": "person-herodotus",
+      "to": "work-histories-of-herodotus",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-livius-person-herodotus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-philip-ii-holder-of-king-of-macedonia",
+      "from": "person-philip-ii",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-philip-ii-of-macedonia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 360
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 336
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-iii-holder-of-king-of-macedonia",
+      "from": "person-alexander-iii",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 336
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 323
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-philip-ii-parent-of-alexander-iii",
+      "from": "person-philip-ii",
+      "to": "person-alexander-iii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-person-philip-ii-of-macedonia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-iii-successor-of-philip-ii",
+      "from": "person-alexander-iii",
+      "to": "person-philip-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-i-holder-of-king-of-macedonia",
+      "from": "person-antigonus-i",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 306
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 301
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-i-member-of-antigonid",
+      "from": "person-antigonus-i",
+      "to": "dynasty-antigonid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-demetrius-i-holder-of-king-of-macedonia",
+      "from": "person-demetrius-i",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 306
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 287
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-demetrius-i-member-of-antigonid",
+      "from": "person-demetrius-i",
+      "to": "dynasty-antigonid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-ii-holder-of-king-of-macedonia",
+      "from": "person-antigonus-ii",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 276
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 239
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-ii-member-of-antigonid",
+      "from": "person-antigonus-ii",
+      "to": "dynasty-antigonid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-demetrius-ii-holder-of-king-of-macedonia",
+      "from": "person-demetrius-ii",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 239
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 229
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-demetrius-ii-member-of-antigonid",
+      "from": "person-demetrius-ii",
+      "to": "dynasty-antigonid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-iii-holder-of-king-of-macedonia",
+      "from": "person-antigonus-iii",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 229
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 221
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-iii-member-of-antigonid",
+      "from": "person-antigonus-iii",
+      "to": "dynasty-antigonid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-philip-v-holder-of-king-of-macedonia",
+      "from": "person-philip-v",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 221
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 179
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-philip-v-member-of-antigonid",
+      "from": "person-philip-v",
+      "to": "dynasty-antigonid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-perseus-holder-of-king-of-macedonia",
+      "from": "person-perseus",
+      "to": "office-king-of-macedonia",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "King",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 179
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 168
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-perseus-member-of-antigonid",
+      "from": "person-perseus",
+      "to": "dynasty-antigonid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-i-founder-of-antigonid",
+      "from": "person-antigonus-i",
+      "to": "dynasty-antigonid",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sparta-capital-of-agiad",
+      "from": "place-sparta",
+      "to": "dynasty-agiad",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-solon-participant-in-solon-lawgiver",
+      "from": "person-solon",
+      "to": "event-solon-lawgiver",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-solon"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-solon-lawgiver-took-place-in-athens",
+      "from": "event-solon-lawgiver",
+      "to": "place-athens",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-person-solon"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-hippias-participant-in-expulsion-of-hippias",
+      "from": "person-hippias",
+      "to": "event-expulsion-of-hippias",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-expulsion-of-hippias-took-place-in-athens",
+      "from": "event-expulsion-of-hippias",
+      "to": "place-athens",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-miltiades-participant-in-battle-of-marathon",
+      "from": "person-miltiades",
+      "to": "event-battle-of-marathon",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-marathon-490-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-marathon-took-place-in-marathon",
+      "from": "event-battle-of-marathon",
+      "to": "place-marathon",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-battle-marathon-490-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-marathon-during-persian-wars",
+      "from": "event-battle-of-marathon",
+      "to": "period-persian-wars",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-battle-marathon-490-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-xerxes-i-participant-in-thermopylae",
+      "from": "person-xerxes-i",
+      "to": "event-thermopylae",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-thermopylae-480-bce",
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-leonidas-participant-in-thermopylae",
+      "from": "person-leonidas",
+      "to": "event-thermopylae",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-thermopylae-480-bce",
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-thermopylae-took-place-in-thermopylae",
+      "from": "event-thermopylae",
+      "to": "place-thermopylae",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-battle-thermopylae-480-bce",
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-thermopylae-during-persian-wars",
+      "from": "event-thermopylae",
+      "to": "period-persian-wars",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-battle-thermopylae-480-bce",
+        "src-livius-person-leonidas"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-xerxes-i-participant-in-salamis",
+      "from": "person-xerxes-i",
+      "to": "event-salamis",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-salamis-480-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-themistocles-participant-in-salamis",
+      "from": "person-themistocles",
+      "to": "event-salamis",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-salamis-480-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-salamis-during-persian-wars",
+      "from": "event-salamis",
+      "to": "period-persian-wars",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-battle-salamis-480-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mardonius-participant-in-plataea",
+      "from": "person-mardonius",
+      "to": "event-plataea",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-plataea-479-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-plataea-took-place-in-plataea",
+      "from": "event-plataea",
+      "to": "place-plataea",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-battle-plataea-479-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-plataea-during-persian-wars",
+      "from": "event-plataea",
+      "to": "period-persian-wars",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-battle-plataea-479-bce",
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-founding-of-delian-league-took-place-in-athens",
+      "from": "event-founding-of-delian-league",
+      "to": "place-athens",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-founding-of-delian-league-during-persian-wars",
+      "from": "event-founding-of-delian-league",
+      "to": "period-persian-wars",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-surrender-of-athens-404-took-place-in-athens",
+      "from": "event-surrender-of-athens-404",
+      "to": "place-athens",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-concept-peloponnesian-war"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-surrender-of-athens-404-during-peloponnesian-war",
+      "from": "event-surrender-of-athens-404",
+      "to": "period-peloponnesian-war",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-concept-peloponnesian-war"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-socrates-participant-in-death-of-socrates",
+      "from": "person-socrates",
+      "to": "event-death-of-socrates",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-death-of-socrates-took-place-in-athens",
+      "from": "event-death-of-socrates",
+      "to": "place-athens",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-athens"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-philip-ii-participant-in-battle-of-chaeronea",
+      "from": "person-philip-ii",
+      "to": "event-battle-of-chaeronea",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-chaeronea-338-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-chaeronea-took-place-in-chaeronea",
+      "from": "event-battle-of-chaeronea",
+      "to": "place-chaeronea",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-battle-chaeronea-338-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-chaeronea-during-macedonian-hegemony",
+      "from": "event-battle-of-chaeronea",
+      "to": "period-macedonian-hegemony",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-battle-chaeronea-338-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-iii-participant-in-issus",
+      "from": "person-alexander-iii",
+      "to": "event-issus",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-darius-iii-participant-in-issus",
+      "from": "person-darius-iii",
+      "to": "event-issus",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-issus-during-macedonian-hegemony",
+      "from": "event-issus",
+      "to": "period-macedonian-hegemony",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-person-alexander-the-great"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-iii-participant-in-gaugamela",
+      "from": "person-alexander-iii",
+      "to": "event-gaugamela",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-gaugamela-331-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-darius-iii-participant-in-gaugamela",
+      "from": "person-darius-iii",
+      "to": "event-gaugamela",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-gaugamela-331-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gaugamela-took-place-in-gaugamela",
+      "from": "event-gaugamela",
+      "to": "place-gaugamela",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-battle-gaugamela-331-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-gaugamela-during-macedonian-hegemony",
+      "from": "event-gaugamela",
+      "to": "period-macedonian-hegemony",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-battle-gaugamela-331-bce"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-antigonus-i-participant-in-battle-of-ipsus",
+      "from": "person-antigonus-i",
+      "to": "event-battle-of-ipsus",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-ipsus-during-macedonian-hegemony",
+      "from": "event-battle-of-ipsus",
+      "to": "period-macedonian-hegemony",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-perseus-participant-in-battle-of-pydna",
+      "from": "person-perseus",
+      "to": "event-battle-of-pydna",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-battle-pydna-168-bce",
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-pydna-took-place-in-pydna",
+      "from": "event-battle-of-pydna",
+      "to": "place-pydna",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-battle-pydna-168-bce",
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-battle-of-pydna-during-macedonian-hegemony",
+      "from": "event-battle-of-pydna",
+      "to": "period-macedonian-hegemony",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-battle-pydna-168-bce",
+        "src-livius-dynasty-antigonids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-sack-of-corinth-took-place-in-corinth",
+      "from": "event-sack-of-corinth",
+      "to": "place-corinth",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-corinth",
+        "src-livius-place-sparta"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-livius-place-athens",
+      "title": "Athens – Livius",
+      "url": "https://www.livius.org/articles/place/athens/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-sparta",
+      "title": "Sparta – Livius",
+      "url": "https://www.livius.org/articles/place/sparta/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-battle-marathon-490-bce",
+      "title": "Battle of Marathon – Livius",
+      "url": "https://www.livius.org/articles/battle/marathon-490-bce/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-battle-salamis-480-bce",
+      "title": "Battle of Salamis – Livius",
+      "url": "https://www.livius.org/articles/battle/salamis-480-bce/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-battle-plataea-479-bce",
+      "title": "Battle of Plataea – Livius",
+      "url": "https://www.livius.org/articles/battle/plataea-479-bce/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-battle-thermopylae-480-bce",
+      "title": "Thermopylae – Livius",
+      "url": "https://www.livius.org/articles/battle/thermopylae-480-bce/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-pericles",
+      "title": "Pericles – Livius",
+      "url": "https://www.livius.org/articles/person/pericles/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-solon",
+      "title": "Solon – Livius",
+      "url": "https://www.livius.org/articles/person/solon/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-leonidas",
+      "title": "Leonidas – Livius",
+      "url": "https://www.livius.org/articles/person/leonidas/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-themistocles",
+      "title": "Themistocles – Livius",
+      "url": "https://www.livius.org/articles/person/themistocles/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-philip-ii-of-macedonia",
+      "title": "Philip II of Macedonia – Livius",
+      "url": "https://www.livius.org/articles/person/philip-ii-of-macedonia/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-alexander-the-great",
+      "title": "Alexander the Great – Livius",
+      "url": "https://www.livius.org/articles/person/alexander-the-great/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-dynasty-antigonids",
+      "title": "Antigonids – Livius",
+      "url": "https://www.livius.org/articles/dynasty/antigonids/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-concept-peloponnesian-war",
+      "title": "Peloponnesian War – Livius",
+      "url": "https://www.livius.org/articles/concept/peloponnesian-war/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-corinth",
+      "title": "Corinth – Livius",
+      "url": "https://www.livius.org/articles/place/corinth/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-battle-chaeronea-338-bce",
+      "title": "Battle of Chaeronea – Livius",
+      "url": "https://www.livius.org/articles/battle/chaeronea-338-bce/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-battle-gaugamela-331-bce",
+      "title": "Battle of Gaugamela – Livius",
+      "url": "https://www.livius.org/articles/battle/gaugamela-331-bce/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-battle-pydna-168-bce",
+      "title": "Battle of Pydna – Livius",
+      "url": "https://www.livius.org/articles/battle/pydna-168-bce/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-socrates",
+      "title": "Socrates – Livius",
+      "url": "https://www.livius.org/articles/person/socrates/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-herodotus",
+      "title": "Herodotus – Livius",
+      "url": "https://www.livius.org/articles/person/herodotus/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-macedonia",
+      "title": "Macedonia – Livius",
+      "url": "https://www.livius.org/articles/place/macedonia/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-olympia",
+      "title": "Olympia – Livius",
+      "url": "https://www.livius.org/articles/place/olympia/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-579885",
+      "title": "Pleiades: Athenae",
+      "url": "https://pleiades.stoa.org/places/579885",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-570685",
+      "title": "Pleiades: Sparta",
+      "url": "https://pleiades.stoa.org/places/570685",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-580021",
+      "title": "Pleiades: Marathon",
+      "url": "https://pleiades.stoa.org/places/580021",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-570182",
+      "title": "Pleiades: Corinthus/Korinthos",
+      "url": "https://pleiades.stoa.org/places/570182",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-491703",
+      "title": "Pleiades: Pydna",
+      "url": "https://pleiades.stoa.org/places/491703",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-540701",
+      "title": "Pleiades: Chaeronea",
+      "url": "https://pleiades.stoa.org/places/540701",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-541140",
+      "title": "Pleiades: Thermopylae",
+      "url": "https://pleiades.stoa.org/places/541140",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-541063",
+      "title": "Pleiades: Plataea",
+      "url": "https://pleiades.stoa.org/places/541063",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-874478",
+      "title": "Pleiades: Gaugamela",
+      "url": "https://pleiades.stoa.org/places/874478",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-540726",
+      "title": "Pleiades: Delphi",
+      "url": "https://pleiades.stoa.org/places/540726",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-570531",
+      "title": "Pleiades: Olympia",
+      "url": "https://pleiades.stoa.org/places/570531",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    }
+  ],
+  "events": [],
+  "media": []
+}
