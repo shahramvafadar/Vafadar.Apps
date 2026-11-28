@@ -1748,6 +1748,101 @@
           "entityId": "place-corinth"
         }
       ]
+    },
+    {
+      "id": "event-plague-of-athens",
+      "type": "Event",
+      "kinds": [
+        "epidemic"
+      ],
+      "label": "The plague of Athens",
+      "summary": "In 429 BCE, in the first years of the Peloponnesian War, a plague killed about a third of the citizens of Athens, Pericles among them.",
+      "sourceIds": [
+        "src-livius-concept-peloponnesian-war"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 429
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-athens"
+        }
+      ]
+    },
+    {
+      "id": "event-earthquake-at-olympia",
+      "type": "Event",
+      "kinds": [
+        "earthquake"
+      ],
+      "label": "The earthquake at Olympia",
+      "summary": "The earthquake of 551 CE that destroyed the temple of Zeus at Olympia; the sanctuary was abandoned in the seventh century.",
+      "sourceIds": [
+        "src-livius-place-olympia"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 551
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-olympia"
+        }
+      ]
+    },
+    {
+      "id": "event-silver-of-laurion",
+      "type": "Event",
+      "kinds": [
+        "discovery"
+      ],
+      "label": "Silver found at Laurion",
+      "summary": "In 483/482 BCE a vein of silver was found near Laurion, southeast of Athens; Themistocles had the silver spent on the warships that fought at Salamis.",
+      "sourceIds": [
+        "src-livius-person-themistocles"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 483
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 482
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-themistocles"
+        }
+      ]
     }
   ],
   "relations": [
@@ -3101,6 +3196,74 @@
       "sourceIds": [
         "src-livius-place-corinth",
         "src-livius-place-sparta"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-plague-of-athens-took-place-in-athens",
+      "from": "event-plague-of-athens",
+      "to": "place-athens",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-concept-peloponnesian-war"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-plague-of-athens-during-peloponnesian-war",
+      "from": "event-plague-of-athens",
+      "to": "period-peloponnesian-war",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-livius-concept-peloponnesian-war"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-earthquake-at-olympia-took-place-in-olympia",
+      "from": "event-earthquake-at-olympia",
+      "to": "place-olympia",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-olympia"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-themistocles-participant-in-silver-of-laurion",
+      "from": "person-themistocles",
+      "to": "event-silver-of-laurion",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-themistocles"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

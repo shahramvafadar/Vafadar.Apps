@@ -9534,6 +9534,96 @@
         "longitude": 114.30742,
         "precision": "approximate"
       }
+    },
+    {
+      "id": "event-great-flood-of-the-yellow-river",
+      "type": "Event",
+      "kinds": [
+        "earthquake",
+        "flood"
+      ],
+      "label": "The great flood of the Yellow River",
+      "summary": "About 1920 BCE an earthquake in what is now Qinghai dammed the Yellow River; the lake it made later broke through in a great flood that devastated the Neolithic societies along the river. Scholars connect it with the stories of Yu taming the flood and the beginning of the Xia.",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1920,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-yellow-river-flood-of-14-17",
+      "type": "Event",
+      "kinds": [
+        "flood"
+      ],
+      "label": "The Yellow River flood of 14–17 CE",
+      "summary": "A massive flood of the Yellow River between 14 and 17 CE that killed millions, in the reign of Wang Mang; it may have been a key reason for the fall of his rule.",
+      "sourceIds": [
+        "src-hawaii-early-china"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 14
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 17
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-pestilence-of-171-185",
+      "type": "Event",
+      "kinds": [
+        "epidemic"
+      ],
+      "label": "The pestilences of the late Han",
+      "summary": "Recurrent and widespread outbreaks of pestilence from 171 to 185; faith-healing against them inspired popular sects such as the Yellow Turbans.",
+      "sourceIds": [
+        "src-decrespigny-later-han"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 171
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 185
+            }
+          }
+        }
+      ]
     }
   ],
   "relations": [

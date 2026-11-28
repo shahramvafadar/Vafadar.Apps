@@ -234,6 +234,18 @@
     "event-sack-of-corinth": {
       "label": "غارت کورنت به دست رومیان",
       "summary": "در ۱۴۶ پیش از میلاد رومیان کورنت را غارت کردند و شهر کمابیش رها شد؛ یونان بخشی از استان رومی آخائیا شد."
+    },
+    "event-plague-of-athens": {
+      "label": "طاعون آتن",
+      "summary": "در ۴۲۹ پیش از میلاد، در نخستین سال‌های جنگ پلوپونزی، طاعونی نزدیک به یک‌سوم شهروندان آتن، از جمله پریکلس، را از میان برد."
+    },
+    "event-earthquake-at-olympia": {
+      "label": "زمین‌لرزهٔ المپیا",
+      "summary": "زمین‌لرزهٔ ۵۵۱ میلادی که پرستشگاه زئوس را در المپیا ویران کرد؛ این پرستشگاه در سدهٔ هفتم رها شد."
+    },
+    "event-silver-of-laurion": {
+      "label": "یافتن سیم در لاوریون",
+      "summary": "در ۴۸۳/۴۸۲ پیش از میلاد رگه‌ای از سیم (نقره) در نزدیکی لاوریون، در جنوب خاوری آتن، یافته شد؛ تمیستوکلس آن را خرج ساختن کشتی‌های جنگی‌ای کرد که در سالامیس جنگیدند."
     }
   },
   "relations": {
@@ -434,6 +446,18 @@
     },
     "relation-sack-of-corinth-took-place-in-corinth": {
       "label": "رخ داد در"
+    },
+    "relation-plague-of-athens-took-place-in-athens": {
+      "label": "رخ داد در"
+    },
+    "relation-plague-of-athens-during-peloponnesian-war": {
+      "label": "در دورهٔ"
+    },
+    "relation-earthquake-at-olympia-took-place-in-olympia": {
+      "label": "رخ داد در"
+    },
+    "relation-themistocles-participant-in-silver-of-laurion": {
+      "label": "شرکت در"
     }
   }
 }

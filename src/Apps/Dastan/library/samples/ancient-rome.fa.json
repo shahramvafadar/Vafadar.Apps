@@ -1806,6 +1806,22 @@
       "facts": {
         "knownFor": "امپراتور باختر، ۴۶۱ تا ۴۶۵."
       }
+    },
+    "event-severe-winter-of-rome": {
+      "label": "زمستان سخت روم",
+      "summary": "زمستانی چنان سرد و پربرف، در روزگار جنگ با وِئی، که راه‌ها بسته شد و در رود تیبر کشتی نمی‌رفت؛ لیوی آن را در سال پیش از بیماری همه‌گیر ۳۹۹ پیش از میلاد می‌نهد."
+    },
+    "event-pestilence-of-399-bce": {
+      "label": "بیماری همه‌گیر پس از زمستان سخت",
+      "summary": "تابستانی مرگبار از بیماری همه‌گیر که پس از زمستان سخت در شهر و روستاها آمد؛ سنا فرمان داد کتاب‌های سیبیلی را بگشایند و نخستین سفرهٔ آیینی خدایان (لکتیستِرنیوم) برپا شد."
+    },
+    "event-famine-of-440-bce": {
+      "label": "قحطی ۴۴۰ پیش از میلاد",
+      "summary": "قحطی‌ای در روم که در آن سوارکاری به نام اسپوریوس مایلیوس به مردم غله بخشید؛ چون گفتند در پی پادشاهی است، در ۴۳۹ کشته شد."
+    },
+    "event-famine-at-constantinople": {
+      "label": "قحطی و بیماری همه‌گیر در قسطنطنیه",
+      "summary": "چون ایرانیان اسکندریه را گرفتند و راه غلهٔ مصر را بستند، در قسطنطنیه قحطی افتاد و از پی آن بیماری همه‌گیر آمد؛ هراکلیوس حتی به بردن پایتخت به آفریقا اندیشید."
     }
   },
   "relations": {
@@ -3733,6 +3749,27 @@
     },
     "relation-libius-severus-holder-of-west-roman-emperor": {
       "label": "امپراتور"
+    },
+    "relation-severe-winter-of-rome-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-severe-winter-of-rome-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-pestilence-of-399-bce-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-pestilence-of-399-bce-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-famine-of-440-bce-took-place-in-rome": {
+      "label": "رخ داد در"
+    },
+    "relation-famine-of-440-bce-during-republic": {
+      "label": "در دورهٔ"
+    },
+    "relation-famine-at-constantinople-took-place-in-constantinople": {
+      "label": "رخ داد در"
     }
   }
 }
