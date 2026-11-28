@@ -4,6 +4,11 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The content review report lists what was checked and corrected, what no source yet carries, and what the owner
+  decides.
+- Not done: looking at the collections in a browser waits for the owner (decision E5).
+- The steps of the seven Shahnameh stories are compared with their sections on Ganjoor, and the reading stages
+  with the names each step gives.
 - A glossary of the Persian names of the collections, with the rules for writing them, and the translations
   brought to it.
 - The review brings the collections into agreement: one identifier for Bahram the champion and for Houman, the
