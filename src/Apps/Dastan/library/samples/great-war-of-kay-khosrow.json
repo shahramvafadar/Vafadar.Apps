@@ -12,7 +12,7 @@
     "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the great war of Kay Khosrow with Afrasiab, sections 1 to 47.",
     "baseUrl": "https://ganjoor.net/ferdousi/shahname/mahmood",
     "criticalPrintEdition": "Not independently established for this online transcription.",
-    "scope": "The great war of Kay Khosrow with Afrasiab as the poem tells it, with its praise of Sultan Mahmud, through the death of Afrasiab, the death of Kavus and Kay Khosrow’s renunciation and disappearance, to the enthronement of Lohrasp; the scenes are drawn from groups of sections, not verse by verse.",
+    "scope": "The great war of Kay Khosrow with Afrasiab as the poem tells it, from the elephant throne through the death of Afrasiab, the death of Kavus and Kay Khosrow’s renunciation and disappearance, to the enthronement of Lohrasp; the scenes are drawn from groups of sections, not verse by verse.",
     "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
     "calendarMapping": null,
     "summaryLanguage": "English",
@@ -71,15 +71,6 @@
       "kind": "primary_literary_text_transcription",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
-    },
-    {
-      "id": "src-ganjoor-mahmood-s01",
-      "title": "Ganjoor: بخش ۱ - اندر ستایش سلطان محمود",
-      "url": "https://ganjoor.net/ferdousi/shahname/mahmood/sh1",
-      "kind": "primary_literary_text_transcription",
-      "accessedAt": "2026-11-28",
-      "spoilerLevel": 0,
-      "passageLocator": "بخش ۱ - اندر ستایش سلطان محمود"
     },
     {
       "id": "src-ganjoor-mahmood-s02",
@@ -1100,7 +1091,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-great-war",
         "eventIds": [
-          "event-02"
+          "event-01"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1122,7 +1113,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-great-war",
         "eventIds": [
-          "event-03"
+          "event-02"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1144,7 +1135,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-great-war",
         "eventIds": [
-          "event-04"
+          "event-03"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1166,7 +1157,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-great-war",
         "eventIds": [
-          "event-06"
+          "event-05"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1188,7 +1179,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-great-war",
         "eventIds": [
-          "event-14"
+          "event-13"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1210,7 +1201,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-great-war",
         "eventIds": [
-          "event-02"
+          "event-01"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1221,33 +1212,9 @@
   "events": [
     {
       "id": "event-01",
-      "label": "In praise of Sultan Mahmud",
-      "summary": "The poet opens the story with a long praise of Sultan Mahmud, a lion in battle.",
-      "order": 1,
-      "orderBasis": "narrative",
-      "sourceIds": [
-        "src-ganjoor-mahmood-s01"
-      ],
-      "spoilerLevel": 0,
-      "temporalExpression": {
-        "kind": "narrative_position",
-        "calendarMapping": null,
-        "duration": null
-      },
-      "reviewStatus": "source_backed_editorial_review_pending",
-      "entityAssociations": [
-        {
-          "entityId": "person-ferdowsi",
-          "role": "narrator",
-          "presence": "acts_in_selected_scenes"
-        }
-      ]
-    },
-    {
-      "id": "event-02",
       "label": "The elephant throne",
       "summary": "Kay Khosrow sits on a turquoise throne on an elephant’s back, sounds the call, gathers his great men and arrays his army against Afrasiab.",
-      "order": 2,
+      "order": 1,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s02"
@@ -1273,10 +1240,10 @@
       ]
     },
     {
-      "id": "event-03",
+      "id": "event-02",
       "label": "Afrasiab’s mourning and muster",
       "summary": "Hearing of the defeat and death of his kinsmen, Afrasiab mourns, swears revenge and sends his army over the Jayhun by boat.",
-      "order": 3,
+      "order": 2,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s03"
@@ -1307,10 +1274,10 @@
       ]
     },
     {
-      "id": "event-04",
+      "id": "event-03",
       "label": "The offer of peace",
       "summary": "The armies face each other across a trench. Afrasiab sends his son Shideh with an offer of peace; Kay Khosrow answers that Siavash was killed without guilt and will have revenge, and proposes single combat.",
-      "order": 4,
+      "order": 3,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s04",
@@ -1343,10 +1310,10 @@
       ]
     },
     {
-      "id": "event-05",
+      "id": "event-04",
       "label": "Kay Khosrow and Shideh",
       "summary": "Away from the armies Kay Khosrow fights Shideh alone and kills him; the Turks wait in vain for him to return, and Afrasiab mourns.",
-      "order": 5,
+      "order": 4,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s07"
@@ -1377,10 +1344,10 @@
       ]
     },
     {
-      "id": "event-06",
+      "id": "event-05",
       "label": "Afrasiab flees over the Jayhun",
       "summary": "Jahn brings thirty thousand men; Qaren prevails, the king prays, and Afrasiab flees by night over the Jayhun towards Gang. Kay Khosrow writes to Kavus of three battles.",
-      "order": 6,
+      "order": 5,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s08",
@@ -1423,10 +1390,10 @@
       ]
     },
     {
-      "id": "event-07",
+      "id": "event-06",
       "label": "The wind at Golzarriun",
       "summary": "The kings meet in battle; at Kay Khosrow’s prayer a strong wind rises and Afrasiab flees to Gang and writes to the Faghfur of Chin.",
-      "order": 7,
+      "order": 6,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s11"
@@ -1452,10 +1419,10 @@
       ]
     },
     {
-      "id": "event-08",
+      "id": "event-07",
       "label": "The message from Gang-dezh",
       "summary": "Kay Khosrow surrounds Gang-dezh. Jahn brings his father’s message of regret for Siavash’s blood and offer of peace; the king rejects it and swears to fight to the end.",
-      "order": 8,
+      "order": 7,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s12",
@@ -1493,10 +1460,10 @@
       ]
     },
     {
-      "id": "event-09",
+      "id": "event-08",
       "label": "Gang-dezh taken",
       "summary": "The stronghold falls; Afrasiab escapes in secret, the women of Turan lament and Kay Khosrow spares them.",
-      "order": 9,
+      "order": 8,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s15"
@@ -1527,10 +1494,10 @@
       ]
     },
     {
-      "id": "event-10",
+      "id": "event-09",
       "label": "Afrasiab and the Faghfur",
       "summary": "The Faghfur of Chin allies himself with Afrasiab. Afrasiab offers single combat; on Rostam’s advice the king declines and lays an ambush, the night attack fails, the Faghfur asks pardon, and Afrasiab crosses the water of Zereh back to Gang-dezh.",
-      "order": 10,
+      "order": 9,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s16",
@@ -1573,10 +1540,10 @@
       ]
     },
     {
-      "id": "event-11",
+      "id": "event-10",
       "label": "The king of Makran",
       "summary": "After letters to Kavus and the submission of the Khaqan and the Faghfur, the king of Makran refuses passage; Kay Khosrow defeats and buries him, crosses the sea and weeps at the walls Siavash built.",
-      "order": 11,
+      "order": 10,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s19",
@@ -1609,10 +1576,10 @@
       ]
     },
     {
-      "id": "event-12",
+      "id": "event-11",
       "label": "The return to Kavus",
       "summary": "Afrasiab flees again by night; Kay Khosrow mourns Siavash and returns to Iran, meets Kavus and the two kings pray at the fire temple of Azargoshasb.",
-      "order": 12,
+      "order": 11,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s22",
@@ -1644,10 +1611,10 @@
       ]
     },
     {
-      "id": "event-13",
+      "id": "event-12",
       "label": "Hom and the cave",
       "summary": "Afrasiab hides in a cave near Barda; the hermit Hom hears him lament, binds his arms and leads him away, but in pity loosens the bonds and Afrasiab escapes into the water.",
-      "order": 13,
+      "order": 12,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s24"
@@ -1673,10 +1640,10 @@
       ]
     },
     {
-      "id": "event-14",
+      "id": "event-13",
       "label": "The lake of Chichast",
       "summary": "Afrasiab hides in the lake of Chichast; hearing Garsivaz lament, he comes out and Hom takes him again.",
-      "order": 14,
+      "order": 13,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s25"
@@ -1712,10 +1679,10 @@
       ]
     },
     {
-      "id": "event-15",
+      "id": "event-14",
       "label": "The death of Afrasiab",
       "summary": "Kay Khosrow puts Afrasiab and Garsivaz to death with the sword; he gives thanks at Azargoshasb and spreads justice and gifts over the world.",
-      "order": 15,
+      "order": 14,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s26"
@@ -1746,10 +1713,10 @@
       ]
     },
     {
-      "id": "event-16",
+      "id": "event-15",
       "label": "The death of Kavus",
       "summary": "Kavus, at peace, prays and dies; Kay Khosrow buries him.",
-      "order": 16,
+      "order": 15,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s27"
@@ -1775,10 +1742,10 @@
       ]
     },
     {
-      "id": "event-17",
+      "id": "event-16",
       "label": "The king withdraws",
       "summary": "After sixty years of rule, with the world at his feet, Kay Khosrow fears that pride will cost him the divine glory; he closes his court and prays for weeks, and Sorush tells him in a dream that he may leave the world.",
-      "order": 17,
+      "order": 16,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s28",
@@ -1807,10 +1774,10 @@
       ]
     },
     {
-      "id": "event-18",
+      "id": "event-17",
       "label": "Zal’s reproach",
       "summary": "Zal and Rostam come to the withdrawn king. Zal says a demon has turned him from God’s path; Kay Khosrow answers with his lineage and his vengeance and his fear of hell, and Zal asks his pardon.",
-      "order": 18,
+      "order": 17,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s32",
@@ -1845,10 +1812,10 @@
       ]
     },
     {
-      "id": "event-19",
+      "id": "event-18",
       "label": "The king’s gifts",
       "summary": "Kay Khosrow gives away his treasures and lands: his treasures to Gudarz, Nimruz to Rostam, Qom and Isfahan to Giv, Khorasan and the banner of Kaveh to Tus.",
-      "order": 19,
+      "order": 18,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s37",
@@ -1894,10 +1861,10 @@
       ]
     },
     {
-      "id": "event-20",
+      "id": "event-19",
       "label": "The crown to Lohrasp",
       "summary": "To the dismay of the Iranians the king has Bizhan bring Lohrasp and gives him the crown; then he takes leave and goes to the mountain with his champions.",
-      "order": 20,
+      "order": 19,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s43",
@@ -1934,10 +1901,10 @@
       ]
     },
     {
-      "id": "event-21",
+      "id": "event-20",
       "label": "The king vanishes",
       "summary": "At a spring in the mountains the king bids his companions farewell; when the sun rises he has vanished from their sight.",
-      "order": 21,
+      "order": 20,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s45"
@@ -1983,10 +1950,10 @@
       ]
     },
     {
-      "id": "event-22",
+      "id": "event-21",
       "label": "The champions in the snow",
       "summary": "A snowstorm buries the champions who would not turn back – Tus, Giv, Bizhan and Fariborz – and Gudarz mourns; Rostam and Zal come back from the mountain.",
-      "order": 22,
+      "order": 21,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s46"
@@ -2037,10 +2004,10 @@
       ]
     },
     {
-      "id": "event-23",
+      "id": "event-22",
       "label": "Lohrasp enthroned",
       "summary": "Lohrasp sits on the throne; Zal and Gudarz pledge him allegiance and he is crowned at Mehregan.",
-      "order": 23,
+      "order": 22,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-mahmood-s47"

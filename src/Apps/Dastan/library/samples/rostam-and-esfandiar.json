@@ -73,15 +73,6 @@
       "spoilerLevel": 0
     },
     {
-      "id": "src-ganjoor-esfandyar-s01",
-      "title": "Ganjoor: بخش ۱ - آغاز داستان",
-      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh1",
-      "kind": "primary_literary_text_transcription",
-      "accessedAt": "2026-11-28",
-      "spoilerLevel": 0,
-      "passageLocator": "بخش ۱ - آغاز داستان"
-    },
-    {
       "id": "src-ganjoor-esfandyar-s02",
       "title": "Ganjoor: بخش ۲ - بازگشت مست اسفندیار طلب تاج پیشگویی مرگش به دست رستم و اندیشه بد گشتاسپ",
       "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh2",
@@ -850,7 +841,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-04"
+          "event-03"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -872,7 +863,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-04"
+          "event-03"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -894,7 +885,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-02"
+          "event-01"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -916,7 +907,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-07"
+          "event-06"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -938,7 +929,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-16"
+          "event-15"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -960,7 +951,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-16"
+          "event-15"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -982,7 +973,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-13"
+          "event-12"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1004,7 +995,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-16"
+          "event-15"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1026,7 +1017,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-14"
+          "event-13"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1048,7 +1039,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-18"
+          "event-17"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1070,7 +1061,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-16"
+          "event-15"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1092,7 +1083,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-rostam-esfandiar",
         "eventIds": [
-          "event-16"
+          "event-15"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -1103,38 +1094,9 @@
   "events": [
     {
       "id": "event-01",
-      "label": "The poet’s spring",
-      "summary": "The poet opens in spring, calling for wine, and hears the nightingale lament the death of Esfandiar.",
-      "order": 1,
-      "orderBasis": "narrative",
-      "sourceIds": [
-        "src-ganjoor-esfandyar-s01"
-      ],
-      "spoilerLevel": 0,
-      "temporalExpression": {
-        "kind": "narrative_position",
-        "calendarMapping": null,
-        "duration": null
-      },
-      "reviewStatus": "source_backed_editorial_review_pending",
-      "entityAssociations": [
-        {
-          "entityId": "person-ferdowsi",
-          "role": "narrator",
-          "presence": "acts_in_selected_scenes"
-        },
-        {
-          "entityId": "character-esfandiar",
-          "role": "hero lamented",
-          "presence": "mentioned_only"
-        }
-      ]
-    },
-    {
-      "id": "event-02",
       "label": "Esfandiar asks for the crown",
       "summary": "Esfandiar comes home drunk and complains to his mother Katayun that the king keeps from him the crown he promised. Katayun tells Goshtasp, who asks Jamasp; the sage foretells that Esfandiar’s death lies in Zabulistan at the hand of Rostam.",
-      "order": 2,
+      "order": 1,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s02"
@@ -1180,10 +1142,10 @@
       ]
     },
     {
-      "id": "event-03",
+      "id": "event-02",
       "label": "Esfandiar reminds his father",
       "summary": "Before the court Esfandiar recounts what he did for the king: his years in chains in Gonbadan, the killing of Arjasp – and asks what excuse is left for withholding the crown.",
-      "order": 3,
+      "order": 2,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s03"
@@ -1209,10 +1171,10 @@
       ]
     },
     {
-      "id": "event-04",
+      "id": "event-03",
       "label": "The king’s condition",
       "summary": "Goshtasp answers that he sees no rival to his son but Rostam, who will not own the new king: Esfandiar must go to Sistan and bring Rostam back in bonds; then he shall have the crown. Esfandiar objects, but leaves in grief.",
-      "order": 4,
+      "order": 3,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s04"
@@ -1243,10 +1205,10 @@
       ]
     },
     {
-      "id": "event-05",
+      "id": "event-04",
       "label": "Katayun’s warning",
       "summary": "Katayun weeps and begs her son not to go to bind Rostam, the lord of sword and mace; he answers that he cannot disobey the king. She spends the night in tears.",
-      "order": 5,
+      "order": 4,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s05"
@@ -1272,10 +1234,10 @@
       ]
     },
     {
-      "id": "event-06",
+      "id": "event-05",
       "label": "The ill omen of the camel",
       "summary": "At the parting of the roads the lead camel lies down and will not rise; Esfandiar has its head cut off to turn the omen back on it, and marches on to camp by the Hirmand. With Peshotan he resolves to send a messenger first.",
-      "order": 6,
+      "order": 5,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s06"
@@ -1306,10 +1268,10 @@
       ]
     },
     {
-      "id": "event-07",
+      "id": "event-06",
       "label": "Bahman sent to Zabulistan",
       "summary": "Esfandiar dresses his son Bahman in royal clothes and sends him with a message: Rostam has been ungrateful to the new kings and must come in bonds; Esfandiar promises to plead for him. Bahman crosses the Hirmand; Zal receives him and sends him to Rostam’s hunting ground.",
-      "order": 7,
+      "order": 6,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s07",
@@ -1346,10 +1308,10 @@
       ]
     },
     {
-      "id": "event-08",
+      "id": "event-07",
       "label": "Bahman at the hunting ground",
       "summary": "Bahman finds Rostam roasting an onager under a tree, a cup of wine in his hand. He rolls a stone down at him; Rostam stops it with his heel. Rostam welcomes him, and Bahman gives his father’s message.",
-      "order": 8,
+      "order": 7,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s09"
@@ -1375,10 +1337,10 @@
       ]
     },
     {
-      "id": "event-09",
+      "id": "event-08",
       "label": "Rostam’s answer",
       "summary": "Rostam answers Esfandiar that a wise man looks to the end of things: he will gladly come to him and to the king, but he will ask the king why his feet should be put in chains.",
-      "order": 9,
+      "order": 8,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s10"
@@ -1409,10 +1371,10 @@
       ]
     },
     {
-      "id": "event-10",
+      "id": "event-09",
       "label": "The meeting on the Hirmand",
       "summary": "Rostam orders a royal feast prepared, sends Zavareh and Faramarz to Zal, and rides unarmed to the Hirmand. The two champions meet and greet each other with praise; Rostam invites Esfandiar to his house, but will not accept the bonds.",
-      "order": 10,
+      "order": 9,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s11",
@@ -1454,10 +1416,10 @@
       ]
     },
     {
-      "id": "event-11",
+      "id": "event-10",
       "label": "The invitation not sent",
       "summary": "Esfandiar tells Peshotan that he will not go to Rostam’s hall nor call him to his own; Peshotan warns him, but Esfandiar holds to it. Rostam waits in vain and rides back angry.",
-      "order": 11,
+      "order": 10,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s13"
@@ -1488,10 +1450,10 @@
       ]
     },
     {
-      "id": "event-12",
+      "id": "event-11",
       "label": "The quarrel at the feast",
       "summary": "Rostam comes to Esfandiar’s camp and is angered to be seated on the left. Esfandiar calls Zal a demon’s child cast out and raised by the Simorgh; Rostam praises his lineage and recalls his deeds, the Mazandaran and the seven trials; Esfandiar boasts of his own wars for the faith and of the Brazen Hold. They test each other’s grip.",
-      "order": 12,
+      "order": 11,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s14",
@@ -1531,10 +1493,10 @@
       ]
     },
     {
-      "id": "event-13",
+      "id": "event-12",
       "label": "The pledge to fight",
       "summary": "At the noon feast Rostam again offers peace and gifts, and to go with Esfandiar to the king unbound. Esfandiar insists on the bonds and they agree to fight in the morning. At the tent door Rostam laments the house of the kings; Peshotan pleads for peace in vain.",
-      "order": 13,
+      "order": 12,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s19",
@@ -1566,10 +1528,10 @@
       ]
     },
     {
-      "id": "event-14",
+      "id": "event-13",
       "label": "Zal’s counsel",
       "summary": "Rostam calls for his arms. Zal begs him to yield rather than fight the king’s son; Rostam prays through the night.",
-      "order": 14,
+      "order": 13,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s21"
@@ -1600,10 +1562,10 @@
       ]
     },
     {
-      "id": "event-15",
+      "id": "event-14",
       "label": "The single combat",
       "summary": "At dawn the two meet alone on the Hirmand, agreeing that no one shall help either. Their spears, swords and maces break, and the horses and men are worn out.",
-      "order": 15,
+      "order": 14,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s22"
@@ -1634,10 +1596,10 @@
       ]
     },
     {
-      "id": "event-16",
+      "id": "event-15",
       "label": "The death of Nush-Azar and Mehrnush",
       "summary": "Zavareh brings Rostam’s men and the Iranians are attacked; Zavareh kills Nush-Azar and Faramarz kills Mehrnush, two sons of Esfandiar, who turns in anger on Rostam for breaking the pact.",
-      "order": 16,
+      "order": 15,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s23"
@@ -1683,10 +1645,10 @@
       ]
     },
     {
-      "id": "event-17",
+      "id": "event-16",
       "label": "Rostam wounded",
       "summary": "Esfandiar’s arrows pierce Rostam and Rakhsh; Rostam climbs a hill and asks for a truce for the night. Esfandiar grants it and mourns his sons, sure that Rostam will die of his wounds.",
-      "order": 17,
+      "order": 16,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s24"
@@ -1717,10 +1679,10 @@
       ]
     },
     {
-      "id": "event-18",
+      "id": "event-17",
       "label": "Rostam comes home wounded",
       "summary": "Rostam reaches his hall covered with wounds; Zavareh, Faramarz and Rudabeh weep. Zal resolves to call the Simorgh.",
-      "order": 18,
+      "order": 17,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s25"
@@ -1761,10 +1723,10 @@
       ]
     },
     {
-      "id": "event-19",
+      "id": "event-18",
       "label": "The Simorgh’s secret",
       "summary": "Zal burns a feather and the Simorgh comes. It draws out the arrows and heals Rostam and Rakhsh, then leads Rostam to the sea, to a tamarisk: Esfandiar’s life lies in that wood. Rostam cuts the branch and makes an arrow, warned that whoever sheds Esfandiar’s blood will suffer for it.",
-      "order": 19,
+      "order": 18,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s26"
@@ -1805,10 +1767,10 @@
       ]
     },
     {
-      "id": "event-20",
+      "id": "event-19",
       "label": "The last offer",
       "summary": "At dawn Rostam stands before Esfandiar again, healed. He asks pardon and offers his ancient treasures and to serve him, but Esfandiar insists on the bonds.",
-      "order": 20,
+      "order": 19,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s27"
@@ -1834,10 +1796,10 @@
       ]
     },
     {
-      "id": "event-21",
+      "id": "event-20",
       "label": "The arrow in the eyes",
       "summary": "Seeing that pleading is no use, Rostam prays, sets the arrow of tamarisk to his bow and shoots Esfandiar in the eyes; the brazen-bodied prince falls from his horse and speaks with Rostam a last time.",
-      "order": 21,
+      "order": 20,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s28"
@@ -1868,10 +1830,10 @@
       ]
     },
     {
-      "id": "event-22",
+      "id": "event-21",
       "label": "Esfandiar’s last will",
       "summary": "Dying, Esfandiar tells Rostam that the tamarisk was only a pretext, and entrusts his son Bahman to him to be raised. Zavareh warns that evil will come to Zabulistan from Bahman.",
-      "order": 22,
+      "order": 21,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s29"
@@ -1907,10 +1869,10 @@
       ]
     },
     {
-      "id": "event-23",
+      "id": "event-22",
       "label": "The iron coffin",
       "summary": "Rostam has an iron coffin made and sends Esfandiar’s body to Iran. The nobles rage, and Peshotan and Esfandiar’s sisters reproach Goshtasp, who sent his son to his death for the throne; Iran mourns for a year.",
-      "order": 23,
+      "order": 22,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s30"
@@ -1951,10 +1913,10 @@
       ]
     },
     {
-      "id": "event-24",
+      "id": "event-23",
       "label": "Bahman’s return",
       "summary": "Bahman stays in Zabulistan, where Rostam teaches him riding, feasting and kingship and loves him more than his own son; Rostam writes to Goshtasp asking pardon. Bahman returns to Iran, and the king, finding him wise, calls him Ardashir.",
-      "order": 24,
+      "order": 23,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-esfandyar-s31"

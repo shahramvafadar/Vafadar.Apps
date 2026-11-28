@@ -65,15 +65,6 @@
       "spoilerLevel": 0
     },
     {
-      "id": "src-ganjoor-bizhan-s01",
-      "title": "Ganjoor: بخش ۱ - دیباچه داستان بیژن و منیژه: شب قیرگون بزم با یار مهربان و آغاز داستان از دفتر پهلوی",
-      "url": "https://ganjoor.net/ferdousi/shahname/bizhan/sh1",
-      "kind": "primary_literary_text_transcription",
-      "accessedAt": "2026-11-28",
-      "spoilerLevel": 0,
-      "passageLocator": "بخش ۱ - دیباچه داستان بیژن و منیژه: شب قیرگون بزم با یار مهربان و آغاز داستان از دفتر پهلوی"
-    },
-    {
       "id": "src-ganjoor-bizhan-s02",
       "title": "Ganjoor: بخش ۲ - آغاز داستان بیژن و منیژه: کشتن گرازان ارمان فریب گرگین و بردن بیژن به ایوان افراسیاب",
       "url": "https://ganjoor.net/ferdousi/shahname/bizhan/sh2",
@@ -617,7 +608,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-bizhan-manizheh",
         "eventIds": [
-          "event-02"
+          "event-01"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -639,7 +630,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-bizhan-manizheh",
         "eventIds": [
-          "event-05"
+          "event-04"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -661,7 +652,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-bizhan-manizheh",
         "eventIds": [
-          "event-02"
+          "event-01"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -683,7 +674,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-bizhan-manizheh",
         "eventIds": [
-          "event-04"
+          "event-03"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -694,33 +685,9 @@
   "events": [
     {
       "id": "event-01",
-      "label": "A night with the beloved",
-      "summary": "On a pitch-dark night the poet’s beloved brings a lamp and wine and reads him the story from an old Pahlavi book, asking him to put it into verse.",
-      "order": 1,
-      "orderBasis": "narrative",
-      "sourceIds": [
-        "src-ganjoor-bizhan-s01"
-      ],
-      "spoilerLevel": 0,
-      "temporalExpression": {
-        "kind": "narrative_position",
-        "calendarMapping": null,
-        "duration": null
-      },
-      "reviewStatus": "source_backed_editorial_review_pending",
-      "entityAssociations": [
-        {
-          "entityId": "person-ferdowsi",
-          "role": "narrator",
-          "presence": "acts_in_selected_scenes"
-        }
-      ]
-    },
-    {
-      "id": "event-02",
       "label": "The Armanians ask for help",
       "summary": "The Armanians come to Kay Khosrow’s court: boars have overrun their forest on the border of Turan. No one answers but Bizhan son of Giv, and the king sends Gorgin with him as guide.",
-      "order": 2,
+      "order": 1,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s02"
@@ -761,10 +728,10 @@
       ]
     },
     {
-      "id": "event-03",
+      "id": "event-02",
       "label": "The boars killed",
       "summary": "Bizhan kills the boars alone while Gorgin holds back.",
-      "order": 3,
+      "order": 2,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s02"
@@ -795,10 +762,10 @@
       ]
     },
     {
-      "id": "event-04",
+      "id": "event-03",
       "label": "Manizheh’s garden",
       "summary": "Out of envy Gorgin tells Bizhan of the garden where Manizheh, daughter of Afrasiab, holds her feast. Bizhan goes; Manizheh sees him from her tent, bids him in, and has him drugged and carried to her palace.",
-      "order": 4,
+      "order": 3,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s02"
@@ -839,10 +806,10 @@
       ]
     },
     {
-      "id": "event-05",
+      "id": "event-04",
       "label": "Bizhan seized",
       "summary": "A doorkeeper learns that a stranger is hidden in the princess’s palace and tells Afrasiab, who sends Garsivaz to seize Bizhan and orders him hanged.",
-      "order": 5,
+      "order": 4,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s03"
@@ -873,10 +840,10 @@
       ]
     },
     {
-      "id": "event-06",
+      "id": "event-05",
       "label": "Piran pleads; the pit",
       "summary": "As the gallows is raised Piran arrives and pleads for Bizhan. Afrasiab spares his life but has him chained and cast into a pit, covered with the stone of Akvan the demon; Manizheh, cast out, begs bread for him and brings it to the pit.",
-      "order": 6,
+      "order": 5,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s04"
@@ -922,10 +889,10 @@
       ]
     },
     {
-      "id": "event-07",
+      "id": "event-06",
       "label": "Gorgin returns alone",
       "summary": "Gorgin waits a week, then returns without Bizhan and tells a false tale. Giv mourns and has him put in chains; Kay Khosrow looks into his world-revealing cup and sees Bizhan alive in the pit.",
-      "order": 7,
+      "order": 6,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s05"
@@ -966,10 +933,10 @@
       ]
     },
     {
-      "id": "event-08",
+      "id": "event-07",
       "label": "Rostam summoned",
       "summary": "Kay Khosrow writes to Rostam to free Bizhan; Giv carries the letter to Zabol, and Rostam comes to Iran, is feasted by the king in the garden and takes up the task.",
-      "order": 8,
+      "order": 7,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s06",
@@ -1001,10 +968,10 @@
       ]
     },
     {
-      "id": "event-09",
+      "id": "event-08",
       "label": "Gorgin’s plea and the plan",
       "summary": "Gorgin sends to Rostam asking him to plead with the king; Rostam plans to go to Turan secretly, with treasure and seven champions.",
-      "order": 9,
+      "order": 8,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s08"
@@ -1035,10 +1002,10 @@
       ]
     },
     {
-      "id": "event-10",
+      "id": "event-09",
       "label": "The merchant in Khotan",
       "summary": "Rostam comes to Khotan dressed as a merchant, meets Piran unrecognized and opens a market of jewels.",
-      "order": 10,
+      "order": 9,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s09"
@@ -1069,10 +1036,10 @@
       ]
     },
     {
-      "id": "event-11",
+      "id": "event-10",
       "label": "Manizheh and the ring",
       "summary": "Manizheh comes weeping to the merchant. Rostam hides his ring in the food she takes to the pit; Bizhan finds it and knows Rostam has come. Rostam tells her to light a fire at the pit by night.",
-      "order": 11,
+      "order": 10,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s10"
@@ -1108,10 +1075,10 @@
       ]
     },
     {
-      "id": "event-12",
+      "id": "event-11",
       "label": "The stone lifted",
       "summary": "At night, guided by the fire, Rostam lifts the stone of Akvan from the pit and draws Bizhan out; at Rostam’s request Bizhan forgives Gorgin, and they make ready for revenge on Afrasiab.",
-      "order": 12,
+      "order": 11,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s11"
@@ -1152,10 +1119,10 @@
       ]
     },
     {
-      "id": "event-13",
+      "id": "event-12",
       "label": "The night attack on Afrasiab",
       "summary": "Rostam storms Afrasiab’s gate by night and calls out that Bizhan is free; Afrasiab flees and the palace is plundered.",
-      "order": 13,
+      "order": 12,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s12"
@@ -1186,10 +1153,10 @@
       ]
     },
     {
-      "id": "event-14",
+      "id": "event-13",
       "label": "The battle with Afrasiab",
       "summary": "Afrasiab leads his army against Rostam; he is defeated and flees, and a thousand Turanian horsemen are taken alive.",
-      "order": 14,
+      "order": 13,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s13"
@@ -1215,10 +1182,10 @@
       ]
     },
     {
-      "id": "event-15",
+      "id": "event-14",
       "label": "The return to Kay Khosrow",
       "summary": "Rostam returns victorious with Bizhan; Kay Khosrow comes out to meet him, holds a feast and gives gifts to Manizheh.",
-      "order": 15,
+      "order": 14,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-bizhan-s14"

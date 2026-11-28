@@ -47,6 +47,11 @@ for Dastan is added here in the same commit as the work it came with.
   history. A hypothetical placement is written only as a dated statement marked with `placement`
   ([ADR 0028](docs/adr/0028-hypothetical-placement.md)) – never as a year in a summary or a date of a character –
   and no view of time draws it.
+* **The author's time is not the characters' time** (2026-11-28): the life of a poet or writer and the making of
+  the work are kept apart from the time of its characters and events. A scene of a story is something that happens
+  in its own world – never the author's preface, dedication or life – and a story collection does not take the
+  author's years as its span. Many writers tell of the same characters: what a character has of time or detail
+  belongs to the character and its world, not to any one author.
 
 ## 3. Architecture
 

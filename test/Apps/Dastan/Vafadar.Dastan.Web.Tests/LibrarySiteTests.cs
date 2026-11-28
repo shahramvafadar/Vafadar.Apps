@@ -307,6 +307,27 @@ public sealed class LibrarySiteTests
     }
 
     [Fact]
+    public async Task AStoryIsNotGivenTheYearsOfItsPoetAsItsSpanWhileAHistoryKeepsItsSpan()
+    {
+        // The life of an author is not the time of the characters (owner, 2026-11-28): the head of a story says
+        // how many names it holds, not the years of the poet and of the writing of the work.
+        if (LibrarySite.Collections.Count == 0)
+        {
+            return;
+        }
+
+        using var site = new LibrarySite();
+        var visitor = site.Visitor();
+        var story = (await visitor.Get("/en/story-rostam-esfandiar")).Main;
+        var history = (await visitor.Get("/en/subject-ancient-egypt")).Main;
+
+        static string Stats(string page) => System.Text.RegularExpressions.Regex.Match(page, "<p class=\"collection-stats\">(.*?)</p>", System.Text.RegularExpressions.RegexOptions.Singleline).Groups[1].Value;
+        Assert.NotEmpty(Stats(story));
+        Assert.DoesNotContain(" CE", Stats(story), StringComparison.Ordinal);
+        Assert.Contains("642 CE", Stats(history), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task TheTitleOfASourceIsMarkedAsTheLanguageItIsWrittenIn()
     {
         // On a Persian page an English title of a source is read as English by a screen reader.
