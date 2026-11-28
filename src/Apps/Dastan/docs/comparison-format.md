@@ -38,6 +38,7 @@ A lane has a `key`, a `label`, `periods` and `events`. A period and an event hav
 | `time` | The time as it is stated, in the JSON form of `Vafadar.Temporal`. A period has `kind: "period"`; an event usually `kind: "occurrence"` |
 | `sourceIds` | The sources that support the statement and its time. May be empty; the page then says that no source is recorded |
 | `reviewStatus` | `proposed`, `sourcedReviewPending`, `reviewed`, `disputed` or `withdrawn` |
+| `kinds` | Optional: the kinds of the item, keys of the list of kinds of the content root (`kinds.json`, [ADR 0029](adr/0029-kinds.md)). A period counts as a `period`, an event as an `event`: a kind not given to it is refused. The page of the comparison offers a choice of the kinds it has |
 
 ## Time
 

@@ -1,0 +1,69 @@
+@* The choice of kinds of a page that shows many records (ADR 0029): a link for every kind that what the page
+   shows has, and for every wider kind above one – several may be chosen, and a wider kind takes in the kinds
+   below it. Each link is an address with the choice in it, so a narrowed view can be shared and Back undoes
+   it; it works without a script. A page whose records have no kind shows no choice. *@
+@using System.Collections.Immutable
+@inject IStringLocalizer<Ui> T
+
+@if (!Offered.IsDefaultOrEmpty)
+{
+    <nav class="chart-tools kind-choice" id="@Id" aria-label="@T["Kinds_Filter"]">
+        <p class="note">@T["Kinds_FilterLead"]</p>
+        <p class="chart-tool">
+            @if (Chosen.Count == 0)
+            {
+                <span class="choice" aria-current="true">@T["Kinds_All"]</span>
+            }
+            else
+            {
+                <a class="choice" href="@Address(string.Empty)">@T["Kinds_All"]</a>
+            }
+            @foreach (var kind in Offered)
+            {
+                var chosen = Chosen.Contains(kind.Key);
+                var next = chosen ? Chosen.Remove(kind.Key) : Chosen.Add(kind.Key);
+                <a class="choice" href="@Address(KindFilter.Written(next, Offered))" aria-current="@(chosen ? "true" : null)"><Icon Name="@KindNames.IconOf(kind)" /><Loc Text="kind.Label" /></a>
+            }
+        </p>
+    </nav>
+}
+
+@code {
+    /// <summary>Gets or sets the kinds the page offers, in the order of their list.</summary>
+    [Parameter, EditorRequired]
+    public ImmutableArray<Kind> Offered { get; set; }
+
+    /// <summary>Gets or sets the keys of the kinds chosen.</summary>
+    [Parameter, EditorRequired]
+    public ImmutableHashSet<string> Chosen { get; set; } = [];
+
+    /// <summary>
+    /// Gets or sets how the address of the page is made for a choice: it is given the value of the parameter
+    /// <see cref="KindFilter.Parameter"/>, empty for every kind.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public Func<string, string> Address { get; set; } = null!;
+
+    /// <summary>Gets or sets the identifier of the choice in the page, the place its links lead back to.</summary>
+    [Parameter]
+    public string Id { get; set; } = "kind-choice";
+
+    /// <summary>
+    /// Returns the address of a page with a choice of kinds added: <paramref name="address"/> may have a query
+    /// already, and may end with a place in the page, which stays at its end.
+    /// </summary>
+    /// <param name="address">The address of the page without the choice.</param>
+    /// <param name="kinds">The value of the parameter, keys of kinds with commas between them (they need no escaping); nothing is added when it is empty.</param>
+    public static string With(string address, string kinds)
+    {
+        ArgumentNullException.ThrowIfNull(address);
+        if (string.IsNullOrEmpty(kinds))
+        {
+            return address;
+        }
+
+        var hash = address.IndexOf('#', StringComparison.Ordinal);
+        var (path, place) = hash < 0 ? (address, string.Empty) : (address[..hash], address[hash..]);
+        return $"{path}{(path.Contains('?', StringComparison.Ordinal) ? '&' : '?')}{KindFilter.Parameter}={kinds}{place}";
+    }
+}

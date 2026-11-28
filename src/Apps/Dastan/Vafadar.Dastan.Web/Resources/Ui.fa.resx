@@ -4680,4 +4680,19 @@
   <data name="Compare_Created" xml:space="preserve">
     <value>زمان ساخته شدن</value>
   </data>
+  <data name="Kinds_Filter" xml:space="preserve">
+    <value>نمایش بر پایهٔ دسته</value>
+  </data>
+  <data name="Kinds_FilterLead" xml:space="preserve">
+    <value>یک دسته یا چند دسته را برگزینید؛ دستهٔ گسترده‌تر دسته‌های زیرین خود را هم در بر می‌گیرد.</value>
+  </data>
+  <data name="Kinds_All" xml:space="preserve">
+    <value>همهٔ دسته‌ها</value>
+  </data>
+  <data name="Kinds_None" xml:space="preserve">
+    <value>هیچ چیزی در این‌جا از دسته‌های برگزیده نیست.</value>
+  </data>
+  <data name="Search_Kinds" xml:space="preserve">
+    <value>از این دسته‌ها</value>
+  </data>
 </root>

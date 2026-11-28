@@ -1,0 +1,43 @@
+@* The kinds of a record (ADR 0029): each with its drawing and its name, the meaning as a hint. A record that
+   is not classified yet shows nothing – no kind is guessed from its type. *@
+@using System.Collections.Immutable
+@inject Visitor Visitor
+
+@if (!Kinds.IsDefaultOrEmpty)
+{
+    <span class="kinds">
+        @foreach (var kind in Kinds)
+        {
+            <span class="kind" title="@Visitor.Text(kind.Meaning).Value"><Icon Name="@IconOf(kind)" /><Loc Text="kind.Label" /></span>
+        }
+    </span>
+}
+
+@code {
+    /// <summary>Gets or sets the kinds, in the order the record names them.</summary>
+    [Parameter, EditorRequired]
+    public ImmutableArray<Kind> Kinds { get; set; }
+
+    /// <summary>
+    /// Returns the drawing of a kind: the one it names when the site has it, otherwise a drawing of what its
+    /// first type is – a kind is never shown without one.
+    /// </summary>
+    public static string IconOf(Kind kind)
+    {
+        ArgumentNullException.ThrowIfNull(kind);
+        return Icon.Names.Contains(kind.Icon, StringComparer.Ordinal)
+            ? kind.Icon
+            : kind.Types.FirstOrDefault()?.Nature switch
+            {
+                EntityNature.Being => "account",
+                EntityNature.Group => "world",
+                EntityNature.Place => "globe",
+                EntityNature.Work => "story",
+                EntityNature.Object => "overview",
+                EntityNature.Occasion => "timeline",
+                EntityNature.Role => "crown",
+                EntityNature.Subject => "learning",
+                _ => "overview",
+            };
+    }
+}

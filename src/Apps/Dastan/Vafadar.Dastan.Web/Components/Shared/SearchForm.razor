@@ -16,6 +16,7 @@
     {
         var natures = projection.Entities.Select(entity => entity.Type.Nature).Distinct().Order().ToList();
         var places = projection.Places();
+        var kinds = KindFilter.Offered(projection.Entities.Select(entity => entity.Kinds));
         <div class="search-row search-filters">
             @if (natures.Count > 1)
             {
@@ -42,6 +43,20 @@
                         }
                     </select>
                 </p>
+            }
+            @if (!kinds.IsEmpty)
+            {
+                @* The kinds of records (ADR 0029): several may be chosen; a wider kind takes in the kinds below it. *@
+                <fieldset class="field kind-fields">
+                    <legend>@T["Search_Kinds"]</legend>
+                    @foreach (var kind in kinds)
+                    {
+                        <label class="kind">
+                            <input type="checkbox" name="@KindFilter.Parameter" value="@kind.Key" checked="@Filter.Kinds.Contains(kind.Key)" />
+                            <Icon Name="@KindNames.IconOf(kind)" /><Loc Text="kind.Label" />
+                        </label>
+                    }
+                </fieldset>
             }
             @if (projection.SaysWhen(Clock.GetUtcNow().Year))
             {

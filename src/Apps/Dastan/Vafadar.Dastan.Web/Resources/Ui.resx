@@ -4680,4 +4680,19 @@
   <data name="Compare_Created" xml:space="preserve">
     <value>When it was made</value>
   </data>
+  <data name="Kinds_Filter" xml:space="preserve">
+    <value>Show by kind</value>
+  </data>
+  <data name="Kinds_FilterLead" xml:space="preserve">
+    <value>Choose one kind or several; a wider kind takes in the kinds below it.</value>
+  </data>
+  <data name="Kinds_All" xml:space="preserve">
+    <value>Every kind</value>
+  </data>
+  <data name="Kinds_None" xml:space="preserve">
+    <value>Nothing here is of the kinds chosen.</value>
+  </data>
+  <data name="Search_Kinds" xml:space="preserve">
+    <value>Of these kinds</value>
+  </data>
 </root>

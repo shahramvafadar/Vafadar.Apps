@@ -17,6 +17,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private const string ContentRootName = "the folder of the collection";
     private const string ReviewRootName = "the folder of the editors' documents";
 
+    private KindList? _kindList;
+
     private static readonly FrozenDictionary<string, EntityType> EntityTypeNames = Named(
         ("Work", EntityTypes.Work),
         ("NarrativeArc", EntityTypes.StoryArc),
@@ -757,8 +759,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             }
         }
 
+        // The kinds of the record under its type (ADR 0029), from the list of the content root.
+        var kindKeys = Ids(record, "kinds", required: false);
+        var kinds = typeKnown ? Kinds(record, kindKeys, type!) : [];
         record.Finish();
-        if (id is null || !typeKnown || label is null || summary is null || level is null || !datedComplete || !partsComplete)
+        if (id is null || !typeKnown || label is null || summary is null || level is null || !datedComplete || !partsComplete || kinds.Length != kindKeys.Length)
         {
             return null;
         }
@@ -799,7 +804,74 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Position = position,
             Facts = facts.ToImmutable(),
             Picture = picture is null ? null : new MediaId(picture),
+            Kinds = kinds,
         };
+    }
+
+    /// <summary>
+    /// Finds the kinds a record names (ADR 0029): each a kind of the list that may be given to the type of the
+    /// record, each once. A retired kind stays valid – what was given it keeps its meaning. Without a kind the
+    /// record is valid unless the rule of K4 is on (<see cref="KindsFile.EveryRecordHasAKind"/>).
+    /// </summary>
+    private ImmutableArray<Kind> Kinds(JsonRecord record, ImmutableArray<string> keys, EntityType type)
+    {
+        if (keys.IsEmpty)
+        {
+            if (options.RequireKinds)
+            {
+                record.Problem("kinds names no kind; every record has at least one kind of the list (kinds.json).");
+            }
+
+            return [];
+        }
+
+        var list = KindList;
+        var kinds = ImmutableArray.CreateBuilder<Kind>();
+        foreach (var key in keys)
+        {
+            if (list.Find(key) is not { } kind)
+            {
+                record.Problem(list.All.IsEmpty
+                    ? $"kinds names {key}, and the content root has no list of kinds (kinds.json)."
+                    : $"kinds names {key}, which is not a kind of the list (kinds.json).");
+            }
+            else if (!kind.Allows(type))
+            {
+                record.Problem($"the kind {key} is not given to a {type.Key}; it is given to {string.Join(", ", kind.Types.Select(allowed => allowed.Key))}.");
+            }
+            else if (kinds.Contains(kind))
+            {
+                record.Problem($"kinds names {key} twice.");
+            }
+            else
+            {
+                kinds.Add(kind);
+            }
+        }
+
+        return kinds.ToImmutable();
+    }
+
+    // The list of kinds of the content root, read when a record first names a kind. A list that cannot be read
+    // is a problem of the collection that uses it.
+    private KindList KindList => _kindList ??= ReadKindList();
+
+    private KindList ReadKindList()
+    {
+        if (options.Kinds is { } given)
+        {
+            return given;
+        }
+
+        try
+        {
+            return KindsFile.Load(options.ContentRoot, options.ReviewedTextsOnly);
+        }
+        catch (SampleFormatException refused)
+        {
+            problems.AddRange(refused.Problems);
+            return KindList.Empty;
+        }
     }
 
     /// <summary>

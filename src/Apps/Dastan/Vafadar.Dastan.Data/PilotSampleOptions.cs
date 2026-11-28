@@ -1,3 +1,5 @@
+using Vafadar.Dastan.Core;
+
 namespace Vafadar.Dastan.Data;
 
 /// <summary>Where a sample lives and which translations belong to it.</summary>
@@ -29,4 +31,16 @@ public sealed class PilotSampleOptions
 
     /// <summary>Gets the translation documents of the sample (<see cref="PilotSample.TranslationVersion"/>), as JSON.</summary>
     public IReadOnlyList<string> Translations { get; init; } = [];
+
+    /// <summary>
+    /// Gets the list of kinds the records of the sample may name (ADR 0029). Not given, the list is read from
+    /// <c>kinds.json</c> of <see cref="ContentRoot"/>; a content root without that file has no kinds.
+    /// </summary>
+    public KindList? Kinds { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether every entity has to name a kind. It follows
+    /// <see cref="KindsFile.EveryRecordHasAKind"/>, the rule of the readers; a test may ask for the other.
+    /// </summary>
+    public bool RequireKinds { get; init; } = KindsFile.EveryRecordHasAKind;
 }

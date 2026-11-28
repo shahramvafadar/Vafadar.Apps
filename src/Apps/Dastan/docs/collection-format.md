@@ -166,6 +166,7 @@ before the first named stage nothing is carried.
 | `dated` | Optional: what is stated about the entity with a time of the world: a date of a calendar or a depth of time (so many years, thousand, million or billion years ago: `{ "frame": "age", "value": 55, "unit": "millionYears", "reference": 1950 }`, where `reference` is the year it is counted from and is left out for "years ago", and `"basis": "radiocarbonYears"` says that it is counted in such years) – see below |
 | `picture` | Optional: the media item that is the picture of the profile – an image of the collection that says in `depictedEntityIds` that it depicts this entity. It is shown to who may see that item; everybody else sees a drawing of the kind |
 | `facts` | Optional: the facts of the profile – see "The facts of a profile" |
+| `kinds` | Optional: the kinds of the entity under its type, keys of the list of kinds of the content root – see "The kinds of a record". Several when it is several things: `["poet", "statesman"]` |
 
 ### The facts of a profile
 
@@ -379,6 +380,47 @@ not its `Competition`, and an `Event` – something that happened in the world �
 A thing of the story and a thing of the world are different entities, also when they share a name: the Turan
 of the poem is a `NarrativeRegion`; a land of history is a `Region`. Do not make one stand for the other.
 A place – of the story or real – takes part in a step of the story only as its setting.
+
+### The kinds of a record
+
+A type says what a record is; a kind says what sort of that it is – a battle, a drought, a poet, a hero
+([ADR 0029](adr/0029-kinds.md)). The kinds are not in this file: they are the list `kinds.json` of the content
+root, beside `samples`, `comparisons` and `media`, with its translations `kinds.<language>.json` beside it. A
+record names keys of that list in `kinds`; the reader refuses a key the list does not have, a kind that is not
+given to the type of the record and a key named twice. A content root without `kinds.json` has no kinds.
+
+The list (`dastan-kinds-0.1`):
+
+| Field | Meaning |
+|---|---|
+| `formatVersion` | `dastan-kinds-0.1` |
+| `note` | Optional remark of the editors |
+| `kinds` | The kinds, in the order the pages offer them |
+| `kinds[].key` | The name of the kind in records and addresses: letters and digits, beginning with a small letter (`naturalEvent`) |
+| `kinds[].label` | What the kind is called, in English |
+| `kinds[].meaning` | What it means, in a sentence |
+| `kinds[].types` | The types it may be given to, by the keys of the types (below) |
+| `kinds[].icon` | The drawing of the site beside it: `war`, `flag`, `scroll`, `building`, `nature`, `river`, `faith`, `candle`, `crown`, `pen`, `learning`, `art`, `hero`, `demon`, `divine`, `creature`, `city`, `mountain`, `monument`, or one of the drawings of the frame. A name the site does not draw shows a drawing of the first type |
+| `kinds[].parent` | Optional: the wider kind it belongs to – a `battle` to a `war`. A page that is narrowed to the wider kind shows it too |
+| `kinds[].retired` | Optional, `true`: no longer wanted. A kind is never deleted once it was given; retired, it stays valid for what has it |
+| `kinds[].note` | Optional remark of the editors |
+
+The keys of the types, as `types` names them: `work`, `storyArc` (a `NarrativeArc`), `character`,
+`animalCharacter`, `narrativePlace`, `narrativeRegion`, `narrativeObject`, `person`, `organisation`, `place`,
+`region`, `company`, `sportsClub`, `sportsTeam`, `competition`, `competitionSeason`, `brand`, `product`,
+`university`, `government`, `dynasty`, `family`, `community`, `country`, `event`, `period`, `office`, `honour`,
+`object`, `naturalSubject`, `concept`, `theme`. A period of a comparison counts as `period`, its event as `event`.
+
+A figure of myth is a kind of `character` – `hero`, `king`, `demon`, `divineBeing`, `creature` – never of a
+`person`: it stays a character of a story.
+
+A translation of the list (`dastan-kinds-translation-0.1`) has `formatVersion`, `language`, `review` (`draft` or
+`reviewed`), an optional `note`, and `kinds`: key → `label`, `meaning`. A translation of a kind the list does not
+have is a problem.
+
+While the library is classified, a record without a kind is valid; the check says for every file how many records
+have none (`without a kind: n of m`). When every record has one, the rule that refuses a record without a kind is
+turned on (`KindsFile.EveryRecordHasAKind`).
 
 ## A relation
 

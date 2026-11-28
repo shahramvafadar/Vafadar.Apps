@@ -60,6 +60,7 @@ public sealed class Projection
                         Position = entity.Position,
                         Facts = [.. entity.Facts.Where(fact => fact.Level.IsWithin(boundary))],
                         Picture = entity.Picture,
+                        Kinds = entity.Kinds,
                     }),
         ];
         Relations = [.. catalogue.Relations.Where(relation => relation.Level.IsWithin(boundary))];
@@ -842,7 +843,8 @@ public sealed class Projection
         bool Passes(Entity entity) =>
             (filter.Nature is not { } nature || entity.Type.Nature == nature)
             && (atPlace is null || atPlace.Contains(entity.Id))
-            && (inYear is null || inYear.Contains(entity.Id));
+            && (inYear is null || inYear.Contains(entity.Id))
+            && KindFilter.Passes(entity.Kinds, filter.Kinds);
 
         if (query.Length == 0)
         {

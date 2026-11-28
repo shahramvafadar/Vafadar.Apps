@@ -1,4 +1,5 @@
 @page "/compare/{Id}"
+@using System.Collections.Immutable
 @inject Visitor Visitor
 @inject DastanSite Site
 @inject NavigationManager Navigation
@@ -20,13 +21,29 @@
         <p class="note">@T["Compare_Draft"]</p>
     }
 
+    @* The periods and events narrowed by kind (ADR 0029): only kinds the comparison has are offered. *@
+    <KindChoice Offered="_offered" Chosen="_chosen" Id="comparison-kinds" Address="@(kinds => KindChoice.With($"compare/{comparison.Id}{_state.Query()}#comparison-kinds", kinds))" />
+
     @* How the chart is looked at lives in the address: every choice is a link, and Back undoes it (ADR 0008). *@
-    <ComparisonView Comparison="comparison" Address="@($"compare/{comparison.Id}")" State="_state" />
+    @if (_shown is { } shown)
+    {
+        <ComparisonView Comparison="shown" Address="@($"compare/{comparison.Id}")" State="_state" Carry="@(address => KindChoice.With(address, _kindsKept))" />
+    }
+    else
+    {
+        <p class="note" role="status">@T["Kinds_None"]</p>
+    }
 }
 
 @code {
     private Comparison? _comparison;
     private ChartState _state = new();
+
+    // The comparison as the choice of kinds leaves it, the kinds offered and chosen (ADR 0029).
+    private Comparison? _shown;
+    private ImmutableArray<Kind> _offered = [];
+    private ImmutableHashSet<string> _chosen = [];
+    private string _kindsKept = string.Empty;
 
     /// <summary>Gets or sets the identifier of the comparison in the address.</summary>
     [Parameter]
@@ -56,6 +73,10 @@
     [SupplyParameterFromQuery(Name = "lanes")]
     public string? Lanes { get; set; }
 
+    /// <summary>Gets or sets the kinds the periods and events are narrowed to, in the address: keys with commas between them.</summary>
+    [SupplyParameterFromQuery(Name = KindFilter.Parameter)]
+    public string[]? KindsAsked { get; set; }
+
     protected override void OnInitialized()
     {
         _comparison = Site.Comparison(Id);
@@ -66,5 +87,9 @@
         }
 
         _state = ChartState.Read(View, Scale, From, To, Events, Lanes);
+        _offered = _comparison.Kinds;
+        _chosen = KindFilter.Read(KindsAsked, _offered);
+        _kindsKept = KindFilter.Written(_chosen, _offered);
+        _shown = _comparison.Narrowed(_chosen);
     }
 }

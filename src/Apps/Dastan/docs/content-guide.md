@@ -36,6 +36,8 @@ The guide says how to work. What every field means is in the two format pages:
 | A comparison | `content/comparisons/<name>.json` | `dastan-comparison-0.1` |
 | Its translation | `content/comparisons/<name>.<language>.json`, beside it | `dastan-comparison-translation-0.1` |
 | Images, videos, captions, transcripts | `content/media/` | named by the collection, by a path relative to its file |
+| The list of kinds | `content/kinds.json`, in the content root | `dastan-kinds-0.1` |
+| Its translation | `content/kinds.<language>.json`, beside it | `dastan-kinds-translation-0.1` |
 
 All paths are below `src/Apps/Dastan/`. The files are input of the site and never served as they are. A file is
 UTF-8 JSON; a field the format does not know is a problem, not a comment – remarks go into the fields the format
@@ -59,6 +61,7 @@ $content = "src/Apps/Dastan/Vafadar.Dastan.Content"
 # 1. The values a field may have – ask instead of guessing. Add --json to get them as data.
 dotnet run --project $content -- vocabulary
 dotnet run --project $content -- vocabulary collection --json
+dotnet run --project $content -- vocabulary kinds
 
 # 2. The smallest file the site accepts, to start a new collection or comparison from. Never over a file.
 dotnet run --project $content -- template collection my-story --out src/Apps/Dastan/content/samples/my-story.json
@@ -120,10 +123,15 @@ dotnet run --project $content -- quotes src/Apps/Dastan/library/samples/my-story
 2. **Ask for the vocabulary.** Types of entities and relations, kinds of sources, what an entity has to do with a
    step: all are fixed sets. A value that is not listed does not exist for the site – see "What the formats cannot
    say yet" before you bend a meaning to fit.
-3. **Start** from a template for something new, or from the existing file for an addition or a correction.
-4. **Write**, sources first: a record can only cite a source that is in the file.
-5. **Check** after every larger change, and repeat until the answer is "in order" with no notice.
-6. **Hand over** the files with a short note: what you added or changed, which sources you used, what you were
+3. **Give every record its kinds** – a battle, a drought, a poet, a hero – from the list of kinds of the content
+   root (`kinds.json`, see "The kinds of a record" in [the format of a collection](collection-format.md)). A kind
+   is never guessed: a record you cannot classify from its sources is left without one, and the check counts it
+   (`without a kind`). A kind that is missing is added to the list by the editors, with its meaning, its types and
+   its drawing; a kind is never deleted, only retired. A figure of myth is a kind of a character, not of a person.
+4. **Start** from a template for something new, or from the existing file for an addition or a correction.
+5. **Write**, sources first: a record can only cite a source that is in the file.
+6. **Check** after every larger change, and repeat until the answer is "in order" with no notice.
+7. **Hand over** the files with a short note: what you added or changed, which sources you used, what you were
    not sure about, and what you left out because you found no source. The editors review from there.
 
 ## Reading stages

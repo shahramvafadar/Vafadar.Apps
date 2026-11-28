@@ -6,6 +6,7 @@ This folder holds the real collections of Dastan, as they are written and before
 samples/        one file for each collection, and its translations beside it
 comparisons/    comparisons of lands over time, and their translations
 media/          files of pictures whose rights are established – nothing else
+kinds.json      the list of kinds records may name (ADR 0029), and kinds.fa.json its Persian
 ```
 
 It has the same shape as [`content/`](../content), and the site reads it the same way when it is started with

@@ -1,0 +1,450 @@
+{
+  "formatVersion": "dastan-kinds-0.1",
+  "note": "The kinds of records under their types (ADR 0029, docs/plan-kinds.md). A kind that is no longer wanted is marked retired, never deleted. The first list of 2026-11-28; it is refined while the library is classified.",
+  "kinds": [
+    {
+      "key": "war",
+      "label": "War",
+      "meaning": "An armed struggle between powers over a span of time, of history or of a story.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "war"
+    },
+    {
+      "key": "battle",
+      "label": "Battle",
+      "meaning": "One fight of armies at one place, often part of a war.",
+      "types": [
+        "event"
+      ],
+      "icon": "war",
+      "parent": "war"
+    },
+    {
+      "key": "siege",
+      "label": "Siege",
+      "meaning": "The surrounding of a city or a stronghold to take it.",
+      "types": [
+        "event"
+      ],
+      "icon": "war",
+      "parent": "war"
+    },
+    {
+      "key": "revolt",
+      "label": "Revolt",
+      "meaning": "A rising against a ruler or a state.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "conquest",
+      "label": "Conquest",
+      "meaning": "The taking of a land or a city by force.",
+      "types": [
+        "event"
+      ],
+      "icon": "flag"
+    },
+    {
+      "key": "treaty",
+      "label": "Treaty",
+      "meaning": "An agreement between powers: a peace, an alliance, a border.",
+      "types": [
+        "event"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "founding",
+      "label": "Founding",
+      "meaning": "The beginning of a city, a state, a dynasty or an institution.",
+      "types": [
+        "event"
+      ],
+      "icon": "building"
+    },
+    {
+      "key": "naturalEvent",
+      "label": "Natural event",
+      "meaning": "Something nature does that marks the time and the people: a drought, a flood, an earthquake.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "nature"
+    },
+    {
+      "key": "drought",
+      "label": "Drought",
+      "meaning": "A long time without enough rain.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "nature",
+      "parent": "naturalEvent"
+    },
+    {
+      "key": "flood",
+      "label": "Flood",
+      "meaning": "Water that rises over the land.",
+      "types": [
+        "event"
+      ],
+      "icon": "river",
+      "parent": "naturalEvent"
+    },
+    {
+      "key": "earthquake",
+      "label": "Earthquake",
+      "meaning": "A shaking of the earth.",
+      "types": [
+        "event"
+      ],
+      "icon": "nature",
+      "parent": "naturalEvent"
+    },
+    {
+      "key": "frost",
+      "label": "Frost",
+      "meaning": "A cold that kills crops or people: a hard winter, a late frost.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "nature",
+      "parent": "naturalEvent"
+    },
+    {
+      "key": "famine",
+      "label": "Famine",
+      "meaning": "A time when there is not enough food.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "nature",
+      "parent": "naturalEvent"
+    },
+    {
+      "key": "epidemic",
+      "label": "Epidemic",
+      "meaning": "A disease that spreads among many people.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "nature",
+      "parent": "naturalEvent"
+    },
+    {
+      "key": "religiousEvent",
+      "label": "Religious event",
+      "meaning": "Something that happened in a faith: a council, a reform, a conversion.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "faith"
+    },
+    {
+      "key": "construction",
+      "label": "Building",
+      "meaning": "The making of a building or a work of building: a palace, a wall, a canal.",
+      "types": [
+        "event",
+        "period"
+      ],
+      "icon": "building"
+    },
+    {
+      "key": "discovery",
+      "label": "Discovery",
+      "meaning": "A finding of knowledge or of a place.",
+      "types": [
+        "event"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "death",
+      "label": "Death",
+      "meaning": "The death of somebody, as an event of its own.",
+      "types": [
+        "event"
+      ],
+      "icon": "candle"
+    },
+    {
+      "key": "accession",
+      "label": "Accession",
+      "meaning": "The coming of a ruler to the throne.",
+      "types": [
+        "event"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "political",
+      "label": "Political",
+      "meaning": "A person known for a part in power and the state.",
+      "types": [
+        "person"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "ruler",
+      "label": "Ruler",
+      "meaning": "A person who ruled: a king, a queen, an emperor, a caliph.",
+      "types": [
+        "person"
+      ],
+      "icon": "crown",
+      "parent": "political"
+    },
+    {
+      "key": "statesman",
+      "label": "Statesman",
+      "meaning": "A person who served a state: a vizier, a minister, an envoy.",
+      "types": [
+        "person"
+      ],
+      "icon": "scroll",
+      "parent": "political"
+    },
+    {
+      "key": "general",
+      "label": "General",
+      "meaning": "A person who led armies.",
+      "types": [
+        "person"
+      ],
+      "icon": "war",
+      "parent": "political"
+    },
+    {
+      "key": "religious",
+      "label": "Religious",
+      "meaning": "A person known for a part in a faith: a prophet, a priest, a saint, a scholar of a faith.",
+      "types": [
+        "person"
+      ],
+      "icon": "faith"
+    },
+    {
+      "key": "literary",
+      "label": "Literary",
+      "meaning": "A person known for writing.",
+      "types": [
+        "person"
+      ],
+      "icon": "pen"
+    },
+    {
+      "key": "poet",
+      "label": "Poet",
+      "meaning": "A person who wrote poems.",
+      "types": [
+        "person"
+      ],
+      "icon": "pen",
+      "parent": "literary"
+    },
+    {
+      "key": "historian",
+      "label": "Historian",
+      "meaning": "A person who wrote history.",
+      "types": [
+        "person"
+      ],
+      "icon": "scroll",
+      "parent": "literary"
+    },
+    {
+      "key": "scientific",
+      "label": "Scientific",
+      "meaning": "A person known for knowledge of nature, numbers or medicine.",
+      "types": [
+        "person"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "artistic",
+      "label": "Artistic",
+      "meaning": "A person known for making art: painting, music, building, calligraphy.",
+      "types": [
+        "person"
+      ],
+      "icon": "art"
+    },
+    {
+      "key": "philosopher",
+      "label": "Philosopher",
+      "meaning": "A person known for thought about being, knowing and living.",
+      "types": [
+        "person"
+      ],
+      "icon": "learning"
+    },
+    {
+      "key": "hero",
+      "label": "Hero",
+      "meaning": "A character of a story known for deeds of strength and courage.",
+      "types": [
+        "character"
+      ],
+      "icon": "hero"
+    },
+    {
+      "key": "king",
+      "label": "King",
+      "meaning": "A character of a story who rules.",
+      "types": [
+        "character"
+      ],
+      "icon": "crown"
+    },
+    {
+      "key": "demon",
+      "label": "Demon",
+      "meaning": "A being of a story of evil and harm: a div.",
+      "types": [
+        "character",
+        "animalCharacter"
+      ],
+      "icon": "demon"
+    },
+    {
+      "key": "divineBeing",
+      "label": "Divine being",
+      "meaning": "A being of a story of the other world: a god, an angel, a yazata.",
+      "types": [
+        "character"
+      ],
+      "icon": "divine"
+    },
+    {
+      "key": "creature",
+      "label": "Creature",
+      "meaning": "A creature of a story that is not of this world: a Simorgh, a dragon.",
+      "types": [
+        "character",
+        "animalCharacter"
+      ],
+      "icon": "creature"
+    },
+    {
+      "key": "city",
+      "label": "City",
+      "meaning": "A town or a city.",
+      "types": [
+        "place",
+        "narrativePlace"
+      ],
+      "icon": "city"
+    },
+    {
+      "key": "capital",
+      "label": "Capital",
+      "meaning": "A city from which a land was ruled.",
+      "types": [
+        "place",
+        "narrativePlace"
+      ],
+      "icon": "crown",
+      "parent": "city"
+    },
+    {
+      "key": "battlefield",
+      "label": "Battlefield",
+      "meaning": "A place where battles were fought.",
+      "types": [
+        "place",
+        "narrativePlace",
+        "region",
+        "narrativeRegion"
+      ],
+      "icon": "war"
+    },
+    {
+      "key": "sanctuary",
+      "label": "Sanctuary",
+      "meaning": "A holy place: a temple, a fire temple, a shrine.",
+      "types": [
+        "place",
+        "narrativePlace"
+      ],
+      "icon": "faith"
+    },
+    {
+      "key": "river",
+      "label": "River",
+      "meaning": "A river or its valley.",
+      "types": [
+        "place",
+        "narrativePlace",
+        "region",
+        "narrativeRegion"
+      ],
+      "icon": "river"
+    },
+    {
+      "key": "mountain",
+      "label": "Mountain",
+      "meaning": "A mountain or a range of mountains.",
+      "types": [
+        "place",
+        "narrativePlace",
+        "region",
+        "narrativeRegion"
+      ],
+      "icon": "mountain"
+    },
+    {
+      "key": "poem",
+      "label": "Poem",
+      "meaning": "A work of poetry.",
+      "types": [
+        "work"
+      ],
+      "icon": "pen"
+    },
+    {
+      "key": "history",
+      "label": "Work of history",
+      "meaning": "A work that tells history: a chronicle, a history.",
+      "types": [
+        "work"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "inscription",
+      "label": "Inscription",
+      "meaning": "Words cut into stone or metal.",
+      "types": [
+        "work",
+        "object"
+      ],
+      "icon": "scroll"
+    },
+    {
+      "key": "monument",
+      "label": "Monument",
+      "meaning": "A building or a work that was made to be remembered.",
+      "types": [
+        "object",
+        "place"
+      ],
+      "icon": "monument"
+    }
+  ]
+}
