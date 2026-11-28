@@ -1,0 +1,1989 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "rostam-and-esfandiar",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-rostam-esfandiar",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-28",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-esfandyar-2026-11-28",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the story of Rostam and Esfandiar, sections 1 to 31.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/esfandyar",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "The story of Rostam and Esfandiar as the poem tells it: from Esfandiar’s claim to the crown and Goshtasp’s command to bring Rostam in bonds, through the meeting and fight on the Hirmand and the arrow of tamarisk, to Esfandiar’s iron coffin and Bahman’s return; the story of Rostam and Shaghad that follows is not part of it.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "The king’s command"
+      },
+      {
+        "level": 1,
+        "label": "The message to Zabulistan"
+      },
+      {
+        "level": 2,
+        "label": "The meeting on the Hirmand"
+      },
+      {
+        "level": 3,
+        "label": "The fight"
+      },
+      {
+        "level": 4,
+        "label": "The sons of Esfandiar"
+      },
+      {
+        "level": 5,
+        "label": "The Simorgh"
+      },
+      {
+        "level": 6,
+        "label": "The arrow of tamarisk"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-esfandyar-index",
+      "title": "Ganjoor: the story of Rostam and Esfandiar, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s01",
+      "title": "Ganjoor: بخش ۱ - آغاز داستان",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱ - آغاز داستان"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s02",
+      "title": "Ganjoor: بخش ۲ - بازگشت مست اسفندیار طلب تاج پیشگویی مرگش به دست رستم و اندیشه بد گشتاسپ",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh2",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲ - بازگشت مست اسفندیار طلب تاج پیشگویی مرگش به دست رستم و اندیشه بد گشتاسپ"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s03",
+      "title": "Ganjoor: بخش ۳ - گلایه اسفندیار از گشتاسپ: بند گنبدان کشتن ارجاسپ و طلب تاج وعده‌شده",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh3",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳ - گلایه اسفندیار از گشتاسپ: بند گنبدان کشتن ارجاسپ و طلب تاج وعده‌شده"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s04",
+      "title": "Ganjoor: بخش ۴ - فرمان گشتاسپ به بستن رستم در برابر تاج اعتراض اسفندیار و بازگشت غمگین او",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh4",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۴ - فرمان گشتاسپ به بستن رستم در برابر تاج اعتراض اسفندیار و بازگشت غمگین او"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s05",
+      "title": "Ganjoor: بخش ۵ - پند کتایون به اسفندیار: هشدار از رستم ناگزیری فرمان شاه و زاری شبانه مادر",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh5",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۵ - پند کتایون به اسفندیار: هشدار از رستم ناگزیری فرمان شاه و زاری شبانه مادر"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s06",
+      "title": "Ganjoor: بخش ۶ - حرکت اسفندیار فال ناخجسته شتر و بریدن سرش اردوزدن کنار هیرمند و رای فرستادن رسول به رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh6",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۶ - حرکت اسفندیار فال ناخجسته شتر و بریدن سرش اردوزدن کنار هیرمند و رای فرستادن رسول به رستم"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s07",
+      "title": "Ganjoor: بخش ۷ - پند اسفندیار به بهمن و پیام او به رستم: سرزنش ناسپاسی سوگند شاه و نوید شفاعت",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh7",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۷ - پند اسفندیار به بهمن و پیام او به رستم: سرزنش ناسپاسی سوگند شاه و نوید شفاعت"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s08",
+      "title": "Ganjoor: بخش ۸ - آمدن بهمن به زاولستان دیدار با زال و خواستن راه نخچیرگاه رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh8",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۸ - آمدن بهمن به زاولستان دیدار با زال و خواستن راه نخچیرگاه رستم"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s09",
+      "title": "Ganjoor: بخش ۹ - آمدن بهمن به نخچیرگاه رستم دور انداختن سنگ به پاشنه بزم گور و پیام اسفندیار",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh9",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۹ - آمدن بهمن به نخچیرگاه رستم دور انداختن سنگ به پاشنه بزم گور و پیام اسفندیار"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s10",
+      "title": "Ganjoor: بخش ۱۰ - پاسخ رستم به اسفندیار: پند پرهیز از آز دعوت به بزم و تن ندادن به بند",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh10",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۰ - پاسخ رستم به اسفندیار: پند پرهیز از آز دعوت به بزم و تن ندادن به بند"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s11",
+      "title": "Ganjoor: بخش ۱۱ - فرمان رستم به ساختن بزم شاهانه آمدن بی‌سلاح به هیرمند و خشم اسفندیار بر بهمن",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh11",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۱ - فرمان رستم به ساختن بزم شاهانه آمدن بی‌سلاح به هیرمند و خشم اسفندیار بر بهمن"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s12",
+      "title": "Ganjoor: بخش ۱۲ - دیدار رستم و اسفندیار بر لب هیرمند آفرین دوسویه دعوت به خان و سرباز زدن از بند",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh12",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۲ - دیدار رستم و اسفندیار بر لب هیرمند آفرین دوسویه دعوت به خان و سرباز زدن از بند"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s13",
+      "title": "Ganjoor: بخش ۱۳ - پند پشوتن و پاسخ اسفندیار نخواندن رستم به بزم و بازگشت خشمگین او",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh13",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۳ - پند پشوتن و پاسخ اسفندیار نخواندن رستم به بزم و بازگشت خشمگین او"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s14",
+      "title": "Ganjoor: بخش ۱۴ - دیدار رستم و اسفندیار لاف پهلوانی‌ها و خشم بر نشستن سوی چپ",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh14",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۴ - دیدار رستم و اسفندیار لاف پهلوانی‌ها و خشم بر نشستن سوی چپ"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s15",
+      "title": "Ganjoor: بخش ۱۵ - سخن اسفندیار در نکوهش نیاکان رستم: زال دیوزاد افکندن به دریا پرورش سیمرغ و ناپارسایی رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh15",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۵ - سخن اسفندیار در نکوهش نیاکان رستم: زال دیوزاد افکندن به دریا پرورش سیمرغ و ناپارسایی رستم"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s16",
+      "title": "Ganjoor: بخش ۱۶ - پاسخ رستم به اسفندیار: ستایش نژاد یادکرد پهلوانی‌های خویش و دعوت به می",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh16",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۶ - پاسخ رستم به اسفندیار: ستایش نژاد یادکرد پهلوانی‌های خویش و دعوت به می"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s17",
+      "title": "Ganjoor: بخش ۱۷ - پاسخ اسفندیار به رستم: فخر به نژاد شکستن بند و گشودن رویین‌دژ",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh17",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۷ - پاسخ اسفندیار به رستم: فخر به نژاد شکستن بند و گشودن رویین‌دژ"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s18",
+      "title": "Ganjoor: بخش ۱۸ - مفاخره رستم با اسفندیار: یاد هفت‌خوان و هاماوران زورآزمایی دست و وعده نبرد",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh18",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۸ - مفاخره رستم با اسفندیار: یاد هفت‌خوان و هاماوران زورآزمایی دست و وعده نبرد"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s19",
+      "title": "Ganjoor: بخش ۱۹ - بزم نیمروز نزد اسفندیار پند آشتی رستم و پیمان نبرد فردا",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh19",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۱۹ - بزم نیمروز نزد اسفندیار پند آشتی رستم و پیمان نبرد فردا"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s20",
+      "title": "Ganjoor: بخش ۲۰ - سخن تلخ رستم بر در سراپرده پند آشتی پشوتن و پافشاری اسفندیار بر جنگ",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh20",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۰ - سخن تلخ رستم بر در سراپرده پند آشتی پشوتن و پافشاری اسفندیار بر جنگ"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s21",
+      "title": "Ganjoor: بخش ۲۱ - خواست رستم سلاح نبرد پند زال به تسلیم و لاف برگرفتن اسفندیار از باره",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh21",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۱ - خواست رستم سلاح نبرد پند زال به تسلیم و لاف برگرفتن اسفندیار از باره"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s22",
+      "title": "Ganjoor: بخش ۲۲ - هماوردی تنهای رستم و اسفندیار بر لب هیرمند پیمان بی‌مدد و شکستن نیزه و تیغ و گرز",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh22",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۲ - هماوردی تنهای رستم و اسفندیار بر لب هیرمند پیمان بی‌مدد و شکستن نیزه و تیغ و گرز"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s23",
+      "title": "Ganjoor: بخش ۲۳ - کشته شدن نوش‌آذر و مهرنوش به دست زواره و فرامرز و خشم اسفندیار بر رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh23",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۳ - کشته شدن نوش‌آذر و مهرنوش به دست زواره و فرامرز و خشم اسفندیار بر رستم"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s24",
+      "title": "Ganjoor: بخش ۲۴ - خستن رستم و رخش به تیر اسفندیار زینهار شبانه و سوگ نوش‌آذر و مهرنوش",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh24",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۴ - خستن رستم و رخش به تیر اسفندیار زینهار شبانه و سوگ نوش‌آذر و مهرنوش"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s25",
+      "title": "Ganjoor: بخش ۲۵ - رسیدن رستم زخمی از نبرد اسفندیار شیون زال و رودابه و چاره خواندن سیمرغ",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh25",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۵ - رسیدن رستم زخمی از نبرد اسفندیار شیون زال و رودابه و چاره خواندن سیمرغ"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s26",
+      "title": "Ganjoor: بخش ۲۶ - آمدن سیمرغ به خواندن زال درمان رستم و رخش و نمودن راز تیر گز",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh26",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۶ - آمدن سیمرغ به خواندن زال درمان رستم و رخش و نمودن راز تیر گز"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s27",
+      "title": "Ganjoor: بخش ۲۷ - سپیده‌دم رویارویی رستم و اسفندیار: پوزش و گنج‌بخشی و پافشاری اسفندیار بر بند",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh27",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۷ - سپیده‌دم رویارویی رستم و اسفندیار: پوزش و گنج‌بخشی و پافشاری اسفندیار بر بند"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s28",
+      "title": "Ganjoor: بخش ۲۸ - تیر گز بر چشم اسفندیار افتادن رویین‌تن و گفتگوی واپسین با رستم",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh28",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۸ - تیر گز بر چشم اسفندیار افتادن رویین‌تن و گفتگوی واپسین با رستم"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s29",
+      "title": "Ganjoor: بخش ۲۹ - وصیت واپسین و مرگ اسفندیار سپردن بهمن به رستم و هشدار زواره",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh29",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۲۹ - وصیت واپسین و مرگ اسفندیار سپردن بهمن به رستم و هشدار زواره"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s30",
+      "title": "Ganjoor: بخش ۳۰ - تشییع تابوت آهنین اسفندیار خشم مهان ایران و نکوهش گشتاسپ به دست پشوتن و خواهران",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh30",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۰ - تشییع تابوت آهنین اسفندیار خشم مهان ایران و نکوهش گشتاسپ به دست پشوتن و خواهران"
+    },
+    {
+      "id": "src-ganjoor-esfandyar-s31",
+      "title": "Ganjoor: بخش ۳۱ - نامه پوزش رستم به گشتاسپ بازگشت بهمن از زابل و نامیدن او به اردشیر",
+      "url": "https://ganjoor.net/ferdousi/shahname/esfandyar/sh31",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "بخش ۳۱ - نامه پوزش رستم به گشتاسپ بازگشت بهمن از زابل و نامیدن او به اردشیر"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-index",
+      "title": "Ganjoor, Ferdowsi’s Shahnameh: the table of contents",
+      "url": "https://ganjoor.net/ferdousi/shahname",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "The Shahnameh",
+      "summary": "The literary work in which the story of Rostam and Esfandiar is told.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-index",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-golha-ferdowsi",
+        "src-ganjoor-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-index",
+        "src-iranica-ferdowsi-i",
+        "src-golha-ferdowsi",
+        "src-agakhan-firdausi-court-poets"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1020
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-rostam-esfandiar",
+      "type": "NarrativeArc",
+      "label": "Rostam and Esfandiar",
+      "summary": "The story of how King Goshtasp sends his son Esfandiar to bring Rostam to court in bonds, and of the fight between the two champions on the Hirmand.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-goshtasp",
+      "type": "Character",
+      "label": "Goshtasp",
+      "summary": "The king of Iran, father of Esfandiar, who has promised him the crown but, warned by Jamasp, sends him against Rostam instead.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02",
+        "src-ganjoor-esfandyar-s04"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-esfandiar",
+      "type": "Character",
+      "label": "Esfandiar",
+      "summary": "The son of Goshtasp, champion of the faith, who has freed his father’s kingdom from Arjasp and now claims the crown.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02",
+        "src-ganjoor-esfandyar-s03"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Prince and champion"
+        }
+      ]
+    },
+    {
+      "id": "character-katayun",
+      "type": "Character",
+      "label": "Katayun",
+      "summary": "The mother of Esfandiar, a daughter of the Caesar, who warns him against going to fight Rostam.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02",
+        "src-ganjoor-esfandyar-s05"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of Esfandiar"
+        }
+      ]
+    },
+    {
+      "id": "character-jamasp",
+      "type": "Character",
+      "label": "Jamasp",
+      "summary": "The king’s sage and reader of the stars, who foretells that Esfandiar’s death lies in Zabulistan at the hand of Rostam.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Sage of the king"
+        }
+      ]
+    },
+    {
+      "id": "character-peshotan",
+      "type": "Character",
+      "label": "Peshotan",
+      "summary": "The brother and counsellor of Esfandiar, who urges peace with Rostam to the end and afterwards reproaches Goshtasp.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s06",
+        "src-ganjoor-esfandyar-s20",
+        "src-ganjoor-esfandyar-s30"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Brother of Esfandiar"
+        }
+      ]
+    },
+    {
+      "id": "character-bahman",
+      "type": "Character",
+      "label": "Bahman",
+      "summary": "The son of Esfandiar, sent as messenger to Rostam; his father entrusts him to Rostam as he dies, and Rostam raises him.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s07",
+        "src-ganjoor-esfandyar-s29",
+        "src-ganjoor-esfandyar-s31"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Esfandiar"
+        }
+      ]
+    },
+    {
+      "id": "character-nush-azar",
+      "type": "Character",
+      "label": "Nush-Azar",
+      "summary": "A son of Esfandiar, killed by Zavareh in the fighting beside the Hirmand.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Esfandiar"
+        }
+      ]
+    },
+    {
+      "id": "character-mehrnush",
+      "type": "Character",
+      "label": "Mehrnush",
+      "summary": "A son of Esfandiar, brother of Nush-Azar, killed by Faramarz.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Esfandiar"
+        }
+      ]
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "The great champion of Zabulistan, son of Zal, who will not go to the king in bonds.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s04",
+        "src-ganjoor-esfandyar-s10"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion of Zabulistan"
+        }
+      ]
+    },
+    {
+      "id": "character-zal",
+      "type": "Character",
+      "label": "Zal",
+      "summary": "The father of Rostam, who counsels him to yield and, when Rostam is wounded, calls the Simorgh.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s21",
+        "src-ganjoor-esfandyar-s25",
+        "src-ganjoor-esfandyar-s26"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Father of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-rudabeh",
+      "type": "Character",
+      "label": "Rudabeh",
+      "summary": "The mother of Rostam, who mourns when he comes home wounded.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s25"
+      ],
+      "spoilerLevel": 5,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Mother of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-zavareh",
+      "type": "Character",
+      "label": "Zavareh",
+      "summary": "The brother of Rostam, who leads his men to the field and kills Nush-Azar.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s11",
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Brother of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-faramarz",
+      "type": "Character",
+      "label": "Faramarz",
+      "summary": "The son of Rostam, who kills Mehrnush.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s11",
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Son of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-simorgh",
+      "type": "AnimalCharacter",
+      "label": "Simorgh",
+      "summary": "The great bird who heals Rostam and Rakhsh and shows Rostam the branch of tamarisk that is Esfandiar’s death.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s26"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Helper of the house of Zal"
+        }
+      ]
+    },
+    {
+      "id": "character-rakhsh",
+      "type": "AnimalCharacter",
+      "label": "Rakhsh",
+      "summary": "Rostam’s horse, wounded by Esfandiar’s arrows and healed by the Simorgh.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s14",
+        "src-ganjoor-esfandyar-s24",
+        "src-ganjoor-esfandyar-s26"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Horse of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "The kingdom of Goshtasp.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-zabulistan",
+      "type": "NarrativeRegion",
+      "label": "Zabulistan",
+      "summary": "The land of Zal and Rostam, where Jamasp foretells Esfandiar will die.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02",
+        "src-ganjoor-esfandyar-s08"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Zabol",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
+    },
+    {
+      "id": "place-hirmand",
+      "type": "NarrativePlace",
+      "label": "The Hirmand",
+      "summary": "The river of Zabulistan beside which Esfandiar camps and the two champions meet and fight.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s06",
+        "src-ganjoor-esfandyar-s12",
+        "src-ganjoor-esfandyar-s22"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "object-tamarisk-arrow",
+      "type": "NarrativeObject",
+      "label": "The arrow of tamarisk",
+      "summary": "The arrow Rostam makes from a tamarisk branch the Simorgh shows him, the only thing that can kill Esfandiar; he shoots it into Esfandiar’s eyes.",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s26",
+        "src-ganjoor-esfandyar-s28"
+      ],
+      "spoilerLevel": 5
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-rostam-esfandiar",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-goshtasp",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s04"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-goshtasp",
+      "to": "character-esfandiar",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s04"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-04"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-05",
+      "from": "character-katayun",
+      "to": "character-esfandiar",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-06",
+      "from": "character-esfandiar",
+      "to": "character-bahman",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s07"
+      ],
+      "spoilerLevel": 1,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-07",
+      "from": "character-esfandiar",
+      "to": "character-nush-azar",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-08",
+      "from": "character-esfandiar",
+      "to": "character-mehrnush",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-09",
+      "from": "character-peshotan",
+      "to": "character-esfandiar",
+      "type": "siblingOf",
+      "label": "Brother",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s20"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-13"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-10",
+      "from": "character-nush-azar",
+      "to": "character-mehrnush",
+      "type": "siblingOf",
+      "label": "Brother",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-11",
+      "from": "character-zal",
+      "to": "character-rostam",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s21"
+      ],
+      "spoilerLevel": 3,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-14"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-12",
+      "from": "character-rudabeh",
+      "to": "character-rostam",
+      "type": "parentOf",
+      "label": "Mother of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s25"
+      ],
+      "spoilerLevel": 5,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-18"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-13",
+      "from": "character-zavareh",
+      "to": "character-rostam",
+      "type": "siblingOf",
+      "label": "Brother",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "symmetric"
+    },
+    {
+      "id": "relation-14",
+      "from": "character-rostam",
+      "to": "character-faramarz",
+      "type": "parentOf",
+      "label": "Father of",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-rostam-esfandiar",
+        "eventIds": [
+          "event-16"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "The poet’s spring",
+      "summary": "The poet opens in spring, calling for wine, and hears the nightingale lament the death of Esfandiar.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "person-ferdowsi",
+          "role": "narrator",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "hero lamented",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "Esfandiar asks for the crown",
+      "summary": "Esfandiar comes home drunk and complains to his mother Katayun that the king keeps from him the crown he promised. Katayun tells Goshtasp, who asks Jamasp; the sage foretells that Esfandiar’s death lies in Zabulistan at the hand of Rostam.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s02"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-esfandiar",
+          "role": "son who claims the crown",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-katayun",
+          "role": "mother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-goshtasp",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-jamasp",
+          "role": "sage who foretells",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "the foretold hand",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-zabulistan",
+          "role": "the foretold place",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "Esfandiar reminds his father",
+      "summary": "Before the court Esfandiar recounts what he did for the king: his years in chains in Gonbadan, the killing of Arjasp – and asks what excuse is left for withholding the crown.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s03"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-esfandiar",
+          "role": "son who claims his due",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-goshtasp",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "The king’s condition",
+      "summary": "Goshtasp answers that he sees no rival to his son but Rostam, who will not own the new king: Esfandiar must go to Sistan and bring Rostam back in bonds; then he shall have the crown. Esfandiar objects, but leaves in grief.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s04"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-goshtasp",
+          "role": "king who sets the task",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "son sent",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "the one to be bound",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "Katayun’s warning",
+      "summary": "Katayun weeps and begs her son not to go to bind Rostam, the lord of sword and mace; he answers that he cannot disobey the king. She spends the night in tears.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s05"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-katayun",
+          "role": "mother who warns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "son who will not turn back",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "The ill omen of the camel",
+      "summary": "At the parting of the roads the lead camel lies down and will not rise; Esfandiar has its head cut off to turn the omen back on it, and marches on to camp by the Hirmand. With Peshotan he resolves to send a messenger first.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s06"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-esfandiar",
+          "role": "commander",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-peshotan",
+          "role": "counsellor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-hirmand",
+          "role": "camp",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "Bahman sent to Zabulistan",
+      "summary": "Esfandiar dresses his son Bahman in royal clothes and sends him with a message: Rostam has been ungrateful to the new kings and must come in bonds; Esfandiar promises to plead for him. Bahman crosses the Hirmand; Zal receives him and sends him to Rostam’s hunting ground.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s07",
+        "src-ganjoor-esfandyar-s08"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-esfandiar",
+          "role": "sender",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahman",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "host",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-zabulistan",
+          "role": "destination",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "Bahman at the hunting ground",
+      "summary": "Bahman finds Rostam roasting an onager under a tree, a cup of wine in his hand. He rolls a stone down at him; Rostam stops it with his heel. Rostam welcomes him, and Bahman gives his father’s message.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s09"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bahman",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "host",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "Rostam’s answer",
+      "summary": "Rostam answers Esfandiar that a wise man looks to the end of things: he will gladly come to him and to the king, but he will ask the king why his feet should be put in chains.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s10"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "speaker",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahman",
+          "role": "messenger",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "addressee",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-10",
+      "label": "The meeting on the Hirmand",
+      "summary": "Rostam orders a royal feast prepared, sends Zavareh and Faramarz to Zal, and rides unarmed to the Hirmand. The two champions meet and greet each other with praise; Rostam invites Esfandiar to his house, but will not accept the bonds.",
+      "order": 10,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s11",
+        "src-ganjoor-esfandyar-s12"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "host",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "guest he invites",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "brother sent home",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-faramarz",
+          "role": "son sent home",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-hirmand",
+          "role": "meeting place",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-11",
+      "label": "The invitation not sent",
+      "summary": "Esfandiar tells Peshotan that he will not go to Rostam’s hall nor call him to his own; Peshotan warns him, but Esfandiar holds to it. Rostam waits in vain and rides back angry.",
+      "order": 11,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s13"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-esfandiar",
+          "role": "host who does not invite",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-peshotan",
+          "role": "counsellor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "the slighted guest",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-12",
+      "label": "The quarrel at the feast",
+      "summary": "Rostam comes to Esfandiar’s camp and is angered to be seated on the left. Esfandiar calls Zal a demon’s child cast out and raised by the Simorgh; Rostam praises his lineage and recalls his deeds, the Mazandaran and the seven trials; Esfandiar boasts of his own wars for the faith and of the Brazen Hold. They test each other’s grip.",
+      "order": 12,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s14",
+        "src-ganjoor-esfandyar-s15",
+        "src-ganjoor-esfandyar-s16",
+        "src-ganjoor-esfandyar-s17",
+        "src-ganjoor-esfandyar-s18"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "guest",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "host",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "father insulted",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "character-simorgh",
+          "role": "who raised Zal",
+          "presence": "mentioned_only"
+        }
+      ]
+    },
+    {
+      "id": "event-13",
+      "label": "The pledge to fight",
+      "summary": "At the noon feast Rostam again offers peace and gifts, and to go with Esfandiar to the king unbound. Esfandiar insists on the bonds and they agree to fight in the morning. At the tent door Rostam laments the house of the kings; Peshotan pleads for peace in vain.",
+      "order": 13,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s19",
+        "src-ganjoor-esfandyar-s20"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "champion who offers peace",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "prince who insists",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-peshotan",
+          "role": "peacemaker",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-14",
+      "label": "Zal’s counsel",
+      "summary": "Rostam calls for his arms. Zal begs him to yield rather than fight the king’s son; Rostam prays through the night.",
+      "order": 14,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s21"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "champion arming",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "father who counsels",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "brother who brings the arms",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-15",
+      "label": "The single combat",
+      "summary": "At dawn the two meet alone on the Hirmand, agreeing that no one shall help either. Their spears, swords and maces break, and the horses and men are worn out.",
+      "order": 15,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s22"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "combatant",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "combatant",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-hirmand",
+          "role": "field",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-16",
+      "label": "The death of Nush-Azar and Mehrnush",
+      "summary": "Zavareh brings Rostam’s men and the Iranians are attacked; Zavareh kills Nush-Azar and Faramarz kills Mehrnush, two sons of Esfandiar, who turns in anger on Rostam for breaking the pact.",
+      "order": 16,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s23"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zavareh",
+          "role": "killer of Nush-Azar",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-faramarz",
+          "role": "killer of Mehrnush",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-nush-azar",
+          "role": "son killed",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-mehrnush",
+          "role": "son killed",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "bereaved father",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "accused",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-17",
+      "label": "Rostam wounded",
+      "summary": "Esfandiar’s arrows pierce Rostam and Rakhsh; Rostam climbs a hill and asks for a truce for the night. Esfandiar grants it and mourns his sons, sure that Rostam will die of his wounds.",
+      "order": 17,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s24"
+      ],
+      "spoilerLevel": 4,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-esfandiar",
+          "role": "archer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "wounded champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "wounded horse",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-18",
+      "label": "Rostam comes home wounded",
+      "summary": "Rostam reaches his hall covered with wounds; Zavareh, Faramarz and Rudabeh weep. Zal resolves to call the Simorgh.",
+      "order": 18,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s25"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "wounded champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zal",
+          "role": "father who seeks help",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rudabeh",
+          "role": "mother who mourns",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "brother",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-faramarz",
+          "role": "son",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-19",
+      "label": "The Simorgh’s secret",
+      "summary": "Zal burns a feather and the Simorgh comes. It draws out the arrows and heals Rostam and Rakhsh, then leads Rostam to the sea, to a tamarisk: Esfandiar’s life lies in that wood. Rostam cuts the branch and makes an arrow, warned that whoever sheds Esfandiar’s blood will suffer for it.",
+      "order": 19,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s26"
+      ],
+      "spoilerLevel": 5,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-zal",
+          "role": "who burns the feather",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-simorgh",
+          "role": "healer and counsellor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "healed champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "healed horse",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-tamarisk-arrow",
+          "role": "the weapon given",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-20",
+      "label": "The last offer",
+      "summary": "At dawn Rostam stands before Esfandiar again, healed. He asks pardon and offers his ancient treasures and to serve him, but Esfandiar insists on the bonds.",
+      "order": 20,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s27"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "champion who pleads",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "prince who refuses",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-21",
+      "label": "The arrow in the eyes",
+      "summary": "Seeing that pleading is no use, Rostam prays, sets the arrow of tamarisk to his bow and shoots Esfandiar in the eyes; the brazen-bodied prince falls from his horse and speaks with Rostam a last time.",
+      "order": 21,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s28"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "archer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "the one struck",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "object-tamarisk-arrow",
+          "role": "the weapon",
+          "presence": "object_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-22",
+      "label": "Esfandiar’s last will",
+      "summary": "Dying, Esfandiar tells Rostam that the tamarisk was only a pretext, and entrusts his son Bahman to him to be raised. Zavareh warns that evil will come to Zabulistan from Bahman.",
+      "order": 22,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s29"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-esfandiar",
+          "role": "dying prince",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "guardian chosen",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-bahman",
+          "role": "son entrusted",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-zavareh",
+          "role": "who warns",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-23",
+      "label": "The iron coffin",
+      "summary": "Rostam has an iron coffin made and sends Esfandiar’s body to Iran. The nobles rage, and Peshotan and Esfandiar’s sisters reproach Goshtasp, who sent his son to his death for the throne; Iran mourns for a year.",
+      "order": 23,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s30"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "who sends the coffin",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-esfandiar",
+          "role": "the dead prince",
+          "presence": "deceased_subject"
+        },
+        {
+          "entityId": "character-peshotan",
+          "role": "who reproaches the king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-goshtasp",
+          "role": "king reproached",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "land in mourning",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-24",
+      "label": "Bahman’s return",
+      "summary": "Bahman stays in Zabulistan, where Rostam teaches him riding, feasting and kingship and loves him more than his own son; Rostam writes to Goshtasp asking pardon. Bahman returns to Iran, and the king, finding him wise, calls him Ardashir.",
+      "order": 24,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-esfandyar-s31"
+      ],
+      "spoilerLevel": 6,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-bahman",
+          "role": "prince raised in Zabulistan",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "teacher",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-goshtasp",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    }
+  ],
+  "media": []
+}
