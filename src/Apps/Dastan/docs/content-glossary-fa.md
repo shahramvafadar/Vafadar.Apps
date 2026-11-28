@@ -732,12 +732,14 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Bikheris | بیخریس |
 | Bocchoris | بوخوریس |
 | Cambyses II | کمبوجیهٔ دوم |
+| Caracalla | کاراکالا |
 | Cleopatra III | کلئوپاترای سوم |
 | Cleopatra VII Thea Philopator | کلئوپاترای هفتم |
 | Darius I | داریوش یکم (داریوش بزرگ) |
 | Darius II | داریوش دوم |
 | Darius III Codoman | داریوش سوم |
 | Den | دن |
+| Diocletian | دیوکلسین |
 | Djedkare Izezi | جدکارع ایززی |
 | Djer | جر |
 | Djoser | جوسر |
@@ -882,15 +884,25 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Unas | اوناس |
 | Userkaf | اوسرکاف |
 | Userkare | اوسرکارع |
+| Vespasian | وسپاسیان |
 | Wegaf | وگاف |
 | Xerxes I | خشایارشا یکم |
 | ʿAdjib | عجیب |
+| ʿAmr ibn al-ʿĀṣ | عمرو بن عاص |
 
 ### Places and regions
 
 | English | Persian |
 |---|---|
+| Alexandria | اسکندریه |
 | Egypt | مصر |
+| Giza | جیزه |
+| Heracleopolis | هراکلئوپولیس |
+| Karnak | کرنک |
+| Memphis | ممفیس |
+| Sais | سائیس |
+| Tanis | تانیس |
+| Thebes | تبس |
 
 ## The Shahnameh
 

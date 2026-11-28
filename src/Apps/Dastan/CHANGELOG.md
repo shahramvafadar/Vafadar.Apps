@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Egypt reaches the Arab conquest of 642: Roman and Byzantine Egypt, its capitals with their positions, the
+  pyramids of Giza and the Rosetta Stone.
 - A new history: ancient Egypt, from the kings before the unification through the thirty dynasties to the
   Ptolemies and the Roman conquest, every pharaoh of the Britannica list with the years it gives.
 - Quotes for 203 more statements without a year: parents, siblings, marriages, successions, founders, capitals
