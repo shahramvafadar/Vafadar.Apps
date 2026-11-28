@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A new history: India, from the Indus civilization through Alexander and the Mauryas, the Indo-Greeks and the
+  Kushans to the Guptas and Harsha.
 - A new history: Greece, from archaic Athens and Sparta through the Persian wars and the Peloponnesian War to
   Philip II, Alexander, the Antigonids and the Roman conquest.
 - A new history: Anatolia, from the Hittite kings of Hattusa through Midas of Phrygia to the Lydian kings and

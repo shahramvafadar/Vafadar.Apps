@@ -1,0 +1,1800 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "ancient-india",
+  "worldId": "world-ancient-india",
+  "subjectId": "subject-ancient-india",
+  "language": "en",
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "Everything"
+      }
+    ],
+    "defaultLevel": 0
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "entities": [
+    {
+      "id": "subject-ancient-india",
+      "type": "Region",
+      "label": "India",
+      "summary": "Ancient India from the cities of the Indus civilization through the Persian and Macedonian conquests of Gandara and the Punjab, the Mauryan empire of Chandragupta and Ashoka, the Indo-Greek kings and the Kushans, to the Gupta age and the empire of Harsha in the 7th century CE.",
+      "sourceIds": [
+        "src-britannica-indus-civilization",
+        "src-livius-dynasty-maurya",
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "office-mauryan-emperor",
+      "type": "Office",
+      "label": "Mauryan emperor",
+      "summary": "The throne of the Mauryan empire, with its capital at Patna on the Ganges.",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-india"
+        }
+      ]
+    },
+    {
+      "id": "office-gupta-emperor",
+      "type": "Office",
+      "label": "Gupta emperor",
+      "summary": "The throne of the Gupta dynasty of northern India.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-india"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-maurya",
+      "type": "Dynasty",
+      "label": "The Mauryas",
+      "summary": "The dynasty of Chandragupta Maurya, who took the Nanda throne of Magadha and united the Indus and Ganges valleys; after Ashoka its empire declined.",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "dynasty-kushan",
+      "type": "Dynasty",
+      "label": "The Kushans",
+      "summary": "A ruling line descended from the Yuezhi, which ruled most of the northern Indian subcontinent, Afghanistan and parts of Central Asia in the first three centuries CE.",
+      "sourceIds": [
+        "src-britannica-kushan-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": []
+    },
+    {
+      "id": "dynasty-gupta",
+      "type": "Dynasty",
+      "label": "The Guptas",
+      "summary": "The dynasty that ruled northern and parts of central and western India from the early 4th to the mid-6th century CE; its age is often called the classical age of India.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 319,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-indus-civilization",
+      "type": "Period",
+      "label": "The Indus civilization",
+      "summary": "The earliest known urban culture of the Indian subcontinent, with its nuclear dates about 2600 to 1900 BCE; it declined in stages between about 2000 and 1750 BCE.",
+      "sourceIds": [
+        "src-britannica-indus-civilization"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2600,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1900,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "period-gupta",
+      "type": "Period",
+      "label": "The Gupta period",
+      "summary": "The broad period from about 300 to about 600 CE, regarded by many as the golden and classical age of India in literature, art, architecture and philosophy.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "began",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 300,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "ended",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 600,
+              "approximate": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-chandragupta-maurya",
+      "type": "Person",
+      "label": "Chandragupta Maurya",
+      "summary": "Founder of the Mauryan empire, king from 321 to 297 BCE: a pupil of Kautilya who had seen Alexander’s army at Taxila, he took the Nanda throne, captured Taxila and made a treaty with Seleucus, who gave up the eastern provinces for 500 elephants.",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Chandragupta",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-bindusara",
+      "type": "Person",
+      "label": "Bindusara",
+      "summary": "Son of Chandragupta, emperor for a quarter of a century until 272 BCE, the least known of the three great Mauryan emperors.",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ashoka",
+      "type": "Person",
+      "label": "Ashoka",
+      "summary": "Son of Bindusara, Mauryan emperor from 272 to 232 BCE, who first united the subcontinent except its far south, turned against war after the conquest of Kalinga, became a Buddhist and published his rock edicts also in Greek.",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya",
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Asoka",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-porus",
+      "type": "Person",
+      "label": "Porus",
+      "summary": "King in the eastern Punjab, defeated by Alexander the Great at the Hydaspes in 326 BCE and murdered in 317 by the Macedonian commander at Taxila.",
+      "sourceIds": [
+        "src-livius-person-porus"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Puru",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-demetrius-i-of-bactria",
+      "type": "Person",
+      "label": "Demetrius I of Bactria",
+      "summary": "Son of Euthydemus, who invaded Gandara and the Punjab in 184 BCE and created an Indo-Greek kingdom reaching into the Ganges valley; he ruled until about 170.",
+      "sourceIds": [
+        "src-livius-place-gandara"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-menander",
+      "type": "Person",
+      "label": "Menander",
+      "summary": "Indo-Greek king who reunited the kingdom about 125 BCE, invaded the Mauryan heartland and took Patna; the Buddhist “Questions of Menander” bear his name.",
+      "sourceIds": [
+        "src-livius-place-gandara"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Milinda",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-chandragupta-i",
+      "type": "Person",
+      "label": "Chandragupta I",
+      "summary": "Gupta king from about 319 CE to 335 or 350, who united the Guptas with the Lichchhavis by marrying Kumaradevi; the Gupta era is counted from his coronation or marriage.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-samudragupta",
+      "type": "Person",
+      "label": "Samudragupta",
+      "summary": "Son of Chandragupta I, who succeeded him about 335 CE – or about 350 by another view – and reigned until about 370.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ramagupta",
+      "type": "Person",
+      "label": "Ramagupta",
+      "summary": "A king of 370 to 375 CE known from evidence outside the Gupta records, probably the elder brother of Chandragupta II, who may have killed him.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-chandragupta-ii",
+      "type": "Person",
+      "label": "Chandragupta II",
+      "summary": "Gupta king from about 375 CE to 413/415, called Vikramaditya, “Sun of Valor”; the Chinese pilgrim Faxian, in India from 405 to 411, praised his government.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Vikramaditya",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-kumaragupta",
+      "type": "Person",
+      "label": "Kumaragupta",
+      "summary": "Successor of Chandragupta II, Gupta king from 415 to 454 CE, when the invasions of the Hunas began to bring the empire down.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-skandagupta",
+      "type": "Person",
+      "label": "Skandagupta",
+      "summary": "Gupta king from 454 to 467 CE, in the time of the repeated invasions of the Hunas, a branch of the Hephthalites.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-harsha",
+      "type": "Person",
+      "label": "Harsha",
+      "summary": "Ruler of a large empire in northern India from 606 to 647 CE, born about 590; in 641 he sent an envoy to the Chinese emperor, the first diplomatic relations between India and China.",
+      "sourceIds": [
+        "src-britannica-harsha"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-alexander-iii",
+      "type": "Person",
+      "label": "Alexander III of Macedon",
+      "summary": "The Macedonian king who invaded the Kabul valley in 327 BCE, took Taxila, defeated Porus at the Hydaspes and turned back at the eastern border of the Punjab.",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-seleucus-i",
+      "type": "Person",
+      "label": "Seleucus I Nicator",
+      "summary": "The successor of Alexander who tried to recover the eastern provinces and made peace with Chandragupta, giving up Gandara and Arachosia for 500 elephants.",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-darius-i",
+      "type": "Person",
+      "label": "Darius I the Great",
+      "summary": "The Persian king under whom Taxila and the western Punjab, Hinduš, were added to the Achaemenid empire.",
+      "sourceIds": [
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "place-taxila",
+      "type": "Place",
+      "label": "Taxila",
+      "summary": "The capital of the western Punjab, added to the Achaemenid empire under Darius I, which invited Alexander in 329 BCE, fell to Chandragupta, had Ashoka as governor and Greek kings from 184.",
+      "sourceIds": [
+        "src-livius-place-taxila",
+        "src-pleiades-107421148"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Takshaçila",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-india"
+        }
+      ],
+      "position": {
+        "latitude": 33.7437,
+        "longitude": 72.821,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-pataliputra",
+      "type": "Place",
+      "label": "Pataliputra",
+      "summary": "The Mauryan capital on the Ganges, modern Patna, which Menander took in the 2nd century BCE.",
+      "sourceIds": [
+        "src-livius-dynasty-maurya",
+        "src-livius-place-gandara",
+        "src-pleiades-59978"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Patna",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Palibothra",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-india"
+        }
+      ],
+      "position": {
+        "latitude": 25.6144,
+        "longitude": 85.135,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "place-mohenjo-daro",
+      "type": "Place",
+      "label": "Mohenjo-daro",
+      "summary": "A city of the Indus civilization near the Indus in Sindh, identified in 1922.",
+      "sourceIds": [
+        "src-britannica-indus-civilization",
+        "src-pleiades-902113570"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "subject-ancient-india"
+        }
+      ],
+      "position": {
+        "latitude": 27.3254,
+        "longitude": 68.1377,
+        "precision": "approximate"
+      }
+    },
+    {
+      "id": "event-alexander-defeats-porus",
+      "type": "Event",
+      "label": "Alexander defeats Porus",
+      "summary": "In 326 BCE Alexander the Great, invited by the king of Taxila, defeated Porus on the banks of the Hydaspes.",
+      "sourceIds": [
+        "src-livius-person-porus",
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 326
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-alexander-iii"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-porus"
+        }
+      ]
+    },
+    {
+      "id": "event-treaty-of-seleucus-and-chandragupta",
+      "type": "Event",
+      "label": "Seleucus and Chandragupta make peace",
+      "summary": "In 304 BCE Seleucus, needing his army in the west, made peace with Chandragupta: he gave up Gandara and Arachosia and received 500 elephants.",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 304
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-seleucus-i"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-chandragupta-maurya"
+        }
+      ]
+    },
+    {
+      "id": "event-greeks-invade-punjab",
+      "type": "Event",
+      "label": "The Greeks invade the Punjab",
+      "summary": "In 184 BCE the Greeks of Bactria under Demetrius invaded Gandara and the Punjab and founded an Indo-Greek kingdom.",
+      "sourceIds": [
+        "src-livius-place-taxila",
+        "src-livius-place-gandara"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 184
+            }
+          }
+        },
+        {
+          "fact": "where",
+          "entityId": "place-taxila"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-demetrius-i-of-bactria"
+        }
+      ]
+    },
+    {
+      "id": "event-faxian-in-india",
+      "type": "Event",
+      "label": "Faxian in India",
+      "summary": "The Chinese Buddhist pilgrim Faxian spent six years in India, from 405 to 411 CE, in the reign of Chandragupta II.",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 405
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 411
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "event-harsha-envoy-to-china",
+      "type": "Event",
+      "label": "Harsha’s envoy to China",
+      "summary": "In 641 CE Harsha sent an envoy to the Chinese emperor, establishing the first diplomatic relations between India and China.",
+      "sourceIds": [
+        "src-britannica-harsha"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "happened",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            }
+          }
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-harsha"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-chandragupta-maurya-holder-of-mauryan-emperor",
+      "from": "person-chandragupta-maurya",
+      "to": "office-mauryan-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 321
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 297
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-maurya-member-of-maurya",
+      "from": "person-chandragupta-maurya",
+      "to": "dynasty-maurya",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-maurya-founder-of-maurya",
+      "from": "person-chandragupta-maurya",
+      "to": "dynasty-maurya",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bindusara-holder-of-mauryan-emperor",
+      "from": "person-bindusara",
+      "to": "office-mauryan-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 297
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 272
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bindusara-member-of-maurya",
+      "from": "person-bindusara",
+      "to": "dynasty-maurya",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-maurya-parent-of-bindusara",
+      "from": "person-chandragupta-maurya",
+      "to": "person-bindusara",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bindusara-successor-of-chandragupta-maurya",
+      "from": "person-bindusara",
+      "to": "person-chandragupta-maurya",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashoka-holder-of-mauryan-emperor",
+      "from": "person-ashoka",
+      "to": "office-mauryan-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya",
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 272
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "beforeCommonEra",
+            "year": 232
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashoka-member-of-maurya",
+      "from": "person-ashoka",
+      "to": "dynasty-maurya",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya",
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bindusara-parent-of-ashoka",
+      "from": "person-bindusara",
+      "to": "person-ashoka",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ashoka-successor-of-bindusara",
+      "from": "person-ashoka",
+      "to": "person-bindusara",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-i-holder-of-gupta-emperor",
+      "from": "person-chandragupta-i",
+      "to": "office-gupta-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 319,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 335
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 350
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-i-member-of-gupta",
+      "from": "person-chandragupta-i",
+      "to": "dynasty-gupta",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-i-founder-of-gupta",
+      "from": "person-chandragupta-i",
+      "to": "dynasty-gupta",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-samudragupta-holder-of-gupta-emperor",
+      "from": "person-samudragupta",
+      "to": "office-gupta-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 335
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 350
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 370,
+            "approximate": true
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-samudragupta-member-of-gupta",
+      "from": "person-samudragupta",
+      "to": "dynasty-gupta",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-i-parent-of-samudragupta",
+      "from": "person-chandragupta-i",
+      "to": "person-samudragupta",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-samudragupta-successor-of-chandragupta-i",
+      "from": "person-samudragupta",
+      "to": "person-chandragupta-i",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ramagupta-holder-of-gupta-emperor",
+      "from": "person-ramagupta",
+      "to": "office-gupta-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 370
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 375
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ramagupta-member-of-gupta",
+      "from": "person-ramagupta",
+      "to": "dynasty-gupta",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-ii-holder-of-gupta-emperor",
+      "from": "person-chandragupta-ii",
+      "to": "office-gupta-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 375,
+            "approximate": true
+          }
+        },
+        "end": {
+          "state": "between",
+          "earliest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 413
+          },
+          "latest": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 415
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-ii-member-of-gupta",
+      "from": "person-chandragupta-ii",
+      "to": "dynasty-gupta",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ramagupta-sibling-of-chandragupta-ii",
+      "from": "person-ramagupta",
+      "to": "person-chandragupta-ii",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-kumaragupta-holder-of-gupta-emperor",
+      "from": "person-kumaragupta",
+      "to": "office-gupta-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 415
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 454
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-kumaragupta-member-of-gupta",
+      "from": "person-kumaragupta",
+      "to": "dynasty-gupta",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-kumaragupta-successor-of-chandragupta-ii",
+      "from": "person-kumaragupta",
+      "to": "person-chandragupta-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-skandagupta-holder-of-gupta-emperor",
+      "from": "person-skandagupta",
+      "to": "office-gupta-emperor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Emperor",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 454
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 467
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-skandagupta-member-of-gupta",
+      "from": "person-skandagupta",
+      "to": "dynasty-gupta",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-skandagupta-successor-of-kumaragupta",
+      "from": "person-skandagupta",
+      "to": "person-kumaragupta",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-pataliputra-capital-of-maurya",
+      "from": "place-pataliputra",
+      "to": "dynasty-maurya",
+      "type": "capitalOf",
+      "directionality": "directed",
+      "label": "Capital of",
+      "sourceIds": [
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-alexander-iii-participant-in-alexander-defeats-porus",
+      "from": "person-alexander-iii",
+      "to": "event-alexander-defeats-porus",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-porus",
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-porus-participant-in-alexander-defeats-porus",
+      "from": "person-porus",
+      "to": "event-alexander-defeats-porus",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-person-porus",
+        "src-livius-place-taxila"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-seleucus-i-participant-in-treaty-of-seleucus-and-chandragupta",
+      "from": "person-seleucus-i",
+      "to": "event-treaty-of-seleucus-and-chandragupta",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-chandragupta-maurya-participant-in-treaty-of-seleucus-and-chandragupta",
+      "from": "person-chandragupta-maurya",
+      "to": "event-treaty-of-seleucus-and-chandragupta",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-gandara",
+        "src-livius-dynasty-maurya"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-demetrius-i-of-bactria-participant-in-greeks-invade-punjab",
+      "from": "person-demetrius-i-of-bactria",
+      "to": "event-greeks-invade-punjab",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-livius-place-taxila",
+        "src-livius-place-gandara"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-greeks-invade-punjab-took-place-in-taxila",
+      "from": "event-greeks-invade-punjab",
+      "to": "place-taxila",
+      "type": "tookPlaceIn",
+      "directionality": "directed",
+      "label": "Took place in",
+      "sourceIds": [
+        "src-livius-place-taxila",
+        "src-livius-place-gandara"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-faxian-in-india-during-gupta",
+      "from": "event-faxian-in-india",
+      "to": "period-gupta",
+      "type": "during",
+      "directionality": "directed",
+      "label": "During",
+      "sourceIds": [
+        "src-britannica-gupta-dynasty"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-harsha-participant-in-harsha-envoy-to-china",
+      "from": "person-harsha",
+      "to": "event-harsha-envoy-to-china",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-britannica-harsha"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-livius-dynasty-maurya",
+      "title": "Maurya – Livius",
+      "url": "https://www.livius.org/articles/dynasty/maurya/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-taxila",
+      "title": "Taxila – Livius",
+      "url": "https://www.livius.org/articles/place/taxila/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-place-gandara",
+      "title": "Gandara – Livius",
+      "url": "https://www.livius.org/articles/place/gandara/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-person-porus",
+      "title": "Porus – Livius",
+      "url": "https://www.livius.org/articles/person/porus/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-gupta-dynasty",
+      "title": "Gupta dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Gupta-dynasty",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-kushan-dynasty",
+      "title": "Kushan dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Kushan-dynasty",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-indus-civilization",
+      "title": "Indus civilization – Britannica",
+      "url": "https://www.britannica.com/topic/Indus-civilization",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-harsha",
+      "title": "Harsha – Britannica",
+      "url": "https://www.britannica.com/biography/Harsha",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-107421148",
+      "title": "Pleiades: Bhir Mound (Taxila)",
+      "url": "https://pleiades.stoa.org/places/107421148",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-59978",
+      "title": "Pleiades: Palibothra",
+      "url": "https://pleiades.stoa.org/places/59978",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-pleiades-902113570",
+      "title": "Pleiades: Moenjodaro",
+      "url": "https://pleiades.stoa.org/places/902113570",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    }
+  ],
+  "events": [],
+  "media": []
+}
