@@ -34,7 +34,7 @@ public sealed record QuantitySeries(Entity Entity, LocalizedText Label, string U
         ArgumentNullException.ThrowIfNull(entity);
         return
         [
-            .. entity.Dated
+            .. entity.Stated
                 .Where(statement => statement.Quantity is not null)
                 .Select(statement => (Statement: statement, Reach: YearCover.Reach(statement.Time)))
                 .Where(placed => placed.Reach is not null)

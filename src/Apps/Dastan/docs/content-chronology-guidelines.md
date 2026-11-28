@@ -306,22 +306,28 @@ late Kayanians in the sixth century BCE. Both are chronologies of tradition and 
 * The collections were checked for characters with a date or a myth told as history: no `Character` carries a
   time; legends in the history collections are labelled as tradition.
 
-## What the format cannot yet express – a proposal for the owner
+## Hypothetical placements – what was built (2026-11-28)
 
-A hypothetical placement (Rostam about 1300 BCE, within 1500–1100 BCE, very low confidence, an editorial
-hypothesis) cannot be written today without either giving a `Character` a historical `born` – which would turn the
-hypothesis into a statement of history – or putting the year into a summary, where it reads as a claim. It is
-therefore **not written** into any collection yet.
+The owner approved the proposal (option (a) of F1 in [the plan of the next content](content-plan-next.md)); it is
+built as [ADR 0028](adr/0028-hypothetical-placement.md):
 
-Proposed, to be decided before any implementation (an ADR when approved):
+1. **A placement is a dated statement with `placement`** – the entity it places is the entity it stands on; its
+   time in the existing vocabulary (a year, `approximate`, a window); its `basis` (`narrative`, `synchronism`,
+   `editorialHypothesis`), a `confidence` (`veryLow`, `low`, `medium`), the sources and an optional
+   `explanation` ([format](collection-format.md), "A hypothetical placement"). Several placements of one entity
+   stand side by side as competing hypotheses. The format has no "about X within Y–Z": such a placement is
+   written as the window, and the explanation names the centre.
+2. **A character of a story takes no other dated statement**: a `Character` or `AnimalCharacter` with a dated
+   statement that is no placement is refused.
+3. **The page of the entity** shows its placements under the heading "Hypothetical placement in time", each with
+   its time, basis, confidence and explanation, and the sentence of section 5.5 that no historically verified
+   date exists.
+4. **The charts of time leave placements out** – the chart of a collection and of a name, the comparison, a
+   year and a stretch of time. Of the two ways the proposal allowed (a style of their own or none), this one
+   can never make a hypothesis look like a dated fact of history; a lane of placements of their own can follow
+   without a change of what is written.
 
-1. **A placement statement** for story collections, beside `dated`: the entity it places, the time (in the existing
-   time vocabulary – a year, `approximate`, a window), its `basis` (narrative, synchronism of a named source,
-   editorial hypothesis), a `confidence` word, the sources and a short explanation; several placements of one
-   entity stand side by side as competing hypotheses.
-2. **The comparison** draws placements in a lane of their own or with a distinct style, never as events of
-   history, with the wording of section 5.5.
-3. **The page of a character** shows its placements under a heading that says they are hypotheses, and its
-   narrative chronology (the reigns it spans) beside them.
-
-Until then, the narrative chronology (the reigns of the poem) and the synchronisms of the sources stay in words.
+The first placement is Rostam's hypothetical birth (`placement-rostam-birth`): the window 1500–1100 BCE, about
+1300 BCE, an editorial hypothesis of very low confidence. The sentence that carried it in his summary until
+then is taken out. The narrative chronology (the reigns of the poem) and the synchronisms of the sources stay
+in words.

@@ -202,6 +202,24 @@ manuscript was made, when a place was founded. The collection shows these statem
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage from which the statement is shown – not before its entity |
 | `reviewStatus` | `proposed`, `sourcedReviewPending`, `reviewed`, `disputed` or `withdrawn` |
+| `placement` | Optional: the statement is a hypothetical placement in time, not a date of history – see "A hypothetical placement" |
+
+### A hypothetical placement
+
+A figure or an event of legend or myth has no date of history. Where the editors still give it a place in time
+([ADR 0028](adr/0028-hypothetical-placement.md), [the chronology guidelines](content-chronology-guidelines.md)),
+the dated statement says so with `placement`:
+`"placement": { "basis": "editorialHypothesis", "confidence": "veryLow", "explanation": "…" }`. Such a statement
+has a `time` and no `quantity`. Several placements of one entity stand side by side as competing hypotheses. A
+character of a story (`Character`, `AnimalCharacter`) has no date of history: a dated statement of it is refused
+unless it is a placement. A placement is shown on the page of its entity under its own heading, with the sentence
+that no historically verified date exists; no chart or view of time draws it.
+
+| Field | Meaning |
+|---|---|
+| `basis` | What it rests on: `narrative` (the order of the story – the reigns or generations it tells), `synchronism` (the reckoning of a named source that fitted the tradition to another history), `editorialHypothesis` (a working hypothesis of the editors, not a scholarly estimate) |
+| `confidence` | `veryLow`, `low` or `medium` – never more: nothing of history verifies it |
+| `explanation` | Optional: why the time was chosen, in a sentence; a translation gives it as `explanation` of the statement |
 
 ### Disputed and withdrawn statements
 

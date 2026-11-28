@@ -8,7 +8,8 @@ namespace Vafadar.Dastan.Web.Site;
 /// The lanes of a chart of time made of names (step 9.4, D-092): one lane for a name, with what is stated about it
 /// with a time and what is said between it and another name with a time. The chart of time of a collection and the
 /// comparison a visitor makes of names of several collections build their lanes the same way. Nothing is added to
-/// what the projection gives, and nothing is dated that states no date.
+/// what the projection gives, and nothing is dated that states no date. A hypothetical placement in time (ADR 0028)
+/// is never laid on a lane: it is no date of history (<see cref="Entity.Stated"/> leaves it out).
 /// </summary>
 public static class TimelineLanes
 {
@@ -55,7 +56,7 @@ public static class TimelineLanes
                     Sources = Cited(time.Sources),
                     Review = ReviewStatus.SourcedReviewPending,
                 }),
-                .. subject.Dated.Where(dated => dated.Time is Period).Select(dated => new ComparisonPeriod
+                .. subject.Stated.Where(dated => dated.Time is Period).Select(dated => new ComparisonPeriod
                 {
                     Key = prefix + dated.Key,
                     Label = dated.Label,
@@ -83,7 +84,7 @@ public static class TimelineLanes
                     Sources = Cited(time.Sources),
                     Review = ReviewStatus.SourcedReviewPending,
                 }),
-                .. subject.Dated.Where(dated => dated.Time is not null and not Period).Select(dated => new ComparisonEvent
+                .. subject.Stated.Where(dated => dated.Time is not null and not Period).Select(dated => new ComparisonEvent
                 {
                     Key = prefix + dated.Key,
                     Label = dated.Label,
@@ -138,7 +139,7 @@ public static class TimelineLanes
         ArgumentNullException.ThrowIfNull(subject);
         ArgumentNullException.ThrowIfNull(view);
         var reaches = RecordTimes.Of(subject).Select(time => (TemporalExpression?)time.Time)
-            .Concat(subject.Dated.Select(dated => dated.Time))
+            .Concat(subject.Stated.Select(dated => dated.Time))
             .Concat(view.Held.Where(edge => edge.From.Id == subject.Id).Select(edge => edge.Relation.Time))
             .Select(time => YearCover.Reach(time)).OfType<YearSpan>().ToList();
         return reaches.Count == 0 ? null : new YearSpan(reaches.Min(reach => reach.From), reaches.Max(reach => reach.To));

@@ -63,7 +63,17 @@ public sealed class Entity
     /// something happened to it. A story has an order and no dates; this is for what really has one – when a
     /// work was written, when a manuscript was made.
     /// </summary>
+    /// <remarks>
+    /// It holds the hypothetical placements as well (ADR 0028); a view of time reads <see cref="Stated"/>, which
+    /// leaves them out, and the page of the entity shows <see cref="Placements"/> apart.
+    /// </remarks>
     public ImmutableArray<DatedStatement> Dated { get; init; } = [];
+
+    /// <summary>Gets the statements of <see cref="Dated"/> that are not hypothetical placements: what is stated of history.</summary>
+    public ImmutableArray<DatedStatement> Stated => [.. Dated.Where(dated => dated.Placement is null)];
+
+    /// <summary>Gets the hypothetical placements in time among <see cref="Dated"/> (ADR 0028), in the order of the collection.</summary>
+    public ImmutableArray<DatedStatement> Placements => [.. Dated.Where(dated => dated.Placement is not null)];
 
     /// <summary>
     /// Gets the other names of the entity: names it is also known by, names it had before, abbreviations, titles,
@@ -244,6 +254,56 @@ public sealed class DatedStatement
 
     /// <summary>Gets the reading level from which the statement may be shown; never before its entity.</summary>
     public required ReadingLevel Level { get; init; }
+
+    /// <summary>
+    /// Gets what makes the statement a hypothetical placement in time (ADR 0028), or <see langword="null"/> for
+    /// a statement of history. A placement is never a date of history: it is shown apart from what is dated and
+    /// is left out of every chart and view of time.
+    /// </summary>
+    public HypotheticalPlacement? Placement { get; init; }
+}
+
+/// <summary>What a hypothetical placement in time rests on (ADR 0028).</summary>
+public enum PlacementBasis
+{
+    /// <summary>The order of the story itself: the reigns or generations it tells.</summary>
+    Narrative = 0,
+
+    /// <summary>The reckoning of a named source that fitted the tradition to another history.</summary>
+    Synchronism = 1,
+
+    /// <summary>A working hypothesis of the editors of Dastan, not a scholarly estimate.</summary>
+    EditorialHypothesis = 2,
+}
+
+/// <summary>How much confidence the editors have in a hypothetical placement in time (ADR 0028).</summary>
+public enum PlacementConfidence
+{
+    /// <summary>Very low: one way of reading the tradition among others.</summary>
+    VeryLow = 0,
+
+    /// <summary>Low.</summary>
+    Low = 1,
+
+    /// <summary>Medium; a placement never has more, for nothing of history verifies it.</summary>
+    Medium = 2,
+}
+
+/// <summary>
+/// What makes a <see cref="DatedStatement"/> a hypothetical placement in time (ADR 0028): a time given to a
+/// figure or an event of legend or myth that has no date of history, with what it rests on and how much
+/// confidence it has. Several placements of one entity stand side by side as competing hypotheses.
+/// </summary>
+public sealed class HypotheticalPlacement
+{
+    /// <summary>Gets what the placement rests on.</summary>
+    public required PlacementBasis Basis { get; init; }
+
+    /// <summary>Gets how much confidence the editors have in it.</summary>
+    public required PlacementConfidence Confidence { get; init; }
+
+    /// <summary>Gets why the time was chosen, in a sentence, when the editors wrote one.</summary>
+    public LocalizedText? Explanation { get; init; }
 }
 
 /// <summary>What a <see cref="Relation"/> is a statement about, and where in the story it holds.</summary>

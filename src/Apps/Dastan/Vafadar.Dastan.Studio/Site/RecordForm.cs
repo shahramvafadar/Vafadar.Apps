@@ -612,7 +612,11 @@ public static class RecordForm
                 }
 
                 var texts = new JsonObject();
-                foreach (var name in DatedTexts)
+
+                // A text the form has no input for – the explanation of a hypothetical placement (ADR 0028) –
+                // is kept as the translation has it.
+                var others = (before[key] as JsonObject)?.Select(text => text.Key).Where(name => !DatedTexts.Contains(name)) ?? [];
+                foreach (var name in DatedTexts.Concat(others).ToList())
                 {
                     if (form.TryGetValue($"t.{language}.{Dated}[{index}].{name}", out var sent))
                     {

@@ -1050,6 +1050,33 @@
   <data name="Foreign_Note_Other" xml:space="preserve">
     <value>in the language of the collection</value>
   </data>
+  <data name="Entity_Placements" xml:space="preserve">
+    <value>Hypothetical placement in time</value>
+  </data>
+  <data name="Placement_Line" xml:space="preserve">
+    <value>{0} — hypothetical placement, {1}. {2}.</value>
+  </data>
+  <data name="Placement_Basis_Narrative" xml:space="preserve">
+    <value>based on the order of the story</value>
+  </data>
+  <data name="Placement_Basis_Synchronism" xml:space="preserve">
+    <value>based on the reckoning of a source that fitted the tradition to another history</value>
+  </data>
+  <data name="Placement_Basis_EditorialHypothesis" xml:space="preserve">
+    <value>an editorial working hypothesis of Dastan, not a scholarly estimate</value>
+  </data>
+  <data name="Placement_Confidence_VeryLow" xml:space="preserve">
+    <value>Confidence: very low</value>
+  </data>
+  <data name="Placement_Confidence_Low" xml:space="preserve">
+    <value>Confidence: low</value>
+  </data>
+  <data name="Placement_Confidence_Medium" xml:space="preserve">
+    <value>Confidence: medium</value>
+  </data>
+  <data name="Placement_NoDate" xml:space="preserve">
+    <value>No historically verified date exists.</value>
+  </data>
   <data name="Entity_Stated" xml:space="preserve">
     <value>What is stated</value>
   </data>

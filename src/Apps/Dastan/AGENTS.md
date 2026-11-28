@@ -44,8 +44,9 @@ for Dastan is added here in the same commit as the work it came with.
 * **Myth and history in time** (2026-11-28): legendary and mythological figures and events are placed in time only
   as [the chronology guidelines](docs/content-chronology-guidelines.md) say – narrative, literary, historical and
   hypothetical chronology kept apart, a legend's date marked as tradition, a hypothesis never written as a date of
-  history. Until the format can mark a hypothetical placement (the proposal in those guidelines), none is written
-  into a collection.
+  history. A hypothetical placement is written only as a dated statement marked with `placement`
+  ([ADR 0028](docs/adr/0028-hypothetical-placement.md)) – never as a year in a summary or a date of a character –
+  and no view of time draws it.
 
 ## 3. Architecture
 

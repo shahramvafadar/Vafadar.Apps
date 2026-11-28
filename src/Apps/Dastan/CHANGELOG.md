@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Hypothetical placements in time can now be stated as such, apart from dates of history; Rostam's birth stands
+  about 1300 BCE as an editorial hypothesis.
 - Rostam's hypothetical placement about 1300 BCE stated in words in his entry, as an editorial hypothesis of
   very low confidence.
 - A new story: the great war of Kay Khosrow, from the elephant throne to the king vanishing in the mountains.
