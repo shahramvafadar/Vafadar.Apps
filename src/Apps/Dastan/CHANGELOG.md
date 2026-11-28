@@ -4,6 +4,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A new story: Akvan the demon, from the poem on Ganjoor, scene by scene.
 - A new story: Bizhan and Manizheh, from the poem on Ganjoor, scene by scene.
 - A new story: Rostam and Esfandiar, from the poem on Ganjoor, scene by scene.
 - The new histories reviewed: every quote stands, the Persian is complete, two shared records corrected.

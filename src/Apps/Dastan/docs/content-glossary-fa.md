@@ -1137,6 +1137,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Abu Mansur Mohammad ibn Abd al-Razzaq | ابومنصور محمد بن عبدالرزاق |
 | Afrasiab | افراسیاب |
 | Aghriras | اغریرث |
+| Akvan | اکوان |
 | Ardashir | اردشیر |
 | Ardashir son of Shiruy | اردشیر شیروی |
 | Ardashir the Good | اردشیر نکوکار |

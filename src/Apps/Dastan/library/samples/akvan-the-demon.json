@@ -1,0 +1,675 @@
+{
+  "schemaVersion": "dastan-pilot-0.2",
+  "datasetId": "akvan-the-demon",
+  "worldId": "world-shahnameh",
+  "subjectId": "story-akvan",
+  "documentVersion": "0.1",
+  "preparedAt": "2026-11-28",
+  "status": "source_backed_editorial_sample_complete_arc",
+  "editionContext": {
+    "id": "edition-ganjoor-akvan-2026-11-28",
+    "workId": "work-shahnameh",
+    "baseText": "Ganjoor online transcription of Ferdowsi’s Shahnameh: the story of Akvan the demon, its one section.",
+    "baseUrl": "https://ganjoor.net/ferdousi/shahname/akvan",
+    "criticalPrintEdition": "Not independently established for this online transcription.",
+    "scope": "The story of Akvan the demon as the poem tells it, from the golden onager among Kay Khosrow’s herds to Rostam’s return with the demon’s head and Afrasiab’s elephants.",
+    "evidencePolicy": "Use actual verse for narrative assertions. Site-generated summaries are not the selected base text.",
+    "calendarMapping": null,
+    "summaryLanguage": "English",
+    "translationPolicy": "Original English paraphrases prepared for this collection; not a quoted modern translation.",
+    "editorialReview": "A specialist edition and verse-locator check remains pending before release."
+  },
+  "spoilerPolicy": {
+    "kind": "minimum_reader_progress_level",
+    "levels": [
+      {
+        "level": 0,
+        "label": "The golden onager"
+      },
+      {
+        "level": 1,
+        "label": "The demon"
+      },
+      {
+        "level": 2,
+        "label": "The herds of Afrasiab"
+      },
+      {
+        "level": 3,
+        "label": "The head of Akvan"
+      }
+    ],
+    "defaultLevel": 0,
+    "rule": "Show a record only when spoilerLevel is at or below the selected boundary and all other publication/access checks pass. Recompute graph layout, labels, counts, media and recommendations after filtering."
+  },
+  "publication": {
+    "state": "editorial_sample",
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "inputContract": {
+    "rawDatasetPubliclyServable": false,
+    "reviewerFilesPubliclyServable": false
+  },
+  "sources": [
+    {
+      "id": "src-ganjoor-akvan-index",
+      "title": "Ganjoor: the story of Akvan the demon, its sections",
+      "url": "https://ganjoor.net/ferdousi/shahname/akvan",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-akvan-s01",
+      "title": "Ganjoor: داستان اکوان دیو",
+      "url": "https://ganjoor.net/ferdousi/shahname/akvan/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0,
+      "passageLocator": "داستان اکوان دیو"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-index",
+      "title": "Ganjoor, Ferdowsi’s Shahnameh: the table of contents",
+      "url": "https://ganjoor.net/ferdousi/shahname",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "work-shahnameh",
+      "type": "Work",
+      "label": "The Shahnameh",
+      "summary": "The literary work in which the story of Akvan the demon is told.",
+      "sourceIds": [
+        "src-ganjoor-akvan-index",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-golha-ferdowsi",
+        "src-ganjoor-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ferdowsi"
+        },
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ferdowsi",
+      "type": "Person",
+      "label": "Ferdowsi",
+      "summary": "The poet of the Shahnameh.",
+      "sourceIds": [
+        "src-ganjoor-akvan-index",
+        "src-iranica-ferdowsi-i",
+        "src-golha-ferdowsi",
+        "src-agakhan-firdausi-court-poets"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1020
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The poet of the Shahnameh."
+        }
+      ]
+    },
+    {
+      "id": "story-akvan",
+      "type": "NarrativeArc",
+      "label": "Akvan the demon",
+      "summary": "The story of the golden onager that appears among the king’s herds, which Rostam recognizes as the demon Akvan, who carries him off sleeping and throws him into the sea.",
+      "sourceIds": [
+        "src-ganjoor-akvan-index"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "work-shahnameh"
+        }
+      ]
+    },
+    {
+      "id": "character-kay-khosrow",
+      "type": "Character",
+      "label": "Kay Khosrow",
+      "summary": "The king of Iran, who sees that the onager is no onager and sends Rostam against it.",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Iran"
+        }
+      ]
+    },
+    {
+      "id": "character-rostam",
+      "type": "Character",
+      "label": "Rostam",
+      "summary": "The champion, who hunts the onager for three days, is thrown into the sea by the demon, swims to shore, wins back Rakhsh and kills Akvan.",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Champion"
+        }
+      ]
+    },
+    {
+      "id": "character-akvan",
+      "type": "Character",
+      "label": "Akvan",
+      "summary": "A demon in the shape of a golden onager, who vanishes from the lasso and arrow and, turned to wind, lifts the sleeping Rostam into the air; the poet asks that he be understood as a man who does not thank God.",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 1,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Demon"
+        }
+      ]
+    },
+    {
+      "id": "character-rakhsh",
+      "type": "AnimalCharacter",
+      "label": "Rakhsh",
+      "summary": "Rostam’s horse, which strays among Afrasiab’s mares while Rostam is in the sea.",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "Horse of Rostam"
+        }
+      ]
+    },
+    {
+      "id": "character-afrasiab",
+      "type": "Character",
+      "label": "Afrasiab",
+      "summary": "The king of Turan, who comes to see his horses and loses his herds and four white elephants to Rostam.",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 2,
+      "facts": [
+        {
+          "fact": "role",
+          "text": "King of Turan"
+        }
+      ]
+    },
+    {
+      "id": "place-iran",
+      "type": "NarrativeRegion",
+      "label": "Iran",
+      "summary": "The kingdom of Kay Khosrow.",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 0
+    },
+    {
+      "id": "place-turan",
+      "type": "NarrativeRegion",
+      "label": "Turan",
+      "summary": "The kingdom of Afrasiab.",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 2
+    }
+  ],
+  "relations": [
+    {
+      "id": "relation-01",
+      "from": "story-akvan",
+      "to": "work-shahnameh",
+      "type": "partOf",
+      "label": "Part of",
+      "sourceIds": [
+        "src-ganjoor-akvan-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "work_structure",
+        "storyId": "story-akvan",
+        "eventIds": [],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-02",
+      "from": "person-ferdowsi",
+      "to": "work-shahnameh",
+      "type": "authorOf",
+      "label": "Poet",
+      "sourceIds": [
+        "src-ganjoor-akvan-index"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-03",
+      "from": "character-kay-khosrow",
+      "to": "place-iran",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-akvan",
+        "eventIds": [
+          "event-02"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    },
+    {
+      "id": "relation-04",
+      "from": "character-afrasiab",
+      "to": "place-turan",
+      "type": "leaderOf",
+      "label": "King of",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 2,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "relationship_revealed_in_beat",
+        "storyId": "story-akvan",
+        "eventIds": [
+          "event-07"
+        ],
+        "calendarPeriod": null,
+        "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
+      },
+      "directionality": "directed"
+    }
+  ],
+  "events": [
+    {
+      "id": "event-01",
+      "label": "The poet on wonders",
+      "summary": "The poet praises the Creator and says the world is full of wonders: the wise man who hears this old tale may not believe it, but will accept it once he remembers its meaning.",
+      "order": 1,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "person-ferdowsi",
+          "role": "narrator",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-02",
+      "label": "The onager among the herds",
+      "summary": "As Kay Khosrow feasts with Gudarz, Rostam, Giv and others, a herdsman reports an onager the colour of the sun that tears apart the stallions. The king knows it is no onager and asks Rostam to go, warning that it may be Ahriman.",
+      "order": 2,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 0,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "champion sent",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "place-iran",
+          "role": "court",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-03",
+      "label": "The onager that vanishes",
+      "summary": "Rostam searches three days and on the fourth sees it. He means to take it alive with his lasso, but it vanishes; he knows it must be the demon Akvan, and his arrow too finds nothing.",
+      "order": 3,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "hunter",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-akvan",
+          "role": "the onager",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "horse",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-04",
+      "label": "Carried off in sleep",
+      "summary": "Worn out, Rostam waters Rakhsh at a spring and sleeps. Akvan comes as a wind, cuts out the ground beneath him and lifts him into the air, then asks whether he wants to be thrown onto the mountains or into the sea.",
+      "order": 4,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-akvan",
+          "role": "abductor",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "sleeping champion",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-05",
+      "label": "Into the sea",
+      "summary": "Knowing a demon does the opposite of what is asked, Rostam asks to be thrown onto the mountain; Akvan throws him into the deep sea. Rostam draws his sword against the sea monsters and swims to land.",
+      "order": 5,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 1,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "swimmer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-akvan",
+          "role": "demon",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-06",
+      "label": "Rakhsh among Afrasiab’s mares",
+      "summary": "Back at the spring Rakhsh is gone. Rostam follows him on foot and finds him among Afrasiab’s mares, lassoes and saddles him, drives off the herd and kills two thirds of the herdsmen’s riders.",
+      "order": 6,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "champion",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rakhsh",
+          "role": "found horse",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-afrasiab",
+          "role": "owner of the herds",
+          "presence": "mentioned_only"
+        },
+        {
+          "entityId": "place-turan",
+          "role": "pasture",
+          "presence": "setting"
+        }
+      ]
+    },
+    {
+      "id": "event-07",
+      "label": "Afrasiab’s elephants",
+      "summary": "Afrasiab comes to see his horses with two thousand men, hears that Rostam alone took the herd and pursues him; Rostam rains blows on them and takes his four white elephants.",
+      "order": 7,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 2,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-afrasiab",
+          "role": "pursuer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "champion",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-08",
+      "label": "The death of Akvan",
+      "summary": "At the spring Akvan meets Rostam again and mocks him; Rostam strikes his head with his mace and cuts it off. The poet asks the reader to understand the demon as a man who does not thank God.",
+      "order": 8,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-rostam",
+          "role": "slayer",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-akvan",
+          "role": "demon slain",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    },
+    {
+      "id": "event-09",
+      "label": "The return to Kay Khosrow",
+      "summary": "Kay Khosrow comes out to meet Rostam with the royal banner; Rostam shares the herds among the Iranians, sends the elephants to the king and tells the story of Akvan at a feast of two weeks. The king gives him rich gifts, and Rostam returns home.",
+      "order": 9,
+      "orderBasis": "narrative",
+      "sourceIds": [
+        "src-ganjoor-akvan-s01"
+      ],
+      "spoilerLevel": 3,
+      "temporalExpression": {
+        "kind": "narrative_position",
+        "calendarMapping": null,
+        "duration": null
+      },
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "entityAssociations": [
+        {
+          "entityId": "character-kay-khosrow",
+          "role": "king",
+          "presence": "acts_in_selected_scenes"
+        },
+        {
+          "entityId": "character-rostam",
+          "role": "returning champion",
+          "presence": "acts_in_selected_scenes"
+        }
+      ]
+    }
+  ],
+  "media": []
+}
