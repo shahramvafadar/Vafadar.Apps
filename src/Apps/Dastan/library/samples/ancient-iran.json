@@ -1663,6 +1663,62 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-caesar-caesar-02",
+      "title": "Gaius Julius Caesar: Early career – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-02/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-livius-caesar-caesar-03",
+      "title": "Gaius Julius Caesar: Consul – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-03/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-mahmud",
+      "title": "Mahmud of Ghazna – Britannica",
+      "url": "https://www.britannica.com/biography/Mahmud-king-of-Ghazna",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-goshtasp-sh1",
+      "title": "Ganjoor, Ferdowsi’s Shahnameh: goshtasp/sh1",
+      "url": "https://ganjoor.net/ferdousi/shahname/goshtasp/sh1",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-daqiqi",
+      "title": "Daqiqi, Abu Mansur Ahmad – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/daqiqi/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-26",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -6030,14 +6086,21 @@
       "label": "Marcus Licinius Crassus",
       "summary": "A Roman general and one of the triumvirs, who invaded Parthia and was defeated and killed after the battle of Carrhae in 53 BCE.",
       "sourceIds": [
-        "src-livius-battle-carrhae-53-bce"
+        "src-livius-battle-carrhae-53-bce",
+        "src-livius-caesar-caesar-02",
+        "src-livius-caesar-caesar-03"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 115
+            }
           }
         },
         {
@@ -11052,7 +11115,10 @@
       "sourceIds": [
         "src-iranica-ghaznavids",
         "src-iranica-ziyarids",
-        "src-iranica-biruni-i"
+        "src-iranica-biruni-i",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-britannica-mahmud"
       ],
       "spoilerLevel": 0,
       "names": [
@@ -11066,7 +11132,12 @@
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 971
+            }
           }
         },
         {
@@ -11186,7 +11257,9 @@
       "label": "Daqiqi",
       "summary": "Abu Mansur Daqiqi, the poet who began versifying the Iranian national epic; Ferdowsi took up the task after his death.",
       "sourceIds": [
-        "src-iranica-ferdowsi-i"
+        "src-iranica-ferdowsi-i",
+        "src-ganjoor-goshtasp-sh1",
+        "src-iranica-daqiqi"
       ],
       "spoilerLevel": 0,
       "names": [
@@ -11206,7 +11279,13 @@
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 976,
+              "approximate": true
+            }
           }
         },
         {
@@ -11221,7 +11300,9 @@
       "label": "Ferdowsi",
       "summary": "Abu’l-Qasem Ferdowsi of Tus, who began the Shahnameh about 977 after the death of Daqiqi, completed a first version by 994 and finished the poem on 8 March 1010; he died in 1020 or 1025.",
       "sourceIds": [
-        "src-iranica-ferdowsi-i"
+        "src-iranica-ferdowsi-i",
+        "src-golha-ferdowsi",
+        "src-agakhan-firdausi-court-poets"
       ],
       "spoilerLevel": 0,
       "names": [
@@ -11235,13 +11316,8 @@
         {
           "fact": "born",
           "time": {
-            "kind": "occurrenceWindow",
-            "earliest": {
-              "frame": "calendar",
-              "era": "commonEra",
-              "year": 939
-            },
-            "latest": {
+            "kind": "occurrence",
+            "at": {
               "frame": "calendar",
               "era": "commonEra",
               "year": 940

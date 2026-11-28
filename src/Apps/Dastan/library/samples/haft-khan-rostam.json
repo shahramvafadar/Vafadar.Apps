@@ -220,16 +220,52 @@
       "accessedAt": "2026-11-27",
       "spoilerLevel": 5,
       "passageLocator": "بخش ۱۷ - بازگشت پیروزمندانهٔ کاووس به ایران، بخشش به رستم و برقراری داد و آبادی"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-index",
+      "title": "Ganjoor, Ferdowsi’s Shahnameh: the table of contents",
+      "url": "https://ganjoor.net/ferdousi/shahname",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
     {
       "id": "work-shahnameh",
       "type": "Work",
-      "label": "Shahnameh",
+      "label": "The Shahnameh",
       "summary": "The literary work in which the seven labours of Rostam are told.",
       "sourceIds": [
-        "src-ganjoor-kkavoos-index"
+        "src-ganjoor-kkavoos-index",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-golha-ferdowsi",
+        "src-ganjoor-index"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -240,7 +276,25 @@
         {
           "fact": "created",
           "time": {
-            "kind": "unknown"
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
           }
         }
       ]
@@ -251,20 +305,38 @@
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
-        "src-ganjoor-kkavoos-index"
+        "src-ganjoor-kkavoos-index",
+        "src-iranica-ferdowsi-i",
+        "src-golha-ferdowsi",
+        "src-agakhan-firdausi-court-poets"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1020
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
           }
         },
         {
@@ -424,7 +496,7 @@
     {
       "id": "place-sistan",
       "type": "NarrativeRegion",
-      "label": "Nimruz",
+      "label": "Sistan",
       "summary": "The land of Zal and Rostam, also called Sistan.",
       "sourceIds": [
         "src-ganjoor-kkavoos-s01"
@@ -433,6 +505,11 @@
       "names": [
         {
           "name": "Sistan",
+          "language": "en",
+          "kind": "alternative"
+        },
+        {
+          "name": "Nimruz",
           "language": "en",
           "kind": "alternative"
         }

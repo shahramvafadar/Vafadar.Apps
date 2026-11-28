@@ -292,16 +292,52 @@
       "accessedAt": "2026-11-27",
       "spoilerLevel": 5,
       "passageLocator": "بخش ۲۵ - فرجام داستان فرود: آگهی پیروزی به افراسیاب، جشن و خلعت و پند پیران"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-index",
+      "title": "Ganjoor, Ferdowsi’s Shahnameh: the table of contents",
+      "url": "https://ganjoor.net/ferdousi/shahname",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
     {
       "id": "work-shahnameh",
       "type": "Work",
-      "label": "Shahnameh",
+      "label": "The Shahnameh",
       "summary": "The literary work in which the story of Forud is told.",
       "sourceIds": [
-        "src-ganjoor-forood-index"
+        "src-ganjoor-forood-index",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-golha-ferdowsi",
+        "src-ganjoor-index"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -312,7 +348,25 @@
         {
           "fact": "created",
           "time": {
-            "kind": "unknown"
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
           }
         }
       ]
@@ -323,20 +377,38 @@
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
-        "src-ganjoor-forood-index"
+        "src-ganjoor-forood-index",
+        "src-iranica-ferdowsi-i",
+        "src-golha-ferdowsi",
+        "src-agakhan-firdausi-court-poets"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1020
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
           }
         },
         {
@@ -576,9 +648,9 @@
       ]
     },
     {
-      "id": "character-bahram",
+      "id": "character-bahram-pahlavan",
       "type": "Character",
-      "label": "Bahram",
+      "label": "Bahram son of Gudarz",
       "summary": "A warrior of Iran, son of Gudarz, once a companion of Siavash.",
       "sourceIds": [
         "src-ganjoor-forood-s04"
@@ -804,9 +876,9 @@
       "spoilerLevel": 4
     },
     {
-      "id": "character-human",
+      "id": "character-houman",
       "type": "Character",
-      "label": "Human",
+      "label": "Houman",
       "summary": "A Turanian hero, brother of Piran.",
       "sourceIds": [
         "src-ganjoor-forood-s22"
@@ -1069,7 +1141,7 @@
     {
       "id": "relation-09",
       "from": "character-gudarz",
-      "to": "character-bahram",
+      "to": "character-bahram-pahlavan",
       "type": "parentOf",
       "label": "Father of",
       "sourceIds": [
@@ -1290,7 +1362,7 @@
     },
     {
       "id": "relation-19",
-      "from": "character-bahram",
+      "from": "character-bahram-pahlavan",
       "to": "character-kabudeh",
       "type": "opponentOf",
       "label": "Enemies",
@@ -1378,7 +1450,7 @@
     },
     {
       "id": "relation-23",
-      "from": "character-human",
+      "from": "character-houman",
       "to": "character-fariborz",
       "type": "opponentOf",
       "label": "Enemies",
@@ -1423,7 +1495,7 @@
     {
       "id": "relation-25",
       "from": "character-tazhav",
-      "to": "character-bahram",
+      "to": "character-bahram-pahlavan",
       "type": "opponentOf",
       "label": "Enemies",
       "sourceIds": [
@@ -1445,7 +1517,7 @@
     {
       "id": "relation-26",
       "from": "character-giv",
-      "to": "character-bahram",
+      "to": "character-bahram-pahlavan",
       "type": "siblingOf",
       "label": "Brothers",
       "sourceIds": [
@@ -1679,7 +1751,7 @@
           "presence": "mentioned_only"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "friend to ask for",
           "presence": "mentioned_only"
         },
@@ -1764,7 +1836,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "lord passing by",
           "presence": "involved_in_selected_scenes"
         },
@@ -1798,7 +1870,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "rider sent up",
           "presence": "acts_in_selected_scenes"
         },
@@ -1832,7 +1904,7 @@
       "reviewStatus": "source_backed_editorial_review_pending",
       "entityAssociations": [
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior who recognizes",
           "presence": "acts_in_selected_scenes"
         },
@@ -1886,7 +1958,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior who reports",
           "presence": "acts_in_selected_scenes"
         },
@@ -1940,7 +2012,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior who warns",
           "presence": "involved_in_selected_scenes"
         },
@@ -2313,7 +2385,7 @@
       "reviewStatus": "source_backed_editorial_review_pending",
       "entityAssociations": [
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior who mourns",
           "presence": "acts_in_selected_scenes"
         },
@@ -2441,7 +2513,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior who reproaches",
           "presence": "acts_in_selected_scenes"
         },
@@ -2524,7 +2596,7 @@
       "reviewStatus": "source_backed_editorial_review_pending",
       "entityAssociations": [
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior on watch",
           "presence": "acts_in_selected_scenes"
         },
@@ -2818,7 +2890,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "Turanian who breaks the centre",
           "presence": "acts_in_selected_scenes"
         },
@@ -2887,7 +2959,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "Turanian who seeks the banner",
           "presence": "involved_in_selected_scenes"
         },
@@ -2897,7 +2969,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior who saves the crown",
           "presence": "acts_in_selected_scenes"
         },
@@ -2936,7 +3008,7 @@
       "reviewStatus": "source_backed_editorial_review_pending",
       "entityAssociations": [
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior alone on foot",
           "presence": "acts_in_selected_scenes"
         },
@@ -3000,7 +3072,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "dying warrior",
           "presence": "acts_in_selected_scenes"
         },

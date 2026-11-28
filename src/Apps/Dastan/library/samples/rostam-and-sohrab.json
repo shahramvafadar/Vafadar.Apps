@@ -324,19 +324,72 @@
       "accessedAt": "2026-11-23",
       "spoilerLevel": 3,
       "passageLocator": "بخش ۱۶ - شب پیش از نبرد فردا: گزارش رستم از زور سهراب و وصیت به زواره"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
     {
       "id": "work-shahnameh",
       "type": "Work",
-      "label": "Shahnameh",
+      "label": "The Shahnameh",
       "summary": "Ferdowsi’s epic, in which the story of Rostam and Sohrab stands.",
       "sourceIds": [
-        "src-ganjoor-index"
+        "src-ganjoor-index",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-golha-ferdowsi"
       ],
       "spoilerLevel": 0,
-      "labelFa": "شاهنامه"
+      "labelFa": "شاهنامه",
+      "facts": [
+        {
+          "fact": "created",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
+          }
+        }
+      ]
     },
     {
       "id": "story-rostam-sohrab",
@@ -542,9 +595,9 @@
       ]
     },
     {
-      "id": "character-human",
+      "id": "character-houman",
       "type": "Character",
-      "label": "Human",
+      "label": "Houman",
       "summary": "Turanian captain sent by Afrasiab.",
       "sourceIds": [
         "src-ganjoor-s06"
@@ -686,9 +739,9 @@
       ]
     },
     {
-      "id": "character-bahram",
+      "id": "character-bahram-pahlavan",
       "type": "Character",
-      "label": "Bahram",
+      "label": "Bahram son of Gudarz",
       "summary": "Iranian warrior.",
       "sourceIds": [
         "src-ganjoor-s08"
@@ -1424,7 +1477,7 @@
     },
     {
       "id": "relation-25",
-      "from": "character-human",
+      "from": "character-houman",
       "to": "character-sohrab",
       "type": "alliedWith",
       "label": "On the same side",
@@ -2040,7 +2093,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "captain sent",
           "presence": "acts_in_selected_scenes"
         },
@@ -2089,7 +2142,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "receives the captive",
           "presence": "involved_in_selected_scenes"
         },
@@ -2222,7 +2275,7 @@
           "presence": "mentioned_only"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "counsellor",
           "presence": "mentioned_only"
         },
@@ -2330,7 +2383,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "alarmed companion",
           "presence": "acts_in_selected_scenes"
         },
@@ -2374,7 +2427,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "at the banquet",
           "presence": "involved_in_selected_scenes"
         },
@@ -2609,7 +2662,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "companion",
           "presence": "acts_in_selected_scenes"
         },
@@ -2668,7 +2721,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "adviser",
           "presence": "acts_in_selected_scenes"
         },
@@ -2712,7 +2765,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "critic of the release",
           "presence": "acts_in_selected_scenes"
         }
@@ -2878,7 +2931,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-human",
+          "entityId": "character-houman",
           "role": "Turanian leader to be spared",
           "presence": "mentioned_only"
         },
@@ -2947,7 +3000,7 @@
           "presence": "deceased_subject"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "speaks counsel",
           "presence": "acts_in_selected_scenes"
         }

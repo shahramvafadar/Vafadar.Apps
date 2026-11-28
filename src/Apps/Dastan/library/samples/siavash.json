@@ -175,16 +175,52 @@
       "accessedAt": "2026-11-24",
       "spoilerLevel": 5,
       "passageLocator": "بخش ۱۴ - خبر قتل سیاوش، سوگ کاووس و رستم، کشتن سودابه و آغاز کین با سر بریدن ورازاد و سرخه"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-golha-ferdowsi",
+      "title": "Firdawsi – Golha project, people/587",
+      "url": "https://www.golha.co.uk/en/people/587",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-agakhan-firdausi-court-poets",
+      "title": "Firdausi and the Three Poets of Ghazna, AKM156 – Aga Khan Museum",
+      "url": "https://collections.agakhanmuseum.org/collection/artifact/firdausi-and-the-three-poets-of-ghazna-akm156",
+      "kind": "museum_object_record",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-ganjoor-index",
+      "title": "Ganjoor, Ferdowsi’s Shahnameh: the table of contents",
+      "url": "https://ganjoor.net/ferdousi/shahname",
+      "kind": "primary_literary_text_transcription",
+      "accessedAt": "2026-11-23",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
     {
       "id": "work-shahnameh",
       "type": "Work",
-      "label": "Shahnameh",
+      "label": "The Shahnameh",
       "summary": "The literary work in which the story of Siavash is told.",
       "sourceIds": [
-        "src-ganjoor-siavosh-index"
+        "src-ganjoor-siavosh-index",
+        "src-iranica-ferdowsi-i",
+        "src-agakhan-firdausi-court-poets",
+        "src-golha-ferdowsi",
+        "src-ganjoor-index"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -195,7 +231,25 @@
         {
           "fact": "created",
           "time": {
-            "kind": "unknown"
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 977,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1010
+              }
+            },
+            "continuity": "notAsserted"
           }
         }
       ]
@@ -206,20 +260,38 @@
       "label": "Ferdowsi",
       "summary": "The poet of the Shahnameh.",
       "sourceIds": [
-        "src-ganjoor-siavosh-index"
+        "src-ganjoor-siavosh-index",
+        "src-iranica-ferdowsi-i",
+        "src-golha-ferdowsi",
+        "src-agakhan-firdausi-court-poets"
       ],
       "spoilerLevel": 0,
       "facts": [
         {
           "fact": "born",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 940
+            }
           }
         },
         {
           "fact": "died",
           "time": {
-            "kind": "unknown"
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1020
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
           }
         },
         {
@@ -501,9 +573,9 @@
       ]
     },
     {
-      "id": "character-bahram",
+      "id": "character-bahram-pahlavan",
       "type": "Character",
-      "label": "Bahram",
+      "label": "Bahram son of Gudarz",
       "summary": "Iranian warrior, son of Gudarz.",
       "sourceIds": [
         "src-ganjoor-siavosh-s05"
@@ -599,7 +671,7 @@
     {
       "id": "character-forud",
       "type": "Character",
-      "label": "Farud",
+      "label": "Forud",
       "summary": "Son of Jarira.",
       "sourceIds": [
         "src-ganjoor-siavosh-s10"
@@ -775,14 +847,21 @@
       "spoilerLevel": 1
     },
     {
-      "id": "place-herat",
+      "id": "place-hari",
       "type": "NarrativePlace",
-      "label": "Herat",
+      "label": "Hari",
       "summary": "City on the army's route.",
       "sourceIds": [
         "src-ganjoor-siavosh-s05"
       ],
-      "spoilerLevel": 2
+      "spoilerLevel": 2,
+      "names": [
+        {
+          "name": "Herat",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ]
     },
     {
       "id": "place-balkh",
@@ -836,7 +915,7 @@
     },
     {
       "id": "place-khotan",
-      "type": "NarrativePlace",
+      "type": "NarrativeRegion",
       "label": "Khotan",
       "summary": "City of Piran.",
       "sourceIds": [
@@ -1148,7 +1227,7 @@
     {
       "id": "relation-14",
       "from": "character-gudarz",
-      "to": "character-bahram",
+      "to": "character-bahram-pahlavan",
       "type": "parentOf",
       "label": "Father of",
       "sourceIds": [
@@ -1169,7 +1248,7 @@
     },
     {
       "id": "relation-15",
-      "from": "character-bahram",
+      "from": "character-bahram-pahlavan",
       "to": "character-siavash",
       "type": "alliedWith",
       "label": "On the same side",
@@ -2054,7 +2133,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior chosen for the army",
           "presence": "mentioned_only"
         },
@@ -2284,7 +2363,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "confidant of the prince",
           "presence": "acts_in_selected_scenes"
         },
@@ -2343,7 +2422,7 @@
           "presence": "acts_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "warrior left in charge of the army",
           "presence": "acts_in_selected_scenes"
         },
@@ -3102,7 +3181,7 @@
           "presence": "involved_in_selected_scenes"
         },
         {
-          "entityId": "character-bahram",
+          "entityId": "character-bahram-pahlavan",
           "role": "noble at the gathering",
           "presence": "involved_in_selected_scenes"
         },
