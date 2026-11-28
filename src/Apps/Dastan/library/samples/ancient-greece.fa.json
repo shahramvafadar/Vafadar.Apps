@@ -103,7 +103,7 @@
       "label": "آنتیگونوس دوم گوناتاس",
       "summary": "پادشاه آنتیگونی مقدونیه از ۲۷۶ تا ۲۳۹ پیش از میلاد."
     },
-    "person-demetrius-ii": {
+    "person-demetrius-ii-of-macedon": {
       "label": "دمتریوس دوم",
       "summary": "پادشاه آنتیگونی مقدونیه از ۲۳۹ تا ۲۲۹ پیش از میلاد."
     },
@@ -288,10 +288,10 @@
     "relation-antigonus-ii-member-of-antigonid": {
       "label": "از خاندان"
     },
-    "relation-demetrius-ii-holder-of-king-of-macedonia": {
+    "relation-demetrius-ii-of-macedon-holder-of-king-of-macedonia": {
       "label": "پادشاه"
     },
-    "relation-demetrius-ii-member-of-antigonid": {
+    "relation-demetrius-ii-of-macedon-member-of-antigonid": {
       "label": "از خاندان"
     },
     "relation-antigonus-iii-holder-of-king-of-macedonia": {

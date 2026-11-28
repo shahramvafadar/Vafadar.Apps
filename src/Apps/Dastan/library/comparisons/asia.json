@@ -1,0 +1,5032 @@
+{
+  "formatVersion": "dastan-comparison-0.1",
+  "id": "asia",
+  "status": "draft",
+  "note": "Built from the collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. An event two collections share stands in both lanes. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year, and a period that begins and ends in the same year.",
+  "frame": "commonEraYears",
+  "title": "Iran, India and China side by side",
+  "summary": "Iran, India and China: the Indus civilization beside the Elamites and the first Chinese cultures, the Persians and Alexander in the Punjab, the Mauryas and the Han, the Guptas and the Sasanians, Harsha and the Tang, to the Ghaznavids and the Northern Song – every dated period and event of the three collections.",
+  "show": {
+    "from": {
+      "frame": "calendar",
+      "era": "beforeCommonEra",
+      "year": 3000
+    },
+    "to": {
+      "frame": "calendar",
+      "era": "commonEra",
+      "year": 1030
+    }
+  },
+  "publication": {
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "lanes": [
+    {
+      "key": "iran",
+      "label": "Iran",
+      "periods": [
+        {
+          "key": "iran-shahr-i-sokhta",
+          "label": "The Burnt City inhabited",
+          "summary": "Shahr-i Sokhta was founded around 3200 BCE and inhabited through four periods until 1800 BCE, one of the first complex societies of eastern Iran.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3200,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1800
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-unesco-shahr-i-sokhta"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-proto-elamite",
+          "label": "The Proto-Elamite period",
+          "summary": "From about 3200 BCE numerical and then proto-Elamite tablets appear at Susa and across the plateau as far as Shahr-i Sokhta; the undeciphered script remained in use until about 2700 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3200,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2700,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-awan-shimashki",
+          "label": "Awan and Šimaški",
+          "summary": "The kings of Awan and Šimaški, who ruled Elam from about 2400 to 1970 BCE, the first two dynasties of the Old Elamite period; a king list from Susa names them without the years of their reigns.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2400,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1970,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-content-awan-king-list",
+            "src-livius-place-susa",
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-old-elamite",
+          "label": "The Old Elamite period",
+          "summary": "The age of the three dynasties of Awan, Šimaški and the Epartids (sukkalmahs), about 2400 to 1600 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2400,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1600,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-awan-dynasty",
+          "label": "The Awan dynasty",
+          "summary": "The first Old Elamite dynasty, about 2400 to 2100 BCE, partly contemporary with Sargon of Akkad; its last king Puzur-Inšušinak reigned in the time of Ur-Nammu.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2400,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2100,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i",
+            "src-iranica-awan"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-simashki-dynasty",
+          "label": "The Šimaški dynasty",
+          "summary": "The second Old Elamite dynasty, about 2100 to 1970 BCE, whose king Kindattu conquered Ur in 2004 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2100,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1970,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-epartid-dynasty",
+          "label": "The Epartids (sukkalmahs)",
+          "summary": "The third Old Elamite dynasty, about 1970 to 1600 BCE, named after its founder Eparti and called “of the sukkalmahs” after the title of its rulers; contemporary with the Old Babylonian period.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1970,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1600,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-middle-elamite",
+          "label": "Middle Elamite period",
+          "summary": "The age of the Kidinuids, the Igehalkids and the Šutrukids, about 1500 to 1100 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1500,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1100,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-place-ansan-tell-malyan",
+            "src-livius-place-susa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-neo-elamite",
+          "label": "The Neo-Elamite period",
+          "summary": "The last age of Elam, from 1100 to 539 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1100
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 539
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-median-kingdom",
+          "label": "The Median kingdom",
+          "summary": "The time of the Median kings as Herodotus counts them, from Deioces to the fall of Astyages; the years are computed from his figures, which scholars regard as suspect.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 700
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 699
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 550
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 549
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-people-medes",
+            "src-livius-medes-medes-2"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-achaemenid",
+          "label": "The Achaemenid period",
+          "summary": "From the victory of Cyrus over Astyages in 550 BCE to the death of Darius III in 330 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 550
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 330
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-achaemenids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-seleucid-iran",
+          "label": "Alexander and the Seleucids in Iran",
+          "summary": "From Alexander’s rule over the former Achaemenid empire to the loss of Media, Babylonia and Elam to the Parthians between about 143 and 139 BCE and finally in 129 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 330
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 129
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-seleucids",
+            "src-livius-person-demetrius-ii-nicator",
+            "src-livius-person-antiochus-vii-sidetes"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-arsacid",
+          "label": "The Arsacid period",
+          "summary": "The rule of the Arsacid kings of Parthia, from Arsaces I to 224 CE. The dates follow the chronology of G.R.F. Assar that Livius uses.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 247
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 224
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-arsaces-i",
+            "src-livius-place-parthia"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-sasanian",
+          "label": "The Sasanian period",
+          "summary": "The rule of the Sasanian kings, from the revolt of Ardašir in 224 to the death of Yazdgard III in 651 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 224
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 651
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-sasanians-sasanian-kings",
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-umayyad-caliphate",
+          "label": "The Umayyad caliphate",
+          "summary": "The first great Muslim dynasty to rule the empire of the caliphate, from 661 to 750; Iran was governed as provinces of this Arab empire.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 661
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 750
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-umayyad-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-abbasid-caliphate",
+          "label": "The Abbasid caliphate before the Seljuks",
+          "summary": "From the establishment of the Abbasids in 750 until Toghril Beg’s Seljuks entered Baghdad in 1055; within it the Iranian dynasties rose in the east and the Buyids held the caliphs in tutelage.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 750
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1055
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-iranica-abbasid-caliphate"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "iran-first-settlement-at-susa",
+          "label": "People settle at Susa",
+          "summary": "Excavations show people living on the acropolis of Susa in 5000 BCE and urban structures about 4000 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 5000
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-susa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-elamites-conquer-ur",
+          "label": "The Elamites conquer Ur",
+          "summary": "In 2004 BCE the Elamites, allied with the people of Susiana under Kindattu of Šimaški, conquered Ur, ended its empire and led its king Ibbi-Sin away as a prisoner.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 2004
+            }
+          },
+          "sourceIds": [
+            "src-iranica-elam-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-sack-of-susa",
+          "label": "The Assyrian sack of Susa",
+          "summary": "Aššurbanipal destroyed Susa and the sanctuary of Dur-Untaš. The Livius pages differ on the year: 646 BCE, between 645 and 640 BCE, or the subjection of Elam in 643 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 646
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 640
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-assurbanipal",
+            "src-livius-place-susa",
+            "src-livius-place-elam"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-fall-of-nineveh",
+          "label": "The fall of Nineveh",
+          "summary": "The Medes under Cyaxares and the Babylonians captured the Assyrian capital Nineveh in July 612 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 612
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cyaxares",
+            "src-livius-people-medes"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-cyrus-defeats-astyages",
+          "label": "Cyrus defeats Astyages",
+          "summary": "Cyrus rose against his overlord Astyages of Media; the army of Astyages revolted and handed him over, and Cyrus took Ecbatana. Livius gives 550 BCE, and mentions a chronology of 554/553.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 550
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-achaemenids",
+            "src-livius-person-cyrus-the-great",
+            "src-livius-person-astyages"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-conquest-of-lydia",
+          "label": "Cyrus conquers Lydia",
+          "summary": "Cyrus defeated Croesus of Lydia and took Sardis. The traditional year 547 BCE rests on a reading of the Nabonidus Chronicle that most scholars now doubt; it was perhaps later.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 547,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cyrus-the-great",
+            "src-livius-person-croesus",
+            "src-livius-place-sardes"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-capture-of-babylon",
+          "label": "Cyrus takes Babylon",
+          "summary": "In October 539 BCE Cyrus captured Babylon and the Neo-Babylonian king Nabonidus, and appointed his son Cambyses king of Babylon.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 539
+            }
+          },
+          "sourceIds": [
+            "src-livius-cyrus-the-great-cyrus-takes-babylon",
+            "src-livius-place-babylon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-conquest-of-egypt",
+          "label": "Cambyses conquers Egypt",
+          "summary": "In 525 BCE Cambyses II conquered Egypt; the pharaoh Psammetichus III was captured alive.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 525
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cambyses-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-darius-seizes-power",
+          "label": "Darius seizes power",
+          "summary": "On 29 September 522 BCE Darius and six noblemen killed the king whom Darius calls the usurper Gaumâta; Darius then fought nineteen battles in one year against rebels from Persia, Elam, Media, Babylonia and other lands, the last revolt ending in December 521 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 522
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-darius-the-great",
+            "src-livius-darius-the-great-5-civil-war"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-thermopylae",
+          "label": "The battle of Thermopylae",
+          "summary": "In September 480 BCE the army of Xerxes defeated the Greeks under the Spartan king Leonidas at the pass of Thermopylae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-thermopylae-480-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-salamis",
+          "label": "The battle of Salamis",
+          "summary": "At the end of September 480 BCE the Greek fleet defeated the Persian fleet at Salamis, while Xerxes watched from a hill.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-salamis-480-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-plataea",
+          "label": "The battle of Plataea",
+          "summary": "In the summer of 479 BCE the Greeks under Pausanias defeated the Persian army of Mardonius near Plataea.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 479
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-plataea-479-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-cunaxa",
+          "label": "The battle of Cunaxa",
+          "summary": "In 401 BCE Cyrus the Younger, with an army including Greek mercenaries, fought his brother Artaxerxes II at Cunaxa near Babylon; his army won, but Cyrus fell.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 401
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-cyrus-the-younger",
+            "src-livius-dynasty-achaemenids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-reconquest-of-egypt",
+          "label": "The reconquest of Egypt",
+          "summary": "In 343 BCE the generals of Artaxerxes III, Bagoas and Mentor of Rhodes, reconquered Egypt.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 343
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-artaxerxes-iii-ochus",
+            "src-livius-dynasty-achaemenids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-issus",
+          "label": "The battle of Issus",
+          "summary": "In November 333 BCE Alexander defeated Darius III near Issus.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 333
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-issus",
+            "src-livius-person-darius-iii-codomannus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-gaugamela",
+          "label": "The battle of Gaugamela",
+          "summary": "On 1 October 331 BCE Alexander defeated Darius III at Gaugamela in northern Iraq.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 331
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-gaugamela-331-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-burning-of-persepolis",
+          "label": "The burning of Persepolis",
+          "summary": "Alexander captured Persepolis in the first weeks of 330 BCE and burnt several palace buildings in April 330 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 330
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-persepolis",
+            "src-livius-alexander-the-great-alexander-2-10"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-death-of-darius-iii",
+          "label": "The death of Darius III",
+          "summary": "In July 330 BCE Darius III, fleeing from Alexander, was murdered by his own courtiers at Choara near modern Damghan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 330
+            }
+          },
+          "sourceIds": [
+            "src-livius-alexander-the-great-alexander-2-10",
+            "src-livius-person-darius-iii-codomannus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-susa-weddings",
+          "label": "The weddings at Susa",
+          "summary": "In March 324 BCE Alexander held a mass wedding at Susa where his officers married Iranian women by Persian rites; Alexander married a daughter of Darius III, and Seleucus married Apame.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 324
+            }
+          },
+          "sourceIds": [
+            "src-livius-alexander-the-great-alexander-2-15",
+            "src-livius-person-seleucus-i-nicator"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-eastern-campaign-antiochus-iii",
+          "label": "The eastern campaign of Antiochus III",
+          "summary": "Antiochus III campaigned in the east, forcing Arsaces II of Parthia (209 BCE) and the king of Bactria to accept his overlordship. Livius dates the campaign 212–205 BCE on one page and 209–204 on another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 212
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 204
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-antiochus-iii-the-great",
+            "src-livius-dynasty-seleucids",
+            "src-livius-person-arsaces-iii-phriapatius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-parthians-take-babylonia",
+          "label": "The Parthians take Babylonia",
+          "summary": "Mithradates I of Parthia captured Seleucia, the Seleucid capital in Babylonia, in 141 BCE – between April and June according to one Livius page, in July according to another – after taking Media; Susa followed in 139 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 141
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-demetrius-ii-nicator",
+            "src-livius-dynasty-seleucids",
+            "src-livius-person-arsaces-vi-mithradates-i-the-great"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-defeat-of-antiochus-vii",
+          "label": "The defeat of Antiochus VII",
+          "summary": "In 130 BCE Antiochus VII drove the Parthians out of Babylonia and Media; in 129 BCE they defeated him, he took his own life, and the Parthians retook all Seleucid territory in Iran.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 129
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-antiochus-vii-sidetes",
+            "src-livius-person-arsaces-vii-phraates-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-carrhae",
+          "label": "The battle of Carrhae",
+          "summary": "In 53 BCE the Parthian army under Surena defeated the Roman army of Crassus on the plain east of Carrhae; Crassus was killed after a meeting with Surena.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 53
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-carrhae-53-bce",
+            "src-livius-person-arsaces-xix-orodes-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-antony-parthian-war",
+          "label": "Antony’s Parthian war",
+          "summary": "In 36 BCE the Roman Mark Antony invaded the Parthian empire and failed; another Livius page connects his eastern campaigns with 34/33 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 36
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-mark-antony",
+            "src-livius-misc-parthian-empire"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-return-of-standards",
+          "label": "The return of the Roman standards",
+          "summary": "In 20 BCE the Parthians gave back to Rome the standards they had taken from Roman armies; Augustus records it in his Res Gestae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 20
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-carrhae-53-bce",
+            "src-livius-content-augustus-res-gestae"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-armenia-settlement",
+          "label": "The settlement over Armenia",
+          "summary": "After a Roman army surrendered to the Parthians at Rhandeia (about 62 CE), Rome and Vologases I agreed in 63 CE that his brother Tiridates would be king of Armenia.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 63
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-vologases-i",
+            "src-livius-domitius-corbulo-domitius-corbulo-2"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-trajan-takes-ctesiphon",
+          "label": "Trajan takes Ctesiphon",
+          "summary": "In Trajan’s war against Osroes I (114–117), the Romans took Babylon, Seleucia and Ctesiphon in 116; after Trajan’s death in 117 Hadrian gave up the conquests.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 116
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-osroes-i",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-ctesiphon-taken-164",
+          "label": "The Romans take Ctesiphon under Vologases IV",
+          "summary": "In the war that began over Armenia in 161, the Roman general Avidius Cassius took the Parthian capital; Livius dates it to 164 on one page and 165 on another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 164
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 165
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-vologases-iv",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-severus-takes-ctesiphon",
+          "label": "Septimius Severus takes Ctesiphon",
+          "summary": "In a new war with Vologases V, the emperor Septimius Severus took Seleucia and Ctesiphon; Livius dates it to 197 on one page and 198 on another. He then failed to take Hatra.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 197
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 198
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-vologases-v",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-artabanus-defeats-macrinus",
+          "label": "Artabanus IV against Macrinus at Nisibis",
+          "summary": "After Caracalla’s attack and murder, Artabanus IV met the new emperor Macrinus near Nisibis in 217; the sources present it as a Roman defeat, and Rome paid an indemnity.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 217
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-artabanus-iv",
+            "src-livius-person-vologases-vi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-ardashir-defeats-artabanus",
+          "label": "Ardašir defeats Artabanus IV",
+          "summary": "Artabanus IV marched against the insurrection of Ardašir in Persis in 224 and was defeated; a relief near Firuzabad shows the victory. It marks the beginning of the Sasanian empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 224
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-ardasir-khureh-firuzabad",
+            "src-livius-person-vologases-vi",
+            "src-livius-place-istakhr"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-ardashir-takes-ctesiphon",
+          "label": "Ardašir takes Ctesiphon",
+          "summary": "Two years after his victory, Ardašir took Ctesiphon, the Parthian capital, and was recognised as ruler of the former Parthian empire; Ctesiphon became the city where Sasanian kings were inaugurated.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 226
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-ardasir-i",
+            "src-livius-place-ctesiphon",
+            "src-livius-dynasty-sasanians",
+            "src-livius-place-ardasir-khureh-firuzabad"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-war-with-rome-230",
+          "label": "Ardašir’s war with Rome begins",
+          "summary": "Ardašir’s siege of Nisibis began a long war with Rome; Livius dates the siege to 230 on its page on Ardašir and the first fighting on the Euphrates to 231 on its page on the Sasanians.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 230
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 231
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-ardasir-i",
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-defeat-of-gordian-iii",
+          "label": "The defeat and death of Gordian III",
+          "summary": "The emperor Gordian III invaded Mesopotamia in 244, was defeated near Ctesiphon and died – killed in action, or lynched by his soldiers, as the Livius pages differ; his successor Philip made a peace that left Armenia to the Persians.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 244
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-shapur-i",
+            "src-livius-person-gordian-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-capture-of-valerian",
+          "label": "Shapur captures Valerian",
+          "summary": "In 260 Shapur I defeated the Roman emperor Valerian and took him captive; reliefs at Bishapur and Naqš-e Rustam show the triumph, and the captured soldiers built Bishapur.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 260
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-valerian",
+            "src-livius-person-shapur-i",
+            "src-livius-place-bishapur"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-carus-takes-ctesiphon",
+          "label": "Carus takes Ctesiphon",
+          "summary": "The emperor Carus took Ctesiphon in 283; Bahram II lost the war and with it Armenia and northern Mesopotamia.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 283
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-ctesiphon",
+            "src-livius-person-bahram-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-treaty-of-nisibis-298",
+          "label": "The peace of 298",
+          "summary": "After Galerius defeated Narseh, a treaty concluded at Nisibis in 298 made the Persians give up territories in northern Mesopotamia and gave Rome lands east of the Tigris.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 298
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-galerius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-shapur-ii-takes-amida",
+          "label": "Shapur II takes Amida",
+          "summary": "The Sasanian king Shapur II captured the Roman city of Amida in 359.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 359
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-julian-the-apostate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-death-of-julian",
+          "label": "The death of Julian and the peace of 363",
+          "summary": "The emperor Julian invaded Mesopotamia and reached Ctesiphon, but was defeated by Shapur II and killed in action on 26 June 363; his successor Jovian made a peace that gave up Nisibis and other eastern lands.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 363
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-julian-the-apostate",
+            "src-livius-person-jovian",
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-shapur-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-division-of-armenia",
+          "label": "Armenia divided",
+          "summary": "In 387 Shapur III made peace with Rome, and Armenia was divided between the two empires.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 387
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-shapur-iii",
+            "src-livius-person-bahram-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-bahram-v-takes-throne",
+          "label": "Bahram V takes the throne with Lakhmid help",
+          "summary": "Bahram V, brought up at the Lakhmid court of Hira, gained the throne at Ctesiphon in 420 with the help of the Lakhmid king against the nobles who had killed his brother Shapur.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 420
+            }
+          },
+          "sourceIds": [
+            "src-iranica-lakhmids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-war-of-421",
+          "label": "Bahram V’s war with Rome",
+          "summary": "A brief war between Bahram V and the Romans in 421–422.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 421
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 422
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-bahram-v"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-yazdgard-ii-invades-armenia",
+          "label": "Yazdgard II invades Roman Armenia",
+          "summary": "In 451 Yazdgard II invaded the Roman province of Armenia; the borders in the end remained unchanged.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 451
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-death-of-peroz",
+          "label": "Peroz I killed in battle",
+          "summary": "Peroz I was killed in action in 484 – Livius places the war in the northeast on one page and on the northwestern frontier on another – which brought a crisis on the Sasanian empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 484
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-peroz-i",
+            "src-livius-person-kavad-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-peroz-against-the-hephthalites",
+          "label": "Peroz’s campaigns against the Hephthalites",
+          "summary": "Peroz I led three disastrous campaigns against the Hephthalites: in the first he was forced to surrender, in the third, in 484, he died with his cavalry in a hidden ditch. The Shahnameh gives the fullest account of his defeats.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 484
+            }
+          },
+          "sourceIds": [
+            "src-iranica-hephthalites",
+            "src-livius-person-peroz-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-kavad-takes-amida",
+          "label": "Kavad I takes Amida",
+          "summary": "Kavad I attacked the Byzantine empire and captured Amida in 502/503; a second Roman attempt in the winter of 505 recovered it, but the Romans had to pay the Persian garrison to leave.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 502
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 503
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-kavad-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-suppression-of-mazdakism",
+          "label": "The Mazdakites suppressed",
+          "summary": "Khusrau I suppressed the religious movement called Mazdakism in the 530s; its adherents may have fled to Arabia.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 530
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 539
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-khusrau-i-takes-antioch",
+          "label": "Khusrau I takes Antioch",
+          "summary": "In 540 Khusrau I conquered Antioch, the capital of Roman Syria, and settled its people in a new city near Ctesiphon, \"Khusrau’s Antioch\".",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 540
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-defeat-of-the-hephthalites",
+          "label": "The Hephthalites crushed near Bukhara",
+          "summary": "Between 558 and 561 Khusrau I, acting with the newly arrived Turks, crushed the Hephthalites in a great battle near Bukhara, and the two powers divided their land along the Oxus.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 558
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 561
+            }
+          },
+          "sourceIds": [
+            "src-iranica-hephthalites"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-revolt-of-bahram-vi",
+          "label": "The revolt of Bahram VI",
+          "summary": "In 590 the general Bahram VI revolted and marched west; Hormizd IV was executed and his son Khusrau II fled to the Byzantines, who brought him back in 591.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 590
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-bahram-vi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-end-of-the-lakhmids",
+          "label": "The end of the Lakhmids",
+          "summary": "Khusrau II had the Lakhmid king Noʿmān III killed in 602 and soon after brought Hira under direct Persian rule, removing the Arab bulwark of Iraq.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 602
+            }
+          },
+          "sourceIds": [
+            "src-iranica-lakhmids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-battle-of-dhu-qar",
+          "label": "The battle of Ḏu Qār",
+          "summary": "In 604 the Banu Bakr defeated a Persian force at Ḏu Qār, which Tabari saw as a consequence of Khusrau II’s action against Noʿmān.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 604
+            }
+          },
+          "sourceIds": [
+            "src-iranica-lakhmids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-sui-embassy-to-khusrau-ii",
+          "label": "The Sui and Khusrau II exchange embassies",
+          "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 605
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 617
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-persians-take-jerusalem",
+          "label": "The Persians take Jerusalem",
+          "summary": "The armies of Khusrau II under Shahrbaraz took Antioch in 612 and Damascus in 613, and sacked Jerusalem in 614, carrying off the relic of the True Cross.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 614
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-persians-take-alexandria",
+          "label": "The Persians take Alexandria",
+          "summary": "The armies of Khusrau II invaded Egypt and captured Alexandria in 619, cutting the corn supply of Constantinople.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 619
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-siege-of-constantinople-626",
+          "label": "The Persians before Constantinople",
+          "summary": "In 626 Persian forces under Shahrbaraz reached the Asian shore of the Bosphorus, a mile from Constantinople, while the Avars besieged the city; they could not take it.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 626
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-shahrbaraz",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-battle-of-nineveh-627",
+          "label": "Heraclius defeats the Persians near Nineveh",
+          "summary": "In December 627 Heraclius, who had invaded Mesopotamia, defeated a large Persian army near the ruins of Nineveh.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 627
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius",
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-fall-of-khusrau-ii",
+          "label": "The fall of Khusrau II",
+          "summary": "After the defeat, the army mutinied; early in 628 the crown prince Sheroe imprisoned his father Khusrau II, who died soon after, and became king as Kavad II.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 628
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-kavad-ii",
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-return-of-the-true-cross",
+          "label": "The True Cross returned to Jerusalem",
+          "summary": "After peace was made, Heraclius returned the relic of the True Cross to Jerusalem in 630.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 630
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius",
+            "src-livius-dynasty-sasanians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-arabs-invade-mesopotamia",
+          "label": "The first Arab invasion of Mesopotamia",
+          "summary": "In 633 an army of Christians and Muslims invaded Mesopotamia; a Sasanian counteroffensive was followed by an Arab one.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 633
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-arabs-take-ctesiphon",
+          "label": "The Arabs take Ctesiphon",
+          "summary": "The Arabs captured Ctesiphon, the beginning of their conquest of Mesopotamia; Livius dates it to 636 on its page on the Sasanians and to 637 on its page on Ctesiphon.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 636
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 637
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-place-ctesiphon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-yazdgard-iii-embassy-to-china",
+          "label": "Yazdgard III sends an embassy to China",
+          "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 638
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-battle-of-nehavand",
+          "label": "The battle of Nehavand",
+          "summary": "The Arabs invaded Iran and defeated Yazdgard III at Nehavand, after which he retreated to the northeast; Livius dates it to 641 on one page and 642 on another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-fall-of-istakhr",
+          "label": "The Arabs take Istakhr",
+          "summary": "The walled city of Istakhr repulsed a first Arab attack in about 644, but was captured and sacked in about 650.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 650,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-istakhr"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-death-of-yazdgard-iii",
+          "label": "The death of Yazdgard III",
+          "summary": "Yazdgard III, the last Sasanian king, died as a fugitive in 651, ten years after Nehavand; with him the Sasanian empire ended.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 651
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-sasanians",
+            "src-livius-person-yazdgard-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-peroz-iii-at-the-tang-court",
+          "label": "Peroz, son of Yazdgard III, at the Tang court",
+          "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 670
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 673
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-abbasid-revolution",
+          "label": "The Abbasid revolution",
+          "summary": "On 15 June 747 Abu Muslim raised the banner of revolt in Khorasan; it triumphed in 750 when the last Umayyad caliph Marwan II was defeated and killed, and the Abbasids took the caliphate.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 747
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 750
+            }
+          },
+          "sourceIds": [
+            "src-britannica-abu-muslim",
+            "src-iranica-abbasid-caliphate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-battle-of-talas",
+          "label": "The battle of the Talas River",
+          "summary": "In 751 the Arabs defeated the Tang armies on the Talas River, establishing Arab dominance in Transoxania.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 751
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i",
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-death-of-abu-muslim",
+          "label": "The death of Abu Muslim",
+          "summary": "Suspicious of a vassal with so much power, the caliph al-Mansur took Khorasan from Abu Muslim and had him put to death at court in February 755; his unavenged death inspired many later revolts.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            }
+          },
+          "sourceIds": [
+            "src-britannica-abu-muslim"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-founding-of-baghdad",
+          "label": "The founding of Baghdad",
+          "summary": "In 762 Baghdad was founded on the Tigris as the capital of the Abbasid caliphs.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 762
+            }
+          },
+          "sourceIds": [
+            "src-britannica-baghdad"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-mamun-defeats-amin",
+          "label": "al-Maʾmun defeats his brother Amin",
+          "summary": "From his governorate in Marv, with the men and resources of Persia, al-Maʾmun defeated his brother Amin in 813, whose cause was that of the Arabs of Iraq and Syria.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 813
+            }
+          },
+          "sourceIds": [
+            "src-iranica-abbasid-caliphate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-yaqub-hailed-amir",
+          "label": "Yaʿqub hailed as amir in Sistan",
+          "summary": "Out of the power struggles of the ʿayyar leaders of Sistan, Yaʿqub emerged the victor and was hailed as amir by the army of Sistan in 861.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 861
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-yaqub-at-nishapur",
+          "label": "Yaʿqub at Nishapur",
+          "summary": "In 873 Yaʿqub intervened at Nishapur and ended the rule of the Tahirid governors in Khorasan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 873
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids",
+            "src-iranica-abbasid-caliphate",
+            "src-iranica-taherids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-battle-of-dayr-al-aqul",
+          "label": "The battle of Dayr al-ʿAqul",
+          "summary": "Marching on Baghdad, Yaʿqub was decisively defeated by the regent al-Muwaffaq at Dayr al-ʿAqul southeast of Baghdad in 876; he kept Fars and Ahvaz.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 876
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-battle-of-balkh",
+          "label": "ʿAmr b. Layth defeated outside Balkh",
+          "summary": "In 900 Ismaʿil the Samanid crossed the Oxus and defeated ʿAmr b. Layth outside Balkh, capturing him and overturning Saffarid power in a single day; Khorasan passed to the Samanids for almost a century.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 900
+            }
+          },
+          "sourceIds": [
+            "src-iranica-saffarids",
+            "src-britannica-samanid-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-death-of-mardavij",
+          "label": "The murder of Mardavij",
+          "summary": "In 935 Mardavij was killed by his Turkish slaves; his empire fell apart and most of its lands south of the Caspian mountains went to the Buyid brothers.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 935
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ziyarids",
+            "src-iranica-buyids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-buyids-enter-baghdad",
+          "label": "The Buyids enter Baghdad",
+          "summary": "On 19 December 945 Ahmad b. Buya entered Baghdad without a fight and the Buyids took the caliphs into their tutelage.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 945
+            }
+          },
+          "sourceIds": [
+            "src-iranica-buyids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-adud-al-dawla-shahanshah",
+          "label": "ʿAdud al-Dawla as shahanshah",
+          "summary": "A coin struck in Fars in 970 shows ʿAdud al-Dawla as a crowned king with the inscription shahanshah.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 970
+            }
+          },
+          "sourceIds": [
+            "src-iranica-buyids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-ferdowsi-begins-the-shahnameh",
+          "label": "Ferdowsi begins the Shahnameh",
+          "summary": "About 977, after the death of Daqiqi, Ferdowsi began writing the Shahnameh; a first version was complete by 994.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 977,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ferdowsi-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-mahmud-throws-off-samanid-authority",
+          "label": "Mahmud throws off Samanid authority",
+          "summary": "In 999 Mahmud of Ghazni threw off Samanid authority; with the Qarakhanids north of the Oxus he divided up the former Samanid lands, and the Samanid dynasty came to its end.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 999
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ghaznavids",
+            "src-britannica-samanid-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-completion-of-the-shahnameh",
+          "label": "The completion of the Shahnameh",
+          "summary": "In his seventy-first year, on 8 March 1010, Ferdowsi finished the Shahnameh.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1010
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ferdowsi-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-mahmud-takes-ray",
+          "label": "Mahmud takes Ray",
+          "summary": "In 1029 Mahmud of Ghazni conquered Ray, until then the capital of the northern Buyid emirate.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1029
+            }
+          },
+          "sourceIds": [
+            "src-iranica-ziyarids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "iran-biruni-completes-india",
+          "label": "Biruni completes his India",
+          "summary": "In 1030, just after the death of Mahmud, Biruni completed his great work on India, the Tahqiq ma li’l-Hind.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1030
+            }
+          },
+          "sourceIds": [
+            "src-iranica-biruni-i"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "india",
+      "label": "India",
+      "periods": [
+        {
+          "key": "india-indus-civilization",
+          "label": "The Indus civilization",
+          "summary": "The earliest known urban culture of the Indian subcontinent, with its nuclear dates about 2600 to 1900 BCE; it declined in stages between about 2000 and 1750 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2600,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1900,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-indus-civilization"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "india-gupta",
+          "label": "The Gupta period",
+          "summary": "The broad period from about 300 to about 600 CE, regarded by many as the golden and classical age of India in literature, art, architecture and philosophy.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 300,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 600,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-gupta-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "india-alexander-defeats-porus",
+          "label": "Alexander defeats Porus",
+          "summary": "In 326 BCE Alexander the Great, invited by the king of Taxila, defeated Porus on the banks of the Hydaspes.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 326
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-porus",
+            "src-livius-place-taxila"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "india-treaty-of-seleucus-and-chandragupta",
+          "label": "Seleucus and Chandragupta make peace",
+          "summary": "In 304 BCE Seleucus, needing his army in the west, made peace with Chandragupta: he gave up Gandara and Arachosia and received 500 elephants.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 304
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-gandara",
+            "src-livius-dynasty-maurya"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "india-greeks-invade-punjab",
+          "label": "The Greeks invade the Punjab",
+          "summary": "In 184 BCE the Greeks of Bactria under Demetrius invaded Gandara and the Punjab and founded an Indo-Greek kingdom.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 184
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-taxila",
+            "src-livius-place-gandara"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "india-faxian-in-india",
+          "label": "Faxian in India",
+          "summary": "The Chinese Buddhist pilgrim Faxian spent six years in India, from 405 to 411 CE, in the reign of Chandragupta II.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 405
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 411
+            }
+          },
+          "sourceIds": [
+            "src-britannica-gupta-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "india-harsha-envoy-to-china",
+          "label": "Harsha’s envoy to China",
+          "summary": "In 641 CE Harsha sent an envoy to the Chinese emperor, establishing the first diplomatic relations between India and China.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            }
+          },
+          "sourceIds": [
+            "src-britannica-harsha"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "china",
+      "label": "China",
+      "periods": [
+        {
+          "key": "china-first-pottery-china",
+          "label": "The first pottery of southern China",
+          "summary": "At Xianrendong in Jiangxi and Zengpiyan in Guangxi, from the tenth to the seventh millennium BCE, people left low-fired cord-marked shards and mostly chipped stone tools.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 10000
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 9001
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 7000
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 6001
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-prehistory"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-yangshao",
+          "label": "The Yangshao culture",
+          "summary": "The prehistoric culture of the Yellow River basin, from 5000 to 3000 BCE, known by its painted pottery; its people grew millet, kept animals, made silk and fired pottery in kilns.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 5000
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3000
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-yangshao-culture"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-hongshan",
+          "label": "The Hongshan culture",
+          "summary": "A prehistoric culture of far northern China, about 4000 to 3000 BCE, centred in western Liaoning and eastern Inner Mongolia, with a three-tiered elite buried in complex tombs and fine jades.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 4000,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3000,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-hongshan-culture",
+            "src-britannica-history-of-china-prehistory"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-liangzhu",
+          "label": "The Liangzhu culture",
+          "summary": "A jade-working culture of the eastern coast, about 3300 to 2200 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 3300,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2200,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-hongshan-culture",
+            "src-britannica-history-of-china-prehistory"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-longshan",
+          "label": "The Longshan culture",
+          "summary": "The Neolithic culture of central China, about 2600 to 2000 BCE, named for its site in Shandong, with black burnished wheel-turned pottery, walls of rammed earth and divination by heating cattle bones.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2600,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2000,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-longshan-culture"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-xia",
+          "label": "The Xia (tradition)",
+          "summary": "The first dynasty in Chinese tradition, said to have been founded by Yu the Great; there is no written evidence of it, though many historians identify Erlitou as its capital. The traditional dates differ: about 2100 or 1900 to 1600 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2100
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1900
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1600,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-hawaii-early-china"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-erlitou",
+          "label": "The Erlitou culture",
+          "summary": "The culture of the central plains of northern China, from 1900 to 1350 BCE, the first state-level society in China, with palaces, royal tombs, paved roads and bronze; its remains are taken to correspond to the Xia of tradition.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1900
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1350
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-erlitou-culture"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-western-zhou",
+          "label": "The Western Zhou",
+          "summary": "From the Zhou conquest of the Shang to the fall of the Western capital in 771 BCE. The sources date the conquest about 1050 or 1046 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1050
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1046
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 771
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-afe-keypoints",
+            "src-si-zhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-eastern-zhou",
+          "label": "The Eastern Zhou",
+          "summary": "The Zhou after the move of the court to Luoyang in 770 BCE, to 256 BCE; some sources take it to 221 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 771
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 770
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 256
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 221
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-afe-keypoints",
+            "src-hawaii-early-china",
+            "src-si-zhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-spring-and-autumn",
+          "label": "The Spring and Autumn period",
+          "summary": "The first part of the Eastern Zhou, from 770 BCE to about 480–475 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 770
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 480
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 475
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-afe-keypoints"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-warring-states",
+          "label": "The Warring States",
+          "summary": "From about 480–475 BCE to the unification under the Qin in 221 BCE, when the many small states were consolidated into seven kingdoms.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 480
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 475
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 221
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-afe-timeline",
+            "src-uw-marquis-yi",
+            "src-si-zhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-three-kingdoms",
+          "label": "The Three Kingdoms",
+          "summary": "Wei, Shu-Han and Wu, which divided China after the fall of the Han; Britannica dates the period 220–280, to the fall of Wu, and Asia for Educators 220–265.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 220
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 265
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 280
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-afe-timeline",
+            "src-afe-keypoints"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-western-jin",
+          "label": "The Western Jin",
+          "summary": "A short time of relative order after the Three Kingdoms, which ended with the fall of Luoyang in 311 and Chang’an in 316.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 265
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 316
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 317
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-si-period-of-division",
+            "src-britannica-wudi-emperor-of-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-sixteen-kingdoms",
+          "label": "The Sixteen Kingdoms",
+          "summary": "The short-lived non-Chinese states that ruled northern China from 303 until the Northern Wei unified it in 439.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 303
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 439
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-eastern-jin",
+          "label": "The Eastern Jin",
+          "summary": "The Jin court set up at Jiankang in 317 by a member of the imperial family, ruled by the great southern families until 420.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 317
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 420
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-northern-wei",
+          "label": "The Northern Wei",
+          "summary": "The Tuoba state in the north; Britannica dates it 386–534/535 and Asia for Educators 386–535, and the Smithsonian says it brought all of north China under its rule in 439.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 386
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 534
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 535
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-afe-keypoints",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-southern-dynasties",
+          "label": "The Southern Dynasties",
+          "summary": "The Liu-Song, Southern Qi, Southern Liang and Southern Chen, which ruled the south from Jiankang from 420 until the Sui overthrew the last of them in 589.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 420
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 589
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-sui",
+          "label": "The Sui",
+          "summary": "The reunification of China under the Sui, from 581 to 618.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 581
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 618
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-sui-dynasty",
+            "src-afe-timeline"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-tang",
+          "label": "The Tang",
+          "summary": "The rule of the Tang, from 618 to 907; its high point came under Xuanzong, and after the rebellion of An Lushan in 755 the generals and provinces grew strong until the dynasty ended in 907.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 618
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 907
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-tang-dynasty",
+            "src-si-tang",
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-late-tang",
+          "label": "The late Tang",
+          "summary": "From the rebellion of An Lushan in 755 to the end of the dynasty in 907, an age of provincial governors, eunuch power at court and great uprisings.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 755
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 907
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-five-dynasties",
+          "label": "The Five Dynasties and Ten Kingdoms",
+          "summary": "The half century of disunity between the Tang and the Song, from 907 to 960: five short-lived dynasties followed one another in the north while ten kingdoms held the south.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 907
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 960
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-northern-song",
+          "label": "The Northern Song",
+          "summary": "The first part of the Song, from 960 to 1127, when the dynasty ruled the north as well as the south.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 960
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1127
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "china-zhou-conquest",
+          "label": "The Zhou conquest of the Shang",
+          "summary": "The Zhou under King Wu overthrew the Shang. The sources give about 1050 or 1046 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1050
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1046
+            }
+          },
+          "sourceIds": [
+            "src-uw-count-of-yu",
+            "src-hawaii-early-china"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-fall-of-western-zhou",
+          "label": "The fall of the Western Zhou",
+          "summary": "In 771 BCE the Western Zhou fell; the court moved east to Luoyang.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 771
+            }
+          },
+          "sourceIds": [
+            "src-afe-timeline"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-qin-unification",
+          "label": "The Qin unifies China",
+          "summary": "In 221 BCE the king of Qin completed the conquest of the other states, unified China and took the title of emperor.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 221
+            }
+          },
+          "sourceIds": [
+            "src-major-cook-9",
+            "src-afe-timeline"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-fall-of-qin",
+          "label": "The fall of the Qin",
+          "summary": "The Qin fell in 206 BCE; Xiang Yu burnt Xianyang in 207 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 207
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 206
+            }
+          },
+          "sourceIds": [
+            "src-major-cook-9",
+            "src-eno-early-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-zhang-qian-mission",
+          "label": "Zhang Qian travels to the west",
+          "summary": "Zhang Qian set out for the west in 138 BCE (139 according to Eno, about 130 according to Livius) and returned to Chang’an in 125 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 139
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 125
+            }
+          },
+          "sourceIds": [
+            "src-major-cook-10",
+            "src-eno-wudi",
+            "src-livius-place-silk-road"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-han-restoration",
+          "label": "The restoration of the Han",
+          "summary": "In the autumn of 25 CE Liu Xiu claimed the imperial title and restored the Han; Wang Mang had died in 23 CE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 25
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-expedition-against-xiongnu",
+          "label": "The expedition against the Xiongnu",
+          "summary": "In 73 CE Emperor Ming sent an army against the Xiongnu; in the same winter Ban Chao arrested Dou Ti.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 73
+            }
+          },
+          "sourceIds": [
+            "src-hill-hou-hanshu"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-gan-ying-mission",
+          "label": "Gan Ying’s journey toward Da Qin",
+          "summary": "In 97 CE Ban Chao sent Gan Ying to explore the far west toward Da Qin; he reached Tiaozhi beside a large sea.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 97
+            }
+          },
+          "sourceIds": [
+            "src-hill-hou-hanshu",
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-qiang-rebellion",
+          "label": "The great Qiang rebellion",
+          "summary": "A mutiny of auxiliaries in the northwest grew in 107 into a full-scale rebellion of the Qiang within China, which lasted until 118.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 107
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 118
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-roman-envoys-166",
+          "label": "Envoys from Rome at the Han court",
+          "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of Emperor Huan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 166
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-yellow-turbans",
+          "label": "The Yellow Turban rebellion",
+          "summary": "In the spring of 184 the Yellow Turbans, a popular sect led by Zhang Jue, rose and ravaged the north and east; the warlordism that followed ended the Han.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 184
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han",
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-dong-zhuo-takes-power",
+          "label": "Dong Zhuo takes power",
+          "summary": "In 189 eunuchs and the general He Jin destroyed each other at Luoyang; the general Dong Zhuo took power, deposed Liu Bian and in 190 moved the capital to Chang’an.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 189
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-battle-of-guandu",
+          "label": "The battle of Guandu",
+          "summary": "In 200 Yuan Shao attacked Cao Cao and was defeated at Guandu.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 200
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-red-cliffs",
+          "label": "The battle of the Red Cliffs",
+          "summary": "In 208 Cao Cao, who had taken over north China, was defeated at the Red Cliffs on the Yangtze by the forces of Sun Quan and Liu Bei.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 208
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-end-of-han",
+          "label": "The end of the Han",
+          "summary": "In the winter of 220 Emperor Xian abdicated to Cao Pi, who proclaimed himself emperor of the Wei dynasty.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 220
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han",
+            "src-britannica-cao-pi",
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-wei-conquers-shu",
+          "label": "Wei conquers Shu-Han",
+          "summary": "Wei conquered the Shu-Han kingdom in 263/264.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 263
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 264
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-britannica-wudi-emperor-of-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-jin-legal-code",
+          "label": "The Jin legal code",
+          "summary": "The court of Wudi of Jin established one of China’s earliest legal codes in 268.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 268
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-jin-reunifies-china",
+          "label": "The Jin reunite China",
+          "summary": "In 280 the Jin armies of Sima Yan overran Wu, the last of the Three Kingdoms, and China was nominally reunited.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 280
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-britannica-wudi-emperor-of-jin-dynasty",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-fall-of-luoyang-311",
+          "label": "The fall of Luoyang",
+          "summary": "In 311 the Xiongnu armies that Liu Yuan had led into northern China took and destroyed Luoyang.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 311
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-fall-of-changan-316",
+          "label": "The fall of Chang’an",
+          "summary": "The fall of Chang’an in 316 ended Chinese dynastic rule in the north for centuries.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 316
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-si-period-of-division"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-jin-surrender-316",
+          "label": "The last Western Jin emperor surrenders",
+          "summary": "In 316 the Jin emperor, a grandson of Wudi, surrendered to a chief of the Xiongnu, abdicated and was later put to death.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 316
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-eastern-jin-at-jiankang",
+          "label": "A Jin court at Jiankang",
+          "summary": "In 317 a member of the Jin imperial family set up a refugee court at Jiankang, the start of the Eastern Jin.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 317
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-jin-reconquers-sichuan",
+          "label": "The Eastern Jin reconquer Sichuan",
+          "summary": "In 347 the general Huan Wen reconquered Sichuan for the Eastern Jin; he later deposed the reigning emperor.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 347
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-orchid-pavilion-gathering",
+          "label": "The gathering at the Orchid Pavilion",
+          "summary": "Some 42 literary figures met at the Orchid Pavilion during the Spring Purification Festival of 353 to compose poems; Wang Xizhi wrote the preface to their poems.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 353
+            }
+          },
+          "sourceIds": [
+            "src-britannica-wang-xizhi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-battle-of-fei-river",
+          "label": "The battle of the Fei River",
+          "summary": "In 383 the Eastern Jin turned back the invading armies of the northern nomads at the Fei River.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 383
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-landowner-uprising-400",
+          "label": "The uprising of the landowners",
+          "summary": "An uprising led by disaffected landowners began in 400 and was crushed in 402, giving army leaders more power.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 400
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 402
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-jin-northwest-campaign",
+          "label": "The Eastern Jin push northwest",
+          "summary": "Between 415 and 417 the Eastern Jin pushed northwestward and regained access to the trade routes of Central Asia.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 415
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 417
+            }
+          },
+          "sourceIds": [
+            "src-britannica-jin-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-northern-wei-unifies-north",
+          "label": "The Northern Wei unify the north",
+          "summary": "In 439 the Northern Wei brought the whole of north China under its rule, ending the Sixteen Kingdoms.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 439
+            }
+          },
+          "sourceIds": [
+            "src-si-period-of-division",
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-equal-field-system",
+          "label": "The equal-field system",
+          "summary": "In 485 Xiaowendi of the Northern Wei introduced the equal-field system, which assigned land to every peasant family.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 485
+            }
+          },
+          "sourceIds": [
+            "src-britannica-xiaowendi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-northern-zhou-reunifies-north",
+          "label": "The Northern Zhou reunify the north",
+          "summary": "After the Wei broke apart soon after 520, the Northern Zhou reunified northern China in 577.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 577
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-sui-reunifies-china",
+          "label": "The Sui reunite China",
+          "summary": "In 589 Yang Jian crossed the Yangtze and overthrew the last southern dynasty at Jiankang, uniting China under one government after almost four centuries.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 589
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-six-dynasties",
+            "src-britannica-sui-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-sui-embassy-to-khusrau-ii",
+          "label": "The Sui and Khusrau II exchange embassies",
+          "summary": "Yangdi of the Sui, emperor from 605 to 617, sent an embassy to Khusrau II, which brought a Persian embassy to China in return.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 605
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 617
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-grand-canal",
+          "label": "The Grand Canal begun",
+          "summary": "In 608 Yangdi built a great canal between the rice-growing south and the Beijing area, and in 610 extended it, beginning the Grand Canal network.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 608
+            }
+          },
+          "sourceIds": [
+            "src-britannica-yangdi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-sui-korean-wars",
+          "label": "The Sui expeditions against Korea",
+          "summary": "Yangdi’s three expeditions against the Koreans between 612 and 614 ended in disaster and led to revolts.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 612
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 614
+            }
+          },
+          "sourceIds": [
+            "src-britannica-yangdi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-tang-founded",
+          "label": "The Tang proclaimed",
+          "summary": "Li Yuan rose in rebellion in 617, took Chang’an and in 618 proclaimed the Tang dynasty.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 618
+            }
+          },
+          "sourceIds": [
+            "src-britannica-gaozu-emperor-of-tang-dynasty",
+            "src-britannica-tang-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-xuanwu-gate",
+          "label": "The Xuanwu gate incident",
+          "summary": "In 626 Li Shimin ambushed and killed his two brothers at the Xuanwu gate of the palace; two months later his father abdicated in his favour.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 626
+            }
+          },
+          "sourceIds": [
+            "src-britannica-taizong-emperor-of-tang-dynasty",
+            "src-britannica-tang-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-xuanzang-journey",
+          "label": "Xuanzang’s journey to India",
+          "summary": "The monk Xuanzang left for India in 629 and came back to China in 645 with the scriptures he had gathered.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 629
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 645
+            }
+          },
+          "sourceIds": [
+            "src-britannica-xuanzang",
+            "src-afe-keypoints"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-yazdgard-iii-embassy-to-china",
+          "label": "Yazdgard III sends an embassy to China",
+          "summary": "Hard pressed by the western Turks and then by the Arabs, Yazdgard III sent an embassy to the Tang court in 638.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 638
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-korea-vassal-668",
+          "label": "Korea made a vassal",
+          "summary": "Continuing his father’s campaigns, Gaozong conquered the Korean peninsula and made Korea a vassal state in 668.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 668
+            }
+          },
+          "sourceIds": [
+            "src-britannica-gaozong-emperor-of-tang-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-peroz-iii-at-the-tang-court",
+          "label": "Peroz, son of Yazdgard III, at the Tang court",
+          "summary": "Peroz, son of the last Sasanian king, asked the Tang for help against the Arabs, was recognised as governor of Persia at Zarang after 659 and, unable to hold out, took refuge at the Tang court between 670 and 673.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 670
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 673
+            }
+          },
+          "sourceIds": [
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-wuhou-takes-throne",
+          "label": "Wuhou takes the throne",
+          "summary": "After ruling through puppets since Gaozong’s death in 683, Wu Zhao usurped the throne herself in 690.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 690
+            }
+          },
+          "sourceIds": [
+            "src-britannica-gaozong-emperor-of-tang-dynasty",
+            "src-britannica-wuhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-wuhou-abdicates",
+          "label": "Wuhou forced to abdicate",
+          "summary": "In 705 Wuhou’s ministers and generals seized the palace and forced her to abdicate in favour of her son Zhongzong.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 705
+            }
+          },
+          "sourceIds": [
+            "src-britannica-wuhou"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-xuanzong-takes-power",
+          "label": "Xuanzong takes full power",
+          "summary": "After Ruizong ceded the throne in 712, a second coup in 713 put Xuanzong completely in charge; Ruizong retired and the princess Taiping took her life.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 713
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-battle-of-talas",
+          "label": "The battle of the Talas River",
+          "summary": "In 751 the overextended Tang armies in the far west were defeated by the Arabs on the Talas River.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 751
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang",
+            "src-iranica-chinese-iranian-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-an-lushan-rebellion",
+          "label": "The rebellion of An Lushan",
+          "summary": "The rebellion of An Lushan broke out in 755, took Luoyang and Chang’an in 756 and, carried on after his murder by his son and by Shi Siming, was not suppressed until 763.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 755
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 763
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-rebels-take-changan",
+          "label": "The rebels take Chang’an",
+          "summary": "Early in 756 An Lushan’s rebels captured the eastern capital Luoyang, and in July of the same year the main capital Chang’an.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 756
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-tibetans-loot-changan",
+          "label": "The Tibetans loot Chang’an",
+          "summary": "In 763 the Tibetans, allied with Nanzhao, occupied present-day Gansu and late in the year took and looted the capital.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 763
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-dezong-tax-reform",
+          "label": "The tax reform of 780",
+          "summary": "In 780 Dezong promulgated a new system of taxation in which each province was assessed a quota to be collected by its own government.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 780
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-sweet-dew-incident",
+          "label": "The Sweet Dew coup",
+          "summary": "In 835 Wenzong’s scheme against the eunuchs misfired in the Sweet Dew (Ganlu) coup and led to the deaths of several ministers and officials.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 835
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-suppression-of-buddhism",
+          "label": "The suppression of Buddhism",
+          "summary": "In 843–845 the emperor Wuzong, a fanatical Daoist, suppressed Buddhism and dissolved the monasteries.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 843
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 845
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-huang-chao-takes-changan",
+          "label": "Huang Chao takes Chang’an",
+          "summary": "Huang Chao, leader of the greatest uprising, took Luoyang late in 880 and Chang’an in 881; in 883 he was forced to abandon the capital.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 881
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-tang"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-end-of-the-tang",
+          "label": "The end of the Tang",
+          "summary": "In 907 Zhu Wen deposed the last Tang emperor, bringing the dynasty to its formal end and beginning the Five Dynasties.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-founding-of-the-liao",
+          "label": "The Khitan found the Liao",
+          "summary": "In 907 the Khitan founded the Liao dynasty, expanding from the border of Mongolia into southern Manchuria and the sixteen prefectures south of the Great Wall.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 907
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-founding-of-the-song",
+          "label": "The founding of the Song",
+          "summary": "In 960 Zhao Kuangyin, Taizu, founded the Song, ending the rapid succession of the Five Dynasties.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 960
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties",
+            "src-britannica-taizu-emperor-of-song-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-song-conquers-sichuan",
+          "label": "The Song take Sichuan",
+          "summary": "Taizu’s strategy of reunification first took Sichuan in 965, then the far south in 971.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 965
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-wuyue-surrenders",
+          "label": "The Wu-Yue surrender",
+          "summary": "In 978 the Wu-Yue, the last of the Ten Kingdoms in the south, surrendered to the Song without a war.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 978
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-song-conquers-northern-han",
+          "label": "The Song conquer the Northern Han",
+          "summary": "In 979 Taizong conquered the Northern Han, the last of the Ten Kingdoms, completing the reunification.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 979
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-song-defeated-by-khitan",
+          "label": "The Song defeated by the Khitan",
+          "summary": "Fighting on against the Khitan in the north, Taizong suffered a disastrous defeat in 986.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 986
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "china-song-liao-peace",
+          "label": "The sworn peace of the Song and the Liao",
+          "summary": "After a Khitan offensive met by Zhenzong himself, the two empires pledged peaceful coexistence in 1004 through an exchange of sworn documents.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1004
+            }
+          },
+          "sourceIds": [
+            "src-britannica-history-of-china-five-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-livius-content-awan-king-list",
+      "title": "Awan King List – Livius",
+      "url": "https://www.livius.org/sources/content/awan-king-list/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-susa",
+      "title": "Susa – Livius",
+      "url": "https://www.livius.org/articles/place/susa/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-iranica-elam-i",
+      "title": "Elam i. The history of Elam – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/elam-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-ansan-tell-malyan",
+      "title": "Anšan (Tell Malyan) – Livius",
+      "url": "https://www.livius.org/articles/place/ansan-tell-malyan/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-people-medes",
+      "title": "Medes – Livius",
+      "url": "https://www.livius.org/articles/people/medes/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-medes-medes-2",
+      "title": "Medes (2) – Livius",
+      "url": "https://www.livius.org/articles/people/medes/medes-2/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-dynasty-achaemenids",
+      "title": "Achaemenids – Livius",
+      "url": "https://www.livius.org/articles/dynasty/achaemenids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-dynasty-seleucids",
+      "title": "Seleucids (Livius) – Livius",
+      "url": "https://www.livius.org/articles/dynasty/seleucids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-demetrius-ii-nicator",
+      "title": "Demetrius II Nicator (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/demetrius-ii-nicator/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-antiochus-vii-sidetes",
+      "title": "Antiochus VII Sidetes (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/antiochus-vii-sidetes/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-i",
+      "title": "Arsaces I – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-parthia",
+      "title": "Parthia – Livius",
+      "url": "https://www.livius.org/articles/place/parthia/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-assurbanipal",
+      "title": "Aššurbanipal – Livius",
+      "url": "https://www.livius.org/articles/person/assurbanipal/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-elam",
+      "title": "Elam – Livius",
+      "url": "https://www.livius.org/articles/place/elam/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cyaxares",
+      "title": "Cyaxares – Livius",
+      "url": "https://www.livius.org/articles/person/cyaxares/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cyrus-the-great",
+      "title": "Cyrus the Great – Livius",
+      "url": "https://www.livius.org/articles/person/cyrus-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-astyages",
+      "title": "Astyages – Livius",
+      "url": "https://www.livius.org/articles/person/astyages/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-croesus",
+      "title": "Croesus – Livius",
+      "url": "https://www.livius.org/articles/person/croesus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-sardes",
+      "title": "Sardes – Livius",
+      "url": "https://www.livius.org/articles/place/sardes/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-cyrus-the-great-cyrus-takes-babylon",
+      "title": "Cyrus takes Babylon – Livius",
+      "url": "https://www.livius.org/articles/person/cyrus-the-great/cyrus-takes-babylon/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-babylon",
+      "title": "Babylon – Livius",
+      "url": "https://www.livius.org/articles/place/babylon/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cambyses-ii",
+      "title": "Cambyses II – Livius",
+      "url": "https://www.livius.org/articles/person/cambyses-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-darius-the-great",
+      "title": "Darius the Great (1) – Livius",
+      "url": "https://www.livius.org/articles/person/darius-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-darius-the-great-5-civil-war",
+      "title": "Darius the Great (5): Civil War – Livius",
+      "url": "https://www.livius.org/articles/person/darius-the-great/5-civil-war/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-thermopylae-480-bce",
+      "title": "Thermopylae (480 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/thermopylae-480-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-salamis-480-bce",
+      "title": "Salamis (480 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/salamis-480-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-plataea-479-bce",
+      "title": "Plataea (479 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/plataea-479-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-cyrus-the-younger",
+      "title": "Cyrus the Younger – Livius",
+      "url": "https://www.livius.org/articles/person/cyrus-the-younger/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-artaxerxes-iii-ochus",
+      "title": "Artaxerxes III Ochus – Livius",
+      "url": "https://www.livius.org/articles/person/artaxerxes-iii-ochus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-issus",
+      "title": "Issus – Livius",
+      "url": "https://www.livius.org/articles/battle/issus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-darius-iii-codomannus",
+      "title": "Darius III Codomannus – Livius",
+      "url": "https://www.livius.org/articles/person/darius-iii-codomannus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-gaugamela-331-bce",
+      "title": "Gaugamela (331 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/gaugamela-331-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-persepolis",
+      "title": "Persepolis – Livius",
+      "url": "https://www.livius.org/articles/place/persepolis/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-alexander-the-great-alexander-2-10",
+      "title": "Alexander the Great (2.10) – Livius",
+      "url": "https://www.livius.org/articles/person/alexander-the-great/alexander-2.10/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-alexander-the-great-alexander-2-15",
+      "title": "Alexander 2.15 Susa (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/alexander-the-great/alexander-2.15/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-seleucus-i-nicator",
+      "title": "Seleucus I Nicator (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/seleucus-i-nicator/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-antiochus-iii-the-great",
+      "title": "Antiochus III the Great (Livius) – Livius",
+      "url": "https://www.livius.org/articles/person/antiochus-iii-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-iii-phriapatius",
+      "title": "Arsaces III Phriapatius – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-iii-phriapatius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-vi-mithradates-i-the-great",
+      "title": "Arsaces VI, Mithradates I the Great – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-vi-mithradates-i-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-vii-phraates-ii",
+      "title": "Arsaces VII, Phraates II – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-vii-phraates-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-carrhae-53-bce",
+      "title": "Carrhae (53 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/carrhae-53-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-arsaces-xix-orodes-ii",
+      "title": "Arsaces XIX, Orodes II – Livius",
+      "url": "https://www.livius.org/articles/person/arsaces-xix-orodes-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-mark-antony",
+      "title": "Mark Antony – Livius",
+      "url": "https://www.livius.org/articles/person/mark-antony/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-misc-parthian-empire",
+      "title": "Parthian Empire – Livius",
+      "url": "https://www.livius.org/articles/misc/parthian-empire/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-content-augustus-res-gestae",
+      "title": "Augustus, Res Gestae – Livius",
+      "url": "https://www.livius.org/sources/content/augustus-res-gestae/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-vologases-i",
+      "title": "Vologases I – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-domitius-corbulo-domitius-corbulo-2",
+      "title": "Gnaeus Domitius Corbulo (2) – Livius",
+      "url": "https://www.livius.org/articles/person/domitius-corbulo/domitius-corbulo-2/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-sasanians-sasanian-kings",
+      "title": "Sasanian Kings – Livius",
+      "url": "https://www.livius.org/articles/dynasty/sasanians/sasanian-kings/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-sasanians",
+      "title": "Sasanians – Livius",
+      "url": "https://www.livius.org/articles/dynasty/sasanians/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-yazdgard-iii",
+      "title": "Yazdgard III – Livius",
+      "url": "https://www.livius.org/articles/person/yazdgard-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-osroes-i",
+      "title": "Osroes I – Livius",
+      "url": "https://www.livius.org/articles/person/osroes-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-ctesiphon",
+      "title": "Ctesiphon – Livius",
+      "url": "https://www.livius.org/articles/place/ctesiphon/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-vologases-iv",
+      "title": "Vologases IV – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-iv/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-vologases-v",
+      "title": "Vologases V – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-v/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-artabanus-iv",
+      "title": "Artabanus IV – Livius",
+      "url": "https://www.livius.org/articles/person/artabanus-iv/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-vologases-vi",
+      "title": "Vologases VI – Livius",
+      "url": "https://www.livius.org/articles/person/vologases-vi/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-ardasir-khureh-firuzabad",
+      "title": "Ardašir Khureh (Firuzabad) – Livius",
+      "url": "https://www.livius.org/articles/place/ardasir-khureh-firuzabad/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-istakhr",
+      "title": "Istakhr – Livius",
+      "url": "https://www.livius.org/articles/place/istakhr/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-ardasir-i",
+      "title": "Ardašir I – Livius",
+      "url": "https://www.livius.org/articles/person/ardasir-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shapur-i",
+      "title": "Shapur I – Livius",
+      "url": "https://www.livius.org/articles/person/shapur-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-gordian-iii",
+      "title": "Gordian III – Livius",
+      "url": "https://www.livius.org/articles/person/gordian-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-valerian",
+      "title": "Valerian – Livius",
+      "url": "https://www.livius.org/articles/person/valerian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-place-bishapur",
+      "title": "Bishapur – Livius",
+      "url": "https://www.livius.org/articles/place/bishapur/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-ii",
+      "title": "Bahram II – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-galerius",
+      "title": "Galerius – Livius",
+      "url": "https://www.livius.org/articles/person/galerius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-julian-the-apostate",
+      "title": "Julian the Apostate – Livius",
+      "url": "https://www.livius.org/articles/person/julian-the-apostate/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-jovian",
+      "title": "Jovian – Livius",
+      "url": "https://www.livius.org/articles/person/jovian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shapur-ii",
+      "title": "Shapur II – Livius",
+      "url": "https://www.livius.org/articles/person/shapur-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shapur-iii",
+      "title": "Shapur III – Livius",
+      "url": "https://www.livius.org/articles/person/shapur-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-iv",
+      "title": "Bahram IV – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-iv/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-v",
+      "title": "Bahram V – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-v/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-peroz-i",
+      "title": "Peroz I – Livius",
+      "url": "https://www.livius.org/articles/person/peroz-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-kavad-i",
+      "title": "Kavad I – Livius",
+      "url": "https://www.livius.org/articles/person/kavad-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-bahram-vi",
+      "title": "Bahram VI – Livius",
+      "url": "https://www.livius.org/articles/person/bahram-vi/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-heraclius",
+      "title": "Heraclius – Livius",
+      "url": "https://www.livius.org/articles/person/heraclius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-shahrbaraz",
+      "title": "Shahrbaraz – Livius",
+      "url": "https://www.livius.org/articles/person/shahrbaraz/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-kavad-ii",
+      "title": "Kavad II – Livius",
+      "url": "https://www.livius.org/articles/person/kavad-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-iranica-lakhmids",
+      "title": "Lakhmids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/lakhmids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-hephthalites",
+      "title": "Hephthalites – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/hephthalites/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-umayyad-dynasty",
+      "title": "Umayyad dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Umayyad-dynasty-Islamic-history",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-abbasid-caliphate",
+      "title": "ʿAbbasid caliphate – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/abbasid-caliphate/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-abu-muslim",
+      "title": "Abu Muslim – Britannica",
+      "url": "https://www.britannica.com/biography/Abu-Muslim",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-baghdad",
+      "title": "Baghdad – Britannica",
+      "url": "https://www.britannica.com/place/Baghdad",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-saffarids",
+      "title": "Saffarids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/saffarids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-taherids",
+      "title": "Taherids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/taherid-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-samanid-dynasty",
+      "title": "Samanid dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Samanid-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-ziyarids",
+      "title": "Ziyarids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ziyarids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-buyids",
+      "title": "Buyids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/buyids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-ghaznavids",
+      "title": "Ghaznavids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ghaznavids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-ferdowsi-i",
+      "title": "Ferdowsi, Abu’l-Qasem i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/ferdowsi-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-biruni-i",
+      "title": "Biruni, Abu Rayhan i. Life – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/biruni-abu-rayhan-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-chinese-iranian-i",
+      "title": "Chinese-Iranian relations i. In pre-Islamic times – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/chinese-iranian-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-history-of-china-tang",
+      "title": "History of China: the Tang dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Sui-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-unesco-shahr-i-sokhta",
+      "title": "Shahr-i Sokhta – UNESCO World Heritage Centre",
+      "url": "https://whc.unesco.org/en/list/1456/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-iranica-awan",
+      "title": "Awan – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/awan/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-indus-civilization",
+      "title": "Indus civilization – Britannica",
+      "url": "https://www.britannica.com/topic/Indus-civilization",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-gupta-dynasty",
+      "title": "Gupta dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Gupta-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-person-porus",
+      "title": "Porus – Livius",
+      "url": "https://www.livius.org/articles/person/porus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-taxila",
+      "title": "Taxila – Livius",
+      "url": "https://www.livius.org/articles/place/taxila/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-gandara",
+      "title": "Gandara – Livius",
+      "url": "https://www.livius.org/articles/place/gandara/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-dynasty-maurya",
+      "title": "Maurya – Livius",
+      "url": "https://www.livius.org/articles/dynasty/maurya/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-harsha",
+      "title": "Harsha – Britannica",
+      "url": "https://www.britannica.com/biography/Harsha",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-afe-timeline",
+      "title": "Timelines: China – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/timelines/china_timeline.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-hawaii-early-china",
+      "title": "China and East Asia to the Han Dynasty – Journeys in World History I, University of Hawaii",
+      "url": "https://pressbooks.oer.hawaii.edu/honcchist151/chapter/the-beginnings-of-asian-civilization/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-afe-keypoints",
+      "title": "Key Points: 4000 BCE – 1000 CE – Asia for Educators, Columbia University",
+      "url": "https://afe.easia.columbia.edu/main_pop/kpct/kp_4000bce-1000ce.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-si-zhou",
+      "title": "Zhou dynasty – Smithsonian’s National Museum of Asian Art",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/zhou-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-uw-marquis-yi",
+      "title": "Marquis Yi’s Tomb – A Visual Sourcebook of Chinese Civilization, University of Washington",
+      "url": "https://depts.washington.edu/chinaciv/archae/2marmain.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-uw-count-of-yu",
+      "title": "Count of Yu – A Visual Sourcebook of Chinese Civilization, University of Washington",
+      "url": "https://depts.washington.edu/chinaciv/archae/2coumain.htm",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-major-cook-9",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 9: The Qin dynasty",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-9&type=chapterpdf",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-eno-early-han",
+      "title": "R. Eno, The Reigns of the Early Han Emperors (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/dspace/bitstreams/d7346363-5afd-47f9-af36-8b4d33f0d45f/download",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-major-cook-10",
+      "title": "J. S. Major & C. A. Cook, Ancient China (Routledge, open access), ch. 10: The Western Han and Emperor Wu",
+      "url": "https://api.taylorfrancis.com/content/chapters/oa-mono/download?identifierName=doi&identifierValue=10.4324/9781315715322-10&type=chapterpdf",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-eno-wudi",
+      "title": "R. Eno, The Reign of Wu-di, 141–87 (Indiana University, PDF)",
+      "url": "https://scholarworks.iu.edu/iuswrrest/api/core/bitstreams/2693ed09-d574-45f5-9dae-61ed31559874/content",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-silk-road",
+      "title": "Silk Road – Livius",
+      "url": "https://www.livius.org/articles/place/silk-road/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-hill-hou-hanshu",
+      "title": "The Western Regions according to the Hou Hanshu, transl. John E. Hill – Silk Road Seattle, University of Washington",
+      "url": "https://depts.washington.edu/silkroad/texts/hhshu/hou_han_shu.html",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-decrespigny-later-han",
+      "title": "Rafe de Crespigny, Chronology of Later Han (Brill)",
+      "url": "https://ll-chinesereferenceshelf.brillonline.com/dictionary-han/prelims/sim-200005",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-britannica-history-of-china-six-dynasties",
+      "title": "History of China: The Six Dynasties – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Six-Dynasties",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-si-period-of-division",
+      "title": "Period of Division (220–589) – Smithsonian, Teaching China",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/period-of-division/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-wudi-emperor-of-jin-dynasty",
+      "title": "Wudi (emperor of Jin dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Wudi-emperor-of-Jin-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-sui-dynasty",
+      "title": "Sui dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Sui-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-tang-dynasty",
+      "title": "Tang dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-si-tang",
+      "title": "Tang dynasty (618–907) – Smithsonian, Teaching China",
+      "url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/explore-by-dynasty/tang-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-cao-pi",
+      "title": "Cao Pi – Britannica",
+      "url": "https://www.britannica.com/biography/Cao-Pi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-xiaowendi",
+      "title": "Xiaowendi – Britannica",
+      "url": "https://www.britannica.com/biography/Xiaowendi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-yangdi",
+      "title": "Yangdi – Britannica",
+      "url": "https://www.britannica.com/biography/Yangdi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-gaozu-emperor-of-tang-dynasty",
+      "title": "Gaozu (emperor of Tang dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Gaozu-emperor-of-Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-taizong-emperor-of-tang-dynasty",
+      "title": "Taizong (emperor of Tang dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Taizong-emperor-of-Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-xuanzang",
+      "title": "Xuanzang – Britannica",
+      "url": "https://www.britannica.com/biography/Xuanzang",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-gaozong-emperor-of-tang-dynasty",
+      "title": "Gaozong (emperor of Tang dynasty) – Britannica",
+      "url": "https://www.britannica.com/biography/Gaozong-emperor-of-Tang-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-wuhou",
+      "title": "Wuhou – Britannica",
+      "url": "https://www.britannica.com/biography/Wuhou",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-jin-dynasty",
+      "title": "Jin dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/Jin-dynasty-China-AD-265-316-317-317-420",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-wang-xizhi",
+      "title": "Wang Xizhi – Britannica",
+      "url": "https://www.britannica.com/biography/Wang-Xizhi",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-history-of-china-five-dynasties",
+      "title": "History of China: the Five Dynasties and the Ten Kingdoms, the Song dynasty – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China/The-Five-Dynasties-and-the-Ten-Kingdoms",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-taizu-emperor-of-song-dynasty",
+      "title": "Taizu, emperor of the Song dynasty – Britannica",
+      "url": "https://www.britannica.com/biography/Taizu-emperor-of-Song-dynasty",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-history-of-china-prehistory",
+      "title": "History of China: prehistory and the Neolithic period – Britannica",
+      "url": "https://www.britannica.com/topic/history-of-China",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-yangshao-culture",
+      "title": "Yangshao culture – Britannica",
+      "url": "https://www.britannica.com/topic/Yangshao-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-hongshan-culture",
+      "title": "Hongshan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Hongshan-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-longshan-culture",
+      "title": "Longshan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Longshan-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-erlitou-culture",
+      "title": "Erlitou culture – Britannica",
+      "url": "https://www.britannica.com/topic/Erlitou-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    }
+  ]
+}
