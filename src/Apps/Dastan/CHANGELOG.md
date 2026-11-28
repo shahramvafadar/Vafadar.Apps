@@ -4,6 +4,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- China gains Li Bai and Du Fu, and the Analects, the Daodejing and the Art of War as works.
 - Rome gains its writers and monuments: Virgil, Livy and Procopius with their works, and the Pantheon rebuilt by
   Hadrian.
 - The Sasanian kings of the Shahnameh are linked to the kings of history where the Encyclopaedia Iranica says
