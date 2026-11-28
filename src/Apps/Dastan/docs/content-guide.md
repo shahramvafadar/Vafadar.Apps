@@ -170,6 +170,14 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
   made), a period of history in a comparison.
 * Say how exact a time is: `approximate: true` for "about"; in a comparison an end `between` two years, or
   `unknown`, `ongoing`, `endedAtUnknownTime`.
+* **A figure of legend or myth has no date of history.** Where you still give it a place in time, write it as a
+  **hypothetical placement** – a dated statement with `placement` ([format](collection-format.md), "A hypothetical
+  placement"; [ADR 0028](adr/0028-hypothetical-placement.md)): its `basis` (`narrative`, `synchronism` or
+  `editorialHypothesis`), its `confidence` (`veryLow`, `low`, `medium`) and an `explanation` of why that time.
+  Keep the year out of the label and the summary of the entity: a year in a sentence reads as a claim. A
+  character of a story takes no other dated statement, several placements may stand side by side, and the time
+  is written as stated – "about" or a window between two years – never more exact than the hypothesis. Follow
+  [the chronology guidelines](content-chronology-guidelines.md).
 
 ## Images and videos
 

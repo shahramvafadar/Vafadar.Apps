@@ -108,7 +108,37 @@
         </section>
     }
 
-    @if (!overview.Entity.Dated.IsEmpty)
+    @if (!_placements.IsEmpty)
+    {
+        @* Hypothetical placements in time (ADR 0028): a time given to a figure of legend or myth, never a date of
+           history. They stand apart from what is stated, each with what it rests on, how sure it is and why, and
+           with the sentence that no date of history exists. No view of time draws them, and the years a visitor
+           chose do not leave them out: they belong to the name, not to a year. *@
+        <section aria-labelledby="placements">
+            <h2 id="placements">@T["Entity_Placements"]</h2>
+            <dl class="facts placements">
+                @foreach (var statement in _placements)
+                {
+                    var placement = statement.Placement!;
+                    <dt id="@($"placement-{statement.Key}")"><Loc Text="statement.Label" /> <DisputedMark Review="statement.Review" /></dt>
+                    <dd>
+                        <p class="placement-line">@string.Format(CultureInfo.CurrentCulture, T["Placement_Line"], TimeText.Of(statement.Time!, Visitor, T), T[$"Placement_Basis_{placement.Basis}"], T[$"Placement_Confidence_{placement.Confidence}"])</p>
+                        @if (placement.Explanation is { } explanation)
+                        {
+                            <p><Loc Text="explanation" /></p>
+                        }
+                        @if (statement.Summary is { } summary)
+                        {
+                            <p><Loc Text="summary" /></p>
+                        }
+                        <p class="note">@T["Placement_NoDate"]</p>
+                    </dd>
+                }
+            </dl>
+        </section>
+    }
+
+    @if (!overview.Entity.Stated.IsEmpty)
     {
         @* What is stated about the entity itself: when something lasted or happened, how much of something. *@
         <section aria-labelledby="stated">
@@ -361,6 +391,8 @@
     };
 
     private YearParts<DatedStatement> _stated = null!;
+    // The hypothetical placements in time of the name (ADR 0028), shown apart from what is stated.
+    private System.Collections.Immutable.ImmutableArray<DatedStatement> _placements = [];
     private YearParts<Connection> _connected = null!;
     private string _years = string.Empty;
     private EntityOverview? _entity;
@@ -402,7 +434,8 @@
 
         // The years the visitor chose are kept to by this page too (step 25.3).
         var present = Clock.GetUtcNow().Year;
-        _stated = YearParts.Of(_entity.Entity.Dated, statement => statement.Time, _explore.Span, present);
+        _stated = YearParts.Of(_entity.Entity.Stated, statement => statement.Time, _explore.Span, present);
+        _placements = _entity.Entity.Placements;
         _connected = YearParts.Of(_entity.Connections, connection => connection.Relation.Time, _explore.Span, present);
         _years = _explore.Years is { } chosen ? YearsText.Of(chosen, Visitor, T) : string.Empty;
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;

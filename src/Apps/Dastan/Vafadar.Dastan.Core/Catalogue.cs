@@ -294,6 +294,18 @@ public sealed class Catalogue
                     {
                         problems.Add($"{dated.Key}: its quantity has a unit of the list, and a currency when and only when it is money.");
                     }
+
+                    // A hypothetical placement (ADR 0028) places in time and says nothing else; a character of a
+                    // story has no date of history, so what is dated of it can only be such a placement.
+                    if (dated.Placement is not null && (dated.Time is null || dated.Quantity is not null))
+                    {
+                        problems.Add($"{dated.Key}: a hypothetical placement states a time and no quantity.");
+                    }
+
+                    if (dated.Placement is null && (entity.Type == EntityTypes.Character || entity.Type == EntityTypes.AnimalCharacter))
+                    {
+                        problems.Add($"{dated.Key}: a character of a story has no date of history; a time given to {entity.Id} is a hypothetical placement and says so with placement.");
+                    }
                 }
 
                 foreach (var name in entity.Names)

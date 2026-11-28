@@ -69,6 +69,22 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private static readonly FrozenDictionary<string, ReviewStatus> DatedReviewNames =
         ComparisonSample.ReviewNames.ToFrozenDictionary(name => name, name => Enum.Parse<ReviewStatus>(name, ignoreCase: true), StringComparer.Ordinal);
 
+    // What a hypothetical placement in time rests on and how sure it is (ADR 0028), with what each word means.
+    private static readonly (string Name, PlacementBasis Value, string Note)[] PlacementBases =
+    [
+        ("narrative", PlacementBasis.Narrative, "the order of the story itself – the reigns or generations it tells"),
+        ("synchronism", PlacementBasis.Synchronism, "the reckoning of a named source that fitted the tradition to another history"),
+        ("editorialHypothesis", PlacementBasis.EditorialHypothesis, "a working hypothesis of the editors, not a scholarly estimate"),
+    ];
+
+    private static readonly FrozenDictionary<string, PlacementBasis> PlacementBasisNames =
+        PlacementBases.ToFrozenDictionary(basis => basis.Name, basis => basis.Value, StringComparer.Ordinal);
+
+    private static readonly FrozenDictionary<string, PlacementConfidence> PlacementConfidenceNames = Names(
+        ("veryLow", PlacementConfidence.VeryLow),
+        ("low", PlacementConfidence.Low),
+        ("medium", PlacementConfidence.Medium));
+
     private static readonly FrozenDictionary<string, SourceKind> SourceKindNames = Names(
         ("primary_literary_text_transcription", SourceKind.PrimaryText),
         ("scholarly_reference", SourceKind.ScholarlyReference),
@@ -358,6 +374,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             new("relations[].scope.kind", "What the relation is a statement about.", Of(ScopeKindNames.Keys)),
             new("relations[].reviewStatus, events[].reviewStatus", "How far a statement has been checked.", Of(ReviewNames.Keys)),
             new("entities[].dated[].reviewStatus", "How far a statement with a date has been checked.", [.. ComparisonSample.ReviewNames.Select(name => new ContentChoice(name))]),
+            new(
+                "entities[].dated[].placement.basis",
+                "Optional placement: the statement is a hypothetical placement in time, never a date of history (ADR 0028). What it rests on.",
+                [.. PlacementBases.OrderBy(basis => basis.Name, StringComparer.Ordinal).Select(basis => new ContentChoice(basis.Name, basis.Note))]),
+            new("entities[].dated[].placement.confidence", "How much confidence the editors have in a hypothetical placement; never more than medium.", Of(PlacementConfidenceNames.Keys)),
             new("events[].orderBasis", "What the order of the events follows.", Of(["narrative"])),
             new("events[].temporalExpression.kind", "The time of a story event: its place in the telling, never a date.", Of(["narrative_position"])),
             new("events[].grouping", "Optional: the event stands for several scenes.", Of(["editorial_beat_may_condense_multiple_scenes"])),
@@ -953,8 +974,17 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             record.Problem("time is missing.");
         }
 
+        // A hypothetical placement in time (ADR 0028): what it rests on, how sure it is and why.
+        var placement = record.Child("placement", required: false);
+        var placed = placement is not null;
+        var placing = placement is null ? null : ReadPlacement(placement, key);
+        if (placed && !timed && quantified)
+        {
+            record.Problem("a hypothetical placement states the time it places at; time is missing.");
+        }
+
         record.Finish();
-        if (key is null || label is null || level is null || !reviewKnown || (timed && time is null) || (quantified && quantity is null) || (!timed && !quantified))
+        if (key is null || label is null || level is null || !reviewKnown || (timed && time is null) || (quantified && quantity is null) || (!timed && !quantified) || (placed && (placing is null || !timed)))
         {
             return null;
         }
@@ -970,6 +1000,30 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Review = review,
             Reviewed = reviewed,
             Level = level.Value,
+            Placement = placing,
+        };
+    }
+
+    /// <summary>
+    /// Reads what makes a statement with a date a hypothetical placement in time (ADR 0028): its basis and its
+    /// confidence, from the fixed lists, and an explanation a translation may give in its language.
+    /// </summary>
+    private HypotheticalPlacement? ReadPlacement(JsonRecord record, string? key)
+    {
+        var basisKnown = record.Choice("basis", PlacementBasisNames, out var basis);
+        var confidenceKnown = record.Choice("confidence", PlacementConfidenceNames, out var confidence);
+        var explanation = record.Text("explanation", required: false);
+        record.Finish();
+        if (!basisKnown || !confidenceKnown || key is null)
+        {
+            return null;
+        }
+
+        return new HypotheticalPlacement
+        {
+            Basis = basis,
+            Confidence = confidence,
+            Explanation = explanation is null ? null : Localized(explanation, $"dated/{key}/explanation"),
         };
     }
 
@@ -1962,7 +2016,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         new("relations", ["label", "note"]),
         new("events", ["label", "summary"], Roles: true),
         new("media", ["label", "caption", "altText"], Places: true),
-        new("dated", ["label", "summary"]),
+        new("dated", ["label", "summary", "explanation"]),
         new("threads", ["label", "summary"], Notes: true),
     ];
 

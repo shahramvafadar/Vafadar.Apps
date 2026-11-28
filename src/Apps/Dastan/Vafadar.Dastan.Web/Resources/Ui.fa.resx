@@ -1050,6 +1050,33 @@
   <data name="Foreign_Note_Other" xml:space="preserve">
     <value>به زبان مجموعه</value>
   </data>
+  <data name="Entity_Placements" xml:space="preserve">
+    <value>جایگاه زمانی فرضی</value>
+  </data>
+  <data name="Placement_Line" xml:space="preserve">
+    <value>{0} — جایگاه زمانی فرضی، {1}. {2}.</value>
+  </data>
+  <data name="Placement_Basis_Narrative" xml:space="preserve">
+    <value>بر پایهٔ ترتیب داستان</value>
+  </data>
+  <data name="Placement_Basis_Synchronism" xml:space="preserve">
+    <value>بر پایهٔ گاه‌شماری منبعی که روایت را با تاریخی دیگر برابر نهاده است</value>
+  </data>
+  <data name="Placement_Basis_EditorialHypothesis" xml:space="preserve">
+    <value>فرضیهٔ کاری ویراستاران داستان، نه برآوردی پژوهشی</value>
+  </data>
+  <data name="Placement_Confidence_VeryLow" xml:space="preserve">
+    <value>اطمینان: بسیار کم</value>
+  </data>
+  <data name="Placement_Confidence_Low" xml:space="preserve">
+    <value>اطمینان: کم</value>
+  </data>
+  <data name="Placement_Confidence_Medium" xml:space="preserve">
+    <value>اطمینان: متوسط</value>
+  </data>
+  <data name="Placement_NoDate" xml:space="preserve">
+    <value>هیچ تاریخ مستند تاریخی وجود ندارد.</value>
+  </data>
   <data name="Entity_Stated" xml:space="preserve">
     <value>آنچه گفته شده است</value>
   </data>

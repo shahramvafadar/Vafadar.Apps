@@ -519,13 +519,15 @@ public sealed class Projection
     /// Returns what the collection has with a time of the calendar: the entities something dated is stated about
     /// – in a statement, in a relation, or among the facts of their own record (<see cref="RecordTimes"/>) – and
     /// the media, each of which was made at some time. The story itself is not in it – it has an order, no dates.
+    /// A hypothetical placement in time (ADR 0028) is not in it either, nor in any other view of time: it is no
+    /// date of history and is shown on the page of its entity only.
     /// </summary>
     public TimelineView Timeline()
     {
         // A relation with a time stands in the lane of the entity it reads from: "played for" in the lane of the player.
         ImmutableArray<Edge> held = [.. Relations.Where(relation => relation.Time is not null).Select(ToEdge)];
         var holders = held.Select(edge => edge.From.Id).ToHashSet();
-        return new([.. Entities.Where(entity => entity.Dated.Any(dated => dated.Time is not null) || holders.Contains(entity.Id) || RecordTimes.Any(entity))], Media, held);
+        return new([.. Entities.Where(entity => entity.Stated.Any(dated => dated.Time is not null) || holders.Contains(entity.Id) || RecordTimes.Any(entity))], Media, held);
     }
 
     /// <summary>
@@ -558,7 +560,7 @@ public sealed class Projection
             year,
             [.. Relations.Select(relation => (Relation: relation, Holding: YearCover.Of(relation.Time, year)))
                 .Where(held => held.Holding != Holding.No).Select(held => new HeldThen(ToEdge(held.Relation), held.Holding))],
-            [.. Entities.SelectMany(entity => entity.Dated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, year))))
+            [.. Entities.SelectMany(entity => entity.Stated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, year))))
                 .Where(stated => stated.Holding != Holding.No)],
             turns.Where(turn => turn.Place < year.Place).Select(turn => (YearOfEra?)turn).LastOrDefault(),
             turns.Where(turn => turn.Place > year.Place).Select(turn => (YearOfEra?)turn).FirstOrDefault())
@@ -572,7 +574,7 @@ public sealed class Projection
     // about its entities, and of the records of its entities.
     private IEnumerable<TemporalExpression?> Times() =>
         Relations.Select(relation => relation.Time)
-            .Concat(Entities.SelectMany(entity => entity.Dated.Select(dated => dated.Time)))
+            .Concat(Entities.SelectMany(entity => entity.Stated.Select(dated => dated.Time)))
             .Concat(Entities.SelectMany(entity => RecordTimes.Of(entity).Select(time => (TemporalExpression?)time.Time)));
 
     /// <summary>
@@ -597,7 +599,7 @@ public sealed class Projection
             asked,
             [.. Relations.Select(relation => (Relation: relation, Holding: YearCover.Of(relation.Time, span, present)))
                 .Where(held => held.Holding != Holding.No).Select(held => new HeldThen(ToEdge(held.Relation), held.Holding))],
-            [.. Entities.SelectMany(entity => entity.Dated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, span, present))))
+            [.. Entities.SelectMany(entity => entity.Stated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, span, present))))
                 .Where(stated => stated.Holding != Holding.No)])
         {
             Records = [.. Entities.SelectMany(entity => RecordTimes.Of(entity).Select(time => new RecordThen(entity, time, YearCover.Of(time.Time, span, present))))

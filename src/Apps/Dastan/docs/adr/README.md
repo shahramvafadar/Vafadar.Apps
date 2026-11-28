@@ -34,6 +34,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0026](0026-logo.md) | The logo: one geometry reconstructed from the approved picture, every asset made from it by one script, drawn by the site itself | Accepted; D-082 |
 | [0027](0027-gallery-themes.md) | A theme of a gallery is a record of its collection: an entity of the type `Theme` that media items name | Accepted; D-083 |
 | [0025](0025-exploring.md) | One state of exploring – what is explored, the view, what is chosen, what each view was told – read from the address and known to no renderer | Accepted; step 20.6 |
+| [0028](0028-hypothetical-placement.md) | A hypothetical placement in time is a dated statement marked with its basis and confidence, shown apart on the page of its entity and drawn by no view of time | Accepted; F1 of the content plan |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),
 [0012](../../../../../docs/adr/0012-temporal-model.md) (stated time), [0013](../../../../../docs/adr/0013-web-library.md) (the web library).
