@@ -84,3 +84,4 @@ working session; a civilization is about four batches.
 | N8 | 2026-11-28 | near-east (4 lanes, 33 periods, 117 events), mediterranean (3 lanes, 32 periods, 127 events), asia (3 lanes, 40 periods, 147 events), following the recommendation of F3; iran-china-rome kept. |
 | N9 | 2026-11-28 | Report: reviews/2026-11-28-new-histories-review.md. 736 quotes stand; Demetrius II of Macedon separated from the Seleucid; the Hittite sack of Babylon given both years. Nothing marked reviewed; G5, G7 and the look in a browser wait for the owner. |
 | G5 | 2026-11-28 | In part, on the recommendation of F6 as a working default: Rostam and Esfandiar (24 scenes, 22 records, 28 verse quotes). Left: Bizhan and Manizheh, the great war of Kay Khosrow and Akvan the demon, and portrayalOf links for further Sasanian kings. |
+| G5 | 2026-11-28 | Continued: Bizhan and Manizheh (15 scenes, 19 records, 20 verse quotes). |
