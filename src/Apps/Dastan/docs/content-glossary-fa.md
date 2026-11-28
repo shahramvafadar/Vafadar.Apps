@@ -17,6 +17,10 @@ translation takes its names from here; where a name is not yet here, it follows 
 * **The Shahnameh**: the poem's own forms, as on Ganjoor – کی‌کاووس, کیخسرو, تهمورث, هفت‌خوان; a champion
   who shares a king's name keeps the poem's distinction (بهرام the champion, بهرام گور the king).
 * A summary in Persian says no more than the English; a name in it is written as in its own entry.
+* Sources are named as Persian writing names them where a form is settled (بریتانیکا, اسمیتسونین); a source
+  without one keeps its Latin script – Livius, so that the website is not read as Livy the historian (تیتوس
+  لیویوس), Asia for Educators, ROR – as do a museum number (BM 90920), a Latin title or word given beside its
+  Persian (کارنامه (Res Gestae), senex) and Qin beside چین, which would otherwise read as China.
 
 ## Iran
 
