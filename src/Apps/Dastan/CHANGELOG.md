@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- A new history: Anatolia, from the Hittite kings of Hattusa through Midas of Phrygia to the Lydian kings and
+  Croesus.
 - A new history: Mesopotamia, from Ur and the Babylon of Hammurabi through Assyria to the Neo-Babylonian kings
   and Cyrus.
 - Egypt reaches the Arab conquest of 642: Roman and Byzantine Egypt, its capitals with their positions, the

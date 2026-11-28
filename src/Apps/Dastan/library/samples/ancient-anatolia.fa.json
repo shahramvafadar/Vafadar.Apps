@@ -1,0 +1,361 @@
+{
+  "formatVersion": "dastan-translation-0.1",
+  "datasetId": "ancient-anatolia",
+  "language": "fa",
+  "review": "draft",
+  "readingStages": {
+    "0": "همه"
+  },
+  "entities": {
+    "subject-ancient-anatolia": {
+      "label": "آناتولی",
+      "summary": "آناتولی باستان از پادشاهی هیتیِ هتوسا، پادشاهی‌های کهن و نو و فروپاشی آن در حدود ۱۱۹۰ پیش از میلاد، تا دولت‌های نوهیتی، اورارتو و پادشاهی فریگیه در گوردیون، و لیدیِ گوگس و کرزوس که کوروش آن را گشود."
+    },
+    "office-hittite-king": {
+      "label": "شاه هیتی",
+      "summary": "پادشاهی هیتی‌ها در هتوسا."
+    },
+    "office-king-of-phrygia": {
+      "label": "پادشاه فریگیه",
+      "summary": "پادشاهی فریگی‌ها در گوردیون."
+    },
+    "office-king-of-lydia": {
+      "label": "پادشاه لیدی",
+      "summary": "پادشاهی لیدی در سارد."
+    },
+    "dynasty-mermnad": {
+      "label": "مرمنادها",
+      "summary": "دودمان لیدیایی که گوگس حدود ۶۸۰ پیش از میلاد بنیاد نهاد و با کرزوس، هنگامی که کوروش سارد را گرفت، پایان یافت."
+    },
+    "period-hittite-old-kingdom": {
+      "label": "پادشاهی کهن هیتی",
+      "summary": "از لابارنا و هتوسیلی، حدود ۱۶۵۰ پیش از میلاد، تا غارت بابل به دست مورسیلی یکم و بحران پس از او و بازسازی زیر فرمان تلپینو، حدود ۱۵۰۰."
+    },
+    "period-hittite-new-kingdom": {
+      "label": "پادشاهی نو هیتی",
+      "summary": "از شوپیلولیومای یکم، شاه از حدود ۱۳۵۵ پیش از میلاد، که هیتی‌ها را قدرتی بزرگ تا سوریه کرد، تا فروپاشی امپراتوری پس از حدود ۱۱۹۰."
+    },
+    "person-labarna": {
+      "label": "لابارنا",
+      "summary": "بنیادگذار پادشاهی هیتی بنا بر فرمان تلپینو؛ شاید او و جانشینش هتوسیلی یک تن بوده باشند."
+    },
+    "person-hattusili-i": {
+      "label": "هتوسیلی یکم",
+      "summary": "جانشین لابارنا، شاه از حدود ۱۶۵۰ تا ۱۶۲۰ پیش از میلاد، که با جنگ‌هایش پادشاهی را «همسایهٔ دریا» کرد و کیزوواتنا در کیلیکیه را افزود."
+    },
+    "person-mursili-i": {
+      "label": "مورسیلی یکم",
+      "summary": "شاه هیتی که در نخستین سال‌های سدهٔ شانزدهم پیش از میلاد – بنا بر گاه‌شماری میانهٔ پایین در ۱۵۸۷ – به بابل رسید و آن را غارت کرد."
+    },
+    "person-hantili-i": {
+      "label": "هانتیلی یکم",
+      "summary": "شاه هیتی از حدود ۱۵۸۵ تا ۱۵۶۰ پیش از میلاد که در روزگارش بحرانی در دودمان به فروپاشی قدرت هیتی انجامید."
+    },
+    "person-telepinu": {
+      "label": "تلپینو",
+      "summary": "شاه هیتی از حدود ۱۵۲۵ تا ۱۵۰۰ پیش از میلاد که نظم را بازگرداند و اصول فرمانروایی نیک را در فرمانش نهاد، فرمانی که منبع شناخت نخستین شاهان است."
+    },
+    "person-tudhaliya-i": {
+      "label": "تودخلیای یکم",
+      "summary": "شاه هیتی از حدود ۱۴۲۰ تا ۱۴۰۰ پیش از میلاد، از دودمانی نو، هشتمین جانشین تلپینو."
+    },
+    "person-suppiluliuma-i": {
+      "label": "شوپیلولیومای یکم",
+      "summary": "شاه هیتی از حدود ۱۳۵۵ پیش از میلاد به مدت سی‌وپنج سال، بنیادگذار پادشاهی نو، که میتانی را شکست داد و شمال سوریه را از مصر گرفت؛ حدود ۱۳۲۰ پادشاهی را به پسر بزرگش واگذاشت."
+    },
+    "person-arnuwanda-ii": {
+      "label": "آرنوواندای دوم",
+      "summary": "پسر بزرگ شوپیلولیومای یکم که حدود ۱۳۲۰ پیش از میلاد جانشینش شد و کوتاه فرمان راند."
+    },
+    "person-mursili-ii": {
+      "label": "مورسیلی دوم",
+      "summary": "پسر دیگر شوپیلولیومای یکم، شاه از حدود ۱۳۱۸ تا ۱۲۹۰ پیش از میلاد، که بر آرزاوا در باختر آناتولی چیره شد."
+    },
+    "person-muwatalli-ii": {
+      "label": "مواتلی دوم",
+      "summary": "پسر مورسیلی دوم، شاه از حدود ۱۲۹۰ تا ۱۲۷۲ پیش از میلاد، که در ۱۲۷۴ در نبرد بزرگ ارابه‌ها بر کرانهٔ اورونتس با رامسس دوم مصر رو‌به‌رو شد."
+    },
+    "person-mursili-iii": {
+      "label": "مورسیلی سوم",
+      "summary": "پسر نخست مواتلی دوم، شاه از حدود ۱۲۷۲ تا ۱۲۶۵ پیش از میلاد، که هتوسیلی سوم او را از تخت برانداخت."
+    },
+    "person-hattusili-iii": {
+      "label": "هتوسیلی سوم",
+      "summary": "شاه هیتی از حدود ۱۲۶۵ تا ۱۲۴۰ پیش از میلاد که مورسیلی سوم را برانداخت، فرمانروایی نیابتی تارخونتاسا را پدید آورد و دربارهٔ شورشی پیامارادو به شاه آهیاوا نامه نوشت."
+    },
+    "person-tudhaliya-iv": {
+      "label": "تودخلیای چهارم",
+      "summary": "پسر هتوسیلی سوم، شاه از حدود ۱۲۴۰ تا ۱۲۱۵ پیش از میلاد، که هنوز در هتوسا می‌زیست و دستور کنده‌کاری‌های یازیلیکایای نزدیک آن را داد."
+    },
+    "person-midas": {
+      "label": "میداس",
+      "summary": "نامدارترین پادشاه فریگیه، شناخته از افسانه‌های یونانی و شاید همان میتا در نوشته‌های آشوری، که در ۷۱۰/۷۰۹ پیش از میلاد از سارگن دوم در برابر کیمری‌ها یاری خواست و در ۶۹۶/۶۹۵ پس از شکستی خودکشی کرد."
+    },
+    "person-gyges": {
+      "label": "گوگس",
+      "summary": "بنیادگذار دودمان مرمنادِ لیدی، که با احتیاط از ۶۸۰ تا ۶۴۴ پیش از میلاد گذاشته می‌شود؛ سادیاتس را برانداخت، کیمری‌ها را در ۶۷۹ شکست داد و هنگام بازگشت آنان در ۶۴۴ کشته شد."
+    },
+    "person-ardys": {
+      "label": "آردیس",
+      "summary": "پسر و جانشین گوگس که پدرش را در بین‌تپه به خاک سپرد و حدود ۶۲۵ پیش از میلاد پسرش سادیاتس جانشینش شد."
+    },
+    "person-sadyattes": {
+      "label": "سادیاتس",
+      "summary": "پسر آردیس، پادشاه لیدی از حدود ۶۲۵ پیش از میلاد، که جز نامی از او نمانده است."
+    },
+    "person-alyattes": {
+      "label": "آلیاتس",
+      "summary": "پسر و جانشین سادیاتس، پادشاه لیدی از حدود ۶۰۰ تا ۵۶۰ پیش از میلاد، که ازمیر و گوردیون را گرفت، کیمری‌ها را شکست داد و تا گرفت خورشید ۵۸۵ با مادهای هووخشتره در کنار رود هالیس جنگید."
+    },
+    "person-croesus": {
+      "label": "کرزوس",
+      "summary": "پسر آلیاتس، زادهٔ حدود ۵۹۵ پیش از میلاد، پنجمین و واپسین شاه دودمان مرمناد از ۵۶۰، که پادشاهی‌اش با گرفتن سارد به دست کوروش پایان یافت – بنا بر سنت در ۵۴۷، سالی که اکنون در آن تردید است."
+    },
+    "person-ramses-ii": {
+      "label": "رامسس دوم",
+      "summary": "پادشاه مصر از دودمان نوزدهم که برای بازگرفتن شمال سوریه برخاست و در ۱۲۷۴ پیش از میلاد بر کرانهٔ اورونتس با مواتلی دوم جنگید؛ در ۱۲۵۹ پیمانی با هیتی‌ها بسته شد."
+    },
+    "person-cyaxares": {
+      "label": "هووخشتره",
+      "summary": "سرکردهٔ مادها که به کاپادوکیه تاخت و در ۵۸۵ پیش از میلاد در کنار رود هالیس با آلیاتس لیدیایی جنگید."
+    },
+    "person-cyrus-ii": {
+      "label": "کوروش دوم (کوروش بزرگ)",
+      "summary": "شاه پارسی که کرزوس را شکست داد، او را در سارد محاصره کرد و شهر را گرفت."
+    },
+    "person-sargon-ii": {
+      "label": "سارگن دوم",
+      "summary": "شاه آشوری که میداس در ۷۱۰/۷۰۹ پیش از میلاد در برابر کیمری‌ها از او یاری خواست و رُسای اورارتویی را در ۷۱۴ شکست داد."
+    },
+    "place-hattusa": {
+      "label": "هتوسا",
+      "summary": "پایتخت هیتی‌ها که تودخلیای چهارم هنوز در آن می‌زیست؛ بعدها خالی شد، چون در برابر یورش‌های کاسکا بی‌دفاع بود."
+    },
+    "place-gordium": {
+      "label": "گوردیون",
+      "summary": "پایتخت فریگی‌ها که در سدهٔ نهم پیش از میلاد بنیاد شد؛ کیمری‌ها آن را غارت کردند، لیدیایی‌ها و پارسیان در دستش داشتند و پارمنیون در ۳۳۴ آن را برای اسکندر گرفت."
+    },
+    "place-carchemish": {
+      "label": "کرکمیش",
+      "summary": "شهری بر کرانهٔ فرات که شوپیلولیومای یکم پسری را در آن نایب‌السلطنه کرد؛ پس از فروپاشی هیتی یکی از دولت‌های نوهیتی شد."
+    },
+    "place-sardis": {
+      "label": "سارد",
+      "summary": "پایتخت لیدی بر کرانهٔ رود پاکتولوس که در روزگار گوگس شهری شکوهمند شد و کوروش آن را گرفت."
+    },
+    "event-hittites-sack-babylon": {
+      "label": "غارت بابل به دست هیتی‌ها",
+      "summary": "مورسیلی یکم در نخستین سال‌های سدهٔ شانزدهم پیش از میلاد – بنا بر گاه‌شماری میانهٔ پایین در ۱۵۸۷ – به بابل رسید و آن را غارت کرد؛ کاری که میان‌رودان را آشفته کرد ولی برای هیتی‌ها سود چندانی نداشت."
+    },
+    "event-battle-on-the-orontes": {
+      "label": "نبرد اورونتس (قادش)",
+      "summary": "در ۱۲۷۴ پیش از میلاد مواتلی دوم رامسس دوم را در دشت اورونتس غافلگیر کرد و دو سپاه ارابه‌سوار نبردی بزرگ کردند؛ هر دو سو ادعای پیروزی کردند."
+    },
+    "event-hittite-egyptian-treaty": {
+      "label": "پیمان هیتی‌ها و مصر",
+      "summary": "در ۱۲۵۹ پیش از میلاد هیتی‌ها و مصر پیمانی بستند که سوریه را میان دو قدرت بزرگ بخش کرد."
+    },
+    "event-collapse-of-hittite-empire": {
+      "label": "فروپاشی امپراتوری هیتی",
+      "summary": "پس از حدود ۱۱۹۰ پیش از میلاد قدرت به نایب‌السلطنه‌های تارخونتاسا و کرکمیش رسید و سرزمین‌هایشان به دولت‌های نوهیتی بخش شد، در حالی که فریگی‌ها و مردمان دریا درآمدند."
+    },
+    "event-sargon-defeats-rusa": {
+      "label": "شکست اورارتو از سارگن دوم",
+      "summary": "در ۷۱۴ پیش از میلاد سارگن دوم رُسای اورارتویی را شکست داد، تقریباً بی‌مانع در سرزمین پیش رفت و پیکرهٔ خدای هالدی را برد؛ رُسا خودکشی کرد."
+    },
+    "event-cimmerians-sack-sardis": {
+      "label": "غارت سارد به دست کیمری‌ها",
+      "summary": "در ۶۴۴ پیش از میلاد کیمری‌ها باز به لیدی تاختند؛ گوگس شکست خورد و کشته شد و سارد غارت شد."
+    },
+    "event-battle-of-the-eclipse": {
+      "label": "نبرد گرفت خورشید",
+      "summary": "در ۲۸ مه ۵۸۵ پیش از میلاد آلیاتس لیدیایی و هووخشترهٔ مادی در کنار رود هالیس جنگیدند؛ خورشید گرفت، دو شاه آشتی کردند و هالیس مرز شد."
+    },
+    "event-conquest-of-lydia": {
+      "label": "گشودن لیدی به دست کوروش",
+      "summary": "کوروش کرزوس را در خاور آنکارا شکست داد، او را در سارد محاصره کرد و شهر را گرفت؛ این جنگ را معمولاً بنا بر خوانشی بسیار نامطمئن از گاه‌نامه‌ای بابلی در ۵۴۷ پیش از میلاد می‌گذارند."
+    }
+  },
+  "relations": {
+    "relation-labarna-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-hattusili-i-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-hattusili-i-successor-of-labarna": {
+      "label": "جانشینِ"
+    },
+    "relation-mursili-i-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-hantili-i-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-telepinu-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-tudhaliya-i-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-suppiluliuma-i-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-arnuwanda-ii-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-suppiluliuma-i-parent-of-arnuwanda-ii": {
+      "label": "پدرِ"
+    },
+    "relation-arnuwanda-ii-successor-of-suppiluliuma-i": {
+      "label": "جانشینِ"
+    },
+    "relation-mursili-ii-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-suppiluliuma-i-parent-of-mursili-ii": {
+      "label": "پدرِ"
+    },
+    "relation-mursili-ii-successor-of-arnuwanda-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-mursili-ii-sibling-of-arnuwanda-ii": {
+      "label": "برادرِ"
+    },
+    "relation-muwatalli-ii-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-mursili-ii-parent-of-muwatalli-ii": {
+      "label": "پدرِ"
+    },
+    "relation-mursili-iii-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-muwatalli-ii-parent-of-mursili-iii": {
+      "label": "پدرِ"
+    },
+    "relation-hattusili-iii-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-hattusili-iii-successor-of-mursili-iii": {
+      "label": "جانشینِ"
+    },
+    "relation-tudhaliya-iv-holder-of-hittite-king": {
+      "label": "پادشاه"
+    },
+    "relation-hattusili-iii-parent-of-tudhaliya-iv": {
+      "label": "پدرِ"
+    },
+    "relation-midas-holder-of-king-of-phrygia": {
+      "label": "پادشاه"
+    },
+    "relation-gyges-holder-of-king-of-lydia": {
+      "label": "پادشاه"
+    },
+    "relation-gyges-member-of-mermnad": {
+      "label": "از خاندان"
+    },
+    "relation-gyges-founder-of-mermnad": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-ardys-holder-of-king-of-lydia": {
+      "label": "پادشاه"
+    },
+    "relation-ardys-member-of-mermnad": {
+      "label": "از خاندان"
+    },
+    "relation-gyges-parent-of-ardys": {
+      "label": "پدرِ"
+    },
+    "relation-ardys-successor-of-gyges": {
+      "label": "جانشینِ"
+    },
+    "relation-sadyattes-holder-of-king-of-lydia": {
+      "label": "پادشاه"
+    },
+    "relation-sadyattes-member-of-mermnad": {
+      "label": "از خاندان"
+    },
+    "relation-ardys-parent-of-sadyattes": {
+      "label": "پدرِ"
+    },
+    "relation-sadyattes-successor-of-ardys": {
+      "label": "جانشینِ"
+    },
+    "relation-alyattes-holder-of-king-of-lydia": {
+      "label": "پادشاه"
+    },
+    "relation-alyattes-member-of-mermnad": {
+      "label": "از خاندان"
+    },
+    "relation-sadyattes-parent-of-alyattes": {
+      "label": "پدرِ"
+    },
+    "relation-alyattes-successor-of-sadyattes": {
+      "label": "جانشینِ"
+    },
+    "relation-croesus-holder-of-king-of-lydia": {
+      "label": "پادشاه"
+    },
+    "relation-croesus-member-of-mermnad": {
+      "label": "از خاندان"
+    },
+    "relation-alyattes-parent-of-croesus": {
+      "label": "پدرِ"
+    },
+    "relation-croesus-successor-of-alyattes": {
+      "label": "جانشینِ"
+    },
+    "relation-sardis-capital-of-mermnad": {
+      "label": "پایتختِ"
+    },
+    "relation-mursili-i-participant-in-hittites-sack-babylon": {
+      "label": "شرکت در"
+    },
+    "relation-hittites-sack-babylon-during-hittite-old-kingdom": {
+      "label": "در دورهٔ"
+    },
+    "relation-muwatalli-ii-participant-in-battle-on-the-orontes": {
+      "label": "شرکت در"
+    },
+    "relation-ramses-ii-participant-in-battle-on-the-orontes": {
+      "label": "شرکت در"
+    },
+    "relation-battle-on-the-orontes-during-hittite-new-kingdom": {
+      "label": "در دورهٔ"
+    },
+    "relation-ramses-ii-participant-in-hittite-egyptian-treaty": {
+      "label": "شرکت در"
+    },
+    "relation-hittite-egyptian-treaty-during-hittite-new-kingdom": {
+      "label": "در دورهٔ"
+    },
+    "relation-collapse-of-hittite-empire-during-hittite-new-kingdom": {
+      "label": "در دورهٔ"
+    },
+    "relation-sargon-ii-participant-in-sargon-defeats-rusa": {
+      "label": "شرکت در"
+    },
+    "relation-gyges-participant-in-cimmerians-sack-sardis": {
+      "label": "شرکت در"
+    },
+    "relation-cimmerians-sack-sardis-took-place-in-sardis": {
+      "label": "رخ داد در"
+    },
+    "relation-alyattes-participant-in-battle-of-the-eclipse": {
+      "label": "شرکت در"
+    },
+    "relation-cyaxares-participant-in-battle-of-the-eclipse": {
+      "label": "شرکت در"
+    },
+    "relation-cyrus-ii-participant-in-conquest-of-lydia": {
+      "label": "شرکت در"
+    },
+    "relation-croesus-participant-in-conquest-of-lydia": {
+      "label": "شرکت در"
+    },
+    "relation-conquest-of-lydia-took-place-in-sardis": {
+      "label": "رخ داد در"
+    }
+  }
+}

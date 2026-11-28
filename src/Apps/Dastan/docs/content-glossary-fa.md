@@ -1,6 +1,6 @@
 # Persian names of the collections
 
-The forms in which the Persian translations of the histories of Iran, Rome, China, Egypt and Mesopotamia and of the Shahnameh write
+The forms in which the Persian translations of the histories of Iran, Rome, China, Egypt, Mesopotamia and Anatolia and of the Shahnameh write
 names, gathered from the collections themselves (review D3 of `content-plan-histories.md`, 2026-11-28). A new
 translation takes its names from here; where a name is not yet here, it follows the rules below and is added.
 
@@ -21,6 +21,8 @@ translation takes its names from here; where a name is not yet here, it follows 
 * **Mesopotamia**: the forms of Persian histories of the Near East where settled (حمورابی, نبوکدنصر, آشوربانیپال,
   سناخریب, اسرحدون, شلمنصر, تیگلات‌پیلسر, نبونید, بابل, نینوا, اور, اوروک), otherwise the cuneiform name read aloud
   with its parts joined by a hyphen as in the English (اور-نمو, شمشی-ادد); a king shared with Iran keeps its form there.
+* **Anatolia**: the forms Persian history uses for Lydia and Phrygia (لیدی, سارد, کرزوس, گوگس, میداس, فریگیه, گوردیون),
+  the Hittite names read aloud (هتوسیلی, مورسیلی, شوپیلولیوما, تودخلیا), numbers written out.
 * **The Shahnameh**: the poem's own forms, as on Ganjoor – کی‌کاووس, کیخسرو, تهمورث, هفت‌خوان; a champion
   who shares a king's name keeps the poem's distinction (بهرام the champion, بهرام گور the king).
 * A summary in Persian says no more than the English; a name in it is written as in its own entry.
@@ -972,6 +974,52 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Nineveh | نینوا |
 | Ur | اور |
 | Uruk | اوروک |
+
+## Anatolia
+
+### Houses and dynasties
+
+| English | Persian |
+|---|---|
+| The Mermnads | مرمنادها |
+
+### People
+
+| English | Persian |
+|---|---|
+| Alyattes | آلیاتس |
+| Ardys | آردیس |
+| Arnuwanda II | آرنوواندای دوم |
+| Croesus | کرزوس |
+| Cyaxares | هووخشتره |
+| Cyrus II the Great | کوروش دوم (کوروش بزرگ) |
+| Gyges | گوگس |
+| Hantili I | هانتیلی یکم |
+| Hattusili I | هتوسیلی یکم |
+| Hattusili III | هتوسیلی سوم |
+| Labarna | لابارنا |
+| Midas | میداس |
+| Mursili II | مورسیلی دوم |
+| Mursili III | مورسیلی سوم |
+| Mursilis I | مورسیلی یکم |
+| Muwatalli II | مواتلی دوم |
+| Ramses II | رامسس دوم |
+| Sadyattes | سادیاتس |
+| Sargon II | سارگن دوم |
+| Šuppiluliuma I | شوپیلولیومای یکم |
+| Telepinu | تلپینو |
+| Tudhaliya I | تودخلیای یکم |
+| Tudhaliya IV | تودخلیای چهارم |
+
+### Places and regions
+
+| English | Persian |
+|---|---|
+| Anatolia | آناتولی |
+| Carchemish | کرکمیش |
+| Gordium | گوردیون |
+| Hattusa | هتوسا |
+| Sardis | سارد |
 
 ## The Shahnameh
 
