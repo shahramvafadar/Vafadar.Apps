@@ -9,8 +9,11 @@ kind. This plan records the design and the decisions; it is carried out as one b
 Steps 1 to 3 are done: the format, the reader and the check, the vocabulary, the list `library/kinds.json` with its
 Persian, the drawings, the choice of kinds on the list of names, the timeline, the comparisons and the search, and
 the classification of the whole library – 1,717 distinct entities of the collections and 796 periods and events of
-the comparisons – with the rule of K4 on. The list grew from 45 to 96 kinds while classifying (below). The look in
-a browser waits for the owner's word.
+the comparisons – with the rule of K4 on. The list grew from 45 to 96 kinds while classifying (below). Step 4 is done:
+the look in a browser on the owner's word (Persian, wide and 360 pixels) found the boxes of kinds in the search
+of a collection stretched to the width of a line, one under the other; they now stand in columns with their
+icon and name beside them. The choices on the list of names, the timeline and a comparison, wider kinds taking
+in narrower ones, and the addresses with the choice in them work as planned.
 
 ## What exists
 
