@@ -1202,6 +1202,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Hushang | هوشنگ |
 | Iblis | ابلیس |
 | Iraj | ایرج |
+| Jamasp | جاماسپ |
 | Jamshid | جمشید |
 | Jandal | جندل |
 | Jarira | جریره |
@@ -1209,6 +1210,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Kabudeh | کبوده |
 | Kakuy | کاکوی |
 | Kalahur | کلاهور |
+| Katayun | کتایون |
 | Kaveh | کاوه |
 | Kay Kavus | کی‌کاووس |
 | Kay Khosrow | کیخسرو |
@@ -1229,16 +1231,19 @@ translation takes its names from here; where a name is not yet here, it follows 
 | Manuchehr | منوچهر |
 | Mardas | مرداس |
 | Mehrab | مهراب |
+| Mehrnush | مهرنوش |
 | Milad | میلاد |
 | Nariman | نریمان |
 | Narsi | نرسی |
 | Nowzar | نوذر |
+| Nush-Azar | نوش‌آذر |
 | Olad | اولاد |
 | Ormazd | اورمزد |
 | Ormazd son of Narsi | اورمزد نرسی |
 | Palashan | پلاشان |
 | Pashang | پشنگ |
 | Pashang | پشنگ |
+| Peshotan | پشوتن |
 | Pilsam | پیلسم |
 | Piran | پیران |
 | Piruz | پیروز |
@@ -1360,6 +1365,7 @@ translation takes its names from here; where a name is not yet here, it follows 
 | The camp of Iran | لشکرگاه ایران |
 | The field of combat | آوردگاه |
 | The fortress of Alanan | دژ الانان |
+| The Hirmand | هیرمند |
 | The hunting ground | نخچیرگه |
 | The Kashaf river | رود کشف |
 | The land of the Arabs | سرزمین تازیان |
