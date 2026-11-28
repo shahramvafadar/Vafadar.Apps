@@ -70,3 +70,4 @@ working session; a civilization is about four batches.
 
 | Batch | Done | Note |
 |---|---|---|
+| G1 | 2026-11-28 | 15 people, the Tahirids as a house with their office, 20 quotes. Left out: Mansur I of the Samanids (no reign dates in the pages read); Mazdak and Tansar (Iranica has no article of their own; the article on the Khorramis is the next to read); Jiroft and Ganj Dareh. |

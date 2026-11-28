@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Iran gains the Tahirid governors of Khorasan and the Samanid amirs from Nasr I to the last, with Bisotun of
+  the Ziyarids and two more Buyids.
 - Rostam and the kings around him say where they stand in time without a false date: the reigns of the poem he
   spans, his absence from the Avesta and the Saka origin of his legend, Esfandiar and Goshtasp as the Avesta
   names them, and the medieval synchronisms (Moses under Manuchehr, Biruni's Kay Khosrow as Koresh) as the

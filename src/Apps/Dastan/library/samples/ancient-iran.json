@@ -1719,6 +1719,30 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-23",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-taherids",
+      "title": "Taherids – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/taherid-dynasty/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-khorasan-vi",
+      "title": "Khorasan vi. History in the Taherid and Samanid periods – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/khorasan-vi-history-in-the-taherid-and-samanid-periods/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-iranica-nuh-ii",
+      "title": "Nuḥ (II) b. Manṣur (I) – Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/nuh-ii-b-mansur-i/",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -10340,7 +10364,8 @@
       "summary": "In 873 Yaʿqub intervened at Nishapur and ended the rule of the Tahirid governors in Khorasan.",
       "sourceIds": [
         "src-iranica-saffarids",
-        "src-iranica-abbasid-caliphate"
+        "src-iranica-abbasid-caliphate",
+        "src-iranica-taherids"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -10362,6 +10387,10 @@
         {
           "fact": "participant",
           "entityId": "person-yaqub-ibn-layth"
+        },
+        {
+          "fact": "participant",
+          "entityId": "person-muhammad-ibn-tahir"
         }
       ]
     },
@@ -12310,6 +12339,490 @@
         {
           "fact": "creator",
           "entityId": "person-rudaki"
+        }
+      ]
+    },
+    {
+      "id": "dynasty-tahirid",
+      "type": "Dynasty",
+      "label": "The Tahirids",
+      "summary": "A family of the early Abbasid period whose members governed Khorasan for the caliphs from 821 to 873, from Tahir b. Husayn to Muhammad b. Tahir, deferential to the caliphs yet in practice autonomous.",
+      "sourceIds": [
+        "src-iranica-taherids",
+        "src-iranica-saffarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "founded",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 821
+            }
+          }
+        },
+        {
+          "fact": "dissolved",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 873
+            }
+          }
+        },
+        {
+          "fact": "seat",
+          "entityId": "place-nishapur"
+        }
+      ]
+    },
+    {
+      "id": "office-tahirid-governor",
+      "type": "Office",
+      "label": "Tahirid governor of Khorasan",
+      "summary": "The governorship of Khorasan and the eastern provinces held by the Tahirids for the Abbasid caliphs.",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "partOf",
+          "entityId": "dynasty-tahirid"
+        }
+      ]
+    },
+    {
+      "id": "person-tahir-ibn-husayn",
+      "type": "Person",
+      "label": "Tahir b. Husayn",
+      "summary": "Called Dhu’l-Yaminayn, “the ambidextrous”, the general who rose to prominence in the civil war of al-Amin and al-Maʾmun; named governor of Khorasan in 821, he died suddenly in 822.",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Dhu’l-Yaminayn",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 775
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 776
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 822
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Founder of the Tahirids."
+        }
+      ]
+    },
+    {
+      "id": "person-talha-ibn-tahir",
+      "type": "Person",
+      "label": "Talha b. Tahir",
+      "summary": "Son of Tahir, governor of Khorasan from 822 to 828.",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-abdallah-ibn-tahir",
+      "type": "Person",
+      "label": "ʿAbdallah b. Tahir",
+      "summary": "Son of Tahir, governor of Khorasan from 828 to 844.",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-tahir-ibn-abdallah",
+      "type": "Person",
+      "label": "Tahir b. ʿAbdallah",
+      "summary": "Son of ʿAbdallah, governor of Khorasan from 844 to his death in 862.",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 862
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-muhammad-ibn-tahir",
+      "type": "Person",
+      "label": "Muhammad b. Tahir",
+      "summary": "Son of Tahir b. ʿAbdallah, the last Tahirid governor of Khorasan, from 862 until Yaʿqub the Saffarid came to Nishapur in 873.",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nasr-i",
+      "type": "Person",
+      "label": "Nasr I",
+      "summary": "Son of Ahmad b. Asad, Samanid amir from 864 to 892, who extended his power from Samarkand to Bukhara and was invested with Transoxania by the caliph in 875.",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-ahmad-ii-samanid",
+      "type": "Person",
+      "label": "Ahmad II",
+      "summary": "Son of Ismaʿil, Samanid amir from 907 to 914.",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 914
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nuh-i",
+      "type": "Person",
+      "label": "Nuh I",
+      "summary": "Son of Nasr II, called the Praiseworthy Amir, Samanid amir from 943 to 954, under whom the dynasty began to weaken.",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 954
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-abd-al-malik-i",
+      "type": "Person",
+      "label": "ʿAbd al-Malik I",
+      "summary": "Eldest son of Nuh I, called the Rightly-Guided Amir, Samanid amir from 954 to 961.",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-nuh-ii",
+      "type": "Person",
+      "label": "Nuh II",
+      "summary": "Son of Mansur I, called the Well-Pleasing Amir, Samanid amir from 976 to 997, at thirteen at first under his mother and the vizier ʿUtbi; the last Samanid with a reign of significant length.",
+      "sourceIds": [
+        "src-iranica-nuh-ii",
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 997
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-mansur-ii",
+      "type": "Person",
+      "label": "Mansur II",
+      "summary": "Son of Nuh II, Samanid amir from 997 until Faʾiq and Begtuzun deposed him in 999.",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-abd-al-malik-ii",
+      "type": "Person",
+      "label": "ʿAbd al-Malik II",
+      "summary": "Younger brother of Mansur II, raised to the throne by Faʾiq and Begtuzun, the last Samanid amir, from 999 to 1000.",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-bisotun",
+      "type": "Person",
+      "label": "Bisotun",
+      "summary": "Eldest son of Vushmgir, Ziyarid amir from 967 to 978, backed by the Buyids and married to a daughter of ʿAdud al-Dawla; the caliph gave him the title Zahir al-Dawla in 971.",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 978
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Ziyarid amir with Buyid support."
+        }
+      ]
+    },
+    {
+      "id": "person-fakhr-al-dawla",
+      "type": "Person",
+      "label": "ʿAli Fakhr al-Dawla",
+      "summary": "Buyid amir from 983 to 997, brother of ʿAdud al-Dawla and brother-in-law of Qabus, who gave him refuge when he quarrelled with his brother.",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Buyid amir of Ray."
+        }
+      ]
+    },
+    {
+      "id": "person-muayyad-al-dawla",
+      "type": "Person",
+      "label": "Muʾayyad al-Dawla",
+      "summary": "Brother of ʿAdud al-Dawla, who took Gorgan from Qabus in 981; he died in 984.",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "unknown"
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 984
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Took Gorgan from Qabus."
         }
       ]
     }
@@ -26519,6 +27032,1272 @@
       "label": "Translator",
       "sourceIds": [
         "src-britannica-rudaki"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-husayn-holder-of-tahirid-governor",
+      "from": "person-tahir-ibn-husayn",
+      "to": "office-tahirid-governor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Governor",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 821
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 822
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-husayn-member-of-tahirid",
+      "from": "person-tahir-ibn-husayn",
+      "to": "dynasty-tahirid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-husayn-founder-of-tahirid",
+      "from": "person-tahir-ibn-husayn",
+      "to": "dynasty-tahirid",
+      "type": "founderOf",
+      "directionality": "directed",
+      "label": "Founder of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-husayn-employed-by-abbasid",
+      "from": "person-tahir-ibn-husayn",
+      "to": "dynasty-abbasid",
+      "type": "employedBy",
+      "directionality": "directed",
+      "label": "General of al-Maʾmun under",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-talha-ibn-tahir-holder-of-tahirid-governor",
+      "from": "person-talha-ibn-tahir",
+      "to": "office-tahirid-governor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Governor",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 822
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 828
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-talha-ibn-tahir-member-of-tahirid",
+      "from": "person-talha-ibn-tahir",
+      "to": "dynasty-tahirid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-husayn-parent-of-talha-ibn-tahir",
+      "from": "person-tahir-ibn-husayn",
+      "to": "person-talha-ibn-tahir",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-talha-ibn-tahir-successor-of-tahir-ibn-husayn",
+      "from": "person-talha-ibn-tahir",
+      "to": "person-tahir-ibn-husayn",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abdallah-ibn-tahir-holder-of-tahirid-governor",
+      "from": "person-abdallah-ibn-tahir",
+      "to": "office-tahirid-governor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Governor",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 828
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 844
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abdallah-ibn-tahir-member-of-tahirid",
+      "from": "person-abdallah-ibn-tahir",
+      "to": "dynasty-tahirid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-husayn-parent-of-abdallah-ibn-tahir",
+      "from": "person-tahir-ibn-husayn",
+      "to": "person-abdallah-ibn-tahir",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abdallah-ibn-tahir-successor-of-talha-ibn-tahir",
+      "from": "person-abdallah-ibn-tahir",
+      "to": "person-talha-ibn-tahir",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-abdallah-holder-of-tahirid-governor",
+      "from": "person-tahir-ibn-abdallah",
+      "to": "office-tahirid-governor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Governor",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 844
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 862
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-abdallah-member-of-tahirid",
+      "from": "person-tahir-ibn-abdallah",
+      "to": "dynasty-tahirid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abdallah-ibn-tahir-parent-of-tahir-ibn-abdallah",
+      "from": "person-abdallah-ibn-tahir",
+      "to": "person-tahir-ibn-abdallah",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-abdallah-successor-of-abdallah-ibn-tahir",
+      "from": "person-tahir-ibn-abdallah",
+      "to": "person-abdallah-ibn-tahir",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muhammad-ibn-tahir-holder-of-tahirid-governor",
+      "from": "person-muhammad-ibn-tahir",
+      "to": "office-tahirid-governor",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Governor",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 862
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 873
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muhammad-ibn-tahir-member-of-tahirid",
+      "from": "person-muhammad-ibn-tahir",
+      "to": "dynasty-tahirid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tahir-ibn-abdallah-parent-of-muhammad-ibn-tahir",
+      "from": "person-tahir-ibn-abdallah",
+      "to": "person-muhammad-ibn-tahir",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muhammad-ibn-tahir-successor-of-tahir-ibn-abdallah",
+      "from": "person-muhammad-ibn-tahir",
+      "to": "person-tahir-ibn-abdallah",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muhammad-ibn-tahir-participant-in-yaqub-at-nishapur",
+      "from": "person-muhammad-ibn-tahir",
+      "to": "event-yaqub-at-nishapur",
+      "type": "participantIn",
+      "directionality": "directed",
+      "label": "Took part in",
+      "sourceIds": [
+        "src-iranica-taherids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nasr-i-holder-of-samanid-amir",
+      "from": "person-nasr-i",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 864
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 892
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nasr-i-member-of-samanid",
+      "from": "person-nasr-i",
+      "to": "dynasty-samanid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ismail-samani-successor-of-nasr-i",
+      "from": "person-ismail-samani",
+      "to": "person-nasr-i",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ismail-samani-sibling-of-nasr-i",
+      "from": "person-ismail-samani",
+      "to": "person-nasr-i",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ahmad-ii-samanid-holder-of-samanid-amir",
+      "from": "person-ahmad-ii-samanid",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 907
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 914
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ahmad-ii-samanid-member-of-samanid",
+      "from": "person-ahmad-ii-samanid",
+      "to": "dynasty-samanid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ahmad-ii-samanid-successor-of-ismail-samani",
+      "from": "person-ahmad-ii-samanid",
+      "to": "person-ismail-samani",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ismail-samani-parent-of-ahmad-ii-samanid",
+      "from": "person-ismail-samani",
+      "to": "person-ahmad-ii-samanid",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nasr-ii-successor-of-ahmad-ii-samanid",
+      "from": "person-nasr-ii",
+      "to": "person-ahmad-ii-samanid",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nuh-i-holder-of-samanid-amir",
+      "from": "person-nuh-i",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 943
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 954
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nuh-i-member-of-samanid",
+      "from": "person-nuh-i",
+      "to": "dynasty-samanid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nuh-i-successor-of-nasr-ii",
+      "from": "person-nuh-i",
+      "to": "person-nasr-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nasr-ii-parent-of-nuh-i",
+      "from": "person-nasr-ii",
+      "to": "person-nuh-i",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abd-al-malik-i-holder-of-samanid-amir",
+      "from": "person-abd-al-malik-i",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 954
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 961
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abd-al-malik-i-member-of-samanid",
+      "from": "person-abd-al-malik-i",
+      "to": "dynasty-samanid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abd-al-malik-i-successor-of-nuh-i",
+      "from": "person-abd-al-malik-i",
+      "to": "person-nuh-i",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nuh-i-parent-of-abd-al-malik-i",
+      "from": "person-nuh-i",
+      "to": "person-abd-al-malik-i",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nuh-ii-holder-of-samanid-amir",
+      "from": "person-nuh-ii",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-nuh-ii"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 976
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 997
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nuh-ii-member-of-samanid",
+      "from": "person-nuh-ii",
+      "to": "dynasty-samanid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-nuh-ii"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mansur-ii-holder-of-samanid-amir",
+      "from": "person-mansur-ii",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 997
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 999
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mansur-ii-member-of-samanid",
+      "from": "person-mansur-ii",
+      "to": "dynasty-samanid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-mansur-ii-successor-of-nuh-ii",
+      "from": "person-mansur-ii",
+      "to": "person-nuh-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-nuh-ii-parent-of-mansur-ii",
+      "from": "person-nuh-ii",
+      "to": "person-mansur-ii",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abd-al-malik-ii-holder-of-samanid-amir",
+      "from": "person-abd-al-malik-ii",
+      "to": "office-samanid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 999
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 1000
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abd-al-malik-ii-member-of-samanid",
+      "from": "person-abd-al-malik-ii",
+      "to": "dynasty-samanid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abd-al-malik-ii-successor-of-mansur-ii",
+      "from": "person-abd-al-malik-ii",
+      "to": "person-mansur-ii",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-abd-al-malik-ii-sibling-of-mansur-ii",
+      "from": "person-abd-al-malik-ii",
+      "to": "person-mansur-ii",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-khorasan-vi"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bisotun-holder-of-ziyarid-amir",
+      "from": "person-bisotun",
+      "to": "office-ziyarid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 967
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 978
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-vushmgir-parent-of-bisotun",
+      "from": "person-vushmgir",
+      "to": "person-bisotun",
+      "type": "parentOf",
+      "directionality": "directed",
+      "label": "Father of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bisotun-successor-of-vushmgir",
+      "from": "person-bisotun",
+      "to": "person-vushmgir",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-qabus-successor-of-bisotun",
+      "from": "person-qabus",
+      "to": "person-bisotun",
+      "type": "successorOf",
+      "directionality": "directed",
+      "label": "Successor of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-bisotun-sibling-of-qabus",
+      "from": "person-bisotun",
+      "to": "person-qabus",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fakhr-al-dawla-holder-of-buyid-amir",
+      "from": "person-fakhr-al-dawla",
+      "to": "office-buyid-amir",
+      "type": "holderOf",
+      "directionality": "directed",
+      "label": "Amir",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "time": {
+        "kind": "period",
+        "start": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 983
+          }
+        },
+        "end": {
+          "state": "known",
+          "at": {
+            "frame": "calendar",
+            "era": "commonEra",
+            "year": 997
+          }
+        },
+        "continuity": "notAsserted"
+      },
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fakhr-al-dawla-sibling-of-adud-al-dawla",
+      "from": "person-fakhr-al-dawla",
+      "to": "person-adud-al-dawla",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muayyad-al-dawla-sibling-of-adud-al-dawla",
+      "from": "person-muayyad-al-dawla",
+      "to": "person-adud-al-dawla",
+      "type": "siblingOf",
+      "directionality": "symmetric",
+      "label": "Brother of",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-muayyad-al-dawla-member-of-buyid",
+      "from": "person-muayyad-al-dawla",
+      "to": "dynasty-buyid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-ziyarids"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-fakhr-al-dawla-member-of-buyid",
+      "from": "person-fakhr-al-dawla",
+      "to": "dynasty-buyid",
+      "type": "memberOf",
+      "directionality": "directed",
+      "label": "Member of the house",
+      "sourceIds": [
+        "src-iranica-ziyarids"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

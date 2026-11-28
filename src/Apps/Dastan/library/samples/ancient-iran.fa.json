@@ -1843,6 +1843,86 @@
     "work-rudaki-kalila-wa-dimna": {
       "label": "کلیله و دمنهٔ رودکی",
       "summary": "برگردان رودکی از کلیله و دمنه، داستان‌هایی هندی‌تبار، به پارسی نو؛ از میان رفته است اما بازگویی‌های پسین وام بسیاری به آن دارند."
+    },
+    "dynasty-tahirid": {
+      "label": "طاهریان",
+      "summary": "خاندانی از آغاز دورهٔ عباسی که از ۸۲۱ تا ۸۷۳، از طاهر بن حسین تا محمد بن طاهر، از سوی خلیفه‌ها بر خراسان فرمان راندند؛ فرمانبر خلیفه بودند اما در عمل خودگردان."
+    },
+    "office-tahirid-governor": {
+      "label": "امیر طاهری خراسان",
+      "summary": "فرمانداری خراسان و استان‌های خاوری که طاهریان از سوی خلیفه‌های عباسی داشتند."
+    },
+    "person-tahir-ibn-husayn": {
+      "label": "طاهر بن حسین (ذوالیمینین)",
+      "summary": "ملقب به ذوالیمینین، سرداری که در جنگ داخلی امین و مأمون نامدار شد؛ در ۸۲۱ فرماندار خراسان شد و در ۸۲۲ ناگهان درگذشت.",
+      "facts": {
+        "knownFor": "بنیادگذار طاهریان."
+      }
+    },
+    "person-talha-ibn-tahir": {
+      "label": "طلحه بن طاهر",
+      "summary": "پسر طاهر، فرماندار خراسان از ۸۲۲ تا ۸۲۸."
+    },
+    "person-abdallah-ibn-tahir": {
+      "label": "عبدالله بن طاهر",
+      "summary": "پسر طاهر، فرماندار خراسان از ۸۲۸ تا ۸۴۴."
+    },
+    "person-tahir-ibn-abdallah": {
+      "label": "طاهر بن عبدالله",
+      "summary": "پسر عبدالله، فرماندار خراسان از ۸۴۴ تا مرگش در ۸۶۲."
+    },
+    "person-muhammad-ibn-tahir": {
+      "label": "محمد بن طاهر",
+      "summary": "پسر طاهر بن عبدالله، واپسین امیر طاهری خراسان، از ۸۶۲ تا آمدن یعقوب لیث به نیشابور در ۸۷۳."
+    },
+    "person-nasr-i": {
+      "label": "نصر یکم",
+      "summary": "پسر احمد بن اسد، امیر سامانی از ۸۶۴ تا ۸۹۲، که فرمانش را از سمرقند تا بخارا گستراند و در ۸۷۵ خلیفه فرمانروایی فرارود را به او سپرد."
+    },
+    "person-ahmad-ii-samanid": {
+      "label": "احمد دوم",
+      "summary": "پسر اسماعیل، امیر سامانی از ۹۰۷ تا ۹۱۴."
+    },
+    "person-nuh-i": {
+      "label": "نوح یکم",
+      "summary": "پسر نصر دوم، ملقب به امیر حمید، امیر سامانی از ۹۴۳ تا ۹۵۴، که در زمان او ناتوانی دودمان آغاز شد."
+    },
+    "person-abd-al-malik-i": {
+      "label": "عبدالملک یکم",
+      "summary": "بزرگ‌ترین پسر نوح یکم، ملقب به امیر رشید، امیر سامانی از ۹۵۴ تا ۹۶۱."
+    },
+    "person-nuh-ii": {
+      "label": "نوح دوم",
+      "summary": "پسر منصور یکم، ملقب به امیر رضی، امیر سامانی از ۹۷۶ تا ۹۹۷، که در سیزده‌سالگی نخست زیر فرمان مادرش و وزیر عتبی بود؛ واپسین سامانی با فرمانروایی دراز."
+    },
+    "person-mansur-ii": {
+      "label": "منصور دوم",
+      "summary": "پسر نوح دوم، امیر سامانی از ۹۹۷ تا آنکه فائق و بگتوزون در ۹۹۹ او را برکنار کردند."
+    },
+    "person-abd-al-malik-ii": {
+      "label": "عبدالملک دوم",
+      "summary": "برادر کوچک‌تر منصور دوم، که فائق و بگتوزون او را بر تخت نشاندند، واپسین امیر سامانی، از ۹۹۹ تا ۱۰۰۰."
+    },
+    "person-bisotun": {
+      "label": "بیستون",
+      "summary": "بزرگ‌ترین پسر وشمگیر، امیر زیاری از ۹۶۷ تا ۹۷۸، که آل‌بویه پشتیبانش بودند و دختر عضدالدوله را به زنی گرفت؛ خلیفه در ۹۷۱ لقب ظهیرالدوله به او داد.",
+      "facts": {
+        "knownFor": "امیر زیاری با پشتیبانی آل‌بویه."
+      }
+    },
+    "person-fakhr-al-dawla": {
+      "label": "فخرالدوله علی",
+      "summary": "امیر بویهی از ۹۸۳ تا ۹۹۷، برادر عضدالدوله و برادرزن قابوس، که چون با برادرش ستیزید قابوس پناهش داد.",
+      "facts": {
+        "knownFor": "امیر بویهی ری."
+      }
+    },
+    "person-muayyad-al-dawla": {
+      "label": "مؤیدالدوله",
+      "summary": "برادر عضدالدوله، که در ۹۸۱ گرگان را از قابوس گرفت؛ در ۹۸۴ درگذشت.",
+      "facts": {
+        "knownFor": "گرگان را از قابوس گرفت."
+      }
     }
   },
   "relations": {
@@ -3868,6 +3948,180 @@
     },
     "relation-rudaki-author-of-work-rudaki-kalila-wa-dimna": {
       "label": "برگرداننده"
+    },
+    "relation-tahir-ibn-husayn-holder-of-tahirid-governor": {
+      "label": "امیر"
+    },
+    "relation-tahir-ibn-husayn-member-of-tahirid": {
+      "label": "از خاندانِ"
+    },
+    "relation-tahir-ibn-husayn-founder-of-tahirid": {
+      "label": "بنیادگذارِ"
+    },
+    "relation-tahir-ibn-husayn-employed-by-abbasid": {
+      "label": "سردار مأمون در"
+    },
+    "relation-talha-ibn-tahir-holder-of-tahirid-governor": {
+      "label": "امیر"
+    },
+    "relation-talha-ibn-tahir-member-of-tahirid": {
+      "label": "از خاندانِ"
+    },
+    "relation-tahir-ibn-husayn-parent-of-talha-ibn-tahir": {
+      "label": "پدرِ"
+    },
+    "relation-talha-ibn-tahir-successor-of-tahir-ibn-husayn": {
+      "label": "جانشینِ"
+    },
+    "relation-abdallah-ibn-tahir-holder-of-tahirid-governor": {
+      "label": "امیر"
+    },
+    "relation-abdallah-ibn-tahir-member-of-tahirid": {
+      "label": "از خاندانِ"
+    },
+    "relation-tahir-ibn-husayn-parent-of-abdallah-ibn-tahir": {
+      "label": "پدرِ"
+    },
+    "relation-abdallah-ibn-tahir-successor-of-talha-ibn-tahir": {
+      "label": "جانشینِ"
+    },
+    "relation-tahir-ibn-abdallah-holder-of-tahirid-governor": {
+      "label": "امیر"
+    },
+    "relation-tahir-ibn-abdallah-member-of-tahirid": {
+      "label": "از خاندانِ"
+    },
+    "relation-abdallah-ibn-tahir-parent-of-tahir-ibn-abdallah": {
+      "label": "پدرِ"
+    },
+    "relation-tahir-ibn-abdallah-successor-of-abdallah-ibn-tahir": {
+      "label": "جانشینِ"
+    },
+    "relation-muhammad-ibn-tahir-holder-of-tahirid-governor": {
+      "label": "امیر"
+    },
+    "relation-muhammad-ibn-tahir-member-of-tahirid": {
+      "label": "از خاندانِ"
+    },
+    "relation-tahir-ibn-abdallah-parent-of-muhammad-ibn-tahir": {
+      "label": "پدرِ"
+    },
+    "relation-muhammad-ibn-tahir-successor-of-tahir-ibn-abdallah": {
+      "label": "جانشینِ"
+    },
+    "relation-muhammad-ibn-tahir-participant-in-yaqub-at-nishapur": {
+      "label": "شرکت در"
+    },
+    "relation-nasr-i-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-nasr-i-member-of-samanid": {
+      "label": "از خاندانِ"
+    },
+    "relation-ismail-samani-successor-of-nasr-i": {
+      "label": "جانشینِ"
+    },
+    "relation-ismail-samani-sibling-of-nasr-i": {
+      "label": "برادرِ"
+    },
+    "relation-ahmad-ii-samanid-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-ahmad-ii-samanid-member-of-samanid": {
+      "label": "از خاندانِ"
+    },
+    "relation-ahmad-ii-samanid-successor-of-ismail-samani": {
+      "label": "جانشینِ"
+    },
+    "relation-ismail-samani-parent-of-ahmad-ii-samanid": {
+      "label": "پدرِ"
+    },
+    "relation-nasr-ii-successor-of-ahmad-ii-samanid": {
+      "label": "جانشینِ"
+    },
+    "relation-nuh-i-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-nuh-i-member-of-samanid": {
+      "label": "از خاندانِ"
+    },
+    "relation-nuh-i-successor-of-nasr-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-nasr-ii-parent-of-nuh-i": {
+      "label": "پدرِ"
+    },
+    "relation-abd-al-malik-i-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-abd-al-malik-i-member-of-samanid": {
+      "label": "از خاندانِ"
+    },
+    "relation-abd-al-malik-i-successor-of-nuh-i": {
+      "label": "جانشینِ"
+    },
+    "relation-nuh-i-parent-of-abd-al-malik-i": {
+      "label": "پدرِ"
+    },
+    "relation-nuh-ii-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-nuh-ii-member-of-samanid": {
+      "label": "از خاندانِ"
+    },
+    "relation-mansur-ii-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-mansur-ii-member-of-samanid": {
+      "label": "از خاندانِ"
+    },
+    "relation-mansur-ii-successor-of-nuh-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-nuh-ii-parent-of-mansur-ii": {
+      "label": "پدرِ"
+    },
+    "relation-abd-al-malik-ii-holder-of-samanid-amir": {
+      "label": "امیر"
+    },
+    "relation-abd-al-malik-ii-member-of-samanid": {
+      "label": "از خاندانِ"
+    },
+    "relation-abd-al-malik-ii-successor-of-mansur-ii": {
+      "label": "جانشینِ"
+    },
+    "relation-abd-al-malik-ii-sibling-of-mansur-ii": {
+      "label": "برادرِ"
+    },
+    "relation-bisotun-holder-of-ziyarid-amir": {
+      "label": "امیر"
+    },
+    "relation-vushmgir-parent-of-bisotun": {
+      "label": "پدرِ"
+    },
+    "relation-bisotun-successor-of-vushmgir": {
+      "label": "جانشینِ"
+    },
+    "relation-qabus-successor-of-bisotun": {
+      "label": "جانشینِ"
+    },
+    "relation-bisotun-sibling-of-qabus": {
+      "label": "برادرِ"
+    },
+    "relation-fakhr-al-dawla-holder-of-buyid-amir": {
+      "label": "امیر"
+    },
+    "relation-fakhr-al-dawla-sibling-of-adud-al-dawla": {
+      "label": "برادرِ"
+    },
+    "relation-muayyad-al-dawla-sibling-of-adud-al-dawla": {
+      "label": "برادرِ"
+    },
+    "relation-muayyad-al-dawla-member-of-buyid": {
+      "label": "از خاندانِ"
+    },
+    "relation-fakhr-al-dawla-member-of-buyid": {
+      "label": "از خاندانِ"
     }
   }
 }
