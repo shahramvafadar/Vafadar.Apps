@@ -1,0 +1,4132 @@
+{
+  "formatVersion": "dastan-comparison-0.1",
+  "id": "mediterranean",
+  "status": "draft",
+  "note": "Built from the collections of the library: every period and event of a collection that has years is here, says those years with their uncertainty, and cites the sources the collection gives for the same record. An event two collections share stands in both lanes. Every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Left out: what has no year, and a period that begins and ends in the same year.",
+  "frame": "commonEraYears",
+  "title": "The ancient Mediterranean side by side",
+  "summary": "Egypt, Greece and Rome: the pharaohs beside archaic Athens and the kings of Rome of tradition, the Persian wars, Alexander and the Ptolemies, the Roman conquest of Greece and of Egypt, and Rome and Byzantium to 1025 – every dated period and event of the three collections.",
+  "show": {
+    "from": {
+      "frame": "calendar",
+      "era": "beforeCommonEra",
+      "year": 3000
+    },
+    "to": {
+      "frame": "calendar",
+      "era": "commonEra",
+      "year": 1025
+    }
+  },
+  "publication": {
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "lanes": [
+    {
+      "key": "egypt",
+      "label": "Egypt",
+      "periods": [
+        {
+          "key": "egypt-egypt-early-dynastic",
+          "label": "The Early Dynastic period",
+          "summary": "The 1st to the 3rd dynasty, from about 2900 to about 2544 BCE: Memphis became the capital and Djoser’s step pyramid was built.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2900,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2544,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-old-kingdom",
+          "label": "The Old Kingdom",
+          "summary": "The 4th to the 8th dynasty, from about 2543 to about 2118 BCE, the age of the pyramids of Giza.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2543,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2118,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-first-intermediate",
+          "label": "The First Intermediate period",
+          "summary": "The time of the kings of Heracleopolis, the 9th and 10th dynasties, from about 2118 to about 1980 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2118,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1980,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-middle-kingdom",
+          "label": "The Middle Kingdom",
+          "summary": "The 11th and 12th dynasties, from about 2080 to about 1760 BCE; Mentuhotep II of Thebes united much of Egypt and began it.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 2080,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1760,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-second-intermediate",
+          "label": "The Second Intermediate period",
+          "summary": "The 13th to the 17th dynasty, from about 1759 to about 1530 BCE, when the Hyksos from Southwest Asia ruled in the north.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1759,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1530,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-new-kingdom",
+          "label": "The New Kingdom",
+          "summary": "The 18th to the 20th dynasty, from about 1539 to about 1077 BCE: Ahmose I drove out the Hyksos and Egypt reached into western Asia.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1539,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1077,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-third-intermediate",
+          "label": "The Third Intermediate period",
+          "summary": "The 21st to the 25th dynasty, from about 1076 to about 655 BCE, with kings at Tanis, Libyan lines and finally kings from Kush.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1076,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 655,
+                "approximate": true
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-late",
+          "label": "The Late period",
+          "summary": "The 26th to the 30th dynasty and the second Persian period, from 664 to 332 BCE; the kings of Sais, then the Persian kings, then Egyptian kings again until the Persians returned in 343.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 664
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 332
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-macedonian-ptolemaic",
+          "label": "The Macedonian and Ptolemaic periods",
+          "summary": "Egypt in the empire of Alexander from 332 BCE, and under the Ptolemies from 305 until it became Roman in 30 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 332
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 30
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-roman-byzantine",
+          "label": "Roman and Byzantine Egypt",
+          "summary": "Egypt as a province of Rome from 30 BCE, governed from Constantinople after its founding, lost to the Persians from 619 to 628 and to the Arabs, who entered Alexandria in 642 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 30
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 642
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-roman-byzantine-egypt",
+            "src-britannica-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "egypt-conquest-of-egypt",
+          "label": "Cambyses conquers Egypt",
+          "summary": "Cambyses II made Egypt part of the Persian empire in 525 BCE; the Persian kings counted as Egypt’s 27th dynasty held it until 404.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 525
+            }
+          },
+          "sourceIds": [
+            "src-britannica-list-of-pharaohs",
+            "src-britannica-list-of-dynasties"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-reconquest-of-egypt",
+          "label": "The reconquest of Egypt",
+          "summary": "In 343 BCE Artaxerxes III brought Egypt back under Persian rule, ending the last native dynasty; his successors held it until Alexander came.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 343
+            }
+          },
+          "sourceIds": [
+            "src-britannica-list-of-pharaohs"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-alexander-takes-egypt",
+          "label": "Alexander takes Egypt",
+          "summary": "In 332 BCE Egypt passed from the last Persian king to Alexander the Great and became part of his empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 332
+            }
+          },
+          "sourceIds": [
+            "src-britannica-list-of-pharaohs"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-ptolemy-i-king-of-egypt",
+          "label": "Ptolemy I becomes king of Egypt",
+          "summary": "In 305 BCE Ptolemy, satrap of Egypt since 323 under Alexander and his successors, declared himself king and founded the Ptolemaic dynasty.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 305
+            }
+          },
+          "sourceIds": [
+            "src-britannica-list-of-pharaohs"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-egypt-becomes-roman",
+          "label": "Egypt becomes Roman",
+          "summary": "At the deaths of Cleopatra VII and her son Ptolemy XV in 30 BCE, Egypt became part of the Roman Empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 30
+            }
+          },
+          "sourceIds": [
+            "src-britannica-list-of-pharaohs"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-vespasian-proclaimed-at-alexandria",
+          "label": "Vespasian proclaimed at Alexandria",
+          "summary": "In the Year of the Four Emperors Vespasian was first proclaimed emperor at Alexandria on 1 July 69 CE, in a move contrived by Tiberius Julius Alexander, prefect of Egypt.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 69
+            }
+          },
+          "sourceIds": [
+            "src-britannica-roman-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-edict-of-caracalla",
+          "label": "The edict of Caracalla",
+          "summary": "In 212 CE an edict of Caracalla gave Roman citizenship to practically all subjects of the empire, ending the distinction between citizens and noncitizens in Egypt.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 212
+            }
+          },
+          "sourceIds": [
+            "src-britannica-roman-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-palmyrene-egypt",
+          "label": "Palmyra holds Egypt",
+          "summary": "From 270 to 272 Egypt fell into the hands of the ruling dynasty of Palmyra, the only long time in the 3rd century when it was lost to the emperors.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 270
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 272
+            }
+          },
+          "sourceIds": [
+            "src-britannica-roman-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-diocletian-visits-egypt",
+          "label": "Diocletian visits Egypt",
+          "summary": "In 302 CE Diocletian came to Egypt, the last reigning Roman emperor to visit it.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 302
+            }
+          },
+          "sourceIds": [
+            "src-britannica-roman-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-ban-of-polytheist-cults",
+          "label": "The old cults forbidden",
+          "summary": "In 391 the practice of the local polytheistic religions of Egypt was officially made illegal.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 391
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-persians-take-alexandria",
+          "label": "The Persians take Alexandria",
+          "summary": "The Persians advanced to the Nile delta and captured Alexandria; their occupation of Egypt was complete early in 619 and lasted until the peace of 628, when they withdrew.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 619
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-battle-of-heliopolis-640",
+          "label": "The battle of Heliopolis",
+          "summary": "In July 640, during the Arab conquest of Egypt, 15,000 Arabs met 20,000 Egyptian defenders at Heliopolis.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 640
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-capture-of-babylon-fortress",
+          "label": "The fortress of Babylon taken",
+          "summary": "The Arabs stormed and took Trajan’s old fortress of Babylon, where Old Cairo now stands, on 6 April 641 – the decisive step of the conquest.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-treaty-of-alexandria-641",
+          "label": "Byzantium signs Egypt away",
+          "summary": "On 8 November 641 Byzantium signed Egypt away, with an armistice of eleven months for the emperor and the caliph to ratify the surrender.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 641
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-egypt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "egypt-arabs-enter-alexandria",
+          "label": "ʿAmr enters Alexandria",
+          "summary": "By 29 September 642 the Arab general ʿAmr ibn al-ʿĀṣ marched into Alexandria, and the conquest of Egypt, begun three years before, ended in a peaceful capitulation.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-egypt",
+            "src-britannica-alexandria"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "greece",
+      "label": "Greece",
+      "periods": [
+        {
+          "key": "greece-persian-wars",
+          "label": "The Persian wars",
+          "summary": "From the Athenian part in the Ionian Revolt in 499 BCE through Marathon in 490 and Xerxes’ invasion of 480–479 to the founding of the Delian League in 478.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 499
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 478
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-place-athens"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-peloponnesian-war",
+          "label": "The Peloponnesian War",
+          "summary": "The war of Athens and Sparta from 431 BCE, with an interruption, until Athens surrendered in April 404 and gave up its empire.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 431
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 404
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-concept-peloponnesian-war"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-macedonian-hegemony",
+          "label": "Macedonian Greece",
+          "summary": "From Philip II’s victory at Chaeronea in 338 BCE, the end of Greek independence, through Alexander and the Antigonid kings to the Roman victory at Pydna in 168.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 338
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 168
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-battle-chaeronea-338-bce",
+            "src-livius-dynasty-antigonids"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "greece-solon-lawgiver",
+          "label": "Solon becomes lawgiver",
+          "summary": "In 594/593 BCE, amid conflicts between the aristocrats and the new rich, the Athenians appointed Solon as lawgiver instead of a tyrant.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 594
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 593
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-solon"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-expulsion-of-hippias",
+          "label": "The expulsion of Hippias",
+          "summary": "In 510 BCE the Athenians expelled the tyrant Hippias, son of Pisistratus.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 510
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-athens"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-battle-of-marathon",
+          "label": "The battle of Marathon",
+          "summary": "In 490 BCE some 10,000 Athenians under Miltiades defeated a Persian force that had come to bring back Hippias.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 490
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-marathon-490-bce",
+            "src-livius-place-athens"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-thermopylae",
+          "label": "The battle of Thermopylae",
+          "summary": "In the summer of 480 BCE Xerxes attacked the Greeks at the pass of Thermopylae, where Leonidas and his Spartans were defeated and killed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-thermopylae-480-bce",
+            "src-livius-person-leonidas"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-salamis",
+          "label": "The battle of Salamis",
+          "summary": "On 29 September 480 BCE the Greek allies, drawn up by Themistocles, defeated the Persian navy in the straits of Salamis, after Xerxes had captured Athens.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 480
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-salamis-480-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-plataea",
+          "label": "The battle of Plataea",
+          "summary": "In 479 BCE the Spartans and Athenians defeated the Persian army of Mardonius at Plataea, the decisive battle of the Persian war.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 479
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-plataea-479-bce",
+            "src-livius-place-athens"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-founding-of-delian-league",
+          "label": "The Delian League founded",
+          "summary": "In 478 BCE Athens created the Delian League, an alliance against Persia that slowly became an Athenian empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 478
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-athens"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-surrender-of-athens-404",
+          "label": "Athens surrenders",
+          "summary": "In April 404 BCE Athens surrendered to Sparta, gave up its empire and accepted the rule of thirty oligarchs; the Long Walls were torn down.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 404
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-peloponnesian-war"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-death-of-socrates",
+          "label": "The death of Socrates",
+          "summary": "The philosopher Socrates died at Athens in 399 BCE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 399
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-athens"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-battle-of-chaeronea",
+          "label": "The battle of Chaeronea",
+          "summary": "In 338 BCE Philip II of Macedonia defeated Athens and Thebes at Chaeronea, which meant essentially the end of Greek independence.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 338
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-chaeronea-338-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-issus",
+          "label": "The battle of Issus",
+          "summary": "In November 333 BCE Alexander met Darius III at Issus on a narrow strip of land and defeated the Persians for the second time.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 333
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-alexander-the-great"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-gaugamela",
+          "label": "The battle of Gaugamela",
+          "summary": "On 1 October 331 BCE Alexander defeated Darius III at Gaugamela in northern Iraq, the decisive battle of his war with the Achaemenid empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 331
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-gaugamela-331-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-battle-of-ipsus",
+          "label": "The battle of Ipsus",
+          "summary": "In 301 BCE Antigonus the One-Eyed was defeated by the other successors of Alexander at Ipsus and killed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 301
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-antigonids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-battle-of-pydna",
+          "label": "The battle of Pydna",
+          "summary": "On 22 June 168 BCE the Romans won their decisive victory of the Third Macedonian War over Perseus at Pydna; Macedonia was divided into four republics.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 168
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-pydna-168-bce",
+            "src-livius-dynasty-antigonids"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "greece-sack-of-corinth",
+          "label": "The Romans sack Corinth",
+          "summary": "In 146 BCE the Romans sacked Corinth, which was left essentially abandoned; Greece became part of the Roman province of Achaea.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 146
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-corinth",
+            "src-livius-place-sparta"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "rome",
+      "label": "Rome",
+      "periods": [
+        {
+          "key": "rome-villanovan",
+          "label": "The Villanovan culture",
+          "summary": "The Early Iron Age culture of Italy, named after Villanova near Bologna, whose cremating people appeared in the tenth or ninth century BCE and worked the copper and iron mines of Tuscany; in Tuscany an Orientalizing civilization, presumably Etruscan, overlaid it in the first quarter of the seventh century.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 1000
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 801
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 700
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 676
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-villanovan-culture",
+            "src-livius-people-etruscans"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-monarchy",
+          "label": "The age of the kings (tradition)",
+          "summary": "From the traditional founding of Rome to the traditional end of the monarchy.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 753
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 509
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-eutropius-short-history-eutropius-short-history-1",
+            "src-livius-person-junius-brutus-lucius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-republic",
+          "label": "The Republic",
+          "summary": "From the end of the monarchy to the settlement of Augustus in 27 BCE; the beginning is dated 509, 510 or about 507–505 BCE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 510
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 505
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 27
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-junius-brutus-lucius",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-caesar-caesar-09"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-julio-claudian",
+          "label": "The Julio-Claudians",
+          "summary": "The rule of the house of Augustus, from his sole rule in 31 BCE to the death of Nero in 68 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 31
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 68
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-julio-claudians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-year-of-four-emperors",
+          "label": "The year of the four emperors",
+          "summary": "The civil war after Nero’s death, when Galba, Otho, Vitellius and Vespasian were emperors in turn.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 68
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 69
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-concept-batavian-revolt",
+            "src-livius-batavian-revolt-batavian-revolt-chrono"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-flavian",
+          "label": "The Flavians",
+          "summary": "The rule of Vespasian and his sons Titus and Domitian.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 69
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 96
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-vespasian",
+            "src-livius-person-domitian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-nerva-trajan",
+          "label": "Nerva and Trajan",
+          "summary": "From the accession of Nerva in 96 CE to the death of Trajan in 117 CE.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 96
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 117
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-person-nerva",
+            "src-livius-person-trajan"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-antonine",
+          "label": "The Antonines",
+          "summary": "The family of Antoninus Pius, Marcus Aurelius, Lucius Verus and Commodus, who ruled from about 138 to 192; their years are often called the golden age of the empire.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 138,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 192
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-antonines"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-severan",
+          "label": "The Severans",
+          "summary": "The dynasty of Septimius Severus, which ruled from 193 to 235 with a break in 217–218.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 193
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 235
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-severans"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-tetrarchy",
+          "label": "The first tetrarchy",
+          "summary": "The rule of two augusti, Diocletian and Maximian, with two caesares, Galerius and Constantius, from 293 until the augusti resigned in 305.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 293
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 305
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-concept-tetrarchy"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-constantinian",
+          "label": "The Constantinian dynasty",
+          "summary": "The family of Constantine the Great, which ruled the empire or parts of it from 305 to 363; under it Christianity was no longer persecuted and Constantinople was founded.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 305
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 363
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-constantinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-valentinian",
+          "label": "The Valentinian dynasty",
+          "summary": "The family of Valentinian I, which ruled the empire or parts of it from 363 to 392, in a western and an eastern branch.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 363
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 392
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-valentinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-theodosian",
+          "label": "The Theodosian dynasty",
+          "summary": "The dynasty of Theodosius I, which ruled from 378 to 457; his sons founded an eastern and a western line, and in its time Britain and Gaul were lost and Constantinople became the chief city of the empire.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 378
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 457
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-theodosian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-west-roman-empire",
+          "label": "The divided empire, west",
+          "summary": "The western half of the empire under its own emperors, from the death of Theodosius I in 395 to the deposition of Romulus Augustulus in 476.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 395
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 476
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-livius-dynasty-theodosian-dynasty",
+            "src-livius-person-honorius",
+            "src-livius-person-romulus-augustulus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-heraclian",
+          "label": "The Heraclian dynasty",
+          "summary": "The house of Heraclius, which ruled from 610 to 711; under his successors Egypt, Syria and Africa were lost to the Arabs, Constantinople withstood a four-year siege and the Bulgars settled south of the Danube.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 610
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 711
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-byzantine-emperors",
+            "src-britannica-justinian-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-isaurian",
+          "label": "The Isaurian dynasty",
+          "summary": "The house of Leo III, which ruled from 717 to 802; it turned back the Arabs from Constantinople and began the attack on the veneration of icons, and ended with the deposition of Irene.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 717
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 802
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm",
+            "src-britannica-byzantine-emperors"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-iconoclasm",
+          "label": "The age of Iconoclasm",
+          "summary": "From the accession of Leo III in 717 to 867 the emperors tried, often with wide support, to end the veneration of icons; Irene restored it at the Council of Nicaea in 787, Leo V renewed iconoclasm in 815, and the icons were finally restored in 843.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 717
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 867
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-amorian",
+          "label": "The Amorian dynasty",
+          "summary": "The house of Michael II, also called Phrygian, which ruled from 820 to 867 through his son Theophilus and grandson Michael III; under it the icons were finally restored in 843.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 820
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 867
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm",
+            "src-britannica-byzantine-emperors"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-macedonian",
+          "label": "The Macedonian dynasty",
+          "summary": "The house of Basil I, who murdered his way to the throne in 867; until the death of Basil II in 1025 the empire enjoyed a golden age, recovering Crete, Antioch and Bulgaria.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 867
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1025
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era",
+            "src-britannica-byzantine-emperors"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "rome-founding-of-alba-longa",
+          "label": "The founding of Alba Longa (tradition)",
+          "summary": "Tradition attributes the founding of Alba Longa, about 1152 BCE, to Ascanius, son of Aeneas, making it the oldest Latin city and the mother of Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1152,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-britannica-alba-longa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-founding-of-rome",
+          "label": "The founding of Rome (tradition)",
+          "summary": "According to tradition Romulus founded Rome on the Palatine on 21 April 753 BCE; Livius calls this Varronian date an artificial calculation.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 753
+            }
+          },
+          "sourceIds": [
+            "src-livius-eutropius-short-history-eutropius-short-history-1",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-person-romulus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-first-greek-colonies-in-italy",
+          "label": "The first Greek colonies in Italy",
+          "summary": "About 750 BCE Euboeans founded the first Greek colonies in Italy, Pithecussae and Cumae; Spartans, Achaeans, Locrians and Chalcidians followed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 750,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-britannica-magna-graecia"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-destruction-of-alba-longa",
+          "label": "Rome destroys Alba Longa",
+          "summary": "Alba Longa, head of a Latin league, was destroyed by Rome about 600 BCE; distinguished families, among them the Julian clan, were said to have moved to Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 600,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-britannica-alba-longa"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-founding-of-republic",
+          "label": "The founding of the Republic",
+          "summary": "The last king was expelled and the Republic founded – in 509 BCE according to the traditional chronology, in 510 according to one Livius page, about 507–505 according to Livius’ own reconstruction.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 510
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 505
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-junius-brutus-lucius",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-concept-senate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-battle-of-cumae",
+          "label": "The naval battle of Cumae",
+          "summary": "About 474 BCE the Cumaeans and Syracusans defeated the Etruscans in a naval battle off Cumae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 474,
+              "approximate": true
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-cumae"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-twelve-tables",
+          "label": "The Twelve Tables",
+          "summary": "The first codification of Roman law, written by a board of ten men in the middle of the fifth century BCE: ten tables in 451 and two more in 450 BCE in the traditional chronology.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 451
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 450
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-plebs",
+            "src-livius-livy-livy-periochae-1-5",
+            "src-livius-concept-roman-law"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-gallic-sack",
+          "label": "The Gauls take Rome",
+          "summary": "After their victory at the Allia the Gauls occupied Rome and besieged the Capitol until the Romans bought their freedom with gold – in 390 BCE in the traditional chronology, in 387 or 386 according to Livius.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 390
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 386
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-allia",
+            "src-livius-concept-varronian-chronology",
+            "src-livius-livy-livy-periochae-1-5"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-licinian-sextian-laws",
+          "label": "The Licinian-Sextian laws",
+          "summary": "Laws first proposed in 376 and passed in 367 BCE (traditional chronology) that opened the consulship to plebeians, adjusted debts and limited the ownership of public land.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 367
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-plebs",
+            "src-livius-concept-senate"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-first-punic-war",
+          "label": "The First Punic War",
+          "summary": "The war of Rome and Carthage from 264 to 241 BCE, in which Rome conquered Sicily.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 264
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 241
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-first-punic-war"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-second-punic-war",
+          "label": "The Second Punic War",
+          "summary": "The war of Rome and Carthage from 218 to 202 BCE, in which Hannibal crossed the Alps; the peace was signed in 201 BCE.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 218
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 201
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hannibal-3-barca"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-cannae",
+          "label": "The battle of Cannae",
+          "summary": "On 2 August 216 BCE Hannibal destroyed the army of the two Roman consuls at Cannae.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 216
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hannibal-3-barca"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-zama",
+          "label": "The battle of Zama",
+          "summary": "On 19 October 202 BCE Scipio defeated Hannibal at Zama in Africa.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 202
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hannibal-3-barca",
+            "src-livius-carthage-roman-wars"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-third-punic-war",
+          "label": "The Third Punic War",
+          "summary": "The last war against Carthage, begun in 149 BCE after Cato had urged it; it ended in 146 BCE with the destruction of the city.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 149
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 146
+            }
+          },
+          "sourceIds": [
+            "src-livius-livy-livy-periochae-46-50",
+            "src-livius-place-carthage"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-destruction-of-carthage",
+          "label": "The destruction of Carthage",
+          "summary": "In 146 BCE Rome took and sacked Carthage; Corinth was sacked in the same year.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 146
+            }
+          },
+          "sourceIds": [
+            "src-livius-place-carthage",
+            "src-livius-place-corinth"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-tribunate-of-tiberius-gracchus",
+          "label": "The tribunate of Tiberius Gracchus",
+          "summary": "In 133 BCE Tiberius Gracchus proposed his land bill; he was killed on the Capitol in the same year.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 133
+            }
+          },
+          "sourceIds": [
+            "src-livius-livy-livy-periochae-56-60"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-social-war",
+          "label": "The Social War",
+          "summary": "The war with Rome’s Italian allies, which began in 91 BCE; citizenship was promised to loyal allies in 90 and to those who surrendered in 89. Marius and Sulla fought on the Roman side.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 91
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-01"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-revolt-of-spartacus",
+          "label": "The revolt of Spartacus",
+          "summary": "A slave revolt that began at Capua and was suppressed by Crassus; the Livius page dates the war 73–71 BCE in one place and 73–70 in another.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 73
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 71
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-spartacus",
+            "src-livius-caesar-caesar-03"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-first-triumvirate",
+          "label": "The alliance of Caesar, Crassus and Pompey",
+          "summary": "In 60 BCE Caesar, Crassus and Pompey made a private agreement, sealed by Pompey’s marriage to Caesar’s daughter Julia; modern historians call it the First Triumvirate.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 60
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-triumvir",
+            "src-livius-caesar-caesar-03"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-conquest-of-gaul",
+          "label": "Caesar conquers Gaul",
+          "summary": "From 58 to 50 BCE Caesar conquered Gaul; in 52 BCE Vercingetorix surrendered to him at Alesia.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 58
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 50
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-05"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-carrhae",
+          "label": "The battle of Carrhae",
+          "summary": "In 53 BCE the Parthians defeated the Roman army of Crassus at Carrhae; Crassus was killed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 53
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-carrhae-53-bce",
+            "src-livius-caesar-caesar-06"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-rubicon",
+          "label": "Caesar crosses the Rubicon",
+          "summary": "In the night of 10/11 January 49 BCE Caesar crossed the Rubicon, the border of Cisalpine Gaul and Italy, and began the second civil war; where the river was is not certain.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 49
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-06",
+            "src-livius-battle-rubico-49-bce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-pharsalus",
+          "label": "The battle of Pharsalus",
+          "summary": "On 9 August 48 BCE Caesar defeated Pompey at Pharsalus; Pompey fled to Egypt and was murdered there.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 48
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-pharsalus-48-bce",
+            "src-livius-place-pharsalus",
+            "src-livius-caesar-caesar-06"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-murder-of-caesar",
+          "label": "The murder of Caesar",
+          "summary": "On the Ides of March, 15 March 44 BCE, Caesar was murdered by a group led by Gaius Cassius, Decimus Brutus and Marcus Junius Brutus.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 44
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-08"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-second-triumvirate",
+          "label": "The Second Triumvirate",
+          "summary": "In 43 BCE Antony and Octavian became triumvirs with a third colleague, an official magistracy with dictatorial powers.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 43
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-triumvir",
+            "src-livius-caesar-caesar-09",
+            "src-livius-person-mark-antony"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-philippi",
+          "label": "The battle of Philippi",
+          "summary": "In October 42 BCE Mark Antony and Octavian defeated Brutus and Cassius at Philippi.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 42
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-philippi-42-bce",
+            "src-livius-place-philippi"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-actium",
+          "label": "The battle of Actium",
+          "summary": "Octavian, with Agrippa, defeated Mark Antony and Cleopatra off Actium in 31 BCE – on 2 September according to the battle page, on 2 August according to another Livius page.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 31
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-actium-31-bce",
+            "src-livius-caesar-caesar-09"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-augustan-settlement",
+          "label": "The settlement of Augustus",
+          "summary": "In January 27 BCE Octavian accepted the title Augustus (16 January); the rule of the emperors begins here.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 27
+            }
+          },
+          "sourceIds": [
+            "src-livius-caesar-caesar-09",
+            "src-livius-person-augustus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-teutoburg",
+          "label": "The battle in the Teutoburg Forest",
+          "summary": "In September 9 CE Arminius, leading a coalition of Germanic tribes, annihilated three Roman legions under Publius Quintilius Varus; Germania remained independent.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 9
+            }
+          },
+          "sourceIds": [
+            "src-livius-battle-teutoburg-forest-9-ce"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-death-of-augustus",
+          "label": "The death of Augustus",
+          "summary": "Augustus died on 19 August 14 CE and Tiberius succeeded him.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 14
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-augustus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-great-fire",
+          "label": "The Great Fire of Rome",
+          "summary": "The great fire of Rome in 64 CE, under Nero.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 64
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-nero"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-jewish-war",
+          "label": "The Jewish War",
+          "summary": "The war in Judaea that began in 66 CE and culminated in the destruction of the temple of Jerusalem in 70; the last resistance at Masada held out until 74.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 66
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 70
+            }
+          },
+          "sourceIds": [
+            "src-livius-roman-jewish-wars-roman-jewish-wars-3",
+            "src-livius-roman-jewish-wars-roman-jewish-wars-5"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-death-of-nero",
+          "label": "The death of Nero",
+          "summary": "After the revolts of Vindex, Macer and Galba Nero took his own life in June 68 CE – on 9 June according to his page, on 8 June according to the chronology of 68–70.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 68
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-nero",
+            "src-livius-concept-batavian-revolt"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-event-year-of-four-emperors",
+          "label": "The year of the four emperors",
+          "summary": "In 69 CE Galba, Otho, Vitellius and Vespasian were emperors in turn; Vespasian was recognised on 21 December 69.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 69
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-batavian-revolt",
+            "src-livius-batavian-revolt-batavian-revolt-chrono"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-siege-of-jerusalem",
+          "label": "The siege of Jerusalem",
+          "summary": "Titus began the siege of Jerusalem on 14 April 70 CE and was master of the city on 8 September.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 70
+            }
+          },
+          "sourceIds": [
+            "src-livius-roman-jewish-wars-roman-jewish-wars-4"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-vesuvius",
+          "label": "The eruption of Vesuvius",
+          "summary": "In 79 CE, in the reign of Titus, Vesuvius erupted and buried Pompeii.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 79
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-titus",
+            "src-livius-place-pompeii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-colosseum",
+          "label": "The dedication of the Colosseum",
+          "summary": "The Amphitheatrum Flavium, built by Vespasian, was dedicated by Titus in 80 CE.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 80
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-titus",
+            "src-livius-rome-photos-rome-amphitheatrum-flavium"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-murder-of-domitian",
+          "label": "The murder of Domitian",
+          "summary": "Domitian was murdered by courtiers on 18 September 96 CE; Nerva became emperor the same day.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 96
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-domitian",
+            "src-livius-person-nerva"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-accession-of-trajan",
+          "label": "Trajan becomes emperor",
+          "summary": "On Nerva’s death in January 98 CE Trajan, his adopted son, became emperor.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 98
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-trajan"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-bar-kochba-revolt",
+          "label": "The revolt of Bar Kochba",
+          "summary": "A Jewish insurrection that began in 132 under Hadrian; Hadrian took Bethar in 135/136 and the last fighting in Galilee was in 136.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 132
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 136
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-hadrian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-antonine-plague",
+          "label": "The plague under Marcus Aurelius",
+          "summary": "A plague broke out in 165, during the Parthian war, and reached Rome in 167.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 165
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-marcus-aurelius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-roman-envoys-166",
+          "label": "Envoys from Rome at the Han court",
+          "summary": "In 166 men who called themselves ambassadors from the Roman empire came to the court of the Han emperor Huan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 166
+            }
+          },
+          "sourceIds": [
+            "src-decrespigny-later-han"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-year-of-five-emperors",
+          "label": "The year of the five emperors",
+          "summary": "After the murder of Pertinax in 193, Didius Julianus, Pescennius Niger, Clodius Albinus and Septimius Severus were all proclaimed emperor; Severus won the civil wars that followed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 193
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-pertinax",
+            "src-livius-person-septimius-severus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-constitutio-antoniniana",
+          "label": "Citizenship for all free men",
+          "summary": "In 212 Caracalla gave Roman citizenship to all free-born men of the empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 212
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-caracalla",
+            "src-livius-dynasty-severans"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-capture-of-valerian",
+          "label": "Shapur captures Valerian",
+          "summary": "In 260 the emperor Valerian was defeated and taken captive by the Sasanian king Shapur I; he died in captivity in 262, and in the following years many usurpers rose in the empire.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 260
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-valerian",
+            "src-livius-person-gallienus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-aurelian-wall",
+          "label": "A new wall for Rome",
+          "summary": "In 271 Aurelian ordered the building of a new wall around Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 271
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-aurelian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-aurelian-takes-palmyra",
+          "label": "Aurelian takes Palmyra",
+          "summary": "In 272 Aurelian defeated Zenobia and her son Vaballathus and captured Palmyra; in 274 he defeated the Gallic emperor Tetricus.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 272
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-aurelian",
+            "src-livius-person-zenobia"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-tetrarchy-founded",
+          "label": "The first tetrarchy",
+          "summary": "In 293 Diocletian and Maximian each appointed a caesar, Galerius and Constantius, who were to succeed them.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 293
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-tetrarchy",
+            "src-livius-person-diocletian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-abdication-of-diocletian",
+          "label": "Diocletian and Maximian resign",
+          "summary": "In May 305 the two augusti laid down their power, and the caesares Galerius and Constantius became augusti – for the first time in ages a transfer of power without bloodshed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 305
+            }
+          },
+          "sourceIds": [
+            "src-livius-concept-tetrarchy",
+            "src-livius-person-diocletian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-milvian-bridge",
+          "label": "The battle of the Milvian Bridge",
+          "summary": "In 312 Constantine crossed the Alps and defeated Maxentius at the Milvian Bridge, where Maxentius was killed.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 312
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great",
+            "src-livius-person-maxentius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-edict-of-milan",
+          "label": "The meeting at Milan",
+          "summary": "In 313 Constantine and Licinius met at Milan; the agreement is known as the Edict of Milan.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 313
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-founding-of-constantinople",
+          "label": "The founding of Constantinople",
+          "summary": "After defeating Licinius in 324, Constantine became sole ruler and founded a new residence at Byzantium, Constantinople.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 324
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great",
+            "src-livius-dynasty-constantinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-council-of-nicaea",
+          "label": "The Council of Nicaea",
+          "summary": "The first ecumenical council of the Church met at Nicaea from 20 May to 19 June 325.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 325
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-constantine-the-great"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-death-of-julian",
+          "label": "The death of Julian and the peace of 363",
+          "summary": "Julian invaded the Sasanian empire and was killed in action on 26 June 363; Jovian then made a peace with Shapur II that gave up Nisibis.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 363
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-julian-the-apostate",
+            "src-livius-person-jovian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-battle-of-adrianople",
+          "label": "The battle of Adrianople",
+          "summary": "In 378 the Goths defeated and killed the emperor Valens at Adrianople, and Theodosius was made emperor in the east.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 378
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-theodosius-i",
+            "src-livius-person-valens",
+            "src-livius-dynasty-valentinian-dynasty"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-division-of-the-empire",
+          "label": "The empire divided between two sons",
+          "summary": "At the death of Theodosius I in 395, his sons Arcadius and Honorius succeeded him in the east and the west.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 395
+            }
+          },
+          "sourceIds": [
+            "src-livius-dynasty-theodosian-dynasty",
+            "src-livius-person-honorius",
+            "src-livius-person-theodosius-i"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-sack-of-rome-410",
+          "label": "The Visigoths take Rome",
+          "summary": "In 410 the Visigoths captured Rome; Alaric died the same year, and Britain was evacuated.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 410
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-honorius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-vandals-take-carthage",
+          "label": "The Vandals take Carthage",
+          "summary": "The Vandals invaded Africa in 429 and took Carthage in 439.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 439
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-valentinian-iii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-attila-in-gaul",
+          "label": "Attila defeated in Gaul",
+          "summary": "In 451 the Huns crossed the Rhine and invaded Gaul; Aetius defeated Attila near Troyes. In 452 the Huns invaded Italy.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 451
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-valentinian-iii",
+            "src-britannica-attila-king-of-the-huns",
+            "src-britannica-flavius-aetius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-vandal-sack-of-rome",
+          "label": "The Vandals sack Rome",
+          "summary": "In 455, after the murder of Valentinian III and the death of Petronius Maximus, the Vandals sacked Rome.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 455
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-avitus",
+            "src-livius-person-petronius-maximus"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-end-of-the-west",
+          "label": "The end of the empire in the west",
+          "summary": "In 476 the soldiers in Italy revolted and their leader Odoacer deposed Romulus Augustulus, the last emperor in the west.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 476
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-romulus-augustulus",
+            "src-britannica-odoacer"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-theodoric-conquers-italy",
+          "label": "Theodoric conquers Italy",
+          "summary": "The Ostrogoths under Theodoric invaded Italy in 488 and by 493 had conquered almost the whole peninsula and Sicily, ending the rule of Odoacer.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 488
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 493
+            }
+          },
+          "sourceIds": [
+            "src-britannica-theodoric-king-of-italy"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-battle-of-dara",
+          "label": "Belisarius defeats the Persians",
+          "summary": "Belisarius won his first victory as a commander against Sasanian Persia on the Mesopotamian front in 530.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 530
+            }
+          },
+          "sourceIds": [
+            "src-britannica-belisarius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-nika-riots",
+          "label": "The Nika riots",
+          "summary": "In January 532 the Nika riots broke out in Constantinople under Justinian.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 532
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian",
+            "src-britannica-belisarius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-codification-of-roman-law",
+          "label": "Roman law codified",
+          "summary": "In 533 the codification of Roman law, the Institutes and the Digest, was completed under Justinian.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 533
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-belisarius-takes-carthage",
+          "label": "Belisarius conquers Africa",
+          "summary": "Justinian’s general Belisarius conquered Africa and entered Carthage on 15 September 534; he went on to Sicily and took Rome in 536.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 534
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian",
+            "src-britannica-belisarius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-hagia-sophia",
+          "label": "The Hagia Sophia inaugurated",
+          "summary": "The Hagia Sophia in Constantinople was inaugurated on 26 December 537.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 537
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-narses-conquers-italy",
+          "label": "Narses conquers Italy",
+          "summary": "Justinian’s general Narses completed the conquest of Italy in 552.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 552
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justinian"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-langobards-invade-italy",
+          "label": "The Langobards invade Italy",
+          "summary": "In 568, under Justin II, the Langobards invaded Italy.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 568
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-justin-ii"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-siege-of-constantinople-626",
+          "label": "The Persians before Constantinople",
+          "summary": "In 626 the Avars attacked Constantinople while a Persian army under Shahrbaraz stood across the Bosphorus; the walls held, the Avars retreated and Heraclius kept to his campaign in the east.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 626
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-battle-of-nineveh-627",
+          "label": "Heraclius defeats the Persians near Nineveh",
+          "summary": "In December 627 Heraclius defeated a large Persian army near the ruins of Nineveh; Khusrau II fell soon after, and in 630 Heraclius returned the True Cross to Jerusalem.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 627
+            }
+          },
+          "sourceIds": [
+            "src-livius-person-heraclius"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-arabs-take-alexandria",
+          "label": "Alexandria capitulates to the Arabs",
+          "summary": "Alexandria capitulated in 642, removing Egypt forever from Byzantine authority.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 642
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-arab-siege-of-constantinople-674",
+          "label": "The Arab siege of Constantinople",
+          "summary": "After their assaults on Armenia and Asia Minor the Arabs besieged Constantinople for four years, from 674 to 678; Constantine IV withstood them, a turning point in European history.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 674
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 678
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-constantine-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-sixth-ecumenical-council",
+          "label": "The sixth ecumenical council",
+          "summary": "The sixth general council, summoned by Constantine IV in 680–681 at Constantinople, condemned Monothelitism.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 680
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 681
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-constantine-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-bulgar-kingdom-recognised",
+          "label": "The Bulgar kingdom recognised",
+          "summary": "Constantine IV failed to defeat the Bulgars in 681 and by treaty recognised them as an independent kingdom south of the Danube.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 681
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-constantine-iv"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-justinian-ii-deposed",
+          "label": "Justinian II deposed",
+          "summary": "Justinian II was deposed and mutilated in 695; with Bulgar help he returned to the throne in 705.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 695
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-fall-of-septem",
+          "label": "The loss of Africa",
+          "summary": "By the end of the seventh century Africa was largely lost to the Muslims, who in 711 seized the last outpost at Septem.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 711
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-arab-siege-of-constantinople-717",
+          "label": "The second Arab siege of Constantinople",
+          "summary": "In 717 the Arabs again besieged Constantinople by land and sea; with Bulgar help Leo III turned back the assault in 718.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 717
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 718
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-heraclians",
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-battle-of-akroinon",
+          "label": "The battle of Akroinon",
+          "summary": "With the help of the Khazars, Leo III’s reign ended with a major victory over the Arabs at Akroinon in 740.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 740
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-second-council-of-nicaea",
+          "label": "The Council of Nicaea restores the icons",
+          "summary": "At the instigation of the empress Irene, the Council of Nicaea in 787 restored the veneration of icons.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 787
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-irene-sole-ruler",
+          "label": "Irene rules alone",
+          "summary": "Irene had her son Constantine VI deposed and blinded and ruled alone from 797 until a revolt of palace officials deposed her in 802.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 797
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-coronation-of-charlemagne",
+          "label": "The coronation of Charlemagne",
+          "summary": "On Christmas Day 800 Pope Leo III crowned Charlemagne, king of the Franks and Lombards, emperor of the Romans, a challenge to the emperor at Constantinople.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 800
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-death-of-nicephorus-i",
+          "label": "Nikephoros I falls against Krum",
+          "summary": "Nikephoros I led his army against the Bulgar khan Krum in 811 and met defeat and death.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 811
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-iconoclasm-renewed",
+          "label": "Leo V renews iconoclasm",
+          "summary": "After military reverses, Leo V revived the iconoclast policies of Constantine V in 815.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 815
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-arabs-take-crete",
+          "label": "The Arabs take Crete",
+          "summary": "In 826 or 827 the Arabs captured Crete, a sign of the decline of Byzantine strength in the Mediterranean.",
+          "time": {
+            "kind": "occurrenceWindow",
+            "earliest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 826
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 827
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-fall-of-amorium",
+          "label": "Theophilus defeated and Amorium lost",
+          "summary": "In 838 a Muslim army defeated Theophilus himself and went on to capture the fortress of Amorium in Asia Minor.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 838
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-restoration-of-the-icons",
+          "label": "The icons restored",
+          "summary": "In 843, under Michael III, the icons were definitively restored and their veneration proclaimed as Orthodox belief.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 843
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-iconoclasm"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-rus-attack-constantinople",
+          "label": "The Rus attack Constantinople",
+          "summary": "Sailing down the Dnieper from Kiev to the Black Sea, the warships of the Rus first attacked Constantinople in 860.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 860
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-basil-i-takes-throne",
+          "label": "Basil I seizes the throne",
+          "summary": "In 867 Basil I murdered his way to the throne and founded the Macedonian dynasty.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 867
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-arabs-complete-sicily",
+          "label": "The Arabs complete the conquest of Sicily",
+          "summary": "In 902 the Arabs completed the conquest of Sicily, though they were kept out of Byzantine South Italy.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 902
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-simeon-at-constantinople",
+          "label": "Simeon of Bulgaria before Constantinople",
+          "summary": "In 913 Simeon I of Bulgaria brought his army to the walls of Constantinople, demanding the imperial title.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 913
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-reconquest-of-crete",
+          "label": "Crete reconquered",
+          "summary": "In 961 Nikephoros Phokas reconquered Crete and destroyed the Arab fleet that had terrorised the Aegean for 150 years.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 961
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-recapture-of-antioch",
+          "label": "Antioch recaptured",
+          "summary": "In 969 the Byzantine armies recaptured Antioch, seat of one of the patriarchs.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 969
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-tzimisces-subdues-bulgaria",
+          "label": "John Tzimiskes humbles the Rus and Bulgaria",
+          "summary": "In 971 John Tzimiskes humiliated the Rus and reduced Bulgaria to a client kingdom.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 971
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-baptism-of-vladimir",
+          "label": "The baptism of Vladimir of Kiev",
+          "summary": "Vladimir of Kiev, who had helped Basil II to keep his throne, received the emperor’s sister in marriage and was baptised in 989.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 989
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-bulgaria-subdued",
+          "label": "Bulgaria subdued",
+          "summary": "After a ruthless campaign of some twenty years Basil II crushed the last Bulgarian resistance by 1018.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1018
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rome-death-of-basil-ii",
+          "label": "The death of Basil II",
+          "summary": "Basil II died in 1025 while preparing a campaign against the Arabs in Sicily; with him ended the golden age of the Macedonian era.",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 1025
+            }
+          },
+          "sourceIds": [
+            "src-britannica-byzantine-empire-macedonian-era"
+          ],
+          "reviewStatus": "proposed"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-britannica-list-of-dynasties",
+      "title": "List of dynasties of ancient Egypt – Britannica",
+      "url": "https://www.britannica.com/topic/list-of-dynasties-of-ancient-Egypt",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-list-of-pharaohs",
+      "title": "List of pharaohs of ancient Egypt – Britannica",
+      "url": "https://www.britannica.com/topic/list-of-pharaohs-of-ancient-Egypt",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-roman-byzantine-egypt",
+      "title": "Ancient Egypt: Roman and Byzantine Egypt (30 BCE–642 CE) – Britannica",
+      "url": "https://www.britannica.com/place/ancient-Egypt/Roman-and-Byzantine-Egypt-30-bce-642-ce",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-egypt",
+      "title": "Ancient Egypt: Egypt’s role in the Byzantine Empire – Britannica",
+      "url": "https://www.britannica.com/place/ancient-Egypt/Egypts-role-in-the-Byzantine-Empire",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-alexandria",
+      "title": "Alexandria – Britannica",
+      "url": "https://www.britannica.com/place/Alexandria-Egypt",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-athens",
+      "title": "Athens – Livius",
+      "url": "https://www.livius.org/articles/place/athens/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-concept-peloponnesian-war",
+      "title": "Peloponnesian War – Livius",
+      "url": "https://www.livius.org/articles/concept/peloponnesian-war/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-battle-chaeronea-338-bce",
+      "title": "Battle of Chaeronea – Livius",
+      "url": "https://www.livius.org/articles/battle/chaeronea-338-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-dynasty-antigonids",
+      "title": "Antigonids – Livius",
+      "url": "https://www.livius.org/articles/dynasty/antigonids/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-person-solon",
+      "title": "Solon – Livius",
+      "url": "https://www.livius.org/articles/person/solon/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-battle-marathon-490-bce",
+      "title": "Battle of Marathon – Livius",
+      "url": "https://www.livius.org/articles/battle/marathon-490-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-battle-thermopylae-480-bce",
+      "title": "Thermopylae – Livius",
+      "url": "https://www.livius.org/articles/battle/thermopylae-480-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-person-leonidas",
+      "title": "Leonidas – Livius",
+      "url": "https://www.livius.org/articles/person/leonidas/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-battle-salamis-480-bce",
+      "title": "Battle of Salamis – Livius",
+      "url": "https://www.livius.org/articles/battle/salamis-480-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-battle-plataea-479-bce",
+      "title": "Battle of Plataea – Livius",
+      "url": "https://www.livius.org/articles/battle/plataea-479-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-person-alexander-the-great",
+      "title": "Alexander the Great – Livius",
+      "url": "https://www.livius.org/articles/person/alexander-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-battle-gaugamela-331-bce",
+      "title": "Battle of Gaugamela – Livius",
+      "url": "https://www.livius.org/articles/battle/gaugamela-331-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-battle-pydna-168-bce",
+      "title": "Battle of Pydna – Livius",
+      "url": "https://www.livius.org/articles/battle/pydna-168-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-corinth",
+      "title": "Corinth – Livius",
+      "url": "https://www.livius.org/articles/place/corinth/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-sparta",
+      "title": "Sparta – Livius",
+      "url": "https://www.livius.org/articles/place/sparta/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-eutropius-short-history-eutropius-short-history-1",
+      "title": "Eutropius, Short History 1 – Livius",
+      "url": "https://www.livius.org/sources/content/eutropius-short-history/eutropius-short-history-1/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-junius-brutus-lucius",
+      "title": "Lucius Junius Brutus – Livius",
+      "url": "https://www.livius.org/articles/person/junius-brutus-lucius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-varronian-chronology",
+      "title": "Varronian Chronology – Livius",
+      "url": "https://www.livius.org/articles/concept/varronian-chronology/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-09",
+      "title": "Gaius Julius Caesar: Inheritance – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-09/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-dynasty-julio-claudians",
+      "title": "Julio-Claudians – Livius",
+      "url": "https://www.livius.org/articles/dynasty/julio-claudians/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-batavian-revolt",
+      "title": "Batavian Revolt – Livius",
+      "url": "https://www.livius.org/articles/concept/batavian-revolt/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-batavian-revolt-batavian-revolt-chrono",
+      "title": "Batavian Revolt: Chronology of the years 68-70 – Livius",
+      "url": "https://www.livius.org/articles/concept/batavian-revolt/batavian-revolt-chrono/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-vespasian",
+      "title": "Vespasian – Livius",
+      "url": "https://www.livius.org/articles/person/vespasian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-domitian",
+      "title": "Domitian – Livius",
+      "url": "https://www.livius.org/articles/person/domitian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-nerva",
+      "title": "Nerva – Livius",
+      "url": "https://www.livius.org/articles/person/nerva/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-trajan",
+      "title": "Trajan – Livius",
+      "url": "https://www.livius.org/articles/person/trajan/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-romulus",
+      "title": "Romulus – Livius",
+      "url": "https://www.livius.org/articles/person/romulus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-senate",
+      "title": "Senate – Livius",
+      "url": "https://www.livius.org/articles/concept/senate/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-plebs",
+      "title": "Plebs – Livius",
+      "url": "https://www.livius.org/articles/concept/plebs/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-livy-livy-periochae-1-5",
+      "title": "Livy, Periochae 1-5 – Livius",
+      "url": "https://www.livius.org/sources/content/livy/livy-periochae-1-5/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-roman-law",
+      "title": "Roman Law – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-law/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-allia",
+      "title": "Allia (387 or 386 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/allia/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-first-punic-war",
+      "title": "First Punic War – Livius",
+      "url": "https://www.livius.org/articles/concept/first-punic-war/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-hannibal-3-barca",
+      "title": "Hannibal Barca – Livius",
+      "url": "https://www.livius.org/articles/person/hannibal-3-barca/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-carthage-roman-wars",
+      "title": "Carthage: Roman Wars – Livius",
+      "url": "https://www.livius.org/articles/place/carthage/roman-wars/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-livy-livy-periochae-46-50",
+      "title": "Livy, Periochae 46-50 – Livius",
+      "url": "https://www.livius.org/sources/content/livy/livy-periochae-46-50/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-carthage",
+      "title": "Carthage – Livius",
+      "url": "https://www.livius.org/articles/place/carthage/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-livy-livy-periochae-56-60",
+      "title": "Livy, Periochae 56-60 – Livius",
+      "url": "https://www.livius.org/sources/content/livy/livy-periochae-56-60/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-01",
+      "title": "Gaius Julius Caesar: Youth – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-01/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-spartacus",
+      "title": "Spartacus – Livius",
+      "url": "https://www.livius.org/articles/person/spartacus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-03",
+      "title": "Gaius Julius Caesar: Consul – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-03/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-concept-triumvir",
+      "title": "Triumvir – Livius",
+      "url": "https://www.livius.org/articles/concept/triumvir/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-05",
+      "title": "Gaius Julius Caesar: Reconquest – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-05/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-carrhae-53-bce",
+      "title": "Carrhae (53 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/carrhae-53-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-06",
+      "title": "Gaius Julius Caesar: Civil War – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-06/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-rubico-49-bce",
+      "title": "Rubico (49 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/rubico-49-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-pharsalus-48-bce",
+      "title": "Pharsalus (48 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/pharsalus-48-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-pharsalus",
+      "title": "Pharsalus – Livius",
+      "url": "https://www.livius.org/articles/place/pharsalus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-caesar-caesar-08",
+      "title": "Gaius Julius Caesar: Constitutional problems – Livius",
+      "url": "https://www.livius.org/articles/person/caesar/caesar-08/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-mark-antony",
+      "title": "Mark Antony – Livius",
+      "url": "https://www.livius.org/articles/person/mark-antony/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-philippi-42-bce",
+      "title": "Philippi (42 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/philippi-42-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-philippi",
+      "title": "Philippi – Livius",
+      "url": "https://www.livius.org/articles/place/philippi/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-actium-31-bce",
+      "title": "Actium (31 BCE) – Livius",
+      "url": "https://www.livius.org/articles/battle/actium-31-bce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-augustus",
+      "title": "Augustus – Livius",
+      "url": "https://www.livius.org/articles/person/augustus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-battle-teutoburg-forest-9-ce",
+      "title": "Teutoburg Forest (9 CE) – Livius",
+      "url": "https://www.livius.org/articles/battle/teutoburg-forest-9-ce/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-nero",
+      "title": "Nero – Livius",
+      "url": "https://www.livius.org/articles/person/nero/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-roman-jewish-wars-roman-jewish-wars-3",
+      "title": "Jewish War (66-70) – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-jewish-wars/roman-jewish-wars-3/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-roman-jewish-wars-roman-jewish-wars-5",
+      "title": "Chronology 66-74 – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-jewish-wars/roman-jewish-wars-5/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-roman-jewish-wars-roman-jewish-wars-4",
+      "title": "Titus' Siege of Jerusalem – Livius",
+      "url": "https://www.livius.org/articles/concept/roman-jewish-wars/roman-jewish-wars-4/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-person-titus",
+      "title": "Titus – Livius",
+      "url": "https://www.livius.org/articles/person/titus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-place-pompeii",
+      "title": "Pompeii – Livius",
+      "url": "https://www.livius.org/articles/place/pompeii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-rome-photos-rome-amphitheatrum-flavium",
+      "title": "Rome, Amphitheatrum Flavium – Livius",
+      "url": "https://www.livius.org/articles/place/rome/rome-photos/rome-amphitheatrum-flavium/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-livius-dynasty-antonines",
+      "title": "Antonines – Livius",
+      "url": "https://www.livius.org/articles/dynasty/antonines/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-severans",
+      "title": "Severans – Livius",
+      "url": "https://www.livius.org/articles/dynasty/severans/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-constantinian-dynasty",
+      "title": "Constantinian Dynasty – Livius",
+      "url": "https://www.livius.org/articles/dynasty/constantinian-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-valentinian-dynasty",
+      "title": "Valentinian Dynasty – Livius",
+      "url": "https://www.livius.org/articles/dynasty/valentinian-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-dynasty-theodosian-dynasty",
+      "title": "Theodosian Dynasty – Livius",
+      "url": "https://www.livius.org/articles/dynasty/theodosian-dynasty/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-concept-tetrarchy",
+      "title": "Tetrarchy – Livius",
+      "url": "https://www.livius.org/articles/concept/tetrarchy/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-honorius",
+      "title": "Honorius – Livius",
+      "url": "https://www.livius.org/articles/person/honorius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-romulus-augustulus",
+      "title": "Romulus Augustulus – Livius",
+      "url": "https://www.livius.org/articles/person/romulus-augustulus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-hadrian",
+      "title": "Hadrian – Livius",
+      "url": "https://www.livius.org/articles/person/hadrian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-marcus-aurelius",
+      "title": "Marcus Aurelius – Livius",
+      "url": "https://www.livius.org/articles/person/marcus-aurelius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-pertinax",
+      "title": "Pertinax – Livius",
+      "url": "https://www.livius.org/articles/person/pertinax/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-septimius-severus",
+      "title": "Septimius Severus – Livius",
+      "url": "https://www.livius.org/articles/person/septimius-severus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-caracalla",
+      "title": "Caracalla – Livius",
+      "url": "https://www.livius.org/articles/person/caracalla/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-valerian",
+      "title": "Valerian – Livius",
+      "url": "https://www.livius.org/articles/person/valerian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-gallienus",
+      "title": "Gallienus – Livius",
+      "url": "https://www.livius.org/articles/person/gallienus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-aurelian",
+      "title": "Aurelian – Livius",
+      "url": "https://www.livius.org/articles/person/aurelian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-zenobia",
+      "title": "Zenobia – Livius",
+      "url": "https://www.livius.org/articles/person/zenobia/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-diocletian",
+      "title": "Diocletian – Livius",
+      "url": "https://www.livius.org/articles/person/diocletian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-constantine-the-great",
+      "title": "Constantine The Great – Livius",
+      "url": "https://www.livius.org/articles/person/constantine-the-great/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-maxentius",
+      "title": "Maxentius – Livius",
+      "url": "https://www.livius.org/articles/person/maxentius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-julian-the-apostate",
+      "title": "Julian The Apostate – Livius",
+      "url": "https://www.livius.org/articles/person/julian-the-apostate/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-jovian",
+      "title": "Jovian – Livius",
+      "url": "https://www.livius.org/articles/person/jovian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-theodosius-i",
+      "title": "Theodosius I – Livius",
+      "url": "https://www.livius.org/articles/person/theodosius-i/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-valens",
+      "title": "Valens – Livius",
+      "url": "https://www.livius.org/articles/person/valens/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-valentinian-iii",
+      "title": "Valentinian Iii – Livius",
+      "url": "https://www.livius.org/articles/person/valentinian-iii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-attila-king-of-the-huns",
+      "title": "Attila – Britannica",
+      "url": "https://www.britannica.com/biography/Attila-king-of-the-Huns",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-flavius-aetius",
+      "title": "Flavius Aetius – Britannica",
+      "url": "https://www.britannica.com/biography/Flavius-Aetius",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-person-avitus",
+      "title": "Avitus – Livius",
+      "url": "https://www.livius.org/articles/person/avitus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-petronius-maximus",
+      "title": "Petronius Maximus – Livius",
+      "url": "https://www.livius.org/articles/person/petronius-maximus/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-odoacer",
+      "title": "Odoacer – Britannica",
+      "url": "https://www.britannica.com/biography/Odoacer",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-person-justinian",
+      "title": "Justinian – Livius",
+      "url": "https://www.livius.org/articles/person/justinian/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-belisarius",
+      "title": "Belisarius – Britannica",
+      "url": "https://www.britannica.com/biography/Belisarius",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-person-justin-ii",
+      "title": "Justin Ii – Livius",
+      "url": "https://www.livius.org/articles/person/justin-ii/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-livius-person-heraclius",
+      "title": "Heraclius – Livius",
+      "url": "https://www.livius.org/articles/person/heraclius/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-27"
+    },
+    {
+      "id": "src-britannica-theodoric-king-of-italy",
+      "title": "Theodoric – Britannica",
+      "url": "https://www.britannica.com/biography/Theodoric-king-of-Italy",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-empire-heraclians",
+      "title": "Byzantine Empire: the Heraclians and the challenge of Islam – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/The-successors-of-Justinian-565-610",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-emperors",
+      "title": "Byzantine Empire: Byzantine emperors – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/Manuel-II-and-respite-from-the-Turks",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-justinian-ii",
+      "title": "Justinian II – Britannica",
+      "url": "https://www.britannica.com/biography/Justinian-II",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-empire-iconoclasm",
+      "title": "Byzantine Empire: the age of Iconoclasm, 717–867 – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/The-age-of-Iconoclasm-717-867",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-byzantine-empire-macedonian-era",
+      "title": "Byzantine Empire: the Macedonian era, 867–1025 – Britannica",
+      "url": "https://www.britannica.com/place/Byzantine-Empire/From-867-to-the-Ottoman-conquest",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-constantine-iv",
+      "title": "Constantine IV – Britannica",
+      "url": "https://www.britannica.com/biography/Constantine-IV",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-decrespigny-later-han",
+      "title": "Rafe de Crespigny, Chronology of Later Han (Brill)",
+      "url": "https://ll-chinesereferenceshelf.brillonline.com/dictionary-han/prelims/sim-200005",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-villanovan-culture",
+      "title": "Villanovan culture – Britannica",
+      "url": "https://www.britannica.com/topic/Villanovan-culture",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-people-etruscans",
+      "title": "Etruscans – Livius",
+      "url": "https://www.livius.org/articles/people/etruscans/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-23"
+    },
+    {
+      "id": "src-britannica-alba-longa",
+      "title": "Alba Longa – Britannica",
+      "url": "https://www.britannica.com/place/Alba-Longa",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-britannica-magna-graecia",
+      "title": "Magna Graecia – Britannica",
+      "url": "https://www.britannica.com/place/Magna-Graecia",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    },
+    {
+      "id": "src-livius-place-cumae",
+      "title": "Cumae – Livius",
+      "url": "https://www.livius.org/articles/place/cumae/",
+      "kind": "scholarlyReference",
+      "accessedAt": "2026-11-28"
+    }
+  ]
+}

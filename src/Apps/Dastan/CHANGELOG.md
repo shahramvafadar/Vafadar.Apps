@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- The new histories reviewed: every quote stands, the Persian is complete, two shared records corrected.
+- Three regional comparisons: the ancient Near East, the Mediterranean, and Iran, India and China side by side.
 - A new history: India, from the Indus civilization through Alexander and the Mauryas, the Indo-Greeks and the
   Kushans to the Guptas and Harsha.
 - A new history: Greece, from archaic Athens and Sparta through the Persian wars and the Peloponnesian War to

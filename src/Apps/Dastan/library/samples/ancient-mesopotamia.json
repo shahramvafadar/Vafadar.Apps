@@ -1544,7 +1544,7 @@
       "id": "event-hittites-sack-babylon",
       "type": "Event",
       "label": "The Hittites sack Babylon",
-      "summary": "About 1595 BCE the Hittite king Mursilis I advanced along the Euphrates, sacked Babylon and carried off the statue of Marduk, ending the First Dynasty of Babylon.",
+      "summary": "Mursilis I, the Hittite king, advanced along the Euphrates, sacked Babylon and carried off the statue of Marduk, ending the First Dynasty of Babylon; the Livius page on Babylon puts it about 1595 BCE, the page on the Hittites in 1587 by the low middle chronology.",
       "sourceIds": [
         "src-livius-place-babylonian-empire"
       ],
@@ -1553,11 +1553,17 @@
         {
           "fact": "happened",
           "time": {
-            "kind": "occurrence",
-            "at": {
+            "kind": "occurrenceWindow",
+            "earliest": {
               "frame": "calendar",
               "era": "beforeCommonEra",
               "year": 1595,
+              "approximate": true
+            },
+            "latest": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 1587,
               "approximate": true
             }
           }

@@ -673,7 +673,7 @@
       ]
     },
     {
-      "id": "person-demetrius-ii",
+      "id": "person-demetrius-ii-of-macedon",
       "type": "Person",
       "label": "Demetrius II",
       "summary": "Antigonid king of Macedonia from 239 to 229 BCE.",
@@ -2004,8 +2004,8 @@
       }
     },
     {
-      "id": "relation-demetrius-ii-holder-of-king-of-macedonia",
-      "from": "person-demetrius-ii",
+      "id": "relation-demetrius-ii-of-macedon-holder-of-king-of-macedonia",
+      "from": "person-demetrius-ii-of-macedon",
       "to": "office-king-of-macedonia",
       "type": "holderOf",
       "directionality": "directed",
@@ -2041,8 +2041,8 @@
       }
     },
     {
-      "id": "relation-demetrius-ii-member-of-antigonid",
-      "from": "person-demetrius-ii",
+      "id": "relation-demetrius-ii-of-macedon-member-of-antigonid",
+      "from": "person-demetrius-ii-of-macedon",
       "to": "dynasty-antigonid",
       "type": "memberOf",
       "directionality": "directed",
