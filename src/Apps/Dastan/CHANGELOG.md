@@ -4,6 +4,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Rostam's hypothetical placement about 1300 BCE stated in words in his entry, as an editorial hypothesis of
+  very low confidence.
 - A new story: the great war of Kay Khosrow, from the elephant throne to the king vanishing in the mountains.
 - A new story: Akvan the demon, from the poem on Ganjoor, scene by scene.
 - A new story: Bizhan and Manizheh, from the poem on Ganjoor, scene by scene.
