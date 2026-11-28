@@ -168,5 +168,5 @@ was left out, and – if E5 allows – the chart looked at.
 | D2 | 2026-11-28 | 85 shared identifiers checked, 20 differing; corrected: 2 doubles merged, 7 names or Persian forms, 5 sets of years with their sources, Hari separated from Herat. Left for the owner: dynasty-sasanian and place-baghdad each stand for the historical and the poem entity under one identifier. The comparison agrees with the collections. |
 | D3 | 2026-11-28 | Glossary written from the collections (about 840 names). Corrected: Zhou (5 places), Justinian II (11), Claudius II (2), Zhengzhou (1). Not done: every Persian summary read against its English - only names were compared. |
 | D4 | 2026-11-28 | 224 steps compared; 61 associated characters are not named in the cited verses (epithets, unnamed sons, joined sections) and 17 names stand before their stage; listed in the review report, none changed - lowering a stage is refused because the sources belong to the later stage. Correspondences between stories not done. |
-| D5 | 2026-11-28 | Not done: the site is not started without the owner's word (E5). |
+| D5 | 2026-11-28 | Done on the owner's later word: see the look in a browser in [the review of the new histories](reviews/2026-11-28-new-histories-review.md); nothing had to be corrected. |
 | D6 | 2026-11-28 | docs/reviews/2026-11-28-content-review.md; six questions for the owner. |

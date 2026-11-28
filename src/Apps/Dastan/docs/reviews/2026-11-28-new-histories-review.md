@@ -70,6 +70,24 @@ earlier stories is written the same way. Corrected: Lohrasp, written لهراس�
 now لهراسپ as in the other collections; Iran, named in the story of Bizhan without a scene, now stands in the scene
 at Kay Khosrow's court.
 
+## The look in a browser (2026-11-28, on the owner's word)
+
+The site was run on the library (`dastan-library`, port 5220) and looked at in the built-in browser:
+
+* All 36 pages of the new content answered 200 with their title, in English and Persian: the five histories, the
+  three comparisons, the four stories and a sample of their entity pages.
+* At phone width in Persian and dark: Egypt (its page, timeline and map), the Near East comparison, the story of
+  Rostam and Esfandiar and the page of Ramses II – the text runs right to left, numbers in Persian digits, nothing cut.
+* At phone width in English and light: the battle of Salamis and the Mediterranean comparison, whose lanes stack
+  one under another with their events in order.
+* At desktop width in Persian and dark: the Near East comparison as a chart with its four lanes; dense, as an
+  ancient-world chart of 150 records is, but readable. The console showed no errors.
+
+Nothing had to be corrected. One observation for the owner, not a defect of the new content: the head of every story
+page – the older ones as much as the new – shows "940 CE to 1025 CE", the span of the only dated record of a story,
+the poet. A reader may take it for the time of the story; whether the page should say "the poet's life" or show no
+span is a question of the site, not of the collections.
+
 ## Open
 
 * **Gaps no free source read closes**, listed in the progress table of the plan: Sumer and Akkad, the Kassites and
@@ -80,4 +98,4 @@ at Kay Khosrow's court.
 * **The decisions F1–F6** of the plan. Part N followed the recommendations of F2–F5 and G5 that of F6 as working
   defaults, which the owner can change; F1 (hypothetical placements) is a change to the format and is the owner's to
   approve before G7 can be done.
-* **The look in a browser** of the new collections and comparisons, as D5 of the earlier plan, waits for the owner.
+
