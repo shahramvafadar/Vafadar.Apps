@@ -1719,6 +1719,38 @@
       "kind": "scholarly_reference",
       "accessedAt": "2026-11-28",
       "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-tacitus",
+      "title": "Tacitus – Britannica",
+      "url": "https://www.britannica.com/biography/Tacitus-Roman-historian",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-ovid",
+      "title": "Ovid – Britannica",
+      "url": "https://www.britannica.com/biography/Ovid-Roman-poet",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-polybius",
+      "title": "Polybius – Britannica",
+      "url": "https://www.britannica.com/biography/Polybius",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
+    },
+    {
+      "id": "src-britannica-cicero",
+      "title": "Cicero – Britannica",
+      "url": "https://www.britannica.com/biography/Cicero",
+      "kind": "scholarly_reference",
+      "accessedAt": "2026-11-28",
+      "spoilerLevel": 0
     }
   ],
   "entities": [
@@ -3827,7 +3859,8 @@
       "sourceIds": [
         "src-livius-caesar-caesar-01",
         "src-livius-caesar-caesar-02",
-        "src-livius-livy-livy-periochae-116-120"
+        "src-livius-livy-livy-periochae-116-120",
+        "src-britannica-cicero"
       ],
       "spoilerLevel": 0,
       "facts": [
@@ -12721,6 +12754,210 @@
             },
             "continuity": "notAsserted"
           }
+        }
+      ]
+    },
+    {
+      "id": "person-tacitus-historian",
+      "type": "Person",
+      "label": "Tacitus the historian",
+      "summary": "Roman orator and official, born in 56 CE, probably the greatest historian who wrote in Latin: the Germania, the Histories of 69–96 and the Annals of 14–68; he died about 120.",
+      "sourceIds": [
+        "src-britannica-tacitus"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 56
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 120,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "The greatest historian in Latin."
+        }
+      ]
+    },
+    {
+      "id": "work-germania",
+      "type": "Work",
+      "label": "The Germania",
+      "summary": "Tacitus’ description of the Germanic tribes.",
+      "sourceIds": [
+        "src-britannica-tacitus"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-tacitus-historian"
+        }
+      ]
+    },
+    {
+      "id": "work-histories-of-tacitus",
+      "type": "Work",
+      "label": "The Histories of Tacitus",
+      "summary": "Tacitus’ Historiae, on the Roman Empire from 69 to 96 CE.",
+      "sourceIds": [
+        "src-britannica-tacitus"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-tacitus-historian"
+        }
+      ]
+    },
+    {
+      "id": "work-annals",
+      "type": "Work",
+      "label": "The Annals",
+      "summary": "Tacitus’ later work on the empire from 14 to 68 CE.",
+      "sourceIds": [
+        "src-britannica-tacitus"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-tacitus-historian"
+        }
+      ]
+    },
+    {
+      "id": "person-ovid",
+      "type": "Person",
+      "label": "Ovid",
+      "summary": "Publius Ovidius Naso, Roman poet born at Sulmo in 43 BCE, noted for the Ars amatoria and the Metamorphoses, whose retelling of Classical myth had immense influence; he died at Tomis on the Black Sea in 17 CE.",
+      "sourceIds": [
+        "src-britannica-ovid"
+      ],
+      "spoilerLevel": 0,
+      "names": [
+        {
+          "name": "Publius Ovidius Naso",
+          "language": "en",
+          "kind": "alternative"
+        }
+      ],
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 43
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 17
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Poet of the Metamorphoses."
+        }
+      ]
+    },
+    {
+      "id": "work-metamorphoses",
+      "type": "Work",
+      "label": "The Metamorphoses",
+      "summary": "Ovid’s poem of transformations, an imaginative retelling of Classical myth.",
+      "sourceIds": [
+        "src-britannica-ovid"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ovid"
+        }
+      ]
+    },
+    {
+      "id": "work-ars-amatoria",
+      "type": "Work",
+      "label": "The Art of Love",
+      "summary": "Ovid’s Ars amatoria.",
+      "sourceIds": [
+        "src-britannica-ovid"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "creator",
+          "entityId": "person-ovid"
+        }
+      ]
+    },
+    {
+      "id": "person-polybius",
+      "type": "Person",
+      "label": "Polybius",
+      "summary": "Greek statesman and historian from Megalopolis, born about 200 BCE, who wrote of the rise of Rome to world prominence; he died about 118 BCE.",
+      "sourceIds": [
+        "src-britannica-polybius"
+      ],
+      "spoilerLevel": 0,
+      "facts": [
+        {
+          "fact": "born",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 200,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "died",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 118,
+              "approximate": true
+            }
+          }
+        },
+        {
+          "fact": "knownFor",
+          "text": "Historian of the rise of Rome."
         }
       ]
     }
@@ -26346,6 +26583,91 @@
       "label": "Rebuilt",
       "sourceIds": [
         "src-livius-rome-pantheon"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tacitus-historian-author-of-work-germania",
+      "from": "person-tacitus-historian",
+      "to": "work-germania",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-tacitus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tacitus-historian-author-of-work-histories-of-tacitus",
+      "from": "person-tacitus-historian",
+      "to": "work-histories-of-tacitus",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-tacitus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-tacitus-historian-author-of-work-annals",
+      "from": "person-tacitus-historian",
+      "to": "work-annals",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-tacitus"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ovid-author-of-work-metamorphoses",
+      "from": "person-ovid",
+      "to": "work-metamorphoses",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-ovid"
+      ],
+      "spoilerLevel": 0,
+      "reviewStatus": "source_backed_editorial_review_pending",
+      "scope": {
+        "kind": "outside_the_story",
+        "eventIds": []
+      }
+    },
+    {
+      "id": "relation-ovid-author-of-work-ars-amatoria",
+      "from": "person-ovid",
+      "to": "work-ars-amatoria",
+      "type": "authorOf",
+      "directionality": "directed",
+      "label": "Author",
+      "sourceIds": [
+        "src-britannica-ovid"
       ],
       "spoilerLevel": 0,
       "reviewStatus": "source_backed_editorial_review_pending",

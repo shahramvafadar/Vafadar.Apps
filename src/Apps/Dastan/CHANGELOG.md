@@ -4,6 +4,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 
 ## Unreleased
 
+- Rome gains Tacitus the historian, Ovid and Polybius, with the works of Tacitus and Ovid.
 - Iran gains the Tahirid governors of Khorasan and the Samanid amirs from Nasr I to the last, with Bisotun of
   the Ziyarids and two more Buyids.
 - Rostam and the kings around him say where they stand in time without a false date: the reigns of the poem he
