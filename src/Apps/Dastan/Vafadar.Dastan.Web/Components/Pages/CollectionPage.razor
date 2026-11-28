@@ -18,7 +18,10 @@
            speaks of – the first and the last year anything of it is placed in. *@
         <p class="collection-stats">
             <span>@string.Format(CultureInfo.CurrentCulture, T["Collection_Names"], Visitor.Number(Visitor.Projection!.Entities.Length))</span>
-            @if (Visitor.Projection!.Years() is { } years)
+            @* A story has an order, not a date of the calendar: the years its collection holds are those of the poet
+               and of the writing of the work, outside the story, and are not given as the story's span (owner's rule
+               of 2026-11-28: the life of an author is not the time of the characters). *@
+            @if (overview.Subject.Type != EntityTypes.StoryArc && Visitor.Projection!.Years() is { } years)
             {
                 <span>@string.Format(CultureInfo.CurrentCulture, T["Collection_Span"], TimeText.Year(years.First.Era, years.First.Number, Visitor, T), TimeText.Year(years.Last.Era, years.Last.Number, Visitor, T))</span>
             }

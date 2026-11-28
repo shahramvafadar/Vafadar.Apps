@@ -363,7 +363,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-akvan",
         "eventIds": [
-          "event-02"
+          "event-01"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -385,7 +385,7 @@
         "kind": "relationship_revealed_in_beat",
         "storyId": "story-akvan",
         "eventIds": [
-          "event-07"
+          "event-06"
         ],
         "calendarPeriod": null,
         "interpretation": "The cited beat supports or reveals the claim; its ordinal is not the start date or duration of this relationship."
@@ -396,33 +396,9 @@
   "events": [
     {
       "id": "event-01",
-      "label": "The poet on wonders",
-      "summary": "The poet praises the Creator and says the world is full of wonders: the wise man who hears this old tale may not believe it, but will accept it once he remembers its meaning.",
-      "order": 1,
-      "orderBasis": "narrative",
-      "sourceIds": [
-        "src-ganjoor-akvan-s01"
-      ],
-      "spoilerLevel": 0,
-      "temporalExpression": {
-        "kind": "narrative_position",
-        "calendarMapping": null,
-        "duration": null
-      },
-      "reviewStatus": "source_backed_editorial_review_pending",
-      "entityAssociations": [
-        {
-          "entityId": "person-ferdowsi",
-          "role": "narrator",
-          "presence": "acts_in_selected_scenes"
-        }
-      ]
-    },
-    {
-      "id": "event-02",
       "label": "The onager among the herds",
       "summary": "As Kay Khosrow feasts with Gudarz, Rostam, Giv and others, a herdsman reports an onager the colour of the sun that tears apart the stallions. The king knows it is no onager and asks Rostam to go, warning that it may be Ahriman.",
-      "order": 2,
+      "order": 1,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
@@ -453,10 +429,10 @@
       ]
     },
     {
-      "id": "event-03",
+      "id": "event-02",
       "label": "The onager that vanishes",
       "summary": "Rostam searches three days and on the fourth sees it. He means to take it alive with his lasso, but it vanishes; he knows it must be the demon Akvan, and his arrow too finds nothing.",
-      "order": 3,
+      "order": 2,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
@@ -487,10 +463,10 @@
       ]
     },
     {
-      "id": "event-04",
+      "id": "event-03",
       "label": "Carried off in sleep",
       "summary": "Worn out, Rostam waters Rakhsh at a spring and sleeps. Akvan comes as a wind, cuts out the ground beneath him and lifts him into the air, then asks whether he wants to be thrown onto the mountains or into the sea.",
-      "order": 4,
+      "order": 3,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
@@ -516,10 +492,10 @@
       ]
     },
     {
-      "id": "event-05",
+      "id": "event-04",
       "label": "Into the sea",
       "summary": "Knowing a demon does the opposite of what is asked, Rostam asks to be thrown onto the mountain; Akvan throws him into the deep sea. Rostam draws his sword against the sea monsters and swims to land.",
-      "order": 5,
+      "order": 4,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
@@ -545,10 +521,10 @@
       ]
     },
     {
-      "id": "event-06",
+      "id": "event-05",
       "label": "Rakhsh among Afrasiab’s mares",
       "summary": "Back at the spring Rakhsh is gone. Rostam follows him on foot and finds him among Afrasiab’s mares, lassoes and saddles him, drives off the herd and kills two thirds of the herdsmen’s riders.",
-      "order": 6,
+      "order": 5,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
@@ -584,10 +560,10 @@
       ]
     },
     {
-      "id": "event-07",
+      "id": "event-06",
       "label": "Afrasiab’s elephants",
       "summary": "Afrasiab comes to see his horses with two thousand men, hears that Rostam alone took the herd and pursues him; Rostam rains blows on them and takes his four white elephants.",
-      "order": 7,
+      "order": 6,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
@@ -613,10 +589,10 @@
       ]
     },
     {
-      "id": "event-08",
+      "id": "event-07",
       "label": "The death of Akvan",
       "summary": "At the spring Akvan meets Rostam again and mocks him; Rostam strikes his head with his mace and cuts it off. The poet asks the reader to understand the demon as a man who does not thank God.",
-      "order": 8,
+      "order": 7,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
@@ -642,10 +618,10 @@
       ]
     },
     {
-      "id": "event-09",
+      "id": "event-08",
       "label": "The return to Kay Khosrow",
       "summary": "Kay Khosrow comes out to meet Rostam with the royal banner; Rostam shares the herds among the Iranians, sends the elephants to the king and tells the story of Akvan at a feast of two weeks. The king gives him rich gifts, and Rostam returns home.",
-      "order": 9,
+      "order": 8,
       "orderBasis": "narrative",
       "sourceIds": [
         "src-ganjoor-akvan-s01"
